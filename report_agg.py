@@ -150,22 +150,19 @@ def visualize_pvalues(battles, title, max_num_models=30):
     return fig
 #consider also defining the include_plotlyjs parameter to point to an external Plotly.js as described above
 
-def fig_delta_vs_pvalues(battle: pd.DataFrame, result: pd.DataFrame):
+def fig_delta_vs_pvalues(battles: pd.DataFrame, result: pd.DataFrame):
     a_win, pvalue, diffs, sums, chi2 = compute_pvalues(battles, 100)
     df = pvalue.reset_index()
     df_pval = df.melt(id_vars='model_a', value_vars=list(df.columns[1:]), var_name='model_b', value_name='p_value')
     df = diffs.reset_index()
     df_diffs = df.melt(id_vars='model_a', value_vars=list(df.columns[1:]), var_name='model_b', value_name='diff')
     benchmark_size = len(set(result['example_id']))
-    df_diffs['delta(A, B)'] = df_diffs['diff'].abs() / benchmark_size
+    df_diffs['|acc(A) - acc(B)|'] = df_diffs['diff'].abs() / benchmark_size
     df_diffs['models'] = df_diffs['model_a'] + ' vs. ' + df_diffs['model_b']
 
     df = df_pval.merge(df_diffs, on=['model_a', 'model_b'])
-    sections['fig_deltas'] = px.scatter(df, x='delta(A, B)', y='p_value', hover_data='models').to_html(full_html=False)
+    return px.scatter(df, x='|acc(A) - acc(B)|', y='p_value', hover_data='models')
 
-
-
-# %%
 def compute_mle_elo(
     df, SCALE=400, BASE=10, INIT_RATING=1000
 ):
@@ -257,8 +254,9 @@ def get_sections(result: pd.DataFrame, benchmark_id):
     fig_pairwin = visualize_pairwise_win_fraction(battles, f'win_rates {benchmark_id}', max_num_models=60)
 
     sections = {
-        "pairwise wins": fig_pairwin.to_html(full_html=False),
         "p-values": fig_pvalues.to_html(full_html=False),
+        "delta vs. p-values": fig_delta_vs_pvalues(battles, result).to_html(full_html=False),
+        "pairwise wins (including ties)": fig_pairwin.to_html(full_html=False),
         "result table": result_table(battles_no_ties, result).to_html(float_format='%10.3f')
     }
 
@@ -269,7 +267,7 @@ def gen_benchmark_report(benchmark_id: str):
     sections = get_sections(eval_results[eval_results['benchmark_id'] == benchmark_id], benchmark_id)
     from jinja2 import Template
     template_path=r"report_template.html"
-    output_path = rf"reports/{benchmark_id}.html"
+    output_path = rf"crux-eval.github.io/reports/agg_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
@@ -286,4 +284,4 @@ gen_benchmark_report('humaneval+')
 gen_benchmark_report('CRUXEval-input')
 gen_benchmark_report('CRUXEval-output')
 
-# %%
+# pushd .; cd crux-eval.github.io/; git commit -am 'report'; git push; popd
