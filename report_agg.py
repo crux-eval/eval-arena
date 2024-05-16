@@ -1,12 +1,10 @@
-from collections import defaultdict
 import json, math, glob
+
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
 import plotly.express as px
 from tqdm import tqdm
-import math
-import os
 
 
 def pass1_to_battle(result: pd.DataFrame):
@@ -22,7 +20,7 @@ def pass1_to_battle(result: pd.DataFrame):
     pa.loc[bwins, 'winner'] = 'model_b'
     pa.loc[ties_neither, 'winner'] = 'neither'
     pa.loc[ties_both, 'winner'] = 'both'
-    return pa 
+    return pa
 
 
 def compute_pairwise_win_fraction(battles, max_num_models=100):
@@ -46,7 +44,7 @@ def compute_pairwise_win_fraction(battles, max_num_models=100):
         index="model_a", columns="model_b", aggfunc="size", fill_value=0) / num_battles_ptbl 
 
     # 
-    prop_wins = a_win.mean(axis=1).sort_values(ascending=False)
+    prop_wins = (a_win / b_win).mean(axis=1).sort_values(ascending=False)
     prop_wins = prop_wins[:max_num_models]
     sort_keys = list(prop_wins.keys())
     return tuple(x.loc[sort_keys, sort_keys] for x in [a_win, b_win, neither, both])
@@ -87,6 +85,78 @@ def compute_pvalues(battles, max_num_models=100):
     chi2 = suf_stats.applymap(lambda x: 1 if x[2] == 0 else 1 - stats.chi2.cdf( (np.abs(x[1]) - 1)**2 / (x[2]), 1))
     binom = suf_stats.applymap(lambda x: stats.binomtest(x[0], x[2], p=0.5).pvalue if x[2] > 0 else 1)
     return row_beats_col, binom, diffs, sums, chi2 
+
+
+def compute_mle_elo(
+    df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
+):
+    """
+    calculate Elo based on winrate, code from chatbot arena with minor changes.
+    """
+    from sklearn.linear_model import LogisticRegression
+    ptbl_a_win = pd.pivot_table(
+        df[df["winner"] == "model_a"],
+        index="model_a",
+        columns="model_b",
+        aggfunc="size",
+        fill_value=0,
+    )
+    # if no tie, create a zero matrix
+    if sum(df["winner"].isin(["both", "both"])) == 0:
+        ptbl_tie = pd.DataFrame(0, index=ptbl_a_win.index, columns=ptbl_a_win.columns)
+    else:
+        ptbl_tie = pd.pivot_table(
+            df[df["winner"].isin(["both", "neither"])],
+            index="model_a",
+            columns="model_b",
+            aggfunc="size",
+            fill_value=0,
+        )
+        ptbl_tie = ptbl_tie + ptbl_tie.T
+
+    ptbl_b_win = pd.pivot_table(
+        df[df["winner"] == "model_b"],
+        index="model_a",
+        columns="model_b",
+        aggfunc="size",
+        fill_value=0,
+    )
+    ptbl_win = ptbl_a_win * 2 + ptbl_b_win.T * 2 + ptbl_tie
+
+    models = pd.Series(np.arange(len(ptbl_win.index)), index=ptbl_win.index)
+
+    p = len(models)
+    X = np.zeros([p * (p - 1) * 2, p])
+    Y = np.zeros(p * (p - 1) * 2)
+
+    cur_row = 0
+    sample_weights = []
+    for m_a in ptbl_win.index:
+        for m_b in ptbl_win.columns:
+            if m_a == m_b:
+                continue
+            # if nan skip
+            if math.isnan(ptbl_win.loc[m_a, m_b]) or math.isnan(ptbl_win.loc[m_b, m_a]):
+                continue
+            X[cur_row, models[m_a]] = +math.log(BASE)
+            X[cur_row, models[m_b]] = -math.log(BASE)
+            Y[cur_row] = 1.0
+            sample_weights.append(ptbl_win.loc[m_a, m_b])
+
+            X[cur_row + 1, models[m_a]] = math.log(BASE)
+            X[cur_row + 1, models[m_b]] = -math.log(BASE)
+            Y[cur_row + 1] = 0.0
+            sample_weights.append(ptbl_win.loc[m_b, m_a])
+            cur_row += 2
+    X = X[:cur_row]
+    Y = Y[:cur_row]
+
+    lr = LogisticRegression(fit_intercept=False, penalty=None, tol=1e-6)
+    lr.fit(X, Y, sample_weight=sample_weights)
+    elo_scores = SCALE * lr.coef_[0] + INIT_RATING
+    if ref_model in models.index:
+        elo_scores += 1000 - elo_scores[models[ref_model]]
+    return pd.Series(elo_scores, index=models.index).sort_values(ascending=False)
 
 
 def visualize_pairwise_win_fraction(battles, title, max_num_models=100):
@@ -163,76 +233,6 @@ def fig_delta_vs_pvalues(battles: pd.DataFrame, result: pd.DataFrame):
     df = df_pval.merge(df_diffs, on=['model_a', 'model_b'])
     return px.scatter(df, x='|acc(A) - acc(B)|', y='p_value', hover_data='models')
 
-def compute_mle_elo(
-    df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
-):
-    """
-    calculate Elo based on winrate, code from chatbot arena with minor changes.
-    """
-    from sklearn.linear_model import LogisticRegression
-    ptbl_a_win = pd.pivot_table(
-        df[df["winner"] == "model_a"],
-        index="model_a",
-        columns="model_b",
-        aggfunc="size",
-        fill_value=0,
-    )
-    # if no tie, create a zero matrix
-    if sum(df["winner"].isin(["both", "both"])) == 0:
-        ptbl_tie = pd.DataFrame(0, index=ptbl_a_win.index, columns=ptbl_a_win.columns)
-    else:
-        ptbl_tie = pd.pivot_table(
-            df[df["winner"].isin(["both", "neither"])],
-            index="model_a",
-            columns="model_b",
-            aggfunc="size",
-            fill_value=0,
-        )
-        ptbl_tie = ptbl_tie + ptbl_tie.T
-
-    ptbl_b_win = pd.pivot_table(
-        df[df["winner"] == "model_b"],
-        index="model_a",
-        columns="model_b",
-        aggfunc="size",
-        fill_value=0,
-    )
-    ptbl_win = ptbl_a_win * 2 + ptbl_b_win.T * 2 + ptbl_tie
-
-    models = pd.Series(np.arange(len(ptbl_win.index)), index=ptbl_win.index)
-
-    p = len(models)
-    X = np.zeros([p * (p - 1) * 2, p])
-    Y = np.zeros(p * (p - 1) * 2)
-
-    cur_row = 0
-    sample_weights = []
-    for m_a in ptbl_win.index:
-        for m_b in ptbl_win.columns:
-            if m_a == m_b:
-                continue
-            # if nan skip
-            if math.isnan(ptbl_win.loc[m_a, m_b]) or math.isnan(ptbl_win.loc[m_b, m_a]):
-                continue
-            X[cur_row, models[m_a]] = +math.log(BASE)
-            X[cur_row, models[m_b]] = -math.log(BASE)
-            Y[cur_row] = 1.0
-            sample_weights.append(ptbl_win.loc[m_a, m_b])
-
-            X[cur_row + 1, models[m_a]] = math.log(BASE)
-            X[cur_row + 1, models[m_b]] = -math.log(BASE)
-            Y[cur_row + 1] = 0.0
-            sample_weights.append(ptbl_win.loc[m_b, m_a])
-            cur_row += 2
-    X = X[:cur_row]
-    Y = Y[:cur_row]
-
-    lr = LogisticRegression(fit_intercept=False, penalty=None, tol=1e-6)
-    lr.fit(X, Y, sample_weight=sample_weights)
-    elo_scores = SCALE * lr.coef_[0] + INIT_RATING
-    if ref_model in models.index:
-        elo_scores += 1000 - elo_scores[models[ref_model]]
-    return pd.Series(elo_scores, index=models.index).sort_values(ascending=False)
 
 def result_table(battles_no_ties, result):
     model_elos = compute_mle_elo(battles_no_ties)
@@ -256,17 +256,18 @@ def get_sections(result: pd.DataFrame, benchmark_id):
         "p-values": fig_pvalues.to_html(full_html=False),
         "delta vs. p-values": fig_delta_vs_pvalues(battles, result).to_html(full_html=False),
         "pairwise wins (including ties)": fig_pairwin.to_html(full_html=False),
-        # "result table": result_table(battles_no_ties, result).to_html(float_format='%10.3f')
+        "result table": result_table(battles_no_ties, result).style \
+                .format(precision=3).to_html()
     }
     return sections
 
 
-def gen_benchmark_report(benchmark_id: str):
+def gen_benchmark_report(benchmark_id: str, eval_results):
     sections = get_sections(eval_results[eval_results['benchmark_id'] == benchmark_id], benchmark_id)
     from jinja2 import Template
     template_path=r"report_template.html"
     template_path=r"agg_template_description.html"
-    output_path = rf"crux-eval.github.io/reports/agg_{benchmark_id}.html"
+    output_path = rf"crux-eval.github.io/eval-arena/agg_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
@@ -280,8 +281,6 @@ if __name__ == '__main__':
             records.extend([json.loads(l) for l in f.readlines()])
     eval_results = pd.DataFrame(records)
     print(set(eval_results['benchmark_id']))
-    gen_benchmark_report('mbpp+')
-    gen_benchmark_report('humaneval+')
-    gen_benchmark_report('CRUXEval-input')
-    gen_benchmark_report('CRUXEval-output')
+    for b in set(eval_results['benchmark_id']):
+        gen_benchmark_report(b, eval_results)
 # pushd .; cd crux-eval.github.io/; git commit -am 'report'; git push; popd
