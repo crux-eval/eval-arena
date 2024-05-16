@@ -1,4 +1,3 @@
-# %%
 from collections import defaultdict
 import json, math, glob
 import numpy as np
@@ -9,15 +8,12 @@ from tqdm import tqdm
 import math
 import os
 
-# %%
 
-
-# figs = basic_analysis(result, benchmark_id)
 def pass1_to_battle(result: pd.DataFrame):
     pa = pd.merge(result, result, on=['example_id'], suffixes=["_a", "_b"], how='outer')
 
-    awins = (pa['pass1_a'] > 0) & (pa['pass1_b'] == 0)
-    bwins = (pa['pass1_a'] == 0) & (pa['pass1_b'] > 0)
+    awins = pa['pass1_a'] > pa['pass1_b']
+    bwins = pa['pass1_a'] < pa['pass1_b']
     ties_neither = (pa['pass1_a'] == 0) & (pa['pass1_b'] == 0)
     ties_both = (pa['pass1_a'] > 0) & (pa['pass1_b'] > 0)
     # pa[['winner']][awins] = 'model_a' 
@@ -28,7 +24,8 @@ def pass1_to_battle(result: pd.DataFrame):
     pa.loc[ties_both, 'winner'] = 'both'
     return pa 
 
-def compute_pairwise_win_fraction(battles, max_num_models=30):
+
+def compute_pairwise_win_fraction(battles, max_num_models=100):
     num_battles_ptbl = pd.pivot_table(battles,
         index="model_a", columns="model_b", aggfunc="size", fill_value=0)
     
@@ -53,6 +50,7 @@ def compute_pairwise_win_fraction(battles, max_num_models=30):
     prop_wins = prop_wins[:max_num_models]
     sort_keys = list(prop_wins.keys())
     return tuple(x.loc[sort_keys, sort_keys] for x in [a_win, b_win, neither, both])
+
 
 def compute_pvalues(battles, max_num_models=100):
     # Times each model wins as Model A
@@ -90,7 +88,8 @@ def compute_pvalues(battles, max_num_models=100):
     binom = suf_stats.applymap(lambda x: stats.binomtest(x[0], x[2], p=0.5).pvalue if x[2] > 0 else 1)
     return row_beats_col, binom, diffs, sums, chi2 
 
-def visualize_pairwise_win_fraction(battles, title, max_num_models=30):
+
+def visualize_pairwise_win_fraction(battles, title, max_num_models=100):
     a_win, b_win, neither, both = compute_pairwise_win_fraction(battles, max_num_models)
 
     fig = px.imshow(a_win, color_continuous_scale='RdBu',
@@ -117,7 +116,8 @@ def visualize_pairwise_win_fraction(battles, title, max_num_models=30):
     )
     return fig
 
-def visualize_pvalues(battles, title, max_num_models=30):
+
+def visualize_pvalues(battles, title, max_num_models=100):
     row_beats_col, pvalue, diffs, sums, chi2 = compute_pvalues(battles, max_num_models)
     fig = px.imshow(pvalue,
                     text_auto=".2f", title=title)
@@ -164,8 +164,11 @@ def fig_delta_vs_pvalues(battles: pd.DataFrame, result: pd.DataFrame):
     return px.scatter(df, x='|acc(A) - acc(B)|', y='p_value', hover_data='models')
 
 def compute_mle_elo(
-    df, SCALE=400, BASE=10, INIT_RATING=1000
+    df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
 ):
+    """
+    calculate Elo based on winrate, code from chatbot arena with minor changes.
+    """
     from sklearn.linear_model import LogisticRegression
     ptbl_a_win = pd.pivot_table(
         df[df["winner"] == "model_a"],
@@ -195,8 +198,6 @@ def compute_mle_elo(
         fill_value=0,
     )
     ptbl_win = ptbl_a_win * 2 + ptbl_b_win.T * 2 + ptbl_tie
-    # display(ptbl_win)
-    # display(ptbl_tie)
 
     models = pd.Series(np.arange(len(ptbl_win.index)), index=ptbl_win.index)
 
@@ -225,15 +226,12 @@ def compute_mle_elo(
             cur_row += 2
     X = X[:cur_row]
     Y = Y[:cur_row]
-    # fig = px.imshow(X)
-    # display(fig)
-    # print(Y, Y.shape)
 
     lr = LogisticRegression(fit_intercept=False, penalty=None, tol=1e-6)
     lr.fit(X, Y, sample_weight=sample_weights)
     elo_scores = SCALE * lr.coef_[0] + INIT_RATING
-    if "gpt-3.5-turbo-0613" in models.index:
-        elo_scores += 1000 - elo_scores[models["gpt-3.5-turbo-0613"]]
+    if ref_model in models.index:
+        elo_scores += 1000 - elo_scores[models[ref_model]]
     return pd.Series(elo_scores, index=models.index).sort_values(ascending=False)
 
 def result_table(battles_no_ties, result):
@@ -246,6 +244,7 @@ def result_table(battles_no_ties, result):
     all_stats = win_elo.merge(accs, left_on='model_a', right_on='model')[['model', 'pass1', 'win_rate', 'elo']]
     return all_stats
 
+
 def get_sections(result: pd.DataFrame, benchmark_id):
     battles = pass1_to_battle(result)
     battles_no_ties = battles[battles["winner"].str.contains("model_")]
@@ -257,9 +256,8 @@ def get_sections(result: pd.DataFrame, benchmark_id):
         "p-values": fig_pvalues.to_html(full_html=False),
         "delta vs. p-values": fig_delta_vs_pvalues(battles, result).to_html(full_html=False),
         "pairwise wins (including ties)": fig_pairwin.to_html(full_html=False),
-        "result table": result_table(battles_no_ties, result).to_html(float_format='%10.3f')
+        # "result table": result_table(battles_no_ties, result).to_html(float_format='%10.3f')
     }
-
     return sections
 
 
@@ -267,21 +265,23 @@ def gen_benchmark_report(benchmark_id: str):
     sections = get_sections(eval_results[eval_results['benchmark_id'] == benchmark_id], benchmark_id)
     from jinja2 import Template
     template_path=r"report_template.html"
+    template_path=r"agg_template_description.html"
     output_path = rf"crux-eval.github.io/reports/agg_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({'benchmark_id': benchmark_id, 'sections': sections}))
 
-records = []
-for fname in glob.glob(f"data/*.jsonl"):
-    with open(fname, 'rt') as f:
-        records.extend([json.loads(l) for l in f.readlines()])
-eval_results = pd.DataFrame(records)
-print(set(eval_results['benchmark_id']))
-gen_benchmark_report('mbpp+')
-gen_benchmark_report('humaneval+')
-gen_benchmark_report('CRUXEval-input')
-gen_benchmark_report('CRUXEval-output')
 
+if __name__ == '__main__':
+    records = []
+    for fname in glob.glob(f"data/*.jsonl"):
+        with open(fname, 'rt') as f:
+            records.extend([json.loads(l) for l in f.readlines()])
+    eval_results = pd.DataFrame(records)
+    print(set(eval_results['benchmark_id']))
+    gen_benchmark_report('mbpp+')
+    gen_benchmark_report('humaneval+')
+    gen_benchmark_report('CRUXEval-input')
+    gen_benchmark_report('CRUXEval-output')
 # pushd .; cd crux-eval.github.io/; git commit -am 'report'; git push; popd
