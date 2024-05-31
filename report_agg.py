@@ -63,7 +63,7 @@ def fig_diff_vs_sum(battles):
 
     fig = go.Figure(data=figl.data + figs.data)
     fig.update_layout(
-        width=600, height=600, title=bmname,
+        width=800, height=600, title=bmname,
         xaxis_title="|#A_win - #B_win|",
         yaxis_title="#A_win + #B_win"
     )
@@ -90,8 +90,9 @@ def fig_accs_and_pvalues(battles):
         .aggregate(aggfunc)\
         ['winner'].apply(pd.Series)\
         .reset_index(drop=False)
-    figs = px.scatter(diffvsum, x='accA', y='accB', color='p_value',
-        custom_data=['model_a', 'model_b', 'accA', 'accB', 'p_value', 'std'])
+    figs = px.scatter(diffvsum, x='accA', y='accB',
+            color='p_value', range_color=[0, 0.2],
+            custom_data=['model_a', 'model_b', 'accA', 'accB', 'p_value', 'std'])
     figs.update_traces(hovertemplate=
         "<br>".join([
         "Model A: %{customdata[0]}",
@@ -105,7 +106,7 @@ def fig_accs_and_pvalues(battles):
     # fig = go.Figure(data=figs.data)
     bmname = set(battles['benchmark_id_a']).pop()
     figs.update_layout(
-        width=600, height=600,
+        width=800, height=800,
         title=bmname,
         xaxis_title="acc(Model A)",
         yaxis_title="acc(Model B)",
@@ -120,10 +121,14 @@ def get_sections(result: pd.DataFrame, benchmark_id):
     sections = {
         "fig_accs_and_pvalues": fig_accs_and_pvalues(battles).to_html(full_html=False),
         "fig_diff_vs_sum": fig_diff_vs_sum(battles).to_html(full_html=False),
-        "result_table (no ties)": result_table(battles_no_ties, result).style \
-                .format(precision=3).to_html(),
-        "result_table": result_table(battles, result).style \
-            .format(precision=3).to_html()
+        "result_table (no ties)": result_table(battles_no_ties, result)\
+        .to_html(formatters={
+            'pass1': '{:.1%}'.format,
+            'win_rate': '{:.1%}'.format,
+            'elo': '{:.1f}'.format
+        }),
+        # "result_table": result_table(battles, result).style \
+        #     .format(precision=3).to_html()
     }
     return sections
 

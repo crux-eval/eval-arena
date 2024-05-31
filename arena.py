@@ -1,5 +1,6 @@
 from typing import List, Optional
 import math
+from collections import Counter
 
 import numpy as np
 import numpy.random as rng
@@ -14,40 +15,12 @@ def pass1_to_battle(result: pd.DataFrame):
     bwins = (pa['pass1_a'] == 0) & (pa['pass1_b'] > 0)
     ties_neither = (pa['pass1_a'] == 0) & (pa['pass1_b'] == 0)
     ties_both = (pa['pass1_a'] > 0) & (pa['pass1_b'] > 0)
-    # pa[['winner']][awins] = 'model_a' 
     pa['winner'] = 'a'
     pa.loc[awins, 'winner'] = 'model_a'
     pa.loc[bwins, 'winner'] = 'model_b'
     pa.loc[ties_neither, 'winner'] = 'neither'
     pa.loc[ties_both, 'winner'] = 'both'
     return pa
-
-
-def compute_pairwise_win_fraction(battles, max_num_models=100):
-    num_battles_ptbl = pd.pivot_table(battles,
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0)
-    
-    a_win = pd.pivot_table(
-        battles[battles['winner'] == "model_a"],
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0) / num_battles_ptbl  
-    
-    b_win = pd.pivot_table(
-        battles[battles['winner'] == "model_b"],
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0) / num_battles_ptbl
-
-    neither = pd.pivot_table(
-        battles[battles['winner'] == "neither"],
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0) / num_battles_ptbl
-    
-    both = pd.pivot_table(
-        battles[battles['winner'] == "both"],
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0) / num_battles_ptbl 
-
-    # 
-    prop_wins = (a_win / b_win).mean(axis=1).sort_values(ascending=False)
-    prop_wins = prop_wins[:max_num_models]
-    sort_keys = list(prop_wins.keys())
-    return tuple(x.loc[sort_keys, sort_keys] for x in [a_win, b_win, neither, both])
 
 def compute_mle_elo(
     df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
@@ -64,7 +37,7 @@ def compute_mle_elo(
         fill_value=0,
     )
     # if no tie, create a zero matrix
-    if sum(df["winner"].isin(["both", "both"])) == 0:
+    if sum(df["winner"].isin(["both", "neither"])) == 0:
         ptbl_tie = pd.DataFrame(0, index=ptbl_a_win.index, columns=ptbl_a_win.columns)
     else:
         ptbl_tie = pd.pivot_table(
@@ -120,69 +93,17 @@ def compute_mle_elo(
         elo_scores += 1000 - elo_scores[models[ref_model]]
     return pd.Series(elo_scores, index=models.index).sort_values(ascending=False)
 
+def result_table(battles, result):
+    win_rates = battles[['model_a', 'model_b', 'winner']]\
+        .groupby(['model_a'])\
+        .aggregate({'winner': lambda x: Counter(x)['model_a'] / Counter(x).total()})\
+        .reset_index().rename(columns={'winner': 'win_rate'})
 
-def compute_pvalues(battles, max_num_models=100):
-    # Times each model wins as Model A
-    a_win_ptbl = pd.pivot_table(
-        battles[battles['winner'] == "model_a"],
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0)
-
-    # Table counting number of A-B pairs
-    num_battles_ptbl = pd.pivot_table(battles,
-        index="model_a", columns="model_b", aggfunc="size", fill_value=0)
-
-    # Computing the proportion of wins for each model as A and as B
-    # against all other models
-    row_beats_col_freq = (
-        (a_win_ptbl) /
-        (num_battles_ptbl)
-    )
-    # display(mcnemar)
-    # Arrange ordering according to proprition of wins
-    prop_wins = row_beats_col_freq.mean(axis=1).sort_values(ascending=False)
-    prop_wins = prop_wins[:max_num_models]
-    model_names = list(prop_wins.keys())
-    row_beats_col = row_beats_col_freq.loc[model_names, model_names]
-
-    wins = a_win_ptbl.loc[model_names, model_names]
-    diffs = (wins - wins.T)
-    sums = (wins + wins.T)
-    suf_stats = (pd.concat([wins, wins - wins.T, wins + wins.T])
-        .stack(dropna=False)
-        .groupby(level=[0,1])
-        .apply(tuple)
-        .unstack()
-    ).loc[model_names, model_names]
-    chi2 = suf_stats.applymap(lambda x: 1 if x[2] == 0 else 1 - stats.chi2.cdf( (np.abs(x[1]) - 1)**2 / (x[2]), 1))
-    binom = suf_stats.applymap(lambda x: stats.binomtest(x[0], x[2], p=0.5).pvalue if x[2] > 0 else 1)
-    return row_beats_col, binom, diffs, sums, chi2 
-
-
-def result_table(battles_no_ties, result):
-    model_elos = compute_mle_elo(battles_no_ties)
-    pair_stats = compute_pairwise_win_fraction(battles_no_ties)
-    a_win = pair_stats[0]
-    win_rates = a_win.mean(axis=1).sort_values(ascending=False)
-    win_elo = win_rates.to_frame(name='win_rate').join(model_elos.to_frame(name='elo')).reset_index()
-    accs = result.groupby('model').agg('mean', numeric_only=True).reset_index().sort_values(by='pass1', ascending=False)
-    all_stats = win_elo.merge(accs, left_on='model_a', right_on='model')[['model', 'pass1', 'win_rate', 'elo']]
+    model_elos = compute_mle_elo(battles).to_frame('elo').reset_index()
+    win_elo = win_rates.merge(model_elos, on='model_a')
+    accs = result.groupby('model').agg('mean', numeric_only=True).reset_index()
+    all_stats = win_elo.merge(accs, left_on='model_a', right_on='model')[['model', 'pass1', 'win_rate', 'elo']].sort_values(by='pass1', ascending=False)
     return all_stats
-
-
-def estimate_tie_probs(battles: pd.DataFrame):
-    pass
-
-# def null_samples(weights, tie_prob, num_samples = 1000):
-#     samps = []
-#     for _ in range(num_samples):
-#         not_ties = rng.rand(weights.size) > tie_prob
-#         not_tie_bernoulis = np.sign(np.randn(not_ties.sum()))
-#         score = np.sum(weights[not_ties] * not_tie_bernoulis)
-#         samps.append(score)
-#     return samps
-
-def bootstrap_group(df, col_name):
-    pass
 
 def null_samples(weights, tie_prob, num_samples = 100000):
     not_ties = rng.rand(num_samples, weights.size) > tie_prob
