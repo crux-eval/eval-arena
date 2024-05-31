@@ -148,10 +148,10 @@ def compute_pvalues(battles, max_num_models=100):
     diffs = (wins - wins.T)
     sums = (wins + wins.T)
     suf_stats = (pd.concat([wins, wins - wins.T, wins + wins.T])
-    .stack(dropna=False)
-    .groupby(level=[0,1])
-    .apply(tuple)
-    .unstack()
+        .stack(dropna=False)
+        .groupby(level=[0,1])
+        .apply(tuple)
+        .unstack()
     ).loc[model_names, model_names]
     chi2 = suf_stats.applymap(lambda x: 1 if x[2] == 0 else 1 - stats.chi2.cdf( (np.abs(x[1]) - 1)**2 / (x[2]), 1))
     binom = suf_stats.applymap(lambda x: stats.binomtest(x[0], x[2], p=0.5).pvalue if x[2] > 0 else 1)
@@ -192,9 +192,9 @@ def null_samples(weights, tie_prob, num_samples = 100000):
 
 def sign_test_niid(response_a: List, response_b: List, tie_probs: Optional[List[float]], weights: Optional[List[float]], sample_all=False) -> float:
     if weights is None:
-        weights = np.ones(response_a.size)
+        weights = np.ones(len(response_a))
     if tie_probs is None:
-        tie_probs = np.zeros(response_a.size)
+        tie_probs = np.zeros(len(response_a))
     assert all(weights >= 0)
     weights = weights / weights.sum()
 
@@ -215,4 +215,3 @@ def sign_test_niid(response_a: List, response_b: List, tie_probs: Optional[List[
     print('pvalue', 1 - np.mean(np.abs(samps) <= score_thres - 1e-10))
     # print(pd.Series(samps).describe())
     return cdf, pvalue
-    

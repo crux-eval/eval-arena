@@ -9,7 +9,6 @@ import plotly.express as px
 
 from arena import result_table, pass1_to_battle, compute_pairwise_win_fraction, compute_pvalues 
 
-
 def visualize_pairwise_win_fraction(battles, title, max_num_models=100):
     a_win, b_win, neither, both = compute_pairwise_win_fraction(battles, max_num_models)
 
@@ -90,12 +89,12 @@ def get_sections(result: pd.DataFrame, benchmark_id):
     battles_no_ties = battles[battles["winner"].str.contains("model_")]
 
     fig_pvalues = visualize_pvalues(battles_no_ties, f'p-values {benchmark_id}', max_num_models=60)
-    fig_pairwin = visualize_pairwise_win_fraction(battles, f'win_rates {benchmark_id}', max_num_models=60)
+    # fig_pairwin = visualize_pairwise_win_fraction(battles, f'win_rates {benchmark_id}', max_num_models=60)
 
     sections = {
         "p-values": fig_pvalues.to_html(full_html=False),
         "delta vs. p-values": fig_delta_vs_pvalues(battles, result).to_html(full_html=False),
-        "pairwise wins (including ties)": fig_pairwin.to_html(full_html=False),
+        # "pairwise wins (including ties)": fig_pairwin.to_html(full_html=False),
         "result table": result_table(battles_no_ties, result).style \
                 .format(precision=3).to_html()
     }
