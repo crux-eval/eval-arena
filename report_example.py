@@ -22,7 +22,11 @@ def get_anchor(benchmark_id: str, example_id: str):
             return f'https://crux-eval.github.io/demo.html?id={int(id) + 1}'
         else:
             return ''
-    return f'<a href="{get_link()}">{example_id}</a>'
+    link = get_link()
+    if link != '':
+        return f'<a href="{get_link()}">{example_id}</a>'
+    else:
+        return example_id
 
 def gen_example_table(result, all_stats):
     records = []
@@ -32,17 +36,16 @@ def gen_example_table(result, all_stats):
     
     for current_id in list(ids):
         example_data = result[result['example_id'] == current_id][['model', 'pass1']]
-        ex = example_data.merge(all_stats[['model', 'elo']], left_on = 'model', right_on = 'model')
+        example_data['correct'] = np.where(example_data['pass1'] > 0, 1, 0)
+        ex = example_data[['model', 'correct']].merge(all_stats[['model', 'elo']], left_on = 'model', right_on = 'model')
         # fit_data['result'] = fit_data['result']
-        from sklearn.linear_model import LogisticRegression
-        lr = LogisticRegression()
-        ex['correct'] = np.where(ex['pass1'] > 0, 1, 0)
         model_elos = ex[ex['correct'] == 1]['elo']
         # print(model_elos.describe())
         r = model_elos.describe().to_dict()
         r['example_id'] = current_id
         r['models'] = ex[ex['correct'] == 1]['model'].to_numpy()
         r['acc'] = len(ex[ex['correct'] == 1]) / len(ex)
+        r['tau'] = stats.kendalltau(ex['correct'], ex['elo']).statistic
         records.append(r)
 
     return pd.DataFrame(records)
@@ -69,12 +72,14 @@ def get_example_level_results(benchmark_id):
     one_solve = one_solve.sort_values(by='max', ascending=False)
     one_solve = one_solve[['example_link', 'model', 'max']]
     display(one_solve)
-    outputs['table_one_solve'] = one_solve.to_html(escape=False)
+    outputs['table_one_solve'] = one_solve.to_html(escape=False, float_format='%10.3f')
 
     elo75 = all_stats['elo'].quantile(0.75)
     print(elo75)
-    list_suspect = example_table[example_table['max'] < elo75]
-    outputs['table_suspect'] = list_suspect[['example_link', 'models', 'max']].to_html(escape=False)
+    list_suspect = example_table.sort_values(by='tau', ascending=True).head(10)
+    outputs['table_suspect'] = list_suspect[['example_link', 'max', 'tau']].to_html(escape=False, float_format='%10.3f')
+    print(benchmark_id, 'anti-correlated prop', np.mean(example_table['tau'] <= 0))
+    print(example_table['tau'].describe())
 
     print(outputs.keys())
     return outputs
@@ -97,6 +102,6 @@ def gen_report(benchmark_id: str):
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({'benchmark_id': benchmark_id, 'outputs': outputs}))
 
-for b in ['CRUXEval-output', 'CRUXEval-input', 'humaneval+', 'mbpp+', 'lcb_codegen']:
+for b in set(eval_results['benchmark_id']):
     gen_report(b)
     # outputs['fig_unique_solves'] = px.histogram(one_solve, x='model').update_xaxes(categoryorder='total descending')
