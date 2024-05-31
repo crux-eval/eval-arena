@@ -10,8 +10,8 @@ def pass1_to_battle(result: pd.DataFrame):
     pa = pd.merge(result, result, on=['example_id'], suffixes=["_a", "_b"], how='outer')
     pa = pa[pa['model_a'] != pa['model_b']]
 
-    awins = pa['pass1_a'] > pa['pass1_b']
-    bwins = pa['pass1_a'] < pa['pass1_b']
+    awins = (pa['pass1_a'] > 0) & (pa['pass1_b'] == 0)
+    bwins = (pa['pass1_a'] == 0) & (pa['pass1_b'] > 0)
     ties_neither = (pa['pass1_a'] == 0) & (pa['pass1_b'] == 0)
     ties_both = (pa['pass1_a'] > 0) & (pa['pass1_b'] > 0)
     # pa[['winner']][awins] = 'model_a' 

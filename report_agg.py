@@ -1,110 +1,135 @@
 import json, math, glob
+from collections import Counter
 
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
-from tqdm import tqdm
 
 import plotly.express as px
+import plotly.graph_objects as go
 
-from arena import result_table, pass1_to_battle, compute_pairwise_win_fraction, compute_pvalues 
+from arena import result_table, pass1_to_battle
 
-def visualize_pairwise_win_fraction(battles, title, max_num_models=100):
-    a_win, b_win, neither, both = compute_pairwise_win_fraction(battles, max_num_models)
+def fig_diff_vs_sum(battles):
+    data_sz = len(set(battles['example_id']))
+    bmname = set(battles['benchmark_id_a']).pop()
 
-    fig = px.imshow(a_win, color_continuous_scale='RdBu',
-                    text_auto=".2f", title=title)
-    fig.update_layout(xaxis_title=" Model B: Loser",
-                  yaxis_title="Model A: Winner",
-                  xaxis_side="top", height=900, width=900,
-                  title_y=0.07, title_x=0.5)
+    print(data_sz)
+    def aggfunc(input: pd.Series):
+        sufs = Counter(input.values) # model_a, model_b, neither, both
+        res = {} 
+        res['diff'] = sufs['model_a'] - sufs['model_b']
+        res['sum'] = sufs['model_a'] + sufs['model_b'] 
+        # res['pvalue-chi2'] = 1 if res['diff'] == 0 else (1 - stats.chi2.cdf( (np.abs(res['diff']) - 1)**2 / res['sum'], 1))
+        res['pvalue'] = stats.binomtest(sufs['model_a'], res['sum'], p=0.5).pvalue
+        total = sufs.total()
+        pa = sufs['model_a'] / total
+        pb = sufs['model_b'] / total 
+        res['std'] = np.sqrt(total * (pa*(1-pa) +  pb*(1-pb) + 2*pa*pb))
+        return res
 
-    sort_keys = a_win.keys()  
-    extra_info = (pd.concat([a_win, b_win, neither, both])
-    .stack(dropna=False)
-    .groupby(level=[0,1])
-    .apply(tuple).apply(lambda t: tuple(s if not math.isnan(s) else 'nan' for s in t))
-    .unstack()
-    ).loc[sort_keys, sort_keys]
-    fig.update_traces(customdata=extra_info, hovertemplate="<br>".join(
-        [
-            "A Wins: %{customdata[0]:.3f}",
-            "B Wins: %{customdata[1]:.3f}",
-            "Neither: %{customdata[2]:.3f}",
-            "Both: %{customdata[3]:.3f}",
-        ])
+    diffvsum = battles[['model_a', 'model_b', 'winner']]\
+        .groupby(['model_a', 'model_b'])\
+        .aggregate(aggfunc)\
+        ['winner'].apply(pd.Series)\
+        .reset_index(drop=False)
+    figs = px.scatter(diffvsum, x=diffvsum['diff'].abs(), y='sum', custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std'])
+    figs.update_traces(hovertemplate=
+        "<br>".join([
+        "Model A: %{customdata[0]}",
+        "Model B: %{customdata[1]}", 
+        "|A - B|: %{customdata[3]}", 
+        "A + B: %{customdata[2]}", 
+        "p-value: %{customdata[4]:.4f}", 
+        "std(A-B): %{customdata[5]:.4f}", 
+        ])  + '<extra></extra>')
+
+    min_p5 = diffvsum[diffvsum['pvalue'] < 0.05]['diff'].abs().min() / data_sz
+    max_p5 = diffvsum[diffvsum['pvalue'] > 0.05]['diff'].abs().max() / data_sz
+    print(f'{bmname}\t N={data_sz},\t diff_min/max={min_p5}/{max_p5}')
+    maxy = diffvsum['sum'].max()
+    refs = []
+    for alpha in [0.05, 0.1]:
+        thres = stats.chi2.ppf(1-alpha, 1)
+        print('thres', thres)
+        y = np.linspace(1, maxy, 200)
+        refs.append(pd.DataFrame({'x': 1 + np.sqrt(y * thres), 'y': y, 'type': f'pvalue={alpha}'}))
+    
+    x = np.linspace(0, data_sz / 2, 100)
+    refs.append(pd.DataFrame({'x': x, 'y': x, 'type': 'x=y'}))
+    df_ref = pd.concat(refs, axis=0)
+    figl = px.line(df_ref, x='x', y='y', color='type')
+    figl.update_layout(hovermode=False)
+
+    fig = go.Figure(data=figl.data + figs.data)
+    fig.update_layout(
+        width=600, height=600, title=bmname,
+        xaxis_title="|#A_win - #B_win|",
+        yaxis_title="#A_win + #B_win"
     )
     return fig
 
-
-def visualize_pvalues(battles, title, max_num_models=100):
-    row_beats_col, pvalue, diffs, sums, chi2 = compute_pvalues(battles, max_num_models)
-    fig = px.imshow(pvalue,
-                    text_auto=".2f", title=title)
-    fig.update_layout(xaxis_title=" Model B",
-                  yaxis_title="Model A",
-                  xaxis_side="top", height=900, width=900,
-                  title_y=0.07, title_x=0.5)
-
-    sort_keys = row_beats_col.keys() 
-    extra_info = (pd.concat([row_beats_col, pvalue, diffs, sums, chi2])
-        .stack(dropna=False)
-        .groupby(level=[0,1])
-        .apply(tuple).apply(lambda t: tuple(s if not math.isnan(s) else 'nan' for s in t))
-        .unstack()
-    ).loc[sort_keys, sort_keys]
+def fig_accs_and_pvalues(battles):
+    def aggfunc(input: pd.Series):
+        sufs = Counter(input.values) # model_a, model_b, neither, both
+        res = {} 
+        total = sufs.total()
+        res['diff'] = sufs['model_a'] - sufs['model_b']
+        res['sum'] = sufs['model_a'] + sufs['model_b'] 
+        res['accA'] = (sufs['model_a'] + sufs['both']) / total
+        res['accB'] = (sufs['model_b'] + sufs['both']) / total
+        pv = stats.binomtest(sufs['model_a'], res['sum'], p=0.5).pvalue
+        res['p_value'] = pv
+        pa = sufs['model_a'] / total
+        pb = sufs['model_b'] / total
+        res['std'] = np.sqrt(1 / total * (pa*(1-pa) +  pb*(1-pb) + 2*pa*pb))
+        return res
     
-    # display(row_beats_col)
-    # display(extra_info)
-    fig.update_traces(customdata=extra_info, hovertemplate=
+    diffvsum = battles[['model_a', 'model_b', 'winner']]\
+        .groupby(['model_a', 'model_b'])\
+        .aggregate(aggfunc)\
+        ['winner'].apply(pd.Series)\
+        .reset_index(drop=False)
+    figs = px.scatter(diffvsum, x='accA', y='accB', color='p_value',
+        custom_data=['model_a', 'model_b', 'accA', 'accB', 'p_value', 'std'])
+    figs.update_traces(hovertemplate=
         "<br>".join([
-        "Model A: %{y}",
-        "Model B: %{x}", 
-        "binom p-value: %{customdata[1]:.4f}",
-        "chi2 p-value: %{customdata[4]:.4f}",
-        "A_win frac.: %{customdata[0]:.2f}",
-        "A_win - B_win: %{customdata[2]}",
-        "A_win + B_win: %{customdata[3]}",
+        "Model A: %{customdata[0]}",
+        "Model B: %{customdata[1]}", 
+        "acc(A): %{customdata[2]:.3f}", 
+        "acc(B): %{customdata[3]:.3f}", 
+        "p-value: %{customdata[4]:.4f}", 
+        "std(acc(A)-acc(B)): %{customdata[5]:.4f}", 
         ])  + '<extra></extra>')
-
-    return fig
-#consider also defining the include_plotlyjs parameter to point to an external Plotly.js as described above
-
-def fig_delta_vs_pvalues(battles: pd.DataFrame, result: pd.DataFrame):
-    a_win, pvalue, diffs, sums, chi2 = compute_pvalues(battles, 100)
-    df = pvalue.reset_index()
-    df_pval = df.melt(id_vars='model_a', value_vars=list(df.columns[1:]), var_name='model_b', value_name='p_value')
-    df = diffs.reset_index()
-    df_diffs = df.melt(id_vars='model_a', value_vars=list(df.columns[1:]), var_name='model_b', value_name='diff')
-    benchmark_size = len(set(result['example_id']))
-    df_diffs['|acc(A) - acc(B)|'] = df_diffs['diff'].abs() / benchmark_size
-    df_diffs['models'] = df_diffs['model_a'] + ' vs. ' + df_diffs['model_b']
-
-    df = df_pval.merge(df_diffs, on=['model_a', 'model_b'])
-    return px.scatter(df, x='|acc(A) - acc(B)|', y='p_value', hover_data='models')
-
+    
+    # fig = go.Figure(data=figs.data)
+    bmname = set(battles['benchmark_id_a']).pop()
+    figs.update_layout(
+        width=600, height=600,
+        title=bmname,
+        xaxis_title="acc(Model A)",
+        yaxis_title="acc(Model B)",
+        legend_title='p_value',
+    )
+    return figs
 
 def get_sections(result: pd.DataFrame, benchmark_id):
     battles = pass1_to_battle(result)
     battles_no_ties = battles[battles["winner"].str.contains("model_")]
 
-    fig_pvalues = visualize_pvalues(battles_no_ties, f'p-values {benchmark_id}', max_num_models=60)
-    # fig_pairwin = visualize_pairwise_win_fraction(battles, f'win_rates {benchmark_id}', max_num_models=60)
-
     sections = {
-        "p-values": fig_pvalues.to_html(full_html=False),
-        "delta vs. p-values": fig_delta_vs_pvalues(battles, result).to_html(full_html=False),
-        # "pairwise wins (including ties)": fig_pairwin.to_html(full_html=False),
-        "result table": result_table(battles_no_ties, result).style \
-                .format(precision=3).to_html()
+        "fig_accs_and_pvalues": fig_accs_and_pvalues(battles).to_html(full_html=False),
+        "fig_diff_vs_sum": fig_diff_vs_sum(battles).to_html(full_html=False),
+        "result_table (no ties)": result_table(battles_no_ties, result).style \
+                .format(precision=3).to_html(),
+        "result_table": result_table(battles, result).style \
+            .format(precision=3).to_html()
     }
     return sections
-
 
 def gen_benchmark_report(benchmark_id: str, eval_results):
     sections = get_sections(eval_results[eval_results['benchmark_id'] == benchmark_id], benchmark_id)
     from jinja2 import Template
-    template_path=r"report_template.html"
     template_path=r"agg_template_description.html"
     output_path = rf"crux-eval.github.io/eval-arena/agg_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
