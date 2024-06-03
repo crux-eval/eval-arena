@@ -22,6 +22,37 @@ def pass1_to_battle(result: pd.DataFrame):
     pa.loc[ties_both, 'winner'] = 'both'
     return pa
 
+def _comp_stats(outcomes: pd.Series):
+    sufs = Counter(outcomes.values) # model_a, model_b, neither, both
+    total = sufs.total()
+    model_a, model_b, both, neither = sufs['model_a'], sufs['model_b'], sufs['both'], sufs['neither']
+    pa = model_a / total
+    pb = model_b / total
+    diff = model_a - model_b
+    sum = model_a + model_b
+    std_count = np.sqrt(total * (pa*(1-pa) +  pb*(1-pb) + 2*pa*pb))
+    res = dict(
+        sum = sum,
+        diff = diff,
+        accA = (model_a + both) / total,
+        accB = (model_b + both) / total,
+        total = total,
+        pvalue = stats.binomtest(model_a, sum, p=0.5).pvalue,
+        std_count = std_count,
+        std_acc = std_count / total,
+    )
+    return res
+
+def battle_summary(battles):
+    data_sz = len(set(battles['example_id']))
+    print(data_sz)
+    diffvsum = battles[['model_a', 'model_b', 'winner']]\
+        .groupby(['model_a', 'model_b'])\
+        .aggregate(_comp_stats)\
+        ['winner'].apply(pd.Series)\
+        .reset_index(drop=False)
+    return diffvsum
+    
 def compute_mle_elo(
     df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
 ):
@@ -104,6 +135,29 @@ def result_table(battles, result):
     accs = result.groupby('model').agg('mean', numeric_only=True).reset_index()
     all_stats = win_elo.merge(accs, left_on='model_a', right_on='model')[['model', 'pass1', 'win_rate', 'elo']].sort_values(by='pass1', ascending=False)
     return all_stats
+
+def example_table(result, all_stats):
+    records = []
+    ids = set(result['example_id']) 
+    print(np.mean(all_stats['elo']))
+    
+    for current_id in list(ids):
+        example_data = result[result['example_id'] == current_id][['model', 'pass1']]
+        example_data['correct'] = np.where(example_data['pass1'] > 0, 1, 0)
+        ex = example_data[['model', 'correct']].merge(all_stats[['model', 'elo', 'pass1']], left_on = 'model', right_on = 'model')
+        r = {}
+        r['example_id'] = current_id
+        solved_ex = ex[ex['correct'] == 1]
+        r['min_elo'] = solved_ex['elo'].min()
+        r['num_solved'] = len(solved_ex)
+        r['models'] = solved_ex['model'].to_numpy()
+        r['acc'] = len(solved_ex) / len(ex)
+        r['tau'] = stats.kendalltau(ex['correct'], ex['pass1']).statistic
+        # r['corr'] = stats.pearsonr(ex['correct'], ex['pass1']).statistic
+        records.append(r)
+
+    return pd.DataFrame(records)
+
 
 def null_samples(weights, tie_prob, num_samples = 100000):
     not_ties = rng.rand(num_samples, weights.size) > tie_prob
