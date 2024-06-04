@@ -45,7 +45,6 @@ def _comp_stats(outcomes: pd.Series):
 
 def battle_summary(battles):
     data_sz = len(set(battles['example_id']))
-    print(data_sz)
     diffvsum = battles[['model_a', 'model_b', 'winner']]\
         .groupby(['model_a', 'model_b'])\
         .aggregate(_comp_stats)\
@@ -57,7 +56,8 @@ def compute_mle_elo(
     df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
 ):
     """
-    calculate Elo based on winrate, code from chatbot arena with minor changes.
+    calculate Elo based on winrate, code from chatbot arena (https://chat.lmsys.org/)
+    with minor changes to use gpt-3.5 as as reference when possible
     """
     from sklearn.linear_model import LogisticRegression
     ptbl_a_win = pd.pivot_table(
@@ -124,7 +124,7 @@ def compute_mle_elo(
         elo_scores += 1000 - elo_scores[models[ref_model]]
     return pd.Series(elo_scores, index=models.index).sort_values(ascending=False)
 
-def result_table(battles, result):
+def model_table(battles, result):
     win_rates = battles[['model_a', 'model_b', 'winner']]\
         .groupby(['model_a'])\
         .aggregate({'winner': lambda x: Counter(x)['model_a'] / Counter(x).total()})\
@@ -139,8 +139,6 @@ def result_table(battles, result):
 def example_table(result, all_stats):
     records = []
     ids = set(result['example_id']) 
-    print(np.mean(all_stats['elo']))
-    
     for current_id in list(ids):
         example_data = result[result['example_id'] == current_id][['model', 'pass1']]
         example_data['correct'] = np.where(example_data['pass1'] > 0, 1, 0)
