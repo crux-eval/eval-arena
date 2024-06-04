@@ -12,8 +12,8 @@ def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
                       custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std_count', 'accA', 'accB'])
     figs.update_traces(hovertemplate=
         "<br>".join([
-        "Model A: %{customdata[0]} (acc: %{customdata[6]:.2f})",
-        "Model B: %{customdata[1]} (acc: %{customdata[7]:.2f})", 
+        "Model A: %{customdata[0]} (acc: %{customdata[6]:.3f})",
+        "Model B: %{customdata[1]} (acc: %{customdata[7]:.3f})", 
         "A + B: %{customdata[2]}", 
         "A - B: %{customdata[3]}", 
         "p-value: %{customdata[4]:.4f}", 

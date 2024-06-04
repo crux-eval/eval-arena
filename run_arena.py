@@ -33,7 +33,7 @@ def generate_summary(eval_results: pd.DataFrame):
         records.append(r)
 
     summary_count = pd.DataFrame(records).sort_values(by='benchmark_id')
-    def links(b):
+    def links(bid):
         l1 = f"""by <a href="model_{bid}.html">models </a> | """
         l2 = f"""<a href="ex_{bid}.html"> examples </a>"""
         return l1 + l2
