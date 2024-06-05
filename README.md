@@ -76,7 +76,7 @@ Additional models and evaluations are welcome.
 ```
 @misc{eval_arena,
   title = {Eval-Arena: measuring noise and detecting errors using leaderboard data},
-  authors = {Sida I. Wang and Alex Gu and Jiawei Liu and Yuxiang Wei and Naman Jain and Yuhang Lai and Ofir Press and Baptiste Rozière and Gabriel Synnaeve}
+  authors = {Sida I. Wang and Alex Gu and Jiawei Liu and Yuxiang Wei and Naman Jain and Yuhang Lai and Sten Sootla and Ofir Press and Baptiste Rozière and Gabriel Synnaeve}
   year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
