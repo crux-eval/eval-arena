@@ -33,11 +33,11 @@ def generate_summary(eval_results: pd.DataFrame):
         records.append(r)
 
     summary_count = pd.DataFrame(records).sort_values(by='benchmark_id')
-    def links(bid):
+    def link_detail(bid):
         l1 = f"""by <a href="model_{bid}.html">models </a> | """
         l2 = f"""<a href="ex_{bid}.html"> examples </a>"""
         return l1 + l2
-    summary_count['link to details'] = summary_count['benchmark_id'].apply(links)
+    summary_count['link to details'] = summary_count['benchmark_id'].apply(link_detail)
 
     def normalize(counts, includes):
         percent = pd.DataFrame(counts)
