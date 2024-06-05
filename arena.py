@@ -23,7 +23,7 @@ def pass1_to_battle(result: pd.DataFrame, thres=0.5):
     return pa
 
 def _comp_stats(outcomes: pd.Series):
-    sufs = Counter(outcomes.values) # model_a, model_b, neither, both
+    sufs = Counter(outcomes.values) # model_a, model_b, neither, both are the possible outcomes
     total = sufs.total()
     model_a, model_b, both, neither = sufs['model_a'], sufs['model_b'], sufs['both'], sufs['neither']
     assert model_a + model_b + both + neither == total
@@ -133,8 +133,23 @@ def model_table(battles, result):
 
     model_elos = compute_mle_elo(battles).to_frame('elo').reset_index()
     win_elo = win_rates.merge(model_elos, on='model_a')
-    accs = result.groupby('model').agg('mean', numeric_only=True).reset_index()
-    all_stats = win_elo.merge(accs, left_on='model_a', right_on='model')[['model', 'pass1', 'win_rate', 'elo']].sort_values(by='pass1', ascending=False)
+    accs = result.groupby('model').agg(pass1=('pass1', 'mean')).reset_index()
+
+    def sample_std(pass1s):
+        N = len(pass1s)
+        p = pass1s.to_numpy()
+        return np.sqrt( 1 / len(p) * np.mean(p*(1-p)))
+
+    # add std if pass1 is not just 0 or 1 
+    std = result.groupby('model').agg(std=('pass1', sample_std)).reset_index()
+
+    if any((std['std'] > 0) & (std['std'] < 1)):
+        accs = accs.merge(std, on='model')[['model', 'pass1', 'std']]
+        table_inds = ['model', 'pass1', 'std', 'win_rate', 'elo']
+    else:
+        table_inds = ['model', 'pass1', 'win_rate', 'elo']
+
+    all_stats = win_elo.merge(accs, left_on='model_a', right_on='model')[table_inds].sort_values(by='pass1', ascending=False)
     return all_stats
 
 def example_table(result, all_stats):
@@ -186,6 +201,4 @@ def sign_test_niid(response_a: List, response_b: List, tie_probs: Optional[List[
     cdf = stats.ecdf(samps).cdf
 
     pvalue = (1 - cdf.evaluate(score_thres - 1e-10)) + cdf.evaluate(-score_thres + 1e-10)
-    print('pvalue', 1 - np.mean(np.abs(samps) <= score_thres - 1e-10))
-    # print(pd.Series(samps).describe())
     return cdf, pvalue

@@ -78,6 +78,7 @@ def get_sections(result: pd.DataFrame, benchmark_id):
             index=False,
             formatters={
                 'pass1': '{:.1%}'.format,
+                'std': '{:.2%}'.format,
                 'win_rate': '{:.1%}'.format,
                 'elo': '{:.1f}'.format
         }),
