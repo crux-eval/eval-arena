@@ -7,14 +7,14 @@ import numpy.random as rng
 import scipy.stats as stats
 import pandas as pd
 
-def pass1_to_battle(result: pd.DataFrame):
+def pass1_to_battle(result: pd.DataFrame, thres=0.5):
     pa = pd.merge(result, result, on=['example_id'], suffixes=["_a", "_b"], how='outer')
     pa = pa[pa['model_a'] != pa['model_b']]
 
-    awins = (pa['pass1_a'] > 0) & (pa['pass1_b'] == 0)
-    bwins = (pa['pass1_a'] == 0) & (pa['pass1_b'] > 0)
-    ties_neither = (pa['pass1_a'] == 0) & (pa['pass1_b'] == 0)
-    ties_both = (pa['pass1_a'] > 0) & (pa['pass1_b'] > 0)
+    awins = (pa['pass1_a'] > thres) & (pa['pass1_b'] <= thres)
+    bwins = (pa['pass1_a'] <= thres) & (pa['pass1_b'] > thres)
+    ties_neither = (pa['pass1_a'] <= thres) & (pa['pass1_b'] <= thres)
+    ties_both = (pa['pass1_a'] > thres) & (pa['pass1_b'] > thres)
     pa['winner'] = 'a'
     pa.loc[awins, 'winner'] = 'model_a'
     pa.loc[bwins, 'winner'] = 'model_b'
@@ -26,6 +26,7 @@ def _comp_stats(outcomes: pd.Series):
     sufs = Counter(outcomes.values) # model_a, model_b, neither, both
     total = sufs.total()
     model_a, model_b, both, neither = sufs['model_a'], sufs['model_b'], sufs['both'], sufs['neither']
+    assert model_a + model_b + both + neither == total
     pa = model_a / total
     pb = model_b / total
     diff = model_a - model_b
