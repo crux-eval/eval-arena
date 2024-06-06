@@ -10,12 +10,10 @@ import pandas as pd
 def pass1_to_battle(result: pd.DataFrame, thres=0.5):
     pa = pd.merge(result, result, on=['example_id'], suffixes=["_a", "_b"], how='outer')
     pa = pa[pa['model_a'] != pa['model_b']]
-
     awins = (pa['pass1_a'] > thres) & (pa['pass1_b'] <= thres)
     bwins = (pa['pass1_a'] <= thres) & (pa['pass1_b'] > thres)
     ties_neither = (pa['pass1_a'] <= thres) & (pa['pass1_b'] <= thres)
     ties_both = (pa['pass1_a'] > thres) & (pa['pass1_b'] > thres)
-    pa['winner'] = 'a'
     pa.loc[awins, 'winner'] = 'model_a'
     pa.loc[bwins, 'winner'] = 'model_b'
     pa.loc[ties_neither, 'winner'] = 'neither'
@@ -179,7 +177,11 @@ def null_samples(weights, tie_prob, num_samples = 100000):
     scores = not_tie_bernoulis @ weights
     return scores
 
-def sign_test_niid(response_a: List, response_b: List, tie_probs: Optional[List[float]], weights: Optional[List[float]], sample_all=False) -> float:
+def sign_test_niid(response_a: List, response_b: List,
+                   tie_probs: Optional[List[float]], weights: Optional[List[float]], sample_all=False) -> float:
+    """
+    Experimental function to estimate p-value for weighted scores and different tie probabilities
+    """
     if weights is None:
         weights = np.ones(len(response_a))
     if tie_probs is None:

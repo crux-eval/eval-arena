@@ -1,8 +1,14 @@
 # [Eval Arena](https://crux-eval.github.io/eval-arena)
 
-For evaluating methods or developing models, we want to know if the gains are real or noise, and how much we can trust each evaluation benchmark. In this work we use matchup data on thousands of model pairs to measure the noise and errors on several popular code generation benchmarks evaluated by executing tests (HumanEval, MBPP, DS-1000, CRUXEval, LiveCodeBench). 
+For evaluating methods or developing models, we want to know if the gains are real or noise, and how much we can trust each evaluation benchmark. In this work we match up thousands of model pairs from >200K example level evaluations on several code generation benchmarks:
+<ul>
+      <li><a href="https://evalplus.github.io/">EvalPlus versions of MBPP/+, HumanEval/+</a> </li>
+      <li><a href="https://livecodebench.github.io/leaderboard.html">LiveCodeBench</a></li>
+      <li><a href="https://crux-eval.github.io/">CRUXEval</a></li>
+      <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
+</ul>
 
-The main results is [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena): a summary table for all benchmarks and reports aggregated by models or by example for each benchmark. The method to run comparisons on all model pairs of each benchmark (hence arena, like chatbot arena but using benchmark data). The interactive figures helped convince me that the noise across all matchups behaves predictably and their measurements as provided are meaningful. Example level evaluation data is released in `data/`, which might be use for developing better evaluation metrics or better leaderboards.
+The main results can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). The noise properties are summarized with aggregation by models and by example for each benchmark. The method is to run comparisons on all model pairs of each benchmark (hence arena, like chatbot arena but using benchmark data). The interactive figures helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and meaningful. Example level evaluation data is released in `data/`, which might be use for developing better evaluation metrics or better leaderboards.
 
 ## Main findings
 
@@ -14,11 +20,12 @@ Even if our bar is lower, we still need a 5% difference to get a p-value of 0.20
 These thresholds can be found in the `p5_min` column of the [summary page](https://crux-eval.github.io/eval-arena). 
 Many popular papers in the area contain results that have low statistical significance: [HumanEval](https://arxiv.org/pdf/2107.03374), [mbpp](https://arxiv.org/pdf/2108.07732), [StarCoder 2](https://arxiv.org/pdf/2402.19173), [CodeLlamma](https://arxiv.org/pdf/2308.12950) 
 [reflexion](https://arxiv.org/pdf/2303.11366), [self-debugging](https://arxiv.org/pdf/2304.05128), [Coder-Reviewer](https://arxiv.org/pdf/2211.16490).
+To be clear, there are clear benefits of reporting on a consistent set of benchmarks, and these results makes more sense when the noise level is known.
 
-If the general perception is that you always get the right rankings anyways, here are some counter-examples. According to [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is not surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
+There seems to be a perception that you always get the right rankings anyways, and perhaps the calculated noise level is too large. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
 
 **The null-hypothesis.**
-The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that nothing interesting is happening. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other. This is equivalent to predicting from the mixture model where predictions of A and B are used with probability 1/2 each. This method can be implemented to produce variance and higher accuracies by chance as long as A and B makes enough distinct predictions `#A_win + #B_win`. 
+The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that there is no real difference between the pair. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other (i.e. sign test or McNemar test). This is equivalent to predicting from the mixture model where predictions of A and B are used with probability 1/2 each. This method can be implemented to produce variance and higher accuracies by chance as long as `#A_win + #B_win` > `#A_win - #B_win`. 
 
 
 ### Reading p-value and noise level from eval-arena
@@ -33,11 +40,11 @@ Let $A$ be the number of times model A won against model B and vice versa.
 The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. The actual p-values are computed exactly as $1 - \operatorname{Pr}[B < X < A]$ for $X \sim \operatorname{bionom}(A+B, 0.5)$.
 
 Since there is always enough disagreements $A+B$, this simple theory is well-justified and the $\chi^2$ approximations is accurate for all pairs. An acurate and interpretable test is then $(|A-B| - 1)^2 / (A + B) > \chi^2_{\alpha}$ for desired level $\alpha$, the resulting parabolas are plotted in [the difference vs. inconsistency figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum). 
-Different treatment of ties and bootstrap all yields similar answers.
+Different treatment of ties and bootstrap gave similar answers.
 
 ### Errors and cheats
 Evaluation set with mistakes can be annoying and it is very tempting to correct them.
-One way to detect mistakes is to find examples that are anti-correlated with the overall model quality. MBPP/+ is a promising source of suspect problems, [here](https://crux-eval.github.io/eval-arena/ex_mbpp+.html#suspect) is the list. I manually inspected the 10 most suspect examples, and 7 of them are indeed wrong: 
+We test a method for detecting mistakes by finding examples that are anti-correlated with the overall model quality. MBPP/MBPP+ is a promising source of suspect problems, [here](https://crux-eval.github.io/eval-arena/ex_mbpp+.html#suspect) is the list. I manually inspected the 10 most suspect examples, and 7 of them are indeed wrong: 
 
 * Reference answer is wrong: [459](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/459.html)
 * Example contradicts instruction: [581](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/581.html), [102](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/102.html), [615](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/615.html)
@@ -45,7 +52,7 @@ One way to detect mistakes is to find examples that are anti-correlated with the
 
 Mistakes can be useful for detecting cheating, which may output the reference solution even when it is wrong. On Mbpp/[615](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/615.html) and [459](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/459.html), `codegen-6b`, `CohereForAI--c4ai-command`, `codet5p-6b` outputs the incorrect reference solution whereas most other models outputs the more natural answer. This provides some evidence that most models have not memorized the eval set.
 
-Increasing data size without degrading average quality clearly improves the statistical power whereas a higher quality dataset of the same size does not seem to have a measurable effect. HumanEval+ has the same ranking issues as HumanEval whereas MBPP+ seems to rank all model series correctly where the bigger model is better within each series of models `X-7B, X-13B, X-34B, etc`. So the bigger size of MBPP+ seems to overcome the much higher intuitive quality of HumanEval over MBPP (For example, HumanEval has fewer tau- examples, which all passes manual inspection anyway). This can also be seen visually by comparing [HumanEval+](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues) vs. [mbpp+](https://crux-eval.github.io/eval-arena/model_mbpp+.html#fig_accs_and_pvalues) where mbpp has a narrower band of insignificant comparisons.
+Increasing data size without degrading average quality clearly improves the statistical power whereas a higher quality dataset of the same size does not seem to have a measurable effect. HumanEval+ has the same ranking issues as HumanEval whereas MBPP+ seems to rank all model series correctly where the bigger model is better within each series of models `X-7B, X-13B, X-34B, etc`. So the bigger size of MBPP+ seems to overcome the much higher intuitive quality of HumanEval over MBPP (For example, HumanEval has fewer tau- examples, which all passes manual inspection anyway). This can also be seen visually by comparing [HumanEval+](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues) vs. [mbpp+](https://crux-eval.github.io/eval-arena/model_mbpp+.html#fig_accs_and_pvalues) where mbpp has a narrower band of statistically insignificant comparisons.
 
 ### Accuracy, ELO, win rate
 In [results tables](https://crux-eval.github.io/eval-arena/model_humaneval+.html#model_table), we provide pass1, average win-rate over all other models (used by [BigCode](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)), and Elo (Bradly-Terry coefficients following [Chatbot Arena](https://chat.lmsys.org/)). **We recommend raw accuracy (or pass1)** -- since accuracy has better stability as measured by tau-correlation on subsamples of the benchmark (following figure 4 of [this paper](https://aclanthology.org/2021.acl-long.346.pdf)). Unless other metrics are measurably better, accuracy has the clear advantage that it does not depend on other models.
@@ -55,12 +62,12 @@ In the `by examples` section, we provide a list of examples that are solved by 0
 
 For problem requiring a long answer where guessing correctly is unlikely, answering even 1 problem might be significant and interesting. For example, the problem can ask for the proof of an important open problem and the test checks the proof. Surely if a model or someone solves it we should not object to the sample size of 1.
 This case only seems to be theoretical for now,
-since all problems solvable by mediocore models are not this type and there are no cases where any model A strictly outperforms model B on a few problems.  
+since all problems solvable by mediocore models are not this type and there are no cases where any model A strictly outperforms model B on a few problems. It also seems unlikely based on the example level inspection that all the inconsistencies are due to mistakes in the dataset.
 
 ### Improving evaluation
 Since it is difficult to collect more evaluations, using more evaluation benchmarks is a good way to improve confidence. Even when individual benchmarks yield low significance, consistent improvements across benchmarks can be significant.
 
-For the test based benchmarks, a solution passing a weak test is still different from a solution failing it, thus running indepedent tests may also help yield more information per example instead of focusing on complete correctness. This is similar to the tech interview approach, where often only 1 or 2 questions are asked but you may get more information than just correct vs. incorrect.
+For test based benchmarks, a solution passing a weak test is still different from a solution failing it, thus running indepedent tests may also help yield more information per example instead of focusing on complete correctness. This is similar to the tech interview approach, where often only 1 or 2 questions are asked but you may get more information than just correct vs. incorrect.
 
 It may also be possible to model individual problems better, such as the probability of each outcome or the difficulty level using [item response model](https://eacl2024irt.github.io/). However our initial attempts at this failed to improve stability or significance levels.
 
@@ -80,7 +87,8 @@ python run_arena.py
 Additional models and evaluations are welcome.
 
 
-## Citation
+## Contributors
+
 
 ```
 @misc{evalarena,
@@ -92,6 +100,8 @@ Additional models and evaluations are welcome.
   howpublished = {\url{https://github.com/crux-eval/eval-arena}}
 }
 ```
+
+Thanks for helpful discussions with Ari Hoffman, Pedro Rodriguez and Nicolas Usunier. Chatbot arena for inspiration to actually try all pairs. 
 
 ## License
 
