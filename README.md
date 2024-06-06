@@ -30,7 +30,7 @@ The easiest way is to use the `p5_min` or `p5_max` values in the summary table. 
 
 **Details about testing.** 
 Let $A$ be the number of times model A won against model B and vice versa.
-The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. The actual p-values are computed exactly as $1 - \operatorname{Pr}[B < X < A]$ for $X \sim \operatorname{bionom}(A+B, 0.5)$.
+The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. The actual p-values are computed exactly as $1 - \text{Pr}[B < X < A]$ for $X \sim \text{bionom}(A+B, 0.5)$.
 
 Since there is always enough disagreements $A+B$, this simple theory is well-justified and the $\chi^2$ approximations is accurate for all pairs. An acurate and interpretable test is then $(|A-B| - 1)^2 / (A + B) > \chi^2_{\alpha}$ for desired level $\alpha$, the resulting parabolas are plotted in [the difference vs. inconsistency figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum). 
 Different treatment of ties and bootstrap all yields similar answers.
