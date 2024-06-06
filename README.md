@@ -34,7 +34,7 @@ Understandably, most people have better priorities than calculating p-values.
 Fortunately, p-values on these datasets are predictable from the accuracy difference alone and you can estimate it from eval-arena data .
 This can be seen visually from [this figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues).
 The easiest way is to use the `p5_min` or `p5_max` values in the summary table. If other p-values are desired, then you can get an estimate from the [p-values vs difference figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff). 
-For example, a 3% difference is unlikely to be significant at the 0.2 level on HumanEval, whereas a difference of 12 is significant at a 0.2 level and a difference of 18 is significant at the 0.05 level.
+For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
 The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and consistent across pairwise matchups. 
 
 **Details on testing.** Let $A$ be the number of times model A won against model B and vice versa.
