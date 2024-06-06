@@ -42,6 +42,26 @@ def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
     )
     return fig
 
+def fig_pvalue_vs_diff(bmname: str, diffvsum: pd.DataFrame):
+    figs = px.scatter(diffvsum, x=(diffvsum['accA'] - diffvsum['accB']).abs(), y='pvalue',
+            custom_data=['model_a', 'model_b', 'accA', 'accB', 'pvalue', 'std_acc'])
+    figs.update_traces(hovertemplate=
+        "<br>".join([
+        "Model A: %{customdata[0]}",
+        "Model B: %{customdata[1]}", 
+        "acc(A): %{customdata[2]:.3f}", 
+        "acc(B): %{customdata[3]:.3f}", 
+        "p-value: %{customdata[4]:.4f}", 
+        "std(acc(A)-acc(B)): %{customdata[5]:.4f}", 
+        ])  + '<extra></extra>')
+    
+    figs.update_layout(
+        width=800, height=800,
+        title=bmname,
+        xaxis_title="acc(Model A) - acc(Model B)|",
+        yaxis_title="p-value",
+    )
+    return figs
 
 def fig_accs_and_pvalues(bmname, diffvsum):
     figs = px.scatter(diffvsum, x='accA', y='accB',
@@ -73,6 +93,7 @@ def get_sections(result: pd.DataFrame, benchmark_id):
     summary = battle_summary(battles)
     sections = {
         "fig_accs_and_pvalues": fig_accs_and_pvalues(benchmark_id, summary).to_html(full_html=False),
+        "fig_pvalue_vs_diff": fig_pvalue_vs_diff(benchmark_id, summary).to_html(full_html=False),
         "fig_diff_vs_sum": fig_diff_vs_sum(benchmark_id, summary).to_html(full_html=False),
         "model_table": model_table(battles_no_ties, result).to_html(
             index=False,
