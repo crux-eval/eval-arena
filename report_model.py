@@ -51,14 +51,14 @@ def fig_pvalue_vs_diff(bmname: str, diffvsum: pd.DataFrame):
         "Model B: %{customdata[1]}", 
         "acc(A): %{customdata[2]:.3f}", 
         "acc(B): %{customdata[3]:.3f}", 
+        "|acc(A)-acc(B)|: %{x:.3f}", 
         "p-value: %{customdata[4]:.4f}", 
-        "std(acc(A)-acc(B)): %{customdata[5]:.4f}", 
         ])  + '<extra></extra>')
     
     figs.update_layout(
-        width=800, height=800,
+        width=800, height=600,
         title=bmname,
-        xaxis_title="acc(Model A) - acc(Model B)|",
+        xaxis_title="|acc(Model A) - acc(Model B)|",
         yaxis_title="p-value",
     )
     return figs
