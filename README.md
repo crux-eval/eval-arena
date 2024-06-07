@@ -22,7 +22,7 @@ These thresholds can be found in the `p5_min` column of the [summary page](https
 Many popular papers in the area contain results that have low statistical significance: [HumanEval](https://arxiv.org/pdf/2107.03374), [mbpp](https://arxiv.org/pdf/2108.07732), [StarCoder 2](https://arxiv.org/pdf/2402.19173), [CodeLlamma](https://arxiv.org/pdf/2308.12950) 
 [reflexion](https://arxiv.org/pdf/2303.11366),
 [self-debugging](https://arxiv.org/pdf/2304.05128), [Coder-Reviewer](https://arxiv.org/pdf/2211.16490).
-This is not meant to single out these works, since reporting on a common set of benchmarks is highly beneficial and low significance level does not mean wrong. However, the results can be better interpreted knowning the noise level that is consistent for each benchmark.
+This is not meant to single out these works, since reporting on a common set of benchmarks is highly beneficial and low significance level does not mean wrong. However, the results can be better interpreted knowning the noise level for each benchmark.
 
 There seems to be a perception that you always get the right rankings anyways. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
 
@@ -39,11 +39,10 @@ For example, a 4% difference is unlikely to be significant even at the 0.2 level
 The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and consistent across pairwise matchups. 
 
 **Details on testing.** Let $A$ be the number of times model A won against model B and vice versa.
-The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. That is, model A is never strictly better than model B on all examples across all benchmarks and all model pairs (if A and B had somewhat similar accuracies). This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. The p-values are computed as $1 - \text{Pr}[B < X < A]$ for $X \sim \text{bionom}(A+B, 0.5)$.
+The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. That is, model A is never strictly better than model B on all examples across all benchmarks and all model pairs (if A and B had somewhat similar accuracies). This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. Assuming $A \geq B$, the p-values are computed as $\text{Pr}[X \leq B \lor X \geq A]$  for $X \sim \text{binom}(A+B, 0.5)$.
 
 Since there is always enough disagreements $A+B$, this simple theory is well-justified and the $\chi^2$ approximations is accurate for all pairs. An acurate and interpretable test is then $(|A-B| - 1)^2 / (A + B) > \chi^2_{\alpha}$ for desired level $\alpha$, the resulting parabolas are plotted in [the difference vs. inconsistency figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum). 
-Different treatment of ties and bootstrap gave similar answers.
-
+Different treatment of ties and bootstrap gave similar answers. See [here](noise.md) for more discussions on some details about testing.
 
 
 ### Errors and memorization
@@ -83,7 +82,7 @@ The raw example level evaluation data is stored in `data/*` in this format:
 {"benchmark_id":"CRUXEval-input", "model":"phind", "example_id":"CRUXEval-input\/0", "pass1":0.8}
 ```
 
-To generate the summaries and figures
+To generate the summaries and figures, install requirements and set `OUTPUT_PATH` then
 ```
 python run_arena.py
 ```
