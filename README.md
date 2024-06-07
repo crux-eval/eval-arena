@@ -20,8 +20,9 @@ Even if our bar is lower, we still need a 5% difference to get a p-value of 0.20
 <!-- MBPP+ needs at at least 4.2% to achieve the p-value of 0.05. -->
 These thresholds can be found in the `p5_min` column of the [summary page](https://crux-eval.github.io/eval-arena). 
 Many popular papers in the area contain results that have low statistical significance: [HumanEval](https://arxiv.org/pdf/2107.03374), [mbpp](https://arxiv.org/pdf/2108.07732), [StarCoder 2](https://arxiv.org/pdf/2402.19173), [CodeLlamma](https://arxiv.org/pdf/2308.12950) 
-[reflexion](https://arxiv.org/pdf/2303.11366), [self-debugging](https://arxiv.org/pdf/2304.05128), [Coder-Reviewer](https://arxiv.org/pdf/2211.16490).
-This is not meant to single out these works, since reporting on a common set of benchmarks is highly beneficial. However, the results make more sense when interpreted with the noise levels that we can infer from eval-arena.
+[reflexion](https://arxiv.org/pdf/2303.11366),
+[self-debugging](https://arxiv.org/pdf/2304.05128), [Coder-Reviewer](https://arxiv.org/pdf/2211.16490).
+This is not meant to single out these works, since reporting on a common set of benchmarks is highly beneficial and low significance level does not mean wrong. However, the results can be better interpreted knowning the noise level that is consistent for each benchmark.
 
 There seems to be a perception that you always get the right rankings anyways. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
 
