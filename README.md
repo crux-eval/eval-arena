@@ -27,7 +27,7 @@ This is not meant to single out these works, since reporting on a common set of 
 There seems to be a perception that you always get the right rankings anyways. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
 
 **The null-hypothesis.**
-The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that there is no real difference between the pair. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other (i.e. sign test or McNemar test). This is equivalent to predicting from the mixture model where predictions of A and B are used with probability 1/2 each. This method can be implemented to produce variance and higher accuracies by chance as long as `#A_win + #B_win` > `#A_win - #B_win`. 
+The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that there is no real difference between the pair. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other (i.e. sign test or McNemar test). 
 
 
 ### Reading p-value and noise level from eval-arena
@@ -38,11 +38,13 @@ The easiest way is to use the `p5_min` or `p5_max` values in the summary table. 
 For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
 The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and consistent across pairwise matchups. 
 
-**Details on testing.** Let $A$ be the number of times model A won against model B and vice versa.
+**Details on testing.** 
+See [noise.md](noise.md) for technical information about testing and modeling noise.
+Let $A$ be the number of times model A won against model B and vice versa.
 The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. That is, model A is never strictly better than model B on all examples across all benchmarks and all model pairs (if A and B had somewhat similar accuracies). This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. Assuming $A \geq B$, the p-values are computed as $\text{Pr}[X \leq B \lor X \geq A]$  for $X \sim \text{binom}(A+B, 0.5)$.
 
 Since there is always enough disagreements $A+B$, this simple theory is well-justified and the $\chi^2$ approximations is accurate for all pairs. An acurate and interpretable test is then $(|A-B| - 1)^2 / (A + B) > \chi^2_{\alpha}$ for desired level $\alpha$, the resulting parabolas are plotted in [the difference vs. inconsistency figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum). 
-Different treatment of ties and bootstrap gave similar answers. See [here](noise.md) for more discussions on some details about testing.
+Different treatment of ties and bootstrap gave similar answers. 
 
 
 ### Errors and memorization
