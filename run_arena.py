@@ -7,7 +7,7 @@ import arena
 from report_example import gen_example_report
 from report_model import gen_model_report
 
-def generate_summary(eval_results: pd.DataFrame):
+def generate_summary(eval_results: pd.DataFrame, OUTPUT_PATH):
     benchmarks = set(eval_results['benchmark_id'])
     records = []
     for bid in benchmarks:
@@ -34,9 +34,10 @@ def generate_summary(eval_results: pd.DataFrame):
 
     summary_count = pd.DataFrame(records).sort_values(by='benchmark_id')
     def link_detail(bid):
-        l1 = f"""by <a href="model_{bid}.html">models </a> | """
+        l1 = f"""by <a href="model_{bid}.html">models </a> """
         l2 = f"""<a href="ex_{bid}.html"> examples </a>"""
-        return l1 + l2
+        l3 = f"""<a href="ex_v_model_{bid}.html"> data </a>"""
+        return l1 + '|' + l2 + '|' + l3
     summary_count['link to details'] = summary_count['benchmark_id'].apply(link_detail)
 
     def normalize(counts, includes):
@@ -50,7 +51,7 @@ def generate_summary(eval_results: pd.DataFrame):
     summary_percent = normalize(summary_count, percent_cols)
 
     template_path = r"templates/summary.html"
-    output_path = rf"crux-eval.github.io/eval-arena/index.html"
+    output_path = rf"{OUTPUT_PATH}/index.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
@@ -75,11 +76,12 @@ for fname in glob.glob(f"data/*.jsonl"):
         records.extend([json.loads(l) for l in f.readlines()])
 eval_results = pd.DataFrame(records)
 
+OUTPUT_PATH = 'crux-eval.github.io/eval-arena'
+
 print('generating summary table...')
-generate_summary(eval_results)
+generate_summary(eval_results, OUTPUT_PATH)
 benchmarks = set(eval_results['benchmark_id'])
 
-OUTPUT_PATH = 'crux-eval.github.io/eval-arena'
 for bid in benchmarks:
     print(f'processing {bid}...')
     raw_results = eval_results[eval_results['benchmark_id'] == bid] 

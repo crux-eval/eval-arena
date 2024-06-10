@@ -20,6 +20,19 @@ def get_anchor(benchmark_id: str, example_id: str):
     else:
         return example_id
 
+def fig_example_vs_model(result, all_stats, ex_table):
+    df = result[['model', 'example_id', 'pass1']].merge(ex_table[['example_id', 'acc']], on='example_id')
+    df = df.merge(all_stats[['model', 'pass1']], on='model', suffixes=['_ex', '_model'])
+    df.sort_values(by=['acc', 'example_id', 'pass1_model', 'model'], inplace=True)
+    fig = px.scatter(df, y='example_id', x='model', color='pass1_ex', size_max=0.5, opacity=0.5, hover_data=['acc', 'model', 'example_id'])
+    fig.update_xaxes(autorange="reversed")
+    fig.update_traces(marker={'size': 5})
+    bid = 'test'
+    fig.update_layout(
+            width=900, height=1200,
+            xaxis = dict(side ="top"),
+        )
+    return fig
 
 def get_example_level_results(benchmark_id, result):
     battles = pass1_to_battle(result)
@@ -46,6 +59,8 @@ def get_example_level_results(benchmark_id, result):
     outputs['table_suspect'] = list_suspect[['example_link', 'acc', 'tau']].to_html(escape=False, float_format='%10.3f', index=False)
     print(benchmark_id, 'anti-correlated prop', np.mean(ex_table['tau'] <= 0))
 
+    outputs['fig_example_vs_model'] = fig_example_vs_model(result, all_stats, ex_table)
+
     return outputs
 
 
@@ -58,3 +73,7 @@ def gen_example_report(benchmark_id: str, raw_results: pd.DataFrame, OUTPUT_PATH
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({'benchmark_id': benchmark_id, 'outputs': outputs}))
+
+    with open(f'{OUTPUT_PATH}/ex_v_model_{benchmark_id}.html', 'wt') as f:
+        f.write(outputs['fig_example_vs_model'].to_html())
+    
