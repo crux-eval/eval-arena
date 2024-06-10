@@ -6,9 +6,8 @@ For correctness evaluation, there are $N$ examples $\{(x_1, y_1), \ldots, (x_N, 
 the model makes prediction $\hat{y}(x)$, possibly random, and we get a binary correctness judgement $R(\hat{y}, y) \in \{0, 1\}$, 0 for incorrect and 1 for correct. $R$ can be checking for equality or running tests on $\hat{y}$ or asking another model, but we assume a binary outcome here.
 We may also compute then get the mean $\text{acc} = \frac1{N} \sum_i R(\hat{y}_i, y_i)$ 
 
-
 We have model A and B, and we are trying to determine is A is better than B.
-Statistics have a lot say about this problem. While the answers are not exactly the same depending on the method and assumptions, the sign test asks if the observed results are likely when the outcomes random, and bootstrap asks if the observed results is reliable when the examples are randomized. It is resassuring that they give the same answer here.
+Statistics have a lot say about this problem. While the answers are not exactly the same depending on the method and assumptions, the sign test asks if the observed results are likely when the outcomes are random, and bootstrap asks if the observed results is reliable when the examples are random. It is resassuring that they give about the same answer.
 
 ## Sign test
 The textbook recommendation where you have binary outcomes is the sign test or McNemar's test. Here is a translation for the application to model comparison.
@@ -20,7 +19,7 @@ The p-values is then $\text{Pr}[X \leq B \lor X \geq A]$ for $X \sim \text{binom
 
 ## Bootstrap
 Bootstrap is a general method with the insight/assumption that the particular examples we measured on are not that special, and you should be able to reach equally valid conclusions by resampling your given examples with replacement.
-You can compute this by actually drawing the samples, but we can also understand what bootstrap depends on by deriving the formula for a similar question as for the sign test.
+We can compute this by actually drawing the samples, but we can also understand what bootstrap depends on by deriving the formula for a similar question as for the sign test.
 Let $A$ be the number of times model A wins against model B and vice versa, and let's assume $A > B$. The question is how likely are we to still observe $A > B$ on bootstraped samples. This also has a good approximation when $A + B > 20$.
 Let $X_A, X_B, X_0 \sim \text{multinomial}(N, p_A, p_B, p_0)$ for $p_A = A / N, p_B = B / N$ and the tie probability $p_0 = 1 - p_A - p_B$.
 The p-value is $\text{Pr}[X_A - X_B \leq 0]$ where $E[X_A - X_B] = A - B$ and $\text{Var}[X_A - X_B] = N \left(p_a (1-p_a) + p_b (1-p_b) + 2 p_a p_b\right) = N (p_a + p_b - (p_a - p_b)^2) \approx A + B$.
