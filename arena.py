@@ -169,38 +169,3 @@ def example_table(result, all_stats):
         records.append(r)
 
     return pd.DataFrame(records)
-
-
-def null_samples(weights, tie_prob, num_samples = 100000):
-    not_ties = rng.rand(num_samples, weights.size) > tie_prob
-    not_tie_bernoulis = not_ties * np.sign(rng.randn(*not_ties.shape))
-    scores = not_tie_bernoulis @ weights
-    return scores
-
-def sign_test_niid(response_a: List, response_b: List,
-                   tie_probs: Optional[List[float]], weights: Optional[List[float]], sample_all=False) -> float:
-    """
-    Experimental function to estimate p-value for weighted scores and different tie probabilities
-    """
-    if weights is None:
-        weights = np.ones(len(response_a))
-    if tie_probs is None:
-        tie_probs = np.zeros(len(response_a))
-    assert all(weights >= 0)
-    weights = weights / weights.sum()
-
-    comparisons = np.where(response_a > response_b, 1, 0) + np.where(response_b > response_a, -1, 0)
-    score_thres = np.abs(np.sum(comparisons * weights))
-
-    # then answer the question, how many under the null hypothesis is more extreme than this one
-    # given no ties, or should ties be considered too
-    not_ties = comparisons != 0
-    print(f'k / n = {comparisons.sum()}/{not_ties.sum()}\t thres: {score_thres}', )
-    if sample_all:
-        samps = null_samples(weights, tie_probs)
-    else:
-        samps = null_samples(weights[not_ties], tie_probs[not_ties])
-    cdf = stats.ecdf(samps).cdf
-
-    pvalue = (1 - cdf.evaluate(score_thres - 1e-10)) + cdf.evaluate(-score_thres + 1e-10)
-    return cdf, pvalue
