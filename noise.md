@@ -1,12 +1,12 @@
 # Measuring noise
 
-We consider measuring the noise in evaluation by adopting classic methods and with some specific considerations for LLMs evals.
+We consider measuring the noise in evaluation by adopting classic methods and some considerations for LLMs evals.
 
 For correctness evaluation, there are $N$ examples $\{(x_1, y_1), \ldots, (x_N, y_N)\}$,
 the model makes prediction $\hat{y}(x)$, possibly random, and we get a binary correctness judgement $R(\hat{y}, y) \in \{0, 1\}$, 0 for incorrect and 1 for correct. $R$ can be checking for equality or running tests on $\hat{y}$ or asking another model, but we assume a binary outcome here.
 We may also compute then get the mean $\text{acc} = \frac1{N} \sum_i R(\hat{y}_i, y_i)$ 
 
-We have model A and B, and we are trying to determine is A is better than B.
+We have model A and B, and we are trying to determine if A is better than B.
 Statistics have a lot say about this problem. While the answers are not exactly the same depending on the method and assumptions, the sign test asks if the observed results are likely when the outcomes are random, and bootstrap asks if the observed results is reliable when the examples are random. It is resassuring that they give about the same answer.
 
 ## Sign test
@@ -27,7 +27,7 @@ The p-value is $\text{Pr}[X_A - X_B \leq 0]$ where $E[X_A - X_B] = A - B$ and $\
 The question is how likely is $\text{Pr}[ Z \geq \frac{A-B}{\sqrt{A+B}}]$ for standard normal $Z$, which gives about the same result as the one-sided sign test. 
 
 
-The distinction between one-sided and two-sided may matter for differences in the questionable range $\frac{A-B}{\sqrt{A+B}} \approx 1 \sim 2$. p-values can be converted from two-sided to one-sided by a factor of 2 (symmetric). You may also get confidence intervals, where the 95% intervals are approximately $\pm 1.96\sigma$ with $\sigma=\sqrt{A+B}$, and a 90% intervals are $\pm1.65 \sigma$, which is only slightly smaller.
+p-values can be converted from two-sided to one-sided by a factor of 2 (symmetric). You may also get confidence intervals, where the 95% intervals are approximately $\pm 1.96\sigma$ with $\sigma=\sqrt{A+B}$, and a 90% intervals are $\pm1.65 \sigma$, which is only slightly smaller. The distinction between one-sided and two-sided would not matter except maybe for a questionable range of $\frac{A-B}{\sqrt{A+B}} \approx 1 \sim 2$. 
 
 In restrospect, the main value of the experiment in eval-arena was to establish that $A + B \geq 20$ and $A + B \geq |A - B| +  8$ for all model pairs and all benchmarks tested.
 This leads to simple behavior predictable from theory. So instead of conducting their own tests, users of these benchmarks can just ask if what they are comparing might be an exception, and if not, they can just interpret the results based on the aggregate behavior that is true for all model pairs so far. If they suspect an exception, they should verify that their $A+B$ is indeed small.
@@ -51,7 +51,7 @@ This is 0 for deterministic predictions and upperbounded by $\frac1{4N}$ if the 
 <!-- sampling is only part of it -->
 
 On [CRUXEval](https://crux-eval.github.io/eval-arena/model_CRUXEval-output.html#model_table), 10 samples are used to estimate the iid sample noise which is reported as std,
-and typically the sampling variance is $ < 0.025 \frac1{N}$, which is quite a bit less than the noise we study here.
+and typically the sampling variance is $\sim 0.025 \frac1{N}$, which is quite a bit less than the noise we study here.
 
 ### Solving hard and special problems 
 
@@ -62,7 +62,8 @@ We probably don't need to consider this yet. In the empirical data, all pairs of
 
 ### Answer extraction
 
-Details like extracting answers and prompting make a bigger difference. For instance, on DS1000, recent models has become more inflexible in formats, whereas Codex-002 from 2022 followed the natural format specified by the problem, Claude models (and the lastest GPT4) tend to output their own format, so the extraction is probably not too generous to them, and they don't evaluate to be much better than Codex-002 on DS1000. 
+Details like extracting answers and prompting make a bigger difference. For instance, on DS1000, recent models has become more inflexible in formats, whereas Codex-002 from 2022 followed the natural format specified by the problem, Claude models (and the lastest GPT4) tend to output their own format, so the extraction is probably not generous enough to them, and they don't evaluate to be much better than Codex-002 on DS1000.
+
 
 
 ## Other works measuring uncertainty
