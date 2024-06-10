@@ -19,20 +19,22 @@ The p-values is then $\text{Pr}[X \leq B \lor X \geq A]$ for $X \sim \text{binom
 
 ## Bootstrap
 Bootstrap is a general method with the insight/assumption that the particular examples we measured on are not that special, and you should be able to reach equally valid conclusions by resampling your given examples with replacement.
-We can compute this by actually drawing the samples, but we can also understand what bootstrap depends on by deriving the formula for a similar question as for the sign test.
+This tend to be more intuitive (to computer scientists) and is used in a few previous works.
+We can compute this by actually drawing the samples, but let's understand what bootstrap depends on by deriving the formula for a similar question as for the sign test.
 Let $A$ be the number of times model A wins against model B and vice versa, and let's assume $A > B$. The question is how likely are we to still observe $A > B$ on bootstraped samples. This also has a good approximation when $A + B > 20$.
 Let $X_A, X_B, X_0 \sim \text{multinomial}(N, p_A, p_B, p_0)$ for $p_A = A / N, p_B = B / N$ and the tie probability $p_0 = 1 - p_A - p_B$.
-The p-value is $\text{Pr}[X_A - X_B \leq 0]$ where $E[X_A - X_B] = A - B$ and $\text{Var}[X_A - X_B] = N \left(p_a (1-p_a) + p_b (1-p_b) + 2 p_a p_b\right) = N (p_a + p_b - (p_a - p_b)^2) \approx A + B$.
-The question is how likely is $\text{Pr}[ Z \geq \frac{A-B}{\sqrt{A+B}}]$ for standard normal $Z$, which gives about the same result as the one-sided sign test (slightly smaller due to $(p_a-p_b)^2$).
+The p-value is $\text{Pr}[X_A - X_B \leq 0]$ where $E[X_A - X_B] = A - B$ and $\text{Var}[X_A - X_B] = N \left(p_a (1-p_a) + p_b (1-p_b) + 2 p_a p_b\right) = N (p_a + p_b - (p_a - p_b)^2) \approx A + B$. If $(p_a-p_b)^2$ is large, then the result is probably very significant and subtlety is not required. 
+The question is how likely is $\text{Pr}[ Z \geq \frac{A-B}{\sqrt{A+B}}]$ for standard normal $Z$, which gives about the same result as the one-sided sign test. 
 
 
-The distinction between one-sided and two-sided only matters for somewhat questionable differences when $\frac{A-B}{\sqrt{A+B}} \approx 1 \sim2.5$, and in any event can be converted with a factor of 2 for symmetric distributions. You may also get confidence intervals, where the 95% intervals are approximately $\pm 2\sigma$ with $\sigma=\sqrt{A+B}$.
+The distinction between one-sided and two-sided may matter for differences in the questionable range $\frac{A-B}{\sqrt{A+B}} \approx 1 \sim 2$. p-values can be converted from two-sided to one-sided by a factor of 2 (symmetric). You may also get confidence intervals, where the 95% intervals are approximately $\pm 1.96\sigma$ with $\sigma=\sqrt{A+B}$, and a 90% intervals are $\pm1.65 \sigma$, which is only slightly smaller.
 
 In restrospect, the main value of the experiment in eval-arena was to establish that $A + B \geq 20$ and $A + B \geq |A - B| +  8$ for all model pairs and all benchmarks tested.
 This leads to simple behavior predictable from theory. So instead of conducting their own tests, users of these benchmarks can just ask if what they are comparing might be an exception, and if not, they can just interpret the results based on the aggregate behavior that is true for all model pairs so far. If they suspect an exception, they should verify that their $A+B$ is indeed small.
 
+## LLM considerations
 
-## Noise from stochastic LLM prediction
+### Noise from stochastic LLM prediction
 You can get iid (identical and independent) predictions from LLMs, which can add some potential confusion for reproducible vs. statistically significant, so is discussed here.
 In LLMs, you can draw iid sample they are interestingly different from each other. In the physical world, because you cannot reset the state, once you do an experiment, you cannot ask for another iid sample: did a treatment work on a patient? or did the student solve a particular problem? So usually statistical tests do not consider the ability to draw more iid samples.
 
@@ -51,12 +53,16 @@ This is 0 for deterministic predictions and upperbounded by $\frac1{4N}$ if the 
 On [CRUXEval](https://crux-eval.github.io/eval-arena/model_CRUXEval-output.html#model_table), 10 samples are used to estimate the iid sample noise which is reported as std,
 and typically the sampling variance is $ < 0.025 \frac1{N}$, which is quite a bit less than the noise we study here.
 
-## Special examples
+### Solving hard and special problems 
 
 For a problem requiring a long answer where guessing correctly is unlikely, answering even 1 problem might be significant and interesting. For example, the problem can ask for the proof of an important open problem and the test checks the proof. If a model (or someone) solves such a hard problem then we should not object to the sample size of 1.
-My experience as a student lead me to intuitively believe that you can get a lot of useful signals by testing on a few hard problems with full answers (like Math or algorithm contests, interviews etc.), especially if there is a range of difficulty levels so you can get some signal for most outcomes. If we need to consider this, the hypothesis testing framework can be extended to model weights and tie probabilities, but bootstrap is probably unfixable when the sample set is small and carefully constructed. 
+My experience as a student lead me to intuitively believe that you can get a lot of useful signals by testing on a few hard problems with full answers (like Math or algorithm contests, interviews etc.), especially if there is a range of difficulty levels so you can get some signal for most outcomes. If we need to consider this, the hypothesis testing framework can be extended to model weights and tie probabilities, but bootstrap breaks when the sample set is small and carefully constructed. 
 
-We probably don't need to consider this yet. In the empirical data, all pairs of models have enough noisy inconsistencies where model A beats B on 2 hard examples, but then B beats A on 10 easy examples. If A is so good that it didn't make any mistakes on the long answer, why did it fail on many easier ones. Second, problems solvable by mediocore models or where reference solutions can be found on the internet (i.e. training data) is unlikely to deserve special deference.
+We probably don't need to consider this yet. In the empirical data, all pairs of models have enough noisy inconsistencies where model A may beat B on 2 hard examples, but then B beats A on 10 easy examples. If A is so good that it didn't make any mistakes on the long complex answer required to solve the hard problems, why did it fail on many easier ones? Second, problems solvable by mediocore models or where reference solutions can be found on the internet (i.e. training data) is unlikely to deserve special deference.
+
+### Answer extraction
+
+Details like extracting answers and prompting make a bigger difference. For instance, on DS1000, recent models has become more inflexible in formats, whereas Codex-002 from 2022 followed the natural format specified by the problem, Claude models (and the lastest GPT4) tend to output their own format, so the extraction is probably not too generous to them, and they don't evaluate to be much better than Codex-002 on DS1000. 
 
 
 ## Other works measuring uncertainty
