@@ -8,7 +8,7 @@ For evaluating methods or developing models, we want to know if the gains are re
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
 </ul>
 
-The main results measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). The noise properties are summarized for each benchmark. In theory, we need the predictions of a pair of models to measure the noise, but empirically, the key variable is actually the benchmark instead of the model being considered, which allows us to give some estimates for each benchmark.  Additionally, we provide detailed performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs of each benchmark (hence arena, inspired by chatbot arena but using benchmark data). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards. See [noise.md](noise.md) for technical information about testing and modeling noise.
+The main results measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). The noise properties are summarized for each benchmark. In theory, we need the predictions from a pair of models to measure the noise, but empirically, the the benchmark is the main factor.  Additionally, we provide detailed performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs of each benchmark (hence arena, inspired by chatbot arena but using static eval benchmarks). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards. See [noise.md](noise.md) for technical details.
 
 ## Main findings
 
@@ -23,7 +23,7 @@ Many popular papers in the area contain some results that have low statistical s
 [self-debugging](https://arxiv.org/pdf/2304.05128), [Coder-Reviewer](https://arxiv.org/pdf/2211.16490).
 This is not meant to single out these works, since reporting on a common set of benchmarks is beneficial and low significance level does not mean wrong. However, the results can be better interpreted knowning the noise level for each benchmark. It seems better if the benchmark builders audit/measure their benchmarks rather than users.  
 
-There seems to be a perception that you always get the right rankings anyways. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
+There seems to be a perception that we always get the right rankings anyways. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
 
 **The null-hypothesis.**
 The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that there is no real difference between the pair. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other (i.e. sign test or McNemar test). 
@@ -33,7 +33,7 @@ The p-value is the probability that data from the null-hypothesis is more extrem
 Understandably, most people have better priorities than calculating p-values.
 Fortunately, p-values on these benchmark are predictable from the accuracy difference alone which mostly depends on the benchmark.
 This can be seen visually from [this figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues).
-The easiest way is to use the `p5_min` or `p5_max` values in the summary table. If other p-values are desired, then you can get an estimate from the [p-values vs difference figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff). 
+The easiest way is to use the `p5_min` or `p5_max` values in the summary table. If other p-values are desired, then we can get an estimate from the [p-values vs difference figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff). 
 For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
 The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and consistent across pairwise matchups.
 
@@ -69,7 +69,7 @@ In the `by examples` section, we provide a list of examples that are solved by 0
 ### Improving evaluation
 Since it is difficult to collect more high quality evaluations, using more evaluation benchmarks is a good way to improve confidence. Even when individual benchmarks yield low significance, consistent improvements across benchmarks can be significant.
 
-For test based benchmarks, a solution passing a weak test is still different from a solution failing it, thus running indepedent tests may also help yield more information per example instead of focusing on complete correctness. This is similar to the tech interview approach, where often only 1 or 2 questions are asked but you may get more information than just correct vs. incorrect.
+For test based benchmarks, a solution passing a weak test is still different from a solution failing it, thus running indepedent tests may also help yield more information per example instead of focusing on complete correctness. This is similar to the tech interview approach, where often only 1 or 2 questions are asked but we may get more information than just correct vs. incorrect, especially with a progressive question with easy to hard parts.
 
 It may also be possible to model individual problems better, such as the probability of each outcome or the difficulty level using [item response model](https://eacl2024irt.github.io/). However our initial attempts did not improve stability or significance levels, maybe because most examples give [very noisy](https://crux-eval.github.io/eval-arena/ex_v_model_humaneval+.html) signals, where most rather than a few examples are noisy, and they are not all errors.
 
