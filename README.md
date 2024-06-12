@@ -19,14 +19,14 @@ According to our analysis, a difference of **6.7% is the minimum required** to a
 Even if our bar is lower, we still need a 5% difference to get a p-value of 0.20.
 <!-- MBPP+ needs at at least 4.2% to achieve the p-value of 0.05. -->
 These thresholds can be found in the `p5_min` column of the [summary page](https://crux-eval.github.io/eval-arena). 
-Many popular papers in the area contain some results that have low statistical significance: [HumanEval](https://arxiv.org/pdf/2107.03374), [mbpp](https://arxiv.org/pdf/2108.07732), [StarCoder 2](https://arxiv.org/pdf/2402.19173), [CodeLlamma](https://arxiv.org/pdf/2308.12950) 
+Many popular papers in the area contain some results that have low statistical significance: [HumanEval](https://arxiv.org/pdf/2107.03374), [mbpp](https://arxiv.org/pdf/2108.07732), [StarCoder 2](https://arxiv.org/pdf/2402.19173), [CodeLlama](https://arxiv.org/pdf/2308.12950) 
 [self-debugging](https://arxiv.org/pdf/2304.05128), [Coder-Reviewer](https://arxiv.org/pdf/2211.16490).
-This is not meant to single out these works, since reporting on a common set of benchmarks is beneficial and low significance level does not mean wrong. However, the results can be better interpreted knowning the noise level for each benchmark. It seems better if the benchmark builders audit/measure their benchmarks rather than users.  
+This is not meant to single out these works, since reporting on a common set of benchmarks is beneficial and low significance level does not mean wrong. However, the results can be better interpreted knowning the noise level for each benchmark. The benchmark builders should audit/measure noise rather than users.  
 
 There seems to be a perception that we always get the right rankings anyways. For some counter-examples on [HumanEval+](https://evalplus.github.io/leaderboard.html), some larger models are worse than smaller models for the series of models `Claude-3-`, `CodeGen2-`, `code-`. This is less surprising given the noise level involved. Inconsistencies in the eval sections of StarCoder2 or CodeLlamma can also be explained by the noise level.
 
 **The null-hypothesis.**
-The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that there is no real difference between the pair. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other (i.e. sign test or McNemar test). 
+The p-value is the probability that data from the null-hypothesis is more extreme than the one observed. It should capture that there is no real difference between the pair. Our particular null-hypothesis is that model A and B has 0.5 chance of winning against each other (i.e. sign test or McNemar's test). 
 
 
 ### Reading p-value and noise level from eval-arena
@@ -47,14 +47,14 @@ Different treatment of ties and bootstrap gave similar answers.  -->
 
 
 ### Errors and contamination
-I can be tempting to try and correct errors in evaluation set, but errors may not matter much and provide some signal about contaimination as well.
+While errors in evaluation set are irritating, errors and idiosyncrasies provide some signal about contaimination as well.
 We test a method for detecting errors by finding examples that are anti-correlated with the overall model quality. MBPP/MBPP+ seems to be the most promising source of suspect problems, [here](https://crux-eval.github.io/eval-arena/ex_mbpp+.html#suspect) is the list. I manually inspected the 10 most suspect examples, and 7 of them are indeed wrong: 
 
 * Reference answer is wrong: [459](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/459.html)
 * Example contradicts instruction: [581](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/581.html), [102](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/102.html), [615](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/615.html)
 * Underspecified: [558](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/558.html), [559](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/559.html), [87](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/87.html), 
 
-These errors can provide some evidence when models memorize the incorrect reference solution. On Mbpp/[615](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/615.html) and [459](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/459.html), `codegen-6b`, `CohereForAI--c4ai-command`, `codet5p-6b` outputs the incorrect reference solution whereas most other models outputs the correct answer. On [581](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/581.html), Claude and GPT both gave a less wrong answer than the reference. This provides some evidence that models have not memorized many of the answers. A few wrong or underspecified problems may provide evidence if a model is memorizing the evaluation data instead of making correct predictions.
+These errors can provide some evidence when models memorize the incorrect reference solution. On Mbpp/[615](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/615.html) and [459](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/459.html), `codegen-6b`, `CohereForAI--c4ai-command`, `codet5p-6b` outputs the incorrect reference solution whereas most other models outputs the correct answer. On [581](https://crux-eval.github.io/eval-arena/evalplus/Mbpp/581.html), Claude and GPT both gave a less wrong answer than the reference. This provides some evidence that models have not memorized many of the answers. A few wrong or underspecified problems may provide evidence if a model is memorizing the evaluation data (likely post-training) instead of making correct predictions.
 
 Increasing data size without degrading average quality clearly improves the statistical power whereas a higher quality dataset of the same size does not seem to have a measurable effect (yet). HumanEval+ has the same ranking issues as HumanEval whereas MBPP+ seems to rank all model series correctly where the bigger model is better within each series of models `X-7B, X-13B, X-34B, etc`. So the bigger size of MBPP+ seems to overcome the much higher intuitive quality of HumanEval over MBPP (For example, HumanEval has fewer tau- examples, which all passes manual inspection anyway). This can also be seen visually by comparing [HumanEval+](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues) vs. [mbpp+](https://crux-eval.github.io/eval-arena/model_mbpp+.html#fig_accs_and_pvalues) where mbpp has a narrower band of statistically insignificant comparisons.
 
@@ -63,7 +63,6 @@ In [results tables](https://crux-eval.github.io/eval-arena/model_humaneval+.html
 
 ### Difficulty levels and hard problems
 In the `by examples` section, we provide a list of examples that are solved by 0 model and solved by only 1 model ([example](https://crux-eval.github.io/eval-arena/ex_humaneval+.html#nosolve)). These are useful for understanding the ability of leading models as well as the quality of the datasets. Whether a benchmark is truly saturated depends on if the remaining examples still contain signal and not just on the raw accuracy. We also provide histograms of accuracies and minimum Elo required to solve examples. On this metric, [LiveCodeBench](https://crux-eval.github.io/eval-arena/ex_lcb_codegen.html#hist) stands out for having a lot of hard examples and a fairly even distribution of difficulties (maybe since it was constructed with a mixture of difficulties).
-
 
 
 ### Improving evaluation
