@@ -27,7 +27,7 @@ The p-value is $\text{Pr}[X_A - X_B \leq 0]$ where $E[X_A - X_B] = A - B$ and $\
 The question is how likely is $\text{Pr}[ Z \geq \frac{A-B}{\sqrt{A+B}}]$ for standard normal $Z$, which gives about the same result as the one-sided sign test. 
 
 
-p-values can be converted from two-sided to one-sided by dividing by 2 (symmetric dist.). We may also get confidence intervals, where the 95% interval is $\pm 1.96\sigma$ with $\sigma=\sqrt{A+B}$, and a 90% interval is $\pm1.65 \sigma$, which is only slightly smaller. The distinction between one-sided and two-sided would not matter much except maybe for a questionable range of $\frac{A-B}{\sqrt{A+B}} \approx 1 \sim 2$. 
+p-values can be converted from two-sided to one-sided by dividing by 2 for the symmetric distributions here. We may also get confidence intervals, where the 95% interval is $\pm 1.96\sigma$ with $\sigma=\sqrt{A+B}$, and a 90% interval is $\pm1.65 \sigma$, which is only slightly smaller. The distinction between one-sided and two-sided would not matter much except maybe for a questionable range of $\frac{A-B}{\sqrt{A+B}} \approx 1 \sim 2$. 
 
 In restrospect, the main value of the experiment in eval-arena was to establish that $A + B \geq 20$ and $A + B \geq |A - B| +  8$ for all model pairs and all benchmarks tested.
 This leads to simple behavior predictable from theory. So instead of conducting their own tests, users of these benchmarks can just ask if what they are comparing might be an exception, and if not, they can just interpret the results based on the aggregate behavior that is true for all model pairs so far. If they suspect an exception, they should verify that their $A+B$ is indeed small.
