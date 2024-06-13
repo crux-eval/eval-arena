@@ -51,7 +51,7 @@ This is 0 for deterministic predictions and upperbounded by $\frac1{4N}$ if the 
 <!-- sampling is only part of it -->
 
 On [CRUXEval](https://crux-eval.github.io/eval-arena/model_CRUXEval-output.html#model_table), 10 samples are used to estimate the iid sample noise which is reported as std,
-and it is typically $\sim \sqrt{0.025 \frac1{N})$, which is much less than the upperbound or $\sqrt{0.25 frac1{N}}$ and less than the noise due to randomizing the examples in bootstrap.
+and it is typically $\sim \sqrt{0.025 \frac1{N}}$, which is much less than the upperbound or $\sqrt{0.25 frac1{N}}$ and less than the noise due to randomizing the examples in bootstrap.
 
 ### Solving hard and special problems 
 
