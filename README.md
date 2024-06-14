@@ -8,9 +8,14 @@ For evaluating methods or developing models, we want to know if the gains are re
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
 </ul>
 
-The main results measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). The noise properties are summarized for each benchmark. In theory, we need the predictions from a pair of models to measure the noise, but empirically, the the benchmark is the main factor.  Additionally, we provide detailed performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs of each benchmark (hence arena, inspired by chatbot arena but using static eval benchmarks). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards. See [noise.md](noise.md) for technical details.
+ We find that all comparisons are noisy where a better model is always worse on some examples than a worse model. You can see this in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html) and [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff). As a result, the noise level depends less on particular model pairs, and can be measured for each benchmark.
 
-## Main findings
+For pratical references, the results on measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). We provide performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs for all benchmarks (hence arena, inspired by chatbot arena but using static eval benchmarks). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards.
+
+See [noise.md](noise.md) for technical details.
+
+
+## Findings
 
 ### Popular benchmarks are noisier than assumed by popular papers.
 We measure the noise using both p-values and standard deviations, which can help ["increase the rigor of the conclusions drawn from data"](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-15/issue-3/The-ASA-presidents-task-force-statement-on-statistical-significance-and/10.1214/21-AOAS1501.full).
@@ -58,7 +63,7 @@ These errors can provide some evidence when models memorize the incorrect refere
 
 Increasing data size without degrading average quality clearly improves the statistical power whereas a higher quality dataset of the same size does not seem to have a measurable effect (yet). HumanEval+ has the same ranking issues as HumanEval whereas MBPP+ seems to rank all model series correctly where the bigger model is better within each series of models `X-7B, X-13B, X-34B, etc`. So the bigger size of MBPP+ seems to overcome the much higher intuitive quality of HumanEval over MBPP (For example, HumanEval has fewer tau- examples, which all passes manual inspection anyway). This can also be seen visually by comparing [HumanEval+](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues) vs. [mbpp+](https://crux-eval.github.io/eval-arena/model_mbpp+.html#fig_accs_and_pvalues) where mbpp has a narrower band of statistically insignificant comparisons.
 
-### Accuracy, ELO, win rate
+### Accuracy, win rate, ELO
 In [results tables](https://crux-eval.github.io/eval-arena/model_humaneval+.html#model_table), we provide pass1, average win-rate over all other models (used by [BigCode](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)), and Elo (Bradly-Terry coefficients following [Chatbot Arena](https://chat.lmsys.org/)). **We recommend raw accuracy (or pass1)** -- since all metrics are highly correlated for our setting and since accuracy actually has better stability as measured by tau-correlation between subsamples of benchmarks (following figure 4 of [this paper](https://aclanthology.org/2021.acl-long.346.pdf)). Unless a more complex metric is measurably better, accuracy has a clear advantage that it does not depend on other models.
 
 ### Difficulty levels and hard problems
@@ -70,7 +75,7 @@ Since it is difficult to collect more high quality evaluations, using more evalu
 
 For test based benchmarks, a solution passing a weak test is still different from a solution failing it, thus running indepedent tests may also help yield more information per example instead of focusing on complete correctness. This is similar to the tech interview approach, where often only 1 or 2 questions are asked but we may get more information than just correct vs. incorrect, especially with a progressive question with easy to hard parts.
 
-It may also be possible to model individual problems better, such as the probability of each outcome or the difficulty level using [item response model](https://eacl2024irt.github.io/). However our initial attempts did not improve stability or significance levels, maybe because most examples give [very noisy](https://crux-eval.github.io/eval-arena/ex_v_model_humaneval+.html) signals, where most rather than a few examples are noisy, and they are not all errors.
+It may also be possible to model individual problems better, such as the probability of each outcome or the difficulty level using [item response model](https://eacl2024irt.github.io/). However our initial attempts did not improve stability or significance levels, maybe because most examples give [very noisy](https://crux-eval.github.io/eval-arena/ex_v_model_humaneval+.html) signals, where most few examples are noisy, and they are not all errors.
 
 ## Usage 
 
