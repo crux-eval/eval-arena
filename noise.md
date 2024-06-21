@@ -19,8 +19,8 @@ The p-values is then $\text{Pr}[X \leq B \lor X \geq A]$ for $X \sim \text{binom
 
 ## Bootstrap
 Bootstrap is a general method with the insight/assumption that the particular examples we measured on are not that special, and we should be able to reach equally valid conclusions by resampling the given examples with replacement.
-This tend to be more intuitive (to computer scientists) and is used in a few previous works.
-We can compute this by actually drawing the samples, but let's understand what bootstrap depends on by deriving the formula for a similar question as for the sign test.
+This is used in more previous works and probably more intuitive to computer scientists.
+We can compute this by actually drawing the samples using a very simple program, but let's understand what bootstrap depends on by deriving the formula for a similar question as for the sign test.
 Let $A$ be the number of times model A wins against model B and vice versa, and let's assume $A > B$. The question is how likely are we to still observe $A > B$ on bootstraped samples. This also has a good approximation when $A + B > 20$.
 Let $X_A, X_B, X_0 \sim \text{multinomial}(N, p_A, p_B, p_0)$ for $p_A = A / N, p_B = B / N$ and the tie probability $p_0 = 1 - p_A - p_B$.
 The p-value is $\text{Pr}[X_A - X_B \leq 0]$ where $E[X_A - X_B] = A - B$ and $\text{Var}[X_A - X_B] = N \left(p_a (1-p_a) + p_b (1-p_b) + 2 p_a p_b\right) = N (p_a + p_b - (p_a - p_b)^2) \approx N (p_a + p_b) = A + B$. If $(p_a-p_b)^2$ is large, then the result is probably significant anyway. 
@@ -31,6 +31,8 @@ p-values can be converted from two-sided to one-sided by dividing by 2 for the s
 
 In restrospect, the main value of the experiment in eval-arena was to establish that $A + B \geq 20$ and $A + B \geq |A - B| +  8$ for all model pairs and all benchmarks tested.
 This leads to simple behavior predictable from theory. So instead of conducting their own tests, users of these benchmarks can just ask if what they are comparing might be an exception, and if not, they can just interpret the results based on the aggregate behavior that is true for all model pairs so far. If they suspect an exception, they should verify that their $A+B$ is indeed small.
+
+There are some subtle cases when bootstrap is different, since 
 
 ## LLM considerations
 
@@ -68,3 +70,11 @@ If feeling generous, perhaps another good model can be used to extract answers. 
 ### Works measuring noise in LLM evals
 Of the leaderboards, [Chatbot arena](https://chat.lmsys.org/) and [CRUXEval](https://crux-eval.github.io/) computed confidence intervals using bootstrap
 and they both did this by having a reference and then compute the intervals relative to the reference . While that is the only way (that I know) to show confidence levels in a linear figure, that method produces intervals that are too large on most pairs, but especially those that are far from the reference. Both of their plots show larger and larger intervals just by being further from the reference (figure `visualize_bootstrap_scores` for chatbot arena). So some of their pairs with overlapping intervals are like not actually overlapping when tested pairwise.
+
+[Quantifying Variance in Evaluation Benchmarks](https://arxiv.org/pdf/2406.10229) measured noise due to random seeds for a more general set of benchmarks.
+This is a direct approach to measuring the noise due to a particularly controlled source of randomness, which should be considered a lowerbound but is insufficient.
+As in the [noise due to sampling](#noise-from-stochastic-llm-prediction), it is direct and conceptually simple to measure,
+but does not account for
+other arbitrary decisions made in both data and code that are not explicitly seeded such as the choices made on how the data is shuffled / filtered.
+
+

@@ -8,12 +8,11 @@ For evaluating methods or developing models, we want to know if the gains are re
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
 </ul>
 
- We find that all comparisons are noisy where a better model is always worse on some examples than a worse model. You can see this in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html) and [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff). As a result, the noise level depends less on particular model pairs, and can be measured for each benchmark.
+ We find that all comparisons are noisy where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be meaningfully measured for each benchmark. We may expect that a good enough model can solve all easy enough examples, but actually models and examples are plausibly independent of each other as seen in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html). 
 
 For pratical references, the results on measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). We provide performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs for all benchmarks (hence arena, inspired by chatbot arena but using static eval benchmarks). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards.
 
 See [noise.md](noise.md) for technical details.
-
 
 ## Findings
 
