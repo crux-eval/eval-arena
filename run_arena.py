@@ -45,13 +45,10 @@ def generate_summary(eval_results: pd.DataFrame, OUTPUT_PATH):
         for c in includes:
             percent[c] = percent[c] / percent['size']
         return percent
-    
-    print(summary_count)
 
     includes_cols = ['benchmark_id', 'size', 'p5_min', 'p5_max', 'no_solve', 'tau-', 'link to details']
     percent_cols = ['p5_min', 'p5_max', 'no_solve', 'tau-']
     summary_percent = normalize(summary_count, percent_cols)
-    print(summary_count)
 
     template_path = r"templates/summary.html"
     output_path = rf"{OUTPUT_PATH}/index.html"
