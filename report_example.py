@@ -25,11 +25,11 @@ def fig_example_vs_model(result, all_stats, ex_table):
     df = df.merge(all_stats[['model', 'pass1']], on='model', suffixes=['_ex', '_model'])
     df.sort_values(by=['acc', 'example_id', 'pass1_model', 'model'], inplace=True)
     fig = px.scatter(df, y='example_id', x='model', color='pass1_ex',
-                     size_max=0.5, opacity=0.5,
-                     color_continuous_scale='rdylgn',
+                     opacity=0.75,
+                     color_continuous_scale=["red", "yellow", "green"],
                      hover_data=['acc', 'model', 'example_id'])
     fig.update_xaxes(autorange="reversed")
-    fig.update_traces(marker={'size': 5})
+    fig.update_traces(marker={'symbol': 'square'})
     bid = 'test'
     fig.update_layout(
             width=900, height=1200,
