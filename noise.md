@@ -1,13 +1,13 @@
 # Measuring noise
 
-We consider measuring the noise in evaluation by adopting classic methods and some considerations for LLMs evals.
+We show how to measure the noise in evaluation using sign test and the bootstrap and then discuss some considerations for LLMs evals. 
 
 For correctness evaluation, there are $N$ examples $\{(x_1, y_1), \ldots, (x_N, y_N)\}$,
 the model makes prediction $\hat{y}(x)$, possibly random, and we get a binary correctness judgement $R(\hat{y}, y) \in \{0, 1\}$, 0 for incorrect and 1 for correct. $R$ can be checking for equality or running tests on $\hat{y}$ or asking another model, but we assume a binary outcome here.
 We may also compute then get the mean $\text{acc} = \frac1{N} \sum_i R(\hat{y}_i, y_i)$ 
 
 We have model A and B, and we are trying to determine if A is better than B.
-Statistics have a lot say about this problem. While the answers are not exactly the same depending on the method and assumptions, the sign test asks if the observed results are likely when the outcomes are random, and bootstrap asks if the observed results is reliable when the examples are random. It is resassuring that they give about the same answer.
+Statistics have a lot say about this problem. While the answers are not exactly the same depending on the method and assumptions, the sign test asks if the observed results are likely when the outcomes are random, and bootstrap asks if the observed results is reliable when the examples are random. It is reassuring that they give about the same answer.
 
 ## Sign test
 The textbook recommendation where we have binary outcomes is the sign test or McNemar's test. Here is a translation for the application to model comparison.
@@ -32,15 +32,13 @@ p-values can be converted from two-sided to one-sided by dividing by 2 for the s
 In restrospect, the main value of the experiment in eval-arena was to establish that $A + B \geq 20$ and $A + B \geq |A - B| +  8$ for all model pairs and all benchmarks tested.
 This leads to simple behavior predictable from theory. So instead of conducting their own tests, users of these benchmarks can just ask if what they are comparing might be an exception, and if not, they can just interpret the results based on the aggregate behavior that is true for all model pairs so far. If they suspect an exception, they should verify that their $A+B$ is indeed small.
 
-There are some subtle cases when bootstrap is different, since 
-
 ## LLM considerations
 
 ### Noise from stochastic LLM prediction
-We can get iid (identical and independent) predictions from LLMs, which is potentially confusing for reproducible vs. statistically significant, so is discussed here.
-In LLMs, we can draw iid sample they are interestingly different from each other. In the physical world, because we cannot reset the state, once we do an experiment, we cannot ask for another iid sample: did a treatment work on a patient? or did the student solve a particular problem? So usually statistical tests do not consider the ability to draw more iid samples.
+We can get iid (identical and independent) predictions from LLMs, which is potentially confusing and we discuss it here.
+In LLMs, we can draw iid sample they are interestingly different from each other. In the physical world, because we cannot reset the state, once we do an experiment, we cannot ask for another iid sample: did a treatment work on a patient? or did the student solve a particular problem? So usually statistical tests do not use the ability to draw more iid samples.
 
-We can certainly draw more samples and estimate an lowerbound on the noise level, but this is insufficient. Sampling from model does not account for other noise such as hyperparameters used to train the model, arbitrary choices in the data etc. Even if we assume the outputs are deterministic, so that A always beats B in 51 examples, and always loses in 49 examples, then we still don't want to conclude that A is better than B with high confidence. If we believe the bootstrapping, then this is just because our results can change if a slightly different set of examples are used instead. 
+We can certainly draw more samples and estimate an lowerbound on the noise level, but this is still insufficient. Sampling from model does not account for other noise such as hyperparameters used to train the model, arbitrary choices in the data etc. Even if we assume the outputs are deterministic, so that A always beats B in 51 examples, and always loses in 49 examples, then we still don't want to conclude that A is better than B with high confidence. If we believe the bootstrapping, then this is just because our results can change if a slightly different set of examples are used instead. 
 
 
 If this iid prediction noise is worrisome already, it can be reduced by averaging and can be estimated from a few samples.
@@ -69,12 +67,12 @@ If feeling generous, perhaps another good model can be used to extract answers. 
 
 ### Works measuring noise in LLM evals
 Of the leaderboards, [Chatbot arena](https://chat.lmsys.org/) and [CRUXEval](https://crux-eval.github.io/) computed confidence intervals using bootstrap
-and they both did this by having a reference and then compute the intervals relative to the reference . While that is the only way (that I know) to show confidence levels in a linear figure, that method produces intervals that are too large on most pairs, but especially those that are far from the reference. Both of their plots show larger and larger intervals just by being further from the reference (figure `visualize_bootstrap_scores` for chatbot arena). So some of their pairs with overlapping intervals are like not actually overlapping when tested pairwise.
+and they both did this by having a reference and then compute the intervals relative to the reference . While that is the only way (that I know) to show confidence levels in a linear figure, this method produce intervals that are too large on most pairs, but especially for models that most different from the reference. Both of their plots show larger and larger intervals just by being further from the reference (figure `visualize_bootstrap_scores` for chatbot arena). So some of their pairs with overlapping intervals are like not actually overlapping when tested pairwise.
 
-[Quantifying Variance in Evaluation Benchmarks](https://arxiv.org/pdf/2406.10229) measured noise due to random seeds for a more general set of benchmarks.
-This is a direct approach to measuring the noise due to a particularly controlled source of randomness, which should be considered a lowerbound but is insufficient.
-As in the [noise due to sampling](#noise-from-stochastic-llm-prediction), it is direct and conceptually simple to measure,
+The work [Quantifying Variance in Evaluation Benchmarks](https://arxiv.org/pdf/2406.10229) measured noise due to random seeds for a more general set of benchmarks.
+This is a direct approach to measuring the noise due to a particularly source of randomness, which should be considered a lowerbound but is insufficient in general.
+As in the [noise due to sampling](#noise-from-stochastic-llm-prediction), it is direct and simple to measure,
 but does not account for
-other arbitrary decisions made in both data and code that are not explicitly seeded such as the choices made on how the data is shuffled / filtered.
+other arbitrary decisions made in both data and code that are not explicitly seeded such as the choices made on how the data is shuffled / filtered. 
 
 
