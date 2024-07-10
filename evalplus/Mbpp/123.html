@@ -1,0 +1,1851 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/123 </h1>
+<pre><code> """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def div_sum(num):
+    res = 1
+    i = 2
+    while i * i <= num:
+        if num % i == 0:
+            res += i
+            if i * i != num:
+                res += num / i
+        i += 1
+    return res
+def amicable_numbers_sum(limit):
+    amicables = set()
+    for num in range(2, limit + 1):
+        if num in amicables:
+            continue
+        sum_fact = div_sum(num)
+        sum_fact2 = div_sum(sum_fact)
+        if num == sum_fact2 and num != sum_fact:
+            amicables.add(num)
+            amicables.add(sum_fact2)
+    return sum(amicables)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[999], [9999], [99]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[10000], [5000], [4999], [4998], [5001], [90], [92], [89], [91], [10001], [93], [5002], [4997], [True], [94], [4996], [4995], [10002], [9999], [88], [10003], [5003], [5004], [21], [87], [22], [4994], [95], [86], [96], [20], [9998], [4993], [23], [47], [97], [5005], [10004], [9], [9997], [10005], [85], [8], [46], [9996], [84], [7], [19], [9995], [98], [10006], [18], [99], [100], [101], [24], [68], [61], [69], [44], [43], [17], [5006], [16], [6], [10], [45], [10007], [66], [15], [83], [48], [9994], [81], [60], [74], [5007], [67], [28], [80], [72], [79], [70], [29], [49], [9993], [65], [4992], [4991], [11], [10008], [73], [12], [62], [71], [4990], [5008], [78], [50], [59], [77], [10009]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    """
+    :param n: int
+    :return: int
+    """
+    sum_ = 0
+    for i in range(1, n + 1):
+        if i == sum_of_divisors(i):
+            sum_ += i
+    return sum_
+
+
+def sum_of_divisors(n):
+    """
+    :param n: int
+    :return: int
+    """
+    sum_ = 1
+    for i in range(2, n):
+        if n % i == 0:
+            sum_ += i
+    return sum_
+
+
+if __name__ == '__main__':
+    print(amicable_numbers_sum(999))
+</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def proper_divisors_sum(n):
+    """
+    Calculate the sum of proper divisors for a given number.
+    """
+    divisors_sum = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i:
+            continue
+        divisors_sum += i
+        divisor = n // i
+        if divisor > i:
+            divisors_sum += divisor
+
+    return divisors_sum
+
+def is_amicable(n, divisors_sums):
+    """
+    Check if a number is amicable.
+    """
+    if n < 2:
+        return False
+    if n not in divisors_sums:
+        return False
+    return divisors_sums[n] != n and divisors_sums[divisors_sums[n]] == n
+
+def amicable_numbers_sum(limit):
+    """
+    Sum all amicable numbers from 1 to a specified number.
+    """
+    divisors_sums = {i: proper_divisors_sum(i) for i in range(2, limit + 1)}
+    return sum(n for n in range(2, limit + 1) if is_amicable(n, divisors_sums))
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def get_divisors_sum(num):
+        sum = 1
+        for i in range(2, int(num ** 0.5) + 1):
+            if num % i == 0:
+                if i == (num / i):
+                    sum += i
+                else:
+                    sum += i + num / i
+        return sum
+
+    amicable_sum = 0
+    for i in range(1, n + 1):
+        j = get_divisors_sum(i)
+        k = get_divisors_sum(j)
+        if i == k and i != j:
+            amicable_sum += i + j
+    return amicable_sum
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def is_amicable(n):
+    """
+    Checks if a number is amicable.
+    An amicable number is a pair of numbers where the sum of the proper divisors of one
+    is equal to the other number and vice versa.
+    """
+    divisors_sum = sum(i for i in range(1, n) if n % i == 0)
+    other_num = sum(i for i in range(1, divisors_sum) if divisors_sum % i == 0)
+    return n == other_num and n != divisors_sum
+
+def amicable_numbers_sum(n):
+    """
+    Sums all amicable numbers from 1 to the specified number.
+    """
+    return sum(i for i in range(1, n+1) if is_amicable(i))
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def sum_of_factors(n):
+    sum = 1
+    i = 2
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            if i * (n // i) == n:
+                sum = sum + i + n//i
+            else:
+                sum = sum + i
+            i += 1
+    return sum
+
+def amicable_numbers_sum(num):
+    sum = 0
+    for i in range(1, num+1):
+        if sum_of_factors(i) != i:
+            if sum_of_factors(sum_of_factors(i)) == i:
+                sum += i
+    return sum
+
+print(amicable_numbers_sum(999))</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+def sum_divisors(n):
+    sum = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            sum += i
+            if i != n // i:
+                sum += n // i
+    return sum
+
+def is_amicable(n):
+    return sum_divisors(sum_divisors(n)) == n and n != sum_divisors(n)
+
+def amicable_numbers_sum(n):
+    return sum(i for i in range(1, n+1) if is_amicable(i))
+
+assert amicable_numbers_sum(999)==504</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def sum_of_divisors(n):
+    return sum(i for i in range(1, n) if n % i == 0)
+
+def amicable_numbers_sum(limit):
+    amicable_sum = 0
+    for a in range(1, limit + 1):
+        b = sum_of_divisors(a)
+        if a != b and sum_of_divisors(b) == a:
+            amicable_sum += a
+    return amicable_sum
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_divisors(n):
+    """Returns the sum of proper divisors of n."""
+    divsum = 1
+    i = 2
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            divsum += i
+    if n > 1:
+        divsum += n
+    return divsum
+
+def amicable_pairs(n):
+    """Returns a list of amicable pairs up to n."""
+    pairs = []
+    for i in range(1, n):
+        a = sum_divisors(i)
+        if a > i and a < n and sum_divisors(a) == i:
+            pairs.append((i, a))
+    return pairs
+
+def amicable_numbers_sum(n):
+    """Returns the sum of all amicable numbers up to n."""
+    amicables = set(x[0] for x in amicable_pairs(n))
+    return sum(amicables)
+
+# Test the function
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that calculates the sum of all amicable numbers up to a specified number:
+
+
+```python
+def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        divisors = []
+        for i in range(1, num):
+            if num % i == 0:
+                divisors.append(i)
+        return sum(divisors)
+
+    amicable_sum = 0
+    for i in range(1, n+1):
+        divisors_sum = sum_of_divisors(i)
+        if i != divisors_sum:
+            if i == sum_of_divisors(divisors_sum) and i != divisors_sum:
+                amicable_sum += i
+    return amicable_sum
+```
+
+The `sum_of_divisors` function calculates the sum of all divisors of a given number. The `amicable_numbers_sum` function iterates through all numbers from 1 to `n` and checks if they are amicable by comparing the sum of their divisors to the number itself. If they are, it adds the number to the `amicable_sum` variable. Finally, it returns the sum of all amicable numbers found. 
+
+
+To test the function, you can call it with `amicable_numbers_sum(999)` and it should return `504`. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def divisor_sum(n):
+    """Calculate the sum of divisors of a number."""
+    sum = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            sum += i
+            if i != n // i:
+                sum += n // i
+    return sum
+
+def amicable_numbers_sum(n):
+    """Calculate the sum of amicable numbers from 1 to n."""
+    sum = 0
+    for i in range(2, n + 1):
+        if i == divisor_sum(divisor_sum(i)) and i != divisor_sum(i):
+            sum += i
+    return sum
+
+# Test the function
+assert amicable_numbers_sum(999) == 504
+print("All test cases pass")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n + 1):
+        if sum_of_divisors(i) == i and sum_of_divisors(sum_of_divisors(i)) == i:
+            sum += i
+    return sum
+
+
+def sum_of_divisors(n):
+    sum = 0
+    for i in range(1, n):
+        if n % i == 0:
+            sum += i
+    return sum
+
+
+print(amicable_numbers_sum(999))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def is_amicable(a):
+        d_sum = 0
+        for i in range(1, a):
+            if a % i == 0:
+                d_sum += i
+        return d_sum != a and d_sum <= n and is_amicable(d_sum) == a
+
+    sum_amicable = 0
+    for i in range(2, n):
+        if is_amicable(i):
+            sum_amicable += i
+    return sum_amicable
+
+# Test case
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def divisor_sum(n):
+    sum = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            if i == n // i:
+                sum += i
+            else:
+                sum += i + n//i
+    return sum
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n + 1):
+        j = divisor_sum(i)
+        if i == divisor_sum(j) and i != j:
+            sum += i + j
+    return sum // 2
+
+assert amicable_numbers_sum(999) == 504
+```
+
+This code first defines a helper function `divisor_sum(n)` to calculate the sum of all divisors of a number `n`. Then it defines the main function `amicable_numbers_sum(n)` to calculate the sum of all amicable numbers from 1 to `n`. An amicable number is a number for which the sum of its proper divisors is equal to the sum of the proper divisors of that sum. The function checks this condition for all numbers from 1 to `n` and adds the amicable numbers to the sum. The sum is divided by 2 because each amicable pair is counted twice.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    amicable_numbers = []
+    for i in range(1,n):
+        if i not in amicable_numbers:
+            j = sum(1 for j in range(1,i) if i%j == 0 and i!= j)
+            if j == i and i!= j:
+                amicable_numbers.append(i)
+    return sum(amicable_numbers)
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+assert longest_common_prefix(["flower","flow","flight"])=="fl"
+"""
+
+def longest_common_prefix(strs):
+    if len(strs) == 0:
+        return ""
+    if len(strs) == 1:
+        return strs[0]
+    prefix = strs[0]
+    for i in range(1,len(strs)):
+        prefix = prefix[:len(prefix)-1]
+        if prefix == "":
+            return prefix
+        if prefix!= strs[i]:
+            return prefix
+    return prefix
+
+"""
+Write a function to find the longest common suffix string amongst an array of strings.
+If there is no common suffix, return an empty string "".
+assert longest_common_suffix(["flower","flow","flight"])=="tt"
+"""
+
+def longest_common_suffix(strs):
+    if len(strs) == 0:
+        return ""
+    if len(strs) == 1:
+        return strs[0]
+    suffix = strs[0]
+    for i in range(1,len(strs)):
+        suffix = suffix[len(suffix):]
+        if suffix == "":
+            return suffix
+        if suffix!= strs[i]:
+            return suffix
+    return suffix
+
+"""
+Write a function to find the longest common substring amongst an array of strings.
+If there is no common substring, return an empty string "".
+assert longest_common_substring(["flower","flow","flight"])=="fl"
+"""
+
+def longest_common_substring(</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_proper_divisors(n):
+    """
+    Function to calculate sum of proper divisors of a number.
+    """
+    sum = 1
+    i = 2
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            if i * (n // i) == n:
+                sum = sum + i
+            else:
+                sum = sum + (i + n//i)
+            i += 1
+    return sum
+
+def amicable_numbers_sum(limit):
+    """
+    Function to sum all amicable numbers from 1 to a specified number.
+    """
+    amicable_sum = 0
+    for i in range(1, limit + 1):
+        j = sum_proper_divisors(i)
+        if j != i and sum_proper_divisors(j) == i:
+            amicable_sum += i
+    return amicable_sum
+
+# Test the function
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    """
+    >>> amicable_numbers_sum(999)
+    504
+    """
+    return sum(
+        i
+        for i in range(1, n + 1)
+        if i in {
+            j
+            for j in range(1, i)
+            if i in {
+                k
+                for k in range(1, j)
+                if j % k == 0 and i % (j // k) == 0
+            }
+        }
+    )
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    """
+    :param n:
+    :return:
+    """
+    sum_ = 0
+    for i in range(1, n + 1):
+        if is_amicable(i):
+            sum_ += i
+    return sum_
+
+
+def is_amicable(n):
+    """
+    :param n:
+    :return:
+    """
+    sum_ = 0
+    for i in range(1, n):
+        if n % i == 0:
+            sum_ += i
+    if sum_ == n:
+        return True
+    return False
+
+
+if __name__ == '__main__':
+    print(amicable_numbers_sum(10000))
+
+"""
+SPECS:
+
+TIME COMPLEXITY: O(n)
+SPACE COMPLEXITY: O(1)
+"""
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python function to sum all amicable numbers from 1 to a specified number:
+
+```python
+def d(n):
+    sum = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            sum += i
+            if i * i != n:
+                sum += n // i
+    return sum
+
+def amicable_numbers_sum(limit):
+    result = 0
+    for i in range(1, limit):
+        if d(i) > i and d(d(i)) == i:
+            result += i
+    return result
+
+# Test the function
+print(amicable_numbers_sum(999))  # Output: 504
+```
+
+This function `d(n)` calculates the sum of proper divisors of a number `n`. The function `amicable_numbers_sum(limit)` sums all amicable numbers from 1 to the specified limit. An amicable number is a number that is equal to the sum of its proper divisors (excluding itself).
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_square(n):
+    if n < 0:
+        return False
+    x = int(n ** 0.5)
+    return x * x == n
+
+def is_amicable(n):
+    if n < 2:
+        return False
+    if is_square(n):
+        return True
+    for i in range(2, n):
+        if n % i == 0 and is_amicable(i) and is_amicable(n // i):
+            return True
+    return False
+
+def amicable_numbers_sum(n):
+    total = 0
+    for i in range(1, n + 1):
+        if is_amicable(i):
+            total += i
+    return total
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    amicable_numbers = []
+    for i in range(1, n+1):
+        if i in amicable_numbers:
+            continue
+        sum_of_divisors = sum(j for j in range(1, i) if i % j == 0)
+        if sum_of_divisors == i:
+            amicable_numbers.append(i)
+            amicable_numbers.append(sum_of_divisors)
+    return sum(amicable_numbers)
+
+print(amicable_numbers_sum(999))
+print(amicable_numbers_sum(10000))
+print(amicable_numbers_sum(10001))
+print(amicable_numbers_sum(10000))
+print(amicable_numbers_sum(100))
+print(amicable_numbers_sum(1))
+print(amicable_numbers_sum(2))
+print(amicable_numbers_sum(3))
+print(amicable_numbers_sum(4))
+print(amicable_numbers_sum(5))
+print(amicable_numbers_sum(6))
+print(amicable_numbers_sum(7))
+print(amicable_numbers_sum(8))
+print(amicable_numbers_sum(9))
+print(amicable_numbers_sum(10))
+print(amicable_numbers_sum(11))
+print(amicable_numbers_sum(12))
+print(amicable_numbers_sum(13))
+print(amicable_numbers_sum(14))
+print(amicable_numbers_sum(15))
+print(amicable_numbers_sum(16))
+print(amicable_numbers_sum(17))
+print(amicable_numbers_sum(18))
+print(amicable_numbers_sum(19))
+print(amicable_numbers_sum(20))
+print(amicable_numbers_sum(21))
+print(amicable_numbers_sum(22))
+print(amicable_numbers_sum(23))
+print(amicable_numbers_sum(24))
+print</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(num):
+    """
+    Write a function to sum all amicable numbers from 1 to a specified number.
+    assert amicable_numbers_sum(999)==504
+    """
+    sum = 0
+    for i in range(1, num + 1):
+        if is_amicable(i):
+            sum += i
+    return sum
+
+def is_amicable(num):
+    """
+    Write a function to check if a number is amicable.
+    assert is_amicable(220)==True
+    """
+    sum = 0
+    for i in range(1, num):
+        if num % i == 0:
+            sum += i
+    if sum == num:
+        return False
+    sum = 0
+    for i in range(1, sum + 1):
+        if sum % i == 0:
+            sum += i
+    if sum == num:
+        return True
+    return False</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+def is_amicable(n):
+    """
+    Check if a number is amicable.
+    """
+    sum_of_divisors = sum(x for x in range(1, n) if n % x == 0)
+    return sum_of_divisors == sum(int(i) for i in str(sum_of_divisors) if i != '0')
+
+def amicable_numbers_sum(up_to):
+    """
+    Sum all amicable numbers from 1 to a specified number.
+    """
+    amicable_numbers = [x for x in range(1, up_to+1) if is_amicable(x)]
+    return sum(amicable_numbers)
+
+# Test
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        divisors = [1]
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                divisors.append(i)
+                if i != num // i:
+                    divisors.append(num // i)
+        return sum(divisors)
+
+    def is_amicable(num):
+        sum_divisors = sum_of_divisors(num)
+        if num == sum_divisors:
+            return False
+        return num == sum_of_divisors(sum_divisors)
+
+    total_sum = 0
+    for i in range(1, n + 1):
+        if is_amicable(i):
+            total_sum += i
+
+    return total_sum
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def divisors(n):
+    """
+    Returns a list of all divisors of a number n.
+    """
+    divs = []
+    for i in range(1, n+1):
+        if n % i == 0:
+            divs.append(i)
+    return divs
+
+def amicable_numbers_sum(n):
+    """
+    Returns the sum of all amicable numbers from 1 to n.
+    """
+    amicable_sum = 0
+    for i in range(1, n+1):
+        if i == divisors(i)[-1]:
+            j = sum(divisors(i))
+            if j != i and j < n and i == sum(divisors(j)):
+                amicable_sum += i + j
+    return amicable_sum
+```
+
+The `divisors` function takes a number `n` as input and returns a list of all its divisors. It does this by iterating over all numbers from 1 to `n` and checking if each number is a divisor of `n`. If it is, the number is added to the list of divisors.
+
+The `amicable_numbers_sum` function takes a number `n` as input and returns the sum of all amicable numbers from 1 to `n`. It does this by iterating over all numbers from 1 to `n` and checking if each number is amicable. To check if a number is amicable, we first check if it is equal to the sum of its divisors. If it is, we then check if the sum of the divisors of the number is equal to the number itself. If both conditions are true, we add the number and its corresponding amicable number to the sum.
+
+The `assert` statement at the end of the script checks if the function returns the correct sum for the given input.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    """
+    Return the sum of all amicable numbers from 1 to n.
+    """
+    amicable_numbers = []
+    for i in range(1, n + 1):
+        if i in amicable_numbers:
+            continue
+        divisors = get_divisors(i)
+        if sum(divisors) == i:
+            continue
+        if sum(divisors) <= n and sum(divisors) != i:
+            if sum(get_divisors(sum(divisors))) == i:
+                amicable_numbers.append(i)
+                amicable_numbers.append(sum(divisors))
+    return sum(amicable_numbers)
+
+
+def get_divisors(n):
+    """
+    Return list of divisors of n.
+    """
+    divisors = []
+    for i in range(1, n // 2 + 1):
+        if n % i == 0:
+            divisors.append(i)
+    return divisors
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to sum all amicable numbers from 1 to a specified number:
+
+```python
+def amicable_numbers_sum(n):
+    def sum_of_divisors(n):
+        result = 1
+        i = 2
+        while i * i <= n:
+            if n % i:
+                i += 1
+            elif i * (n // i) == n:
+                if i == (n // i):
+                    result += i
+                else:
+                    result += (i + n // i)
+            i += 1
+        return result
+
+    result = 0
+    for i in range(2, n + 1):
+        sum_i = sum_of_divisors(i)
+        if i < sum_i and i == sum_of_divisors(sum_i):
+            result += i + sum_i
+    return result // 2
+
+print(amicable_numbers_sum(999))  # Output: 504
+```
+
+This function first calculates the sum of proper divisors for a given number. Then it checks for each number from 2 to the specified number if it is an amicable number. If it is, it adds the number and its pair to the result. Finally, it returns the sum of all amicable numbers.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    """
+    Returns the sum of all amicable numbers from 1 to n.
+    """
+    def sum_divisors(n):
+        """
+        Returns the sum of all divisors of n.
+        """
+        return sum(i for i in range(1, n) if n % i == 0)
+
+    def sum_divisors_of_sum(n):
+        """
+        Returns the sum of all divisors of the sum of all divisors of n.
+        """
+        return sum(i for i in range(1, n) if sum_divisors(i) == n)
+
+    return sum(i for i in range(1, n+1) if sum_divisors_of_sum(i) == i)
+
+assert amicable_numbers_sum(999)==504
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(number):
+    amicable_numbers = []
+    for i in range(1, number):
+        if sum(amicable_numbers) == i:
+            amicable_numbers.append(i)
+        if sum(amicable_numbers) == number:
+            amicable_numbers.append(i)
+    return sum(amicable_numbers)
+
+print(amicable_numbers_sum(999))
+
+"""
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(number):
+    amicable_numbers = []
+    for i in range(1, number):
+        if sum(amicable_numbers) == i:
+            amicable_numbers.append(i)
+        if sum(amicable_numbers) == number:
+            amicable_numbers.append(i)
+    return sum(amicable_numbers)
+
+print(amicable_numbers_sum(999))
+
+"""
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(number):
+    amicable_numbers = []
+    for i in range(1, number):
+        if sum(amicable_numbers) == i:
+            amicable_numbers.append(i)
+        if sum(amicable_numbers) == number:
+            amicable_numbers.append(i)
+    return sum(amicable_numbers)
+
+print(amicable_numbers_sum(999))
+
+"""
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(number):
+    amicable_numbers = []
+    for i in range(1, number):
+        if sum(amicable_numbers) == i:
+            amicable_numbers.append(i)
+        if sum(amicable_numbers) == number:
+            </code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        sum = 0
+        for i in range(1, num):
+            if num % i == 0:
+                sum += i
+        return sum
+    amicable_numbers = []
+    for a in range(1, n + 1):
+        b = sum_of_divisors(a)
+        if a != b and sum_of_divisors(b) == a:
+            amicable_numbers.append(a)
+    return sum(amicable_numbers)</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1,n):
+        if sum(div(i)) == i and sum(div(sum(div(i)))) == i and i != sum(div(i)):
+            sum += i
+    return sum
+
+def div(n):
+    divs = []
+    for i in range(1,n):
+        if n % i == 0:
+            divs.append(i)
+    return divs
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def sum_divisors(n):
+    s = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            s += i
+            if i != n // i:
+                s += n // i
+    return s
+
+def amicable_numbers_sum(n):
+    amicable_sum = 0
+    for a in range(1, n + 1):
+        b = sum_divisors(a)
+        if a != b and sum_divisors(b) == a:
+            amicable_sum += a
+    return amicable_sum
+
+# Test the function
+assert amicable_numbers_sum(999)==504</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def sum_of_divisors(n):
+    """Calculate the sum of proper divisors of a number."""
+    result = 1
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            if i == (n // i):
+                result += i
+            else:
+                result += i + (n // i)
+    return result
+
+def is_amicable(n):
+    """Check if two numbers are amicable."""
+    sum_n = sum_of_divisors(n)
+    sum_of_div_sum_n = sum_of_divisors(sum_n)
+    return n == sum_of_div_sum_n and n != sum_n
+
+def amicable_numbers_sum(limit):
+    """Sum all amicable numbers up to a specified limit."""
+    amicable_sum = 0
+    for i in range(1, limit + 1):
+        if is_amicable(i):
+            amicable_sum += i
+    return amicable_sum
+
+# Test the function
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_proper_divisors(num):
+        sum = 1
+        i = 2
+        while i * i <= num:
+            if num % i:
+                i += 1
+            else:
+                if i * (num // i) == num:
+                    sum = sum + i + num // i
+                else:
+                    sum = sum + i
+                i += 1
+        return sum
+
+    total = 0
+    for i in range(1, n+1):
+        j = sum_of_proper_divisors(i)
+        if i != j and sum_of_proper_divisors(j) == i:
+            total += i
+    return total
+
+assert amicable_numbers_sum(999)==504
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        return sum(i for i in range(1, num) if num % i == 0)
+
+    amicable_nums = []
+    for num in range(1, n + 1):
+        sum_num = sum_of_divisors(num)
+        if sum_num != num and num == sum_of_divisors(sum_num):
+            amicable_nums.append(num)
+    return sum(amicable_nums)
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    sum_of_divisors = lambda x: sum(set(range(1, x // 2 + 1)) - {x})
+    return sum(x for x in range(1, n) if x == sum_of_divisors(sum_of_divisors(x)))
+
+
+"""
+Write a function that takes a string as an argument and returns the number of times the letter "a" appears in the string.
+assert count_a("a") == 1
+assert count_a("abc") == 0
+assert count_a("aab") == 2
+assert count_a("aabbb") == 3
+"""
+
+def count_a(s):
+    return s.count("a")
+
+
+"""
+Write a function that takes a string as an argument and returns the number of times the letter "a" appears in the string.
+assert count_a("a") == 1
+assert count_a("abc") == 0
+assert count_a("aab") == 2
+assert count_a("aabbb") == 3
+"""
+
+def count_a(s):
+    return s.count("a")
+
+
+"""
+Write a function that takes a string as an argument and returns the number of times the letter "a" appears in the string.
+assert count_a("a") == 1
+assert count_a("abc") == 0
+assert count_a("aab") == 2
+assert count_a("aabbb") == 3
+"""
+
+def count_a(s):
+    return s.count("a")
+
+
+"""
+Write a function that takes a string as an argument and returns the number of times the letter "a" appears in the string.
+assert count_a("a") == 1
+assert count_a("abc") == 0
+assert count_a("aab") == 2
+assert count_a("aabbb") == 3
+"""
+
+def count_a(s):
+    return s.count("a")
+
+
+"""
+Write a function that takes a string as an argument and returns the number of times the letter "a" appears in the string.
+assert count_a("a") == 1
+assert count_a("abc") == 0
+assert count_a("aab") == 2
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    """
+    Return the sum of all amicable numbers from 1 to n.
+    """
+    amicable_numbers = [0]*(n+1)
+    amicable_numbers[0] = 1
+    amicable_numbers[1] = 1
+    for i in range(2, n+1):
+        if amicable_numbers[i] == 0:
+            for j in range(i, n+1, i):
+                if amicable_numbers[j] == 0:
+                    amicable_numbers[j] = i
+                else:
+                    if amicable_numbers[i] == amicable_numbers[j]:
+                        amicable_numbers[i] = amicable_numbers[i]*2
+    return sum(amicable_numbers)
+
+assert amicable_numbers_sum(999) == 504
+
+"""
+Write a function to count the number of amicable numbers from 1 to n.
+assert count_amicable_numbers(999) == 504
+"""
+
+def count_amicable_numbers(n):
+    """
+    Return the number of amicable numbers from 1 to n.
+    """
+    amicable_numbers = [0]*(n+1)
+    amicable_numbers[0] = 1
+    amicable_numbers[1] = 1
+    for i in range(2, n+1):
+        if amicable_numbers[i] == 0:
+            for j in range(i, n+1, i):
+                if amicable_numbers[j] == 0:
+                    amicable_numbers[j] = i
+                else:
+                    if amicable_numbers[i] == amicable_numbers[j]:
+                        amicable_numbers[i] = amicable_numbers[i]*2
+    return sum(amicable_numbers)
+
+assert count_amicable_numbers(999) == 504
+
+"""
+Write a function to count the number of amicable numbers from 1 to n.
+assert count_amicable_numbers(999) == 504
+"""
+
+def count_amicable_numbers(n):
+</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+import math
+
+def sum_of_divisors(n):
+    sum = 1
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            sum += i
+            if i != n // i:
+                sum += n // i
+    return sum
+
+def amicable_numbers_sum(limit):
+    amicable_sum = 0
+    for a in range(2, limit):
+        b = sum_of_divisors(a)
+        if b > a and sum_of_divisors(b) == a:
+            amicable_sum += a + b
+    return amicable_sum
+
+assert amicable_numbers_sum(999) == 504
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    """
+    Write a function to sum all amicable numbers from 1 to a specified number.
+
+    assert amicable_numbers_sum(999)==504
+    """
+    sum = 0
+    for num in range(1, n+1):
+        dividers = [x for x in range(1, int(num**0.5) + 1) if x * x != num else x]
+        amicable_sum = sum(dividers) - num
+        if amicable_sum == num and num not in excluded_numbers:
+            sum += num
+    return sum
+
+excluded_numbers = [1, 2, 3, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        sum = 1
+        i = 2
+        while i * i <= num:
+            if num % i:
+                i += 1
+            else:
+                if i * (num // i) == num:
+                    sum = sum + i + num//i
+                else:
+                    sum = sum + i
+                i += 1
+        return sum
+
+    amicable_sum = 0
+    for i in range(1, n+1):
+        sum1 = sum_of_divisors(i)
+        if sum1 > i and sum_of_divisors(sum1) == i:
+            amicable_sum += i
+    return amicable_sum
+
+print(amicable_numbers_sum(999))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        sum = 0
+        for i in range(1, num):
+            if num % i == 0:
+                sum += i
+        return sum
+
+    def is_amicable(num):
+        sum1 = sum_of_divisors(num)
+        sum2 = sum_of_divisors(sum1)
+        return sum1 < num and sum2 < num and sum1 > sum2
+
+    amicable_sum = 0
+    for i in range(1, n+1):
+        if is_amicable(i):
+            amicable_sum += i
+    return amicable_sum
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        return sum(i for i in range(1, num) if num % i == 0)
+
+    amicable_numbers = set()
+    for i in range(1, n+1):
+        j = sum_of_divisors(i)
+        if i != j and sum_of_divisors(j) == i:
+            amicable_numbers.add(i)
+            amicable_numbers.add(j)
+
+    return sum(amicable_numbers)
+
+assert amicable_numbers_sum(999)==504</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that sums all amicable numbers from 1 to a specified number:
+
+```python
+def amicable_numbers_sum(n):
+    def is_amicable(num):
+        # Calculate the proper divisors of a number
+        divisors_sum = sum(i for i in range(1, num) if num % i == 0)
+        # Calculate the sum of proper divisors of the sum of the number
+        return sum(i for i in range(1, divisors_sum) if divisors_sum % i == 0)
+
+    # Calculate the sum of all amicable numbers from 1 to n
+    return sum(num for num in range(1, n+1) if num != is_amicable(num) and is_amicable(is_amicable(num)) == num)
+
+# Test the function with n = 999
+print(amicable_numbers_sum(999)) # Output: 504
+```
+
+Explanation:
+
+- The `is_amicable` function takes a number as input and returns the sum of its proper divisors. For example, `is_amicable(220)` returns 284, because 220 has proper divisors 1, 2, 4, 5, 10, 11, 20, and 220, and their sum is 284.
+- The `amicable_numbers_sum` function uses a list comprehension to iterate over all numbers from 1 to `n` and checks if the number is not equal to its amicable number and the amicable number is equal to the number itself. If both conditions are true, the number is added to the sum.
+- The function returns the sum of all amicable numbers from 1 to `n`.
+- The test case with `n=999` returns 504, which is the expected output. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n):
+        if is_amicable(i):
+            sum += i
+    return sum
+
+def is_amicable(n):
+    sum = 0
+    for i in range(1, n):
+        if i == sum_divisors(i):
+            continue
+        if sum_divisors(i) == n and sum_divisors(sum_divisors(i)) == i:
+            return True
+    return False
+
+def sum_divisors(n):
+    sum = 0
+    for i in range(1, n):
+        if n % i == 0:
+            sum += i
+    return sum
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    amicable_numbers = set()
+    for i in range(1, n + 1):
+        for j in range(i + 1, n + 1):
+            if i + j == j + i:
+                amicable_numbers.add(i)
+    return sum(amicable_numbers)
+
+assert amicable_numbers_sum(999)==504</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    """
+    Write a function to sum all amicable numbers from 1 to a specified number.
+    assert amicable_numbers_sum(999)==504
+    """
+    pass
+
+
+if __name__ == "__main__":
+    print(amicable_numbers_sum(999))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    """
+    Return the sum of all amicable numbers from 1 to n.
+    """
+    amicable_numbers = [0] * n
+    for i in range(1, n):
+        if amicable_numbers[i] == 0:
+            amicable_numbers[i] = i
+            for j in range(i, n):
+                if amicable_numbers[j] == 0:
+                    if i!= j and is_amicable(i, j):
+                        amicable_numbers[i] += j
+                        amicable_numbers[j] += i
+    return sum(amicable_numbers)
+
+def is_amicable(a, b):
+    """
+    Return True if a and b are amicable numbers.
+    """
+    return sum(divisors(a)) == sum(divisors(b)) and sum(divisors(b)) == sum(divisors(a))
+
+def divisors(n):
+    """
+    Return the divisors of n.
+    """
+    divisors = [1]
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            divisors.append(i)
+            divisors.append(n // i)
+    return divisors
+
+def test_amicable_numbers_sum():
+    assert amicable_numbers_sum(999) == 504
+
+if __name__ == "__main__":
+    print(amicable_numbers_sum(999))
+</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n):
+        if is_amicable(i):
+            sum += i
+    return sum
+
+
+def is_amicable(n):
+    sum = 0
+    for i in range(1, n):
+        if n % i == 0:
+            sum += i
+    return sum == n
+
+
+if __name__ == '__main__':
+    assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    amicable_numbers = []
+    for i in range(1, n+1):
+        sum_of_divisors = sum(set(range(1, i)) - set(range(1, int(i**0.5)+1, i)))
+        if i != sum_of_divisors and sum_of_divisors != 0 and sum_of_divisors != i:
+            amicable_numbers.append(i)
+    return sum(amicable_numbers)
+
+assert amicable_numbers_sum(999)==504
+```
+
+This Python script defines a function `amicable_numbers_sum(n)` that calculates the sum of all amicable numbers from 1 to a specified number `n`. An amicable number is a number that has a friend number, which is another number such that the sum of the divisors of each number is equal to the other number. The function uses a loop to iterate through all numbers from 1 to `n`, and for each number, it calculates the sum of its divisors. If the number is not equal to its sum of divisors, and the sum of divisors is not zero and not equal to the number itself, then it is an amicable number and is added to the list of amicable numbers. Finally, the function returns the sum of all amicable numbers. The assert statement at the end checks if the function returns the correct result for the input `n=999`.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n):
+        if i == sum_of_divisors(i) and i!= sum_of_divisors(sum_of_divisors(i)):
+            sum += i
+    return sum
+
+def sum_of_divisors(n):
+    sum = 0
+    for i in range(1, n):
+        if n % i == 0:
+            sum += i
+    return sum
+
+print(amicable_numbers_sum(999))
+print(amicable_numbers_sum(10000))
+print(amicable_numbers_sum(100000))
+print(amicable_numbers_sum(1000000))
+print(amicable_numbers_sum(10000000))
+print(amicable_numbers_sum(100000000))
+print(amicable_numbers_sum(1000000000))
+print(amicable_numbers_sum(10000000000))
+print(amicable_numbers_sum(100000000000))
+print(amicable_numbers_sum(1000000000000))
+print(amicable_numbers_sum(10000000000000))
+print(amicable_numbers_sum(100000000000000))
+print(amicable_numbers_sum(1000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(100000000000000000))
+print(amicable_numbers_sum(</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def sum_amicable_numbers(n):
+    """
+    Sum all amicable numbers from 1 to a specified number.
+    :param n: number
+    :return: sum of amicable numbers
+    """
+    return sum(amicable_numbers(n))
+
+
+def amicable_numbers(n):
+    """
+    Return a list of amicable numbers from 1 to a specified number.
+    :param n: number
+    :return: list of amicable numbers
+    """
+    return [x for x in range(1, n + 1) if is_amicable(x)]
+
+
+def is_amicable(n):
+    """
+    Check if a number is amicable.
+    :param n: number
+    :return: True if amicable, False otherwise
+    """
+    return sum_of_divisors(n) == sum_of_divisors(sum_of_divisors(n)) and sum_of_divisors(n) != n
+
+
+def sum_of_divisors(n):
+    """
+    Return the sum of divisors of a number.
+    :param n: number
+    :return: sum of divisors
+    """
+    return sum(divisors(n))
+
+
+def divisors(n):
+    """
+    Return a list of divisors of a number.
+    :param n: number
+    :return: list of divisors
+    """
+    return [x for x in range(1, n // 2 + 1) if n % x == 0]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    amicable_numbers = sum(amicable(i) for i in range(1, n+1) if amicable(i))
+    return amicable_numbers
+
+
+def amicable(n):
+    friends = list(filter(lambda x: x > 1 and n // x == x, range(1, n)))
+    return len(friends) > 1 and friends[0] + friends[1] == n
+
+
+if __name__ == "__main__":
+    import pytest
+    pytest.main([__file__])</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+def amicable_numbers_sum(n: int) -> int:
+    amicable_numbers = []
+
+    def is_amicable(num: int) -> bool:
+        # Find the sum of the divisors of a number excluding the number itself
+        divisor_sum = sum([1 for i in range(1, num + 1) if num % i == 0]) - num
+
+        # Check if the sum of divisors is also an amicable number
+        for i in range(1, n + 1):
+            if i != num and is_amicable(divisor_sum):
+                amicable_numbers.append(num)
+                return True
+        return False
+
+    for i in range(1, n + 1):
+        if is_amicable(i):
+            continue
+        amicable_numbers.append(i)
+
+    return sum(amicable_numbers)
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n):
+        if n % i == 0:
+            if i != n / i:
+                sum += i + n / i
+    return sum
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def sum_of_divisors(n):
+    """
+    Returns the sum of proper divisors of n.
+    """
+    divisors = []
+    for i in range(1, int(n**0.5) + 1):
+        if n % i == 0:
+            divisors.append(i)
+            if i != n // i:
+                divisors.append(n // i)
+    return sum(divisors) - n
+
+def is_amicable(n):
+    """
+    Returns True if n is an amicable number, False otherwise.
+    """
+    m = sum_of_divisors(n)
+    return sum_of_divisors(m) == n and m != n
+
+def amicable_numbers_sum(limit):
+    """
+    Returns the sum of all amicable numbers up to the given limit.
+    """
+    amicable_sum = 0
+    for n in range(1, limit + 1):
+        if is_amicable(n):
+            amicable_sum += n
+    return amicable_sum
+
+# Test case
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    def sum_of_divisors(n):
+        return sum(i for i in range(1, n//2+1) if n % i == 0)
+
+    amicable_numbers = set()
+    for i in range(1, n+1):
+        a = sum_of_divisors(i)
+        b = sum_of_divisors(a)
+        if a != b and b == i:
+            amicable_numbers.add(i)
+            amicable_numbers.add(a)
+    return sum(amicable_numbers)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+def amicable_numbers_sum(n):
+    amicable_numbers = []
+    for i in range(1, n):
+        if sum_of_divisors(i) == i:
+            continue
+        if sum_of_divisors(sum_of_divisors(i)) == i:
+            amicable_numbers.append(i)
+    return sum(amicable_numbers)
+
+def sum_of_divisors(n):
+    divisors = []
+    for i in range(1, n):
+        if n % i == 0:
+            divisors.append(i)
+    return sum(divisors)
+
+print(amicable_numbers_sum(10000))
+/001-050/003.py
+"""
+The prime factors of 13195 are 5, 7, 13 and 29.
+What is the largest prime factor of the number 600851475143 ?
+"""
+
+def largest_prime_factor(n):
+    for i in range(2, n):
+        if n % i == 0:
+            n = n / i
+            return largest_prime_factor(n)
+    return n
+
+print(largest_prime_factor(600851475143))
+/001-050/004.py
+"""
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+Find the largest palindrome made from the product of two 3-digit numbers.
+"""
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+def largest_palindrome(n):
+    palindromes = []
+    for i in range(100, 1000):
+        for j in range(100, 1000):
+            if is_palindrome(i * j):
+                palindromes.append(i * j)
+    return max(palindromes)
+
+print(largest_palindrome(3))
+/001-050/0</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def amicable_numbers_sum(n):
+    def sum_of_divisors(num):
+        sum = 0
+        for i in range(1, int(num/2) + 1):
+            if num % i == 0:
+                sum += i
+        return sum
+
+    amicable_numbers = []
+    for i in range(1, n+1):
+        sum_i = sum_of_divisors(i)
+        if sum_i != i and sum_of_divisors(sum_i) == i:
+            amicable_numbers.append(i)
+
+    return sum(amicable_numbers)
+
+assert amicable_numbers_sum(999) == 504</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sum all amicable numbers from 1 to a specified number.
+assert amicable_numbers_sum(999)==504
+"""
+
+
+def amicable_numbers_sum(n):
+    sum = 0
+    for i in range(1, n + 1):
+        if is_amicable(i):
+            sum += i
+    return sum
+
+def is_amicable(n):
+    if n == 1:
+        return False
+    if n == 28:
+        return True
+    if n == 330:
+        return True
+    if n == 1210:
+        return True
+    if n == 661:
+        return True
+    if n == 220:
+        return True
+    if n == 1184:
+        return True
+    if n == 2620:
+        return True
+    if n == 1729:
+        return True
+    if n == 2016:
+        return True
+    if n == 2304:
+        return True
+    if n == 2476:
+        return True
+    if n == 2812:
+        return True
+    if n == 1134:
+        return True
+    if n == 1119:
+        return True
+    if n == 1110:
+        return True
+    if n == 1111:
+        return True
+    if n == 1112:
+        return True
+    if n == 1113:
+        return True
+    if n == 1114:
+        return True
+    if n == 1115:
+        return True
+    if n == 1116:
+        return True
+    if n == 1117:
+        return True
+    if n == 1118:
+        return True
+    if n == 1119:
+        return True
+    if n == 1120:
+        return True
+    if n == 1121:
+        return True
+    if n == 1122:
+        return True
+    if n == 1123:
+        return True
+    if n == 1124:
+        return True
+    if n == 1125:
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def sum_of_divisors(n):
+    sum = 1
+    i = 2
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            if i * (n // i) == n:
+                sum = sum + i + n//i
+            else:
+                sum = sum + i
+            i += 1
+    return sum
+
+def amicable_numbers_sum(limit):
+    amicable_numbers = set()
+    for i in range(2, limit+1):
+        sum_i = sum_of_divisors(i)
+        if sum_i <= limit and sum_i != i and sum_of_divisors(sum_i) == i:
+            amicable_numbers.add(i)
+    return sum(amicable_numbers)
+
+# Test the function
+print(amicable_numbers_sum(999))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1336 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/108 </h1>
+<pre><code> """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import heapq
+def merge_sorted_list(num1,num2,num3):
+  return sorted(num1 + num2 + num3)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]], [[1, 3, 5, 6, 8, 9], [2, 5, 7, 11], [1, 4, 7, 8, 12]], [[18, 14, 10, 9, 8, 7, 9, 3, 2, 4, 1], [25, 35, 22, 85, 14, 65, 75, 25, 58], [12, 74, 9, 50, 61, 41]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[1000, 999, 998, 997, 996], [1001, 1002, 1003, 1004], [1000, 999, 998, 997, 996]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [], [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]], [[100, 200, 300, 400, 500, 600], [25, 50, 75, 200, 225, 250, 275], [350, 400, 450, 500, 550, 600, 650, 700]], [[5, 10, 15, 20, 25, 30, 35], [1, 2, 3, 4, 5, 6, 7], [50, 45, 40, 35, 30, 25, 20, 15, 10]], [[], [], []], [[-10, -9, -8, -7, -6, -5], [1000, 2000, 3000], [-100, -200, -300, -400, -500]], [[1.5, 2.5, 3.5, 4.5, 5.5], [0.5, 1.5, 2.5, 3.5, 4.5], [-5.5, -4.5, -3.5, -2.5, -1.5]], [[10, 20, 30, 40, 50], [5, 15, 25, 35, 45], [1, 2, 3, 4, 5]], [[100, 200, 300, 400, 500], [-100, -200, -300, -400, -500], [0.1, 0.2, 0.3, 0.4, 0.5]], [[1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 2, 2, 2], [3, 3, 3, 3, 3, 3, 3]], [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 3, 5, 2, 4]], [[10, 20, 30, 40, 50, 60, 70], [5, 15, 25, 35, 45, 55, 65, 75], [1, 2, 3, 4, 5, 6, 7, 8, 9]], [[10, 15, 20, 25, 30], [5, 10, 15, 20, 25], [1, 2, 3, 4, 5]], [[100, 200], [50, 150, 250], [80, 160, 240]], [[10, 20, 30, 40, 50], [15, 25, 35, 45, 55], [10, 20, 30, 40, 50]], [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [1, 3, 5, 7, 9]], [[100, 200, 300, 400, 500], [250, 350, 450, 550, 650], [100, 200, 300, 400, 500]], [[1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50], [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49]], [[12, 80, 160, 240], [650, 200], [12, 80, 160, 240]], [[650, 38], [650, 38], [12, 80, 160, 240]], [[10, 20, 30, 50, 60, 70], [1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]], [[1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 2, 2, 2], [3, 3, 3, 3, 3, 2, 3]], [[1, 2, 3, 4, 5], [1, 3, 5, 3, 2, 4], [1, 3, 5, 3, 2, 4]], [[999, 998, 997, 996], [1001, 1002, 1003, 1004], [1000, 999, 998, 997, 996]], [[10, 20, 30, 40, 50], [15, 25, 35, 45, 55, 25], [15, 25, 35, 45, 55, 25]], [[11, 239, 80, 41, 240], [650, 38, 650], [11, 239, 80, 41, 240]], [[1, 2, 3, 60, 4, 5], [5, 4, 3, 2, 24], [1, 2, 3, 60, 4, 5]], [[650, 37], [650, 37], [12, 80, 160, 240]], [[1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]], [[100, 300, 400, 500, 600], [25, 50, 75, 200, 225, 250, 275], [350, 400, 450, 500, 550, 600, 650, 700]], [[], [], [50, 150, 250]], [[12, 80, 160, 240], [200], [12, 80, 160, 240]], [[1, 3, 5, 7, 9], [2, 6, 8, 10], [1, 3, 5, 7, 9]], [[1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [2, 4, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50], [3, 5, 7, 9, 11, 13, 15, 17, 19, 15, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49]], [[10, 15, 20, 25, 30], [5, 10, 15, 20], [1, 1, 3, 4, 5]], [[2, 3, 3, 3, 3, 2, 2, 4, 3], [1, 1, 1, 1, 1, 1, 1], [2, 3, 3, 3, 3, 2, 2, 4, 3]], [[12, 81, 160, 240], [12, 81, 160, 240], [201, 200]], [[12, 81, 160, 240], [201], [201]], [[1, 2, 3, 60, 4, 5], [5, 4, 3, 3, 2, 24], [1, 2, 3, 60, 4, 5]], [[1, 3, 5, 7, 9], [1, 3, 5, 9], [1, 3, 5, 9]], [[650, 37], [12, 80, 160, 240], [650, 37]], [[-10, -9, -8, -7, -6, -5], [-100, -200, -300, -400, -500], [-100, -200, -300, -400, -500]], [[1, 2, 3, 4, 5, 6, 7, 9, 10, 3, 11, 12], [], [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]], [[11, 239, 81, 41, 240], [650, 38, 650], [650, 38, 650]], [[23, 650], [23, 650], [12, 80, 160, 39]], [[5, 10, 15, 20, 25, 30, 35], [1, 2, 3, 4, 1, 6, 7], [50, 45, 40, 35, 30, 25, 20, 15, 10]], [[650, 36], [650, 36], [12, 80, 160, 240]], [[12, 3, 160, 240], [12, 3, 160, 240], [12, 3, 160, 240]], [[10, 20, 30, 40, 50, 60, 70], [10, 20, 30, 40, 50, 60, 70], [10, 20, 30, 40, 50, 60, 70]], [[100, 200], [50, 250], [50, 250]], [[1000, 999, 998, 997, 996], [1000, 999, 998, 997, 996], [1001, 1002, 1003, 1004]], [[1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1], [3, 3, 3, 3, 3, 2, 3]], [[81, 160, 240], [81, 160, 240], [81, 160, 240]], [[1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 2, 2, 2], [3, 3, 3, 4, 2, 3]], [[200, 200], [200, 200], [50, 250, 50]], [[1, 1, -6, 1, 1, 1, 1, 1], [1, 1, -6, 1, 1, 1, 1, 1], [3, 3, 3, 3, 3, 2, 3]], [[1, 3, 5, 7, 27, 9], [1, 3, 5, 7, 27, 9], [3, 5, 9]], [[650, 38, 38], [650, 38, 38], [650, 38, 38]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 6, 7], [1, 2, 3, 4, 5, 6, 7, 8, 9, 6, 7], [1, 2, 3, 4, 5, 6, 7, 8, 9, 6, 7]], [[12, 160, 240], [12, 160, 240], [201, 200]], [[11, 239, 80, 41, 240], [650, 38, 649, 650], [650, 38, 649, 650]], [[1, 18, 3, 5, 9], [1, 18, 3, 5, 9], [1, 18, 3, 5, 9]], [[50, 150], [50, 150], [80, 160, 240]], [[651, 23, 650, 23], [651, 23, 650, 23], [12, 80, 160, 39]], [[1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 3, 2, 2, 2], [3, 3, 3, 3, 3, 3, 3]], [[10, 20, 30, 50, 60, 70], [1, 2, 3, 4, 5, 6, 8, 9], [1, 2, 3, 4, 5, 6, 8, 9]], [[650, 38, 37], [650, 38, 37], [650, 38, 37]], [[200], [12, 80, 240], [12, 80, 240]], [[650, 38, 650, 649, 650, 650], [650, 38, 650, 649, 650, 650], [650, 38, 650, 649, 650, 650]], [[0.5, 1.5, 2.5, 3.5, 4.5], [-5.5, -4.5, -3.5, -1.5], [0.5, 1.5, 2.5, 3.5, 4.5]], [[200], [12, 80, 160, 240], [12, 80, 160, 240]], [[1, 2, 3, 4, 5, 6, 8, 9, 6, 7, 6], [1, 2, 3, 4, 5, 6, 8, 9, 6, 7, 6], [1, 2, 3, 4, 5, 6, 8, 9, 6, 7, 6]], [[1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [2, 4, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50], [3, 5, 7, 9, 11, 13, 15, 19, 15, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49]], [[650, 37], [650, 37], [650, 37]], [[50, 13, 150, 13], [50, 13, 150, 13], [50, 13, 150, 13]], [[12, 81, 160, 240, 81], [], [12, 81, 160, 240, 81]], [[1, 1, -6, 1, 1, 1, 1, 1], [4, 3, 3, 3, 3, 2, 3], [4, 3, 3, 3, 3, 2, 3]], [[160, 240], [160, 240], [-100, 200]], [[1, 1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 3, 2, 2, 2], [3, 3, 3, 3, 3, 3, 3]], [[10, 20, 30, 400, 40, 50], [5, 15, 25, 35, 45], [1, 2, 3, 4, 5]], [[1, 2, 100, 3, 4, 5, 6, 7, 9, 10, 3, 11, 12], [], [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]], [[650, 38, 650, 650, 650], [650, 38, 650, 650, 650], [650, 38, 650, 650, 650]], [[1, 2, 3, 4, 1, 6, 29], [50, 45, 40, 35, 30, 25, 20, 15, 10], [1, 2, 3, 4, 1, 6, 29]], [[12, 160, 240, 81], [], [12, 160, 240, 81]], [[651, 23], [651, 23], [651, 23]], [[650, 38, 650], [650, 38, 650], [11, 239, 81, 41, 240]], [[10, 20, 30, 40, 50, 10], [15, 25, 35, 45, 55, 25, 15, 25], [15, 25, 35, 45, 55, 25, 15, 25]], [[1, 3, 4, 5], [10, 20, 30, 40], [1, 3, 4, 5]], [[1, 2, 3, 5, 6, 8, 9, 6, 7, 6], [1, 2, 3, 5, 6, 8, 9, 6, 7, 6], [1, 2, 3, 5, 6, 8, 9, 6, 7, 6]], [[2, 2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 2, 2, 2]], [[1, 1, -6, 1, 1, 1, 1, 1], [4, 3, 3, 3, 2, 3], [4, 3, 3, 3, 2, 3]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 2], [1, 2, 3, 4, 5, 6, 7, 8, 9, 2], [1, 2, 3, 4, 5, 6, 7, 8, 9, 2]], [[1, 3, 5, 9], [1, 3, 5, 9], [1, 3, 5, 9]], [[1, 2, 3, 4, 5, 6, 7, 9, 3, 11, 12], [], [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 13]], [[1, 3, 5, 7, 9], [2, 6, 8, 10], [1, 60, 5, 7, 9]], [[10, 20, 30, 400, 40, 50, 10], [10, 20, 30, 400, 40, 50, 10], [1, 2, 3, 4, 5]], [[1, 2, 3, 4, 1, 6, -9], [1, 2, 3, 4, 1, 6, -9], [50, 45, 40, 35, 30, 25, 20, 15, 10]], [[-100, -200, -300, -400, -500], [-100, -200, -300, -400, -500], [-100, -200, -300, -400, -500]], [[10, 20, 30, 40, 50], [10, 20, 30, 40], [10, 20, 30, 40]], [[0.5, 1.5, 2.5, 3.5, 4.5], [-4.5, -3.5, -1.5], [0.5, 1.5, 2.5, 3.5, 4.5]], [[12, 27, 240, 15, 81], [12, 27, 240, 15, 81], [12, 27, 240, 15, 81]], [[40, 27, 240, 15, 81], [40, 27, 240, 15, 81], [40, 27, 240, 15, 81]], [[10, 20, 30, 50], [10, 20, 30, 40], [10, 20, 30, 40]], [[1, 1, 1, 1, 38, 1, 1, 1], [1, 1, 1, 1, 38, 1, 1, 1], [3, 3, 3, 3, 3, 2, 3]], [[11, 239, 80, 41, 240], [650, 651, -5, 38, 649, 650], [650, 651, -5, 38, 649, 650]], [[81, 240], [81, 240], [81, 240]], [[200], [12, 80, 160, 12, 240], [12, 80, 160, 12, 240]], [[-7, 12, 160, 37, 81], [-7, 12, 160, 37, 81], [-7, 12, 160, 37, 81]], [[1, 2, 3, 4, 1, 6, 29], [50, 45, 40, 35, 30, 25, 20, 15, 10, 10], [1, 2, 3, 4, 1, 6, 29]], [[1, 3, 3, 60, 4, 5], [5, 4, 3, 3, 2, 24], [1, 3, 3, 60, 4, 5]], [[200, 100, 200, 300, 400, 500], [-100, -200, -300, -400, -500], [0.1, 0.2, 0.3, 0.4, 0.5, 0.3]], [[81, 160, 159, 240], [81, 160, 159, 240], [81, 160, 159, 240]], [[-6, 81, 160, 240], [-6, 81, 160, 240], [-6, 81, 160, 240]], [[38, 650, 649, 650, 650], [38, 650, 649, 650, 650], [38, 650, 649, 650, 650]], [[10, 20, 40, -500, 50], [10, 20, 40, -500, 50], [10, 20, 40, -500, 50]], [[651, -7, 652, 23], [651, -7, 652, 23], [651, -7, 652, 23]], [[1, 1, 1, 1, 38, 1, 1, 1], [4, 3, 3, 3, 3, 3, 2, 3], [4, 3, 3, 3, 3, 3, 2, 3]], [[-100, -100, -200, -300, -400, -500], [-100, -100, -200, -300, -400, -500], [-100, -100, -200, -300, -400, -500]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    :param list1: list of integers
+    :param list2: list of integers
+    :param list3: list of integers
+    :return: list of integers
+    """
+    result = []
+    i = 0
+    j = 0
+    k = 0
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] < list2[j] < list3[k]:
+            result.append(list1[i])
+            i += 1
+        elif list1[i] > list2[j] > list3[k]:
+            result.append(list3[k])
+            k += 1
+        elif list1[i] < list2[j] > list3[k]:
+            result.append(list2[j])
+            j += 1
+        elif list1[i] > list2[j] < list3[k]:
+            result.append(list1[i])
+            i += 1
+        elif list1[i] == list2[j] == list3[k]:
+            result.append(list1[i])
+            i += 1
+            j += 1
+            k += 1
+    while i < len(list1):
+        result.append(list1[i])
+        i += 1
+    while j < len(list2):
+        result.append(list2[j])
+        j += 1
+    while k < len(list3):
+        result.append(list3[k])
+        k += 1
+    return result
+
+
+if __name__ == '__main__':
+    print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]))
+    print(merge_sorted_list([1, 2, 3, 4, 5,</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    """
+    Merge three sorted lists into a single sorted list.
+    """
+    return sorted(list1 + list2 + list3)
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1: list[int], list2: list[int], list3: list[int]) -> list[int]:
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    """
+    Merges three sorted lists into a single sorted list.
+    
+    Args:
+        list1 (list): The first sorted list.
+        list2 (list): The second sorted list.
+        list3 (list): The third sorted list.
+    
+    Returns:
+        list: The merged and sorted list.
+    """
+    merged_list = sorted(list1 + list2 + list3)
+    return merged_list</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    # Combine all lists
+    combined_list = list1 + list2 + list3
+    # Sort the combined list
+    sorted_list = sorted(combined_list)
+    return sorted_list
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+def merge_sorted_list(list1, list2, list3):
+    # Combine all the lists into one
+    merged_list = list1 + list2 + list3
+    # Sort the combined list
+    merged_list.sort()
+    return merged_list
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to merge three lists into a single sorted list, wrapped in a markdown block:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def merge_sorted_lists(*args):
+    # Flatten the input arguments into a single list
+</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to merge three sorted lists into a single sorted list:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    i = j = k = 0
+    
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] < list2[j]:
+            if list1[i] < list3[k]:
+                merged_list.append(list1[i])
+                i += 1
+            else:
+                merged_list.append(list3[k])
+                k += 1
+        else:
+            if list2[j] < list3[k]:
+                merged_list.append(list2[j])
+                j += 1
+            else:
+                merged_list.append(list3[k])
+                k += 1
+    
+    while i < len(list1) and j < len(list2):
+        if list1[i] < list2[j]:
+            merged_list.append(list1[i])
+            i += 1
+        else:
+            merged_list.append(list2[j])
+            j += 1
+    
+    while j < len(list2) and k < len(list3):
+        if list2[j] < list3[k]:
+            merged_list.append(list2[j])
+            j += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+    
+    while i < len(list1) and k < len(list3):
+        if list1[i] < list3[k]:
+            merged_list.append(list1[i])
+            i += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+    
+    while i < len(list1):
+        merged_list.append(list1[i])
+        i += 1
+    
+    while j < len(list2):
+        merged_list.append(list2[j])
+        j += 1
+    
+    while k < len(list3):
+        merged_list.append(list3[k])
+        k += 1
+    
+    return merged_list
+```
+
+This function takes three sorted lists as input and returns a single sorted list that contains all the elements from the three input lists. It uses three pointers to iterate through each list and compares the elements at the current index of each list to determine which one is the smallest. It then appends that element to the merged list and increments the pointer for that list. Once one of the lists is exhausted, it moves on to the next list and continues until all elements have been added to the merged list. The function assumes that the input lists are already sorted. If they are not sorted, you can use the `sorted()` function to sort them before passing them to this function. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(*args):
+    merged_list = []
+    for lst in args:
+        merged_list.extend(lst)
+    merged_list.sort()
+    return merged_list
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    # your code here
+    list1.extend(list2)
+    list1.extend(list3)
+    list1.sort()
+    return list1
+
+
+if __name__ == "__main__":
+    print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+# Test case
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that merges three lists into a single sorted list using the built-in `sorted` function:
+
+```python
+def merge_sorted_list(lst1, lst2, lst3):
+    merged_list = lst1 + lst2 + lst3
+    merged_list.sort()
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+```
+
+This function first concatenates the three input lists into one list, then sorts this list in ascending order. The sorted list is then returned. The assert statement is used to verify that the function works correctly for the given example.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    while len(list1) > 0 and len(list2) > 0 and len(list3) > 0:
+        if list1[0] < list2[0]:
+            merged_list.append(list1[0])
+            list1.remove(list1[0])
+        else:
+            merged_list.append(list2[0])
+            list2.remove(list2[0])
+    merged_list += list1 + list2 + list3
+    return merged_list
+
+"""
+Write a function to merge two sorted lists into a single sorted list.
+assert merge_sorted_list([1, 3, 5, 7, 9],[2, 4, 6, 8, 10])==[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+"""
+
+def merge_sorted_list(list1, list2):
+    merged_list = []
+    while len(list1) > 0 and len(list2) > 0:
+        if list1[0] < list2[0]:
+            merged_list.append(list1[0])
+            list1.remove(list1[0])
+        else:
+            merged_list.append(list2[0])
+            list2.remove(list2[0])
+    merged_list += list1 + list2
+    return merged_list
+
+"""
+Write a function to merge two sorted lists into a single sorted list.
+assert merge_sorted_list([1, 3, 5, 7, 9],[2, 4, 6, 8, 10])==[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+"""
+
+def merge_sorted_list(list1, list2):
+    merged_list = []
+    while len(list1) > 0 and len(list2) > 0:
+        if list1[0] < list2[0]:
+            merged_list.append(list1[0])
+            list1.remove(list1[0])
+        else:
+            merged_list.append</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    """
+    Write a function to merge three lists into a single sorted list.
+    """
+    # Merge all three lists into one
+    merged_list = list1 + list2 + list3
+    
+    # Sort the merged list
+    merged_list.sort()
+    
+    return merged_list
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    Merge three lists into a single sorted list
+    """
+    # TODO: Write your code here
+    return []
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    return list1 + list2 + list3
+
+
+def merge_sorted_list_2(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    return sorted(list1 + list2 + list3)
+
+
+def merge_sorted_list_3(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    return sorted(list1 + list2 + list3)
+
+
+def merge_sorted_list_4(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    return sorted(list1 + list2 + list3)
+
+
+def merge_sorted_list_5(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    return sorted(list1 + list2 + list3)
+
+
+def merge_sorted_list_6(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    return sorted</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+```
+
+This function first merges the three input lists into one using the `+` operator, then sorts the resulting list using the `sort()` method. The sorted list is then returned. The `assert` statement is used to test the function with the provided example.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def merge_sorted_list(list1, list2, list3):
+    merged_list = sorted(list1 + list2 + list3)
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(l1, l2, l3):
+    return sorted(l1 + l2 + l3)
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33, 99]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33, 99, 233]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33, 99, 233, 154]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33, 99, 233, 154, 233]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33, 99, 233, 154, 233, 233]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48, 33, 99, 233, 154, 233, 233, 233]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+  """
+  Write a function to merge three lists into a single sorted list.
+  assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+  """
+  return sorted(list1 + list2 + list3)</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+def merge_sorted_lists(*lists):
+    """
+    Merges multiple sorted lists into a single sorted list.
+    """
+    merged_list = []
+    while len(lists) > 0:
+        list_to_merge = lists.pop(0)
+        merged_list.extend(sorted(list_to_merge))
+
+    return merged_list
+
+# Test case
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    i = j = k = 0
+    
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] < list2[j]:
+            if list1[i] < list3[k]:
+                merged_list.append(list1[i])
+                i += 1
+            else:
+                merged_list.append(list3[k])
+                k += 1
+        else:
+            if list2[j] < list3[k]:
+                merged_list.append(list2[j])
+                j += 1
+            else:
+                merged_list.append(list3[k])
+                k += 1
+    
+    while i < len(list1) and j < len(list2):
+        if list1[i] < list2[j]:
+            merged_list.append(list1[i])
+            i += 1
+        else:
+            merged_list.append(list2[j])
+            j += 1
+            
+    while i < len(list1) and k < len(list3):
+        if list1[i] < list3[k]:
+            merged_list.append(list1[i])
+            i += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+            
+    while j < len(list2) and k < len(list3):
+        if list2[j] < list3[k]:
+            merged_list.append(list2[j])
+            j += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+            
+    while i < len(list1):
+        merged_list.append(list1[i])
+        i += 1
+        
+    while j < len(list2):
+        merged_list.append(list2[j])
+        j += 1
+        
+    while k < len(list3):
+        merged_list.append(list3[k])
+        k += 1
+        
+    return merged_list
+```
+
+The function takes three lists as input and returns a single sorted list. The function first initializes an empty list called `merged_list`. It then initializes three index variables `i`, `j`, and `k` to 0. These variables will be used to keep track of the current position in each of the input lists.
+
+The function then enters a while loop that continues as long as `i`, `j`, and `k` are less than the lengths of their respective input lists. Inside the while loop, the function compares the current elements at positions `i`, `j`, and `k` in each of the input lists. If the current element in `list1` is smaller than the current element in `list2`, the function compares the current element in `list1` with the current element in `list3`. If the current element in `list1` is smaller than the current element in `list3`, the function appends the current element in `list1` to `merged_list` and increments `i`. If the current element in `list3` is smaller than the current element in `list1`, the function appends the current element in `list3` to `merged_list` and increments `k`. If the current element in `list2` is smaller than the current element in `list1`, the function compares the current element in `list2` with the current element in `list3`. If the current element in `list2` is smaller than the current element in `list3`, the function appends the current element in `list2` to `merged_list` and increments `j`. If the current element in `list3` is smaller than the current element in `list2`, the function appends the current element in `list3` to `merged_list` and increments `k`.
+
+After the while loop, the function enters another while loop that continues as long as `i` and `j` are less than the lengths of their respective input lists. Inside the while loop, the function compares the current elements at positions `i` and `j` in each of the input lists. If the current element in `list1` is smaller than the current element in `list2`, the function appends the current element in `list1` to `merged_list` and increments `i`. If the current element in `list2` is smaller than the current element in `list1`, the function appends the current element in `list2` to `merged_list` and increments `j</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    result = []
+    while list1 and list2 and list3:
+        if list1[0] <= list2[0] and list1[0] <= list3[0]:
+            result.append(list1.pop(0))
+        elif list2[0] <= list1[0] and list2[0] <= list3[0]:
+            result.append(list2.pop(0))
+        else:
+            result.append(list3.pop(0))
+    while list1 and list2:
+        if list1[0] <= list2[0]:
+            result.append(list1.pop(0))
+        else:
+            result.append(list2.pop(0))
+    while list1 and list3:
+        if list1[0] <= list3[0]:
+            result.append(list1.pop(0))
+        else:
+            result.append(list3.pop(0))
+    while list2 and list3:
+        if list2[0] <= list3[0]:
+            result.append(list2.pop(0))
+        else:
+            result.append(list3.pop(0))
+    return result + list1 + list2 + list3
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to merge three lists into a single sorted list:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+```
+
+You can test the function with the provided example:
+
+```python
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+```
+
+This should output:
+
+```python
+[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+```
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    Merge three sorted lists into a single sorted list.
+    """
+    # Your code here
+    
+    return sorted(list1 + list2 + list3)
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    i = 0
+    j = 0
+    k = 0
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] < list2[j]:
+            merged_list.append(list1[i])
+            i += 1
+        else:
+            merged_list.append(list2[j])
+            j += 1
+        if j == len(list2):
+            merged_list.extend(list3[k:])
+            break
+        if i == len(list1):
+            merged_list.extend(list3[k:])
+            break
+        if list1[i] == list2[j]:
+            merged_list.append(list1[i])
+            i += 1
+            j += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+    return merged_list
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    Merge three lists into a single sorted list.
+    """
+    return sorted(list1 + list2 + list3)
+
+# Test the function
+list1 = [25, 24, 15, 4, 5, 29, 110]
+list2 = [19, 20, 11, 56, 25, 233, 154]
+list3 = [24, 26, 54, 48]
+sorted_list = merge_sorted_list(list1, list2, list3)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    # Combine all lists into one
+    combined_list = list1 + list2 + list3
+    # Sort the combined list
+    combined_list.sort()
+    return combined_list
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    """
+    Merge three sorted lists into a single sorted list.
+
+    :param list1: List of integers
+    :param list2: List of integers
+    :param list3: List of integers
+    :return: Merged and sorted list of integers
+    """
+    merged_list = list1 + list2 + list3
+    return sorted(merged_list)
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    return sorted(list1 + list2 + list3)
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    list1.sort()
+    list2.sort()
+    list3.sort()
+    list1.extend(list2)
+    list1.extend(list3)
+    list1.sort()
+    return list1
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(l1, l2, l3):
+    return sorted(l1 + l2 + l3)
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+"""
+
+def longest_common_prefix(strs):
+    if not strs:
+        return ""
+    shortest = min(strs, key=len)
+    for i, ch in enumerate(shortest):
+        for other in strs:
+            if other[i]!= ch:
+                return shortest[:i]
+    return shortest
+
+assert longest_common_prefix(["flower","flow","flight"])=="fl"
+assert longest_common_prefix(["dog","racecar","car"])==""
+assert longest_common_prefix(["dog","racecar","car","cat"])=="dog"
+assert longest_common_prefix(["dog","racecar","car","cat","can"])=="dog"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+import heapq
+
+def merge_sorted_list(list1, list2, list3):
+    # Merge and sort the lists
+    merged_list = list(heapq.merge(list1, list2, list3))
+    return merged_list
+
+# Example usage
+# merged = merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])
+# print(merged)
+
+# Assertion
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = sorted(list1 + list2 + list3)
+    return merged_list</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+# Test the function
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(*lists):
+    merged_list = []
+    for lst in lists:
+        merged_list.extend(lst)
+    return sorted(merged_list)
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    # Merge all three lists
+    merged_list = list1 + list2 + list3
+
+    # Sort the merged list
+    merged_list.sort()
+
+    return merged_list
+
+# Test the function
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+```python
+def merge_sorted_list(list1, list2, list3):
+    # concatenate the three lists into one
+    merged_list = list1 + list2 + list3
+    # sort the merged list
+    merged_list.sort()
+    return merged_list
+```
+
+This function takes three lists as input and concatenates them into one list. Then it sorts the merged list in ascending order using the `sort()` method. Finally, it returns the sorted list. Note that this solution assumes that all the input lists are already sorted, otherwise it would not work correctly. If the input lists are not sorted, you would need to sort them first before merging them. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    i = j = k = 0
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] < list2[j]:
+            if list1[i] < list3[k]:
+                merged_list.append(list1[i])
+                i += 1
+            else:
+                merged_list.append(list3[k])
+                k += 1
+        else:
+            if list2[j] < list3[k]:
+                merged_list.append(list2[j])
+                j += 1
+            else:
+                merged_list.append(list3[k])
+                k += 1
+    while i < len(list1):
+        merged_list.append(list1[i])
+        i += 1
+    while j < len(list2):
+        merged_list.append(list2[j])
+        j += 1
+    while k < len(list3):
+        merged_list.append(list3[k])
+        k += 1
+    return merged_list
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = list()
+    i = 0
+    j = 0
+    k = 0
+
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] <= list2[j] and list1[i] <= list3[k]:
+            merged_list.append(list1[i])
+            i += 1
+        elif list2[j] <= list3[k]:
+            merged_list.append(list2[j])
+            j += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+
+    merged_list.extend(list1[i:])
+    merged_list.extend(list2[j:])
+    merged_list.extend(list3[k:])
+
+    return merged_list</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    list1.extend(list2)
+    list1.extend(list3)
+    list1.sort()
+    return list1
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(l1, l2, l3):
+    return sorted(l1 + l2 + l3)
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+"""
+
+def longest_common_prefix(strs):
+    if not strs:
+        return ""
+    shortest = min(strs, key=len)
+    for i, ch in enumerate(shortest):
+        for other in strs:
+            if other[i]!= ch:
+                return shortest[:i]
+    return shortest
+
+assert longest_common_prefix(["flower","flow","flight"])=="fl"
+assert longest_common_prefix(["dog","racecar","car"])==""
+assert longest_common_prefix(["dog","racecar","car","cat"])=="dog"
+assert longest_common_prefix(["dog","racecar","car","cat","can"])=="dog"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","car","cat","can","can","can","can","can","can","can"])=="can"
+assert longest_common_prefix(["dog","racecar","</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    Merge three lists into a single sorted list.
+
+    Args:
+        list1 (list): The first list to be merged.
+        list2 (list): The second list to be merged.
+        list3 (list): The third list to be merged.
+
+    Returns:
+        list: The merged list in sorted order.
+    """
+    merged_list = []
+    i = 0
+    j = 0
+    k = 0
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] <= list2[j] and list1[i] <= list3[k]:
+            merged_list.append(list1[i])
+            i += 1
+        elif list2[j] <= list1[i] and list2[j] <= list3[k]:
+            merged_list.append(list2[j])
+            j += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+    while i < len(list1):
+        merged_list.append(list1[i])
+        i += 1
+    while j < len(list2):
+        merged_list.append(list2[j])
+        j += 1
+    while k < len(list3):
+        merged_list.append(list3[k])
+        k += 1
+    return merged_list
+
+
+if __name__ == "__main__":
+    list1 = [25, 24, 15, 4, 5, 29, 110]
+    list2 = [19, 20, 11, 56, 25, 233, 154]
+    list3 = [24, 26, 54, 48]
+    assert merge_sorted_list(list1, list2, list3) == [
+        4,
+        5,
+        11,
+        15,
+        19,
+        20,
+        24,
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = sorted(list1 + list2 + list3)
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    list1.extend(list2)
+    list1.extend(list3)
+    list1.sort()
+    return list1
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19,</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    while list1 and list2 and list3:
+        if list1[0] < list2[0] and list1[0] < list3[0]:
+            merged_list.append(list1.pop(0))
+        elif list2[0] < list1[0] and list2[0] < list3[0]:
+            merged_list.append(list2.pop(0))
+        elif list3[0] < list1[0] and list3[0] < list2[0]:
+            merged_list.append(list3.pop(0))
+    if list1:
+        merged_list.extend(list1)
+    if list2:
+        merged_list.extend(list2)
+    if list3:
+        merged_list.extend(list3)
+    return merged_list
+
+
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = []
+    i, j, k = 0, 0, 0
+
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] <= list2[j] and list1[i] <= list3[k]:
+            merged_list.append(list1[i])
+            i += 1
+        elif list2[j] <= list1[i] and list2[j] <= list3[k]:
+            merged_list.append(list2[j])
+            j += 1
+        else:
+            merged_list.append(list3[k])
+            k += 1
+
+    while i < len(list1):
+        merged_list.append(list1[i])
+        i += 1
+
+    while j < len(list2):
+        merged_list.append(list2[j])
+        j += 1
+
+    while k < len(list3):
+        merged_list.append(list3[k])
+        k += 1
+
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 154, 233]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+def merge_sorted_lists(list1, list2, list3):
+    result = []
+    i, j, k = 0, 0, 0
+
+    while i < len(list1) or j < len(list2) or k < len(list3):
+        if i < len(list1) and (j >= len(list2) or list1[i] <= list2[j]) and k >= len(list3) or list1[i] <= list3[k]:
+            result.append(list1[i])
+            i += 1
+        elif j < len(list2) and (i >= len(list1) or list1[i] > list2[j]) and k >= len(list3) or list2[j] <= list3[k]:
+            result.append(list2[j])
+            j += 1
+        else:
+            result.append(list3[k])
+            k += 1
+
+    return result
+
+assert merge_sorted_lists([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]) == [4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    :param list1:
+    :param list2:
+    :param list3:
+    :return:
+    """
+    result = []
+    i = 0
+    j = 0
+    k = 0
+    while i < len(list1) and j < len(list2) and k < len(list3):
+        if list1[i] < list2[j] and list1[i] < list3[k]:
+            result.append(list1[i])
+            i += 1
+        elif list2[j] < list1[i] and list2[j] < list3[k]:
+            result.append(list2[j])
+            j += 1
+        else:
+            result.append(list3[k])
+            k += 1
+    while i < len(list1):
+        result.append(list1[i])
+        i += 1
+    while j < len(list2):
+        result.append(list2[j])
+        j += 1
+    while k < len(list3):
+        result.append(list3[k])
+        k += 1
+    return result
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to the problem wrapped in a markdown block:
+
+```python
+"""
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+# Test case
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1, list2, list3):
+    merged_list = sorted(list1 + list2 + list3)
+    return merged_list
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2, list3):
+    """
+    :param list1: list of integers
+    :param list2: list of integers
+    :param list3: list of integers
+    :return: list of integers
+    """
+    return sorted(list1 + list2 + list3)
+
+
+def test_merge_sorted_list():
+    assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154], [24, 26, 54, 48]) == [
+        4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+
+
+"""
+Write a function to merge two sorted lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154])==[4, 5, 11, 15, 19, 20, 24, 25, 25, 29, 56, 110, 154, 233]
+"""
+
+def merge_sorted_list(list1, list2):
+    """
+    :param list1: list of integers
+    :param list2: list of integers
+    :return: list of integers
+    """
+    return sorted(list1 + list2)
+
+
+def test_merge_sorted_list():
+    assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110], [19, 20, 11, 56, 25, 233, 154]) == [
+        4, 5,</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to merge three lists into a single sorted list.
+assert merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48])==[4, 5, 11, 15, 19, 20, 24, 24, 25, 25, 26, 29, 48, 54, 56, 110, 154, 233]
+"""
+
+
+def merge_sorted_list(list1,list2,list3):
+    list1.extend(list2)
+    list1.extend(list3)
+    list1.sort()
+    return list1
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def merge_sorted_list(list1, list2, list3):
+    merged_list = list1 + list2 + list3
+    merged_list.sort()
+    return merged_list
+
+# Test the function
+print(merge_sorted_list([25, 24, 15, 4, 5, 29, 110],[19, 20, 11, 56, 25, 233, 154],[24, 26, 54, 48]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

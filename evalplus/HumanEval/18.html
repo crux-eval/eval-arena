@@ -1,0 +1,1091 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/18 </h1>
+<pre><code> 
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    occurences = 0
+    for i in range(len(string)):
+        if string[i:].startswith(substring):
+            occurences += 1
+    return occurences
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['', 'x'], ['xyxyxyx', 'x'], ['cacacacac', 'cac'], ['john doe', 'john']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['ababa', 'aba'], ['abcdefg', 'efg'], ['abababab', 'aba'], ['hello world', 'o'], ['aaaabbbbcccc', 'bb'], ['12211221122', '122'], ['racecar', 'car'], ['mississippi', 'ss'], ['thequickbrownfox', 'fox'], ['fizzbuzz', 'zz'], ['aaaabbbbccccc', 'bb'], ['bbb', 'bb'], ['zz', 'bbb'], ['122', 'zz'], ['bb', 'bb'], ['misracecarsissippi', 'ss'], ['abababab', 'fox'], ['e', 'e'], ['thequickbrownfox', 'thequickbrownfox'], ['bb', 'thequickbrownfox'], ['fizzbuzz', 'fizzbuzz'], ['122', '12mississippi2'], ['aaacarabbbbcccc', 'efg'], ['hello world', 'fox'], ['ababa', 'ababa'], ['fizzbuzz', 'fizzzbuzz'], ['12mississippi2', 'efg'], ['hello worrld', 'ababao'], ['thebquickbrownfox', 'thequickbrownfox'], ['aaacarabbbbcccc', 'aaacabrabbbbcccc'], ['zz', 'ababao'], ['thequickbrrownfox', 'thequickbrrownfox'], ['hello woorrld', 'abaabaaoo'], ['aaaabbbbcccc', 'thequickbrownfox'], ['abababab', 'hello woorrld'], ['zz', 'efhello worrldssg'], ['fiuzzbuzz', 'efg'], ['aaaabbbcbcccc', 'hello woorrld'], ['bb', 'bssb'], ['zz', 'zz'], ['12hello woorrld', 'zz'], ['bbaaaabbbcbcccc', 'bssb'], ['sss', 'sefhello worrldssgs'], ['fiuzzbuzz', 'aaaabbbbccccc'], ['efg', 'hello woorrld'], ['ababathequickbrownfox', 'abaaba'], ['efgg', '12mtheqabaabaaoouickbrrownfoxississippi2'], ['bb', 'mississippababao'], ['fizzbuzz', 'fizzzbbbzz'], ['sss', 'sfizzzbbbzzss'], ['ccar', 'rccar'], ['efg', 'abaabaabcdefg'], ['bbaaaabbbcbccc', 'bbb'], ['hello world', 'oo'], ['fizzbuz', 'zzz'], ['aaaabbbcbcccc', 'aaaaabbbcbcccc'], ['hello lwoorrld', 'hello lwoorr'], ['eg', 'egccarfiuzzbuzz'], ['12211221122', '1222'], ['efg', 'efg'], ['ss', 'ssfizzzbbbzzsss'], ['zz', 'zzz'], ['s1222bssbs', 's1222bssbbs'], ['12hello woo1rrcarld', 'zz'], ['hello worrlod', 'ababao'], ['sfizabaabazbbbzzss', 'sfizabaabazbbbzzsabcdefg'], ['ezzbuzz', 'essfizzzbbbzzssszzbuzz'], ['zz', 'zmississippababaoz'], ['mississiezzbuzzpi', 'ss'], ['eg', 'eg'], ['abababab', 'ab'], ['12hello woorrld', 'zzz'], ['efgbbaaaabbbcbcccc', 'efgbbaaababbbcbcccc'], ['hello woorrld', 'hello worldaaacarabbbbcccc'], ['aba', 'aba'], ['ef12mtheqabaabaaoouickbrrownfoxississippi2g', 'effg'], ['ezzbuzz', 'efg'], ['cgareg', 'careg122'], ['122bbaaaabbbcbcccc11221122', '1221122112aaaabbbcbcccc2'], ['sefhello worrldssgs', 'aaaaabbbcbcccc'], ['fiuababathequickbrownfoxzzbuzz', 'fiuizzbuzz'], ['zzz', 'z'], ['fizzbuzz', 'effg'], ['caregsfizabaabazbbbzzss122', 'cggareg'], ['fiuzzbuzz', 'egfg'], ['hellol lwoorr', 'hellol lw'], ['12mtheqabaabaaoouickbrrownfoxississippi2', 'efgg'], ['12hello whello lwoorroorrld', 'zabababab'], ['zz', 'zzzz'], ['hello lwoorr', 'zz'], ['efg', 'effizzbuzzfg'], ['efg', 'egfg'], ['zef12mtheqabaabaaoouickbrrownfoxississippi2gz', 'zz'], ['hello woorrld', 'whello woorrld'], ['thequickbrownfox', 'thequickbrownracecarfox'], ['bb', 'thequickbrownracecarfoxbbb'], ['fiessfizzzbbbzzssszzbuzzuababathequickbrownfoxzzbuzz', 'fiuizzbuzz'], ['bbaaaabbbcb12hello whello lwoorroorrldcccc', 'bssb'], ['therbquickbrownfox', 'thequickbrownfox'], ['bbaaaabbbcbccc', 'oo'], ['aaaaabbbbaaaa', 'aaa'], ['abcdefghijklmnopqrstuvwxyzabc', 'abc'], ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'ipsum'], ['The quick brown fox jumps over the lazy dog.', 'the'], ['aaaaaaaabaaaaaaa', 'ba'], ['banana', 'ana'], ['cacccccac', 'cac'], ['fofofofofofofof', 'of'], ['racecarapenapapayapineapple', 'ap'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'AAAAAAA'], ['dog.', 'ap'], ['aaabrownaaaa', 'aaaaabbbbaaaa'], ['The quicfoxk brown fox jumps over the lazy dog.', 'the'], ['The quick brown fox jumps over the lazy dog.', 'foipsumx'], ['.dogfox.', 'dogfox.'], ['Lorem ipsum dolor sit amet, consetctetur adipiscing elit.', 'ipsum'], ['ba', 'aaaaadogfox.aa'], ['quickraceacarapenapapayapineapple', 'quickracecarapenapapayapineapple'], ['AAAAAAA', 'ap'], ['The quick brown fox jumps over the lazy dog.', 'aaaaofabbbbtheaaaa'], ['the', 'the'], ['The quick brown fox jumps over the lazy dog.', 'aaaaofabbbbtheaelit.aaa'], ['aaaaaaaabaaaabrownaaaaaaaaaa', 'ba'], ['abc', 'abc'], ['quicfox', 'ba'], ['sit', 'sit'], ['The quick brown fox jumps over the lazy dog.', 'The quick brown fox jumps over the lazy dog.'], ['gg.', 'dog.'], ['cac', 'cac'], ['quickraceacarapenapapayapineapple', 'quickraceacarapenapapayapineapple'], ['amlazyet,', 'ba'], ['cacccccac', 'cacc'], ['.dogfox.', 'quickcfoxk'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['quicfoxcacccccac', 'quicfoxcacccccac'], ['aaabrownaaaa', 'over'], ['The quicfoxk brown fox jumps over the lazy dog.', 'cacccccac'], ['cacccccac', 'The quick brown fox jumps over the lazy dog.'], ['cacccccaac', 'cac'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'quickraceacarapenapapayapineapple'], ['the', 'The quick brown fox jumps over the lazy dog.'], ['The quicfoxk brown fox jumps over the lazy dog.', 'The quick brown fox jumps over the  lazy dog.'], ['AAAAAAA', 'foipsuconsecteturmx'], ['AAAAA', 'abc'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'tAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['ataaaaaaaabaaaabrownaaaaaaaaaa', 'thequickracecarapenapapayapineapple'], ['AAAAA', 'elit.'], ['taaaaofabbbbtheaelit.aaahe', 'The quick brown fox jumps over the lazy dog.'], ['The quick brown fox jumps over the  lazy dog.', 'brown'], ['baccac', 'cacccccac'], ['ccccacc', 'cacc'], ['cacccccaac', 'quickraecarapenapapayapineapple'], ['taaaaofabbe', 'ccccacc'], ['amet,', 'cac'], ['consectetur', 'ataaaaaaaabaaaabrownaaaaaaaaaa'], ['taaaaofabbbbtheaelitaaaaofabbbbtheaaaa.abrownaahe', 'taaaaofabbbbtheaelit.abrownaahe'], ['ap', 'of'], ['quicaccfox', 'ba'], ['The quicfoxk brown fox jumps over the lazy dog.', 'cacccccacipsum'], ['quickraceacarapenapapayapineapple', 'eapple'], ['Lorem ipsum dolor sit amet, consetctetur adipiscing elit.', 'ielit.psum'], ['aaabrownaaaa', 'aaabrownaaaa'], ['aaaaadogfox.aa', 'ccccacc'], ['consectetur', 'consectetur'], ['over', 'over'], ['.dogfox', 'dogfdox.'], ['abcdefghijklmnopqrstuvwxyzabc', 'quickraceacarapenapapayapineapple'], ['foipsumx', 'foipsumx'], ['aaaaaaaabaaaabrownaaaaaaaaaa', 'aaaaaaaabaaaabrownaaaaaaaaaa'], ['ipsum', 'ipsum'], ['consectetur', 'consecur'], ['foipsumx', 'cacccccaac'], ['aaaaathequickracecarapenapapayapineapplerownaaaaaaaaaa', 'ba'], ['b', 'b'], ['sit', 'foipsuconsecteturmx'], ['aaAAAAAaaaaaabaaaabrownaaaaaaaaaa', 'ba'], ['foipsuconsecteturmx', 'foipsuconsecteturmx'], ['aaAAAAAaaaaaabaaLorem ipsum dolor sit amet, consectetur adipiscing elit.aaaaaaaa', 'ba'], ['eapple', 'ap'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'AAAAAAA'], ['bThe quick brown fox jumps over the lazycacccccacipsum dog.a', 'bThe quick brown fox jumps over the lazy dog.a'], ['c', 'cac'], ['amlazyet,', 'amlazyet,'], ['bThe quick brown fox jumps over the lazy dog.a', 'banana'], ['consectetur', 'quickraceacarapenapapayapineapple'], ['cacccccac', 'cacbaaaaofabbbbtheaelit.aaaa'], ['aaaaaaaabaaaaaaa', 'jumps'], ['ccccacc', 'ccccacc'], ['Lorem ipsum dolor sit amt, consectetur adipiscing elit.', 'ipsum'], ['quicfoxcaccccccac', 'quicfoxcacccccac'], ['abcdefghijklmnopqrstuvwxsityzabc', 'abc'], ['bb', 'bba'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'cac'], ['AAAAA', 'AAAAAAAA'], ['banana', '.dogfox.'], ['quicaccfox', 'quicaccfox'], ['abcdefghijklmnopqrstuvwxsvityzabct', 'abcdefghijklmnopqrstuvwxsityzabct'], ['foipsumx', 'abcdefghijklmnopqrstuvwxyzabc'], ['AAA', 'ipsum'], ['cacccccac', 'caac'], ['bbb', 'bbbb'], ['Lorem ipsum dolor sit amt, consectetur adipiscing elit.', 'cacccccaac'], ['taaaaofabcacccccacipsumbbbtheaelit.aaahe', 'The quick brown fox jumps over the lazy dog.'], ['Lorem ipsum dolor sit amet, consetctetur adipiscing elit.', 'The quick brown fox jumps over the lazy dog.'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'quickraceacarapenapapayapineapple'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'abcdefghijklmnopqrstuvwxsvityzabct'], ['aaabbaaabbbbaaaa', 'aaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa'], ['laz', 'lazy'], ['caac', 'cacccccac'], ['foipsuconsequickcfoxkurmx', 'AAAAAAA'], ['bana', 'thequickracecarapenapapayapineapple'], ['ipoversum', 'aaaaadogfox.aa'], ['foipsuconsequickcfoxkurmx', 'foipsuconsecteturmx'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'amt,'], ['aaaaadogfLoremox.aa', 'ccccacc'], ['quicfoxcacccccacc', 'quicfoxcacccccacc'], ['The quicfoxk brown fox jumps over the lazy dog.', 'quicaccfox'], ['thequickracecarapenapapayapineapple', 'aaaaabbbbaaaa'], ['over', 'aaaaabbbbaaaa'], ['b', 'cac'], ['eapple', '.dogfox.'], ['consecur', 'aaAAAAAaaaaaabaaaabrownaaaaaaaAaaa'], ['quickraceacarapenapapayapineapple', 'eaAAApple'], ['bba', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['aaaaathequickracecarapenapapayapineapplerownaaaaaaaaaa', 'bbaba'], ['aap', 'ap'], ['abcdefghijklmnopqrstuvwxsityzabc', 'The'], ['amlazyet,', 'amlazyety,'], ['ccccacc', 'cacac'], ['banaipsum', 'thequickracecarapenapapayapineapple'], ['ccaccccccac', 'caccccccac'], ['bana', 'cquicfoxkacc'], ['ovlazycacccccacipsumer', 'over'], ['bLorem ipsum dolor sit amet, consetctetur adipiscing elit.a', 'ba'], ['cacccccac', 'aaaaabbbbaaaa'], ['bb', 'cac'], ['aaaaadogfox.aa', 'aaaaadogfox.aa'], ['foipsumx', 'abcdefghijklmnopqovlazycacccccacipsumerrstuvwxyzabc'], ['bbaccac', 'cacccccac'], ['ataaaaaaaabaaaabrownaaaaaaaaaa', 'aaabrownaaaa'], ['cacbaaaaofabbbbtheaelit.aaaa', 'cacccccacipsum'], ['fofofofofofofofaaabrownaaaa', 'oof'], ['amlazyety,', 'amlazyety,'], ['taaaaofabbbbtheaelit.aaahbThee', 'taaaaofabbbbtheaelit.aaahe'], ['amet,', 'AAAAA'], ['over', 'dog.'], ['aaAAAAAaaaaaabaaLorem', 'quicfox'], ['oveamt,', 'dog.'], ['tAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'cacccccac'], ['tAAAAAAAAAAAbanaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'quickraceacarapenapapayapineapple'], ['ovlazycacccccacipsumer', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['cacbaaaaofabbbbtheaelit.aaaa', 'aap'], ['The quick brown fox jumps over the lazy dog.', 'sit'], ['consectetur', 'bLorem ipsum dolor sit amet, consetctetur adipiscing elit.aconsecur'], ['dog.', 'dog.'], ['aaaamt,', 'amt,'], ['cacbaaaaofabbbbtheaelit.aaaa', 'cacbaaaaofabbbbtheaelit.aaaa'], ['AAAAAAA', 'AAAAAAA'], ['bb', 'sit'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAadipiscingAAAAAAAAAAAAAAAAAAAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['qLoremuicaccfox', 'ba'], ['taaaaofabbe', 'celit.acccacc'], ['baccac', 'ccacccccac'], ['aaaamt,', 'cacccccacamt,'], ['cacccccac', 'cacccccac'], ['caac', 'caac'], ['ap', 'quick'], ['quicaccfox', 'aa'], ['Lorem ipsum dolor sit amet, consetctetur adipiscilng elit.', 'Lorem ipsum dolor sit amet, consetctetur adipiscilng elit.'], ['thequickracecarapenapapayaquicfoxcacccccaccpineapple', 'thequickracecaraaaapenapapayaquicfoxcacccccaccpineapple'], ['dogovlazycacccccacipstAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABheumer.', 'over'], ['abcdefghijklmnopqrstuvwxyzabc', 'oever'], ['.dogfox.', 'quicfoxcacccccacc'], ['AAAAA', 'ba'], ['banana', 'bbaba'], ['fofofofofofofofaaabroaaAAAAAaaaaaabaaaabrownaaaaaaaaaaaaaa', 'oof'], ['consectetur', 'The'], ['AAA', 'cac'], ['dog.a', 'epjs'], ['ipoccccaccversum', 'aaaaadogfox.aa'], ['aap', 'cacbaaaaofabbbbtheaelibLoremaaaa'], ['ataaaaaaaabaaaabrownaaaaaaaaaa', 'The quicfoxk brown fox jumps over the lazy dog.'], ['amt,', 'sit'], ['.dogfox', 'dogfox.'], ['Lorem ipsum dolor sit amet, consetctetur adipiscing eliot.', 'ipsum'], ['cac', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['taaaaofabbbbtheaelit.aaahbThee', 'quickraceacarapenapapayapineapple'], ['AAAAAAA', 'AAAAAA'], ['elit.a', 'foipsuconsequickcfoxquicfoxcaccccccackurmx'], ['consecteur', 'ataaLorem ipsum dolor sit amet, consetctetur adipiscing elit.aaaaaabaaaabrownaaaaaaaaaa'], ['cquicfoxkacc', 'quick'], ['AAAAAA', 'AAAAAAAA'], ['AAA', 'bbelit.a'], ['Lorem ipsum dolor sit amet, consetctetur aditamet,piscing elit.', 'quicaccfoxsit amet, consetctetur adiamet,piscing elit.'], ['The quicfoxk brown fobbaccacx jumps over the lazy dog.', 'The quick brown fox jumps over the  lazy dog.'], ['aaaaabbbbaaaa', 'aaaaabbbbaaaa'], ['fofoothequickracecarapenapapayapineapplefoofof', 'of'], ['The quicfoxamlazyet,k brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumups over the lazy dog.', 'The quicfoxk brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumps over azy dog.'], ['foipsuconsecteturmx', 'foataaLorem ipsum dolor sit amet, consetctetur adipiscing elit.aaaaaabaaaabrownaaaaaaaaaaipsuconsecteturmx'], ['quicfoxcacccccac', 'cacccccac'], ['cac', 'cafoipsuconsecteturmxc'], ['foipsumx', 'abcdefghijklmnopqrstuvwxsvityzabct'], ['the', 'AAAAAA'], ['tAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'aaaaabbbbaaaa'], ['ba', 'ba'], ['cacccccacamt,', 'Lorem ipsum dolor sit amet, consetctetur adipiscing elit.'], ['quicfoxcacccccacc', 'quicfThe quicfoxk brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumps over azy dog.oxcacccccacc'], ['cacccccaac', 'cacc'], ['quicaccfox', 'elit.a'], ['bba', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['consectetur', 'consuecur'], ['ccccacc', 'fofofofofofofof'], ['dogovlazycacccccacipstAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABheumer.', 'fofofofofofofofaaabroaaAAAAAaaaaaabaaaabrownaaaaaaaaaaaaaa'], ['etaaaaofabbe', 'taaaaofabbe'], ['anab', 'ana'], ['boverb', 'sit'], ['ovlazycacccccer', 'over'], ['fobccacx', 'aaAAAAAaaaaaabaaaabrownaaaaaaaAaaa'], ['gg.', 'dodg.'], ['aquicaccfoxsit amet, consetctetur adiamet,piscing elit.et,', 'amet,'], ['quickcfoxk', 'qLoremuicaccfox'], ['taaaaobfabbbbtheaelit.aaahe', 'TThe quick brown fox jumps over the lazy dog.he quick brown fox jumps over the lazy dog.'], ['Lorem ipsum odolor sit amet, consetctetur adipiscing elit.', 'Lorem ipsum dolor sit amet, consetctetur adipiscing elit.'], ['Thconsecteture', 'The'], ['bba', 'aaaaathequickracecarapenapapayapineapplerownaaaaaaaaaa'], ['AAA', 'ap'], ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'ipsu'], ['quicfoxacccccac', 'quicfoxcacccccac'], ['aaabrownaaaaa', 'over'], ['aaAAAAAaaaaaabaaaabrownaaaaaaaaaa', 'foataaLorem'], ['cccacc', 'cccquicfoxcacccccaccacc'], ['aaabbThe quicfoxamlazyet,k brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumups over the lazy dog.aabbbbaaaa', 'ccacccccac'], ['caccccc', 'cacc'], ['AAAAAAA', 'aap'], ['cafkoipsuconsequickcfoxkurmxcac', 'cafoipsuconsequickcfoxkurmxcac'], ['quickcfoxk', 'quickcfoxk'], ['aaaamt,', 'aaaamt,'], ['dodg.', 'abc'], ['AA', 'Lorem ipsum dolor sit amet, consetctetur adipiscilng elit.'], ['abc', 'ab'], ['aaaaababbbaaaa', 'aaa'], ['abcdefghijklmnopqrstuvwxsityzabc', 'abcdefghijklmnopqrstuvwxsityzabc'], ['aaabrownaaaaa', 'aaabrownaaaa'], ['fofofofofofofof', 'AAAAAAAthequickracecaraaaapenapapayaquicfoxcacccccaccpineappleAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['eliot.', 'ap'], ['cccacc', 'ccaccccccac'], ['Lorem ipsum dolor sit amet, consetctetur adipiscilang elit.', 'dolor'], ['aaaabrownaaaa', 'aaabrownaaaa'], ['quuicaccfox', 'elit.a'], ['quickraceacarapenapapayapineapplee', 'quickraceacarapenapapayapineapple'], ['cac', 'cacccccaac'], ['brothequickraAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcarapenapapayaquicfoxcacccccaccpineapplewwn', 'brothequickracecarapenapapayaquicfoxcacccccaccpineapplewwn'], ['gg', 'brownfoipsuconsequickcfoxquicfoxcaccccccackurmx'], ['amet,', 'aemet,'], ['caacc', 'caac'], ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'AAA'], ['brothequickraAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAelit.aaaaaabaaaabrownaaaaaaaaaaipsuconsecteturmxAAAAAAAAAAAAAAAABcarapenapapayaquicfoxcacccccaccpineapplewwn', 'brothequickraAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcarapenapapayaquicfoxcacccccaccpineapplewwn'], ['o.dogffox', 'aaaaofabbbbtheaaaa'], ['foipsuconsecteturmx', 'faaaaaaaabaaaaaaaoiconsecteturmx'], ['foipsumx', 'eaAAApple'], ['dog.he', 'consuecur'], ['racecarapenapapayapineapple', 'quickcfoxk'], ['dodg.', 'b'], ['bbc', 'cacccccac'], ['elit.aconsecur', 'bbbbquicfoxcacccccacap'], ['brown', 'brown'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['foipsuconsecteturmx', 'faaaaaaaabaaaaoiconsecteturmx'], ['thequickracecaraaaapenapapayaquicfoxcacccccaccpineapple', 'quickracecarapenapapayapineapple'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAABhe'], ['The qfoxuick brown fox jumps over the lazy dog.', 'The quick brown fox jumps over the lazy dog.'], ['of', 'brown'], ['fmoipsumx', 'foipsumx'], ['elit.aconsecur', 'ab'], ['amlazyetquicfThe quicfoxk brownfoipsuconsequickcfoxquicfoxcaccThconsectetureccccackurmx fox jumps over azy dog.oxcacccccacc', 'amlazyetquicfThe quicfoxk brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumps over azy dog.oxcacccccacc'], ['ovver', 'oveThe quicfoxk brown fobbaccacx jumps over the lazy dog.r'], ['cacccc', 'caac'], ['amt,', 'aaabrownaaaa'], ['Lorem ipsum dolor sit amet, consetctetur adipiscing elit.', 'Lorem ipsum dolor sit amet, consetctetur adipiscing elit.'], ['tAAAAAAAAAAdolorAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['The quick brownn fox jumps over the lazy dog.', 'the'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAadipiscingAAAAAAAAAAAAAAAAAAAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAadipiscingAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['quickraceacarapeabcnapapayapineapple', 'eapple'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABhe', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABhe'], ['cacccccacccac', 'cacc'], ['baditamet,piscinga', 'quicaccfox'], ['etaaaaofabbe', 'etaaaaofaeapplee'], ['ipsu', 'cacc'], ['elit.aconsecur', 'elit.aconsecur'], ['foipsumx', 'cfofoothequickracecarapenapapayapineapplefoofofacccccaac'], ['ccaccccccac', 'ccaccccccac'], ['foipsuconsecamlazyety,teturmx', 'foipsuconsecteturmx'], ['aaaabrownaaaa', 'brown'], ['elit.aaaaaaaa', 'quicfox'], ['etaaaaofaeapplee', 'The quick brown fox jumps over the lazy dog.'], ['oveamt,', 'aemet,'], ['foipsuconsecteturtmx', 'foipsuconsecteturtmx'], ['.cafoipsuconsecteturmxcdogfox.', '.dogfox.'], ['aaaaabbbbaaaa', 'aaaaabbbbaaaaa'], ['gg.', 'Thconsecteture'], ['aaAAAAAaaaaaabaaaabrownaaaaaaaAaaa', 'cacccccac'], ['taaaaofabbbbtheaelitaaaaofabbbbtheaaaa.abrownaahe', 'taaaaofabbbcfofoothequickracecaracaaccpenapapayapineapbbaccacplefoofofacccccaacbtheaelit.abrownaahe'], ['bannana', 'banana'], ['cacccccc', 'cacc'], ['dog.r', 'cquicfoxkacc'], ['ba', 'abcdefghijklmnopqrstuvwxyzabc'], ['cacccccacipsum', 'cacccccacipsum'], ['sist', 'sist'], ['cafoipsuconsequickcfoxkurmxcac', 'cafoipsuconsequickcfoxkurmxcac'], ['bLorem ipsum dolor sit amet, consetctetur adipiscing elit.a', 'bThe quick brown fox jumps over the lazycacccccacipsum dog.a'], ['laz', 'cacccccacipsum'], ['caccccccaac', 'cacccccaac'], ['ovvr', 'ovver'], ['foipsucAAAAAx', 'foipsuconsecteturtmx'], ['foipsuconsecteturmx', 'aquicaccfoxsit'], ['quicfoxcacccccocac', 'quicfoxcaccccThe quicfoxk brown fox jumps over the lazy dog.cac'], ['bbbbquicfoxcacccccacap', 'bbbbquicfoxcacccccacap'], ['bbb', 'oever'], ['taaabbaaabbbbaaaahe', 'the'], ['browwn', 'brown'], ['Lorem', 'banana'], ['foipsuconsecteturmx', 'fquickcfoxkaaaaaaaabaaaaoiconsecTThe quick brown fox jumps over the lazy dog.he quick brown fox jumps over the lazy dog.teturmx'], ['eappleThe qfoxuick brown fox jumps over the lazy dog.', 'The qfoxuick brown fox jumps over the lazy dog.'], ['quicaccfoxsit amet, consetctetur adiamet,piscing elit.', 'quicaccfoxsit amet, consetctetur adiamet,piscing telit.'], ['acaac', 'caac'], ['ataaaaaaaabaaaabrownaaaaaaaaaa', 'thequickracelcarapenapapayapineappl'], ['quicfoxdolor', 'The'], ['ccaccccccac', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['ipsu', 'sit'], ['caac', 'ba'], ['baccac', 'baccac'], ['caaaabrownaaaaac', 'ccccacc'], ['Lorem ipsum dolor sit amet, consectetur adip.iscing elit.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'], ['faaaaaaaabasecteturmx', 'faaaaaaaabasecteturmx'], ['dog.aaaaaofabbbbtheaaaa', 'epjs'], ['browwn', 'browwn'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'thequickracecaraaaapenapapayaquicfoxcacccccaccpineapple'], ['racecarapenapapayapineapple', 'racecarapenapapaeyapineapple'], ['oof', 'bThe quick brown fox jumps over the lazy dog.a'], ['Lorem ipmet, consectetur adip.iscing elit.', 'Lorem ipsum dol adipiscing elit.'], ['amet,', 'aemaditamet,piscing'], ['aquicaccfoxsit amet, consetctetur adiamet,pistcing elit.et,', 'amlazyet,'], ['caccccccacac', 'cacccccacac'], ['quickcfoxk', 'quic'], ['aaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa', 'ana'], ['ccabbbccccccac', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['brothequirckracecarapenapapayaquicconsetcteturfoxcacccccaccpineapplewwn', 'brothequickracecarapenapapayaquicfoxcacccaaaaofabbbbtheaelit.aaaccaccpineapplewwn'], ['AAAAAA', 'sist'], ['dol', 'a'], ['aaaamt,', 'racecarapenapapayapineapple'], ['fofoothequickracecarapenapapayapineapplefoofof', 'abcdefghijklmnopqrstuvwxsvityzabct'], ['dog.a', 'cacc'], ['taaaaofoipsumxfabbbbtheaelit.aaahe', 'The quick brown fox jumps over the lazy dog.'], ['aaAAAAAaaaaaabaaaabrownaaaaaaaaaaa', 'quicfoxamlazyet,k'], ['cacccccacccac', 'banana'], ['quicfThe quicfoxk brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumps over azy dog.oxcacccccacc', 'cacccccacccac'], ['foipsruconsecteturmquicfoxcaccccccacx', 'foipsuconsecteturmquicfoxcaccccccacx'], ['elit.aaaaaaa', 'consectetur'], ['dogfdox.', 'quickraceacarapenapapayapineapple'], ['dog.', 'gdog.'], ['qLoremuicaccfox', 'of'], ['Lor', 'Lorem'], ['aaabrowanaaaa', 'aaabrowanaaaa'], ['caccccaaataaLoremc', 'caccccaaataaLoremc'], ['ccafkoipsuconsequickcfoxkurmxcac', 'ccafkoipsuconsequickcfoxkurmxcac'], ['banana', 'g.dogfox.'], ['AquicfoxAAAAA', 'cafkoipsuconsequickcfoxkurmxcac'], ['cacccccc', 'aaaaofabbbbtheaelit.aaa'], ['faaaaaaaabaaaaoiconsecteturmx', 'foipsucoonsecteturmx'], ['adipiscingcor', 'taaaaofabbbbtheaelitaaaaofabbbbtheaaaa.abrownaahe'], ['quiickraecarapenapapayapineapple', 'quickraecarapenapapayapineapple'], ['LLorem ipsum dolobanar sit amt, consectetur adipiscing elit.or', 'LLorem ipsum dolobanar sit amt, consectetur adipiscing elit.or'], ['cccquicfoxcacccccaccacc', 'b'], ['banna', 'anna'], ['cactAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAABheccc', 'cactAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAABheccc'], ['ieliLorem ipsum dol adipiscing elit.t.psum', 'ielit.psum'], ['bananna', 'bThe quick brown fox jumps over the lazy dog.a'], ['vvr', 'vvr'], ['The quick brown fox jumps over the lazy dog.', 'The quick brown fox jumps ovefr the lazy dog.'], ['taaaaofabbbbtheaelit.aaahbThee', 'tAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe'], ['aaabrowanaaaa', 'aaaabrowanaaaa'], ['ovver', 'sit'], ['aqeuicaccfoxsit amet, consetctetur adiamet,pistcing elit.et,', 'aquicaccfoxsit amet, consetctetur adiamet,pistcing elit.et,'], ['aaaaabbbbaaaaa', 'aaaaabbbbaaaa'], ['thequickracelcarapenapapayapineappl', 'the'], ['', 'adipiscilang'], ['tAAAAAAAAAAAAAAapAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'c'], ['Lorem ipsum dol adipiscing elit.', 'Lorem ipsum dol adipiscing elit.'], ['LLorem ipsum dolobanar sit amt, consectetur adipiscing elit.or', 'Lorem ipsum dol adipiscing adip.iscingit.'], ['fofoothequickracecarapenapapayapineapplefoofof', 'abcdeuvwxsvityzabct'], ['Lorem ipsum dolor sit amet, consetctetur adipiscilng eolit.', 'Lorem ipsum dolor sit amet, consetctetur adipiscilng elit.'], ['aquicaccfoxsit amet, consetctetur adiamet,piscing elit.et,', 'bba'], ['consecttetur', 'The'], ['fofoothequickracecarapenapapayapineapplefoofof', 'oabcdefghijklmnopqrstuvwxsvityzabctf'], ['b', 'bbbb'], ['amet,', 'aemaditametn,piscing'], ['aemet,', 'aemet,'], ['dooveamt,dg.', 'dodg.'], ['Lorem ipsum dolor sit amet, consetcteadipiscilangtur adipiscing elit.', 'Lorem ipsum dolor sit amet, consetctetur adipiscing elit.'], ['etaaaaaofabbe', 'etaaaaofabbe'], ['abcc', 'abcc'], ['bananna', 'bananna'], ['faaaaaaaabasecteturmx', 'aaabrowanaaaa'], ['quickraceacarapenapapayapineapple', 'quickraceacarapenapapayapineappple'], ['dolor', 'Lorem ipsum dol adipiscing elit.'], ['Lorem ipmet, consectetur adip.iscing elit.', 'Lorem ipmet, consectetur adip.iscing elit.'], ['taaaaofabbbbtheaelitaaaaofabbbbtheaaaa.abrownaahe', 'taaaaofabbbbtheaelitaaaaofabbbbtheaaaa.abrownaahe'], ['aaaaoaaabbThefabbbbtheaelit.aaa', 'cacccccc'], ['aaabbaaabbbbaaaa', 'browwn'], ['ipsum', 'quicbbbbquicfoxcacccccacapk'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'quickraceacarapenapapayapineapelit.t.psumple'], ['aaaaabbbbaaaa', 'aacaccccccacacaaabbbbaaaaa'], ['quuicaccfox', 'faaaaaaaabasecteturmx'], ['abcdefghijklmnopqrstuvwxyzabc', 'quicfoxcacccccacc'], ['abcc', 'elit.aconsecur'], ['browwn', 'etaaaaaofabbe'], ['foipsucaaabbaaabbbbaaaaonsecteturmx', 'foataaLorem ipsum dolor sit amet, consetctetur adipiscing elit.aaaaaabaaaabrownaaaaaaaaaaipsuconsecteturmx'], ['dogetaaaaofaeapplee.cac', 'dog.cac'], ['dolor', 'ana'], ['laz', 'laz'], ['banaipsum', 'acaadog.rc'], ['thte', 'the'], ['bThe quick brown fox jumps over the lazycaccoveamt,cccacipsum dog.a', 'bThe quick brown fox jumps over the lazycaccoveamt,cccacipsum dog.a'], ['LLorem ipsum dolobanar sit amt, consectetur adipiscing elit.or', 'aemaditametn,piscing'], ['caacc', 'abcdefghijklmnopqovlazycacccccacipsumerrstuvwxyzabc'], ['AA', 'AA'], ['caaaabrownaaaaac', 'aaaaathequickracecarapenapapayapineapplerownaaaaaaaaaa'], ['cquicfoxkacc', 'dog.r'], ['banaana', 'banaacaccccccacacaaabbbbaaaaaana'], ['quicfThe quicfoxk brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumps over azy dog.oxcacccccacc', 'bThe quick brown fox jumps over the lazycacccccacipsum dog.a'], ['AAA', 'bThe quick brown fox jumps over the lazycaccoveamt,cccacipsum dog.a'], ['caaaabrownaaaaaac', 'aaaaathequickracecarapenapapayapineapplerownaaaaaaaaaa'], ['LLorem ipsum dolobanar sit amt, consectetur adipiscing elit.or', 'taaaaofoipsumxfabbbbtheaelit.aaahe'], ['fobccacx', 'taaaaobfabbbbtheaelit.aaahe'], ['cacbaaaaofabbbbtheaelibLoremaaaa', 'Lorem ipsum dolor sit amet, consetctetur aditpiacaacscilang elit.'], ['caccccc', 'AA'], ['The quicfoxk brown fox jumpxs over the lazy dog.', 'quicaccfoxsit'], ['acaagdog.rc', 'acaadog.quickraceacarapeabcnapapayapineapplerc'], ['bbbb', 'bbbb'], ['dog.aaaaaofabbbbtheaaaa', 'ovvr'], ['adiamet,piscing', 'bannana'], ['ccaac', 'caac'], ['cacccccac', 'cacccccacipsum'], ['eielit.psumfabbe', 'etaaaaofaeapplee'], ['aquicaccfoxsit amet, consetctetur adiamet,piscing elit.et,', 'bThe quick brown fox jumps over the lazycacccccacipsum dog.a'], ['racecarapernapapayapineapple', 'racecarapernapapayapineapple'], ['tAAAAAAquicfoxAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhe', 'aaaaabbbbaaaa'], ['a', 'AAAAAA'], ['bbelit.a', 'acaadog.rc'], ['bThse quick brown fox jumps over the lazycaccoveamt,cccacipsum dog.a', 'bThse quick brown fox jumps over the lazycaccoveamt,cccacipsum dog.a'], ['bba', 'quicfox'], ['.cafoipsuconfobbaccacxsecteturmxcdogfox.', '.cafoipsuconsecteturmxcdogfox.'], ['ccabcdefghijklmnopqovlazycacccccacipsumerrstuvwxyzabcccacc', 'fofofofofofofof'], ['browbwn', 'browwn'], ['aaaaamt,', 'bbc'], ['banaana', 'aaa'], ['bbbbb', 'bbbb'], ['banaipsum', 'banaipsum'], ['dogovlazycaccccAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABheumer.', 'dogovlazycacccccacipstAAAAAAquicfoxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABheumer.'], ['abcc', 'aabcc'], ['anab', 'adiamet,pistcing'], ['cacccccaac', 'cacccccaac'], ['caacccccac', 'caacccccac'], ['aap', 'aaabbThe quicfoxamlazyet,k brownfoipsucolnsequickcfoxquicfoxcaccccccackurmx fox jumups over the lazy dog.aabbbbaaaaaap'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcacccccaac', 'caac'], ['quicfoxcacccccac', 'racecarapenapapaeyapineapple'], ['aaAAAAAaaaaaabaaaabrownaaaaaaaaaa', 'quickcfoxk'], ['foipsumx', 'dodg.'], ['fofofofofofofofaaabroaaAAAAAaaaaaabaaaabrownaaaaaaaaaaaaaa', 'fofofofofofofofaaabroaaAAAAAaaaaaabaaaabrownaaaaaaaaaaaaaa'], ['abcdefghijklmnopqrstuvwxsityzabc', 'ThLorem ipsum dolor sit amet, consetctetur adipiscilang elit.e'], ['aaAAAAAaaaaaabaaLorem', 'daog.a'], ['vvr', 'ba'], ['faaaaaaaabaaaaoaaabbThe quicfoxamlazyet,k brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumups over the lazy dog.aabbbbaaaaiconsecteturmx', 'faaaaaaaabaaaaoaaabbThe quicfoxamlazyet,k brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumups over the lazy dog.aabbbbaaaaiconsecteturmx'], ['celit.aaaaaaacabcdefghijklmnopqovlazycacccccacipsumerrshtuvwxyzabcccacc', 'dgog.cac'], ['The quicfoxk brown fox jumps over the lazy dog.', 'cacccccabThe quick brown fox jumps over the lazy dog.ac'], ['laz', 'cccaacacccccacipsum'], ['Lorem ipsccccaccum dolor sit amet, consetctetg elit.', 'Lorem ipsum dooveamt,or sit ametfaaaaaaaabaaaaaaaoiconsecteturmx, consetctetur adipiscing elit.'], ['The quicfoxk brown foxbrothequickracecarapenapapayaquicfoxcacccaaaaofabbbbtheaelit.aaaccaccpineapplewwn jumps over the lazy dog.', 'The quicfoxk brown fox jumps over the lazy dog.'], ['elit.', 'Lor'], ['gg.', 'dogg.dg.'], ['bbaba', 'bbaba'], ['aaabrquicbbbbquicfoxcacccccacapkaquicaccfoxsitowanaaaa', 'aaabrowanaaaa'], ['quicfoxcacccccacc', 'taaabbaaabbbbaaaahe'], ['The quicfoxkthe brown fox jumps over the lazy dog.', 'The quicfoxk brown fox jumps over the lazy dog.'], ['cacccccabThe', 'ab'], ['The quick brown fps over the lazy dog.', 'The quick brown fps over the lazy dog.'], ['aaaaabbaaAAAAfoipsuconsequickcfoxkurmxAaaaaaabaaaabrownaaccccaccaaabbaaaa', 'aaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa'], ['abcdefghijklmnopqovlazycacccccacipsumerrstuvwxyzabc', 'abcdefghijklmnopqovlazycacccccacipsumerrstuvwxyzabc'], ['abcdefghijklmnopqovlazycacccccacipsumerrstuvkwxyzabc', 'abcdefghijklmnopqovlazycacccccacipsumerrstuvwxyzabc'], ['quicacthequickracecarapenapapayapineapplecfox', 'quicaccaaaaaaaabaaaabrownaaaaaaaaaafox'], ['cccaacacccccacipsum', 'etaaaaofaeapplee'], ['fofofbLorem ipsum dolor sit amet, consetctetur adipiscing elit.aofofofofof', 'fofofofofofofof'], ['consuecurAquicfoxAAAAA', 'consuecur'], ['aaaaaaelit.aaaaaaaaabaaaabrownaaaaaaaaaa', 'aaaaaaaabaaaabrownaaaaaaaaaa'], ['of', 'ccaac'], ['elit.aconsbbbbecu', 'elit.aconsecu'], ['g.dogfox.', 'aaaabofabbbbtheaaaa'], ['quicaccfoxsit amet, consetctetur adiamet,piscing elit.', 'quicaccfoxsit amet, consetctetur adiamet,piscing elit.'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABheaaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABhe'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABheaaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa', 'acaagdog.rc'], ['ab', 'ba'], ['cafoipsuconsequickcfoxkurmxcac', 'consuecur'], ['quiaaaaoaaabbThefabbbbtheaelit.aaacfoxcacccccac', 'cacccccaquicfThe quicfoxk brownfoipsuconsequickcfoxquicfoxcaccccccackurmx fox jumps over azy dofoxcaccc'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABheaaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa', 'taaaaofabbbbtheaelitaaaaofabbbbtheaaaa.abrownaahe'], ['tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapcaaabbaaaa', 'tAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAquickracecarapenapapayapineappleAAAAAABheaaaaabbaaAAAAAaaaaaabaaaabrownaaccccaccaaabbaaaa'], ['celit.aaaaaaacabcdefghijklmnopqovlazycacccccacipsumerrshtuvwxyzabcccacc', 'dgog.cacc'], ['Lorem ipsum dolor sit amt, consectetur adipiscing elit.', 'cac'], ['abaccac', 'ccacccccac'], ['theequickracecarapenapapayaquicfoxcacccccaccpineapple', 'theequickracecarapenapapayaquicfoxcacccccaccpineapple'], ['Lorem ipsum dolor sit amet, consetctetur aditpiacaacscilang elit.', 'Lorem ipsum dolor sit amet, consetctetur aditpiacaacscilang elit.'], ['', 'xyz'], ['hello', 'hello world'], ['apple', 'pineapple'], ['12$34$56', '$'], ['x', 'x'], ['x', 'y'], [' ', ' '], ['hellohello', 'hello'], ['aaaaaa', 'aa'], ['abcabcabc', 'abcabc'], ['racecarapenapapayapineapple', 'ana'], ['The quick brown foxamet, jumps over the lazy dog.', 'the'], ['anaap', 'ana'], ['racecarapenapapayapineapple', 'The quick brown foxamet, jumps over the lazy dog.'], ['elit.', 'abcdefghijklmnopqrstuvwxyzabc'], ['racecarrapenapapayapineapple', 'ana'], ['aAAAAAAAna', 'racecaracecarrapenapapayapineapplerrapenapapayapineapple'], ['aaaaaaaabaaaaaaa', 'jumpsba'], ['ipsum', 'the'], ['racecarapenapapayapineapple', 'appp'], ['AAAAaaaaaaaabaaaaaaaAAA', 'AAAAAAA'], ['anabanana', 'ana'], ['anracecarapenapapayapineapplea', 'ana'], ['of', 'fofofofofofofof'], ['racecarapenaapapayapineapple', 'ap'], ['ipsum', 'sit'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'racecarapenapapayapineapple'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'AAAAAAAA'], ['ba', 'basit'], ['ap', 'ap'], ['consectetur', 'racecaracecarrapenapapayapineapplerrapenapapayapineapple'], ['of', 'of'], ['ana', 'anaap'], ['anaba', 'anabanana'], ['consecteturr', 'consectetur'], ['foxamet,', 'foxamet,'], ['anracecarapenapapayapineapplea', 'an'], ['AAAAAAAA', 'racecarapenapapayapineapple'], ['racecarrapenapapayapineapple', 'racecarrapenapapayapineapple'], ['aaaa', 'aaa'], ['aaaaaaaabaaaaaaa', 'jfoxumpsba'], ['racecaAAAAAAArapenapapayapineapple', 'ana'], ['Lorem', 'aAAAAaaaaaaaabaaaaaaaAAAaaaabbbbaaaa'], ['fofofofofofofof', 'Th e quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.'], ['oof', 'of'], ['anracecarapenapapayapineapplea', 'lazzy'], ['fofofofofofofof', 'lazy'], ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'sit'], ['foxaet,', 'quick'], ['foxamconsecteturet,', 'foxamet,'], ['abcdefghijklmnopqrstuvwxyzabc', 'abcdefghijklmnopqrstuvwxyzabc'], ['anaap', 'aaaaaaaabaaaaaaaana'], ['racecarapenapapayapineapple', 'na'], ['racecarapenanpapayapineapple', 'foxaet,'], ['AAAAAAA', 'consecteturr'], ['aaaaabbbbaaaa', 'of'], ['anaap', 'anaap'], ['Lorem', 'ipsum'], ['consecrteturr', 'consecteturr'], ['ba', 'of'], ['racecarapenaapapayapineapple', 'The quick brown foLoremxamet, jumps over the lazy dog.'], ['The', 'ap'], ['ajumpsaaa', 'jumps'], ['abcdefghijklmnopqrstuvwxyzabcipsum', 'ipsum'], ['aaaaaaaabaaaaaaa', 'ana'], ['na', 'racecaracecarrapenapapayapineapapapayapineapple'], ['ba', 'an'], ['abasitna', 'ana'], ['abasitna', 'racecaraquAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABrpenapapayapineapple'], ['obrownf', 'anabanana'], ['ajumpsaaa', 'racecaracecarrapenapapayapineapapapayapineapple'], ['racecarapenanpapayapineapeple', 'foxfaet,'], ['fofofofofofofof', 'dog.'], ['abcdefghijklmnopqrstuvwxyzabcipsum', 'consectetur'], ['Thazy dog.', 'the'], ['racepcaAAAAAAArapenapapayapineapplee', 'ana'], ['The', 'dog.'], ['racecarapenapapayapineapple', 'ba'], ['appp', 'apppp'], ['racecarapenaapapayapineapple', 'racecarapenaapapayapineapple'], ['abasitna', 'ba'], ['of', 'aaaaabbbbaaaa'], ['appp', 'appp'], ['cacccccac', 'appp'], ['AAAAaaaaaaaabaaaaaaaAAA', 'racepcaAAAAAAArapenapapayapineapplee'], ['racepcaAAAAAAArapenapaadipiscingpayapineapplee', 'aaaaaaaabaaaaaaaaana'], ['cacc', 'cacc'], ['elit.', 'abcdefghijklmnopqrappppstuvwxyzabc'], ['the', 'lazy'], ['ajumpsaaa', 'anaba'], ['AAAAaaaafoxamconsecteturet,aaaabaaaaaaaAAA', 'Aelit.AAAAAA'], ['foxamconsecteturet,', 'p'], ['na', 'sit'], ['appppconsAelit.AAAAAAectetur', 'consecteturr'], ['consecteturr', 'consecteturr'], ['na', 'anaba'], ['aaaaabbbbaaaa', 'consectedturThe quick brown foxamet, jumps over the lazy dog.'], ['The quick brown fox jumps over the lazy dotheg.', 'racecarapenaapapayapineapple'], ['racecarapenanpapayapineapple', 'foxfaet,'], ['ba', 'babcdefghijklmnopqrstuvwxyzabcsit'], ['fofofofofofofof', 'dolorof'], ['oof', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['appp', 'app'], ['cacccccac', 'foxaet,'], ['The quick brown fox jumps over the lazy dotheg.', 'racecarapenaapapayapineappale'], ['foxfaect,consecteturr', 'appppconsAelit.AAAAAAectetur'], ['appppconsAelit.AAAAAAectetur', 'conse ctedturThe quick brown foxamet, jumps over the lazy dog.'], ['aAAAAAAAna', 'aAAAAAAAnaracecarapenaapapayapineappale'], ['foxamconsecteturet,', 'Th e quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.'], ['oof', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['foxamconsecteturet,', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.'], ['Aelit.AAAAAAA', 'Aelit.AAAAAA'], ['AAAAAAAA', 'AAAAAAA'], ['aaaaabbbbaaaa', 'e'], ['conse ctedturThe quick brown foxamet, jumps over the lazy dog.', 'abcdefghijklmnopqrappppstuvwxyzabc'], ['abcdefghijklmnopqrstuvwxyzaaAAAAAAAnabcipsum', 'consectetur'], ['foxamconsecteturet,', 'pp'], ['aaaaabbbbafofofofofofofofaaa', 'aaaaabbbbafofofofofofofofaaa'], ['aaaaaaaabaaaaaaa', 'appp'], ['conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.', 'conse ctedturThedotheg. quick brown foxamet, jumps over the lazy dog.'], ['jumpsba', 'AAAAAAA'], ['aaaaabbba', 'aaa'], ['elit.', 'jumpsba'], ['racecarapenaapapayapineappale', 'racecarapenaapapayapineappale'], ['consecteturr', 'racecarapenaapapayapineapple'], ['foxaomconsecteturet,', 'foxamconsecteturet,'], ['conse ctedturThedotheg. quick brown foxamet, jumps over the lazy dog.', 'aaa'], ['pcacp', 'AAAAAAAA'], ['fofofofofofofof', 'racecaAAAAAAArapenapapayapineapple'], ['aaaaracecarapenanpapayapineapeplea', 'aaaaa'], ['Lorem', 'cac'], ['The quick brown foLoremxamet, jumps over the lazy dog.', 'an'], ['aanaap', 'aaaaaaaabaaaaaaaana'], ['conse ctedturThsit over the lazy dog.', 'conse ctedturThe quick brown foxamet, jumps over the lazy dog.'], ['AAAAAAAanaba', 'AAAAAAAanaba'], ['racecarapenaapapayapineapple', 'The quick brown fox jumps over the lazy dotheg.'], ['dog.', 'foxamconsecteturet,'], ['quAAAAAAAAA', 'quAAAAAAAAA'], ['elit.', 'basit'], ['consectetuabcdefghijklmnopqrappppstuvwxyzabcrr', 'consectetur'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['babcdefghijklmnopqrstuvwxyzabcsit', 'consecuteturr'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['racecarapenapapayeapineapple', 'ba'], ['foxaet,', 'foxaet,'], ['cacccccac', 'consecteturr'], ['baa', 'ba'], ['anaaa', 'anaaa'], ['racecarapenaapapayapineappale', 'an'], ['anaap', 'apfoox'], ['app', 'apppp'], ['quick', 'quicik'], ['conse', 'The quick brown foxamet, jumps over the lazy doTg.'], ['sbasit', 'an'], ['Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.'], ['nna', 'racecaraquAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABrpenapapayapineapple'], ['anaaaLorem', 'anaaa'], ['conse', 'coonse'], ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'consectetur'], ['racecarapenaapapayapineappale', 'racecarapenapapayapineapple'], ['foxamet,', 'fxoxamet,'], ['apppp', 'appp'], ['basit', 'apppp'], ['oxaet,', 'foxaet,'], ['Th e quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.', 'abc'], ['racepcaAAAAAAAranpenapapayapineapplee', 'racepcaAAAAAAArapenapapayapinThazy dog.eapplee'], ['e', 'conse'], ['AAAAAAAA', 'quicik'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'ana'], ['sbasit', 'anaap'], ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'], ['AAAAAAAA', 'AAAAAAAA'], ['fooff', 'foof'], ['basit', 'basit'], ['aaaaabbbbafofofofofofofofaaa', 'Thazy dog.'], ['na', 'anaana'], ['sit', 'na'], ['racecarapenaapapayapineappapfooxale', 'racecarapenaapapayapineappale'], ['Aelit.AAAAAA', 'racecaracecarrapenapapayapineapplerrapenapapayapineapple'], ['racecarapenaapapayapineappapfooxale', 'ana'], ['quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr', 'aaa'], ['The', 'ddog.'], ['foxamconsecteturetp,', 'foxaomconsecteturet,p'], ['anaba', 'anaba'], ['over', 'racecarapenaapapayapineappale'], ['conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.', 'bc'], ['aThazynaap', 'anaap'], ['The', 'TAAAAaaaaaaaabaaaaaaaAAAhe'], ['e', 'laazy'], ['coonsecteturr', 'consecteturr'], ['conse ctedturThsit over the lazy dog.', 'aThazynaap'], ['thhe', 'the'], ['basit', 'bassit'], ['foLoremxamet,', 'quicik'], ['anaba', 'abcdefghijklmnopqrappppstguvwxyzabc'], ['annnaaba', 'anaba'], ['sit', 'bassit'], ['racecaracecarrapenapapayapineapplerrapenapapayapineapple', 'racecaracecarrapenapapayapineapplerrapenapapayapineapple'], ['fofofofofofofof', 'Th e quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.'], ['Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.'], ['racepcaAAAAAAArapenapapayapineapplee', 'racecaAAAAAAArapenapapayapifoxaet,neapple'], ['sbasist', 'anaap'], ['sitfox', 'bassit'], ['bAAAAaaaafoxamconsecteturet,aaaabaaaaaaaAAAa', 'ba'], ['Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.', 'oxaet,'], ['fofofofofofofof', 'racecarapenapapayapineapple'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr', 'jracecarapenanpapayapineappleumps'], ['sit', 'ncaca'], ['jumpsba', 'consectedturThe quick brown foxamet, jumps over the lazy dog.'], ['abcdefghijklmnopqrstuvwxyzaaAAAAAAAnaabcipsum', 'consectetur'], ['AAAAAAA', 'cac'], ['laazy', 'aapfoox'], ['racecarapenracecaAAAAAAArapenapapayapineapple', 'racecarapenaapapayapineapple'], ['jumpsba', 'AA'], ['consectedturThe', 'conse'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'AAAAaaaaaaaabaaaaaaaAAA'], ['Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.', 'dolor'], ['jracecarapenanpapayapineappleumps', 'consectetur'], ['conse ctedturacepcaAAAAAAArapenapapayapinThazy dog.eappleerThsit over the lazy dog.', 'aThazynddog.aap'], ['racepcaAAAAAAArapenapapayapinThazy', 'racecarapenaapapayapineappapfooxale'], ['tbassithe', 'the'], ['Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'], ['racecarapenanpapayapineapeple', 'an'], ['Lor', 'ipsum'], ['Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.'], ['foxamconsectetret,', 'Th e quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the lazy dog.'], ['Lconse ctedturThsit over the lazy dog.orem ipsum dolor sit amet, consectetur adipiscing elit.', 'sit'], ['foxamconsecteturet,', 'foxamconsecteturetp,'], ['aaaaaaaabaaaaaaa', 'racecarapenaapapayapineappale'], ['consectedtAelit.AAAAAAick brown foxamet, jumps over the lazy dog.', 'dconsectedturThe quick brown foxamet, jumps over the lazy dog.og.'], ['aAAAAAAAnaracecarapenaapapayapineappale', 'foxfaect,consecteturr'], ['jraaaaaaaabaaaaaaaaanaaceacarapenanpapayapineappleumps', 'consectetur'], ['foxaomconseet,', 'foxamconsecteturet,'], ['jracecarapenanpapayapiracepcaAAAAAAArapenapapayapineappleeneappleumps', 'jracecarapenanpapayapiracepcaAAAAAAArapenapapayapineappleeneappleumps'], ['Th', 'doTg.'], ['foxamconsecteturet,', 'foxamconsecteturet,'], ['doTg.', 'oof'], ['consectedtAelit.AAAAAAick brown foxamet, jumps over the lazy dog.', 'foxaomconsecteturet,p'], ['babcdefghianaaajklmnopqrstuvwxyzabcsit', 'babcdefghijklmnopqrstuvwxyzabcsit'], ['aaaaabbbbaaaa', 'racecaAAAAAAArapenapapayapifoxaet,neapplee'], ['racecarapenanpapayapineapple', 'racecarapenanpapayapineapple'], ['aAAAAAAAna', 'racecaracecarrapenapapayapineracecaracecarrapenapapayapineapapapayapineappleapplerrapenarpapayapineapple'], ['aapfoox', 'laazy'], ['abasitna', 'racecarapenanpapayapineapeple'], ['aaaaabbbracecarapenaapapayapineappapfooxalebaaaa', 'consectedturThe quick brown foxamet, jumps over the lazy dog.'], ['thlaazyeana', 'the'], ['oxt,', 'oxaet,'], ['an', 'an'], ['AAAAAAA', 'apfoo'], ['racepcaAAAAAAArapenapapayapineapplee', 'racepcaAAAAAAAraracecaracecarrapenapapayapineracecaracecarrapenapapayapineapapapayapineappleapplerrapenarpapayapineapplepenapapayapineapplee'], ['foLoremxamet,', 'qk'], ['conse', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.'], ['rpapayeapineapple', 'anaap'], ['ajumpsaaa', 'racecaracecarrapenapapayanpineapapapayapineapple'], ['appppconsAelit.AAAAAAectetur', 'bc'], ['AAAAAAThe quick brown foLoremxamet, jumps over the lazy dog.A', 'AAAAAAThe quick brown foLoremxamet, jumps over the lazy dog.A'], ['baa', 'Aelit.AAAAAA'], ['quAAAAAAAAA', 'Aelit.AAAAAAAaaa'], ['aana', 'ana'], ['racecarrapenapapayapineapple', 'aaa'], ['abcdefghijklmnopqrappppstguvwxyzabc', 'racecarapenaapapayapineappapfooxale'], ['consectedtAelit.AAAAAAick brown foxamet, jumps over the lazy dog.', 'racecaraquAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABrpenapapayapineapple'], ['racecfoxfaect,consecteturrarapenaapapayapineappapfooxale', 'racecarapenaapapayapineappale'], ['foxfaect,consecteturr', 'anaaa'], ['aac', 'abcappppbc'], ['anaaaLorem', 'abcdefghijklmnopqrappppstguvwxyzabc'], ['Th e quAAAAAAAAA AAAAaazy dog.', 'dconsectedturThe'], ['coonsecteturr', 'consencteturr'], ['aaaa', 'aaaa'], ['qobrownffuick', 'abcdefghijklmnopqrstuvwxbc'], ['aapfoox', 'aapfoox'], ['racecarapenanpapayapineappl', 'racecarapenanpapayapineapple'], ['abcdefghijklmnopqrstuvwxyzabc', 'racecarapenaapapayapineappale'], ['AAAsitAAAA', 'apfoo'], ['na', 'aanaana'], ['anracecarapenapapayapineapplea', 'nan'], ['consectedturThe quick brown foxamet, jumps over the lazy dog.consecrteturr', 'consecrteturr'], ['racecaAAAAAAArapenapapayapifoxaet,neapple', 'jfoxumpsba'], ['ffoxamconsecteturet,', 'ffoxamconsecteturet,'], ['racecarapenapapayapineapple', 'The quick brown foxamet,racecarapenanpapayapineapple jumconsecteturps over the lazy dog.'], ['conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.', 'conse ctedturThedotheg. quick brown foxamet, juAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmps over the lazy dog.'], ['racecarapenanpapayapineapepl', 'racecarapenanpapayapineapeple'], ['oof', 'babcdefghianaaajklmnopqrstuvwxyzabcsit'], ['consectetur', 'AAAAAAA'], ['racecarapenaapapayapineappapfooxale', 'of'], ['TAAAAaaaaaaaadog.AbaaaaaaaAAAhe', 'TAAAAaaaaaaaabaaaaaaaAAAhe'], ['aanaap', 'aaaaconsecteturaaaabaaaaaaaana'], ['confoLoremxamet,e', 'conse'], ['AAAdotheg.AAA', 'AAAAAAA'], ['The', 'aap'], ['racecarapenapineppale', 'racecarapenapapayapineapple'], ['aanaap', 'rpapayeapineapple'], ['conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.', 'ee'], ['anabba', 'anaba'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'conscectetur'], ['AAAAAAAA', 'abcdefghijklmnopqrstuvwxyzaaAAAAAAAnabcipsum'], ['AAAAAAAanaba', 'aaaaabbbbafofofofofofofofaaa'], ['consectedturThe', 'dog.eapplee'], ['racecarapenaapapThe quick brown foLoremxamet, jumps over the lazy dog.ayapineapple', 'racecarapenaapapayapineapple'], ['aaconsannnaabae ctedturacepcaAAAAAAArapenapapayapinThazy dog.eappleerThsit over the lazy dog.aa', 'aaaa'], ['quAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr', 'aThazynddog.aapquAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr'], ['deTg.', 'conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.'], ['laaaaabbbbaaaaazy', 'The quick brown foxamet, jumps over the lazy dog.'], ['fofofofofofofof', '.dog.'], ['dog.eapplee', 'oof'], ['caccccacac', 'cacccccac'], ['pappp', 'appp'], ['Lorem', 'Lorappem'], ['dog.A', 'aaconsannnaabae ctedturacepcaAAAAAAArapenapapayapinThazy dog.eappleerThsit over the lazy dog.aa'], ['dog.eapplee', 'quAAAAAAAAA'], ['conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.', 'racecaAAAAAAArapenapapayapineapple'], ['app', 'app'], ['dog.eappleerT', 'TAAAAaaaaaaaabaaaaaaaAAAhe'], ['iracecarapenracecaAAAAAAArapenapapayapineapplesum', 'ipsum'], ['oof', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjracecarapenanpapayapineappleuctedturThempsAAAAAAAAAAAAAAAAAB'], ['aaaaabbba', 'AAAdotheg.AAA'], ['Lor', 'anaba'], ['jus', 'aaaaaaaabaaaaaaaana'], ['TAAAAaaaaaaaabaaaaaaaAAAhe', 'The'], ['consectedturThe quick brown foxamet, jumps over the lazThazy dog.y dog.', 'consectedturThe quick brown foxamet, jumps over the lazy dog.'], ['racepcaAAAAAAArapenapapayapineapplee', 'racecaAAAAAAArapenapapAelit.AAAAAAayapifoxaet,neapple'], ['conse ctedturacepcaAAAAAAArapenapapayapinThazy dog.eappleerThsit over the lazy dog.', 'conse ctedturacepcaAAAAAAArapenapapayapinThazy dog.eappleerThsit over the lazy dog.'], ['babcdefghijklmnopqrstuvwxyzabcsit', 'babcdefghijklmnopqrstuvwxyzabcsit'], ['oof', 'ofracepcaAAAAAAArapenapaadipiscingpayapineapplee'], ['Tjfoxumpsbahe', 'TAAAAaaaaaaaabaaaaaaaAAAhe'], ['nana', 'ana'], ['aanaanasit', 'na'], ['apgciRKR', 'dPgciRKR'], ['an', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.'], ['sitoof', 'na'], ['aaaaabbbbafofofofofofofofaaa', 'aaaaabbbbafofofofofofaa'], ['aAAAAAAAnaconsecteturracecarapenaapapayapineappale', 'foxfaect,consecteturr'], ['an', 'AAAdotheg.AAA'], ['ajumpsaaa', 'ajumpsaaa'], ['laaznay', 'laazy'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAB'], ['Lorem', 'racepcaAAAAAAAraracecaracecarrapenapapayapineracecaracecarrapenapapayapineapapapayapineappleapplerrapenarpapayapineapplepenapapayapineapplee'], ['na', 'na'], ['foxamconsecteracecarapenanpapayapineapplre,', 'foxamconsecteracecarapenanpapayapineapplret,'], ['laazy', 'alaazy'], ['abcdefghijklmnopqrstuvwxyzabc', 'c'], ['o', 'of'], ['p', 'p'], ['conaaaaracecarapenanpapayapineapepleasectetur', 'AAAAAAA'], ['ssit', 'ncaca'], ['coonsecteturr', 'aana'], ['foxamconsecteturet,', 'racecfoxfaect,consecteturrarapenaapapayapineappapfooxale'], ['anaaaLelit.or', 'anaaaLelit.or'], ['daog.aa', 'daog.aa'], ['foxamconsectetuAAAdotheg.AAAret,', 'foxamconsecteturet,'], ['racecarapenapineppale', 'racecarapenapineppale'], ['foxaomconsecteturet,p', 'foxaomconsecteturet,p'], ['brown', 'e'], ['anabanana', 'anabanana'], ['TAAAAaaaaaaaadog.AbaaaaaaaAAAhe', 'TAAAAaaaaaaaadog.AbaaaaaaaAAAhe'], ['jumpsba', 'jumpsba'], ['aaaaaa', 'aaaaa'], ['abcdefghijklmnopqrstuvconsectedturThe quick brown foxamet, jumps over the lazy dog.wxyzabc', 'abcdefghijklmnopqrstuvwxyzabc'], ['consectedtAelit.AAAAAAick brown foxamr theconse ctedturThe quick brown foxamet, jumps over the lazy dog.g.', 'consectedtAelit.AAAAAAick brown foxamr the lazy dog.'], ['cc', 'cc'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB', 'racecarapenaaanabapapayapineapple'], ['apppp', 'apppp'], ['nana', 'racecarapenanpapayapineapple'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjracecarapenanpapayapineappleuctedturThempsAAAAAAAAAAAAAAAAAB', 'quAAAAAAAAA'], ['racecarapenapapayapineapple', 'The quick brown foxamet,racecarapenanpapayapineapple jumconsecrps over the lazy dog.'], ['dog.y', 'dconsectedturThe quick brown foxamet, jumps over the lazy dog.og.'], ['conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.', 'conse ctedturThedotheobrownfg. quick brown foxamet, jumps over the lazy dog.'], ['iupsum', 'the'], ['ansbasit', 'Th e quAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr the laaaaabbbbaaaaazy dog.'], ['ccac', 'cac'], ['sitoof', 'consectetur'], ['aana', 'anaap'], ['aAAAAAAAAAAAAAAAAAAAAAAAAAAAABna', 'ana'], ['foxaet,', 'cquick'], ['racecarapenaapapayapbAAAAaaaafoxamconsecteturet,aaaabaaaaaaaAAAapple', 'The quick brown foLoremxamet, jumps over the lazy dog.'], ['anaaaLorem', 'anaaaLorem'], ['anabanana', 'anansbasitabanana'], ['oxaet,', 'foxaeet,'], ['conse ctedturacepcaAcAAAAAArapenapapayapinThazy dog.eappleerThsit over the lazy dog.', 'aThazynddog.aap'], ['abcdefghijklmnopqrappppstguvwxyzabc', 'abcdefghijklmnopqrappppstguvwxyzabc'], ['anabanana', 'annabanana'], ['TAAAAaaaaaaaaaaaaaadog.AbaaaaaaaAAAhe', 'TAAAAaaaaaaaadog.AbaaaaaaaAAAhe'], ['broown', 'e'], ['Th', 'Th'], ['aadipiscing', 'aadipiscing'], ['aAAAAAAAAabcdefghijklmnopqrstuvwxyzaaAAAAAaaaaaAAnabcipsumna', 'aAAAAAAAAabcdefghijklmnopqrstuvwxyzaaAAAAAaaaaaAAnabcipsumna'], ['foxaet,', 'quickanansbasitabanana'], ['appppconsAelit.AAAAAAectretur', 'bc'], ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjracecarapenanpapayapineappleuctedturThempsAAAAAAAAAAAAAAAAAB', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjracecarapenanpapayapineappleuctedturThempsAAAAAAAAAAAAAAAAAB'], ['consecrteturr', 'consecrteturr']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the given problem:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while start < len(string):
+        index = string.find(substring, start)
+        if index == -1:
+            break
+        count += 1
+        start = index + 1
+    return count</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the `how_many_times` function, wrapped in a markdown block:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while start < len(string):
+        index = string.find(substring, start)
+        if index == -1:
+            break
+        count += 1
+        start = index + 1
+    return count</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while True:
+        start = string.find(substring, start)
+        if start == -1:  # -1 indicates substring not found in string
+            return count
+        count += 1
+        start += 1 </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlapping cases.
+    """
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+
+# Test cases
+assert how_many_times('', 'a') == 0
+assert how_many_times('aaa', 'a') == 3
+assert how_many_times('aaaa', 'aa') == 3</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if len(substring) == 0:
+        return 0
+    count = 0
+    for i in range(len(string)):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    """
+    count = start = 0
+    while True:
+        start = string.find(substring, start) + 1
+        if start > 0:
+            count += 1
+        else:
+            break
+    return count
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlapping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not string or not substring:
+        return 0
+
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+```
+
+This function works by iterating over the string with a range that goes from 0 to the length of the string minus the length of the substring plus 1. For each iteration, it checks if the substring of the string from the current index to the current index plus the length of the substring is equal to the substring. If it is, it increments the count. The function finally returns the count.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+
+# Test cases
+assert how_many_times('', 'a') == 0
+assert how_many_times('aaa', 'a') == 3
+assert how_many_times('aaaa', 'aa') == 3</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+
+print(how_many_times('', 'a'))  # 0
+print(how_many_times('aaa', 'a'))  # 3
+print(how_many_times('aaaa', 'aa'))  # 3</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string)):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+
+
+def how_many_times_v2(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times_v2('', 'a')
+    0
+    >>> how_many_times_v2('aaa', 'a')
+    3
+    >>> how_many_times_v2('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string)):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+
+
+def how_many_times_v3(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times_v3('', 'a')
+    0
+    >>> how_many_times_v3('aaa', 'a')
+    3
+    >>> how_many_times_v3('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string)):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+
+
+def how_many_times_v4(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times_v4('', 'a')
+    0
+    >>> how_many_times_v4('aaa', 'a')
+    3
+    >>> how_many_times_v4('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string)):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+
+
+def how_many_times_v</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+```
+
+You can run the function with the following code:
+
+```python
+print(how_many_times('', 'a'))  # Output: 0
+print(how_many_times('aaa', 'a'))  # Output: 3
+print(how_many_times('aaaa', 'aa'))  # Output: 3
+```
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+
+print(how_many_times('', 'a'))  # 0
+print(how_many_times('aaa', 'a'))  # 3
+print(how_many_times('aaaa', 'aa'))  # 3</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            count += 1
+            start = pos + 1
+        else:
+            break
+    return count</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not string or not substring:
+        return 0
+    
+    count = 0
+    for i in range(len(string)):
+        if string[i: i + len(substring)] == substring:
+            count += 1
+    
+    return count</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not string or not substring:
+        return 0
+    if len(string) < len(substring):
+        return 0
+    if len(string) == len(substring):
+        return 1 if string == substring else 0
+    if len(string) > len(substring):
+        return 1 + how_many_times(string[1:], substring)
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlapping cases.
+    """
+    count = 0
+    while True:
+        pos = string.find(substring, 0)
+        if pos == -1:
+            break
+        count += 1
+        string = string[pos + len(substring):]
+    return count
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    index = 0
+    while index < len(string):
+        index = string.find(substring, index)
+        if index == -1:
+            break
+        count += 1
+        index += 1
+    return count
+
+# Test cases
+print(how_many_times('', 'a'))  # Output: 0
+print(how_many_times('aaa', 'a'))  # Output: 3
+print(how_many_times('aaaa', 'aa'))  # Output: 3</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+
+print(how_many_times('', 'a'))  # 0
+print(how_many_times('aaa', 'a'))  # 3
+print(how_many_times('aaaa', 'aa'))  # 3</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string)):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+```
+
+The function takes two parameters, `string` and `substring`, and returns the number of times the substring can be found in the original string. The function uses a for loop to iterate over the indices of the string and checks if the substring is present at that index. If it is, the count is incremented. If the substring is not present, the function moves on to the next index. The function also handles the case where the substring is not found in the string by returning 0.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+```
+
+This function uses a while loop to find the substring in the string. The `find` method is used to find the position of the substring in the string. If the substring is found, the start position is updated to the position after the found substring and the count is incremented. If the substring is not found, the loop breaks and the count is returned.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while True:
+        start = string.find(substring, start) + 1
+        if start > 0:
+            count += 1
+        else:
+            return count
+
+def how_many_times_v2(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times_v2('', 'a')
+    0
+    >>> how_many_times_v2('aaa', 'a')
+    3
+    >>> how_many_times_v2('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while True:
+        start = string.find(substring, start) + 1
+        if start > 0:
+            count += 1
+        else:
+            return count
+
+def how_many_times_v3(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times_v3('', 'a')
+    0
+    >>> how_many_times_v3('aaa', 'a')
+    3
+    >>> how_many_times_v3('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while True:
+        start = string.find(substring, start) + 1
+        if start > 0:
+            count += 1
+        else:
+            return count
+
+def how_many_times_v4(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times_v4('', 'a')
+    0
+    >>> how_many_times_v4('aaa', 'a')
+    3
+    >>> how_many_times_v4('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while True:
+        start = string.find(substring, start) + 1
+        if</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not string or not substring:
+        return 0
+    count = 0
+    start = 0
+    while True:
+        index = string.find(substring, start)
+        if index == -1:
+            break
+        count += 1
+        start = index + 1
+    return count</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    if not string or not substring:
+        return 0
+    return sum(string[i:].startswith(substring) for i in range(len(string)))</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlapping cases.
+
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+
+    while True:
+        start = string.find(substring, start) + 1
+        if start > 0:
+            count += 1
+        else:
+            break
+
+    return count
+
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+```
+
+This function takes two arguments, `string` and `substring`, and returns the number of times `substring` appears in `string`. It uses a for loop to iterate over the indices of `string`, and checks if the substring starting at that index matches the given `substring`. If it does, it increments the `count` variable. Finally, it returns the `count` variable.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlapping cases."""
+    count = 0
+    for i in range(len(string)):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count
+
+# Test cases
+print(how_many_times('', 'a'))  # 0
+print(how_many_times('aaa', 'a'))  # 3
+print(how_many_times('aaaa', 'aa'))  # 3</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    sub_len = len(substring)
+    for i in range(len(string)):
+        if string[i:i+sub_len] == substring:
+            count += 1
+    return count</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    return string.count(substring)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+```
+
+Explanation:
+
+The function `how_many_times` takes two arguments, `string` and `substring`. It initializes a variable `count` to 0 and then loops through the `string` using a `for` loop. For each iteration, it checks if the substring is present in the current substring of the `string` starting from the current index. If it is present, it increments the `count` variable. Finally, it returns the `count` variable. The `range` function is used to iterate over the `string` from the first index to the last index minus the length of the `substring` plus 1. This is because we need to check all possible substrings of the `string`. The `len(string) - len(substring) + 1` is the maximum number of times the `substring` can be found in the `string`. If the substring is not found, the count remains 0. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+
+    if not string or not substring:
+        return 0
+    count = 0
+    for i in range(len(string)):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i + len(substring)] == substring:
+            count += 1
+    return count</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    if len(substring) == 0:
+        return count
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+```
+
+This code defines a function `how_many_times` that takes in two parameters: `string` and `substring`. It initializes a variable `count` to keep track of the number of occurrences of the substring in the string.
+
+The function then checks if the length of the substring is 0. If it is, it means the substring is empty and there are no occurrences, so it returns 0.
+
+Next, the function iterates over the range of indices from 0 to the length of the string minus the length of the substring plus 1. This ensures that the substring can fit within the remaining characters of the string.
+
+Inside the loop, it checks if the substring starting from the current index matches the given substring. If it does, it increments the count by 1.
+
+Finally, the function returns the count, which represents the number of times the substring appears in the string.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in markdown style:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """
+    Find how many times a given substring can be found in the original string. Count overlaping cases.
+
+    Parameters:
+    string (str): The original string.
+    substring (str): The substring to be found.
+
+    Returns:
+    int: The number of times the substring can be found in the original string.
+
+    Examples:
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+
+    count = 0
+    for i in range(len(string)):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count
+```
+
+This function uses a for loop to iterate over the string, and for each iteration, it checks if the substring from the current position to the length of the substring is equal to the substring. If it is, it increments the count. At the end of the function, it returns the count.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    while substring in string:
+        string = string[string.index(substring) + len(substring):]
+        count += 1
+    return count
+```
+
+This Python script uses a while loop to find the number of times a given substring can be found in the original string. It counts overlapping cases by continuously searching for the substring in the remaining portion of the string after each occurrence. The function returns the count of occurrences.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    for i in range(len(string) - len(substring) + 1):
+        if string[i:i+len(substring)] == substring:
+            count += 1
+    return count</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+
+def how_many_times(string: str, substring: str) -> int:
+    count = 0
+    start = 0
+    while start < len(string):
+        index = string.find(substring, start)
+        if index == -1:
+            break
+        count += 1
+        start = index + len(substring)
+    return count
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    start = 0
+    while True:
+        start = string.find(substring, start)
+        if start == -1:
+            break
+        count += 1
+        start += 1
+    return count</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+
+    if not string or not substring:
+        return 0
+    count = 0
+    for i in range(len(string)):
+        if string[i:].startswith(substring):
+            count += 1
+    return count
+
+def main():
+    string = input("Enter the string: ")
+    substring = input("Enter the substring: ")
+    count = how_many_times(string, substring)
+    print(f"The substring '{substring}' appears {count} times in the string '{string}'.")
+</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def how_many_times(string: str, substring: str) -> int:
+    """ Find how many times a given substring can be found in the original string. Count overlaping cases.
+    >>> how_many_times('', 'a')
+    0
+    >>> how_many_times('aaa', 'a')
+    3
+    >>> how_many_times('aaaa', 'aa')
+    3
+    """
+    count = 0
+    index = 0
+    while index < len(string):
+        if string[index:index+len(substring)] == substring:
+            count += 1
+            index += len(substring)
+        else:
+            index += 1
+    return count</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def how_many_times(string: str, substring: str) -> int:
+    count = start = 0
+    while start < len(string):
+        pos = string.find(substring, start)
+        if pos != -1:
+            start = pos + 1
+            count += 1
+        else:
+            break
+    return count
+
+# Test cases
+print(how_many_times('', 'a'))  # Expected output: 0
+print(how_many_times('aaa', 'a'))  # Expected output: 3
+print(how_many_times('aaaa', 'aa'))  # Expected output: 3
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

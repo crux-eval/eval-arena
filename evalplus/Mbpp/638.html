@@ -1,0 +1,1351 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/638 </h1>
+<pre><code> """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import math
+def wind_chill(v,t):
+ windchill = 13.12 + 0.6215*t -  11.37*math.pow(v, 0.16) + 0.3965*t*math.pow(v, 0.16)
+ return int(round(windchill, 0))
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[120, 35], [40, 20], [10, 8]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[0, 0], [500, -50], [500, 0], [0, 500], [1, 0], [1, 1], [500, 500], [0, 501], [1, -1], [501, -50], [500, 1], [True, False], [501, 501], [False, True], [501, 0], [False, False], [501, 500], [0, 1], [500, 2], [502, 501], [1, 501], [1, 500], [1, -50], [2, 0], [1, -2], [2, 1], [502, -50], [2, -50], [503, 502], [73.15589926015126, 73.15589926015126], [503, 501], [73.15589926015126, 37.688172821388065], [2, -52], [504, 504], [501, 69], [503, 0], [69, 501], [504, 505], [0, 2], [502, 0], [2, 2], [502, 503], [500, 501], [73.99361665758236, 73.15589926015126], [504, 506], [37.688172821388065, 73.15589926015126], [3, -1], [504, 501], [502, 504], [506, 506], [502, 2], [38.526128276032885, 37.688172821388065], [54.35980990509703, 54.35980990509703], [503, 2], [503, -2], [506, 505], [2, 3], [3, -2], [503, 503], [502, 1], [1, 2], [69, 3], [0, 504], [504, 503], [502, 502], [501, -52], [504, 0], [73.99361665758236, 54.35980990509703], [4, -52], [507, 503], [507, 502], [505, 0], [5, -52], [507, 507], [507, 506], [505, 500], [1, 4], [0, 3], [69, -1], [501, 5], [69, 69], [38.526128276032885, 38.526128276032885], [4, -51], [54.35980990509703, 37.688172821388065], [0, -1], [507, 501], [506, 504], [True, True], [504, 2], [74.55187136846823, 73.99361665758236], [500, 505], [507, -52], [3, 501], [499, 500], [500, 502], [3, 500], [501, 499], [503, 4], [5, 5], [504, 5], [73.99361665758236, 73.99361665758236], [499, 1]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(wind_velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    :param wind_velocity: wind velocity in km/h
+    :param temperature: temperature in celsius
+    :return: wind chill index
+    """
+    wind_chill_index = 35.74 + 0.6215 * temperature - 35.75 * (wind_velocity ** 0.16) + 0.4275 * (
+            temperature * (wind_velocity ** 0.16))
+    return round(wind_chill_index)
+
+
+if __name__ == '__main__':
+    print(wind_chill(120, 35))
+    print(wind_chill(100, 10))
+    print(wind_chill(100, 100))
+    print(wind_chill(100, 1000))
+    print(wind_chill(100, 10000))
+    print(wind_chill(100, 100000))
+    print(wind_chill(100, 1000000))
+    print(wind_chill(100, 10000000))
+    print(wind_chill(100, 100000000))
+    print(wind_chill(100, 1000000000))
+    print(wind_chill(100, 10000000000))
+    print(wind_chill(100, 100000000000))
+    print(wind_chill(100, 1000000000000))
+    print(wind_chill(100, 10000000000000))
+    print(wind_chill(100, </code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import math
+
+def wind_chill(wind_velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)
+    return round(wind_chill_index)
+
+# Test the function
+assert wind_chill(120,35) == 40</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(wind_velocity: float, temperature: float) -> int:
+    wind_chill_index = (
+        13.12 
+        + 0.6215 * temperature 
+        - 11.37 * (wind_velocity ** 0.16) 
+        + 0.3965 * temperature * (wind_velocity ** 0.16)
+    )
+    return round(wind_chill_index)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+import math
+
+def wind_chill(wind_velocity, temperature):
+    """
+    Calculates the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    if wind_velocity < 4.8:
+        return round(temperature)
+    else:
+        wind_chill = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)
+        return round(wind_chill)
+
+# Test the function
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(velocity, temp):
+    wct_index = 13.12 + 0.6215*temp - 11.37*velocity**0.16 + 0.3965*temp*velocity**0.16
+    return round(wct_index)
+
+# Test the function
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+def wind_chill(velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    # Calculate the wind chill index
+    wci = 13.12 + 0.6215 * temperature - 11.37 * (velocity ** 0.16) + 0.3965 * temperature * (velocity ** 0.16)
+
+    # Round the wind chill index to the next integer
+    wci = round(wci)
+
+    return wci
+
+# Test the function
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to calculate the wind chill index wrapped in a Python markdown block:
+
+```python
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(v, t):
+    """
+    Calculate the wind chill index given the wind velocity and temperature.
+    
+    :param v: Wind velocity in km/h
+    :param t: Temperature in Celsius
+    :return: Wind chill index rounded to the next integer
+    """
+    # Convert wind velocity from km/h to m/s
+    v = v / 3.6
+    
+    # Calculate the wind chill index using the formula
+    wind_chill_index = 13.12 + 0.6215 * t - 11.37 * (v ** 0.16) + 0.3965 * t * (v ** 0.16)
+    
+    # Round the wind chill index to the next integer
+    wind_chill_index = round(wind_chill_index)
+    
+    return wind_chill_index
+
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  import math
+
+def wind_chill(velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer.
+
+    Parameters:
+    velocity (int or float): The wind velocity in km/h.
+    temperature (int or float): The temperature in celsius.
+
+    Returns:
+    int or float: The wind chill index.
+    """
+    if temperature < -50 or velocity < 2:
+        return temperature
+    else:
+        wci = 13.12 + 0.6215*temperature - 11.37*velocity**0.16 + 0.3965*temperature*velocity**0.16
+        return math.ceil(wci)
+
+# Test the function
+assert wind_chill(120,35) == 40</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to calculate the wind chill index:
+
+```python
+def wind_chill(velocity, temperature):
+    # formula to calculate wind chill index
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * velocity**0.16 + 0.3965 * temperature * velocity**0.16
+    # rounding the wind chill index to the next integer
+    wind_chill_index = round(wind_chill_index)
+    return wind_chill_index
+
+# testing the function with the given values
+print(wind_chill(120, 35)) # output: 40
+```
+
+The wind chill index is calculated using the formula:
+
+`Wind Chill Index = 13.12 + 0.6215 * temperature - 11.37 * velocity^0.16 + 0.3965 * temperature * velocity^0.16`
+
+We can use the `round()` function to round the wind chill index to the next integer. The `**` operator is used to calculate the power of a number. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def wind_chill(velocity, temperature):
+    # Convert wind velocity from km/h to m/s
+    velocity = velocity * 1000 / 3600
+
+    # Calculate wind chill index
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * velocity**0.16 + 0.3965 * temperature * velocity**0.16
+
+    # Round to the next integer
+    wind_chill_index = round(wind_chill_index)
+
+    return wind_chill_index
+
+# Test the function
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind, temp):
+    return int(round(13.12 + 0.6215 * temp - 11.37 * wind ** 0.16 + 0.3965 * temp * wind ** 0.16))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  # Wind chill index formula based on the U.S. National Weather Service's formula
+# https://www.nws.noaa.gov/om/winter/windchill.shtml
+def wind_chill(velocity, temperature):
+    return round(13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16)
+
+# Test case
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I can help with that. The wind chill index is a measure of how cold people feel due to the combined effect of wind and low temperatures. The formula for wind chill in metric units (with wind speed in km/h and temperature in °C) is a bit complex, but it's derived from the U.S. National Weather Service formula, and it's as follows:
+
+Wind Chill (°C) = 13.12 + 0.6215T - 11.37V^0.16 + 0.3965TV^0.16
+
+where:
+T = Air Temperature (°C)
+V = Wind Speed (km/h)
+
+Here's a Python function that implements this formula:
+
+```python
+import math
+
+def wind_chill(v, t):
+    return round(13.12 + 0.6215*t - 11.37*math.pow(v, 0.16) + 0.3965*t*math.pow(v, 0.16))
+
+# Test the function
+assert wind_chill(120, 35) == 40
+```
+
+This function takes the wind velocity (v) and temperature (t) as arguments, calculates the wind chill index, and then rounds it to the nearest integer. The `assert` statement is used to verify that the function returns the expected result.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    """
+    Calculate the wind chill index for a given wind speed and temperature.
+    wind_speed: int or float for the wind speed in kilometers per hour
+    temperature: int or float for the temperature in degrees celsius
+    returns: float for the wind chill index
+    """
+    # Calculate wind chill index
+    wind_chill_index = 35.74 + 0.6215 * temperature - 35.75 * wind_speed ** 0.16 + 0.4275 * temperature * wind_speed ** 0.16
+    return round(wind_chill_index)
+
+print(wind_chill(120,35))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    """
+    Calculate the wind chill index for a given wind speed and temperature.
+    wind_speed: int or float for the wind speed in kilometers per hour
+    temperature: int or float for the temperature in degrees celsius
+    returns: float for the wind chill index
+    """
+    # Calculate wind chill index
+    wind_chill_index = 35.74 + 0.6215 * temperature - 35.75 * wind_speed ** 0.16 + 0.4275 * temperature * wind_speed ** 0.16
+    return round(wind_chill_index)
+
+print(wind_chill(120,35))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    """
+    Calculate the wind chill index for a given wind speed and temperature.
+    wind_speed: int or float for the wind speed in kilometers per hour
+    temperature: int or float for the temperature in degrees celsius
+    returns: float for the wind chill index
+    """
+    # Calculate wind chill index
+    wind_chill_index = 35.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    """
+    Function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    if temperature > 10 or wind_velocity < 4.8:
+        return "Invalid conditions for wind chill calculation"
+    else:
+        wind_chill_index = 13.12 + 0.6215*temperature - 11.37*(wind_velocity**0.16) + 0.3965*temperature*(wind_velocity**0.16)
+        return round(wind_chill_index)
+
+# Test cases
+assert wind_chill(120,35) == 40
+assert wind_chill(4,15) == "Invalid conditions for wind chill calculation"
+assert wind_chill(10,15) == "Invalid conditions for wind chill calculation"</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    if temperature < -10 or temperature > 40 or wind_velocity < 4 or wind_velocity > 60:
+        return "Invalid input"
+    return int(13.12 + 0.6215 * temperature - 11.37 * (wind_velocity**0.16) + 0.3965 * temperature * (wind_velocity**0.16))
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    """
+    :param wind_velocity:
+    :param temperature:
+    :return:
+    """
+    if wind_velocity < 4.8:
+        return temperature
+    elif temperature < 10:
+        return temperature
+    else:
+        return round(35.74 + 0.6215 * temperature - 35.75 * (wind_velocity ** 0.16) + 0.4275 * temperature * (wind_velocity ** 0.16))
+
+
+if __name__ == '__main__':
+    print(wind_chill(120, 35))
+    print(wind_chill(120, 10))
+    print(wind_chill(120, 30))
+    print(wind_chill(120, 20))
+    print(wind_chill(120, 10))
+    print(wind_chill(120, 0))
+    print(wind_chill(120, -10))
+    print(wind_chill(120, -20))
+    print(wind_chill(120, -30))
+    print(wind_chill(120, -40))
+    print(wind_chill(120, -50))
+    print(wind_chill(120, -60))
+    print(wind_chill(120, -70))
+    print(wind_chill(120, -80))
+    print(wind_chill(120, -90))
+    print(wind_chill(120, -100))
+    print(wind_chill(120, -110))
+    print(wind_chill(120, -120))
+    print(wind_chill(120, -130))
+    print(wind_chill(120, -140))
+    print(wind_chill(120, -150))</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def wind_chill(velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    wct_index = 13.12 + 0.6215*temperature - 11.37*(velocity**0.16) + 0.3965*temperature*(velocity**0.16)
+    return round(wct_index + 0.5)  # Round to the next integer
+
+# Test the function
+assert wind_chill(120,35)==40
+```
+
+This function uses the Wind Chill Temperature Index formula to calculate the wind chill index. The formula is:
+
+    wct_index = 13.12 + 0.6215*temperature - 11.37*(velocity**0.16) + 0.3965*temperature*(velocity**0.16)
+
+The function then rounds the calculated index to the next integer using the `round` function. The `+0.5` term is used to handle the rounding issue in Python where `round(0.5)` would give `0` instead of `1`.
+
+Finally, the function is tested with the provided assert statement.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def wind_chill(velocity, temperature):
+    """
+    Calculate the wind chill index given the wind velocity in km/h and a temperature in Celsius.
+    """
+    # Calculate the wind chill index using the given formula
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * velocity**0.16 + 0.3965 * temperature * velocity**0.16
+
+    # Round the result to the next integer
+    wind_chill_index = round(wind_chill_index)
+
+    return wind_chill_index
+
+# Test the function with the given example
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(velocity, temperature):
+    return round(35.74 + 0.6215 * temperature + (velocity**0.16) * (temperature - 35.74) * 0.16)
+
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_chill(120,35))
+print(wind_chill(80,35))
+print(wind_</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+  """
+  Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+  assert wind_chill(120,35)==40
+  """
+  if not isinstance(wind_velocity, (int, float)) or not isinstance(temperature, (int, float)):
+    raise TypeError("Input must be a number")
+  if wind_velocity < 0 or temperature < -58 or temperature > 41 or wind_velocity > 120:
+    raise ValueError("Input is out of range")
+  
+  wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * wind_velocity ** 0.16 + 0.3965 * temperature * wind_velocity ** 0.16
+  
+  return int(round(wind_chill_index))</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+def wind_chill(wind_velocity: float, temperature: float) -> int:
+    """
+    Calculate the wind chill index rounded to the next integer.
+
+    :param wind_velocity: Wind velocity in km/h
+    :param temperature: Temperature in Celsius
+    :return: Wind chill index rounded to the next integer
+    """
+    formula = "35.74 + 0.6215*T + (0.4275*V**2 - 35.75)*1.8"
+    import math
+    T = temperature
+    V = wind_velocity / 3.6
+    wind_chill = int(round(eval(formula.format(T=T, V=V))) + 0.5)
+    return wind_chill
+
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)
+    return round(wind_chill_index)
+
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def wind_chill(wind_speed, temperature):
+    """
+    Calculates the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_speed ** 0.16) + 0.3965 * temperature * (wind_speed ** 0.16)
+    return round(wind_chill_index)
+```
+
+The function takes two arguments, `wind_speed` and `temperature`, and returns the wind chill index rounded to the next integer. The formula used to calculate the wind chill index is taken from the National Weather Service's (NWS) National Weather Service's (NWS) Forecasting Office website.
+
+The function uses the `round()` function to round the wind chill index to the next integer.
+
+The `assert` statement is used to test the function with the given input values. If the function returns the expected output, the test passes.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(velocity, temperature):
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * velocity**0.16 + 0.3965 * temperature * velocity**0.16
+    return int(wind_chill_index)</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def wind_chill(velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer.
+
+    Parameters:
+    velocity (float): Wind velocity in km/h.
+    temperature (float): Temperature in celsius.
+
+    Returns:
+    int: Wind chill index rounded to the next integer.
+    """
+    wind_chill_index = 13.12 + 0.6215*temperature - 11.37*velocity**0.16 + 0.3965*temperature*velocity**0.16
+    return round(wind_chill_index)
+
+# Test the function
+assert wind_chill(120,35)==40
+```
+
+This function calculates the wind chill index using the formula provided in the problem statement. The result is then rounded to the next integer using the `round()` function. The test case `wind_chill(120,35)==40` is used to verify the function.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    return round(13.12 + 0.6215*temperature - 11.37*(velocity**0.16) + 0.3965*temperature*(velocity**0.16))
+
+assert wind_chill(120,35)==40
+```
+
+2. Write a function to calculate the dew point given the temperature in celsius and the relative humidity in percentage.
+```python
+"""
+Write a function to calculate the dew point given the temperature in celsius and the relative humidity in percentage.
+assert dew_point(25,80)==22
+"""
+
+def dew_point(temperature, relative_humidity):
+    """
+    Calculate the dew point given the temperature in celsius and the relative humidity in percentage.
+    """
+    a = 17.27
+    b = 237.7
+    alpha = ((a * temperature) / (b + temperature)) + math.log(relative_humidity/100.0)
+    dew_point = (b * alpha) / (a - alpha)
+    return round(dew_point)
+
+assert dew_point(25,80)==22
+```
+
+3. Write a function to calculate the heat index given the temperature in celsius and the relative humidity in percentage.
+```python
+"""
+Write a function to calculate the heat index given the temperature in celsius and the relative humidity in percentage.
+assert heat_index(35,80)==42
+"""
+
+def heat_index(temperature, relative_humidity):
+    """
+    Calculate the heat index given the temperature in celsius and the relative humidity in percentage.
+    """
+    a = -42.379
+    b = 2.04901523
+    c = 10.14333127
+    d = -0.22475541
+    e = -6.83783 * 10**-3
+    f = -5.481717 * 10**-2
+    g = 1.22874 * 10**-3
+    h = 8.5282 * 10**</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(wind_velocity, temperature):
+    return 35.74 + 0.6215 * temperature - 35.75 * wind_velocity ** 0.16 + 0.4275 * temperature * wind_velocity ** 0.16
+
+assert wind_chill(120,35)==40
+
+print(wind_chill(120,35))
+
+print(wind_chill(120,35.5))
+
+print(wind_chill(120,35.7))
+
+print(wind_chill(120,35.8))
+
+print(wind_chill(120,35.9))
+
+print(wind_chill(120,36))
+
+print(wind_chill(120,36.1))
+
+print(wind_chill(120,36.2))
+
+print(wind_chill(120,36.3))
+
+print(wind_chill(120,36.4))
+
+print(wind_chill(120,36.5))
+
+print(wind_chill(120,36.6))
+
+print(wind_chill(120,36.7))
+
+print(wind_chill(120,36.8))
+
+print(wind_chill(120,36.9))
+
+print(wind_chill(120,37))
+
+print(wind_chill(120,37.1))
+
+print(wind_chill(120,37.2))
+
+print(wind_chill(120,37.3))
+
+print(wind_chill(120,37.4))
+
+print(wind_chill(120,37.5))
+
+print(wind_chill(120,37.6))
+
+print(wind_chill(120,37.7))
+
+print(wind_chill(120,37.8))
+
+print(wind_chill(120,37.9))
+
+print(wind_chill(120,38))
+
+print(wind_chill(120,38.1))
+
+print(wind_chill(120,38.2))
+
+print(wind_chill(120,38.3))
+
+print(wind_chill(120,38.4))</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(velocity, temperature):
+    """
+    Calculates the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    wind_chill = 13.12 + 0.6215 * temperature - 11.37 * velocity ** 0.16 + 0.3965 * temperature * velocity ** 0.16
+    return round(wind_chill)
+assert wind_chill(120, 35) == 40
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(v,t):
+    return round(35.74 + 0.6215*t - 35.75*v**0.16 + 0.4275*t*v**0.16)
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    # Check if the wind velocity is less than 4.8 km/h or if the temperature is greater than 10 degrees Celsius
+    if wind_velocity < 4.8 or temperature > 10:
+        return "Invalid input"
+    
+    # Calculate the wind chill index
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * wind_velocity**0.16 + 0.3965 * temperature * wind_velocity**0.16
+    
+    # Round the wind chill index to the next integer
+    return round(wind_chill_index)
+
+# Test the function
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    if wind_velocity < 4.8 or temperature < 10:
+        return temperature
+
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * wind_velocity ** 0.16 + 0.3965 * temperature * wind_velocity ** 0.16
+    return round(wind_chill_index)
+
+# Test the function
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def wind_chill(velocity, temperature):
+    """
+    Calculates the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    # Wind chill formula: 13.12 + 0.6215T - 11.37V^0.1625 + 0.3965TV^0.1625
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * velocity**0.1625 + 0.3965 * temperature * velocity**0.1625
+    # Round to the next integer
+    wind_chill_index = round(wind_chill_index)
+    return wind_chill_index
+
+# Test case
+assert wind_chill(120, 35) == 40
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+
+    :param wind_velocity: Wind velocity in km/h
+    :param temperature: Temperature in celsius
+    :return: Wind chill index rounded to the next integer
+    """
+    if temperature > 0 or wind_velocity < 5:
+        return temperature
+    else:
+        wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)
+        return -(-wind_chill_index // 1)
+
+# Test the function</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    return int(round(35.74 + 0.6215*temperature - 35.75*wind_speed**0.16 + 0.4275*temperature*wind_speed**0.16))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    return int(round(35.74 + 0.6215*temperature - 35.75*wind_speed**0.16 + 0.4275*temperature*wind_speed**0.16))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    return int(round(35.74 + 0.6215*temperature - 35.75*wind_speed**0.16 + 0.4275*temperature*wind_speed**0.16))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    return int(round(35.74 + 0.6215*temperature - 35.75*wind_speed**0.16 + 0.4275*temperature*wind_speed**0.16))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_speed, temperature):
+    return int(round(35.74 + 0.6215*temperature - 35.75*wind_speed**0.16 + 0.4275*temperature*wind_speed**0.16))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(v, t):
+    """
+    Calculate wind chill index
+    :param v: wind velocity in km/h
+    :param t: temperature in celsius
+    :return: wind chill index rounded to the next integer
+    """
+    return round(35.74 + 0.6215 * t + (0.4275 * t - 35.75) * (v ** 0.16))
+
+
+assert wind_chill(120, 35) == 40
+assert wind_chill(80, 15) == 19
+assert wind_chill(100, 0) == 32
+assert wind_chill(0, 0) == 32
+assert wind_chill(0, 100) == 32
+assert wind_chill(100, 100) == 32
+assert wind_chill(80, -15) == 19
+assert wind_chill(100, -15) == 32
+assert wind_chill(-80, 15) == 19
+assert wind_chill(-100, 15) == 32
+assert wind_chill(-100, -15) == 32
+assert wind_chill(-80, -15) == 19
+assert wind_chill(-100, -15) == 32
+assert wind_chill(-80, 0) == 19
+assert wind_chill(-100, 0) == 32
+assert wind_chill(-80, 100) == 19
+assert wind_chill(-100, 100) == 32
+assert wind_chill(-80, -100) == 19
+assert wind_chill(-100, -100) == 32
+assert wind_chill(-80, -100) == 19
+assert wind_chill(-100, -100) == 32
+assert wind_chill(-80, -15) == 19
+assert wind_chill(-100, -15) == 32
+assert wind_chill(-80, -50) == 19
+assert wind_chill(-100, -50) == 32
+assert wind_chill(-80, -100) == 19
+assert wind_chill(-100, -100) == 32
+assert wind_chill(-80, -100) == 19
+assert wind_chill(-100, -100) == 32
+assert wind_chill(-80, -15) == 19
+assert wind_chill(-</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+import math
+
+def wind_chill(velocity, temperature):
+    # Wind chill index formula for km/h and Celsius
+    if temperature > 10 or velocity < 4.8:
+        return None
+    wci = 13.12 + 0.6215 * temperature - 11.37 * math.pow(velocity, 0.16) + 0.3965 * temperature * math.pow(velocity, 0.16)
+    return math.ceil(wci)
+
+# Example usage
+# assert wind_chill(120, 35) == 40
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  import math
+
+def wind_chill(speed, temp):
+    """
+    Calculates the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+
+    Args:
+        speed: The wind velocity in km/h.
+        temp: The temperature in celsius.
+
+    Returns:
+        The wind chill index rounded to the next integer.
+    """
+
+    # Formula for wind chill index.
+    wind_chill_index = 13.12 + 0.6215 * temp - 11.57 * math.log10(speed) - 0.2215 * temp * math.log10(speed)
+
+    # Round the wind chill index to the next integer.
+    return int(math.ceil(wind_chill_index))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def wind_chill(velocity, temperature):
+    wind_chill_index = 13.12 + 0.6215*temperature - 11.37*velocity**0.16 + 0.3965*temperature*velocity**0.16
+    return round(wind_chill_index)
+
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  import math
+
+def wind_chill(wind_velocity, temperature):
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * math.pow(wind_velocity, 0.16) + 0.3965 * temperature * math.pow(wind_velocity, 0.16)
+    return round(wind_chill_index)
+
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    # Wind chill formula
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)
+    return round(wind_chill_index)
+
+# Test the function
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to calculate the wind chill index:
+
+```python
+def wind_chill(wind_speed, temp):
+    """
+    Calculates the wind chill index based on the formula:
+    wind_chill = 13.12 + 0.6215 * temp - 11.37 * wind_speed**0.16 + 0.3965 * temp**0.16
+    """
+    wind_chill = 13.12 + 0.6215 * temp - 11.37 * wind_speed**0.16 + 0.3965 * temp**0.16
+    return round(wind_chill)
+```
+
+This function takes two arguments: `wind_speed` and `temp`. It calculates the wind chill index using the formula provided and returns the result rounded to the nearest integer.
+
+To test the function, we can call it with the given values:
+
+```python
+assert wind_chill(120, 35) == 40
+```
+
+This will return `True` if the function returns `40` for the given inputs. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(wind_speed, temperature):
+    return int(35.74 + 0.6215*temperature - 35.75*wind_speed**0.16 + 0.4275*temperature*wind_speed**0.16)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def wind_chill(wind_speed, temperature):
+    if wind_speed < 2 or temperature <= -50:
+        return temperature
+    wind_chill = 35.74 + 0.6215 * temperature - 13.36 * (wind_speed**0.16) + 0.4275 * temperature * (wind_speed**0.16)
+    return round(wind_chill)
+
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    """
+    Calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+    """
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * wind_velocity ** 0.16 + 0.3965 * temperature * wind_velocity ** 0.16
+    return round(wind_chill_index)
+
+print(wind_chill(120,35))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    """
+    :param wind_velocity:
+    :param temperature:
+    :return:
+    """
+    return round(13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16))
+
+print(wind_chill(120,35))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    """
+    :param wind_velocity:
+    :param temperature:
+    :return:
+    """
+    return round(13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16))
+
+print(wind_chill(120,35))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    """
+    :param wind_velocity:
+    :param temperature:
+    :return:
+    """
+    return round(13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16))
+
+print(wind_chill(120,35))
+
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    """
+    :param wind_velocity:
+    :param temperature:
+    :return:
+    """
+    return round(13.12 + 0.6215 * temperature - 11.37 * (wind</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind, temp):
+    if wind < 4:
+        return temp
+    elif wind < 12:
+        return 13.12 + 0.6215 * temp - 11.37 * wind ** 0.16 + 0.3965 * temp * wind ** 0.16
+    else:
+        return 10.0
+
+
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(wind_velocity, temperature):
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * wind_velocity ** 0.16 + 0.3965 * temperature * wind_velocity ** 0.16
+    return round(wind_chill_index)
+
+assert wind_chill(120, 35) == 40
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(wind_velocity, temperature):
+    return round(13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16))
+
+assert wind_chill(120,35)==40
+assert wind_chill(100,35)==40
+assert wind_chill(90,35)==40
+assert wind_chill(80,35)==40
+assert wind_chill(70,35)==40
+assert wind_chill(60,35)==40
+assert wind_chill(50,35)==40
+assert wind_chill(40,35)==40
+assert wind_chill(30,35)==40
+assert wind_chill(20,35)==40
+assert wind_chill(10,35)==40
+assert wind_chill(0,35)==40
+assert wind_chill(10,40)==40
+assert wind_chill(20,40)==40
+assert wind_chill(30,40)==40
+assert wind_chill(40,40)==40
+assert wind_chill(50,40)==40
+assert wind_chill(60,40)==40
+assert wind_chill(70,40)==40
+assert wind_chill(80,40)==40
+assert wind_chill(90,40)==40
+assert wind_chill(100,40)==40
+assert wind_chill(110,40)==40
+assert wind_chill(120,40)==40
+assert wind_chill(130,40)==40
+assert wind_chill(140,40)==40
+assert wind_chill(150,40)==40
+assert wind_chill(160,40)==40
+assert wind_chill(170,40)==40
+assert wind_chill(180,40)==40
+assert wind_chill(190,40)==40
+assert wind_chill(200,40)==40
+assert wind_chill(210,40)==40
+assert wind_chill(220,40)==40
+assert wind_chill(</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(velocity, temperature):
+    return round(35.74 + 0.6215 * temperature - 35.75 * (velocity ** 0.16) + 0.4275 * temperature * (velocity ** 0.16))
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  import math
+
+def wind_chill(wind_velocity, temperature):
+    # Convert wind velocity to m/s
+    wind_velocity_mps = wind_velocity * (1000 / 3600)
+    
+    # Calculate wind chill index using formula from Environment Canada
+    wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * wind_velocity_mps**0.16
+    
+    # Round to the nearest integer
+    return int(math.floor(wind_chill_index + 0.5))
+
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+def wind_chill(wind_velocity: float, temperature: float) -> int:
+    wind_chill_formula = -17.82 + (0.6215 * temperature) - (39.15 * ((wind_velocity / 1.852) ** 0.16))
+    return int(round(wind_chill_formula))
+
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(wind_speed, temperature):
+    return int(round(35.74 + 0.6215 * temperature + (0.4275 * wind_speed) - (35.75 * (0.16 * temperature + 0.145 * wind_speed))))
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a Python markdown block:
+
+```python
+"""
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+import math
+
+def wind_chill(wind_velocity, temperature):
+    """
+    Calculate the wind chill index given the wind velocity in km/h and temperature in celsius.
+    
+    Args:
+        wind_velocity (float): Wind velocity in km/h.
+        temperature (float): Temperature in celsius.
+        
+    Returns:
+        int: Wind chill index rounded to the next integer.
+    """
+    if temperature > 10 or wind_velocity < 4.8:
+        return int(temperature)
+    else:
+        wind_chill_index = 13.12 + 0.6215 * temperature - 11.37 * (wind_velocity ** 0.16) + 0.3965 * temperature * (wind_velocity ** 0.16)
+        return math.ceil(wind_chill_index)
+
+# Test case
+assert wind_chill(120, 35) == 40</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+
+def wind_chill(velocity, temperature):
+    return round(13.12 + 0.6215*temperature - 11.37*velocity**0.16 + 0.3965*temperature*velocity**0.16)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+def wind_chill(wind_velocity, temperature):
+    wind_chill = 35.74 + 0.6215 * temperature - 35.75 * (wind_velocity ** 0.16) + 0.4275 * temperature * (wind_velocity ** 0.16)
+    return int(wind_chill)
+
+print(wind_chill(120,35))
+/week_02/day_02/02_functions/02_functions.py
+"""
+Write a function that takes a list of numbers and returns the sum of all the numbers in the list.
+"""
+
+def sum_list(list):
+    sum = 0
+    for i in list:
+        sum += i
+    return sum
+
+print(sum_list([1,2,3,4,5]))
+
+"""
+Write a function that takes a list of numbers and returns the minimum value in the list.
+"""
+
+def min_list(list):
+    min = list[0]
+    for i in list:
+        if i < min:
+            min = i
+    return min
+
+print(min_list([1,2,3,4,5]))
+
+"""
+Write a function that takes a list of numbers and returns the maximum value in the list.
+"""
+
+def max_list(list):
+    max = list[0]
+    for i in list:
+        if i > max:
+            max = i
+    return max
+
+print(max_list([1,2,3,4,5]))
+
+"""
+Write a function that takes a list of strings and returns a string that is all those strings concatenated together.
+"""
+
+def concat_list(list):
+    string = ""
+    for i in list:
+        string += i
+    return string
+
+print(concat_list(["a","b","c"]))
+
+"""
+Write a function that takes a list of strings and returns a string that is all those strings concatenated together separated by a hyphen.
+"""
+
+def concat_list_hyphen(list):
+    string = ""
+    for i in list:
+        string += i + "-"
+    return string[:-1]
+
+print(concat_list_hyphen(["a","b","c"]))
+
+"""
+Write a function that takes a</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def wind_chill(velocity, temperature):
+    # Calculate wind chill index
+    wci = 13.12 + 0.6215 * temperature - 11.37 * (velocity ** 0.16) + 0.3965 * temperature * (velocity ** 0.16)
+    # Round to the next integer
+    wci = round(wci)
+    return wci
+
+assert wind_chill(120,35)==40</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the wind chill index rounded to the next integer given the wind velocity in km/h and a temperature in celsius.
+assert wind_chill(120,35)==40
+"""
+
+import math
+def wind_chill(vel,temp):
+    return int(round(35.74 + 0.6215 * temp - 35.75 * math.pow(vel, 0.16) + 0.4275 * temp * math.pow(vel, 0.16)))
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+import math
+
+def wind_chill(velocity, temperature):
+    # Formula to calculate wind chill index
+    wci = 13.12 + 0.6215*temperature -  11.37*math.pow(velocity, 0.16) + 0.3965*temperature*math.pow(velocity, 0.16)
+    # Round the result to the next integer
+    return math.ceil(wci)
+
+# Test the function
+print(wind_chill(120,35))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1298 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/630 </h1>
+<pre><code> """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def adjac(ele, sub = []): 
+  if not ele: 
+     yield sub 
+  else: 
+     yield from [idx for j in range(ele[0] - 1, ele[0] + 2) 
+                for idx in adjac(ele[1:], sub + [j])] 
+def get_coordinates(test_tup):
+  return list(adjac(test_tup))
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[(3, 4)], [(4, 5)], [(5, 6)]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[(1, 1, 1)], [(0, 0, 0)], [(-3, -2, -1)], [(10, 20, 30)], [(-5, 0, 5)], [(1, 2, 3, 4)], [(-1, -2, -3, -4)], [(0, 1, 0, -1)], [(2, 2, 2, 2)], [(-2, -2, -2, -2)], [(0, 0, 0, 0)], [(-1, -1, -1, -1)], [(3, 5, 2, 4)], [(0, 0, 1, 1)], [(2, 3, 4, 5)], [(4, 5, 6, 7, 8)], [(-10, 0, 10, 20)], [(1, 2, 3, 4, 5, 6, 7, 8, 9)], [(-1, -2, -3, -4, -5, -6, -7)], [(0, 0, 0, 1, 1, 1, 2, 2, 2)], [(2, 2, 2, 2, 2)], [(-10, 10, 10, 20)], [(20, -10, 0, 10, 2)], [(0, 0, 1, 2, 1, 0)], [(0, 1, 0, 0)], [(9, 0, 1, 2, 1, 0)], [(1, 2, 3, 4, 5, 6, 7, 9)], [(1, 2, 2, 3, 4)], [(-3, -2, -1, -2)], [(2, 2, 2, 2, 2, 2)], [(0, 6, 0, 0)], [(-10, 1, 0, 10, 20, -10)], [(1, 2, 2, 3, 4, 1)], [(20, 2, 3, 4)], [(3, 5, 6, 4)], [(-10, 6, 10, 20)], [(-3, -2, 5)], [(-3, 0, 0)], [(1, -1, 1, 2, 2, 8, 4)], [(1, 0, 1, 2, 2, 8, 4)], [(-3, -1, -2, -3, -4)], [(-1, 4, 1, 0)], [(-3, -2, -1, -1)], [(1, 0, 1, 2, 1, 9, 4)], [(2, 3, 4, 5, 5, 4)], [(0, 0, 0, 0, -10, 0)], [(3, 5, 6, -6, 4, 5)], [(4, 5, 7, 6, 7, 8)], [(1, 2, 2, 3, 4, 1, 2)], [(3, 5, 6, -6, 4, 5, 6)], [(2, 3, 4, 3, 4)], [(0, 0, 0, 0, -10, 0, 0)], [(-3, -2, -2, -1)], [(-1, -1, -1)], [(-3, 3, 5, -6, 4, 5)], [(1, 2, 3, 1, 2)], [(20, -10, 0, 10, 2, 0)], [(-10, 1, 0, 10, -5, 20, -10)], [(-10, 1, 0, 10, -5, 20, -4, -10)], [(2, 3, 5, 6, 5, 4)], [(3, 5, 5, 6, -6, 4, 5, 6)], [(20, -10, 0, 10, 2, 0, 10)], [(2, 2, 3, 4, 1, 2)], [(2, -2, 2, 2, 2, 2)], [(4, 5, 7, 7, 8)], [(10, 21, 30, 10)], [(0, 0, 20, 0, 0, 0)], [(30, 20, 30, 20)], [(0, 0, 0, 0, -10, 0, -10)], [(-3, 0, 0, 0)], [(3, -2, 2, 2, 2, 2, 2)], [(-10, -6, 7, 10, 20)], [(3, 5, 6, 8, 4, 5, 0, 5)], [(3, 3, 5, 5, 6, -6, 4, 5, 10)], [(-7, -1, 4, 1, 0)], [(-10, 1, 0, 10, -5, 20, -4, -10, -10)], [(1, 1, 2, 2, 8, 4)], [(-3, -2, -5, -5, 5)], [(-3, -2, -1, 0, -1)], [(1, 6, 0, 0)], [(3, 3, 5, 5, 6, -6, 4, 5, 10, 5)], [(-10, -6, 7, 11, 20)], [(4, 7, 6, 7, 8)], [(1, 2, 3, 4, 5, 6, 7, 9, 4)], [(-3, -3, -2, -1, -2)], [(0, 0, 0, 1, 1, 1, 2, 2, 2, 1)], [(1, 9, 0, 1, 2, 1, 0)], [(1, 2, 3)], [(0, 0, 0, 0, 0)], [(2, 2, 3, 1, 2)], [(3, -2, 2, 2, 2, 2)], [(2, 3, 4, 3, 4, 4)], [(1, 2, 3, 5, 6, 5, 4)], [(-3, -2, 0, -2)], [(2, 2, 3, 2, 1, 2)], [(10, 11, -10, 6, 10, 20)], [(-3, -1, -2, -3, -4, -4)], [(0, 1, 6, 0, 0)], [(2, 10, 4, 3, 4, -4, 10)], [(2, 2, 2, 1, 2)], [(1, 2, 3, 4, 5, 6, 7, 9, 7)], [(1, 2, 2, 20, 4, 1)], [(2, 10, 3, 4, -4, 10)], [(1, 1, 2, 3, 5, 5, 5, 4)], [(3, 5, 5, 6, -6, 4, 3, 5, 6)], [(3, 5, -6, 4, 5, 6)], [(2, 10, 3, 4, -4, 5)], [(1, 2, 2, 21, 3, 4, 1)], [(2, 3, 5, 6, 5, 4, 3)], [(3, 6, -6, 4, 5, 6)], [(-7, -1, 4, 1, 0, 0)], [(-7, -1, 4, -4, 1, 0)], [(9, 0, 1, 1, 0)], [(3, 5, -6, 5, 4, 5, 6)], [(-10, 1, 0, 0, 10, -5, 20, -4, -10)], [(-3, -1, 0, -2, -3, -4)], [(2, 2, 4, 1, 6)], [(20, 20, 2, 20, 3, 4)], [(0, 0)], [(20, -10, 0, 19, 2)]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coord):
+    """
+    :param coord: tuple of ints
+    :return: list of tuples
+    """
+    x, y = coord
+    return [(x - 1, y - 1), (x - 1, y), (x - 1, y + 1), (x, y - 1), (x, y), (x, y + 1), (x + 1, y - 1), (x + 1, y),
+            (x + 1, y + 1)]
+
+
+if __name__ == '__main__':
+    print(get_coordinates((3, 4)))
+    print(get_coordinates((1, 1)))
+    print(get_coordinates((1, 2)))
+    print(get_coordinates((2, 1)))
+    print(get_coordinates((2, 2)))
+    print(get_coordinates((1, 3)))
+    print(get_coordinates((3, 1)))
+    print(get_coordinates((3, 3)))
+    print(get_coordinates((1, 4)))
+    print(get_coordinates((4, 1)))
+    print(get_coordinates((4, 4)))
+    print(get_coordinates((2, 3)))
+    print(get_coordinates((3, 2)))
+    print(get_coordinates((4, 2)))
+    print(get_coordinates((2, 4)))
+    print(get_coordinates((4, 3)))
+    print(get_coordinates((3, 4)))
+    print(get_coordinates((4, 5)))
+    print(get_coordinates((5, 4)))
+    print(get_coordinates((5, 5)))
+    print(get_coordinates((5, 3)))
+    print(get_coordinates((3, 5)))
+    print(get_coordinates((5, 1)))
+    print(get_coordinates((1, 5)))
+    print(get_coordinates((1, 1)))
+    print(get_coordinates((1, 2)))
+    print(get_</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate: tuple[int, int]) -> list[list[int]]:
+    x, y = coordinate
+    adjacent_coordinates = []
+    for i in range(x - 1, x + 2):
+        for j in range(y - 1, y + 2):
+            if (i, j) != coordinate:
+                adjacent_coordinates.append([i, j])
+    return adjacent_coordinates
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1],
+            [x, y-1], [x, y], [x, y+1],
+            [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    result = []
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if i >= 0 and j >= 0:
+                result.append([i, j])
+    return result
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def get_coordinates(coord):
+    x, y = coord
+    return [[i, j] for i in range(x-1, x+2) for j in range(y-1, y+2)]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    adjacent_coordinates = [
+        [x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+        [x, y - 1], [x, y], [x, y + 1],
+        [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]
+    ]
+    return adjacent_coordinates
+
+# Testing the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+
+# Test some more cases
+assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
+assert get_coordinates((1, 2)) == [[0, 1], [0, 2], [0, 3], [1, 1], [1, 2], [1, 3], [2, 1], [2, 2], [2, 3]]
+assert get_coordinates((5, 5)) == [[4, 4], [4, 5], [4, 6], [5, 4], [5, 5], [5, 6], [6, 4], [6, 5], [6, 6]]
+
+# Test the function with negative coordinates
+assert get_coordinates((-1, -1)) == [[-2, -2], [-2, -1], [-2, 0], [-1, -2], [-1, 0], [-1, 1], [0, -2], [0, -1], [0, 0]]
+assert get_coordinates((-2, 3)) == [[-3, 2], [-3, 3], [-3, 4], [-2, 2], [-2, 3], [-2, 4], [-1, 2], [-1, 3], [-1, 4]]
+
+# Test the function with large coordinates
+assert get_coordinates((10, 10)) == [[9, 9], [9, 10], [9, 11], [10, 9], [10, 10], [10, 11], [11, 9], [11, 10], [11, 11]]
+
+print("All tests passed!") </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y-1], [x-1, y], [x-1, y+1],
+            [x, y-1], [x, y], [x, y+1],
+            [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+print("All test cases pass")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinates):
+    x, y = coordinates
+    return [[x2, y2] for x2 in range(x - 1, x + 2) for y2 in range(y - 1, y + 2)]
+
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    result = [
+        [x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+        [x, y - 1], [x, y + 1],
+        [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]
+    ]
+    return result
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def get_coordinates(coordinate):
+    x, y = coordinate
+    result = []
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if (i, j) != coordinate:
+                result.append([i, j])
+    return result
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+```
+This function works by iterating over all the coordinates in the 3x3 grid centered at the given coordinate, and appending them to the result list if they are not the same as the given coordinate.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinates):
+    """
+    :type coordinates: tuple
+    :rtype: list[list[int]]
+    """
+    result = []
+    for i in range(len(coordinates)):
+        result.append([coordinates[i-1], coordinates[i], coordinates[i+1]])
+    return result
+
+print(get_coordinates((3, 4)))
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+Note:
+
+All given inputs are in lowercase letters a-z.
+"""
+
+def longestCommonPrefix(strs):
+    """
+    :type strs: List[str]
+    :rtype: str
+    """
+    if len(strs) == 0:
+        return ""
+    if len(strs) == 1:
+        return strs[0]
+    if len(strs) == 2:
+        return min(strs[0], strs[1])
+    
+    result = ""
+    for i in range(len(strs[0])):
+        for j in range(1, len(strs)):
+            if i >= len(strs[j]) or strs[j][i]!= strs[0][i]:
+                return result
+        result += strs[0][i]
+    return result
+
+print(longestCommonPrefix(["flower","flow","flight"]))
+print(longestCommonPrefix(["dog","racecar","car"]))
+
+"""
+Write a function to find the longest common suffix string amongst an array of strings.
+
+If there is no common suffix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common suffix among the input strings.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+
+def get_coordinates(coord):
+    return [[coord[0]-1, coord[1]-1], [coord[0]-1, coord[1]], [coord[0]-1, coord[1]+1], [coord[0], coord[1]-1],
+            [coord[0], coord[1]], [coord[0], coord[1]+1], [coord[0]+1, coord[1]-1], [coord[0]+1, coord[1]],
+            [coord[0]+1, coord[1]+1]]
+
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coord):
+    """
+    :param coord: tuple of coordinates
+    :return: list of adjacent coordinates
+    """
+    x, y = coord
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+            [x, y - 1], [x, y], [x, y + 1],
+            [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]]
+
+
+def test_get_coordinates():
+    assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+    assert get_coordinates((0, 0)) == [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]
+    assert get_coordinates((1, 1)) == [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
+    assert get_coordinates((1, 0)) == [[0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1], [2, -1], [2, 0], [2, 1]]
+    assert get_coordinates((0, 1)) == [[-1, 0], [-1, 1], [-1, 2], [0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2]]
+    assert get_coordinates((0, 2)) == [[-1, 1], [-1, 2], [-1</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def get_coordinates(coordinate):
+    x, y = coordinate
+    adjacent_coordinates = []
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if (i, j) != (0, 0):
+                adjacent_coordinates.append([x + i, y + j])
+    return adjacent_coordinates
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+```
+
+This function takes a coordinate tuple as input and returns a list of all adjacent coordinates. The adjacent coordinates are calculated by adding or subtracting 1 from both the x and y coordinates. The function uses two nested loops to generate all possible combinations of x and y coordinates. The condition `(i, j) != (0, 0)` is used to exclude the original coordinate from the result.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def get_coordinates(coord):
+    x, y = coord
+    return [(x-1, y), (x, y-1), (x, y), (x+1, y), (x, y+1)]
+
+print(get_coordinates((3, 4)))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coord):
+    return [[coord[0] + i, coord[1] + j] for i in range(-1, 2) for j in range(-1, 2) if not (i == 0 and j == 0)]
+
+print(get_coordinates((3, 4)))
+print(get_coordinates((1, 1)))
+print(get_coordinates((1, 2)))
+print(get_coordinates((1, 3)))
+print(get_coordinates((1, 4)))
+print(get_coordinates((1, 5)))
+print(get_coordinates((2, 1)))
+print(get_coordinates((2, 2)))
+print(get_coordinates((2, 3)))
+print(get_coordinates((2, 4)))
+print(get_coordinates((2, 5)))
+print(get_coordinates((3, 1)))
+print(get_coordinates((3, 2)))
+print(get_coordinates((3, 3)))
+print(get_coordinates((3, 4)))
+print(get_coordinates((3, 5)))
+print(get_coordinates((4, 1)))
+print(get_coordinates((4, 2)))
+print(get_coordinates((4, 3)))
+print(get_coordinates((4, 4)))
+print(get_coordinates((4, 5)))
+print(get_coordinates((5, 1)))
+print(get_coordinates((5, 2)))
+print(get_coordinates((5, 3)))
+print(get_coordinates((5, 4)))
+print(get_coordinates((5, 5)))
+print(get_coordinates((6, 1)))
+print(get_coordinates((6, 2)))
+print(get_coordinates((6, 3)))
+print(get_coordinates((6, 4)))
+print(get_coordinates((6, 5)))
+print(get_coordinates((7, 1)))
+print(get_coordinates((7, 2)))
+print(get_coordinates((7, 3)))
+print(get_coordinates((7, 4)))
+print(get_coordinates((7, 5)))
+print(get_coordinates((8, 1)))
+print(get_coordinates((8, 2</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+  """
+  Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+  assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+  """
+  adjacent_coordinates = []
+  for i in range(coordinate[0] - 1, coordinate[0] + 2):
+    for j in range(coordinate[1] - 1, coordinate[1] + 2):
+      if i != coordinate[0] or j != coordinate[1]:
+        adjacent_coordinates.append([i, j])
+  return adjacent_coordinates</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+import math
+
+def get_coordinates(coord):
+    x, y = coord
+    step = 1
+    result = [(x, y)]
+    while True:
+        x, y = x + step, y + step
+        if not (0 <= x < 10 and 0 <= y < 10):
+            break
+        result.append((x, y))
+    return result
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    adjacent_coordinates = []
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if i == 0 and j == 0:
+                continue
+            adjacent_coordinates.append([x + i, y + j])
+    return adjacent_coordinates
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def get_coordinates(coord):
+    """
+    This function takes a coordinate tuple as input and returns a list of all the adjacent coordinates.
+    """
+    x, y = coord
+    adjacent_coords = []
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if (i, j) != coord:
+                adjacent_coords.append([i, j])
+    return adjacent_coords
+```
+
+The function takes a coordinate tuple as input and initializes an empty list to store the adjacent coordinates. It then uses nested loops to iterate over all the adjacent coordinates of the given coordinate tuple and append them to the list. Finally, it returns the list of adjacent coordinates.
+
+The function also includes an assertion statement to test the function with the given input.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinates):
+    x, y = coordinates
+    return [[x2, y2] for x2 in range(x - 1, x + 2) for y2 in range(y - 1, y + 2)]
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function to solve the problem:
+
+```python
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], 
+            [x, y-1], [x, y], [x, y+1], 
+            [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+print(get_coordinates((3, 4)))
+```
+
+This function takes a tuple of two integers as input, representing a coordinate in a 2D grid. It then generates all the adjacent coordinates of the given coordinate, and returns them as a list of lists.
+
+The function works by first unpacking the input tuple into two variables, `x` and `y`. It then generates all the possible combinations of `x` and `y` that are one unit away from the original coordinate, and returns them as a list of lists.
+
+The `print` statement at the end is used to test the function with the given example. If the function is implemented correctly, it should print the expected output.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    """
+    Returns a list of all adjacent coordinates of the given coordinate tuple.
+    """
+    x, y = coordinate
+    return [[x-1, y], [x+1, y], [x, y-1], [x, y+1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+```
+
+2. Write a function to check if a given coordinate tuple is inside a given rectangle.
+```python
+"""
+Write a function to check if a given coordinate tuple is inside a given rectangle.
+assert is_inside((2, 3), (0, 0), (4, 4)) == True
+assert is_inside((5, 5), (0, 0), (4, 4)) == False
+"""
+
+def is_inside(coordinate, rectangle):
+    """
+    Returns True if the given coordinate tuple is inside the given rectangle, False otherwise.
+    """
+    x, y = coordinate
+    x1, y1 = rectangle[0]
+    x2, y2 = rectangle[1]
+    return x1 <= x <= x2 and y1 <= y <= y2
+
+assert is_inside((2, 3), (0, 0), (4, 4)) == True
+assert is_inside((5, 5), (0, 0), (4, 4)) == False
+```
+
+3. Write a function to calculate the Euclidean distance between two given coordinate tuples.
+```python
+"""
+Write a function to calculate the Euclidean distance between two given coordinate tuples.
+assert euclidean_distance((0, 0), (3, 4)) == 5.0
+assert euclidean_distance((1, 1), (4, 5)) == 5.0
+"""
+
+def euclidean_distance(coordinate1, coordinate2):
+    """
+    Returns the Euclidean distance between the two given coordinate tuples.
+    """
+    x1, y1 = coordinate1
+    x2, y2 = coordinate2
+    return ((x2 - x1)</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinates):
+    return [[coordinates[0] + i, coordinates[1] + j] for i in range(-1, 2) for j in range(-1, 2) if i!= 0 or j!= 0]
+
+print(get_coordinates((3, 4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, 4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, 4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, 4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, 4)))
+print(get_coordinates((-3, 4)))
+print(get_coordinates((3, -4)))
+print(get_coordinates((-3, -4</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]]</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    adjacent_coordinates = []
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if i != 0 or j != 0:  # Exclude the original coordinate
+                adjacent_coordinates.append([x + i, y + j])
+    return adjacent_coordinates
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    adjacent_coords = [
+        [x-1, y-1], [x-1, y], [x-1, y+1],
+        [x, y-1], [x, y+1],
+        [x+1, y-1], [x+1, y], [x+1, y+1]
+    ]
+    return [c for c in adjacent_coords if 0 <= c[0] < 10 and 0 <= c[1] < 10]
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[i, j] for i in range(x-1, x+2) for j in range(y-1, y+2) if (i, j) != coord]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coord):
+    x, y = coord
+    return [[x - 1, y], [x, y - 1], [x + 1, y], [x, y + 1]]
+
+
+"""
+Write a function to check if a given number is a prime number.
+assert is_prime(7) == True
+assert is_prime(8) == False
+"""
+
+def is_prime(n):
+    if n == 1:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+"""
+Write a function to check if a given number is a perfect number.
+assert is_perfect(6) == True
+assert is_perfect(7) == False
+"""
+
+def is_perfect(n):
+    sum = 0
+    for i in range(1, n):
+        if n % i == 0:
+            sum += i
+    return sum == n
+
+
+"""
+Write a function to check if a given number is a perfect square.
+assert is_perfect_square(121) == True
+assert is_perfect_square(2) == False
+"""
+
+def is_perfect_square(n):
+    return n == int(math.sqrt(n)) ** 2
+
+
+"""
+Write a function to check if a given number is a power of two.
+assert is_power_of_two(8) == True
+assert is_power_of_two(7) == False
+"""
+
+def is_power_of_two(n):
+    return n == 2 ** int(math.log(n, 2))
+
+
+"""
+Write a function to check if a given number is a palindrome.
+assert is_palindrome(121) == True
+assert is_palindrome(123) == False
+"""
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+
+"""
+Write a function to check if a given number is a palindrome number.
+assert is_palindrome_number(121) == True
+assert is_palindrome_number(123) == False
+"""
+
+def is_palindrome_number(n):
+    return n == int(str</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coord):
+    return [[coord[0] + i, coord[1] + j] for i in range(-1, 2) for j in range(-1, 2) if not (i == 0 and j == 0)]
+
+"""
+Write a function to check whether a word is a valid palindrome.
+assert is_palindrome("racecar") == True
+assert is_palindrome("a") == True
+assert is_palindrome("ab") == False
+assert is_palindrome("aba") == True
+"""
+
+def is_palindrome(word):
+    return word == word[::-1]
+
+"""
+Write a function to check whether a string is a permutation of a palindrome.
+assert is_permutation_of_palindrome("tactcoa") == True
+assert is_permutation_of_palindrome("tacocat") == False
+assert is_permutation_of_palindrome("tacocat") == False
+assert is_permutation_of_palindrome("tacocat") == False
+"""
+
+def is_permutation_of_palindrome(word):
+    word = word.lower()
+    word_dict = {}
+    for letter in word:
+        if letter in word_dict:
+            word_dict[letter] += 1
+        else:
+            word_dict[letter] = 1
+    odd_count = 0
+    for key in word_dict:
+        if word_dict[key] % 2!= 0:
+            odd_count += 1
+    return odd_count <= 1
+
+"""
+Write a function to check whether a string is a valid palindrome permutation.
+assert is_valid_palindrome_permutation("tactcoa") == True
+assert is_valid_palindrome_permutation("tacocat") == False
+assert is_valid_palindrome_permutation("tacocat") == False
+assert is_valid_palindrome_permutation("tacocat") == False
+"""
+
+def is_valid_palindrome_permutation(word):
+    word = word.lower()
+    word_dict = {}
+    for letter in word:
+        if</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+
+def get_coordinates(coord):
+    x, y = coord
+    adjacent_coords = []
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if (i, j) != coord:
+                adjacent_coords.append([i, j])
+    return adjacent_coords
+
+# Example usage:
+# assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 5], [4, 3], [4, 4], [4, 5]]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y], [x, y], [x+1, y], [x, y-1], [x, y+1], [x, y], [x+1, y+1], [x-1, y-1], [x-1, y]]</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+# Test the function
+print(get_coordinates((3, 4)))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+# Test the function
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coord):
+    x, y = coord
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to extract all the adjacent coordinates of a given coordinate tuple:
+
+```python
+def get_coordinates(coord):
+    x, y = coord
+    adjacent_coords = []
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if (i, j) != coord:
+                adjacent_coords.append((i, j))
+    return adjacent_coords
+```
+
+This function takes a coordinate tuple as input and returns a list of all the adjacent coordinates to it. It first extracts the x and y values from the input tuple, and then iterates through all the possible adjacent coordinates (i.e., coordinates with either x or y value one less or greater than the input coordinate). If the coordinate is not equal to the input coordinate, it is added to the list of adjacent coordinates. Finally, the list of adjacent coordinates is returned. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    row, col = coordinate
+    adjacent_coordinates = []
+    
+    if row > 0:
+        adjacent_coordinates.append([row - 1, col])
+    if row < 4:
+        adjacent_coordinates.append([row + 1, col])
+    if col > 0:
+        adjacent_coordinates.append([row, col - 1])
+    if col < 4:
+        adjacent_coordinates.append([row, col + 1])
+    
+    return adjacent_coordinates</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y], [x, y + 1], [x + 1, y - 1], [x + 1, y],
+            [x + 1, y + 1]]
+
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y], [x, y + 1], [x + 1, y - 1], [x + 1, y],
+            [x + 1, y + 1]]
+
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    coordinates = []
+    for i in range(coordinate[0] - 1, coordinate[0] + 2):
+        for j in range(coordinate[1] - 1, coordinate[1] + 2):
+            if i == coordinate[0] and j == coordinate[1]:
+                continue
+            coordinates.append([i, j])
+    return coordinates
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    coordinates = []
+    for i in range(coordinate[0] - 1, coordinate[0] + 2):
+        for j in range(coordinate[1] - 1, coordinate[1] + 2):
+            if i == coordinate[0] and j == coordinate[1]:
+                continue
+            coordinates.append([i, j])
+    return coordinates
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    coordinates = []
+    for i in range(coordinate[0] - 1, coordinate[0] + 2):
+        for j in range(coordinate[1] - 1, coordinate[1] + 2):
+            if i == coordinate[0] and j == coordinate[1]:
+                continue
+            coordinates.append([i, j])
+    return coordinates
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    """
+    :param coordinate: tuple
+    :return: list
+    """
+    x, y = coordinate
+    return [(x - 1, y), (x - 1, y + 1), (x, y + 1), (x + 1, y + 1), (x + 1, y), (x + 1, y - 1), (x, y - 1), (x - 1, y - 1)]</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y], [x-1, y+1], [x, y+1], [x+1, y], [x+1, y+1], [x+1, y-1], [x, y-1], [x-1, y-1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y], [x, y - 1], [x, y + 1], [x + 1, y]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+print('Success')
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y], [x, y - 1], [x, y + 1], [x + 1, y]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+print('Success')
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y], [x, y - 1], [x, y + 1], [x + 1, y]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+print('Success')
+
+"""
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x, y - 1], [x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y],
+            [x + 1, y + 1]]
+
+
+def test_get_coordinates():
+    assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+
+
+"""
+Write a function to extract all the diagonal coordinates of the given coordinate tuple.
+assert get_diagonal_coordinates((3, 4)) == [[2, 3], [2, 5], [3, 5], [4, 3], [4, 5]]
+"""
+
+
+def get_diagonal_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y + 1]]
+
+
+def test_get_diagonal_coordinates():
+    assert get_diagonal_coordinates((3, 4)) == [[2, 3], [2, 5], [3, 5], [4, 3], [4, 5]]
+
+
+"""
+Write a function to extract all the orthogonal coordinates of the given coordinate tuple.
+assert get_orthogonal_coordinates((3, 4)) == [[2, 4], [3, 3], [3, 5], [4, 4]]
+"""
+
+
+def get_orthogonal_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y], [x, y - 1], [x, y</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    adjacent_coords = [(x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
+                       (x, y - 1), (x, y + 1),
+                       (x + 1, y - 1), (x + 1, y), (x + 1, y + 1)]
+    return [(c[0], c[1]) for c in adjacent_coords if 0 <= c[0] <= 4 and 0 <= c[1] <= 4]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+def get_coordinates(coordinate: tuple) -> list:
+    x, y = coordinate
+    result = []
+    for i in range(x - 1, x + 2):
+        for j in range(y - 1, y + 2):
+            if i != x or j != y:
+                result.append([i, j])
+    return result
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+
+def get_coordinates(coord):
+    return [coord + [i] for i in range(1, 6)]
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def get_coordinates(coord):
+    """
+    Returns a list of adjacent coordinates for the given coordinate tuple.
+    
+    Args:
+        coord (tuple): A tuple representing the coordinate (x, y).
+        
+    Returns:
+        list: A list of adjacent coordinate tuples.
+    """
+    x, y = coord
+    adjacent_coords = []
+    
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if (i, j) != coord:
+                adjacent_coords.append([i, j])
+    
+    return adjacent_coords
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x-1, y-1], [x-1, y], [x-1, y+1], [x, y-1], [x, y], [x, y+1], [x+1, y-1], [x+1, y], [x+1, y+1]]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]]
+
+print(get_coordinates((3, 4)))
+
+"""
+Write a function to find the sum of all the numbers in a given list.
+assert sum_of_list([1, 2, 3, 4]) == 10
+"""
+
+def sum_of_list(list):
+    sum = 0
+    for i in list:
+        sum += i
+    return sum
+
+print(sum_of_list([1, 2, 3, 4]))
+
+"""
+Write a function to find the sum of all the numbers in a given list.
+assert sum_of_list([1, 2, 3, 4]) == 10
+"""
+
+def sum_of_list(list):
+    sum = 0
+    for i in list:
+        sum += i
+    return sum
+
+print(sum_of_list([1, 2, 3, 4]))
+
+"""
+Write a function to find the sum of all the numbers in a given list.
+assert sum_of_list([1, 2, 3, 4]) == 10
+"""
+
+def sum_of_list(list):
+    sum = 0
+    for i in list:
+        sum += i
+    return sum
+
+print(sum_of_list([1, 2, 3, 4]))
+
+"""
+Write a function to find the sum of all the numbers in a given list.
+assert sum_of_list([1, 2, 3, 4]) == 10
+"""
+
+def sum_of_list(list):
+    sum = 0
+    for i in list:
+        sum += i
+    return sum
+
+print(sum_of_list([1, 2, 3, 4]))
+
+"""
+Write a function to find the sum of all the numbers in a given list.
+assert</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def get_coordinates(coordinate):
+    x, y = coordinate
+    return [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+            [x, y - 1], [x, y], [x, y + 1],
+            [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]]
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to extract all the adjacent coordinates of the given coordinate tuple.
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]
+"""
+
+
+def get_coordinates(coordinate):
+    return [[coordinate[0], coordinate[1]-1], [coordinate[0], coordinate[1]+1], [coordinate[0]+1, coordinate[1]-1], [coordinate[0]+1, coordinate[1]+1], [coordinate[0]+1, coordinate[1]], [coordinate[0], coordinate[1]], [coordinate[0]-1, coordinate[1]-1], [coordinate[0]-1, coordinate[1]+1], [coordinate[0]-1, coordinate[1]]]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def get_coordinates(coord):
+    x, y = coord
+    adjacent_coords = []
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if i == 0 and j == 0:
+                continue
+            adjacent_coords.append([x + i, y + j])
+    return adjacent_coords
+
+assert get_coordinates((3, 4)) == [[2, 3], [2, 4], [2, 5], [3, 3], [3, 4], [3, 5], [4, 3], [4, 4], [4, 5]]</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

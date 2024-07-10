@@ -1,0 +1,1441 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/778 </h1>
+<pre><code> """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+from itertools import groupby
+def pack_consecutive_duplicates(list1):
+    return [list(group) for _, group in groupby(list1)]
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]], [[10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10]], [['a', 'a', 'b', 'c', 'd', 'd']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[2, 5, 3, 1, 1, 0, 4, 4, 2, 3, 3]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', 5]], [['a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'c', 'd', 'd', 'd', 'd']], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e']], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', False, True, 0, 'f', 1.5]], [[0, 0, 1, 1, 1, 'a', 'a', 'b', 'b', 'b', [1, 2, 3], [1, 2, 3], 'c', {'name': 'John', 'age': 25}, {'name': 'John', 'age': 25}]], [[]], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5]], [['ae', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e']], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', False, True, 0, 'f', 1.5, 2]], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'b']], [['a', 1, 'ae', 2, 'c', 3, 'd', 4, 'e', 'e']], [['a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'c', 'd', '', 'd', 'd']], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'b', 'c', 'd', '', 'd', 'd']], [['ae', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', 3]], [[2, 5, 1, 3, 1, 1, 0, 4, 4, 4, 2, 3, 3]], [['a', 1, 'ae', 2, 'c', 3, 'd', 4, 'e']], [['a', 'b', 2, 3, 3, 'b', 'd', 4, 'e', 'e']], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', False, True, 0, 'f', 1.5, 'd']], [['ae', 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', 3]], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'b', 'c', 'd', 'John', 'bb', 'd', 'd', 'a', 'a']], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, False, 4, 'c', 5]], [[2, 5, 1, 3, 1, 0, 4, 4, 4, 2, 3, 3]], [['a', 1, 'b', 2, 'ae', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'b']], [['ae', 1, 'b', 2, 'c', 'ae', 3, 3, 'd', 4, 'e', 'e']], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', True, 5, True]], [['a', 1, 'b', 2, 'c', 3, 'd', 'bbe', 4, 'e', 'e', False, True, 0, 'f', 1.5]], [['a', 'a', 'a', 'a', 'b', 'b', 'b', 'c', 'd', 'd', 'd', 'd', 'a']], [['a', 1, 'bb', 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'b']], [['a', 1, 'b', 'f', 2, 'c', 3, 3, 'e', 'e']], [['a', 1, 'b', 2, 'age', 3, 'd', 'bbe', 4, 'e', 'e', False, True, 0, 'f', 1.5]], [[True, False, True]], [[2, 5, 1, 2, 1, 0, 4, 4, 4, 2, 3, 3, 3]], [[0, 0, 1, 1, 1, 'a', 'a', 'b', 'b', 'b', [1, 2, 3], [1, 2, 3], 'c', {'name': 'John', 'age': 25}, 'd', {'name': 'John', 'age': 25}, 'b']], [[2, 5, 1, 2, 1, 0, 4, 4, 4, 2, 3, 3, 5, 3]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', True, 5, True, False, True]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, False, 4, 'c', 5, 4]], [[2, 5, 25, 1, 1, 0, 4, 4, 2, 3]], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', False, 1.8236031742951366, True, 0, 'f', 1.5]], [['a', 'a', 'a', 'a', 'b', 'b', 'b', 'c', 'd', 'd', 'd', 'd', 'a', 'd']], [['a', 1, 'bb', 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'b', 1.5]], [['ae', 5, 'b', 2, 3, 3, 'd', 4, 25, 'e', 'e', 3, 4]], [[3, 2, 5, 1, 3, 2, 1, 0, 4, 4, 4, 2, 3, 3, 3]], [[0, 3, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', 5]], [[0, 3, 'a', 2.5, True, 0, 'b', 3, False, 4.5, 4, 'c', 5]], [[0, 3, 'a', 2.5, True, 0, 'b', 3, False, 4.5, 4, 'c', 5, False, 3]], [['ae', 'b', 2, 'c', 3, 'd', 4, 'e', 'e', 3]], [['ae', 1, 3, 'b', 2, 'age', 3, 3, 'd', 4, 'e', 'e', 3]], [['a', 4, 'b', 2, 'ae', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'b']], [['a', 2.5, True, 'b', 3, False, 4.999025494806807, False, 4, 'c', 5]], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'b', 'c', 'd', 'John', 'bb', 'd', 'd', 'a', 'a', 'c']], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', True, 5, True, True]], [[True, False, True, True]], [[0, 'a', 2.5, True, 'b', 3, '', False, 4.5, 4, 'c', True, 5, True]], [[3, 2, 5, 1, 3, 2, 1, 0, 4, 4, 4, 4, 2, 3, 3, 3]], [[2, 5, 3, 1, 1, 0, 4, 4, 2, 3, 3, 3]], [[0, 'a', 2.5, True, 'b', '', False, 4.5, 4, 'c', True, 5, True]], [['a', 1, 'b', 'f', 2, 'c', 3, 'e']], [[0, 3, 'a', 2.5, True, 'b', 3, False, 4, 'c']], [['ae', 1, 3, 'a', 2, 'age', 3, 3, 'd', 4, 'bbe', 'e', 3]], [[0, 'a', 2.5, True, 'b', 3, '', False, 3.576699300614228, 4, 'c', True, 5, True]], [['a', 4, 'b', 'ff', 2, 'ae', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'b']], [[0, 'a', 2.5, True, 'bb', 'b', '', False, 4.5, 4, 'c', True, 5, True]], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', True, 0, 'f', 1.5]], [['a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'abb', False, True, 0, 'f', 1.5, 2]], [[0, {'name': 'John', 'age': 24}, 0, 1, 1, 1, 'a', 'a', 'b', 'b', 'b', [1, 2, 3], [1, 2, 3], 'c', {'name': 'John', 'age': 25}, {'name': 'John', 'age': 24}, 'a', 'a']], [['a', 1, 'bb', 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 0.7644455113748416, 'b', 1.5, 'bb']], [['a', 'b', 2, 3, 'b', 'd', 4, 'e', 'e', 4]], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'b', 'c', 'd', 'John', 'bb', 'ae', 'd', 'd', 'a', 'a', 'c']], [[0, 1, 1, 1, 'a', 'a', 'b', 'b', 'b', [1, 2, 3], [1, 2, 3], 'c', {'name': 'John', 'age': 25}, {'name': 'John', 'age': 25}]], [['ae', 1, 'b', 5, 2, 'c', 'ae', 3, 3, 'd', 4, 'e', 'e']], [[True, False, True, False, True]], [[3, 2, 5, 3, 3, 2, 1, 0, 4, 4, 4, 4, 5, 2, 3, 4, 3]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', True, 5, True, 4]], [['a', 'b', 2, 3, 3, 'f', 'd', 4, 3, 'e', 'e']], [[0, 'a', 2.5, 'abb', True, 'b', 3, '', False, 4.5, 4, 'c', True, 5, True]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, False, 4, 'c', 5, 5]], [['a', 1, 'ae', 2, 'aa', 'c', 3, 'd', 4, 'e']], [[0, 0, 1, 1, 1, 'a', 'a', 'b', 'b', 'b', [1, 2, 3], [1, 2, 3], [1, 2, 4, 3], 'c', {'name': 'John', 'age': 25}, {'name': 'John', 'age': 25}]], [[2, 5, 25, 1, 1, 0, 4, 4, 2, 3, 2]], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'b', 'c', 'John', 'bb', 'd', 'f', 'd', 'a', 'a', 'c', 'c', 'c']], [['a', 'b', 2, 3, 'b', 'd', 4, 'e', 'e', 0]], [[0, 0, 1, 1, 1, 'a', 'a', 'b', 'b', 'bb', [1, 2, 3], [1, 2, 3], 'cabb', {'name': 'John', 'age': 25}, 'd', {'name': 'John', 'age': 25}, 'b']], [[False, False, True, False, True]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', True, 5, True, True, True]], [['ae', 1, 3, 'a', 2, 'age', 3, 3, 'f', 4, 'bbe', 'e', 3, 4]], [['a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'cc', 'd', 'e', 'd', 'c', 'd', 'd']], [[0, 'a', 2.5, True, 'b', 'name', 3, False, 4.5, 4, 'c', 5]], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'b', 'c', 'd', 'John', 'bb', 'ae', 'd', 'd', 'a', '', 'c', 'd', 'c']], [[3, 2, 5, 3, 3, 2, 1, 0, 4, 4, 5, 4, 5, 2, 3, 4]], [['a', 2.5, True, 'b', 3, False, 4.999025494806807, True, 4, 'age', 5]], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, 4, 'c', True, 5, True, False]], [['a', 1, 'b', 2, 'c', 24, 3, 'd', 4, 'e', 'abb', False, True, 0, 'f', 2]], [['a', 1, 'bb', 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 0.7644455113748416, 'b', 1.5, 'bb', True]], [['a', 'aa', 0, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'abb', False, True, 0, 1.5, 2]], [['a', 1, 'bb', 'b', 2, 'c', 3, 3, 'd', 4, 'e', False, True, 0, 'f', 1.5, 'cc', 'b', 0]], [[True, False, True, False, True, True]], [[5, 'a', 1, 'b', 2, 'c', 3, 3, 'd', 4, 'e', 'e', False, True, 0, 'f', 1.5, 'd']], [[True, False, True, False]], [['a', 1, 'b', 'f', 2, 'c', 3, 'e', 'c', 'a']], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'bbbe', 'c', 'd', 'John', 'bb', 'ae', 'd', 'd', 'a', '', 'c', 'd', 'c']], [[0, 0, 1, 1, 1, 'a', 'a', 'b', 'b', [1, 2, 3], [1, 2, 3], 'c', {'name': 'John', 'age': 25}, {'name': 'John', 'age': 25}]], [['a', 1, 'b', 'f', 2, 3, 'e', 'c', 'a']], [[0, 'a', 2.5, True, 'b', 'bbe', '', False, 4.5, 4, 'c', True, 5, True, 'b']], [[0, 'a', 2.5, True, 'b', 3, False, 4.5, False, 4, 'c', 5, 4, 4, 0]], [['a', 'a', 'a', 'b', 'bb', 'b', 'b', 'bbbe', 'c', 'd', 'John', 'bb', 'ae', 'd', 'd', 'a', '', 'c', 'd', 'c']], [['a', 'a', 'a', 'a', 'b', 'bb', 'b', 'b', 'bbbe', 'c', 'd', 'John', 'ae', 'd', 'd', 'a', '', 'c', 'd', 'c']]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    """
+    :param lst: list of elements
+    :return: list of sublists
+    """
+    result = []
+    for i in range(len(lst)):
+        if i == 0:
+            result.append([lst[i]])
+        elif lst[i] == lst[i - 1]:
+            result[-1].append(lst[i])
+        else:
+            result.append([lst[i]])
+    return result
+
+
+if __name__ == '__main__':
+    print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+    print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, </code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if not result or i != result[-1][-1]:
+            result.append([i])
+        else:
+            result[-1].append(i)
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(lst: list[int]) -> list[list[int]]:
+    packed_list = []
+    temp_list = [lst[0]]
+
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i - 1]:
+            temp_list.append(lst[i])
+        else:
+            packed_list.append(temp_list)
+            temp_list = [lst[i]]
+
+    packed_list.append(temp_list)
+
+    return packed_list
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def pack_consecutive_duplicates(lst):
+    result = []
+    prev = None
+    current_sublist = []
+    for item in lst:
+        if prev is None or item != prev:
+            if current_sublist:
+                result.append(current_sublist)
+            current_sublist = [item]
+            prev = item
+        else:
+            current_sublist.append(item)
+    if current_sublist:
+        result.append(current_sublist)
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    temp = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            temp.append(lst[i])
+        else:
+            result.append(temp)
+            temp = [lst[i]]
+    result.append(temp)
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+def pack_consecutive_duplicates(lst):
+    result = []
+    current_value = lst[0]
+    current_sublist = [current_value]
+
+    for value in lst[1:]:
+        if value == current_value:
+            current_sublist.append(value)
+        else:
+            result.append(current_sublist)
+            current_sublist = [value]
+            current_value = value
+
+    result.append(current_sublist)
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def pack_consecutive_duplicates(lst):
+    if not lst:
+        return []
+
+    result = []
+    current_sublist = [lst[0]]
+
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i - 1]:
+            current_sublist.append(lst[i])
+        else:
+            result.append(current_sublist)
+            current_sublist = [lst[i]]
+
+    result.append(current_sublist)
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(input_list):
+    result = []
+    current_sublist = [input_list[0]]
+
+    for i in range(1, len(input_list)):
+        if input_list[i] != input_list[i - 1]:
+            result.append(current_sublist)
+            current_sublist = [input_list[i]]
+        else:
+            current_sublist.append(input_list[i])
+
+    result.append(current_sublist)
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to pack consecutive duplicates of a given list elements into sublists:
+
+
+```python
+def pack_consecutive_duplicates(lst):
+    result = []
+    sublist = []
+    for i in range(len(lst)):
+        sublist.append(lst[i])
+        if i == len(lst)-1 or lst[i] != lst[i+1]:
+            result.append(sublist)
+            sublist = []
+    return result
+```
+
+Explanation:
+
+- We initialize an empty list called `result` to store the sublists of consecutive duplicates.
+- We also initialize an empty list called `sublist` to store the current sublist we are building.
+- We iterate through the input list using a `for` loop and append each element to the `sublist`.
+- If the current element is the last element of the list or if the current element is different from the next element, we append the `sublist` to the `result` list and reset `sublist` to an empty list to start building the next sublist.
+- Finally, we return the `result` list.
+
+
+We can test the function with the given example:
+
+```python
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+```
+
+This will output `True` since the function returns the expected result. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    temp = []
+    for i in range(len(lst)):
+        if i == 0:
+            temp.append(lst[i])
+        elif lst[i] != lst[i-1]:
+            result.append(temp)
+            temp = [lst[i]]
+        else:
+            temp.append(lst[i])
+    result.append(temp)
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    """
+    >>> pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])
+    [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+    """
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i - 1]:
+            result.append([lst[i]])
+        else:
+            result[-1].append(lst[i])
+    return result
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    current = None
+
+    for item in lst:
+        if current is None or item != current:
+            current = item
+            result.append([item])
+        else:
+            result[-1].append(item)
+
+    return result
+
+# Test case
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that solves the problem:
+
+```python
+def pack_consecutive_duplicates(lst):
+    packed_list = []
+    sublist = []
+    for i in range(len(lst)):
+        if i == 0:
+            sublist.append(lst[i])
+        elif lst[i] == lst[i-1]:
+            sublist.append(lst[i])
+        else:
+            sublist.append(lst[i])
+            packed_list.append(sublist)
+            sublist = []
+    if sublist:
+        packed_list.append(sublist)
+    return packed_list
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+```
+
+This function works by iterating over the input list and appending each element to a sublist. If the current element is not the same as the previous element, the sublist is appended to the packed_list and a new sublist is started. At the end of the loop, if there are any elements left in the sublist, it is appended to the packed_list. The assert statement at the end is used to verify that the function works correctly.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    """
+    :type lst: List[int]
+    :rtype: List[List[int]]
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return [[lst[0]]]
+    if len(lst) == 2:
+        return [[lst[0]], [lst[1]]]
+    if len(lst) == 3:
+        return [[lst[0]], [lst[1]], [lst[2]]]
+    if len(lst) == 4:
+        return [[lst[0]], [lst[1]], [lst[2]], [lst[3]]]
+    if len(lst) == 5:
+        return [[lst[0]], [lst[1]], [lst[2]], [lst[3]], [lst[4]]]
+    if len(lst) == 6:
+        return [[lst[0]], [lst[1]], [lst[2]], [lst[3]], [lst[4]], [lst[5]]]
+    if len(lst) == 7:
+        return [[lst[0]], [lst[1]], [lst[2]], [lst[3]], [lst[4]], [lst[5]], [lst[6]]]
+    if len(lst) == 8:
+        return [[lst[0]], [lst[1]], [lst[2]], [lst[3]], [lst[4]], [lst[5]], [lst[6]], [lst[7]]]
+    if len(lst) == 9:
+        return [[lst[0]], [lst[1]], [lst[2]], [lst[3]], [lst[4]], [lst[5]], [lst[6]], [lst[7]], [lst[8]]]
+    if len(lst) == 10:
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    """
+    Write a function to pack consecutive duplicates of a given list elements into sublists.
+    assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+    """
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append([lst[i]])
+        else:
+            result[-1].append(lst[i])
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+import unittest
+
+
+def pack_consecutive_duplicates(lst):
+    if not lst:
+        return []
+    res = []
+    i = 0
+    while i < len(lst):
+        res.append([lst[i]])
+        while i + 1 < len(lst) and lst[i] == lst[i + 1]:
+            res[-1].append(lst[i + 1])
+            i += 1
+        i += 1
+    return res
+
+
+class Test(unittest.TestCase):
+    def test_pack_consecutive_duplicates(self):
+        self.assertEqual(
+            pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]),
+            [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+        )
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    """
+    :param lst: list of elements
+    :return: list of sublists
+    """
+    if len(lst) == 0:
+        return []
+    result = []
+    current_sublist = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] == current_sublist[-1]:
+            current_sublist.append(lst[i])
+        else:
+            result.append(current_sublist)
+            current_sublist = [lst[i]]
+    result.append(current_sublist)
+    return result
+
+
+def test_pack_consecutive_duplicates():
+    assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [
+        [0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+    assert pack_consecutive_duplicates([1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def pack_consecutive_duplicates(lst):
+    result = []
+    current_sublist = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            current_sublist.append(lst[i])
+        else:
+            result.append(current_sublist)
+            current_sublist = [lst[i]]
+    result.append(current_sublist)
+    return result
+
+# Test the function
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+```
+
+This function works by iterating over the input list and checking if each element is the same as the previous one. If it is, the element is added to the current sublist. If it's not, the current sublist is added to the result list and a new sublist is started with the current element. The function then returns the result list.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def pack_consecutive_duplicates(lst):
+    result = []
+    current = []
+
+    for item in lst:
+        if item not in current:
+            current.append(item)
+        else:
+            result.append(current)
+            current = [item]
+
+    result.append(current)
+    return result
+
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i]!= lst[i-1]:
+            result.append(lst[i])
+        else:
+            result[-1].append(lst[i])
+    return result
+
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(nums):
+    """
+    Write a function to pack consecutive duplicates of a given list elements into sublists.
+    assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+    """
+    if not nums:
+        return []
+    result = []
+    current_num = nums[0]
+    current_sublist = [current_num]
+    for num in nums[1:]:
+        if num == current_num:
+            current_sublist.append(num)
+        else:
+            result.append(current_sublist)
+            current_num = num
+            current_sublist = [num]
+    result.append(current_sublist)
+    return result</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+def pack_consecutive_duplicates(input_list):
+    """
+    Function to pack consecutive duplicates of given list elements into sublists.
+    """
+    output_list = []
+    current_list = []
+    for element in input_list:
+        if element != input_list[-1] or not current_list:
+            output_list.append(current_list)
+            current_list = [element]
+        else:
+            current_list.append(element)
+    output_list.append(current_list)
+    return output_list
+
+# Test case
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    current_sublist = []
+
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i - 1]:
+            if current_sublist:
+                result.append(current_sublist)
+                current_sublist = []
+        current_sublist.append(lst[i])
+
+    if current_sublist:
+        result.append(current_sublist)
+
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def pack_consecutive_duplicates(lst):
+    result = []
+    temp = []
+    for i in lst:
+        if not temp or i != temp[-1]:
+            temp.append(i)
+        else:
+            result.append(temp)
+            temp = [i]
+    if temp:
+        result.append(temp)
+    return result
+```
+
+The function takes a list as input and returns a new list with consecutive duplicates packed into sublists. The function works by iterating over the input list and keeping track of the current sublist using a temporary list `temp`. Whenever a new element is encountered that is different from the last element in `temp`, the current sublist is appended to the result list and `temp` is reset to a new sublist containing only the current element. If the current element is the same as the last element in `temp`, the current element is simply appended to `temp`. Finally, if there are any remaining elements in `temp` at the end of the iteration, they are appended to the result list as well.
+
+The function uses a simple approach to pack consecutive duplicates, but there are more advanced algorithms that can achieve the same result with better time complexity.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(l):
+    result = []
+    for i in l:
+        if result and result[-1][0] == i:
+            result[-1].append(i)
+        else:
+            result.append([i])
+    return result
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to pack consecutive duplicates of a given list elements into sublists:
+
+```python
+def pack_consecutive_duplicates(lst):
+    packed = []
+    for num in lst:
+        if packed and num == packed[-1][0]:
+            packed[-1].append(num)
+        else:
+            packed.append([num])
+    return packed
+```
+
+This function works by iterating over the input list. For each number, it checks if the last sublist in the packed list is for the same number. If it is, it appends the number to that sublist. If it's not, it starts a new sublist for that number.
+
+You can test this function with the provided test case:
+
+```python
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+```
+
+This should output:
+
+```python
+[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+```
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    if not lst:
+        return []
+    res = [[lst[0]]]
+    for i in range(1, len(lst)):
+        if lst[i] != lst[i-1]:
+            res.append([lst[i]])
+        else:
+            res[-1].append(lst[i])
+    return res
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0:
+            result.append([lst[i]])
+        elif lst[i] == lst[i-1]:
+            result[-1].append(lst[i])
+        else:
+            result.append([lst[i]])
+    return result
+
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    packed_lst = []
+    current_sublist = []
+    previous_element = None
+    for element in lst:
+        if element == previous_element:
+            current_sublist.append(element)
+        else:
+            if current_sublist:
+                packed_lst.append(current_sublist)
+            current_sublist = [element]
+            previous_element = element
+    if current_sublist:
+        packed_lst.append(current_sublist)
+    return packed_lst</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(list):
+    result = []
+    for i in range(len(list)):
+        if i == 0:
+            result.append([list[i]])
+        elif list[i] == list[i-1]:
+            result[len(result)-1].append(list[i])
+        else:
+            result.append([list[i]])
+    return result
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    packed = []
+    current_sublist = []
+    for i, elem in enumerate(lst):
+        if i == 0 or elem != lst[i-1]:
+            if current_sublist:
+                packed.append(current_sublist)
+            current_sublist = [elem]
+        else:
+            current_sublist.append(elem)
+    if current_sublist:
+        packed.append(current_sublist)
+    return packed
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    """
+    Pack consecutive duplicates of a given list elements into sublists.
+    """
+    packed_list = []
+    current_sublist = [lst[0]]
+
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            current_sublist.append(lst[i])
+        else:
+            packed_list.append(current_sublist)
+            current_sublist = [lst[i]]
+
+    packed_list.append(current_sublist)
+    return packed_list
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    sublist = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            sublist = [lst[i]]
+        else:
+            sublist.append(lst[i])
+        if i == len(lst)-1 or lst[i] != lst[i+1]:
+            result.append(sublist)
+    return result
+```
+
+This function takes a list as input and returns a new list where consecutive duplicates of the original list elements are packed into sublists. The function works by iterating through the original list and checking if the current element is equal to the previous element. If it is not, a new sublist is created and the current element is added to it. If it is, the current element is added to the existing sublist. Finally, the function checks if the current element is equal to the next element. If it is not, the current sublist is added to the result list. If it is, the function continues to the next iteration.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    if not lst:
+        return []
+    result = [[lst[0]]]
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            result[-1].append(lst[i])
+        else:
+            result.append([lst[i]])
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    """
+    :param lst: list of elements
+    :return: list of sublists
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return [lst]
+    if lst[0] == lst[1]:
+        return [lst[0]] + pack_consecutive_duplicates(lst[1:])
+    else:
+        return [lst[0]] + pack_consecutive_duplicates(lst[1:])
+
+
+def pack_consecutive_duplicates_v2(lst):
+    """
+    :param lst: list of elements
+    :return: list of sublists
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return [lst]
+    if lst[0] == lst[1]:
+        return [lst[0]] + pack_consecutive_duplicates_v2(lst[1:])
+    else:
+        return [lst[0]] + pack_consecutive_duplicates_v2(lst[1:])
+
+
+def pack_consecutive_duplicates_v3(lst):
+    """
+    :param lst: list of elements
+    :return: list of sublists
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return [lst]
+    if lst[0] == lst[1]:
+        return [lst[0]] + pack_consecutive_duplicates_v3(lst[1:])
+    else:
+        return [lst[0]] + pack_consecutive_duplicates_v3(lst[1:])
+
+
+def pack_consecutive_duplicates_v4(lst):
+    """
+    :param lst: list of elements
+    :return: list of sublists
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return [lst]
+    if lst[0] == lst[1]:</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(l):
+    """
+    >>> pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])
+    [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+    """
+    if not l:
+        return []
+    if len(l) == 1:
+        return [[l[0]]]
+    if l[0] == l[1]:
+        return [l[:2]] + pack_consecutive_duplicates(l[2:])
+    else:
+        return [l[:1]] + pack_consecutive_duplicates(l[1:])
+
+def pack_consecutive_duplicates_2(l):
+    """
+    >>> pack_consecutive_duplicates_2([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])
+    [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+    """
+    if not l:
+        return []
+    if len(l) == 1:
+        return [[l[0]]]
+    if l[0] == l[1]:
+        return [l[:2]] + pack_consecutive_duplicates_2(l[2:])
+    else:
+        return [l[:1]] + pack_consecutive_duplicates_2(l[1:])
+
+def pack_consecutive_duplicates_3(l):
+    """
+    >>> pack_consecutive_duplicates_3([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])
+    [[0, 0], [1], [2], [3], [4, 4], [5], [6</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+from itertools import groupby
+
+def pack_consecutive_duplicates(lst):
+    return [list(group) for key, group in groupby(lst)]
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    res = []
+    curr_ele = lst[0]
+    curr_count = 1
+    for i in range(1, len(lst)):
+        if lst[i] == curr_ele:
+            curr_count += 1
+        else:
+            res.append([curr_ele] * curr_count)
+            curr_ele = lst[i]
+            curr_count = 1
+    res.append([curr_ele] * curr_count)
+    return res</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def pack_consecutive_duplicates(lst):
+    packed_list = []
+    current_sublist = [lst[0]]
+
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            current_sublist.append(lst[i])
+        else:
+            packed_list.append(current_sublist)
+            current_sublist = [lst[i]]
+
+    packed_list.append(current_sublist)
+    return packed_list
+
+# Test the function
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    current_list = []
+    for i in lst:
+        if not current_list or i != current_list[-1]:
+            current_list = [i]
+        else:
+            current_list.append(i)
+        if len(current_list) == 1:
+            result.append(current_list)
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    temp = []
+    for i in lst:
+        if temp and i == temp[-1]:
+            temp.append(i)
+        else:
+            if temp:
+                result.append(temp)
+            temp = [i]
+    result.append(temp)
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to pack consecutive duplicates of a given list elements into sublists:
+
+```python
+def pack_consecutive_duplicates(lst):
+    result = []
+    sublist = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            sublist = [lst[i]]
+            result.append(sublist)
+        else:
+            sublist.append(lst[i])
+    return result
+```
+
+This function takes a list as input and returns a new list where consecutive duplicates of elements are packed into sublists. For example, if the input list is `[0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]`, the output will be `[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]`.
+
+Here's how it works:
+
+1. We initialize an empty list `result` and an empty sublist `sublist`.
+2. We loop through the input list `lst` using `for i in range(len(lst)`.
+3. If the current element is different from the previous element (`lst[i] != lst[i-1]`), we append the current element to the sublist and append the sublist to the result list. We also initialize a new sublist for the next iteration.
+4. If the current element is the same as the previous element (`lst[i] == lst[i-1]`), we append the current element to the sublist.
+5. After the loop, we append the last sublist to the result list if it has any elements.
+6. Finally, we return the result list.
+
+Here's how we can test the function:
+
+```python
+lst = [0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]
+print(pack_consecutive_duplicates(lst))
+```
+
+Output:
+```
+[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+``` </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(list):
+    if len(list) == 0:
+        return []
+    elif len(list) == 1:
+        return [list]
+    else:
+        result = []
+        i = 0
+        while i < len(list):
+            if i == len(list) - 1:
+                result.append([list[i]])
+                break
+            elif list[i] == list[i + 1]:
+                j = i + 1
+                while j < len(list) and list[i] == list[j]:
+                    j += 1
+                result.append(list[i:j])
+                i = j - 1
+            else:
+                result.append([list[i]])
+                i += 1
+        return result
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    res = []
+    count = 1
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            count += 1
+        else:
+            res.append([lst[i-1]] * count)
+            count = 1
+    res.append([lst[-1]] * count)
+    return res</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0:
+            result.append([lst[i]])
+        elif lst[i] == lst[i-1]:
+            result[-1].append(lst[i])
+        else:
+            result.append([lst[i]])
+    return result
+
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0:
+            result.append([lst[i]])
+        elif lst[i] == lst[i-1]:
+            result[-1].append(lst[i])
+        else:
+            result.append([lst[i]])
+    return result
+
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+"""
+
+def longest_common_prefix(strs):
+    if len(strs) == 0:
+        return ""
+    if len(strs) == 1:
+        return strs[0]
+    prefix = strs[0]
+    for i in range(1, len(strs)):
+        while strs[i].find(prefix)!= 0:
+            prefix = prefix[:-1]
+            if len(prefix) == 0:
+                return ""
+    return prefix
+
+print(longest_common_prefix(["flower","flow","flight"]))
+print(longest_common_prefix(["dog","racecar","car"]))
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+"""
+
+def longest_common_prefix_v2(strs):
+    if len(strs) == 0</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i - 1]:
+            result.append([lst[i]])
+        else:
+            result[-1].append(lst[i])
+    return result
+
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    i = 0
+    while i < len(lst):
+        count = 1
+        while i + 1 < len(lst) and lst[i] == lst[i + 1]:
+            i += 1
+            count += 1
+        result.append([lst[i]] * count)
+        i += 1
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    sublists = []
+    sublist = []
+    for i in range(len(lst)):
+        if i == 0:
+            sublist.append(lst[i])
+        elif lst[i] == lst[i-1]:
+            sublist.append(lst[i])
+        else:
+            sublists.append(sublist)
+            sublist = []
+            sublist.append(lst[i])
+    sublists.append(sublist)
+    return sublists
+
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]))
+print(pack_consecutive_duplicates([0, 0, 1, 2</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    if len(lst) == 0:
+        return []
+    else:
+        sublist = [lst[0]]
+        for i in range(1, len(lst)):
+            if lst[i] == sublist[-1]:
+                sublist.append(lst[i])
+            else:
+                yield sublist
+                sublist = [lst[i]]
+        yield sublist
+
+
+def pack_consecutive_duplicates(lst):
+    if len(lst) == 0:
+        return []
+    else:
+        sublist = [lst[0]]
+        for i in range(1, len(lst)):
+            if lst[i] == sublist[-1]:
+                sublist.append(lst[i])
+            else:
+                yield sublist
+                sublist = [lst[i]]
+        yield sublist
+
+
+if __name__ == '__main__':
+    print(list(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        count = 1
+        while i + count < len(lst) and lst[i] == lst[i + count]:
+            count += 1
+        result.append(lst[i:i + count])
+        i += count - 1
+    return result
+
+# Test the function
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+def pack_consecutive_duplicates(input_list):
+    result = []
+    curr_sublist = []
+    for element in input_list:
+        if not curr_sublist or curr_sublist[-1] != element:
+            curr_sublist = [element]
+        else:
+            curr_sublist.append(element)
+        
+        if not input_list or input_list.index(element) + 1 == len(input_list) and len(curr_sublist) > 1:
+            result.append(curr_sublist)
+
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append([lst[i]])
+        else:
+            result[-1].append(lst[i])
+    return result
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def pack_consecutive_duplicates(lst):
+    """
+    Pack consecutive duplicates of a given list elements into sublists.
+    
+    Args:
+        lst (list): The input list.
+        
+    Returns:
+        list: A list of sublists, where each sublist contains consecutive duplicates.
+    """
+    result = []
+    prev = None
+    current_sublist = []
+    
+    for item in lst:
+        if item != prev:
+            if current_sublist:
+                result.append(current_sublist)
+            current_sublist = [item]
+            prev = item
+        else:
+            current_sublist.append(item)
+    
+    if current_sublist:
+        result.append(current_sublist)
+    
+    return result
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    current_sublist = []
+    previous_element = None
+    for element in lst:
+        if element == previous_element:
+            current_sublist.append(element)
+        else:
+            if current_sublist:
+                result.append(current_sublist)
+            current_sublist = [element]
+            previous_element = element
+    if current_sublist:
+        result.append(current_sublist)
+    return result
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0:
+            result.append([lst[i]])
+        elif lst[i] == lst[i-1]:
+            result[-1].append(lst[i])
+        else:
+            result.append([lst[i]])
+    return result
+
+print(pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+
+"""
+Write a function that takes a list of strings an returns a list of strings sorted by length.
+assert sort_by_length(["a", "bb", "ccc"])==["a", "bb", "ccc"]
+assert sort_by_length(["ccc", "bb", "a"])==["ccc", "bb", "a"]
+"""
+
+def sort_by_length(lst):
+    return sorted(lst, key=len)
+
+print(sort_by_length(["a", "bb", "ccc"]))
+print(sort_by_length(["ccc", "bb", "a"]))
+
+"""
+Write a function that takes a list of strings and returns a list with the strings in sorted order, except group all the strings that begin with 'x' first.
+assert sort_by_x(["x", "apple", "banana", "carrot", "date"])==["x", "date", "apple", "banana", "carrot"]
+assert sort_by_x(["x", "apple", "banana", "date", "carrot"])==["x", "date", "apple", "banana", "carrot"]
+"""
+
+def sort_by_x(lst):
+    return sorted(lst, key=lambda x: x[0] == 'x')
+
+print(sort_by_x(["x", "apple", "banana", "carrot", "date"]))
+print(sort_by_x(["x", "apple", "banana", "date", "carrot"]))
+
+"""
+Write a function that takes a list of strings and returns a list with the strings in sorted order, except group all the strings that begin with 'x' first.</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def pack_consecutive_duplicates(lst):
+    result = []
+    i = 0
+    while i < len(lst):
+        j = i + 1
+        while j < len(lst) and lst[j] == lst[i]:
+            j += 1
+        result.append(lst[i:j])
+        i = j
+    return result
+
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to pack consecutive duplicates of a given list elements into sublists.
+assert pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[[0, 0], [1], [2], [3], [4, 4], [5], [6, 6, 6], [7], [8], [9], [4, 4]]
+"""
+
+
+def pack_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)-1):
+        if lst[i] == lst[i+1]:
+            result.append([lst[i],lst[i+1]])
+        else:
+            result.append([lst[i]])
+    if len(lst)>1:
+        result.append([lst[-1]])
+    return result
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def pack_consecutive_duplicates(lst):
+    result = []
+    current_sublist = [lst[0]]
+    
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i-1]:
+            current_sublist.append(lst[i])
+        else:
+            result.append(current_sublist)
+            current_sublist = [lst[i]]
+    
+    result.append(current_sublist)
+    return result
+
+# Test the function
+pack_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

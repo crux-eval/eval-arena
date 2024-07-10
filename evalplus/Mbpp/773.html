@@ -1,0 +1,1291 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/773 </h1>
+<pre><code> """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import re
+def occurance_substring(text,pattern):
+ for match in re.finditer(pattern, text):
+    s = match.start()
+    e = match.end()
+    return (text[s:e], s, e)
+ return None
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['python programming, python language', 'python'], ['python programming,programming language', 'programming'], ['python programming,programming language', 'language'], ['c++ programming, c++ language', 'python']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['', ''], ['UPmVaKepPO', 'UPmVaKepPO'], ['UPmVaKepPO', ''], ['', 'UPmVaKepPO'], ['UPmVepPO', 'UPmVepPO'], ['UPmVaKUPmVepPOepP', 'UPmVaKepPO'], ['UPmVaKepPO', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['UPmVaKepPO', 'UPmVepPO'], ['UUPmVaKepPOUPmVaKepPOaKPepPO', 'UPmVaKepPO'], ['UPPmVaKepPO', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['UPmVaKepPO', 'UPmVaKUPmVepPOepP'], ['UUPmVaKepPOUPmVaKepPOaKPepPOPO', 'UPmVaKepPO'], ['UPmVepPO', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['UPPmVaKepPO', 'UUPmVaKepPOUPmVaKep'], ['UPmVaKUPmVepPOepPUPmVepPO', 'UPmVepPO'], ['UPmVaKPepP', 'UPmVaKepP'], ['', 'UPmVaKepPPO'], ['UPmVaKUPmVepPOepPUUPmVaKepPpPO', 'UPPmVaKUPmVepPOepPUPmVepPO'], ['UPPmVaKUPmVepPOepPUPmVepPOO', 'UPPmVaKUPmVepPOepPUPmVepPOO'], ['UPPmVaKepPO', 'UPmVaKPepP'], ['UPmVaKPepPO', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['zsLntfBjA', 'ubw'], ['UPmVaKPepPO', 'UUPOaKPepPO'], ['UPmVaKepPO', 'UPmVaKUPmVepPOUPPmVaKUPmVepPOepPUPmVepPOOepP'], ['UPmVaKUPmVepPOepPUUPmVaKepPpPO', 'UPmVaKPepPO'], ['UPmVaKUPmVepPOepPUUPmVaKepPpPO', 'UPPmVaKmVepPOepPUPmVepPO'], ['UPmVaKepP', ''], ['UPmVaKPUPPmVaKUPmVepPOepPUPmVepPOepPO', 'UPPmVaKepPO'], ['zsLntfBjA', 'zsLntfBjA'], ['UPmVUUPmVaKepPOUPmVaKepaKUPmVepPOepP', 'UPmVaKepPO'], ['UPmVaeKepPO', 'UPmVaKepPO'], ['UPmVaKUPmVepPOUPPmVaPmVepPOepPUPmVepPOOepP', 'UPmVaKUPmVepPOUPPmVaKUPmVepPOepPUPmVepPOOepP'], ['UPmVaKUPmVepPOUPPmVaKUPmVepPOepPUPmVepPOOepP', 'UPmVepPO'], ['UUPmVaKepPOUPmVaKepPOaKPepPUPPmVaKepPOOPO', 'UUPmVaKepPOUPmVaKepPOaKPepPOPO'], ['UPPmVaKepPO', 'UUPmVaKepPOUPmVa'], ['UPPmVaKUPmVepPOepPUPmVepPO', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['UPO', 'UPmVaKepPO'], ['UPmVaKUPmVepPOepPUPmVepPO', 'UPmVaKUPmVepPOepPUPmVepPO'], ['UPmVUUPmVaKepPOUPmVaKepaKUPmVepPOepP', 'UPmVepPO'], ['UUPmVamKepPOUPmPVa', 'UUPmVaKepPOUPmVa'], ['zsLntfUPmVaKepPPOBjA', 'zsLntfUPmVaKepPPOBjA'], ['UPmVaKPUPPmVaKUPmVepPOepPUPmVepPOepPO', 'UPmVaKepP'], ['UPmVaKepPO', 'UPPmVaKUPmVepPOepPUPmVepPO'], ['UPmVUUPmVaKepPOUPmVaKepaKUPUPmVepPOepPOepP', 'UPmVepPO'], ['UPmVaKUPmVepPOepPUUPUUPmVaKepPOUPmVamVaKepPVpPO', 'UPmVaKUPmVepPOepPUUPmVaKepPpPO'], ['UPPmVaKepPO', 'PUUPmVaKepPOUPmVa'], ['UPmVaUPPmVaUPmVUUPmVaKepPOUPmVaKepaKUPmVepPOepPKUPmVepPOepPUPmVepPOpP', ''], ['UPmVepPO', 'UPmVepPUO'], ['UUPmVaKepPOUPmVaKepPOaKPepPUPPmVaKepPOOPO', 'UUPmVaKepPOUPmVaKepPOaKPepPUPPmVaKepPOOPO'], ['UPmVaeKepPO', 'UPmVaKepP'], ['UPmVaKUPmVepPOepPUPmVepPO', 'UPmVPUUPmVaKepPOUPmVaaKUPmVepPOepPUPmVepPO'], ['UPmVaKPUPPmVaKUPmVepPOepPUPmVepPOepPO', 'UPmVPUUPmVaKepPOUPmVaaKUPmVepPOepPUPmVepPO'], ['UPmVaKepP', 'UPmVaeKepPO'], ['PUUPmVazsLntfUPmVaKepPPOBjAKepPOUPmVa', 'PUUPmVaKepPOUPmVa'], ['UPmVaKUPmVepPOepPUUPUUPmVaKepPOUPmVamVaKepPVpPO', ''], ['UPmVaKPepP', 'UPmUUPmVaKepPOUPmVaKepP'], ['UPmVaKUPmVepPOUPmVUUPmVaKepPOUPmVaKepaKUPUPmVepPOepPOepPepPUPmpVepPO', 'UPmVaKUPmVepPOepPUPmpVepPO'], ['UPmVaKPepP', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['', 'PUUPmVazsLntfUPmVaKepPPOBjAKepPOUPmVa'], ['UUPmVaKepPOUPmVaKepPOaKPepPOPO', 'UPmVaKep'], ['UUPOaKPepPO', 'UPmVaKepPO'], ['UUPmVaKPepPOUPmVaKepPOPaKPepPUPPmVaKepPOOPO', 'UUPmVaKepPOUPmVaKepPOPaKPepPUPPmVaKepPOOPO'], ['UPmVa', 'UUPmVaKepPOUPmVaKepPOaKPepPO'], ['UPmVaeKepPO', 'UP'], ['UPmVaeKeUPmVPUUPmVaKepPOUPmVaaKUPmVepPOepPUPmVepPOpPO', 'UPmVaeKepPO'], ['UPmVaKeUPmVaKUPmVepPOepPUPmVepPOpP', 'UPmVaeKepPO'], ['UUPmVaKepPOUPmVaKep', 'UPmVaKP'], ['UPmVepPO', 'UPmVaKUPmVepPOepPUPmVepPO'], ['UPO', 'UUPmVaKepPOUPmVaKepPOaKPepPUPPmVaKepPOOPO'], ['UPPmVaKUPmVepPOepPUPmVepPO', 'zsLntfUPmVaKepPPOBjA'], ['UPmUVaKPepP', 'UPmUVaKPepP'], ['UPmVaKep', 'UPmVaKep'], ['UPmVUUPmVaKepPOUPmVaKepaKUPmVepPOepP', 'UPmVUUPVmVaKepPOUPmVaKepaKUPmVepPOepP'], ['UPmVaKUPmVepPOepP', 'UP'], ['UPPmVaKUUmVaKepPOUPmVaepPO', 'UPPmVaKUUPmVaKepPOUPmVaepPO'], ['UPPmVaKUPmVaKPUPPmVaKUPmVepPOepPUPmVepPOepPOepP', 'UPPmVaKepP'], ['UPmVzsLntfUPmVaKepPPOBjAVmVaKepPOUPmVaKOepaKUPmVepPOepPpPO', 'UPmVaKepPO'], ['UPPmVaKUPmVepPOepPUPmVepPO', 'UPPmVaKUPmVepPPOepPUPmVepPOO'], ['UPmVaKUPmVepPOepPUUPmVaKepPpPO', 'PUUPmVaKepPOUPmVa'], ['UPmVUUPmVaKepPOUPmVaKepaKUPUPmVepPOepPOepP', 'UPmVaKepP'], ['UPPmVaKepPmO', 'UPPmVaKepPO'], ['zsLntfBjA', 'UUPmVaKepPOUPmVa'], ['PUUPmVazsLntfUPmVaKepPPOBjAKepPOUPmVa', 'PUUPmVaKepPUPmVa'], ['UPPmVaKepP', 'UPmVepPO'], ['PUUPmVazsLntfUPmVaKepPPOBjAKepPaOUPmVa', 'PUUPmVazsLntfUPmVaKeUPPmVaKepPmOpPPOBjAKepPOUPmVa'], ['UPmVaKUPmVepPOepPUPmVPO', 'UPmVamKUPmVepPOepPUPmVepPO'], ['', 'UPmVaKepPP'], ['UPmVaKUPmVepPOUPPmVaKUPmVepPOepPUPmVepPOOepP', 'UPmVepPUO'], ['UPmUVaKPepP', 'UPmVepPO'], ['UPmVaKUPmVepPOepPUPmVepPO', 'UPmVaUKUPmVepPOepPUPO'], ['UPmPVaKP', 'UPmVaKP'], ['UPmVaKUPmVepPOepPUUPUUPmVaKepPOUPmVamVaKepPVpPO', 'UPmVaKeUPmVaKUPmVepPOepPUPmVepPOpP'], ['UPmVaKUPmVepPOepPUUPmVaKepPpPO', 'UPmVVaKP'], ['UUPmVaKepPOUPmVaKepPOaKPepPOPO', 'UPO'], ['UPmVaeKeUPmVPUUPmVaKepPOUPmVaaKUPmVepPOepPUPmVepPOpPO', 'UPmVaeKeUPmVPUUPmVaKepPOUPmVaaKUPmVepPOepPUPmVepPOpPO'], ['PUUPmVafUPmVaKepPPOBjAKepPOUPmVa', 'PUUPmVaKepPOUPmVa'], ['zfBjA', 'zsLntfBjA'], ['UUPmVaKepPOUPmVaKepPOaKPepPOUPmVUUPVmVaKepPOUPmVaKepaKUPmVepPOepP', 'UPPmVaKmVepPOepPUPmVepPUPOO'], ['PUUPmVazsLntfUPmVaKepPPOBjAKepPOUPmVa', 'UPPmVaKUPmVaKPUPPmVaKUPmVepPOepPUPmVepPOepPOepP'], ['PUUPmVazsLntfUPmVaKepPPOBjAKepPOUPmVa', 'PUUPmVaUKepPUPmVa'], ['UPmVUUPVmVaKepPOUPmVaKepaKUPmVepPOepP', 'UPmVaKepPO']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, substring):
+    """
+    :param string: string to search in
+    :param substring: substring to search for
+    :return: tuple of (substring, position, length)
+    """
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+
+if __name__ == '__main__':
+    print(occurance_substring('python programming, python language', 'python'))
+    print(occurance_substring('python programming, python language', 'programming'))
+    print(occurance_substring('python programming, python language', 'language'))
+    print(occurance_substring('python programming, python language', 'java'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming, python language'))
+    print(occurance_substring('python programming, python language', 'python programming</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(string, substring):
+    """
+    Find the occurrence and position of the substrings within a string.
+    Return None if there is no match.
+    """
+    if substring in string:
+        start_index = string.index(substring)
+        end_index = start_index + len(substring)
+        return substring, start_index, end_index
+    else:
+        return None
+
+# Test the function
+assert occurance_substring('python programming, python language','python') == ('python', 0, 6)
+assert occurance_substring('hello world', 'python') is None</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(string: str, substring: str) -> tuple:
+    index = string.find(substring)
+    if index == -1:
+        return None
+    return substring, index, index + len(substring)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def occurance_substring(string, substring):
+    """
+    Find the occurrence and position of the substrings within a string.
+    
+    Args:
+        string (str): The input string to search.
+        substring (str): The substring to search for.
+    
+    Returns:
+        tuple: A tuple containing the substring, start index, and end index if found, otherwise None.
+    """
+    start_index = string.find(substring)
+    if start_index == -1:
+        return None
+    end_index = start_index + len(substring)
+    return (substring, start_index, end_index)</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(main_string, sub_string):
+    position = main_string.find(sub_string)
+    if position == -1:
+        return None
+    else:
+        return (sub_string, position, position + len(sub_string))
+
+print(occurance_substring('python programming, python language','python'))</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurrence_substring(string, substring):
+    index = string.find(substring)
+    if index == -1:
+        return None
+    else:
+        return (substring, index, index + len(substring))
+
+# Test the function
+assert occurrence_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def occurance_substring(string, substring):
+    index = string.find(substring)
+    if index == -1:
+        return None
+    else:
+        return substring, index, index + len(substring)
+
+# Test the function
+assert occurance_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(string, substring):
+    # Find the occurrence of the substring in the string
+    occurrence = string.count(substring)
+    
+    # If the substring is not found in the string, return None
+    if occurrence == 0:
+        return None
+
+    # Initialize variables to store the starting position of each occurrence
+    position = 0
+    all_positions = []
+
+    # Find the starting position of each occurrence of the substring
+    while position < len(string):
+        index = string.find(substring, position)
+        if index != -1:
+            all_positions.append(index)
+            position = index + len(substring)
+        else:
+            break
+
+    # Return the substring, the number of occurrences, and the starting positions
+    return (substring, occurrence, tuple(all_positions))
+
+# Test the function
+assert occurance_substring('python programming, python language', 'python') == ('python', 2, (0, 21))</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+
+```python
+def occurance_substring(string, substring):
+    """
+    Finds the occurrence and position of a substring within a string.
+    Returns a tuple containing the substring and its starting position if found, or None if not found.
+    """
+    if substring in string:
+        return substring, string.index(substring)
+    else:
+        return None
+```
+
+This function takes two arguments: the string to search in and the substring to search for. It uses the `in` operator to check if the substring is present in the string, and if it is, it returns a tuple containing the substring and its starting position using the `index()` method. If the substring is not found, it returns `None`.
+
+
+Here's how you can test the function:
+
+```python
+assert occurance_substring('python programming, python language', 'python') == ('python', 0)
+assert occurance_substring('python programming, python language', 'java') == None
+```
+
+The first test should pass because the substring 'python' is found at the beginning of the string, and its starting position is 0. The second test should pass because the substring 'java' is not found in the string. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurrence_substring(main_string, substring):
+    """
+    This function finds the occurrence and position of the substrings within a string.
+    It returns None if there is no match.
+    """
+    # Find the first occurrence of the substring in the main string
+    start_index = main_string.find(substring)
+
+    # If the substring is not found, return None
+    if start_index == -1:
+        return None
+
+    # Return the substring, start index, and end index
+    return (substring, start_index, start_index + len(substring) - 1)
+
+# Test the function
+assert occurrence_substring('python programming, python language','python')==('python', 0, 6)</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, sub_string):
+    if sub_string in string:
+        return sub_string, string.find(sub_string), string.find(sub_string) + len(sub_string)
+    else:
+        return None
+
+
+print(occurance_substring('python programming, python language', 'python'))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(string, substring):
+    index = string.find(substring)
+    if index == -1:
+        return None
+    else:
+        return (substring, index, index + len(substring) - 1)
+
+# Test the function
+assert occurance_substring('python programming, python language','python') == ('python', 0, 6)</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that should solve the problem:
+
+```python
+def occurrence_substring(string, substring):
+    index = string.find(substring)
+    if index == -1:
+        return None
+    else:
+        return (substring, index, index + len(substring))
+
+# Test the function
+assert occurrence_substring('python programming, python language','python') == ('python', 0, 6)
+```
+
+This function uses the `find` method of the string class to find the first occurrence of the substring in the string. If the substring is not found, `find` returns -1, and the function returns `None`. If the substring is found, the function returns a tuple containing the substring, the index of the first character of the substring in the string, and the index of the last character of the substring in the string.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.find(substring), len(substring)
+    else:
+        return None
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.find(substring), len(substring)
+    else:
+        return None
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.find(substring), len(substring)
+    else:
+        return None
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.find(substring), len(substring)
+    else:
+        return None
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.find(substring), len(substring)
+    else:
+        return None
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(string, substring):
+    """
+    Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+    assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+    """
+    start_index = string.find(substring)
+    if start_index == -1:
+        return None
+    else:
+        end_index = start_index + len(substring)
+        return substring, start_index, end_index
+
+# Test the function
+assert occurance_substring('python programming, python language','python') == ('python', 0, 6)
+assert occurance_substring('hello world', 'python') == None</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(str1,str2):
+    if str2 in str1:
+        return (str2,str1.index(str2),str1.index(str2)+len(str2))
+    else:
+        return None</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    """
+    :param string:
+    :param substring:
+    :return:
+    """
+    if substring in string:
+        return substring, string.index(substring), string.index(substring) + len(substring)
+    else:
+        return None
+
+
+if __name__ == '__main__':
+    print(occurance_substring('python programming, python language', 'python'))
+    print(occurance_substring('python programming, python language', 'java'))
+    print(occurance_substring('python programming, python language', 'python language'))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming, python language', 'python language '))
+    print(occurance_substring('python programming,</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def occurrence_substring(s, sub):
+    pos = s.find(sub)
+    if pos != -1:
+        return (sub, pos, pos + len(sub))
+    return None
+
+# Test the function
+print(occurrence_substring('python programming, python language','python'))  # Output: ('python', 0, 6)
+```
+
+This function uses the `find` method of the string to find the position of the substring within the string. If the substring is found, it returns a tuple containing the substring, its start position, and its end position. If the substring is not found, it returns `None`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def occurance_substring(main_string, sub_string):
+    position = main_string.find(sub_string)
+    if position == -1:
+        return None
+    else:
+        return (sub_string, position, position + len(sub_string))
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, sub_string):
+    if sub_string in string:
+        return sub_string, string.index(sub_string), string.index(sub_string) + len(sub_string)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python programming'))
+print(occurance_substring('python programming, python language','python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python programming, python language','python programming, python language, python programming, python language, python programming, python language, python programming, python language, python programming, python language'))
+print(occurance_substring('python</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(text, substr):
+  """
+  Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+  assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+  """
+  if substr in text:
+    return substr, text.index(substr), text.index(substr)+len(substr)
+  else:
+    return None</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurrence_substring(string, substr):
+    start_pos = 0
+    while True:
+        start_pos = string.find(substr, start_pos)
+        if start_pos != -1:
+            return substr, start_pos
+        else:
+            break
+    return None
+
+# Test case
+assert occurrence_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(s, sub):
+    if sub in s:
+        return sub, s.index(sub), s.index(sub) + len(sub) - 1
+    else:
+        return None
+
+assert occurance_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def occurance_substring(string, substring):
+    """
+    This function takes a string and a substring as input and returns the occurrence and position of the substring within the string.
+    If there is no match, it returns None.
+    """
+    if substring in string:
+        index = string.index(substring)
+        return substring, index, index + len(substring)
+    else:
+        return None
+```
+
+Here's how the function works:
+
+1. The function takes two arguments: `string` and `substring`.
+2. It checks if the substring is present in the string using the `in` operator.
+3. If the substring is present, it finds the index of the substring using the `index` method.
+4. It returns a tuple containing the substring, the starting index, and the ending index of the substring.
+5. If the substring is not present, it returns None.
+
+Here's how you can use the function:
+
+```python
+string = 'python programming, python language'
+substring = 'python'
+result = occurance_substring(string, substring)
+print(result)  # Output: ('python', 0, 6)
+```
+
+In this example, the function returns the tuple `('python', 0, 6)` because the substring 'python' is present in the string at index 0 and has a length of 6.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, sub_string):
+    if sub_string in string:
+        return sub_string, string.index(sub_string), string.index(sub_string)+len(sub_string)-1
+    else:
+        return None
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def occurrence_substring(string, substring):
+    index = string.find(substring)
+    if index != -1:
+        return (substring, index, index + len(substring) - 1)
+    else:
+        return None
+
+print(occurrence_substring('python programming, python language','python'))
+```
+
+This function uses the `find` method of the string class to find the first occurrence of the substring in the string. If the substring is found, it returns a tuple containing the substring, the start index, and the end index of the substring. If the substring is not found, it returns `None`.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, sub):
+    if sub in string:
+        return (sub, string.index(sub), string.rindex(sub))
+    else:
+        return None
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','java')==None
+```
+
+2. Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+```python
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','java')==None
+"""
+
+def occurance_substring(string, sub):
+    if sub in string:
+        return (sub, string.index(sub), string.rindex(sub))
+    else:
+        return None
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','java')==None
+```
+
+
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, sub_string):
+    if string.find(sub_string) == -1:
+        return None
+    else:
+        return sub_string, string.find(sub_string), string.find(sub_string) + len(sub_string)
+
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming, python language','python'))
+print(occurance_substring('python programming,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(string, substring):
+    pos = string.find(substring)
+    if pos != -1:
+        return substring, pos, pos + len(substring) - 1
+    else:
+        return None</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(str,sub):
+    if str.find(sub) == -1:
+        return None
+    else:
+        return str.find(sub),str.find(sub)+len(sub)
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurrence_substring(string, substring):
+    index = string.find(substring)
+    if index != -1:
+        return (substring, index, index + len(substring) - 1)
+    else:
+        return None
+
+# Test the function
+assert occurrence_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(input_string, substring):
+    """
+    Find the occurrence and position of the substrings within a string.
+    Return None if there is no match.
+
+    :param input_string: The string to search within
+    :param substring: The substring to search for
+    :return: A tuple containing the substring, its starting position, and its ending position
+    """
+    start_pos = input_string.find(substring)
+    if start_pos == -1:
+        return None
+    end_pos = start_pos + len(substring)
+    return (substring, start_pos, end_pos)
+
+# Test the function
+assert occurance_substring('python programming, python language','python') == ('python', 0, 6)
+assert occurance_substring('hello world', 'world') == ('world', 6, 11)
+assert occurance_substring('hello world', 'python') == None</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurrence_substring(string, substring):
+    position = string.find(substring)
+    if position == -1:
+        return None
+    else:
+        return substring, position, position + len(substring)
+
+# Test the function
+assert occurrence_substring('python programming, python language','python')==('python', 0, 6)
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(s, sub):
+    idx = s.find(sub)
+    if idx != -1:
+        return sub, idx, idx + len(sub)
+    else:
+        return None
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    """
+    :param string: string to search
+    :param substring: substring to search
+    :return: tuple of (substring, position, length)
+    """
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    """
+    :param string: string to search
+    :param substring: substring to search
+    :return: tuple of (substring, position, length)
+    """
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    """
+    :param string: string to search
+    :param substring: substring to search
+    :return: tuple of (substring, position, length)
+    """
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    """
+    :param string: string to search
+    :param substring: substring to search
+    :return: tuple of (substring, position, length)
+    """
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+
+"""
+Write a function to find the occurrence</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, sub_string):
+    if sub_string in string:
+        return sub_string, string.index(sub_string), string.index(sub_string) + len(sub_string)
+    else:
+        return None
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python programming')==('python programming', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('python programming, python language','python programming language')==('python programming language', 0, 19)
+assert occurance_substring('</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+import re
+
+def occurance_substring(main_string, sub_str):
+    matches = list(re.finditer(sub_str, main_string))
+    if not matches:
+        return None
+    first_match = matches[0]
+    return (sub_str, first_match.start(), first_match.end())
+
+# Example usage:
+# result = occurance_substring('python programming, python language', 'python')
+# print(result)  # Output should be: ('python', 0, 6)
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(str1, str2):
+    if str2 not in str1:
+        return None
+    else:
+        return str2.split(str1), str1.index(str2), len(str1) - str1.index(str2) - len(str2)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def occurance_substring(string, substring):
+    index = string.find(substring)
+    if index != -1:
+        return substring, index, index + len(substring)
+    else:
+        return None
+
+# Test the function
+print(occurance_substring('python programming, python language','python'))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurrence_substring(input_string, substring):
+    occurrences = []
+    start = 0
+    while start < len(input_string):
+        index = input_string.find(substring, start)
+        if index == -1:
+            break
+        occurrences.append((substring, index, index + len(substring) - 1))
+        start = index + 1
+    if not occurrences:
+        return None
+    return occurrences
+
+# Test case
+print(occurrence_substring('python programming, python language', 'python'))</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(string, substring):
+    # Find the position of the substring
+    position = string.find(substring)
+
+    # If the substring is not found, return None
+    if position == -1:
+        return None
+
+    # Find the occurrence of the substring
+    occurrence = string.count(substring)
+
+    # Return the substring, occurrence and position
+    return (substring, occurrence, position)
+
+# Test the function
+assert occurance_substring('python programming, python language','python')==('python', 2, 0)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that finds the occurrence and position of a substring within a string:
+
+```python
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.rindex(substring))
+    else:
+        return None
+```
+
+This function takes two arguments: `string` and `substring`. It first checks if the `substring` is present in the `string`. If it is, it returns a tuple containing the `substring`, the index of the first occurrence of the substring in the string, and the index of the last occurrence of the substring in the string. If the `substring` is not present in the `string`, it returns `None`.
+
+For example:
+
+```python
+>>> occurance_substring('python programming, python language', 'python')
+('python', 0, 20)
+```
+
+In this case, the `substring` 'python' is present in the `string` twice, and the first occurrence starts at index 0 and the last occurrence starts at index 20. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), string.index(substring) + len(substring)
+    else:
+        return None
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurance_substring(str1, str2):
+    if str2 not in str1:
+        return None
+    pos = str1.find(str2)
+    return (str2, pos, len(str2))</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string,substring):
+    if substring in string:
+        return substring,string.index(substring),string.rindex(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), string.index(substring)+len(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurrence_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring) + len(substring))
+    else:
+        return None
+
+print(occurrence_substring('python programming, python language','python'))
+```
+
+This Python script defines a function `occurrence_substring` that takes two parameters: a string and a substring. The function checks if the substring is present in the string using the `in` keyword. If the substring is found, it returns a tuple containing the substring, the index of the first occurrence of the substring in the string, and the index of the last occurrence of the substring in the string. If the substring is not found, it returns `None`.
+
+The last line of the script calls the `occurrence_substring` function with the string 'python programming, python language' and the substring 'python'. The output of the script is the result of the function call, which should be the tuple ('python', 0, 6).
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring), len(substring)
+    else:
+        return None
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+assert occurance_substring('</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return substring, string.index(substring)
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def occurrence_substring(string, substring):
+    positions = [i for i, x in enumerate(string) if x: substring == string[i:i+len(substring)]]
+    
+    if positions:
+        return (substring, positions[0], positions[0] + len(substring) - 1)
+    else:
+        return None
+
+# Test the function
+assert occurrence_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurance_substring(main_string, sub_string):
+    # Use the `.find()` method to find the first occurrence of the substring in the main string
+    first_index = main_string.find(sub_string)
+
+    # If the substring is not found, return `None`
+    if first_index == -1:
+        return None
+
+    # Return a tuple containing the substring, its first occurrence index, and the length of the substring
+    return sub_string, first_index, len(sub_string)
+
+assert occurance_substring('python programming, python language', 'python') == ('python', 0, 6)</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, substring):
+    """
+    :param string: string to search
+    :param substring: substring to search
+    :return: list of (position, length)
+    """
+    if substring in string:
+        return [string.index(substring), len(substring)]
+    else:
+        return None
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+def occurance_substring(string, substring):
+    """
+    Find the occurrence and position of the substrings within a string.
+    Return None if there is no match.
+
+    Args:
+        string (str): The input string.
+        substring (str): The substring to search for.
+
+    Returns:
+        tuple or None: A tuple containing the substring, start index, and end index if found, else None.
+    """
+    occurrences = []
+    start = 0
+    while True:
+        start = string.find(substring, start)
+        if start == -1:
+            break
+        occurrences.append((substring, start, start + len(substring)))
+        start += len(substring)
+    
+    if occurrences:
+        return occurrences[0]
+    else:
+        return None
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring) + len(substring))
+    else:
+        return None
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring)+len(substring))
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring)+len(substring))
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring)+len(substring))
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring)+len(substring))
+    else:
+        return None
+
+print(occurance_substring('python programming, python language','python'))
+
+"""
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+def occurance_substring(string, substring):
+    if substring in string:
+        return (substring, string.index(substring), string.index(substring)+len(substring))
+    else:</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def occurance_substring(string, substring):
+    pos = string.find(substring)
+    if pos != -1:
+        return substring, pos, pos + len(substring)
+    else:
+        return None
+
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the occurrence and position of the substrings within a string. Return None if there is no match.
+assert occurance_substring('python programming, python language','python')==('python', 0, 6)
+"""
+
+
+def occurance_substring(str1, str2):
+    if str1.find(str2) == -1:
+        return None
+    else:
+        return str1.find(str2), str1.find(str2)+len(str2), str1.find(str2)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def occurrence_substring(s, sub):
+    pos = s.find(sub)
+    if pos != -1:
+        return (sub, pos, pos+len(sub))
+    else:
+        return None
+
+# Test the function
+occurrence_substring('python programming, python language','python')
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

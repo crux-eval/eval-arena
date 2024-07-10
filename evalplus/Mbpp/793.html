@@ -1,0 +1,1985 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/793 </h1>
+<pre><code> """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def last(arr,x):
+    return len(arr)-arr[::-1].index(x) - 1
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 2, 3], 1], [[1, 1, 1, 2, 3, 4], 1], [[2, 2, 3, 3, 6, 8, 9], 3]] </code></pre>
+<h2>plus input</h2>
+<pre><code> {} </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+def last(arr, x):
+    """
+    :param arr: list
+    :param x: int
+    :return: int
+    """
+    if not arr:
+        return -1
+    if len(arr) == 1:
+        return 0 if arr[0] == x else -1
+    if arr[0] == x:
+        return 0
+    if arr[-1] == x:
+        return len(arr) - 1
+    if arr[0] > x:
+        return -1
+    if arr[-1] < x:
+        return -1
+    if arr[0] < x < arr[-1]:
+        for i in range(len(arr)):
+            if arr[i] == x:
+                return i
+            if arr[i] > x:
+                return i - 1
+    return -1
+
+
+if __name__ == '__main__':
+    print(last([1, 2, 3], 1))
+    print(last([1, 2, 3], 2))
+    print(last([1, 2, 3], 3))
+    print(last([1, 2, 3], 4))
+    print(last([1, 2, 3], 0))
+    print(last([1, 2, 3], 10))
+    print(last([1, 2, 3], 100))
+    print(last([1, 2, 3], 1000))
+    print(last([1, 2, 3], 10000))
+    print(last([1, 2, 3], 100000))
+    print(last([1, 2, 3], 1000000))
+    print(last([1, 2, 3], 10000000))
+    print(last([1, 2, 3], 100000000))
+    print(last([1, 2, 3], 1000000000))
+    print(last([1, 2, 3], 100</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    """
+    Find the last position of an element in a sorted array.
+
+    :param arr: sorted array of integers
+    :param target: integer to find in the array
+    :return: index of the last occurrence of the target in the array, or -1 if not found
+    """
+    if not arr:
+        return -1
+
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            # Move to the right half if the current element is the target
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    # If the target is not found, return -1
+    if left == len(arr) or arr[left] != target:
+        return -1
+
+    # Otherwise, return the index of the last occurrence of the target
+    return left - 1
+
+# Test the function
+assert last([1, 2, 3], 1) == 0
+assert last([1, 2, 3], 2) == 1
+assert last([1, 2, 3], 3) == 2
+assert last([1, 2, 3], 4) == -1
+assert last([1, 1, 1, 2, 2, 2], 1) == 2
+assert last([1, 1, 1, 2, 2, 2], 2) == 5
+assert last([1, 1, 1, 2, 2, 2], 3) == -1</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    for i in range(len(arr) - 1, -1, -1):
+        if arr[i] == target:
+            return i
+    return -1
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def last(arr, target):
+    """
+    Find the last position of an element in a sorted array.
+    
+    Args:
+        arr (list): A sorted list of integers.
+        target (int): The element to search for.
+    
+    Returns:
+        int: The last position of the target element in the array, or -1 if not found.
+    """
+    left, right = 0, len(arr) - 1
+    last_index = -1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            last_index = mid
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return last_index
+
+# Test the function
+assert last([1, 2, 3], 1) == 0</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    left, right = 0, len(arr) - 1
+    result = -1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == x:
+            result = mid
+            left = mid + 1
+        elif arr[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return result
+
+# Test the function
+assert last([1,2,3],1) == 0</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+def last(arr, x):
+    if x not in arr:
+        return -1
+    else:
+        return arr.index(x)
+
+# Test the function
+assert last([1,2,3],1) == 0</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to find the last position of an element in a sorted array, wrapped in a Python markdown block:
+
+```python
+def last(arr, target):
+    left = 0
+    right = len(arr) - 1
+    last_position = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            last_position = mid
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return last_position
+
+assert last([1, 2, 3], 1) == 0
+assert last([1, 2, 2, 2, 3], 2) == 3
+assert last([1, 2, 3], 4) == -1</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def last(arr, x):
+    """
+    This function returns the last position of an element in a sorted array.
+    :param arr: sorted array
+   </code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that finds the last position of an element in a sorted array:
+
+```python
+def last(arr, x):
+    """
+    This function takes a sorted array and an element x and returns the last position of x in the array.
+    If x is not present in the array, it returns -1.
+    """
+    n = len(arr)
+    left, right = 0, n-1
+    result = -1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == x:
+            result = mid
+            left = mid + 1
+        elif arr[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return result
+```
+
+We can use binary search to find the last position of x in the array. We start by initializing left and right pointers to the first and last indices of the array, respectively. We then use a while loop to keep searching for x until we find it or the pointers cross each other. If the middle element is equal to x, we update the result and move the left pointer to the right of mid. If the middle element is less than x, we move the left pointer to mid+1. Otherwise, we move the right pointer to mid-1. We return the result after the loop ends.
+
+
+We can test the function with the given example:
+
+```python
+assert last([1,2,3],1) == 0
+```
+
+This should return 0 since the last position of 1 in the array [1,2,3] is 0. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    """
+    This function finds the last position of an element in a sorted array.
+    If the element is not found, it returns -1.
+    """
+    # Initialize the result as -1
+    result = -1
+
+    # Perform binary search
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+
+        # If x is present at the mid, then update the result and search in the right half
+        if arr[mid] == x:
+            result = mid
+            left = mid + 1
+
+        # If x is smaller, ignore the right half
+        elif arr[mid] < x:
+            left = mid + 1
+
+        # If x is greater, ignore the left half
+        else:
+            right = mid - 1
+
+    # Return the result
+    return result
+
+# Test the function
+assert last([1, 2, 3], 1) == 0
+assert last([1, 2, 3], 2) == 1
+assert last([1, 2, 3], 3) == 2
+assert last([1, 2, 3], 4) == -1
+assert last([1, 2, 2, 2, 3], 2) == 3</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    """
+    :param arr: sorted array
+    :param x: element to find
+    :return: last position of x in arr
+    """
+    if x not in arr:
+        return -1
+    else:
+        return arr.index(x)
+
+
+if __name__ == '__main__':
+    assert last([1, 2, 3], 1) == 0
+    assert last([1, 2, 3], 2) == 1
+    assert last([1, 2, 3], 3) == 2
+    assert last([1, 2, 3], 4) == -1
+    assert last([1, 2, 3], 0) == -1
+    assert last([1, 2, 3], 5) == -1
+    assert last([1, 2, 3], 6) == -1
+    assert last([1, 2, 3], 7) == -1
+    assert last([1, 2, 3], 8) == -1
+    assert last([1, 2, 3], 9) == -1
+    assert last([1, 2, 3], 10) == -1
+    assert last([1, 2, 3], 11) == -1
+    assert last([1, 2, 3], 12) == -1
+    assert last([1, 2, 3], 13) == -1
+    assert last([1, 2, 3], 14) == -1
+    assert last([1, 2, 3], 15) == -1
+    assert last([1, 2, 3], 16) == -1
+    assert last([1, 2, 3], 17) == -1
+    assert last([1, 2, 3], 18) == -1
+    assert last([1, 2, 3], 19) == -1
+    assert last([1, 2, 3], 20) == -1
+    assert last([1, 2, 3], 21) == -1
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    """
+    Returns the last position of an element in a sorted array.
+    If the element is not found, returns -1.
+    """
+    for i in range(len(arr)-1, -1, -1):
+        if arr[i] == target:
+            return i
+    return -1
+
+# Test cases
+assert last([1, 2, 3, 1, 1], 1) == 4
+assert last([1, 2, 3], 1) == 0
+assert last([1, 2, 3], 4) == -1</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that uses binary search to find the last position of an element in a sorted array. The function `last_position` takes two arguments: `arr` which is the sorted array, and `x` which is the element we are looking for.
+
+```python
+def last_position(arr, x):
+    low = 0
+    high = len(arr) - 1
+
+    # If the array is empty or the element is greater than the last element, return -1
+    if not arr or x > arr[-1]:
+        return -1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        # If the element is found and it is either the last element or the next element is not equal to x, return mid
+        if arr[mid] == x and (mid == len(arr) - 1 or arr[mid + 1] != x):
+            return mid
+
+        # If the element is greater than or equal to the middle element, search in the right half
+        if arr[mid] <= x:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    # If the element is not found, return -1
+    return -1
+```
+
+You can use this function like this:
+
+```python
+assert last_position([1, 2, 3], 1) == 0
+```
+
+This function works by repeatedly dividing the search interval in half. If the value of the search key is less than the item in the middle of the interval, the interval is narrowed to the lower half. Otherwise, it is narrowed to the upper half. The process continues until the value is found or the interval is empty.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    if len(arr) == 0:
+        return -1
+    if len(arr) == 1:
+        if arr[0] == x:
+            return 0
+        else:
+            return -1
+    if arr[0] == x:
+        return 0
+    if arr[-1] == x:
+        return len(arr) - 1
+    if arr[0] > x:
+        return 0
+    if arr[-1] < x:
+        return len(arr) - 1
+    if arr[0] < x and arr[-1] > x:
+        for i in range(1, len(arr)):
+            if arr[i] == x:
+                return i
+        return -1
+
+print(last([1,2,3],1))
+print(last([1,2,3],2))
+print(last([1,2,3],3))
+print(last([1,2,3],4))
+print(last([1,2,3],5))
+print(last([1,2,3],6))
+print(last([1,2,3],7))
+print(last([1,2,3],8))
+print(last([1,2,3],9))
+print(last([1,2,3],10))
+print(last([1,2,3],11))
+print(last([1,2,3],12))
+print(last([1,2,3],13))
+print(last([1,2,3],14))
+print(last([1,2,3],15))
+print(last([1,2,3],16))
+print(last([1,2,3],17))
+print(last([1,2,3],18))
+print(last([1,2,3],19))
+print(last([1,2,3],20))
+print(last([1,2,3],21))
+print(last([1,2,3],22))
+print(last([1,2,3],23))
+print(last([1,2,3],24))
+print(last([1,2,3],25))
+print(last([1,2,3],</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    """
+    Write a python function to find the last position of an element in a sorted array.
+    assert last([1,2,3],1) == 0
+    """
+    left, right = 0, len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = left + (right - left) // 2
+
+        if arr[mid] == target:
+            result = mid
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return result
+
+# Test cases
+assert last([1,2,3],1) == 0
+assert last([1,2,2,3,3,3,4,5],3) == 5
+assert last([1,2,3],4) == -1</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    if not arr:
+        return -1
+    
+    low = 0
+    high = len(arr) - 1
+    
+    while low <= high:
+        mid = (low + high)//2
+        
+        if x < arr[mid]:
+            high = mid - 1
+        elif x > arr[mid]:
+            low = mid + 1
+        else:
+            if mid == len(arr) - 1 or arr[mid + 1] != x:
+                return mid
+            else:
+                low = mid + 1
+    return -1
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, element):
+    """
+    Time Complexity: O(log n)
+    Space Complexity: O(1)
+    """
+    if len(arr) == 0:
+        return -1
+    if arr[-1] == element:
+        return len(arr) - 1
+    if arr[0] == element:
+        return 0
+    if arr[0] > element or arr[-1] < element:
+        return -1
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == element:
+            if arr[mid + 1] != element:
+                return mid
+            else:
+                left = mid + 1
+        elif arr[mid] > element:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return -1
+
+
+def test():
+    assert last([1,2,3],1) == 0
+    assert last([1,2,3],2) == 1
+    assert last([1,2,3],3) == 2
+    assert last([1,2,3],4) == -1
+    assert last([1,2,3],0) == -1
+    assert last([1,2,3],3) == 2
+    assert last([1,2,3],2) == 1
+    assert last([1,2,3],1) == 0
+    assert last([1,2,3],0) == -1
+    assert last([1,2,3],3) == 2
+    assert last([1,2,3],2) == 1
+    assert last([1,2,3],1) == 0
+    assert last([1,2,3],0) == -1
+    assert last([1,2,3],3) == 2
+    assert last([1,2,3],2) == 1
+    assert last([1,2,3],1) == 0
+    assert last([1,2,3],0) == -1
+    assert last([1,2,3],3) == 2</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python function in a markdown style code block:
+
+```python
+def last(arr, target):
+    """
+    Write a python function to find the last position of an element in a sorted array.
+    """
+    try:
+        return len(arr) - 1 - arr[::-1].index(target)
+    except ValueError:
+        return -1
+
+# Test the function
+assert last([1,2,3],1) == 0
+```
+
+This function uses Python's list slicing to reverse the array and then uses the `index()` method to find the last occurrence of the target element. If the target element is not found, the `index()` method raises a `ValueError`, which is caught and handled by returning `-1`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def last(arr, target):
+    last_index = -1
+    for i in range(len(arr)):
+        if arr[i] == target:
+            last_index = i
+    return last_index
+
+print(last([1,2,3],1))</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+def last(arr, elem):
+    if len(arr) == 0:
+        return -1
+    if arr[-1] == elem:
+        return len(arr) - 1
+    return last(arr[:-1], elem)
+
+assert last([1,2,3],1) == 0
+assert last([1,2,3],2) == 1
+assert last([1,2,3],3) == 2
+assert last([1,2,3],4) == -1
+assert last([1,2,3],0) == -1
+assert last([1,2,3],-1) == -1
+assert last([1,2,3],-2) == -2
+assert last([1,2,3],-3) == -3
+assert last([1,2,3],-4) == -4
+assert last([1,2,3],-5) == -5
+assert last([1,2,3],-6) == -6
+assert last([1,2,3],-7) == -7
+assert last([1,2,3],-8) == -8
+assert last([1,2,3],-9) == -9
+assert last([1,2,3],-10) == -10
+assert last([1,2,3],-11) == -11
+assert last([1,2,3],-12) == -12
+assert last([1,2,3],-13) == -13
+assert last([1,2,3],-14) == -14
+assert last([1,2,3],-15) == -15
+assert last([1,2,3],-16) == -16
+assert last([1,2,3],-17) == -17
+assert last([1,2,3],-18) == -18
+assert last([1,2,3],-19) == -19
+assert last([1,2,3],-20) == -20
+assert last([1,2,3],-21) == -21
+assert last([1,2,3],-22) == -22
+assert last([1,2,3],-23) == -23
+assert last([1,2,3],-24)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: False </p>
+      <pre><code>  def last(array, element):
+  """
+  Write a python function to find the last position of an element in a sorted array.
+  assert last([1,2,3],1) == 0
+  """
+  lo = 0
+  hi = len(array) - 1
+  while lo <= hi:
+    mid = (lo + hi) // 2
+    if array[mid] == element:
+      lo = mid + 1
+    elif array[mid] < element:
+      lo = mid + 1
+    else:
+      hi = mid - 1
+  if lo < len(array) and array[lo] == element:
+    return lo
+  return -1</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+def last(arr, target):
+    """
+    Find the last position of the given target in the sorted array.
+    """
+    left, right = 0, len(arr) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return right
+
+# Test cases
+assert last([1, 2, 3], 1) == 0
+assert last([1, 2, 3], 2) == 2
+assert last([1, 2, 3], 3) == 2
+assert last([], 1) == -1
+assert last([1], 1) == 0</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    for i in range(len(arr)):
+        if arr[i] == x:
+            return i
+    return -1
+
+assert last([1, 2, 3], 1) == 0</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to find the last position of an element in a sorted array:
+
+```python
+def last(arr, x):
+    """
+    Returns the last position of an element in a sorted array.
+    """
+    left = 0
+    right = len(arr) - 1
+    result = -1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == x:
+            result = mid
+            left = mid + 1
+        elif arr[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+            
+    return result
+```
+
+The function takes two arguments: `arr`, which is the sorted array, and `x`, which is the element whose last position is to be found. The function uses a binary search algorithm to find the last position of the element.
+
+The function initializes three variables: `left`, `right`, and `result`. `left` and `right` represent the left and right indices of the array, respectively. `result` is initially set to -1, which will be used to indicate that the element is not present in the array.
+
+The function then enters a while loop that continues as long as `left` is less than or equal to `right`. Inside the loop, the function calculates the midpoint of the array using integer division. If the element at the midpoint is equal to `x`, the function sets `result` to the midpoint and updates `left` to `mid + 1`, since we know that the last occurrence of `x` must be to the right of the midpoint. If the element at the midpoint is less than `x`, the function updates `left` to `mid + 1`, since we know that the last occurrence of `x` must be to the right of the midpoint. If the element at the midpoint is greater than `x`, the function updates `right` to `mid - 1`, since we know that the last occurrence of `x` must be to the left of the midpoint.
+
+After the while loop finishes, the function returns the value of `result`, which will be the last position of `x` in the array, or -1 if `x` is not present in the array.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    l = len(arr)
+    if l == 0:
+        return -1
+    if arr[l-1] == x:
+        return l-1
+    if arr[0] > x:
+        return -1
+    if arr[0] == x:
+        return 0
+    mid = l/2
+    if arr[mid] == x:
+        return mid
+    if arr[mid] > x:
+        return last(arr[:mid], x)
+    else:
+        return last(arr[mid:], x)
+
+
+def test_last_pos():
+    assert last([1,2,3],1) == 0
+    assert last([1,2,3],4) == -1
+    assert last([1,2,3],3) == 2
+    assert last([1,2,3],2) == 1
+    assert last([1,2,3],5) == -1
+    assert last([1,2,3],0) == -1
+    assert last([1,2,3,-1,-10,1],1) == 5
+    assert last([1,2,3,-1,-10,1],-10) == 4
+    assert last([1,2,3,-1,-10,1],-1) == 3
+    assert last([1,2,3,-1,-10,1],-11) == -1
+    assert last([1,2,3,-1,-10,1],-110) == -1
+    assert last([1,2,3,-1,-10,1],10) == -1
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the last position of an element in a sorted array:
+
+```python
+def last(arr, x):
+    low = 0
+    high = len(arr) - 1
+    res = -1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] > x:
+            high = mid - 1
+        elif arr[mid] < x:
+            low = mid + 1
+        else:
+            res = mid
+            low = mid + 1
+
+    return res
+```
+
+This function uses binary search to find the last occurrence of an element in a sorted array. It initializes two pointers, `low` and `high`, to the start and end of the array respectively. It then enters a loop where it calculates the middle index `mid` and compares the element at `mid` with the target `x`. If the element at `mid` is greater than `x`, it means `x` must be in the left half of the array, so it updates `high` to `mid - 1`. If the element at `mid` is less than `x`, it means `x` must be in the right half of the array, so it updates `low` to `mid + 1`. If the element at `mid` is equal to `x`, it means `x` is found and it updates `res` to `mid` and `low` to `mid + 1` to continue the search in the right half of the array. The loop continues until `low` is greater than `high`. Finally, it returns `res` which is the last position of `x` in the array.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    """
+    :param arr: sorted array
+    :param x: element to be searched
+    :return: last position of x in arr
+    """
+    if len(arr) == 0:
+        return -1
+    if arr[-1] == x:
+        return len(arr) - 1
+    if arr[-1] > x:
+        return -1
+    return last(arr[:-1], x)
+
+assert last([1,2,3],1) == 0
+assert last([1,2,3],2) == 1
+assert last([1,2,3],3) == 2
+assert last([1,2,3],4) == -1
+assert last([],1) == -1
+assert last([1,2,3],0) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,3],4) == -1
+assert last([1,2,</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr,n):
+    low = 0
+    high = len(arr)-1
+    while low<=high:
+        mid = (low+high)//2
+        if arr[mid] == n:
+            if mid == len(arr)-1:
+                return mid
+            else:
+                if arr[mid+1] == n:
+                    return mid+1
+                else:
+                    return mid
+        elif arr[mid] > n:
+            high = mid-1
+        else:
+            low = mid+1
+    return -1
+
+print(last([1,2,3],1))
+print(last([1,2,3],2))
+print(last([1,2,3],3))
+print(last([1,2,3],4))
+print(last([1,2,3],5))
+print(last([1,2,3],6))
+print(last([1,2,3],7))
+print(last([1,2,3],8))
+print(last([1,2,3],9))
+print(last([1,2,3],10))
+print(last([1,2,3],11))
+print(last([1,2,3],12))
+print(last([1,2,3],13))
+print(last([1,2,3],14))
+print(last([1,2,3],15))
+print(last([1,2,3],16))
+print(last([1,2,3],17))
+print(last([1,2,3],18))
+print(last([1,2,3],19))
+print(last([1,2,3],20))
+print(last([1,2,3],21))
+print(last([1,2,3],22))
+print(last([1,2,3],23))
+print(last([1,2,3],24))
+print(last([1,2,3],25))
+print(last([1,2,3],26))
+print(last([1,2,3],27))
+print(last([1,2,3],28))
+print(last([1,2,3],29))
+print(last([</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(nums, target):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] <= target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    if right < 0 or nums[right] != target:
+        return -1
+    return right</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr,x):
+    for i in range(len(arr)):
+        if arr[i] == x:
+            return i
+    return -1
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] <= target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return right
+
+# Test the function
+assert last([1,2,3],1) == 0
+assert last([1,2,2,3],2) == 2
+assert last([1,2,3,3,4],3) == 3
+assert last([1,2,3,4,5],6) == 4</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    """
+    Find the last position of an element in a sorted array.
+
+    :param arr: List of integers (sorted)
+    :param target: Target integer
+    :return: Index of the last occurrence of the target in the array
+    """
+    left, right = 0, len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            result = mid
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return result
+
+# Test cases
+assert last([1, 2, 3, 4, 4, 4, 5], 4) == 5
+assert last([1, 2, 3, 4, 5], 6) == -1
+assert last([1, 2, 3, 4, 5], 1) == 0
+assert last([1, 2, 3, 4, 4, 4, 5], 1) == -1</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == x:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return right
+
+# Test the function
+assert last([1, 2, 3], 1) == 0
+```
+
+Explanation:
+The function `last` takes two arguments, an array `arr` and an element `x`. It uses binary search to find the last occurrence of `x` in the sorted array `arr`. The binary search algorithm works by repeatedly dividing the search interval in half. In each iteration, the algorithm compares the middle element of the interval with the target element `x`. If the middle element is equal to `x`, the algorithm continues the search in the right half of the interval. Otherwise, it continues the search in the left half of the interval. The process continues until the target element is found or the search interval is empty. In the latter case, the function returns the index of the last element that is less than `x`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    for i in range(len(arr) - 1, -1, -1):
+        if arr[i] == target:
+            return i
+    return -1
+
+assert last([1,2,3],1) == 0</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    """
+    :param arr: sorted array
+    :param x: element to find
+    :return: last position of x in arr
+    """
+    if len(arr) == 0:
+        return -1
+    if len(arr) == 1:
+        if arr[0] == x:
+            return 0
+        else:
+            return -1
+    if arr[0] == x:
+        return 0
+    if arr[-1] == x:
+        return len(arr) - 1
+    if arr[0] < x < arr[-1]:
+        return binary_search(arr, x, 0, len(arr) - 1)
+    else:
+        return -1
+
+
+def binary_search(arr, x, start, end):
+    if start > end:
+        return -1
+    mid = (start + end) // 2
+    if arr[mid] == x:
+        return mid
+    elif arr[mid] < x:
+        return binary_search(arr, x, mid + 1, end)
+    else:
+        return binary_search(arr, x, start, mid - 1)
+
+
+if __name__ == '__main__':
+    print(last([1, 2, 3], 1))
+    print(last([1, 2, 3], 2))
+    print(last([1, 2, 3], 3))
+    print(last([1, 2, 3], 4))
+    print(last([1, 2, 3], 0))
+    print(last([1, 2, 3], 5))
+    print(last([1, 2, 3], -1))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))
+    print(last([1, 2, 3], -5))</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, elem):
+    """
+    Find the last position of an element in a sorted array.
+    """
+    if len(arr) == 0:
+        return -1
+    if arr[-1] == elem:
+        return len(arr) - 1
+    if arr[0] == elem:
+        return 0
+    if arr[0] > elem:
+        return 0
+    if arr[-1] < elem:
+        return len(arr) - 1
+    if arr[-1] < elem < arr[0]:
+        return len(arr) - 1
+    if arr[-1] > elem:
+        return last(arr[:-1], elem)
+    if arr[0] < elem:
+        return last(arr[1:], elem)
+    if arr[0] == elem:
+        return last(arr[1:], elem)
+    if arr[-1] == elem:
+        return last(arr[:-1], elem)
+    if arr[-1] < elem < arr[0]:
+        return last(arr[:-1], elem)
+    if arr[-1] > elem:
+        return last(arr[:-1], elem)
+    if arr[0] < elem:
+        return last(arr[1:], elem)
+    if arr[0] == elem:
+        return last(arr[1:], elem)
+    if arr[-1] == elem:
+        return last(arr[:-1], elem)
+    if arr[-1] < elem:
+        return last(arr[:-1], elem)
+    if arr[0] > elem:
+        return last(arr[1:], elem)
+    if arr[0] == elem:
+        return last(arr[1:], elem)
+    if arr[-1] == elem:
+        return last(arr[:-1], elem)
+    if arr[-1] < elem:
+        return last(arr[:-1], elem)
+    if arr[0] > elem:
+        return last(arr[1:], elem</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+
+def last(arr, x):
+    try:
+        return len(arr) - arr[::-1].index(x) - 1
+    except ValueError:
+        return -1
+
+# Example usage:
+# assert last([1,2,3], 1) == 0
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, ele):
+    index = -1
+    for i in range(len(arr)):
+        if arr[i] == ele:
+            index = i
+    return index</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def last(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] <= target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return right
+
+# Test the function
+print(last([1,2,3],1))  # Output: 0</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == x:
+            if mid == len(arr) - 1 or arr[mid + 1] != x:
+                return mid
+            else:
+                left = mid + 1
+        elif arr[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+# Test case
+print(last([1, 2, 3], 1))  # Output: 0</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    # Initialize the index of the last occurrence of x
+    last_index = -1
+
+    # Iterate over the array
+    for i in range(len(arr)):
+        # If the current element is equal to x
+        if arr[i] == x:
+            # Update the last index
+            last_index = i
+
+    # Return the last index
+    return last_index
+
+# Test the function
+assert last([1,2,3],1) == 0</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  Here's the Python function to find the last position of an element in a sorted array:
+
+```python
+def last(arr, x):
+    """
+    This function takes a sorted array and an element as input and returns the last position of the element in the array.
+    If the element is not found in the array, it returns -1.
+    """
+    n = len(arr)
+    # Initialize the last position of the element to -1
+    last_pos = -1
+    # Loop through the array and find the last position of the element
+    for i in range(n):
+        if arr[n-1-i] == x:
+            last_pos = n-1-i
+    return last_pos
+```
+
+We can test the function with the given example:
+
+```python
+assert last([1,2,3],1) == 0
+```
+
+This should return `True` since the last position of 1 in the array [1,2,3] is 0. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+def last(arr, x):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == x:
+            while mid < high and arr[mid] == x:
+                mid += 1
+            return mid - 1
+        elif arr[mid] < x:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: False </p>
+      <pre><code>  def last(arr, ele):
+    index = -1
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == ele:
+            index = mid
+            high = mid - 1
+        else:
+            low = mid + 1
+
+    return index
+
+assert last([1,2,3],1) == 0
+assert last([1,2,3],2) == 1
+assert last([1,2,3],3) == 2</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    if len(arr) == 0:
+        return -1
+    if arr[0] == x:
+        return 0
+    return 1 + last(arr[1:], x)
+
+
+print(last([1,2,3], 1))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    if len(arr) == 0:
+        return -1
+    if arr[-1] == x:
+        return len(arr) - 1
+    return last(arr[:-1], x)
+
+print(last([1,2,3],1))
+
+"""
+Write a python function to find the first position of an element in a sorted array.
+assert first([1,2,3],1) == 0
+"""
+
+def first(arr, x):
+    if len(arr) == 0:
+        return -1
+    if arr[0] == x:
+        return 0
+    return first(arr[1:], x)
+
+print(first([1,2,3],1))
+
+"""
+Write a python function to find the first and last position of an element in a sorted array.
+assert first_last([1,2,3,4,4,4,5],4) == [3,6]
+"""
+
+def first_last(arr, x):
+    if len(arr) == 0:
+        return [-1,-1]
+    if arr[0] == x:
+        return [0,0]
+    if arr[-1] == x:
+        return [len(arr)-1,len(arr)-1]
+    return [first(arr[1:], x), last(arr[:-1], x)]
+
+print(first_last([1,2,3,4,4,4,5],4))
+
+"""
+Write a python function to find the first position of an element in a sorted array.
+assert first([1,2,3,4,4,4,5],4) == 3
+"""
+
+def first(arr, x):
+    if len(arr) == 0:
+        return -1
+    if arr[0] == x:
+        return 0
+    return first(arr[1:], x)
+
+print(first([1,2,3,4,4,4,5],4))
+
+"""
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3,4,4,4,5],4) == 6
+"""
+
+def last(arr,</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr,x):
+    if len(arr) == 0:
+        return -1
+    if arr[0] == x:
+        return 0
+    if arr[-1] == x:
+        return len(arr)-1
+    if arr[0] > x:
+        return -1
+    if arr[-1] < x:
+        return -1
+    mid = len(arr)//2
+    if arr[mid] == x:
+        return mid
+    if arr[mid] > x:
+        return last(arr[:mid],x)
+    if arr[mid] < x:
+        return last(arr[mid+1:],x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  def last(arr, x):
+    return arr.index(x)
+
+assert last([1,2,3],1) == 0
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+def last(arr,x):
+    if x not in arr:
+        return -1
+    else:
+        return arr.index(x)
+
+assert last([1,2,3],1) == 0
+assert last([1,2,3],2) == 1
+assert last([1,2,3],3) == 2
+assert last([1,2,3],4) == -1
+assert last([1,2,3],0) == -1
+assert last([],1) == -1
+assert last([1],1) == 0
+assert last([1,2,3,4,5,6,7,8,9,10],1) == 9
+assert last([1,2,3,4,5,6,7,8,9,10],10) == 10
+assert last([1,2,3,4,5,6,7,8,9,10],11) == -1
+assert last([1,2,3,4,5,6,7,8,9,10],0) == -1
+assert last([1,2,3,4,5,6,7,8,9,10],-1) == -1
+assert last([1,2,3,4,5,6,7,8,9,10],-10) == 0
+assert last([1,2,3,4,5,6,7,8,9,10],-11) == -1
+assert last([1,2,3,4,5,6,7,8,9,10],-100) == 0
+assert last([1,2,3,4,5,6,7,8,9,10],-101) == -1
+assert last([1,2,3,4,5,6,7,8,9,10],-1000) == 0
+assert last([1,2,3,4,5,6,7,8,9,10],-1001) == -1
+assert last([1,2,3,4,5,6,7,8,9,10],-10000) == 0
+assert last([1,2,3,4,5,6,7,8,9,10],-10001) == -1
+assert last([</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, num):
+    for i in range(len(arr)-1, -1, -1):
+        if arr[i] == num:
+            return i
+    return -1
+
+print(last([1,2,3],1))
+print(last([1,2,3],2))
+print(last([1,2,3],3))
+print(last([1,2,3],4))
+print(last([1,2,3],5))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(arr, target):
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = low + (high - low) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1
+
+# Test the function
+arr = [1, 2, 3]
+target = 1
+print(last(arr, target))  # Output: 0</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+def last(arr: list, elem: int) -> int:
+    # Use binary search to find the last occurrence of the element in the sorted array
+    low, high = 0, len(arr)-1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == elem:
+            if mid == low or arr[mid-1] != elem:
+                # If the element is found at the first index or the previous element is not equal to the searched element, it's the last occurrence
+                return mid
+            else:
+                # Move the high pointer to exclude the left part of the array
+                high = mid - 1
+        else:
+            # Move the low pointer to exclude the right part of the array
+            low = mid + 1
+
+    # If the element is not found, return -1
+    if low > high:
+        return -1
+
+assert last([1,2,3],1) == 0</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, x):
+    i = len(arr) - 1
+    while i >= 0:
+        if arr[i] == x:
+            return i
+        i -= 1
+    return -1
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to find the last position of an element in a sorted array, wrapped in a Python markdown block:
+
+```python
+"""
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr, target):
+    """
+    Find the last position of an element in a sorted array.
+    
+    Args:
+        arr (list): A sorted list of elements.
+        target (any): The element to search for.
+        
+    Returns:
+        int: The last position of the target element in the sorted array.
+             If the target is not found, returns -1.
+    """
+    left = 0
+    right = len(arr) - 1
+    last_pos = -1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            last_pos = mid
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return last_pos
+
+# Test cases
+assert last([1, 2, 3], 1) == 0
+assert last([1, 2, 3, 3, 3, 3, 4, 5], 3) == 5
+assert last([1, 2, 3, 4, 5], 6) == -1</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+def last(arr, x):
+    if x not in arr:
+        return -1
+    return len(arr) - arr[::-1].index(x) - 1
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+def last(arr,ele):
+    for i in range(len(arr)-1,-1,-1):
+        if arr[i] == ele:
+            return i
+    return -1
+
+print(last([1,2,3,4,5,6,7,8,9,10],10))
+print(last([1,2,3,4,5,6,7,8,9,10],1))
+print(last([1,2,3,4,5,6,7,8,9,10],11))
+print(last([1,2,3,4,5,6,7,8,9,10],10))
+print(last([1,2,3,4,5,6,7,8,9,10],0))
+print(last([1,2,3,4,5,6,7,8,9,10],11))
+print(last([1,2,3,4,5,6,7,8,9,10],12))
+print(last([1,2,3,4,5,6,7,8,9,10],13))
+print(last([1,2,3,4,5,6,7,8,9,10],14))
+print(last([1,2,3,4,5,6,7,8,9,10],15))
+print(last([1,2,3,4,5,6,7,8,9,10],16))
+print(last([1,2,3,4,5,6,7,8,9,10],17))
+print(last([1,2,3,4,5,6,7,8,9,10],18))
+print(last([1,2,3,4,5,6,7,8,9,10],19))
+print(last([1,2,3,4,5,6,7,8,9,10],20))
+print(last([1,2,3,4,5,6,7,8,9,10],21))
+print(last([1,2,</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def last(nums, target):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if nums[mid] > target:
+            right = mid - 1
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            if mid == len(nums) - 1 or nums[mid + 1] != target:
+                return mid
+            else:
+                left = mid + 1
+    return -1
+
+assert last([1,2,3],1) == 0</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the last position of an element in a sorted array.
+assert last([1,2,3],1) == 0
+"""
+
+
+def last(array, element):
+    if len(array) == 0:
+        return -1
+    if array[-1] == element:
+        return len(array)-1
+    return last(array[:-1], element)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def last(arr, target):
+    for i in range(len(arr)-1, -1, -1):
+        if arr[i] == target:
+            return i
+    return -1
+
+# Test the function
+assert last([1,2,3],1) == 0</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

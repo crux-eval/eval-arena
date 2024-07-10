@@ -1,0 +1,2510 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/256 </h1>
+<pre><code> """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def count_Primes_nums(n):
+    return sum(all(i % j != 0 for j in range(2, i)) for i in range(2, n))
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[5], [10], [100]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[1000], [1001], [1002], [1003], [999], [True], [False], [998], [65], [66], [67], [997], [68], [64], [1004], [1005], [99], [996], [63], [995], [1006], [1007], [1008], [62], [994], [86], [1009], [85], [61], [87], [60], [44], [1010], [1011], [45], [59], [80], [100], [69], [70], [71], [98], [97], [79], [1012], [2], [1013], [84], [56], [1], [0], [81], [78], [43], [1014], [72], [1015], [90], [42], [41], [46], [88], [3], [1016], [57], [4], [38], [993], [1017], [77], [101], [1018], [83], [82], [76], [58], [73], [39], [74], [89], [40], [75], [1019], [96], [47], [94], [95], [55], [48], [5], [54], [1020], [102], [53], [91], [992], [1021], [991], [11], [92], [37]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(num):
+    """
+    :param num: non-negative number
+    :return: number of prime numbers less than the given non-negative number
+    """
+    if num < 2:
+        return 0
+    count = 0
+    for i in range(2, num + 1):
+        if is_prime(i):
+            count += 1
+    return count
+
+
+def is_prime(num):
+    """
+    :param num: non-negative number
+    :return: True if num is prime, False otherwise
+    """
+    if num < 2:
+        return False
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+
+
+if __name__ == '__main__':
+    print(count_Primes_nums(5))
+    print(count_Primes_nums(10))
+    print(count_Primes_nums(100))
+    print(count_Primes_nums(1000))
+    print(count_Primes_nums(10000))
+    print(count_Primes_nums(100000))
+    print(count_Primes_nums(1000000))
+    print(count_Primes_nums(10000000))
+    print(count_Primes_nums(100000000))
+    print(count_Primes_nums(1000000000))
+    print(count_Primes_nums(10000000000))
+    print(count_Primes_nums(100000000000))
+    print(count_Primes_nums(1000000000000))
+    print(count_Primes_nums(10000000000000))
+    print(count_Primes_nums(100000000000000))
+    print(count_</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_Primes_nums(num: int) -> int:
+    """
+    This function takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+    """
+    if num < 2:
+        return 0
+    primes = [2]
+    for possible_prime in range(3, num):
+        is_prime = True
+        for prime in primes:
+            if possible_prime % prime == 0:
+                is_prime = False
+                break
+            if prime * prime > possible_prime:
+                break
+        if is_prime:
+            primes.append(possible_prime)
+    return len(primes)
+
+# Test the function
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Primes_nums(n):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num ** 0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    count = 0
+    for i in range(n):
+        if is_prime(i):
+            count += 1
+    return count
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def count_Primes_nums(n):
+    """
+    Counts the number of prime numbers less than a given non-negative number.
+    
+    Args:
+        n (int): A non-negative number.
+        
+    Returns:
+        int: The number of prime numbers less than the given number.
+    """
+    if n < 2:
+        return 0
+    
+    primes = [True] * (n)
+    primes[0] = primes[1] = False
+    
+    for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, n, i):
+                primes[j] = False
+    
+    return sum(primes)</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True for _ in range(n)]
+    p = 2
+    while p * p <= n:
+        if primes[p] == True:
+            for i in range(p * p, n, p):
+                primes[i] = False
+        p += 1
+    return sum(primes)
+
+# Test the function
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+def count_Primes_nums(n):
+    if n <= 1:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            primes[i*i: n: i] = [False] * len(primes[i*i: n: i])
+    return sum(primes)
+
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is\_prime(n):
+    """
+    Returns True if n is prime, False otherwise.
+    """
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def count\_primes\_nums(n):
+    """
+    Returns the number of prime numbers less than the given non-negative number.
+    """
+    if n < 0:
+        raise ValueError("Input must be non-negative")
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+
+# Test the function
+assert count_primes_nums(5) == 2
+assert count_primes_nums(10) == 4
+assert count_primes_nums(1) == 0
+assert count_primes_nums(0) == 0</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def count_Primes_nums(n):
+    """
+    This function takes in a non-negative integer n and returns the number of prime numbers less than n.
+    """
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+
+def is_prime(num):
+    """
+    This helper function checks if a number is prime or not.
+    """
+    if num < 2:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+# Test the function
+assert count_Primes_nums(5) == 2 </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def count_primes_nums(n):
+    """Count the number of prime numbers less than n."""
+    count = 0
+    for num in range(2, n):
+        if is_prime(num):
+            count += 1
+    return count
+
+# Test the function
+assert count_primes_nums(5) == 2
+print("All tests passed.")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        if is_Prime(i):
+            count += 1
+    return count
+
+def is_Prime(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+
+print(count_Primes_nums(5))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def count_Primes_nums(n):
+    count = 0
+    for num in range(2, n):
+        if is_prime(num):
+            count += 1
+    return count
+
+# Test case
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+
+def count_primes_nums(n):
+    count = 0
+    for num in range(2, n):
+        if is_prime(num):
+            count += 1
+    return count
+```
+
+This code first defines a helper function `is_prime(n)` to check if a number `n` is prime. Then it defines the main function `count_primes_nums(n)` which counts the number of prime numbers less than `n` by iterating over the range `[2, n)` and checking the primality of each number using the `is_prime` function.
+
+You can test the function with your assert statement:
+
+```python
+assert count_primes_nums(5) == 2
+```</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n <= 1:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n <= 1:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n <= 1:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n <= 1:
+        return 0
+    primes = [True] * n
+    primes[0] =</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def count_Primes_nums(n):
+    """Count the number of prime numbers less than the given non-negative number."""
+    count = 0
+    for i in range(n):
+        if is_prime(i):
+            count += 1
+    return count
+
+# Test the function
+assert count_Primes_nums(5) == 2
+assert count_Primes_nums(10) == 4
+assert count_Primes_nums(0) == 0
+assert count_Primes_nums(1) == 0
+assert count_Primes_nums(2) == 1
+assert count_Primes_nums(3) == 1
+assert count_Primes_nums(4) == 2
+assert count_Primes_nums(100) == 25</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+import math
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    else:
+        return count_Primes_nums(n - 1) + is_prime(n - 1)
+
+def is_prime(n):
+    if n < 2:
+        return 0
+    else:
+        for i in range(2, int(math.sqrt(n)) + 1):
+            if n % i == 0:
+                return 0
+        return 1
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        if is_prime(i):
+            count += 1
+    return count
+
+def is_prime(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [1] * n
+    primes[0] = primes[1] = 0
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = 0
+    return sum(primes)
+
+# Test the function
+assert count_Primes_nums(5) == 2
+```
+
+This function uses the Sieve of Eratosthenes algorithm to find all prime numbers less than a given number. It first initializes a list of 1's of length `n`, representing whether each number is prime. It then iteratively marks the multiples of each prime number starting from 2 as non-prime. Finally, it returns the sum of the list, which is the count of prime numbers less than `n`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def count_primes_nums(n):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    primes = [x for x in range(2, n) if is_prime(x)]
+    return len(primes)
+
+assert count_primes_nums(5) == 2</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5)+1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+print(count_Primes_nums(5))
+print(count_Primes_nums(10))
+print(count_Primes_nums(20))
+print(count_Primes_nums(100))
+print(count_Primes_nums(1000))
+print(count_Primes_nums(10000))
+print(count_Primes_nums(100000))
+print(count_Primes_nums(1000000))
+print(count_Primes_nums(10000000))
+print(count_Primes_nums(100000000))
+print(count_Primes_nums(10000000000))
+print(count_Primes_nums(100000000000))
+print(count_Primes_nums(1000000000000))
+print(count_Primes_nums(10000000000000))
+print(count_Primes_nums(100000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(1000000000000000))</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Primes_nums(num):
+  """
+  Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+  assert count_Primes_nums(5) == 2
+  """
+  if num < 0:
+    raise ValueError("Input number must be non-negative")
+  
+  count = 0
+  for i in range(2, num):
+    is_prime = True
+    for j in range(2, i):
+      if i % j == 0:
+        is_prime = False
+        break
+    if is_prime:
+      count += 1
+  return count</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+def is_prime(n):
+    """
+    Check if a number is prime.
+    """
+    if n <= 1:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def count_primes_nums(n):
+    """
+    Return the number of prime numbers less than the given non-negative number.
+    """
+    count = 0
+    for i in range(2, n + 1):
+        if is_prime(i):
+            count += 1
+    return count
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+
+# Test the function
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number:
+
+```python
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        is_prime = True
+        for j in range(2, i):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            count += 1
+    return count
+```
+
+The function starts by initializing a count variable to 0. It then loops through all numbers from 2 to n-1. For each number, it checks if it is prime by looping through all numbers from 2 to i-1 and checking if i is divisible by any of them. If i is divisible by any of these numbers, then it is not prime and the function sets the is_prime variable to False and breaks out of the inner loop. If i is not divisible by any of these numbers, then it is prime and the function increments the count variable. Finally, the function returns the count variable, which represents the number of prime numbers less than n.
+
+The function uses a nested loop to check if each number is prime. This approach is more efficient than checking if each number is prime individually, as it reduces the number of iterations required.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(num):
+        if i < 2:
+            continue
+        for j in range(2, i):
+            if i % j == 0:
+                break
+        else:
+            count += 1
+    return count
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function that counts the number of prime numbers less than a given non-negative number:
+
+```python
+def count_Primes_nums(n):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+```
+
+You can test the function with the following code:
+
+```python
+print(count_Primes_nums(5))  # Output: 2
+```
+
+This function works by first defining a helper function `is_prime(num)` that checks if a number is prime. It then iterates over all numbers less than `n`, checks if each number is prime, and increments a counter if it is. The function finally returns the counter.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        for j in range(2, i):
+            if i % j == 0:
+                break
+        else:
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2
+assert count_Primes_nums(10) == 4
+assert count_Primes_nums(20) == 8
+assert count_Primes_nums(30) == 12
+assert count_Primes_nums(40) == 16
+assert count_Primes_nums(50) == 20
+assert count_Primes_nums(60) == 24
+assert count_Primes_nums(70) == 28
+assert count_Primes_nums(80) == 32
+assert count_Primes_nums(90) == 36
+assert count_Primes_nums(100) == 40
+assert count_Primes_nums(110) == 44
+assert count_Primes_nums(120) == 48
+assert count_Primes_nums(130) == 52
+assert count_Primes_nums(140) == 56
+assert count_Primes_nums(150) == 60
+assert count_Primes_nums(160) == 64
+assert count_Primes_nums(170) == 68
+assert count_Primes_nums(180) == 72
+assert count_Primes_nums(190) == 76
+assert count_Primes_nums(200) == 80
+assert count_Primes_nums(210) == 84
+assert count_Primes_nums(220) == 88
+assert count_Primes_nums(230) == 92
+assert count_Primes_nums(240) == 96
+assert count_Primes_nums(250) == 100
+assert count_Primes_nums(260) == 104
+assert count_Primes_nums(270) == 108
+assert count_Primes_nums(280) == 112
+assert count_Primes_nums(290) == 116
+assert count_Primes_nums(300) == 120
+assert count_Primes_nums(310) ==</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        for j in range(2, i):
+            if i % j == 0:
+                break
+        else:
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2
+assert count_Primes_nums(10) == 4
+assert count_Primes_nums(100) == 25
+assert count_Primes_nums(1000) == 468
+assert count_Primes_nums(10000) == 468
+assert count_Primes_nums(100000) == 468
+assert count_Primes_nums(1000000) == 468
+assert count_Primes_nums(10000000) == 468
+assert count_Primes_nums(100000000) == 468
+assert count_Primes_nums(1000000000) == 468
+assert count_Primes_nums(10000000000) == 468
+assert count_Primes_nums(100000000000) == 468
+assert count_Primes_nums(1000000000000) == 468
+assert count_Primes_nums(10000000000000) == 468
+assert count_Primes_nums(100000000000000) == 468
+assert count_Primes_nums(1000000000000000) == 468
+assert count_Primes_nums(1000000000000000000) == 468
+assert count_Primes_nums(10000000000000000000) == 468
+assert count_Primes_nums(100000000000000000000) == 468
+assert count_Primes_nums(1000000000000000000000) == 468
+assert count_Primes_nums(10000000000000000000000) == 468
+assert count_Primes_nums(100000000000000000000000) == 468
+assert count_Primes_nums(10000000000000000000000000) == 468
+assert count_Primes_nums(100000000000000000000000) == 468
+assert count_Primes_nums(100000000000000000000000) == 468
+assert count_Primes_nums(100000000000000000000000) == 468
+assert count_Primes_nums(1</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(num):
+        if is_prime(i):
+            count += 1
+    return count</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    if num < 2:
+        return 0
+    primes = [2]
+    for i in range(3, num + 1, 2):
+        is_prime = True
+        for j in range(3, int(i**0.5) + 1, 2):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            primes.append(i)
+    return len(primes)
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_Primes_nums(n):
+    if n <= 1:
+        return 0
+    primes = [True] * (n + 1)
+    primes[0] = primes[1] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, n + 1, i):
+                primes[j] = False
+    return sum(primes)
+
+# Test the function
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Primes_nums(n):
+    """
+    Returns the number of prime numbers less than the given non-negative number.
+    """
+    if n < 2:
+        return 0
+
+    primes = [True] * n
+    primes[0] = primes[1] = False
+
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+
+    return sum(primes)
+
+# Test the function
+assert count_Primes_nums(5) == 2
+assert count_Primes_nums(10) == 4
+assert count_Primes_nums(20) == 8
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        is_prime = True
+        for j in range(2, i):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Primes_nums(n):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    count = 0
+    for num in range(2, n):
+        if is_prime(num):
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    if num == 0:
+        return 0
+    elif num == 1:
+        return 0
+    else:
+        count = 0
+        for i in range(2, num+1):
+            if is_prime(i):
+                count += 1
+        return count
+
+def is_prime(num):
+    if num == 1:
+        return False
+    elif num == 2:
+        return True
+    else:
+        for i in range(2, num):
+            if num % i == 0:
+                return False
+        return True
+
+print(count_Primes_nums(5))
+print(count_Primes_nums(10))
+print(count_Primes_nums(100))
+print(count_Primes_nums(1000))
+print(count_Primes_nums(10000))
+print(count_Primes_nums(100000))
+print(count_Primes_nums(1000000))
+print(count_Primes_nums(10000000))
+print(count_Primes_nums(100000000))
+print(count_Primes_nums(1000000000))
+print(count_Primes_nums(10000000000))
+print(count_Primes_nums(100000000000))
+print(count_Primes_nums(1000000000000))
+print(count_Primes_nums(10000000000000))
+print(count_Primes_nums(100000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(10000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(1000000000000000000))
+print(count_Primes_nums(10000000000000000000))
+print(count_Primes_nums(100000000000000000000))
+print(count_Primes_nums(1000000000000000000000))
+print(count_Primes_nums(10000000000000000000000))
+print(count_Primes_nums(100000000000000000000000))
+print(count_Primes_nums(1000000000000000000000000))
+print(count_Primes_nums(10000000000000000000000</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] =</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+import math
+
+def is_prime(num):
+    if num <= 1:
+        return False
+    if num <= 3:
+        return True
+    if num % 2 == 0 or num % 3 == 0:
+        return False
+    i = 5
+    while i * i <= num:
+        if num % i == 0 or num % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def count_Primes_nums(n):
+    count = 0
+    for num in range(2, n):
+        if is_prime(num):
+            count += 1
+    return count
+
+# Example usage:
+# print(count_Primes_nums(5))  # Output: 2
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  import math
+
+def count_Primes_nums(n):
+    """Counts the number of prime numbers less than a given non-negative number.
+
+    Args:
+        n: A non-negative number.
+
+    Returns:
+        The number of prime numbers less than n.
+    """
+
+    # Create a list of prime numbers up to n.
+    primes = []
+    for i in range(2, int(n**0.5) + 1):
+        is_prime = True
+        for p in primes:
+            if i % p == 0:
+                is_prime = False
+        if is_prime:
+            primes.append(i)
+
+    # Count the number of prime numbers in the list.
+    return len(primes)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def count_Primes_nums(n):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+
+# Test the function
+print(count_Primes_nums(5))  # Output: 2</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_primes_nums(n):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    count = 0
+    for i in range(2, n):
+        if is_prime(i):
+            count += 1
+    return count
+
+assert count_primes_nums(5) == 2</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * (n + 1)
+    p = 2
+    while (p * p <= n):
+        if (primes[p] == True):
+            for i in range(p * p, n + 1, p):
+                primes[i] = False
+        p += 1
+    return sum(primes[2:])
+
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number:
+
+```python
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        if all(i % j != 0 for j in range(2, i)):
+            count += 1
+    return count
+```
+
+This function uses a for loop to iterate through all the numbers from 2 to n-1. For each number, it checks if it is divisible by any number other than 1 and itself. If it is not divisible by any number other than 1 and itself, it is a prime number and the count is incremented. Finally, the count is returned. The function returns 2 for n=5 because 2 and 3 are the only prime numbers less than 5. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        if is_prime(i):
+            count += 1
+    return count
+
+def is_prime(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  import math
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n + 1):
+        is_prime = True
+        for j in range(2, int(math.sqrt(i)) + 1):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [2]
+    x = 3
+    while x <= n:
+        for y in primes:  # use the primes list to check for factor
+            if x%y == 0:
+                x += 2
+                break
+        else:
+            primes.append(x)
+            x += 2
+    print(primes)
+    return len(primes)
+
+print(count_Primes_nums(5))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n, i):
+                primes[j] = False
+    return sum(primes)
+
+"""
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] =</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n + 1):
+        if is_prime(i):
+            count += 1
+    return count
+
+
+def is_prime(n):
+    if n == 1:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        is_prime = True
+        for j in range(2, int(i ** 0.5) + 1):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [2]
+    x = 3
+    while x <= n:
+        for y in range(3,x,2):
+            if x%y == 0:
+                x += 2
+                break
+        else:
+            primes.append(x)
+            x += 2
+    print(primes)
+    return len(primes)
+
+print(count_Primes_nums(5))
+print(count_Primes_nums(10))
+print(count_Primes_nums(100))
+print(count_Primes_nums(1000))
+print(count_Primes_nums(10000))
+print(count_Primes_nums(100000))
+print(count_Primes_nums(1000000))
+print(count_Primes_nums(10000000))
+print(count_Primes_nums(100000000))
+print(count_Primes_nums(1000000000))
+print(count_Primes_nums(10000000000))
+print(count_Primes_nums(100000000000))
+print(count_Primes_nums(1000000000000))
+print(count_Primes_nums(10000000000000))
+print(count_Primes_nums(100000000000000))
+print(count_Primes_nums(1000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(count_Primes_nums(100000000000000000))
+print(</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        if i > 1:
+            for j in range(2, i):
+                if (i % j) == 0:
+                    break
+            else:
+                count += 1
+    return count
+
+print(count_Primes_nums(5))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_primes(n):
+    if n == 0 or n == 1:
+        return 0
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
+
+    for i in range(2, int(n**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, n + 1, i):
+                is_prime[j] = False
+
+    return sum(is_prime)
+
+assert count_primes(5) == 2</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+def count_primes_nums(num: int) -> int:
+    count = 0
+    for i in range(2, num + 1):
+        is_prime = True
+        for j in range(2, int(i ** 0.5) + 1):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            count += 1
+    return count
+
+assert count_primes_nums(5) == 2</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(2, n):
+        if n % i == 0:
+            count += 1
+    return count
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to count the number of prime numbers less than a given non-negative number, along with the solution wrapped in a markdown block:
+
+```python
+def count_Primes_nums(n):
+    """
+    Returns the count of prime numbers less than the given non-negative number n.
+    
+    Args:
+        n (int): A non-negative integer.
+        
+    Returns:
+        int: The count of prime numbers less than n.
+    """
+    if n < 2:
+        return 0
+    
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    
+    for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, n, i):
+                primes[j] = False
+    
+    return sum(primes)
+
+# Test case
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True] * n
+    primes[0] = primes[1] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, n, i):
+                primes[j] = False
+    return sum(primes)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        if is_prime(i):
+            count += 1
+    return count
+
+def is_prime(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+
+print(count_Primes_nums(5))
+/Python/Python_Practice/Python_Practice_1/1.1_reverse_string.py
+"""
+Write a function that reverses a string.
+For example, given 'hello', return 'olleh'.
+"""
+
+def reverse_string(string):
+    return string[::-1]
+
+print(reverse_string('hello'))
+/Python/Python_Practice/Python_Practice_1/1.2_factorial.py
+"""
+Write a function that takes a number and returns its factorial.
+For example, given 5, return 120.
+"""
+
+def factorial(num):
+    if num == 0:
+        return 1
+    else:
+        return num * factorial(num - 1)
+
+print(factorial(5))
+/Python/Python_Practice/Python_Practice_1/1.3_fibonacci.py
+"""
+Write a function that takes a number and returns the Fibonacci of that number.
+For example, given 10 the function should return 55.
+"""
+
+def fibonacci(num):
+    if num == 0:
+        return 0
+    elif num == 1:
+        return 1
+    else:
+        return fibonacci(num - 1) + fibonacci(num - 2)
+
+print(fibonacci(10))
+/Python/Python_Practice/Python_Practice_1/1.4_palindrome.py
+"""
+Write a function that takes a string and returns True if the string is a palindrome.
+For example, given 'racecar', return True.
+"""
+
+def palindrome(string):
+    return string == string[::-1]
+
+print(palindrome('racecar'))
+/Python/Python_Practice/Python_Practice_1/1.5_anagram.py
+"""
+Write a</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def count_Primes_nums(n):
+    count = 0
+    for i in range(n):
+        if is_prime(i):
+            count += 1
+    return count
+
+assert count_Primes_nums(5) == 2</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function that takes in a non-negative number and returns the number of prime numbers less than the given non-negative number.
+assert count_Primes_nums(5) == 2
+"""
+
+
+def isPrime(num):
+    if num < 2:
+        return False
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+
+def count_Primes_nums(num):
+    count = 0
+    for i in range(2, num):
+        if isPrime(i):
+            count += 1
+    return count
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def count_Primes_nums(n):
+    if n < 2:
+        return 0
+    primes = [True for i in range(n)]
+    p = 2
+    while (p * p <= n):
+        if primes[p] == True:
+            for i in range(p * p, n, p):
+                primes[i] = False
+        p += 1
+    count = 0
+    for i in range(2, n):
+        if primes[i]:
+            count += 1
+    return count
+
+# Test the function
+print(count_Primes_nums(5))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

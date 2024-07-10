@@ -1,0 +1,943 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/2 </h1>
+<pre><code> 
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    return number - int(number)
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[3.5], [1.33], [123.456]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[999.99999], [0.3333333], [1.0], [1.5], [0.5], [0.999999], [500.00678], [11.11], [0.25], [5.99], [1.284163165748358], [1.8517611088029418], [0.7713842427275083], [3.1842364304976463], [1.0738831860229472], [0.04320870526393539], [1.1369261836552624], [1.0630407193724771], [10.291122396192739], [1.7558893686701653], [0.9650030856354603], [0.984438743601213], [10.488539525905054], [1.4874349659668864], [0.7636841418734611], [1.0550866750250807], [2.333802704974898], [0.05907618779899971], [10.340562837282636], [14.594425286718018], [2.0662932553410105], [0.31915096006147237], [0.18237813427406302], [1.3346032282437121], [1.8553603762907702], [2.332961000883547], [0.021680163914408097], [3.5819493135932516], [0.8694186154267374], [11.915419340683165], [1.261530828471214], [4.563415501784793], [2.6876956198100403], [0.6637488925155729], [11.020840370441608], [1.2298279240135677], [3.111878426342652], [1.3280193020046864], [3.33346058589665], [4.216338505526772], [1.8986838916527826], [0.9469650857716427], [0.9128948300399008], [1.2816583458068265], [6.174933571987024], [2.609939684332363], [0.8754599167744213], [8.9080357328357], [0.2010885708651687], [6.274114559041777], [12.855609011975265], [11.056395819673522], [16.92988868999689], [1.1490031104601102], [0.7385135848830934], [2.9996633588901283], [1.4811920749857561], [0.5472841211344637], [2.136405572849686], [4.989795959151301], [8.24642675895752], [9.79035608010344], [5.8588962106051605], [17.731635169844186], [11.808291888432494], [1.1526994290821804], [11.765894737711209], [13.527786959840032], [9.628578465053991], [0.32946796610280166], [15.352967268085987], [0.1928538004835197], [3.3212272614517486], [2.558921334743221], [0.3421343646351933], [7.7128061250419595], [10.960003695431494], [2.1718244416613808], [3.509772867652324], [3.2870936824597337], [3.6727514187220556], [0.8116446061258343], [16.517704921540986], [67.49215499058909], [0.21854770645681287], [1.0064607362588194], [0.999], [123456789.87654321], [1000000000.0], [9.32911434557313e-14], [2.5e-323], [3.3333333333333335], [4.999999999999999], [1.01], [2.445784998329154], [123456789.87035146], [2.8826600356459733], [1.8115841500661258], [18.135161889053037], [160272523.20529267], [1000000000.8877808], [999999999.6010063], [3.7123298892113925], [1.5e-323], [999999999.519752], [2.9804922690972266], [150436029.01193357], [3.652484424146342], [1.5152518396359669], [72999331.16870269], [72999331.86348532], [0.6634754089111754], [4.198779002134755], [123456790.81811383], [4.794679851869683], [123456791.1152048], [71715158.05022265], [3.462709133028266], [3.2625298014230917], [1e-323], [1010925072.8576772], [999999999.8689998], [1.319625895008866e-13], [5.555526127930596], [1.8635392957700825], [1010925073.2121989], [1.1564571336470584], [3.390954965157863], [3.638855399123406], [3.140436236372345], [3.7740143753811126], [1.8059703311001947], [3e-323], [9.781312122101996e-14], [160272524.5457365], [72999330.90505825], [1.1470423298796195], [0.1744922651011397], [3.4439317935136886], [26349039.586728778], [2.8469364005316296], [1.2895798371355272], [4.481216180561204], [3.0189582579378045], [4.98664449195926], [1.528436995804495], [1000000001.6386046], [1000000001.7050426], [1.5627036513731054], [2.1677039780515606], [1.4742532194314457], [0.8581470553539504], [5.131177828251349], [1.1492742792268493], [4.661848359779834], [152212563.68798697], [79568565.64931653], [0.923400716022232], [0.05498959935514458], [2.3533781303390207], [2.2882017614066665], [3.0184889018907777], [3.1164878710091473], [2.573743299302671], [2.4581802475578987], [189986233.7046723], [3.7007225844395357], [3.1061366811606566], [1.8886991860707234], [28893008.920844864], [79568564.67553371], [3.682182097150205], [705714765.5983905], [4.020030702454516], [1.8770064465964318], [1.1028338481604116], [175809246.64348242], [0.42431661518684255], [2.5212216746997607], [146587325.7356192], [58831087.84316938], [0.746116762482217], [2.6615496692061957], [100916720.7695719], [1.9883294846441752], [1.093286483400629], [1.721059134675138], [2.2866591259050346], [72999331.37231973], [1.47664467032008], [103901647.0025852], [0.36098338371786576], [3.699074502248208], [4.375013030132074], [2.126642953202345], [1.167194630611698], [1.9795677856345728], [4.515003762223958], [0.9852820814421548], [2.0497478677533256], [150436029.84275985], [845428263.2293222], [3.0801520003341434], [1.1822887609936412], [152212564.19843605], [16.41610969370442], [2.743780512834984], [1416555648.7581606], [1430360274.6746924], [3.25278928738271], [152212564.225985], [3.4273719838780847], [1429680774.7930136], [1.502679753494202], [1772324322.377769], [176775780.85323083], [109416178.07148522], [2.183769011641052], [4.598412908644545], [17.696529964211166], [2.3743582109102555], [4.296055697325035], [3.3373269509519523], [2.092571488216962], [0.9542994114102682], [23.309569638807375], [4.270821859833556], [3.4493396583498814], [3.287966209433857], [2.121560215176112], [0.6868909655876363], [2.2274787597855052], [4.037809217353667], [1416555647.9186053], [113584240.95728153], [3.0276883364808933], [123456791.7281209], [2.044017685681736], [72.19764766807585], [160272524.23746663], [100196200.36723432], [2.471148414375479], [1.8139484014112275], [705714765.592123], [152212563.88458076], [71715158.2886888], [3.5e-323], [146587324.07966906], [92961559.50287504], [1.8706867818100157], [2.0151226303017156], [160272524.58134723], [89154878.08467923], [4.565318084602408], [3.7376876373326633], [58831087.29625991], [6.173935356919032], [144827239.0827088], [3.415679198582467], [71715157.39441195], [7.767620085001745], [1.223325224215468], [2.975879108505155], [215268867.56871042], [1.3629991859337562], [2.709243484253177], [71821597.18352589], [18.56087651129403], [0.6710473395901302], [144827239.27426428], [103901647.80268791], [1000000002.5168852], [128052923.01911041], [152212563.36466226], [24.13926203132389], [0.39283584267023075], [47988184.00313117], [72999331.87087576], [4.012209582716504], [103901646.1691807], [1.3559182448146114], [0.4221837138732041], [1512952485.078303], [0.25089200550351454], [69917173.22005546], [1228590802.0046532], [5.349677271986964], [4.609799651351639], [2.476009903386441], [80305785.4798553], [1.4728421701590824], [0.9939766983739273], [152461650.27579722], [3.5606325284153026], [1000000002.8530337], [215268868.40989217], [1.9742180497747979], [155037879.86268485], [88793517.62025908], [0.546851013145387], [89154879.02236004], [3.8525081365857305], [1.233022921730213], [0.09177851810771813], [40688055.09062066], [2.0187950874808553], [2.6729098096852857], [80305786.21000707], [1.583364427685972], [1.3882366317393324], [1.5999246693081488], [1.6249727914321912], [91840506.80673286], [71715158.26413897], [189986234.65180102], [176775780.43807706], [1.151812980720573], [127955426.5559983], [107008190.53202428], [0.8589476213311955], [3.564636488056597], [3.1218687093490485], [1048312218.6730692], [965667185.13778], [0.4093526665411484], [71165575.44037801], [4.57693416302272], [85122396.02909544], [4.648330024224058], [1.7012984266073585], [4.120412984697993], [48.76043540586227], [3.495658562592636], [85122395.2268395], [4.229419046594004], [1.6015085003001182], [1.6760536585910413], [1.1994982296458598], [1010794396.6547742], [1010794396.5098057], [153417089.22221673], [3.152002360329047], [2.712429362421401], [0.9093160669630782], [3.348024683214573], [122248764.23259409], [1.6831800572808668], [1.069206395097386], [1.5064737221142537], [8.716948583581814e-14], [17.083075994086023], [0.5474916306192323], [1.7401173651453745], [2.8203059263006383], [1512622500.0805044], [40688055.04662351], [205488600.18597928], [3.309032201672641], [4.47392908520534], [142058308.98699012], [130875471.0380795], [169879620.11764595], [1772324322.6225414], [0.9489519908683832], [118822195.34540734], [0.6166567697365697], [0.42200967993559446], [1.9686456768812532], [1.9490759201830523], [1.644413686677947], [71715158.9129067], [1.7068113811262728], [4.761746961832214], [47988184.879423074], [3.2016192110889325], [0.5676786659028618], [1.6722419214137425], [2.45149133525133], [1.3821641614499425], [1.386700109446696], [2.768930147758783], [2.224494581929987], [99041047.65530457], [3.814440085327677], [105087143.66257249], [1.4234977580164692], [102623306.32845166], [1.2180564967147436], [4.001913132962167], [995853919.9248793], [71715157.65491812], [5.09900222436262], [1.489932912077975], [3.2455493017228814], [40.02980804497223], [123456789.98564644], [1.8294531741784663], [169879619.64555934], [0.6682922961154265], [71715158.73092033], [4.721008758225073], [85970027.61167794], [165731002.61921397], [146587324.8043661], [2.7416064141531233], [0.9694645596990121], [1.65966097146055], [4.451042494689095], [140576362.14362016], [1.2818545061065951], [64159799.84253342], [210871829.56473884], [108867285.86630318], [165791438.08694223], [85970026.85145691], [3.776088612171603], [152212563.7637076], [2.214941422324843], [1.161199139427915], [1.0475619115628318], [1.5779607786881473], [1.2040606417384176], [3.4998813553652672], [99708119.1405163], [1228590800.8463624], [4.859807299707288], [129986732.71872947], [123456790.11626266], [885732378.0342572], [79568565.74741061], [2.9407057242361816], [1.0059321549355131], [69917173.82070811], [934904600.7262503], [103901647.25244018], [23.432625867237217], [1.480894212667249], [892327399.9821093], [103901647.30333556], [1.2078713925069458], [70256740.2708059], [3.111801410410773], [3.0024908730502404], [127955427.22776476], [0.9644723056729113], [45.875209692352264], [2.6854038711548482], [2.2456616395979863], [2.366129592374307], [0.37881257655771333], [5.239730326375177], [1.3707080934579263], [4.101448150667928], [152212564.2426438], [3.8948495863461208], [2.861144501035589], [0.5217863769612878], [1.2335573494964835], [2.1637751440827753], [2.9583607736879247], [6.469435978678375], [0.053575469383812815], [1.2457203775539736], [1000000001.1321005], [1006089875.076846], [0.6918541917840608], [5.8249905652306655], [1419776056.1154466], [4.972050090752265], [20.715983391477206], [3.048089164041137], [1.7699747638540608], [6.365129904599676], [1.8137937849121724], [971773012.8434243], [199068786.95279548], [1.153995756077129e-13], [2.068560265473651], [72999332.77292487], [47988185.35787119], [4.497244651150888], [2.841018813581627], [5.368990519330397], [0.7253931749442393], [1.2648775379699755], [102291146.47871837], [31.054544691235577], [1006089874.537642], [4.161195098170445], [0.7672173921458424], [2.6406030996885343], [675898762.3700281], [0.62883132667762], [1.2325502630134941], [2.2074957652265406], [2.7129793793402177], [2.0638686802658897], [0.6986394779433207], [4.422285596119231], [3.0721490595114784], [968285411.0685716], [3.919223367045232], [2.7383829748041504], [155869812.6985208], [81657494.91447921], [1.4483390412564068], [3.352304895642353], [3.2425326639458927], [6.508136123839446], [17.515612451054224], [88744064.45841798], [2.5993867182527106], [0.3634036476711005], [4.14818330198331], [956527934.9385203], [3.520793864750637], [4.3465154691927355], [5.938402206005644], [4.100089638676446], [129544293.13352145], [2.498703317680476], [1.6740097750362195], [653027733.8232279], [72999331.19192737], [4.117955701746306], [2.1553211647796764], [3.784136858006861], [2.4633944828628183], [129986733.69689786], [26.3955133855236], [4.91336531977808], [3.8502862235693445], [15.62693992992976], [3.7533150174835392], [0.9610188874754886], [2.815451273906486], [26349040.00178345], [4.159352773362228], [6.84118054093856], [2.466728180588806], [37.89588753091561], [4.2311497474524185], [1.897335852598901], [2.155529397249772], [279633266.0636109], [2.8903640353980733], [1.5879028870350205], [5.231583142692421], [598109094.097449], [1000000001.1951027], [118822194.39709312], [0.05286469170150809], [4.40758048479924], [756590995.0195402], [5.7700156573715375], [1254747452.6117423], [102623305.64383408], [1.4074156499067956], [3.8432429867195856], [96369038.43482052], [187560222.0893026], [893866957.0346322], [93513771.27305332], [2.8693321925653903], [1.6417216683966669], [3.504896352869404], [5.147499120792044], [1654142220.5871673], [0.46534713541301165], [830688231.8381917], [1.4492363814309515], [4.715051244372558], [71715158.4868071], [266427705.23481366], [2.0309799207968124], [3.3059891919832824], [159707685.35819337], [2.912160789111475], [149951713.40640524], [6.674305171441476e-14], [103901646.3240433], [85987202.98388521], [0.033376509981014824], [0.7918273056198739], [73240795.29430585], [2.3929459872882646], [2.882135001101608], [4.911444862890861], [73240795.29440881], [1229229865.1402571], [123456789.61373438], [2.917257871868941], [4.858923580280865], [1.6635554426074395], [999999999.4860209], [1.9023534234967674], [1.5029843859651806], [1229229865.8553157], [99566554.9084163], [1294654307.9610417], [999999999.4891675], [5.2660866082683056e-14], [2.083491531346205], [4.978377459089754], [2.1038044479035123], [1.9555841616563527], [6.8641990896352985], [1229229865.7012644], [4.930922427236803], [123456788.97332755], [3.4928323623182234], [3.45809496103848], [1384580558.1315536], [3.680356945912665], [1000000000.1642697], [62.873852229672735], [4.71212428116326], [7.065170574106334], [123456788.26121484], [1.6786620763518647], [1000000000.7742487], [2.856367834411976], [3.6258154191137786], [73240794.75702275], [45923672.20052228], [123456790.4923905], [4.161976498149151], [1.3773504063015731], [1073429520.4802737], [5.238183291805815], [0.9475445651677811], [123456789.10631168], [123456787.87268664], [2.8514903094717257], [3.8038161366236887], [2.9052295641745283], [4.738055552597417], [2.028791238220267], [4.499479890100028], [2.5893494745632624], [1229229866.5380485], [4.2883691790192975], [0.5428356289955849], [0.7969820102774821], [1351125324.1225882], [1384580558.5685396], [3.1487079034789054], [1.289558971354532], [1.8877400816707917], [3.7686475879605545], [0.8227768192473903], [36.78671574816508], [5.0767468183802], [2.88240710280967], [0.48715763260143174], [677528898.3094705], [766121920.3722042], [1.3170331660745653], [1229229865.5798495], [0.5642363472800015], [2.645141870039688], [5.393461110547214e-14], [3.793313274865695], [0.891071920894634], [2.2625579729956993], [1206157407.981305], [163531743.5166275], [1.8771727402721947], [5.003320969221821], [4.9501672901725], [1229229866.7411385], [5.695637034282437], [1.913474123234836], [102453751.13899957], [1.9374816253115514], [1723108271.3807466], [0.5756305324119158], [73240794.13624364], [0.6120323388811058], [2.5865912499383046], [1.2318752365430112], [4.641693936199377], [2.222873397249589], [1.6488359107293853], [848961777.5784919], [1.7967012601226822], [2.5146304716490455], [5.391052425043679], [5.470615312555069], [6.271747588894711], [5.5908134764808763e-14], [1000000000.1863974], [3.090319354363427], [0.7909611825056085], [123456789.38177297], [1000000000.3212856], [1.979308639514864], [1471360913.9633186], [1723108272.2679431], [2.1970917246863646], [3.9812582314541087], [5.930447499556583], [2.0735815716701733], [0.42683101686930675], [134973157.7987596], [893339812.558286], [123456788.06590854], [1.0738715197476145], [0.664689946018536], [3.161413122862707], [182374052.988497], [60.30615572770495], [1229229866.966963], [5.22494631007442], [65070291.11403904], [782547117.4665667], [114214533.70884219], [2.70653481653552], [2.015066579785924], [1.90607317872839], [6.140503686609774], [2.1577322113695923], [3.856020528177181], [919744840.2478453], [4.484794293586382], [4.7022843729355105e-14], [1229229865.6592944], [4.981009430076146], [1986418289.245226], [93455188.34470399], [2.646553880806146], [2.8345638414414873], [2.419818942563205], [2.941482764434534], [5.219269860085964], [1.8795690386551904], [6.898984246287797], [182374053.50176996], [1723108270.4858537], [3.4883455940739276], [1.8445209035218229], [664163512.9412829], [1597262695.0750153], [73240793.9346574], [2.0340432845946337], [4.875955692732683], [1.598922505520863], [3.3827333214216395], [999999999.8264782], [1384580557.4301362], [3.768732537605109], [4.884604642638587], [0.7845732144390045], [36.904156632137365], [999999999.5414175], [4.993941384643309], [3.2742165774045446], [140801122.81218356], [2.8816191596252043], [3.4457258268165862], [1.587041111338507], [1.8308791886637201], [3.642286004919871], [0.7994421867451703], [2.8029589290534256], [2.978127229268625], [2.4923104995186036], [1.5130749528156522], [6.253385239670681], [134973157.61863142], [1.205395249404691], [2.329278726033276], [21.805294850523033], [4.536211190094444], [1.344458939951214], [3.045168224231271], [4.783168993031427], [66999503.12475923], [5.259950864919679], [2.987133584995163], [4.240960218327359], [4.476288945408861], [2.2992400809298648], [996636660.2874261], [73240794.58909574], [5.417040590811407], [152513631.04137567], [4.106908186223707], [3.19262408857043], [1464633345.0109391], [55.28382817708639], [1597262694.838057], [90469854.40398492], [3.4589981582660956], [1082927605.9870417], [0.460697474629477], [1.113554753828084], [2.9075883242759875], [263758492.4909119], [1.6674154758282402], [0.36168293045779254], [999999999.993297], [152513630.9948088], [1.322218141624517], [105172788.75918725], [4.357294426031714], [0.7290579755459562], [3.0238454764740426], [2.562591235912451], [664163512.7971014], [123456789.41458373], [1.1058781831112812], [3.2017580671284946], [175328559.43259108], [3.6110351775233362], [1082927605.3966713], [646662589.8603498], [4.742272044774383], [877967248.8858345], [2.6769913144945825], [50.65164625410452], [664163512.6699505], [2.1449768367173228], [4.033550771948594], [3.721355448381416], [1082927604.9299798], [4.824840553345343e-14], [3.354644497379619], [669622968.063163], [1351125323.9961414], [2.4896160061839256], [217573194.43245178], [1.2543890394826862], [5.515391008083752], [1066526832.6733472], [1229229868.049613], [1.1694988007610359], [650832530.1513349], [1000000000.9718553], [2.707236543333476], [1.7604539677470585], [6.655667101588029], [6.047621464467575], [0.05189920542536752], [4.08794494741007], [1.1316361401991273], [1.4226493680879435], [893339812.0990623], [5.400497895714986], [615338120.6687125], [5.918216465127125], [7.733865634033387], [1.6605424612703235], [999999999.9461185], [1.4445597938419295], [0.9778365407795], [217573193.43526092], [9.332627907064017], [1090935584.7609901], [123456788.29602514], [0.10379882677787544], [1723108271.1351836], [7.842178058670941], [4.20266307434997], [1106424669.9524183], [5.02354472078337], [48.950870844883234], [0.001758005350385459], [1294654307.112075], [1.994706057525245], [2.131745598483911], [3.3627566701346625], [105378469.94508764], [0.6681010016576117], [1.5676599004053826], [1000000000.0058513], [5.539906358401206], [2.27672862118226], [1085302460.3708425], [7.340157564283577], [6.996964342868165], [1.018546268805337], [1.8619790591779233], [0.3728951180799692], [0.3991957218297122], [5.155487976218455e-14], [2.036226004256484], [0.6970123381373079], [3.2249590188964707], [123456787.18552905], [2.1618409124840974], [1723108271.997475], [3.9734819465815625], [6.920473543790961], [3.8435920626367714], [158917689.95124128], [1.9372025694972956], [4.807212242209201], [4.510902988096851], [3.5449533855060036], [5.089361995862452], [7.004599772858476], [5.814742635418957], [2.0668427642834204], [4.915669717009991], [2.152398561613328], [275643913.27707875], [1986418288.2958624], [2.9177989873931445], [1.460649663167366], [5.217885299187503], [114214534.04054706], [2917273460.883358], [1085302459.7894087], [5.48766061926811], [0.79072365937356], [0.7619332487651943], [5.7666482426650125], [35.92522727463808], [70.02074193640142], [823684455.4438579], [3.006426926531699], [4.040047572999139], [8.687515297580886], [5.182106381147949], [824766492.7477044], [73240794.35596104], [10.89462555210993], [9.574326072968619], [0.23875095618413633], [2.6408912697708957], [1.0756313214858582], [4.55391467984184], [0.6252488281656963], [123456791.2361226], [1.2408641519411558], [1229229867.5450604], [114214535.35449347], [2.85239108523822], [0.9379060141393113], [0.018399968753522344], [0.36196762181635134], [1.2149144302339392], [1.0293132231308781], [2.4602748862251587e-14], [1.6545550268805593], [4.6600822358584795], [1.8813790109677413], [4.869263033194584], [774025829.4255886], [182374053.9140266], [7.122831784956886e-14], [2.998720971722422], [1723108272.3818932], [2172041431.581541], [123456788.98954034], [5.995693783949557], [6.990901192878196], [85459139.52462885], [9.93444512586173], [1915434693.6848624]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the given problem:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    return number - int(number)
+
+print(truncate_number(3.5))</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    # Convert the number to a string to split the integer and decimal parts
+    number_str = str(number)
+
+    # Split the number into integer and decimal parts
+    integer_part, decimal_part = number_str.split('.')
+
+    # Convert the integer part back to an integer
+    integer_part = int(integer_part)
+
+    # Convert the decimal part back to a float
+    decimal_part = float(decimal_part)
+
+    # Return the decimal part of the number
+    return decimal_part
+
+
+# Test the function with some examples
+print(truncate_number(3.5))  # Output: 0.5
+print(truncate_number(123.456))  # Output: 0.456
+print(truncate_number(0.123))  # Output: 0.123</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+# Test cases</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+
+def truncate_number_v2(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number % 1
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+# Test cases
+assert truncate_number(3.5) == 0.5
+assert truncate_number(7.123) == 0.123
+assert truncate_number(1.0) == 0.0
+assert truncate_number(9.999) == 0.999</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number % 1
+```
+
+This function works by using the modulus operator (`%`), which returns the remainder of the division of `number` by 1. This remainder is exactly the decimal part of the number.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    # Using modulus operator to get the decimal part
+    decimal_part = number % 1
+    return decimal_part
+
+# Testing the function
+assert truncate_number(3.5) == 0.5
+assert truncate_number(2.9999999999999996) == 0.9999999999999996
+assert truncate_number(10.0) == 0.0</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    return number - int(number)
+
+print(truncate_number(3.5))</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+
+def truncate_number_2(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number_2(3.5)
+    0.5
+    """
+    return number % 1
+
+
+def truncate_number_3(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number_3(3.5)
+    0.5
+    """
+    return number - int(number)
+
+
+def truncate_number_4(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number_4(3.5)
+    0.5
+    """
+    return number % 1
+
+
+def truncate_number_5(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number_5(3.5)
+    0.5
+    """
+    return number - int(number)
+
+
+def truncate_number_6(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> trunc</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def truncate_number(number: float) -> float:
+    """
+    Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    return number - int(number)
+```
+
+You can run this function with the following code:
+
+```python
+print(truncate_number(3.5))  # Output: 0.5
+```
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    # Calculate the integer part of the number
+    integer_part = int(number)
+
+    # Calculate the decimal part of the number
+    decimal_part = number - integer_part
+
+    return decimal_part
+
+# Test the function
+print(truncate_number(3.5))  # Output: 0.5</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    return number % 1
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    integer_part = int(number)
+    decimal_part = number - integer_part
+    return decimal_part
+
+
+# Test the function
+print(truncate_number(3.5))  # Output: 0.5
+</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """
+    Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    # The decimal part of the number is the remainder when the number is divided by 1
+    return number - int(number)
+
+print(truncate_number(3.5))  # Output: 0.5</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    integer_part = int(number)
+    decimal_part = number - integer_part
+    return decimal_part
+```
+
+The `truncate_number` function takes a positive floating point number as input and returns the decimal part of the number. The function first converts the input number to an integer using the `int` function and stores it in the `integer_part` variable. Then, it subtracts the `integer_part` from the input number to get the decimal part and stores it in the `decimal_part` variable. Finally, it returns the `decimal_part` variable.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    # Get the integer part of the number
+    integer_part = int(number)
+
+    # Subtract the integer part from the original number
+    decimal_part = number - integer_part
+
+    return decimal_part
+```
+
+This function works by first getting the integer part of the number using the `int()` function, which truncates the decimal part. It then subtracts this integer part from the original number to get the decimal part.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+
+def truncate_number_to_int(number: float) -> int:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the integer part of the number.
+    >>> truncate_number_to_int(3.5)
+    3
+    """
+    return int(number)
+
+
+def truncate_number_to_int_floor(number: float) -> int:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the integer part of the number.
+    >>> truncate_number_to_int_floor(3.5)
+    3
+    """
+    return int(math.floor(number))
+
+
+def truncate_number_to_int_ceil(number: float) -> int:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the integer part of the number.
+    >>> truncate_number_to_int_ceil(3.5)
+    4
+    """
+    return int(math.ceil(number))
+
+
+def truncate_number_to_int_round(number: float) -> int:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the integer part of the number.
+    >>> truncate_number_to_int_round(3.5)
+    4
+    """
+    return int(round(number))
+
+
+def truncate_number_to_int_floor_ceil(number: float) -> Tuple[int, int]:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    # Use the modulo operator to get the remainder after dividing by 1
+    # This will give us the decimal part of the number
+    return number % 1</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    >>> truncate_number(10.0)
+    0.0
+    >>> truncate_number(0.123)
+    0.123
+    """
+    integer_part = int(number)
+    decimal_part = number - integer_part
+    return decimal_part
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    return number - int(number)
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    return number - int(number)
+
+# Test the function
+print(truncate_number(3.5))  # Output: 0.5</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+    # Check if the number is positive
+    if number < 0:
+        raise ValueError("The number must be positive.")
+
+    # Calculate the decimal part by subtracting the integer part from the number
+    decimal_part = number - int(number)
+
+    return decimal_part
+
+# Test the function
+if __name__ == "__main__":
+    print(truncate_number(3.5))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number % 1
+</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    decimal_part = number - int(number)
+    return decimal_part
+```
+
+Explanation:
+
+The function takes a positive floating point number as input and subtracts its integer part from it to get the decimal part. The integer part is obtained using the `int()` function. The `int()` function returns the largest integer that is less than or equal to the given number. The decimal part is then returned. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+    return number - int(number)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+```
+
+This code defines a function `truncate_number` that takes a positive floating point number as input and returns the decimal part of the number. It does this by subtracting the integer part of the number (obtained using the `int()` function) from the original number.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def truncate_number(number: float) -> float:
+    """
+    Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+
+# Testing the function
+print(truncate_number(3.5))  # Output: 0.5
+```
+
+In this function, we subtract the integer part of the number from the original number. This gives us the decimal part of the number. The function returns the decimal part of the number.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    """
+    # We can use the modulo operator (%), which returns the remainder of a division
+    decimal_part = number - int(number)
+    return decimal_part
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    # Convert the number to an integer to get the integer part
+    integer_part = int(number)
+    
+    # Subtract the integer part from the original number to get the decimal part
+    decimal_part = number - integer_part
+    
+    return decimal_part</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+    return number - int(number)
+</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    return number - int(number)</code></pre>
+
+      <p> python-code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def truncate_number(number: float) -> float:
+    integer_part = int(number)
+    decimal_part = number - integer_part
+    return decimal_part</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+    return number - int(number)</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

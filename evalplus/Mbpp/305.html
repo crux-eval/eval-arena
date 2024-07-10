@@ -1,0 +1,1143 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/305 </h1>
+<pre><code> """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import re
+def start_withp(words):
+    for w in words:
+        m = re.match("(P\w+)\W(P\w+)", w)
+        if m:
+            return m.groups()
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[['Python PHP', 'Java JavaScript', 'c c++']], [['Python Programming', 'Java Programming']], [['Pqrst Pqr', 'qrstuv']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[['Python Programming', 'Java Programming', 'Perl Programming', 'Ruby Programming', 'PHP Programming', 'C Programming']], [[]], [['apple', 'banana', 'carrot', 'dog', 'elephant']], [['python Programming', 'Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Programming', 'C Programming']], [['Python PHP', 'Java JavaScript', 'C C++', 'Perl Python', 'Ruby R']], [['Python', 'Programming', 'Java', 'Programming', 'Perl', 'Programming', 'Ruby', 'Programming', 'PHP', 'Programming', 'C', 'Programming']], [['Apple', 'Banana', 'Carrot', 'Dog', 'Elephant']], [['Python', 'Programming', 'Java', 'Programming', 'PBananaerl', 'Programming', 'Ruby', 'Programming', 'PHP', 'Programming', 'C', 'Programming']], [['python Programming', 'Elephant', 'Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Programming', 'C Programming']], [['Python PHP', 'Java JavaScript', 'C C++', 'Perl Python', 'Ruby R', 'Java JavaScript']], [['python Programming', 'Elephant', 'Java Programming', 'perl Programming', 'PHP Programming', 'C Programming', 'Elephant']], [['python Programming', 'Elephant', 'python', 'perl Programming', 'PHP Programming', 'C Programming', 'Elephant']], [['Apple', 'Banana', 'Carrort', 'Carrot', 'Dog', 'Elephant']], [['Apple', 'Banana', 'Carrort', 'Dog', 'Elephant']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'PHP Programming', 'C Programming', 'carrot', 'Elephant']], [['Apple', 'Banana', 'Python Programming', 'Carrot', 'Dog', 'Elephant']], [['Apple', 'Banana', 'Crrort', 'Dog', 'Elephant']], [['python Programming', 'Java Programming', 'perl Programming', 'PHP Programming', 'C Programming', 'python Programming']], [['python Programming', 'Elephant', 'Java Programming', 'perl Progrgamming', 'Ruby Programming', 'PHP Programming', 'C Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'PHP Programming', 'carrot', 'Elephant']], [['python Programming', 'Elephant', 'python', 'Python', 'perl Programming', 'PHP Programming', 'C Programming', 'Elephant']], [['Elephant', 'Java Programming', 'perl Progrgamming', 'Ruby Programming', 'PHP Programming', 'C Programming']], [['Python Programming', 'Java Programming', 'Perl Programming', 'Ruby Programming', 'PHP Programming', 'PHP Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Promgramming', 'C Programming']], [['Python', 'Programming', 'Java', 'Programming', 'PBananaerl', 'C Programming', 'Programming', 'Ruby', 'Programming', 'PHP', 'Programming', '', 'Programming', 'C']], [['Apple', 'Banana', 'Banan', 'Crrort', 'Dog', 'Elephant']], [['python Programming', 'Elephant', 'perl Programming', 'Java Programming', 'perl Progrgamming', 'Ruby Programming', 'PHP Programming', 'C Programming']], [['Banana', 'Apple', 'Banan', 'Crrort', 'Dog', 'Elephant']], [['Java Programming', 'perl Programming', 'PHP Programming', 'C Programming', 'python Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'PHP Programming', 'C Programming', 'Elephant']], [['python Programming', 'Elephant', 'Python', 'perl Programming', 'PHP Programming', 'C Programming', 'Elephant']], [['apple', 'banana', 'carrot', 'apBananple', 'dog', 'elephant', 'banana']], [['python Programming', 'Elephant', 'Java Programming', 'pperlerl Progrgamming', 'Ruby Programming', 'PHP Programming']], [['Apple', 'Banana', 'Perl Python', 'Crrort', 'Dog', 'Elephant']], [['Carrort', 'Dog', 'Elephant', 'Carrort']], [['Apple', 'Banana', 'Perl Python', 'Dog', 'Elephant']], [['Python', 'Programming', 'Java', 'Programming', 'PBananaerl', 'C Programming', 'Programming', 'Ruby', 'Programming', 'PHP', 'Programming', '', 'Programming', 'C', 'Programming']], [['apple', 'banana', 'carrot', 'dog', 'etlephant']], [['Apple', 'Banana', 'Carrot', 'Dg', 'Elephant']], [['Apple', 'Banana', 'Crrort', 'Dog', 'Appe', 'Banana']], [['apple', 'banana', 'carrot', 'Java', 'dog', 'elephant', 'banana']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'perl ProgrammC Programminging', 'PHP Programming', 'Elephant']], [['python Programming', 'Elephant', 'python', 'Python', 'perl Programming', 'PHP Programming', 'C ramming', 'Elephant', 'python Programming']], [['Apple', 'Banana', 'Carrort', 'Dog', 'Elephant', 'apBananple']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'PHP Progiramming', 'C Programming', 'Elephant']], [['python Programming', 'Java Programming', 'Crrort', 'Ruby Programming', 'ProgrammC', 'PHP Promgramming', 'C Programming']], [['Apple', 'Bannana', 'Banana', 'Perl Python', 'Dog', 'Elephant']], [['perl Programmming', 'python Programming', 'Java Programming', 'perl Programming', 'perl ProgrammC Programminging', 'PHP Programming', 'Elephant']], [['Python', 'Programming', 'Java', 'Programming', 'PBananaerl', 'Programming', 'Programming', 'PHP', 'Programming', 'C', 'Programming']], [['python Programming', 'etlephant', 'Java Programming', 'perl Programming', 'perl Programming', 'PHP Programming', 'C Programming', 'Elephant']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'perl ProgrammC Programminging', 'Ruby', 'Elephant']], [['Apple', 'Banana', 'Carrot', 'Programmming', 'Dog', 'Progiramming', 'Elephant']], [['Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Programming', 'Ruby ProgrammingJava', 'C Programming']], [['Elephant', 'Java Programming', 'perl Progrgamming', 'Ruby Programming', 'R', 'C Programming']], [['Java Programming', 'Perl Programming', 'Ruby Programming', 'PHP Programming', 'PHP Programming']], [['python Programming', 'Elephant', 'Java Programming', 'perl Programming', 'PHP Programming', 'Elephant']], [['apple', 'carrot', 'apBananple', 'Javadog', 'elephant', 'banana']], [['apple', 'banana', 'carrot', 'Bannana', 'dog', 'etlephant']], [['Apple', 'Banana', 'Crrort', 'Dog', 'Elephant', 'Banana']], [['Dogg', 'Carrort', 'Dog', 'Elephant']], [['perl Programmming', 'python Programming', 'Java Programming', 'perl Programming', 'perl ProgrammC Programminging', 'PHP Programming', 'Elephant', 'perl Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'PHP Programming', 'Elephant']], [['Apple', 'Banana', 'Carrot', 'Dg', 'Perl Python']], [['Apple', 'Banana', 'Dog', 'Elephant']], [['Elephant', 'Promgramming', 'perl Progrgamming', 'Ruby Programming', 'R', 'C Programming']], [['Apple', 'Banana', 'Carrot', 'Dg', 'Detlephantg', 'Elephant']], [['Elephant', 'Promgramming', 'perl Progrgamming', 'Ruby Programming', 'R']], [['Python', 'Programming', 'Java', 'Programming', 'PBananaerl', 'C Programming', 'Programming', 'Ruby', 'Programming', 'PHP', 'ProPgramming', '', 'Programming', 'C', 'Programming']], [['python Programming', 'Elephant', 'Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Programming', 'C Programming', 'perl Programming', 'Elephant']], [['Elephant', 'Java Programming', 'perl Progrgamming', 'perl Programming', 'R', 'C Programming']], [['Apple', 'Dog', 'Elephant']], [['Perl Programming', 'Ruby Programming', 'PHP Programming', 'Ruby ProgrammiRuby Rng', 'PHP Programming', 'PHP Programming']], [['Apple', 'Banana', 'Python Programming', 'Carrot', 'ProgrammiRubyDog', 'Elephant']], [['apple', 'carrot', 'apBananple', 'Javadog', 'elephant', 'banana', 'banana']], [['banana', 'carrot', 'Bannana', 'dog', 'etlephan']], [['Programming', 'Java', 'Programming', 'PBananaerl', 'C Programming', 'Programming', 'Ruby', 'Programming', 'PHP', 'ProPgramming', '', 'Programming', 'C', 'Programming']], [['Elephant', 'PromgrammingJava Programming', 'perl Progrgamming', 'Ruby Programming', 'R', 'C Programming', 'perl Progrgamming']], [['Carrort', 'Dog', 'Elephant', 'oDog', 'Carrort']], [['Apple', 'Banana', 'Carrort', 'Dog', 'ElephantCarrort', 'apBananple', 'Banana']], [['python Programming', 'Java Programming', 'perl Programming', 'perl Programming', 'perl ProgrammC Programminging', 'Ruby', 'Elephant', 'perl ProgrammC Programminging']], [['python Programming', 'Elephant', 'Java Programming', 'perl Programming', 'PHP Programming', 'C Programming']], [['Apple', 'Bannana', 'Banana', 'Perl Python', 'Elephpant', 'Elephant']], [['python Programming', 'Java Programming', 'perl Programming', 'PHP Programming', 'C Progmramming', 'python Programming']], [['Elephant', 'Promgramming', 'perl', 'perl Progrgamming', 'Apple', 'Ruby Programming', 'prl', 'C Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'perl ProgrammC Programminging', 'Ruby', 'Elephant', 'perl ProgrammC Programminging', 'perl Programming', 'perl ProgrammC Programminging']], [['Python PHP', 'Java JavaScript', 'Perl Python', 'Ruby R']], [['Dogg', 'Dog', 'Elephant']], [['Java Programming', 'perl Programming', 'perl', 'PHP Programming', 'C Programming', 'python Programming']], [['Carrort', 'Dog', 'Elephant', 'og', 'Carrort']], [['python Programming', 'Elephant', 'Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Programming', 'C Programming', 'Java Programming']], [['python Programming', 'pperlerl Progrgamming', 'Ruby Programming', 'PHP Programming']], [['Java Programming', 'Perl Programming', 'Ruby Programming', 'C Programming', 'PHP Programming']], [['python Programming', 'Java Programming', 'Crrort', 'Ruby Programming', 'Pramming', 'ProgrammC', 'PHP Promgramming', 'C Programming', 'PHP Promgramming']], [['Java Programming', 'Perl Programming', 'Ruby Programming', 'PHP Programming']], [['Promgramming', 'Python Programming', 'perl Progrgamming', 'Ruby Programming', 'R']], [['Apple', 'Banana', 'Python Programming', 'ProgrammiRuby', 'Dog', 'Elephant']], [['python Programming', 'PHP ProCrrortgramming', 'Elephant', 'python', 'Python', 'perl Programming', 'PHP Programming', 'C ramming', 'Elephant', 'python Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'PHP PrPHP ProCrrortgrammingogramming', 'C Programming', 'python Programming']], [['', 'python Programming', 'Java Programming', 'Crrort', 'Ruby Programming', 'ProgrammC', 'PHP Promgramming', 'C Programming']], [['Java Programming', 'Perl Programming', 'PHnP Programming', 'Ruby Programming', 'PHP Programming', 'PHP Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'Ruby Programming', 'PHP Promgramming', 'C Programming', 'C Programming', 'Java Programming']], [['python Programming', 'Java Programming', 'perl Programming', 'PHP Programming', 'carrot', 'Elephant']], [['carrot', 'apBananple', 'Javadog', 'elephant', 'Python', 'banana', 'banana']], [['apple', 'banana', 'carrot', 'dRog', 'apBananple', 'dog', 'elephant', 'banana']], [['PHP PrPBananaerling', 'Python Programming', 'Java Programming', 'Perl Programming', 'Ruby Programming', 'PHP Programming', 'PHP Programming']], [['Elephant', 'PromgramminC Progmrammingg', 'perl Progrgamming', 'Ruby Programming', 'R']], [['python Programming', 'Elephant', 'Java Programming', 'pperlerl Progrgammicarrotng', 'Ruby Programming', 'PHP Programming']]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    """
+    :param words: list of words
+    :return: tuple of two words starting with letter 'p'
+    """
+    return tuple(word for word in words if word.startswith('p'))
+
+
+if __name__ == '__main__':
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python", "Python", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "Python", "Python", "Python", "Python", "Python", "Python", "Python", "Python", "Python", "Python"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++", "</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    """
+    This function returns two words from a list of words starting with letter 'p'.
+
+    :param words: list of strings
+    :return: tuple of two strings
+    """
+    p_words = [word for word in words if word[0].lower() == 'p']
+    return tuple(p_words[:2])
+
+# Test the function
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith("p"):
+            result.append(word)
+    return tuple(result)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def start_withp(words):
+    """
+    Returns two words from a list of words starting with letter 'p'.
+    """
+    p_words = [word for word in words if word.startswith('p')]
+    if len(p_words) >= 2:
+        return (p_words[0], p_words[1])
+    else:
+        return ()
+
+# Test the function
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words_list):
+    for word in words_list:
+        word = word.split()
+        if word[0].startswith('p'):
+            return (word[0], word[1])
+    return None
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+def start_withp(words):
+    return tuple(word.split()[0] for word in words if word.split()[0][0] == 'p')
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def start_withp(words):
+    for word in words:
+        w1, w2 = word.split()
+        if w1.startswith('P') and w2.startswith('P'):
+            return w1, w2</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(word_list):
+    words_starting_with_p = [word for word in word_list if word.startswith('p')]
+    if len(words_starting_with_p) >= 2:
+        return (words_starting_with_p[0], words_starting_with_p[1])
+    else:
+        return ("No", "two words found")
+
+# Testing the function
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def start_withp(words):
+    p_words = []
+    for word in words:
+        if word.startswith('p'):
+            p_words.append(word)
+    return p_words[0], p_words[1]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"])) # Output: ('Python', 'PHP')
+```
+
+Explanation:
+
+The function `start_withp` takes a list of words as input and initializes an empty list `p_words` to store the words starting with letter 'p'. It then iterates through each word in the input list and checks if the word starts with 'p' using the `startswith()` method. If it does, the word is appended to the `p_words` list. Finally, it returns the first two words in the `p_words` list as a tuple. The `assert` statement checks if the output of the function is equal to `('Python', 'PHP')`. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def start_withp(words_list):
+    words_list = [word for word_list in words_list for word in word_list.split()]
+    words_starting_with_p = [word for word in words_list if word.startswith('p') or word.startswith('P')]
+    return tuple(words_starting_with_p[:2])
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    for word in words:
+        if word.startswith("p"):
+            return word.split()
+
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_with_p(word_list):
+    p_words = [word for word in word_list if word.startswith('p')]
+    if len(p_words) >= 2:
+        return p_words[:2]
+    else:
+        return p_words
+
+# Test case
+assert start_with_p(["Python PHP", "Java JavaScript", "C C++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def start_withp(words):
+    for word in words:
+        for w in word.split(' '):
+            if w.startswith('p') or w.startswith('P'):
+                yield w
+
+assert tuple(start_withp(["Python PHP", "Java JavaScript", "c c++"])) == ('Python', 'PHP')
+```
+
+This function `start_withp` takes a list of strings as input. It splits each string into words and checks if any word starts with 'p' or 'P'. If it does, it yields that word. The function uses a generator to return the words one at a time. The `assert` statement is used to check if the function returns the correct output.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for i in range(len(words)):
+        if words[i].startswith('p'):
+            return words[i], words[i+1]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+
+def start_withp(words):
+    for i in range(len(words)):
+        if words[i].startswith('p'):
+            return words[i]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+
+def start_withp(words):
+    for i in range(len(words)):
+        if words[i].startswith('p'):
+            return words[i]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+
+def start_withp(words):
+    for i in range(len(words)):
+        if words[i].startswith('p'):
+            return words[i]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+
+def start_withp(words):
+    for i in range(len(words)):
+        if words[i].startswith('p'):
+            return words[i]</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    """
+    Write a function to return two words from a list of words starting with letter 'p'.
+    assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+    """
+    p_words = [word.strip() for word in words if word.strip().lower().startswith('p')]
+    if len(p_words) >= 2:
+        return tuple(p_words[:2])
+    else:
+        return tuple(p_words)
+
+# Test the function
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')
+assert start_withp(["Python", "Java", "c c++"]) == ('Python',)
+assert start_withp(["Java", "c c++", "PHP"]) == ('PHP',)
+assert start_withp(["c c++", "Java", "PHP"]) == ('PHP',)
+assert start_withp(["c c++", "Java", "c#"]) == ()</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(list):
+    for i in list:
+        if i.startswith("p"):
+            return i
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    """
+    :param words: list of words
+    :return: two words starting with letter 'p'
+    """
+    for word in words:
+        if word.startswith('p'):
+            return word
+
+
+if __name__ == '__main__':
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+    print</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def start_withp(words_list):
+    for words in words_list:
+        for word in words.split():
+            if word.lower().startswith('p'):
+                return word,
+
+# Test the function
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+```
+
+This function `start_withp` takes a list of strings as input. It iterates over each string in the list and then over each word in the string. If a word starts with the letter 'p' (case-insensitive), it returns that word.
+
+Please note that the function returns a tuple of one element, containing the first word that starts with 'p'. If you want to return all words that start with 'p', you can modify the function like this:
+
+```python
+def start_withp(words_list):
+    return_list = []
+    for words in words_list:
+        for word in words.split():
+            if word.lower().startswith('p'):
+                return_list.append(word)
+    return tuple(return_list)
+
+# Test the function
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+```
+
+This version of the function will return a tuple of all words that start with 'p'.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith('p'):
+            result.append(word)
+    return result
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==(['Python', 'PHP'])</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(lst):
+    for i in lst:
+        if i.startswith('p'):
+            return i.split()
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+print(start_withp(["Python PHP", "Java JavaScript",</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+  """
+  Write a function to return two words from a list of words starting with letter 'p'.
+  assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+  """
+  return (words[0], words[1])</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+def start_withp(words_list):
+    """
+    Returns a tuple of two words from the given list that start with the letter 'p'.
+    """
+    words = [word for word in words_list if word.lower().startswith('p')]
+    if len(words) < 2:
+        raise ValueError("Not exactly 2 words starting with 'p' in the list")
+    return words[0], words[1]
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def start_withp(words_list):
+    for word in words_list:
+        if word.lower().startswith('p'):
+            return tuple(word.split())
+
+# Test the function
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word.split()[0], word.split()[1]
+```
+
+The function `start_withp` takes a list of words as input and returns two words from the list that start with the letter 'p'. It does this by iterating over each word in the list and checking if it starts with the letter 'p'. If it does, it splits the word into two parts using the `split()` method and returns the first two parts as a tuple. If no words in the list start with 'p', the function returns None.
+
+The function is tested using the `assert` statement as follows:
+
+```python
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+```
+
+This assert statement checks if the function returns the expected output for the given input. If the function returns the expected output, the assert statement passes. If the function returns an unexpected output, the assert statement fails.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(list_of_words):
+    for word in list_of_words:
+        if word.startswith("p"):
+            return word.split()
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith('p') or word.startswith('P'):
+            result.append(word)
+        if len(result) == 2:
+            break
+    return tuple(result)
+```
+
+This function iterates over the list of words and checks if the word starts with 'p' or 'P'. If it does, it adds the word to the result list. The function stops when it has found two words that start with 'p' or 'P'. The result is returned as a tuple.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+def start_withp(words):
+    p_words = []
+    for word in words:
+        if word.startswith('p'):
+            p_words.append(word)
+    return p_words
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    for word in words:
+        if word[0] == 'p':
+            return word[0], word[1:]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for word in words:
+        if word[0] == 'p':
+            return word[0], word[1:]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for word in words:
+        if word[0] == 'p':
+            return word[0], word[1:]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for word in words:
+        if word[0] == 'p':
+            return word[0], word[1:]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for word in words:
+        if word[0] == 'p':
+            return word[0], word[1:]
+
+print(start_withp(["Python PHP", "</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith("p"):
+            result.append(word)
+        if len(result) == 2:
+            break
+    return tuple(result)
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for word in words:
+        if word.startswith("p"):
+            return word
+    return None
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    for word in words:
+        if word.startswith('p') or word.startswith('P'):
+            return word.split()
+    return None
+
+# Test the function
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_with_p(words):
+    """
+    Returns two words from a list of words starting with letter 'p'.
+    If there are less than two words starting with 'p', returns an empty tuple.
+    """
+    p_words = [word for word in words if word.startswith('p') or word.startswith('P')]
+    return tuple(p_words[:2]) if len(p_words) >= 2 else tuple()
+
+# Test the function
+assert start_with_p(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    p_words = []
+    for word in words:
+        if word.startswith('p'):
+            p_words.extend(word.split())
+    return p_words[:2]
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+```
+
+Explanation:
+The function `start_withp` takes a list of words as input and returns the first two words that start with the letter 'p'. It first initializes an empty list `p_words` to store the words that start with 'p'. Then, it iterates through each word in the input list and checks if it starts with 'p' using the `startswith` method. If it does, it splits the word into individual words using the `split` method and adds them to the `p_words` list. Finally, it returns the first two words in the `p_words` list using slicing notation `[:2]`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(lst):
+    words = ' '.join(lst).split()
+    p_words = [word for word in words if word.startswith('p')]
+    return tuple(p_words[:2])
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    p_words = []
+    for word in words:
+        if word.startswith('p'):
+            p_words.append(word)
+    return p_words[0], p_words[1]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(l):
+    for i in l:
+        if i.startswith('p'):
+            return i.split()
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python", "PHP", "Java", "JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python", "PHP", "Java", "JavaScript", "c c++", "c#"])==('Python', 'PHP')
+assert start_withp(["Python", "PHP", "Java", "JavaScript", "c c++", "c#", "C#"])==('Python', 'PHP')
+assert start_withp(["Python", "PHP", "Java", "JavaScript", "c c++", "c#", "C#", "C++"])==('Python', 'PHP')
+assert start_withp(["Python", "PHP", "Java", "JavaScript", "c c++", "c#", "C#", "C++", "C++", "C#", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "C++", "</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+
+def start_withp(word_list):
+    # Initialize an empty list to store words starting with 'p'
+    p_words = []
+
+    # Iterate over each string in the word_list
+    for words in word_list:
+        # Split the string into individual words
+        split_words = words.split()
+
+        # Iterate over each word in the split words
+        for word in split_words:
+            # Check if the word starts with 'p' or 'P'
+            if word.lower().startswith('p'):
+                # Append the word to the p_words list
+                p_words.append(word)
+
+    # Return the first two words that start with 'p'
+    # If there are less than two words, it will return as many as are available
+    return tuple(p_words[:2])
+
+# Example usage
+# assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    return [word for word in words if word.lower().startswith('p')]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def start_withp(words):
+    p_words = [word for word in words if word.startswith('p')]
+    return tuple(p_words[:2])
+
+# Test the function
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    p_words = [word for word in words if word.startswith('p')]
+    return p_words[0], p_words[1]
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(lst):
+    words = [word for word in lst if word.startswith('p')]
+    return tuple(words[:2])
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script to solve the problem:
+
+```python
+def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith('p'):
+            result.append(word.split()[0])
+    return tuple(result)
+```
+
+Explanation:
+
+- We define a function `start_withp` that takes a list of words as input.
+- We initialize an empty list `result` to store the words that start with 'p'.
+- We loop through each word in the list and check if it starts with 'p' using the `startswith()` method.
+- If the word starts with 'p', we split it into two words using `split()` and append the first word to the `result` list.
+- Finally, we return a tuple of the `result` list. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word.split()[0], word.split()[1]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith('p'):
+            result.append(word)
+    return result</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word.split()
+
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(l):
+    for i in l:
+        if i[0] == 'p':
+            return i
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(l):
+    for i in l:
+        if i[0] == 'p':
+            return i
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(l):
+    for i in l:
+        if i[0] == 'p':
+            return i
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(l):
+    for i in l:
+        if i[0] == 'p':
+            return i
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(l):
+    for i in l:
+        if i[0] == 'p':
+            return i
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    return [word for word in words if word.startswith('p')]
+
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    return [word for word in words if word.startswith('p')]
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    return [word for word in words if word.startswith('p')]
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+assert start_withp(["Python PHP", "Java JavaScript", "c c++</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word.split()
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_with_p(words):
+    return [word for word in words if word.startswith('p')]
+
+assert start_with_p(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+def start_withp(word_list: list) -> tuple:
+    result = ()
+    for word in word_list:
+        if word.startswith('p'):
+            result += (word,)
+            if len(result) == 2:
+                break
+    return result
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    return [word for word in words if word.startswith('p')]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+"""
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(words):
+    p_words = []
+    for word in words:
+        if word.split()[0].lower().startswith('p'):
+            p_words.append(word.split()[0])
+        if len(p_words) == 2:
+            break
+    return tuple(p_words)
+
+# Test case
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"]) == ('Python', 'PHP')
+print("Test case passed")</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith('p'):
+            result.append(word)
+    return tuple(result)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+def start_withp(list_of_words):
+    for word in list_of_words:
+        if word.startswith('p'):
+            return word.split(' ')[0], word.split(' ')[1]
+
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the first word from a list of words starting with letter 'p'.
+assert first_withp(["Python PHP", "Java JavaScript", "c c++"])=='Python'
+"""
+
+def first_withp(list_of_words):
+    for word in list_of_words:
+        if word.startswith('p'):
+            return word.split(' ')[0]
+
+print(first_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the last word from a list of words starting with letter 'p'.
+assert last_withp(["Python PHP", "Java JavaScript", "c c++"])=='PHP'
+"""
+
+def last_withp(list_of_words):
+    for word in list_of_words:
+        if word.startswith('p'):
+            return word.split(' ')[-1]
+
+print(last_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the last word from a list of words starting with letter 'p'.
+assert last_withp(["Python PHP", "Java JavaScript", "c c++"])=='PHP'
+"""
+
+def last_withp(list_of_words):
+    for word in list_of_words:
+        if word.startswith('p'):
+            return word.split(' ')[-1]
+
+print(last_withp(["Python PHP", "Java JavaScript", "c c++"]))
+
+"""
+Write a function to return the last word from a list of words starting with letter 'p'.
+assert last_withp(["Python PHP", "Java JavaScript", "c c++"])=='PHP'
+"""
+
+def last_withp(list_of_words):
+    for word in list_of_words:
+        if word.startswith('p'):
+            return word.split(' ')[-1]
+
+print(last_withp(["Python PHP", "Java JavaScript", "c c++</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def start_withp(words):
+    result = []
+    for word in words:
+        if word.startswith('p'):
+            result.append(word)
+        if len(result) == 2:
+            break
+    return tuple(result)
+
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to return two words from a list of words starting with letter 'p'.
+assert start_withp(["Python PHP", "Java JavaScript", "c c++"])==('Python', 'PHP')
+"""
+
+
+def start_withp(list):
+    for i in list:
+        if i.startswith('p'):
+            return i
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def start_withp(words):
+    for word in words:
+        if word.startswith('p'):
+            return word.split()
+    return None
+
+# Test the function
+print(start_withp(["Python PHP", "Java JavaScript", "c c++"]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

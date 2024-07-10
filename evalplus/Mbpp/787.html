@@ -1,0 +1,1379 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/787 </h1>
+<pre><code> """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import re
+def text_match_three(text):
+        patterns = 'ab{3}?'
+        return re.search(patterns,  text)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['ac'], ['dc'], ['abbbba'], ['caacabbbba']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[''], ['gHZZiSWmTL'], ['gHZZiSWmgHZZiSWmTLL'], ['gHZZiSWmgHZZiSWgmTLL'], ['gHZgHZZiSWmgHZZiSWmTLLZSWmTL'], ['gHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLL'], ['gHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLL'], ['gHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWm'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['gHZgHZgHZZiSWmTLZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['ggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTL'], ['gHZZigHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTLSWmgHZZiSWmTLL'], ['gHZZiSWmgHZZiSWmTgHZZimgHZZiSWgmTLLLL'], ['gHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWm'], ['gHZZiSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLL'], ['gZHZgHZZiSWmgHZZiSWmTLLZSWmTL'], ['gZHZgHZZiSWmgHZZigHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSWmTL'], ['gZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTL'], ['gHZgHZZiSWmgHZZiSWTLLZSWmTL'], ['gHZgHZgHZZiSWmTLZiSWmgggHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmHZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['gHZgHZgHZZiSWmTLZiSWmgggHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLgZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLHZZiSWmTLLZSWmTL'], ['gHZgHZZiSWgZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZSZiSWmTLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLgHZZiSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTL'], ['gHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTL'], ['gHZZiSWmgHZZiSWmTgHZZimgHZgHZZiSWmgHZZgHZZiSWmgHZZiSWmTLLiSWmTgHZZiSWmgHZZiSWgmTLLLLZiSWgmTLLLL'], ['gHZZiSWmgHZgHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmZiSWmTLL'], ['gHZZiSWmggHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLL'], ['gHZgHZgHZZgHZZiSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLLiSWmTLZiSWmgggHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['gHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZigSWm'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWiSWmTL'], ['gHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTmLL'], ['AyLkNrPEwE'], ['wah'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTLZiSWmTLgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSgHZZiSWmgHZZiSWgmTLLTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmLZSWmTL'], ['gZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWLgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTL'], ['gHZgHZZiSWmgHZZiSWTgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTLSWmTL'], ['ggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZgHZZiSWmgHZgHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmZiSWmTLLZiSWgmTLL'], ['gHZZiSWmgHZZiSWmgHZZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLHZZiSWm'], ['gHZgHZWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWgmTLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWWSgmTLWLHZZiSWmTLLZSWmTL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWgZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTLWmgHZZiSWgmTLLWmTLSWTLLZSWmTLZiSWmTLgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTLZiSWmTLgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZgHZgHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLZiSWmgHZZiSWTLLZSHWmTL'], ['gHZZiSWmgHZZiSWimTLL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTgHZZiSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLLHZZiSWmTLZSWmTL'], ['gZHZgHZZiSWmgHZZigHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSTL'], ['gHZgHZgHZZiSgHZZiSWmgHZgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLZiSWgmTLLWmgHZZiSWgmTLLZiSWmgHZZiSWTLLZSHWmTL'], ['gHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmggHZZiSWgmTLLLLHZZiSgHZZigHZZiSWmgHZgHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmZiSWmTLLSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmLZSWmTgZHZgHZZiSWmgHZZigHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSTLL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLgHZZiSWmTLSWTLLZSWmTLZiSWmTLgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZZigHZgHZZiSWmggHZZiSWmgHZHZiSWgmTLLHZZiSWmTLLZSWmTLWSWHZZiSWmTLL'], ['gHgZHZgHZZiSWmgHZZiSWmTLLZSWmTLZgHZgHZZgHZZiSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLLiSWmTLZiSWmgggHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['gHZZZiS'], ['gHZZiSWmgHZZiSWmgHZZgHZZiSWmggHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWiSWmTLgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLHZZiSWm'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLgZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWggmTLLWmgHZZiSWgmTLLWmTLHZZiSWmTLLZSWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWgmTgHZZiSWmggHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLLLHZZiSWmTLZSWmTL'], ['gHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSgHZZiSZWmgHZgHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmZiSWmTLLWgmTmLL'], ['gHZZigHZgHZZiSWmggHZZiSWmgHZHZiwahSWgmTLLHSZZiSWmTLLZSWmTLWSWHZZiSWmTLL'], ['gHZZigHZZiSWmgHZZiSWmTLLSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLL'], ['gHZgHZZiSWmgggHZgHZgHZZiSgHZZiSWmgHZgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLZiSWgmTLLWmgHZZiSWgmTLLZiSWmgHZZiSWTLLZSHWmTLHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTL'], ['gHZZiSWmgHZZiSgWgmTL'], ['gZHZgHZZiSWmgHZZigHZZiSWmgHZZiSWmgHZgHgHZgHZWmTLZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSWmTL'], ['gHZZiSWSmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWm'], ['gZHZgHZZiSgHZZiSWmgHZZiSWmTgHZZimgHZZiSWgmTLLLLWmgHZZigHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSWmTL'], ['gHZgHZZiSWmggWHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTL'], ['gHZZigHZZiSWmgHZZiSWmTLLSWmgHZZiSWmTLgHZZiSgHZgHZgHZZiSWmTLZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWgZHZgHZZiSWmgHZZigHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSTLmTLZSWmTLWmgHZZiSWgmTLLLL'], ['ggHZZiSWmgHZZiSWmTgHZZiSWmgWHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLL'], ['gHZZigHZgHZZiWSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTLSWmgHZZiSWmTLL'], ['gHZgHZgHZZiZZiSWmTLZSWmTL'], ['gHZgHZZiSWgZHZgHZZiSWmgHZZigHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmTLSWmTLLZSTLmggHZZiSWmgHZZiSWgmLZSWmTL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWgZHZgHZZiSWggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTLWmgHZZiSWgmTLLWmTLSWTLLZSWTmTLZiSWmTLgHZZiSWmgHZZiSWgmTLLgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZgHZLLZiSWmgHZZiSWTLLZSHWmTL'], ['gHZgHZZiSWmggHZZiSWmgHZgHZZiSWmggWHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSWmTLgHZZiSWgmLZSWmTL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLgHZgHZZigHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZigHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLLZSgHZZiSWmgHZZiSWgmTLLTLSWmTLLZSWmTL'], ['gHZZiSWmgHZZiSWgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLmTLL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmTLLWmTLSWTLLZSWmTLZiSWmTLgHZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLLL'], ['gHZZiSWmggHZgHZZiSWmggHZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTLHZZiSWmTLL'], ['gHZZiSWmgHZZiSWmgHZZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSgZHZgHZZiSWmgHZZiSWmTLLZSWmTLWmTLiSWmgHZZiSWgmTLiLHZZiSWm'], ['gHZgHZgHZZiSWmTLZiSWmgggHZZgHZZiSWmgHZZiSgWgmTLgHZZiSWgmTLWLHZZiSWmTLTLiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmHZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTL'], ['gHZZiSWmggHZgHZgHZZiSWgZHZgHZZiSWggHZmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLgHZgHZZigHZZiSWmgHZ'], ['gHgHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWmgHZZiSWmgHZZiSWmTLLSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLL'], ['gHZgHZZiSWmggWHZZiSWmgHZZiSWgmTLLHTZZiSWmTLLZSWmTL'], ['gHZgHZgHZZiSWmTLZiSWmgggHZZiSWmgHZZiSWmgHZgHZZiSWmgggHZZiSWmgHZZiSWmgHZZgHZZiSWmggHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWiSWmTLgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWmgHZZiSWgmTLiLHZZiSWmHZZiSWmgHZZiSWgmTLWLHZZiSWmTLLZSWmTLiSWZZiSWmgHSZZiSWgmTLLHZZiSWmTLZSWmTL'], ['ggHZZiSWmgHZZiSWmTgHZZiSWmgHZZiSWgmTLLLLHZZiSgHZZiSWmgHZZiSWgmTLLWmgHZZiSWgmmTLL'], ['gHZZiSWmgHZZgiSWmTgHZZiSWmgHZZiSWgmTLiLLLgHZZiSWmgHZZiSWm'], ['gHZZiSWmgHZZiSgWgmTgHZZigHZgHZZiSWmggHZZiSWmgHZHZiSWgmTLLHZZiSWmTLLZSWmTLWSWHZZiSWmTLLL'], ['gHZZiSWmgHZZiSWmgHZZgHZZiSWmggHZZiSWmgHZZiSWgmTLWLHZgHgZHZgHZZiSWmgHZZiSWmTLLZSWmTLZgHZgHZZgHZZiSWmgHZZiSWmTLgHZZiSWmgHZZiSWgmTLLLLiSWmTLZiSWmgggHZZiSWmgHZZiSWmgHZgHZZiSWmggHZZiSWmgHZZiSWgmgHZZiSWgmTLLHZZiSWmTLZSWmTLZiHSWmTLLZSgZHZgHZZiSWmgHZZiSWmTLLZSWmTLWmTLiSWmgHZZiSWgmTLiLHZZiSWm'], ['gHZZiSWTLLZSWmTL'], ['gHZgHZZiSWmggWHZZiSWmgHmZZiSWgmTLLHTZZiSWmTLLZSWmTL'], ['wahh'], ['gHZZiSWmggHZgHZZiSWmggHgZHZgHZZiSWmgHZZiSWmTLLZSWmTLZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTLHZZiSWmTLL'], ['gHZZiSWmggHZgHZZiSWmggHgZHZgHZZiSWmgHZZiSWmTLLZSWmTLZZiSWmgHZZiSWgmTLLHZZiSWmTLZSWmTgHZgHZgHZZiSgHZZiSWmgHZgHZgHZZiSWmggHZZiSWmgHZZiSWWgmTLWLHZZiSWmTLLZSWmTLZiSWgmTLLWmgHZZiSWgmTLLZiSWmgHZZiSWTLLZSHWmTLLHZZiSWmTLL']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    """
+    >>> text_match_three("abbb")
+    True
+    >>> text_match_three("abbbb")
+    False
+    >>> text_match_three("abbbbb")
+    False
+    >>> text_match_three("abbbbbb")
+    False
+    >>> text_match_three("abbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbb")
+    False
+    >>> text_match_three("abbbbbbbbbbbbbbbbbbbbbbb</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text: str) -> bool:
+    """
+    Check if the string has an 'a' followed by three 'b'.
+
+    :param text: str - The text to check.
+    :return: bool - True if the text has an 'a' followed by three 'b', False otherwise.
+    """
+    pattern = r'aabb{3}'
+    match = re.search(pattern, text)
+    return bool(match)
+
+# Test the function
+assert text_match_three("aabbb"), "Should match 'aabbb'"
+assert not text_match_three("ac"), "Should not match 'ac'"
+assert not text_match_three("abb"), "Should not match 'abb'"
+assert text_match_three("aabbbbb"), "Should match 'aabbbbb'"</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+
+def text_match_three(text: str) -> bool:
+    pattern = re.compile(r"abbb")
+    return bool(pattern.search(text))
+
+
+def test_function():
+    assert not text_match_three("ac")
+    assert text_match_three("abbb")
+    assert not text_match_three("abbbb")
+
+</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def text_match_three(text):
+    import re
+    pattern = r'a...b'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(input_str):
+    pattern = "ab{3}"
+    if re.search(pattern, input_str):
+        return True
+    else:
+        return False
+
+# Testing the function
+assert not text_match_three("ac")</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+import re
+
+def text_match_three(text):
+    pattern = r"abbb"
+    return bool(re.search(pattern, text))
+
+# Test the function
+assert not text_match_three("ac")</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+import re
+
+def text_match_three(text):
+    pattern = r'a(b{3})'
+    return bool(re.search(pattern, text))
+
+assert text_match_three("abbb")
+assert not text_match_three("ac")</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    """
+    This function checks if the given string has an 'a' followed by three 'b's.
+    :param text: str, the string to check
+    :return: bool, True if the string matches, False otherwise
+    """
+    pattern = re.compile(r'a(b{3})')
+    match = pattern.search(text)
+    if match:
+        return True
+    else:
+        return False
+
+# Test the function
+assert not text_match_three("ac")
+assert text_match_three("abbbc")
+assert not text_match_three("abbc")
+assert not text_match_three("a bbb")</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: False </p>
+      <pre><code>  Here's a Python function that matches a string that has an 'a' followed by three 'b':
+
+```python
+def text_match_three(text):
+    return 'a' in text and text.count('b') == 3
+```
+
+This function takes a string as input and checks if it contains an 'a' and if the count of 'b' is equal to 3. If both conditions are true, it returns True, otherwise it returns False. 
+
+Here's how you can use it:
+
+```python
+assert text_match_three('abbb') # True
+assert text_match_three('abbbc') # False
+assert text_match_three('a') # False
+assert text_match_three('abb') # False
+assert text_match_three('abbbbb') # False
+```
+
+The first assertion will pass because the string 'abbb' contains an 'a' and has three 'b's. The second assertion will fail because it contains four 'b's. The third assertion will fail because it only contains one 'b'. The fourth assertion will fail because it doesn't contain an 'a'. The fifth assertion will also fail because it contains four 'b's but no 'a'. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    pattern = r"ab{3}"
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test the function
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert not text_match_three("ab")
+assert not text_match_three("a")
+assert not text_match_three("abb")
+assert not text_match_three("abbbb")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    return text.count("abbb") > 0
+
+
+assert text_match_three("abbb")
+assert text_match_three("ac") is False
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_match_three(s):
+    return 'abbb' in s
+
+# Test cases
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert not text_match_three("abb")
+assert not text_match_three("abcd")
+assert text_match_three("xabbbx")</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that uses regular expressions to match a string that has an 'a' followed by three 'b':
+
+```python
+import re
+
+def text_match_three(text):
+    pattern = r'ab{3}'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test the function
+assert not text_match_three("ac")
+```
+
+In this code, `re.search(pattern, text)` searches the string `text` for a match to the pattern `'ab{3}'`. If it finds a match, it returns a match object, and `text_match_three` returns `True`. If it doesn't find a match, it returns `None`, and `text_match_three` returns `False`. The `assert` statement is used to verify that the function is working correctly.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.count("ab") == 3
+
+"""
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    """
+    Write a function that matches a string that has an 'a' followed by three 'b'.
+    """
+    pattern = r'ab{3}'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test cases
+assert text_match_three("abbb") == True
+assert text_match_three("abb") == False
+assert text_match_three("ac") == False
+assert text_match_three("abbbb") == False
+assert text_match_three("a") == False
+assert text_match_three("abbbbb") == False
+assert text_match_three("abbbbbbb") == False
+assert text_match_three("abbbbbbbbb") == False
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+import re
+
+def text_match_three(text):
+    if re.search(r"ab{3}", text):
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+import re
+
+
+def text_match_three(text):
+    """
+    :param text:
+    :return:
+    """
+    return re.match(r'a(b{3})', text)
+
+
+if __name__ == '__main__':
+    assert text_match_three("abbb")
+    assert not text_match_three("ac")
+    assert not text_match_three("ab")
+    assert not text_match_three("abbbb")
+    assert not text_match_three("abbbbb")
+    assert not text_match_three("abbbbbb")
+    assert not text_match_three("abbbbbbb")
+    assert not text_match_three("abbbbbbbb")
+    assert not text_match_three("abbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbbbbbbbbb")
+    assert not text_match_three("abbbbbbbbbbbbbbbbb</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+import re
+
+def text_match_three(text):
+    """
+    Write a function that matches a string that has an a followed by three 'b'.
+    """
+    pattern = 'ab{3}'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test cases
+print(text_match_three("ac"))  # False
+print(text_match_three("abbb"))  # True
+print(text_match_three("abab"))  # False
+```
+
+In this code, we use the `re` module in Python to work with Regular Expressions. The function `text_match_three` takes a string as input and checks if it matches the pattern 'ab{3}', which means the string should have an 'a' followed by exactly three 'b's. If the string matches the pattern, the function returns `True`, otherwise it returns `False`.
+
+The test cases at the end of the code block are used to test the function.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: False </p>
+      <pre><code>  
+def text_match_three(text):
+    pattern = 'abab'
+    if text.startswith(pattern):
+        return True
+    else:
+        return False
+
+assert not text_match_three("ac")</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    if len(text) < 3:
+        return False
+    if text[0] == 'a' and text[2] == 'b':
+        return True
+    return False
+
+assert not text_match_three("ac")
+assert text_match_three("aab")
+assert not text_match_three("a")
+assert not text_match_three("ab")
+assert not text_match_three("abcd")
+assert not text_match_three("abcd")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match_three("abc")
+assert not text_match</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_match_three(text):
+  if text[0] == 'a' and text[1:4] == 'bbb':
+    return True
+  else:
+    return False</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+def text_match_three(text):
+    """
+    Returns True if the text contains an 'a' followed by exactly three 'b's, False otherwise.
+    """
+    if not text or len(text) < 3:
+        return False
+    index_a = text.find('a')
+    if index_a == -1:
+        return False
+    index_b = text.find('b', index_a + 1)
+    if index_b == -1 or index_b + 3 > len(text) or text[index_b:index_b+3] != 'bbb':
+        return False
+    return True
+
+# Test cases
+assert not text_match_three("ac")</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    pattern = r'a\w{0,1}(b{3})'
+    return bool(re.search(pattern, text))
+
+# Test cases
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert text_match_three("aabbbb")
+assert not text_match_three("abbbb")</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that matches a string that has an a followed by three 'b':
+
+```python
+def text_match_three(text):
+    return 'abbb' in text and 'a' in text
+```
+
+This function first checks if the string contains the substring 'abbb'. If it does, it then checks if the string contains the character 'a'. If both conditions are true, the function returns True. Otherwise, it returns False.
+
+To test the function, we can use the `assert` statement:
+
+```python
+assert text_match_three("abbb")
+assert not text_match_three("ac")
+```
+
+The first assertion should pass, while the second assertion should fail.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+import re
+
+def text_match_three(text):
+    pattern = re.compile(r'a.*?b{3}')
+    m = pattern.search(text)
+    return m.group()
+
+
+print(text_match_three("aabbb"))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  Here is the Python function that matches a string that has an 'a' followed by three 'b':
+
+```python
+import re
+
+def text_match_three(text):
+    pattern = 'ab{3}$'
+    if re.search(pattern,  text):
+        return True
+    else:
+        return False
+```
+
+This function uses the `re` module in Python, which provides support for regular expressions. The regular expression `'ab{3}$'` matches any string that ends with 'a' followed by exactly three 'b'. The `$` symbol is an anchor that matches the end of the string.
+
+You can test this function with the following code:
+
+```python
+print(text_match_three("ac"))  # False
+print(text_match_three("abbb"))  # True
+print(text_match_three("abb"))  # False
+```
+
+The first call to `text_match_three` returns `False` because the string "ac" does not end with 'a' followed by exactly three 'b'. The second call returns `True` because the string "abbb" does end with 'a' followed by exactly three 'b'. The third call returns `False` because the string "abb" does not end with 'a' followed by exactly three 'b'.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    """
+    >>> text_match_three("ac")
+    False
+    >>> text_match_three("ababab")
+    True
+    >>> text_match_three("abababab")
+    False
+    """
+    return re.search(r'a.*b.*b.*b', text) is not None
+
+"""
+Write a function that matches a string that has an a followed by three 'b'
+and then a 'c'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three_and_c(text):
+    """
+    >>> text_match_three_and_c("ac")
+    False
+    >>> text_match_three_and_c("ababab")
+    False
+    >>> text_match_three_and_c("abababab")
+    False
+    >>> text_match_three_and_c("abababac")
+    True
+    """
+    return re.search(r'a.*b.*b.*b.*c', text) is not None
+
+"""
+Write a function that matches a string that has an a followed by three 'b'
+and then a 'c' and then a 'd'.
+assert not text_match_three_and_c("ac")
+"""
+
+def text_match_three_and_c_and_d(text):
+    """
+    >>> text_match_three_and_c_and_d("ac")
+    False
+    >>> text_match_three_and_c_and_d("ababab")
+    False
+    >>> text_match_three_and_c_and_d("abababab")
+    False
+    >>> text_match_three_and_c_and_d("abababac")
+    False
+    >>> text_match_three_and_c_and_d("abababacd")
+    True
+    """
+    return re.search(r'a.*b.*b.*b.*c.*d', text) is not None
+
+"""
+Write a function that matches a string that has an a followed by three 'b'
+and then a 'c' and then a 'd' and then a</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    return text.find("ab")!= -1
+
+print(text_match_three("ac"))
+print(text_match_three("abc"))
+print(text_match_three("abcab"))
+print(text_match_three("abcabc"))
+print(text_match_three("abcabcab"))
+print(text_match_three("abcabcabc"))
+print(text_match_three("abcabcabcab"))
+print(text_match_three("abcabcabcabc"))
+print(text_match_three("abcabcabcabcab"))
+print(text_match_three("abcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabc"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabcabcabcab"))
+print(text_match_three("abcabcabcabcabcabcabcabcabcabcabc</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    pattern = r"ab{3}"
+    return bool(re.search(pattern, text))
+assert text_match_three("abbb")
+assert not text_match_three("ac")
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    if len(text) < 3:
+        return False
+    if text[0] != 'a':
+        return False
+    if text[1] != 'b':
+        return False
+    if text[2] != 'b':
+        return False
+    return True
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    pattern = 'ab{3}'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test the function
+assert not text_match_three("ac")
+assert text_match_three("abbb")</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  def text_match_three(text):
+    """
+    Check if the input string has 'a' followed by three 'b's.
+
+    :param text: Input string to be checked
+    :return: True if the string matches the pattern, False otherwise
+    """
+    # Check if the string starts with 'a' and has exactly three 'b's after it
+    return text.startswith('a') and text[1:].count('b') == 3
+
+
+# Test cases
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert text_match_three("aabbb")
+assert not text_match_three("abb")
+assert not text_match_three("a")
+assert text_match_three("abbbb")</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_match_three(text):
+    return 'abbb' in text
+
+assert not text_match_three("ac")
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(s):
+    pattern = r"abbb"
+    if re.search(pattern, s):
+        return True
+    else:
+        return False
+
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert text_match_three("aabbb")
+assert not text_match_three("ab")
+assert not text_match_three("abb")
+assert not text_match_three("abbbbb")
+```</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    return text.find("aabb")!= -1
+
+"""
+Write a function that matches a string that has an a followed by three 'b' and then a 'c'.
+assert not text_match_three_and_c("ac")
+"""
+
+def text_match_three_and_c(text):
+    return text.find("aabbc")!= -1
+
+"""
+Write a function that matches a string that has an a followed by three 'b' and then a 'c' and then a 'd'.
+assert not text_match_three_and_c_and_d("ac")
+"""
+
+def text_match_three_and_c_and_d(text):
+    return text.find("aabbcd")!= -1
+
+"""
+Write a function that matches a string that has an a followed by three 'b' and then a 'c' and then a 'd' and then a 'e'.
+assert not text_match_three_and_c_and_d_and_e("ac")
+"""
+
+def text_match_three_and_c_and_d_and_e(text):
+    return text.find("aabbcd")!= -1
+
+"""
+Write a function that matches a string that has an a followed by three 'b' and then a 'c' and then a 'd' and then a 'e' and then a 'f'.
+assert not text_match_three_and_c_and_d_and_e_and_f("ac")
+"""
+
+def text_match_three_and_c_and_d_and_e_and_f(text):
+    return text.find("aabbcd")!= -1
+
+"""
+Write a function that matches a string that has an a followed by three 'b' and then a 'c' and then a 'd' and then a 'e' and then a 'f' and then a 'g'.
+assert not text_match_three_and_c_and_d_and_e_and_f_and_g("ac")
+"""
+
+def text_match_three_and_c_and_d_and_e_and_f_and_g(</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    if len(text) < 3:
+        return False
+    if text[0] == 'a' and text[1] == 'b' and text[2] == 'b':
+        return True
+    else:
+        return False
+
+assert not text_match_three("ac")
+assert not text_match_three("a")
+assert not text_match_three("ab")
+assert not text_match_three("abcd")
+assert not text_match_three("abcdabcd")
+assert not text_match_three("abcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd")
+assert not text_match_three("abcdabcdabcdabcdabcdabcdabcd</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+import re
+
+def text_match_three(text):
+    pattern = 'ab{3}'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test cases
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert not text_match_three("abb")
+assert not text_match_three("abbbb")
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_match_three(text):
+  return bool(text.match("abbb"))
+
+assert not text_match_three("ac")</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def text_match_three(text):
+    if 'abbb' in text:
+        return True
+    else:
+        return False</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    pattern = r"a.*bbb"
+    return bool(re.match(pattern, text))
+
+# Test cases
+assert not text_match_three("ac")
+assert text_match_three("abbb")
+assert not text_match_three("abc")
+assert not text_match_three("aabbb")
+assert not text_match_three("abbba")</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  def text_match_three(text):
+    return 'a' in text and text.count('b') == 3
+
+assert not text_match_three("ac")</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def text_match_three(text):
+    if 'a' not in text or 'b' not in text:
+        return False
+    
+    count = 0
+    for i in range(len(text)):
+        if text[i] == 'a':
+            count += 1
+            if count == 3:
+                return True
+        elif text[i] == 'b':
+            count = 0
+    
+    return False
+```
+
+Explanation:
+
+The function `text_match_three` takes a string as input and checks if it contains an 'a' followed by three 'b'. It first checks if the string contains an 'a' and a 'b'. If not, it returns False. If it does, it initializes a counter variable `count` to 0. It then iterates through the string and checks if the current character is 'a'. If it is, it increments the counter. If the counter becomes 3, it returns True. If the current character is 'b', it resets the counter to 0. If the loop completes without finding three 'b', it returns False. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    return text.count('a') > 0 and text.count('b') == 3
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: False </p>
+      <pre><code>  def text_match_three(text):
+    return text == "abbb"
+
+assert not text_match_three("ac")</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+import re
+
+
+def text_match_three(text):
+    pattern = r'ab{3}'
+    if re.search(pattern, text):
+        return 'Found a match!'
+    else:
+        return 'Not matched!'
+
+
+print(text_match_three("abbb"))
+print(text_match_three("ac"))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+def text_match_three(text):
+    """
+    Return True if text has at least 3 'b' characters
+    and the first character is 'a'
+    """
+    return text.count('b') >= 3 and text[0] == 'a'
+
+print(text_match_three("ac"))
+print(text_match_three("abc"))
+print(text_match_three("abbc"))
+print(text_match_three("abbbbc"))
+print(text_match_three("abbbbbc"))
+print(text_match_three("abbbbbcc"))
+print(text_match_three("aabbbbbcc"))
+print(text_match_three("aabbbbbccc"))
+print(text_match_three("aabbbbbcccc"))
+print(text_match_three("aabbbbbccccc"))
+print(text_match_three("aabbbbbcccccc"))
+print(text_match_three("aabbbbbccccccc"))
+print(text_match_three("aabbbbbcccccccc"))
+print(text_match_three("aabbbbbccccccccc"))
+print(text_match_three("aabbbbbcccccccccc"))
+print(text_match_three("aabbbbbccccccccccc"))
+print(text_match_three("aabbbbbcccccccccccc"))
+print(text_match_three("aabbbbbccccccccccccc"))
+print(text_match_three("aabbbbbcccccccccccccc"))
+print(text_match_three("aabbbbbccccccccccccccc"))
+print(text_match_three("aabbbbbcccccccccccccccc"))
+print(text_match_three("aabbbbbccccccccccccccccc"))
+print(text_match_three("aabbbbbcccccccccccccccccc"))
+print(text_match_three("aabbbbbccccccccccccccccccc"))
+print(text_match_three("aabbbbbcccccccccccccccccccc"))
+print</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    if text[0] == "a" and text[1] == "b" and text[2] == "b" and text[3] == "b":
+        return True
+    else:
+        return False
+
+
+assert not text_match_three("ac")
+assert text_match_three("abbb")</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_match_three(text):
+    return 'a' in text and 'bbb' in text
+
+assert not text_match_three("ac")
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    """
+    Return True if text has at least three 'b' characters.
+    Return False otherwise.
+    """
+    if text.count("a") >= 3:
+        return True
+    else:
+        return False
+
+assert text_match_three("ac") == False
+assert text_match_three("abc") == False
+assert text_match_three("abbc") == True
+assert text_match_three("abbbc") == True
+assert text_match_three("abbbbc") == True
+assert text_match_three("abbbbbc") == True
+assert text_match_three("abbbbbbc") == True
+assert text_match_three("abbbbbbbc") == True
+assert text_match_three("abbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc") == True
+assert text_match_three("abbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+import re
+
+
+def text_match_three(text):
+    pattern = re.compile(r'a.b.b.b')
+    return pattern.search(text)
+
+
+def test_text_match_three():
+    assert not text_match_three("ac")
+    assert text_match_three("abc")
+    assert text_match_three("abbc")
+    assert text_match_three("abbbc")
+    assert not text_match_three("abbbbc")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")
+    assert not text_match_three("ac")</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_match_three(text):
+    return bool(re.match(r"a(.{3})b", text) and re.search(r"b{3}", text))
+
+# Test the function
+import unittest
+import re
+
+class TestTextMatchThree(unittest.TestCase):
+    def test_not_match(self):
+        self.assertFalse(text_match_three("ac"))
+
+    def test_match(self):
+        self.assertTrue(text_match_three("abbbb"))
+
+if __name__ == "__main__":
+    unittest.main()</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+def text_match_three(input_string: str) -> bool:
+    if input_string[0] != "a" or len(input_string[1:].split("b", 3)) > 3:
+        return False
+    else:
+        return True
+
+assert not text_match_three("ac")</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    if text.count("a") == 1 and text.count("b") == 3:
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+import re
+
+def text_match_three(text):
+    """
+    Returns True if the input string contains an 'a' followed by three 'b's, False otherwise.
+    """
+    pattern = r'ab{3}'
+    return bool(re.search(pattern, text))
+
+# Test cases</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+import re
+
+def text_match_three(text):
+    pattern = r"ab{3}"
+    return bool(re.search(pattern, text))
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+def text_match_three(text):
+    return re.match(r"a.b.b", text)
+
+"""
+Write a function that matches a string that has an a followed by two to three 'b'.
+assert text_match_two_three("abbbbb")
+"""
+def text_match_two_three(text):
+    return re.match(r"a.b{2,3}", text)
+
+"""
+Write a function that matches a string that has an a followed by one or more 'b'.
+assert text_match_one_more("abbbbb")
+"""
+def text_match_one_more(text):
+    return re.match(r"a.b+", text)
+
+"""
+Write a function that matches a string that has an a followed by zero or more 'b'.
+assert text_match_zero_more("abbbbb")
+"""
+def text_match_zero_more(text):
+    return re.match(r"a.b*", text)
+
+"""
+Write a function that matches a string that has an a followed by zero or one 'b'.
+assert text_match_zero_one("abbbbb")
+"""
+def text_match_zero_one(text):
+    return re.match(r"a.b?", text)
+
+"""
+Write a function that matches a string that has an a followed by zero or one 'b'
+assert text_match_zero_one("abbbbb")
+"""
+def text_match_zero_one(text):
+    return re.match(r"a.b?", text)
+
+"""
+Write a function that matches a string that has an a followed by zero or one 'b'
+assert text_match_zero_one("abbbbb")
+"""
+def text_match_zero_one(text):
+    return re.match(r"a.b?", text)
+
+"""
+Write a function that matches a string that has an a followed by zero or one 'b'
+assert text_match_zero_one("abbbbb")
+"""
+def text_match_zero_one(text):
+    return re.match(r"a.b?", text)
+
+"""
+Write a function that matches a string that has an a followed by zero or one 'b'
+assert text_match_zero_one("abbbbb</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_match_three(text):
+    pattern = r'abbbb'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+assert not text_match_three("ac")</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function that matches a string that has an a followed by three 'b'.
+assert not text_match_three("ac")
+"""
+
+
+def text_match_three(text):
+    if text.count("a") == 1 and text.count("b") == 3:
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+import re
+
+def text_match_three(text):
+    pattern = 'ab{3}'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+# Test the function
+print(text_match_three("abc"))  # Expected output: True
+print(text_match_three("ac"))   # Expected output: False</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

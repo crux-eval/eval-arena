@@ -1,0 +1,1840 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/771 </h1>
+<pre><code> """
+Write a function to check if the given expression is balanced or not. 
+assert check_expression("{()}[{}]") == True
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+from collections import deque
+def check_expression(exp):
+    if len(exp) == 0 or len(exp) % 2 == 1:
+        return False
+    stack = deque()
+    for ch in exp:
+        if ch == '(' or ch == '{' or ch == '[':
+            stack.append(ch)
+        if ch == ')' or ch == '}' or ch == ']':
+            if not stack:
+                return False
+            top = stack.pop()
+            if (top == '(' and ch != ')') or (top == '{' and ch != '}' or (top == '[' and ch != ']')):
+                return False
+    return not stack
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['{()}[{}]'], ['{()}[{]'], ['{()}[{}][]({})']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[''], ['(((())()))()'], ['{[{[()]}]}'], ['(((())()))(){[{[()]}]}'], ['(((())()))(()'], ['(((())()(((())()))(()))(){[{[()]}]}'], ['{[{[()]}](((())()))(()}'], ['(((())()(((()){[{[()]}](((())()))(()}()))(()))(){[{[()]}]}'], ['(((())()(((()){[{[()]}](((())()]}'], ['(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[()]}]}'], ['((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}'], ['(((())()(((()){[{[()]}](((())()))(()}()))(()))(){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(()))(){[{[()]}]}]}]}'], ['(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(()))(){[{[()]}]}]}]}'], ['(((())()(((()){[{[()]}](((())()))())(){[{[()]}]}'], ['((((())()))()((())())(()'], ['(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))()]{[{[()]}]}'], ['(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}'], ['((((())()(((()){[{[()]}]((((()))(()}()((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}'], ['(((())())))()'], ['(((())()((((((((())()(((()]){[{[()]}](((())()]}))()))(()))(){[{[()]}]}'], ['ws'], ['(((())())(((()){[{[()]}](((())()))())(){[{[()]}]}'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[{[()]}]}]}]}'], ['(((())()(((()){[{[()]}](((())()))())(){[{[())]}]}'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}'], ['{[[{[()]}](((())()))(()}'], ['(((())()))(()ws'], ['((((())()(((()){[{[()]}]((((()))(()}((((())()(((()){[{[()]}]((((()))(()}()((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}{[{[()]}]}'], [']){[{[()]}]}'], ['((){[{[()(((}())()(((()){[{[(()]}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}'], ['(()(())()(((())()))(())){(){[{[()]}]}'], ['(((())()((((((((())()(((()){[{[()]}](((()((((())()))()((())())(())))(()))()]{[{[()]}]}'], ['{[{[()](((())()))(()}'], ['((((())()(((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())((){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}'], ['{[{[()](((())()))(ws()}'], ['(((()(()ws'], ['(((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}'], ['((){[{[()(((}())()(((()){[{[(()](((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}'], ['(((((())()(((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())((){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(()))(){[{[()]}]}]}]}(((())()(((()){[{[()]}](((())()))())(){[{[()]}]}'], ['vBMc'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((()()()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}'], ['(((((())()(((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())vBMc((){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))()()]}]}]}]}'], ['EOLG'], ['Wofi'], ['(((())()(((()){[{[()]}](((())()))(){[{[()]}]})(){[{[())]}]}'], ['((){[{[()(((())()(((()){[{[(()]}]}{[()]}]}]}]}'], ['(((())()(([()]}](((()))(()}()))(()))(){[{[()]}]}'], ['w{[{[()](((())()))(ws()}s'], ['vvBMMc'], ['{[[{[()]}](((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))()]{[{[()]}]}(((())()))(()}'], ['(((())()((){[{[()(((}())()(((()){[{[(()](((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}'], ['(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))())]{[{[()]}]}'], ['(((())()(((()){[{[()]}](((())()))(()}()))(()))(){[{((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((()()()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}[()]}]}'], ['((){[vMMc()(((())()(((()){[{[(()]}]}{[()]}]}]}]}'], ['(((())()(((()){[{[()]}](((())()))())()){[{[()]}]}'], ['(((())())(((()){[{[()]}](((())()))())((((())()(((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())((){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}(){[{[()]}]}'], ['(((())())))())'], ['((){[{[()(((())()(((()){[{)[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}'], ['(((((((())())))()))()))(()'], ['(((((((())()(((())())))()))))()))()))(()'], ['(()(())()(((())()))((]}'], ['(((()vvBMMc)()(((()){[{[()]}](((())()))())(){[{[()]}]}'], ['(((())()(((((((((())()(((()]){[{[()]}](((())()]}))()))(()))(){[{[()]}]}'], ['(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())((((())()(((()){[{[()]}]((((()))(()}((((())()(((()){[{[()]}]((((()))(()}()((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}{[{[()]}]}}]}'], ['{[{[()](((())(()))(()}'], ['((){[{[()(((())()(((()){[{[(()]((){[{[()(((}())()(((()){[{[(()](((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}}](((()))(()}()))(()))(){[{[()]}]}]}]}'], ['(((((())()(((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())(()))(()))(){[{[()]}]}'], ['(((())()(((())()))(()))(){[{[)]}]}'], ['(((((())()()((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())vBMc((){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}'], ['(((((())()()((()){[{[()]}]((((()))(()}()((((())()(((())((((())()))()((())())vBMc((){[{[()]}]((((()))(()}()))(()))()({[{[()]}]}'], ['RO'], ['(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[)()]}]}'], ['(((()(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[)()]}]})()))((()(())()(((())()))(())){(){[{[()]}]})'], ['(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}(((())()))()))()))(()))(){[{[()]}]}'], ['(((())()(((()){((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((())()(((()){[{[()]}](((())()))())()){[{[()]}]}(((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}{[{[()]}]}'], ['((){[{)[()(((())()(((((())()(((()){[{[()]}](((())()]}(()){[{[(()]}](((()))(()}()))(()))(){[{[()]}]}]}]}'], ['(((())()(((()){[{[()]}](((((())()))(){[{[()]}]}(())()))())()){[{[()]}]}'], ['((){[{[()(((}())()(((()){[{[(()](((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((}]}]}'], ['(((()vvBMMc)()(((()){[{[()]}](((())()))())(){[{[()]}{[{[()](((())()))(ws()}]}'], ['(((())()(((())(()(())()(((())())(((((((())()(((())())))()))))()))(()))(())((]}({[{[()]}](((())()]}'], ['EOLG(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[()]}]}'], ['(((()(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[)()]}]})()))((()(())()((((())()))(())[){(){[{[()]}]})'], ['((){[{[()(((())()(((()){[{[(()]}](((()))(()}()(((())()))(()))(())))(){[{[()]}]}]}]}'], ['(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){(((())())))()[{[()]}]}'], ['(()(())()(((())()))((]'], ['((){[{[()(((())()()((()){[{[(()]}](((()))(()}()(((())()))(()))(())))(){[{[()]}]}]}]}'], ['{[{[()]}](((()])()))(()}'], ['{[{[()]}](((()]{)()))(()}'], ['((){[{[()(((}())()(((()){[{[(()](((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((}]}]}'], ['(((())()(((())(()(()())())(((((((())()(((())())))()))))()))(()))(())((]}({[{[()]}](}((())()]}'], ['(((())()(((())()))(()))()(((())()((){[{[()(((}())()(((()){[{[(()](((())()(((()){[{[()]}](((())()((){[{[()(((())()(((()){[{[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}))())(){[{[()]}]}}](((()))(()}()))(())))(){((((())()(((()){[{[()]}]((((()))(()}()))(()))(){[{[()]}]}[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}(((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}]}]}]}((((((((())()(((()){[{[()]}](((())()]}))()))(()))(){[{[()]}]}{[{[)]}]}'], ['(()(())()(((())())))((]'], ['{[{[()]}](((((((())()))()((())())(()())()))(()}'], ['EOLG(((())()(((()(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[)()]}]}){[{[()]}](((()))(()}()))(())[)(){[{[()]}]}'], ['(((())()(((((((((())()(((()]){[{[()]}](()(())()]}))()))(()))(){(((())()(((()){[{[()]}](((()))(()}()))(()))(){[{[()]}]}[{[()]}]}'], ['(((())()(((())(()(()())())(((((())()((((((((())()(((()){[{[()]}](((())()]}))()))(()))()]{[{[()]}]}(((((())()(((())())))()))))()))(()))(())((]}({[{[()]}](}((())()]}'], ['(((())((((()vvBMMc)()(((()){[{[()]}](((())()))())(){[{[()]}]})))()'], ['(((())()(((()){[{[()]}](((((())()))(){[{[()]})]}(())()))())()){[{[()]}]}'], ['((){[{[()(((())()(((()){[{)[(()]}](((()))(()}()))(())))(){[(((())()((((((((())()(((()){[{[()]}(((())()(((()){[{[()]}](((())()]}](((())()]}))()))(()))(){[{[()]}]}{[()]}Wofi]}]}]}'], ['(((())()(((()){[{[()]}](((())()))(())(){[{[())]}]']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char == '(' or char == '[' or char == '{':
+            stack.append(char)
+        elif char == ')':
+            if len(stack) == 0 or stack.pop() != '(':
+                return False
+        elif char == ']':
+            if len(stack) == 0 or stack.pop() != '[':
+                return False
+        elif char == '}':
+            if len(stack) == 0 or stack.pop() != '{':
+                return False
+    return len(stack) == 0
+
+
+if __name__ == '__main__':
+    print(check_expression("{()}[{}]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+    print(check_expression("{()}[{]"))
+   </code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    dict_brackets = {"]":"[", "}":"{", ")":"("}
+    for char in expression:
+        if char in dict_brackets:
+            top_element = stack.pop() if stack else '#'
+            if dict_brackets[char] != top_element:
+                return False
+        else:
+            stack.append(char)
+    return not stack
+assert check_expression("{()}[{}]") == True
+assert check_expression("{([)]}") == False
+assert check_expression("{([])}") == True
+assert check_expression("((()))") == True
+assert check_expression("(())") == True
+assert check_expression("([)]") == False
+assert check_expression("{")]") == False</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression: str) -> bool:
+    stack = []
+    brackets = {")": "(", "]": "[", "}": "{"}
+
+    for char in expression:
+        if char in brackets.values():
+            stack.append(char)
+        elif char in brackets.keys():
+            if not stack or brackets[char] != stack.pop():
+                return False
+    return not stack
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["{", "(", "["]:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            current_char = stack.pop()
+            if current_char == "(":
+                if char != ")":
+                    return False
+            if current_char == "{":
+                if char != "}":
+                    return False
+            if current_char == "[":
+                if char != "]":
+                    return False
+    if stack:
+        return False
+    return True
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expr):
+    stack = []
+
+    # iterate over the expression
+    for char in expr:
+        if char in ["(", "{", "["]:
+            # push to stack if it's an opening bracket
+            stack.append(char)
+        elif char in [")", "}", "]"]:
+            # if stack is empty, expression is not balanced
+            if not stack:
+                return False
+            
+            # if it's a closing bracket, pop the opening bracket from stack
+            opening_bracket = stack.pop()
+
+            # check if the popped opening bracket matches with the closing bracket
+            if (char == ")" and opening_bracket != "(") or \
+               (char == "}" and opening_bracket != "{") or \
+               (char == "]" and opening_bracket != "["):
+                return False
+
+    # if stack is not empty at the end, expression is not balanced
+    return not stack
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+def check_expression(expression):
+    stack = []
+    opening_brackets = ['(', '[', '{']
+    closing_brackets = [')', ']', '}']
+    bracket_pairs = {')': '(', ']': '[', '}': '{'}
+
+    for char in expression:
+        if char in opening_brackets:
+            stack.append(char)
+        elif char in closing_brackets:
+            if not stack or stack.pop() != bracket_pairs[char]:
+                return False
+
+    return not stack</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem of checking if a given expression has balanced parentheses, wrapped in a Python markdown block:
+
+```python
+def check_expression(expression):
+    stack = []
+    opening_brackets = ['{', '(', '[']
+    closing_brackets = ['}', ')', ']']
+    
+    for char in expression:
+        if char in opening_brackets:
+            stack.append(char)
+        elif char in closing_brackets:
+            if not stack:
+                return False
+            if opening_brackets.index(stack.pop()) != closing_brackets.index(char):
+                return False
+    
+    return len(stack) == 0
+
+# Test the function
+assert check_expression("{()}[{}]") == True
+assert check_expression("({[]})") == True
+assert check_expression("({[}])") == False
+assert check_expression("([]") == False</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    opening_symbols = ["[", "{", "("]
+    closing_symbols = ["]", "}", ")"]
+    symbol_map = {closing_symbols[i]: opening_symbols[i] for i in range(3)}
+
+    for symbol in expression:
+        if symbol in opening_symbols:
+            stack.append(symbol)
+        elif symbol in closing_symbols:
+            if stack == [] or stack.pop() != symbol_map[symbol]:
+                return False
+
+    return stack == []
+
+# Test cases
+assert check_expression("{()}[{}]") == True
+assert check_expression("([)]") == False
+assert check_expression("{[]}") == True
+assert check_expression("{([()])}") == True
+assert check_expression("((({})")) == False</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's a Python function that checks if a given expression is balanced or not:
+
+```python
+def check_expression(expression):
+    stack = []
+    # Dictionary of opening and closing brackets
+    brackets = {'}': '{', ']': '[', ')': '('}
+    # Loop through each character in the expression
+    for char in expression:
+        # If the character is an opening bracket, push it onto the stack
+        if char in brackets.values():
+            stack.append(char)
+        # If the character is a closing bracket, check if it matches the last opening bracket in the stack
+        elif char in brackets.keys():
+            if not stack or brackets[char] != stack.pop():
+                return False
+    # If the stack is empty at the end, the expression is balanced
+    return not stack
+```
+
+We use a stack to keep track of the opening brackets as we iterate through the expression. When we encounter an opening bracket, we push it onto the stack. When we encounter a closing bracket, we check if it matches the last opening bracket in the stack. If it does, we pop the opening bracket off the stack. If it doesn't, we return False because the expression is not balanced. If we make it through the entire expression and the stack is empty, the expression is balanced.
+
+We can test the function with the given example:
+
+```python
+assert check_expression("{()}[{}]") == True
+```
+
+This should return True since the expression is balanced. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    """
+    This function checks if the given expression is balanced or not.
+    It assumes that the expression consists of the following characters:
+    '(', ')', '{', '}', '[', ']'
+    """
+    opening_brackets = ['(', '{', '[']
+    closing_brackets = [')', '}', ']']
+    stack = []
+
+    for char in expression:
+        if char in opening_brackets:
+            stack.append(char)
+        elif char in closing_brackets:
+            if not stack:
+                return False
+            opening_bracket = stack.pop()
+            if not (opening_brackets.index(opening_bracket) == closing_brackets.index(char)):
+                return False
+
+    return not stack
+
+# Test the function
+assert check_expression("{()}[{}]") == True
+assert check_expression("{([)]}") == False
+assert check_expression("{()}[]") == True
+assert check_expression("{") == False
+assert check_expression("}") == False
+assert check_expression("") == True</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in "({[":
+            stack.append(char)
+        elif char in ")}]":
+            if not stack:
+                return False
+            if char == ")" and stack[-1] != "(":
+                return False
+            if char == "}" and stack[-1] != "{":
+                return False
+            if char == "]" and stack[-1] != "[":
+                return False
+            stack.pop()
+    return not stack
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    brackets = {")": "(", "}": "{", "]": "["}
+    for char in expression:
+        if char in brackets.values():
+            stack.append(char)
+        elif char in brackets.keys():
+            if not stack or stack.pop() != brackets[char]:
+                return False
+    return not stack
+
+# Test cases
+assert check_expression("{()}[{}]") == True
+assert check_expression("({[}]") == False
+assert check_expression("({)}") == False
+assert check_expression("[](){}") == True</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that checks if the given expression is balanced or not:
+
+```python
+def check_expression(expression):
+    stack = []
+    mapping = {")": "(", "}": "{", "]": "["}
+
+    for char in expression:
+        if char in mapping:
+            top_element = stack.pop() if stack else '#'
+            if mapping[char] != top_element:
+                return False
+        else:
+            stack.append(char)
+
+    return not stack
+```
+
+This function works by iterating over each character in the expression. If the character is a closing bracket (`, ", or }`), it checks if the top element of the stack is the corresponding opening bracket. If it's not, the function returns `False`. If the character is an opening bracket, it's pushed onto the stack. At the end, if the stack is not empty, the function returns `False`, indicating that the expression is not balanced.
+
+You can test the function with your assert statement:
+
+```python
+assert check_expression("{()}[{}]") == True
+```
+
+This function assumes that the input is a string of only brackets. If the input can contain other characters, you may need to add some additional checks.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+# def check_expression(exp):
+#     stack = []
+#     for i in exp:
+#         if i == '(' or i == '[' or i == '{':
+#             stack.append(i)
+#         elif i == ')' or i == ']' or i == '}':
+#             if len(stack) == 0:
+#                 return False
+#             if i == ')' and stack[-1] == '(':
+#                 stack.pop()
+#             elif i == ']' and stack[-1] == '[':
+#                 stack.pop()
+#             elif i == '}' and stack[-1] == '{':
+#                 stack.pop()
+#             else:
+#                 return False
+#     if len(stack) == 0:
+#         return True
+#     else:
+#         return False
+
+# def check_expression(exp):
+#     stack = []
+#     for i in exp:
+#         if i == '(' or i == '[' or i == '{':
+#             stack.append(i)
+#         elif i == ')' or i == ']' or i == '}':
+#             if len(stack) == 0:
+#                 return False
+#             if i == ')' and stack[-1] == '(':
+#                 stack.pop()
+#             elif i == ']' and stack[-1] == '[':
+#                 stack.pop()
+#             elif i == '}' and stack[-1] == '{':
+#                 stack.pop()
+#             else:
+#                 return False
+#     if len(stack) == 0:
+#         return True
+#     else:
+#         return False
+
+# def check_expression(exp):
+#     stack = []
+#     for i in exp:
+#         if i == '(' or i == '[' or i == '{':
+#             stack.append(i)
+#         elif i == ')' or i == ']' or i == '}':
+#             if len(stack) == 0:
+#                 return False
+#             if i == ')' and stack[-1] == '(':
+#                 stack.pop()
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expr):
+    stack = []
+    opening = set(['(', '{', '['])
+    matches = set([('(', ')'), ('{', '}'), ('[', ']')])
+
+    for char in expr:
+        if char in opening:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            last_open = stack.pop()
+            if (last_open, char) not in matches:
+                return False
+
+    return len(stack) == 0
+
+# Test cases
+assert check_expression("{()}[{}]") == True
+assert check_expression("{{[()]}}") == True
+assert check_expression("{{[()]}") == False
+assert check_expression("{{[()]}}}") == False
+assert check_expression("{{[()}}") == False</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+import unittest
+from collections import deque
+from typing import Deque
+
+
+def check_expression(expression: str) -> bool:
+    """
+    Time complexity: O(n)
+    Space complexity: O(n)
+    """
+    if not expression:
+        return True
+
+    stack: Deque = deque()
+    for char in expression:
+        if char in "({[":
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            if char == "}" and stack[-1] != "{":
+                return False
+            if char == ")" and stack[-1] != "(":
+                return False
+            if char == "]" and stack[-1] != "[":
+                return False
+            stack.pop()
+    return not stack
+
+
+class TestCheckExpression(unittest.TestCase):
+    def test_check_expression(self):
+        self.assertTrue(check_expression("{()}[{}]"))
+        self.assertTrue(check_expression("()[]{}"))
+        self.assertTrue(check_expression("()[]"))
+        self.assertTrue(check_expression("()"))
+        self.assertTrue(check_expression("()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    """
+    :param expression:
+    :return:
+    """
+    stack = []
+    for char in expression:
+        if char in "({[":
+            stack.append(char)
+        elif char in ")}]":
+            if not stack:
+                return False
+            if char == ")" and stack[-1] != "(":
+                return False
+            if char == "}" and stack[-1] != "{":
+                return False
+            if char == "]" and stack[-1] != "[":
+                return False
+            stack.pop()
+    return not stack
+
+
+if __name__ == "__main__":
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{]") == False
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def check_expression(expr):
+    stack = []
+    opening = ['(', '{', '[']
+    closing = [')', '}', ']']
+
+    for symbol in expr:
+        if symbol in opening:
+            stack.append(symbol)
+        elif symbol in closing:
+            pos = closing.index(symbol)
+            if ((len(stack) > 0) and
+                (opening[pos] == stack[len(stack) - 1])):
+                stack.pop()
+            else:
+                return False
+    if len(stack) == 0:
+        return True
+    else:
+        return False
+
+# Test the function
+assert check_expression("{()}[{}]") == True
+```
+
+This function uses a stack to keep track of the opening parentheses. It iterates over the expression, pushing any opening parentheses it encounters onto the stack. When it encounters a closing parenthesis, it checks if the last item on the stack is the corresponding opening parenthesis. If it is, it pops the stack. If not, or if the stack is empty at the end, it returns False, indicating that the expression is not balanced. If the stack is empty at the end, it returns True, indicating that the expression is balanced.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+def check_expression(expression):
+    stack = []
+    opening_brackets = ['(', '[', '{']
+    closing_brackets = [')', ']', '}']
+
+    for char in expression:
+        if char in opening_brackets:
+            stack.append(char)
+        elif char in closing_brackets:
+            if not stack or opening_brackets.index(stack.pop()) != closing_brackets.index(char):
+                return False
+
+    return not stack
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["{", "[", "("]:
+            stack.append(char)
+        elif char in ["}", "]", ")"]:
+            if len(stack) == 0:
+                return False
+            if char == "}" and stack[-1]!= "{":
+                return False
+            if char == "]" and stack[-1]!= "[":
+                return False
+            if char == ")" and stack[-1]!= "(":
+                return False
+            stack.pop()
+    return len(stack) == 0
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]")</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+  """
+  Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+  assert check_expression("{()}[{}]") == True
+  """
+  stack = []
+  for char in expression:
+    if char in ['(', '{', '[']:
+      stack.append(char)
+    elif char in [')', '}', ']']:
+      if not stack or stack.pop() != char:
+        return False
+  return not stack
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. 
+assert check_expression("{()}[{}]") == True
+"""
+def is_balanced(expression):
+    stack = []
+    opening_symbols = "([{"
+    closing_symbols = ")]}"
+    for symbol in expression:
+        if symbol in opening_symbols:
+            stack.append(symbol)
+        elif symbol in closing_symbols:
+            if not stack or stack.pop() != opening_symbols[closing_symbols.index(symbol)]:
+                return False
+    return not stack
+
+def check_expression(expression):
+    return is_balanced(expression)
+
+# Test cases
+assert check_expression("{()}[{}]") == True
+assert check_expression("{[(])}") == False
+assert check_expression("([{}])") == True
+assert check_expression("(]") == False</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression: str) -> bool:
+    stack = []
+    opening_brackets = ['(', '[', '{']
+    closing_brackets = [')', ']', '}']
+    brackets_map = {')': '(', ']': '[', '}': '{'}
+
+    for char in expression:
+        if char in opening_brackets:
+            stack.append(char)
+        elif char in closing_brackets:
+            if not stack or stack.pop() != brackets_map[char]:
+                return False
+
+    return not stack
+
+# Test the function
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ['(', '{', '[']:
+            stack.append(char)
+        elif char in [')', '}', ']']:
+            if not stack:
+                return False
+            if char == ')' and stack[-1] == '(':
+                stack.pop()
+            elif char == '}' and stack[-1] == '{':
+                stack.pop()
+            elif char == ']' and stack[-1] == '[':
+                stack.pop()
+            else:
+                return False
+    return not stack
+```
+
+The function `check_expression` takes an expression as input and returns `True` if the expression is balanced and `False` otherwise.
+
+The function uses a stack to keep track of the opening parentheses. For each opening parenthesis, the function pushes it onto the stack. For each closing parenthesis, the function checks if the stack is empty. If it is, the function returns `False` because the expression is not balanced. If the stack is not empty, the function pops the top element from the stack and checks if it matches the closing parenthesis. If it does not match, the function returns `False` because the expression is not balanced. If the stack is empty after processing all the closing parentheses, the function returns `True` because the expression is balanced.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["{", "[", "("]:
+            stack.append(char)
+        elif char in ["}", "]", ")"]:
+            if not stack:
+                return False
+            last_char = stack.pop()
+            if last_char == "{" and char != "}":
+                return False
+            if last_char == "[" and char != "]":
+                return False
+            if last_char == "(" and char != ")":
+                return False
+    return not stack
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function to check if the given expression is balanced or not:
+
+```python
+def check_expression(expr):
+    stack = []
+    open_tup = tuple('({[')
+    close_tup = tuple(')}]')
+    map = dict(zip(open_tup, close_tup))
+
+    for i in expr:
+        if i in open_tup:
+            stack.append(map[i])
+        elif i in close_tup:
+            if not stack or i != stack.pop():
+                return False
+    if stack:
+        return False
+    return True
+
+# Test the function
+print(check_expression("{()}[{}]"))  # Output: True
+```
+
+This function uses a stack to keep track of the opening brackets. When it encounters a closing bracket, it checks if the top of the stack is the corresponding opening bracket. If it is, it pops the opening bracket from the stack. If it is not, or if the stack is empty, it returns False. If it successfully goes through the entire expression and the stack is empty, it returns True.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["(", "{", "["]:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            if char == ")" and stack[-1] == "(":
+                stack.pop()
+            elif char == "}" and stack[-1] == "{":
+                stack.pop()
+            elif char == "]" and stack[-1] == "[":
+                stack.pop()
+            else:
+                return False
+    return not stack
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(exp):
+    stack = []
+    for i in exp:
+        if i == '{' or i == '[' or i == '(':
+            stack.append(i)
+        elif i == '}' or i == ']' or i == ')':
+            if len(stack) == 0:
+                return False
+            if i == '}' and stack[-1] == '{':
+                stack.pop()
+            elif i == ']' and stack[-1] == '[':
+                stack.pop()
+            elif i == ')' and stack[-1] == '(':
+                stack.pop()
+            else:
+                return False
+    if len(stack) == 0:
+        return True
+    else:
+        return False
+
+print(check_expression("{()}[{}]") == True)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("{()}[{}]") == False)
+print(check_expression("</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression: str) -> bool:
+    stack = []
+    mapping = {")": "(", "}": "{", "]": "["}
+
+    for char in expression:
+        if char in mapping:
+            if not stack or stack.pop() != mapping[char]:
+                return False
+        else:
+            stack.append(char)
+
+    return not stack</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(exp):
+    stack = []
+    for i in exp:
+        if i in ['(', '{', '[']:
+            stack.append(i)
+        else:
+            if not stack:
+                return False
+            if i == ')' and stack[-1] == '(':
+                stack.pop()
+            elif i == '}' and stack[-1] == '{':
+                stack.pop()
+            elif i == ']' and stack[-1] == '[':
+                stack.pop()
+            else:
+                return False
+    if not stack:
+        return True
+    else:
+        return False
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    brackets = {')': '(', '}': '{', ']': '['}
+
+    for char in expression:
+        if char in brackets.values():
+            stack.append(char)
+        elif char in brackets.keys():
+            if not stack or brackets[char] != stack.pop():
+                return False
+
+    return not stack
+
+# Test the function
+assert check_expression("{()}[{}]") == True
+assert check_expression("{(})") == False
+assert check_expression("[()]{}{[()()]()}") == True
+assert check_expression("{{[[(())]]}}") == True
+assert check_expression("[(])") == False</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    """
+    Check if the given expression is balanced or not.
+
+    Args:
+    expression (str): The expression to check.
+
+    Returns:
+    bool: True if the expression is balanced, False otherwise.
+    """
+    # Define the opening and closing brackets
+    opening_brackets = ['(', '{', '[']
+    closing_brackets = [')', '}', ']']
+
+    # Create a stack to keep track of opening brackets
+    stack = []
+
+    # Iterate through each character in the expression
+    for char in expression:
+        # If the character is an opening bracket, push it onto the stack
+        if char in opening_brackets:
+            stack.append(char)
+        # If the character is a closing bracket
+        elif char in closing_brackets:
+            # If the stack is empty or the top of the stack doesn't match the closing bracket, return False
+            if not stack or opening_brackets[closing_brackets.index(char)] != stack.pop():
+                return False
+
+    # If the stack is empty, the expression is balanced
+    return len(stack) == 0
+
+# Test the function
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in "{[(":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack:
+                return False
+            elif char == ")" and stack[-1] != "(":
+                return False
+            elif char == "]" and stack[-1] != "[":
+                return False
+            elif char == "}" and stack[-1] != "{":
+                return False
+            stack.pop()
+    return not stack
+
+assert check_expression("{()}[{}]") == True
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    mapping = {")": "(", "}": "{", "]": "["}
+    for char in expression:
+        if char in mapping.values():
+            stack.append(char)
+        elif char in mapping:
+            if not stack or mapping[char] != stack.pop():
+                return False
+    return not stack
+
+assert check_expression("{()}[{}]")
+```</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in "({[":
+            stack.append(char)
+        elif char in ")}]":
+            if not stack:
+                return False
+            if char == ")" and stack[-1] == "(":
+                stack.pop()
+            elif char == "}" and stack[-1] == "{":
+                stack.pop()
+            elif char == "]" and stack[-1] == "[":
+                stack.pop()
+            else:
+                return False
+    return not stack
+
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{]}"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    for i in expression:
+        if i in ['(', '{', '[']:
+            stack.append(i)
+        elif i in [')', '}', ']']:
+            if len(stack) == 0:
+                return False
+            if i == ')' and stack[-1]!= '(':
+                return False
+            if i == '}' and stack[-1]!= '{':
+                return False
+            if i == ']' and stack[-1]!= '[':
+                return False
+            stack.pop()
+    if len(stack) == 0:
+        return True
+    else:
+        return False
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]")</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+import re
+
+def check_expression(expression):
+    # Using a stack to keep track of opening brackets
+    stack = []
+    # Dictionary to hold matching pairs
+    brackets = {'(': ')', '{': '}', '[': ']'}
+
+    # Iterate over each character in the expression
+    for char in expression:
+        # If the character is an opening bracket, push to stack
+        if char in brackets:
+            stack.append(char)
+        # If the character is a closing bracket
+        elif char in brackets.values():
+            # If stack is empty or doesn't match the corresponding opening bracket, return False
+            if not stack or char != brackets[stack.pop()]:
+                return False
+
+    # If stack is not empty at the end, return False, otherwise True
+    return not stack
+
+# Test the function
+assert check_expression("{()}[{}]") == True
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_expression(exp):
+    mapping = {
+        "(": ")",
+        "[": "]",
+        "{": "}",
+    }
+
+    # Iterate over the expression to find the opening and closing parenthesis
+    for i in range(len(exp)):
+        # If the current character is an opening parenthesis, add its position to the stack
+        if exp[i] in mapping:
+            stack.append(i)
+
+        # If the current character is a closing parenthesis, check if the stack is not empty
+        elif stack:
+            # If the character matches the opening parenthesis at the top of the stack, remove it from the stack
+            if exp[i] == mapping[exp[stack[-1]]]:
+                stack.pop()
+
+    # If the stack is empty, the expression is balanced
+    return not stack</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ['(', '{', '[']:
+            stack.append(char)
+        elif char in [')', '}', ']']:
+            if not stack:
+                return False
+            if char == ')' and stack[-1] != '(' or char == '}' and stack[-1] != '{' or char == ']' and stack[-1] != '[':
+                return False
+            stack.pop()
+    return not stack
+
+# Test the function
+print(check_expression("{()}[{}]"))  # Output: True</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ['(', '{', '[']:
+            stack.append(char)
+        elif char in [')', '}', ']']:
+            if not stack:
+                return False
+            if char == ')' and stack[-1] != '(':
+                return False
+            if char == '}' and stack[-1] != '{':
+                return False
+            if char == ']' and stack[-1] != '[':
+                return False
+            stack.pop()
+    return not stack
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    balanced = True
+    index = 0
+
+    while index < len(expression) and balanced:
+        symbol = expression[index]
+        if symbol in "({[":
+            stack.append(symbol)
+        else:
+            if not stack:
+                balanced = False
+            else:
+                top_symbol = stack.pop()
+                if not match(top_symbol, symbol):
+                    balanced = False
+        index += 1
+
+    if balanced and stack:
+        balanced = False
+
+    return balanced
+
+def match(open, close):
+    opens = "({["
+    closes = ")}]"
+    return opens.index(open) == closes.index(close)
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's a Python function that checks if the given expression is balanced or not:
+
+```python
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["(", "{", "["]:
+            stack.append(char)
+        elif char in [")", "}", "]"]:
+            if not stack:
+                return False
+            if (char == ")" and stack[-1] == "(") or (char == "}" and stack[-1] == "{") or (char == "]" and stack[-1] == "["):
+                stack.pop()
+            else:
+                return False
+    return not stack
+```
+
+This function uses a stack to keep track of opening brackets. If an opening bracket is encountered, it is pushed onto the stack. If a closing bracket is encountered, it is checked against the top of the stack to see if it matches the corresponding opening bracket. If it does, the opening bracket is popped from the stack. If the stack is empty at the end of the expression, then the expression is balanced. If there are any remaining opening brackets at the end of the expression, it is not balanced. The function returns `True` if the expression is balanced, and `False` otherwise. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in "({[":
+            stack.append(char)
+        elif char in ")}]":
+            if not stack:
+                return False
+            if char == ")" and stack[-1] != "(":
+                return False
+            if char == "}" and stack[-1] != "{":
+                return False
+            if char == "]" and stack[-1] != "[":
+                return False
+            stack.pop()
+    return not stack
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(exp):
+    stack = []
+    for char in exp:
+        if char in ['(', '{', '[']:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            top = stack.pop()
+            if (char == ')' and top == '(') or (char == '}' and top == '{') or (char == ']' and top == '['):
+                continue
+            else:
+                return False
+    if stack:
+        return False
+    return True
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["(", "[", "{"]:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            if char == ")" and stack[-1] == "(":
+                stack.pop()
+            elif char == "]" and stack[-1] == "[":
+                stack.pop()
+            elif char == "}" and stack[-1] == "{":
+                stack.pop()
+            else:
+                return False
+    return not stack
+
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}]")</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["(", "{", "["]:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            current_char = stack.pop()
+            if current_char == '(':
+                if char!= ")":
+                    return False
+            if current_char == '{':
+                if char!= "}":
+                    return False
+            if current_char == '[':
+                if char!= "]":
+                    return False
+    if stack:
+        return False
+    return True
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{(}]") == False
+assert check_expression("{(})") == False
+assert check_expression("{(})") == False
+assert check_expression("{[}") == False
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression("{[}]") == True
+assert check_expression</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in "([{":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack or stack.pop() != "(" + char:
+                return False
+    return not stack
+
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check_expression("{()}[{}](") == False
+assert check</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    opening_symbols = "([{"
+    closing_symbols = ")]}"
+    mapping = {"(": ")", "[": "]", "{": "}"}
+
+    for symbol in expression:
+        if symbol in opening_symbols:
+            stack.append(symbol)
+        elif symbol in closing_symbols:
+            if not stack or mapping[stack.pop()] != symbol:
+                return False
+
+    return len(stack) == 0
+
+assert check_expression("{()}[{}]") == True
+```
+
+This Python script defines a function `check_expression` that takes an expression as input and returns `True` if the expression is balanced and `False` otherwise. The function uses a stack to keep track of the opening symbols and checks if the closing symbols match the corresponding opening symbols. If the stack is not empty at the end of the function, it means there are unmatched opening symbols, so the function returns `False`.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ["(", "{", "["]:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            current_char = stack.pop()
+            if current_char == '(':
+                if char!= ")":
+                    return False
+            if current_char == '{':
+                if char!= "}":
+                    return False
+            if current_char == '[':
+                if char!= "]":
+                    return False
+    if stack:
+        return False
+    return True
+
+assert check_expression("{()}[{}]") == True
+assert check_expression("{(}[{}]") == False
+assert check_expression("{()}[{}]{}") == True
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]{}") == False
+assert check_expression("{()}[{}]</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in "([{":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack:
+                return False
+            if stack[-1] == "(" and char == ")":
+                stack.pop()
+            elif stack[-1] == "[" and char == "]":
+                stack.pop()
+            elif stack[-1] == "{" and char == "}":
+                stack.pop()
+            else:
+                return False
+    return not stack
+
+
+if __name__ == "__main__":
+    assert check_expression("{()}[{}]") == True
+    assert check_expression("{()}[{]") == False
+    assert check_expression("{()}[{)}]") == False
+    assert check_expression("{()}[{)}") == False
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    opening_symbols = "([{"
+    closing_symbols = ")]}"
+    matching_pairs = {")": "(", "]": "[", "}": "{"}
+
+    for symbol in expression:
+        if symbol in opening_symbols:
+            stack.append(symbol)
+        elif symbol in closing_symbols:
+            if not stack or stack.pop() != matching_pairs[symbol]:
+                return False
+
+    return len(stack) == 0
+
+# Test the function
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in '([{':
+            stack.append(char)
+        elif char in '()]':
+            if not stack or stack.pop() != '[':
+                return False
+        elif char in '}':
+            if not stack or stack.pop() != '{':
+                return False
+    return not stack
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(exp):
+    stack = []
+    for i in exp:
+        if i == '(':
+            stack.append(i)
+        elif i == ')':
+            if stack:
+                stack.pop()
+            else:
+                return False
+    if stack:
+        return False
+    else:
+        return True
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+"""
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    opening_brackets = ['(', '{', '[']
+    closing_brackets = [')', '}', ']']
+    bracket_map = {')': '(', '}': '{', ']': '['}
+
+    for char in expression:
+        if char in opening_brackets:
+            stack.append(char)
+        elif char in closing_brackets:
+            if not stack:
+                return False
+            top_element = stack.pop()
+            if bracket_map[char] != top_element:
+                return False
+
+    return len(stack) == 0</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ['(', '{', '[']:
+            stack.append(char)
+        elif char in [')', '}', ']']:
+            if not stack:
+                return False
+            top = stack.pop()
+            if (char == ')' and top != '(') or (char == '}' and top != '{') or (char == ']' and top != '['):
+                return False
+    return not stack
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char == "{" or char == "[" or char == "(":
+            stack.append(char)
+        elif char == "}" or char == "]" or char == ")":
+            if len(stack) == 0:
+                return False
+            if char == "}" and stack[-1] == "{":
+                stack.pop()
+            elif char == "]" and stack[-1] == "[":
+                stack.pop()
+            elif char == ")" and stack[-1] == "(":
+                stack.pop()
+            else:
+                return False
+    if len(stack) == 0:
+        return True
+    else:
+        return False
+
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}("))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+print(check_expression("{()}[{}]"))
+</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_expression(expression):
+    stack = []
+    for char in expression:
+        if char in ['(', '{', '[']:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            if char == ')' and stack[-1] != '(':
+                return False
+            if char == '}' and stack[-1] != '{':
+                return False
+            if char == ']' and stack[-1] != '[':
+                return False
+            stack.pop()
+    return not stack
+
+assert check_expression("{()}[{}]") == True</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check if the given expression is balanced or not. https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+assert check_expression("{()}[{}]") == True
+"""
+
+
+def check_expression(exp):
+    stack = []
+    for i in exp:
+        if i in ['(', '{', '[']:
+            stack.append(i)
+        else:
+            if not stack:
+                return False
+            if i == ')' and stack[-1] == '(':
+                stack.pop()
+            elif i == '}' and stack[-1] == '{':
+                stack.pop()
+            elif i == ']' and stack[-1] == '[':
+                stack.pop()
+    return not stack
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def check_expression(expression):
+    stack = []
+    opening = ['(', '{', '[']
+    closing = [')', '}', ']']
+    for bracket in expression:
+        if bracket in opening:
+            stack.append(bracket)
+        elif bracket in closing:
+            if not stack:
+                return False
+            elif opening.index(stack.pop()) != closing.index(bracket):
+                return False
+    return not stack
+
+# Test the function
+assert check_expression("{()}[{}]") == True</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

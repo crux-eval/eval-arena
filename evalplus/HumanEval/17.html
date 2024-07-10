@@ -1,0 +1,1434 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/17 </h1>
+<pre><code> from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    def count_beats(note: str) -> int:
+        if note == "o": return 4
+        elif note == "o|": return 2
+        elif note == ".|": return 1
+    
+    if music_string == "": return []
+    return list(map(count_beats, music_string.split(" ")))
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[''], ['o o o o'], ['.| .| .| .|'], ['o| o| .| .| o o o o'], ['o| .| o| .| o o| o o|']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['o o| o| o|'], ['.| .| o| o| .|'], ['o| o| o| .| o| .|'], ['.| .| o| o| o| o| .| .| o| o| o| o| o| o| o o o o'], ['.| .| o| o| .| .| o| o|'], ['o| .| .| .| o| o|'], ['o| o| o| o| .| .| .| .|'], ['.| o| .| o| o| .| o| .|'], ['o o| o| o| o| o| o| o|'], ['.| .| o| o| o| o| o| .| o| o| o| o| o| o o o o o o o| o|'], ['.| .| o| o|'], [''], ['o| o| o| o| o| o| o|'], ['o| o| o| o| .| .| .|'], ['o o| o| o| o| o'], ['o| o|'], ['.| .| o|'], ['o| .| .| .| o| o| .| .| o| o|'], ['o| o| o| o| o| .| .| .| .| o| .| o| .|'], ['o o| o| o| o|'], ['o| o| o| o| o| o'], ['o| o| o| .|'], ['o| o| o|'], ['o o| o| o| o'], ['o| o| o| o|'], ['o| .| .| o| o|'], ['o| o| o| o| o| o|'], ['o|'], ['o o| o| .| .| o| o| o| o| o| .| o| o| o| o| o| o o o o o o o| o| o| o| o'], ['o| o'], ['o| .| .| o| o| .| .| o| o|'], ['.| .| o| o| o| o o o'], ['o| o| o| o'], ['o o| o'], ['o| .| .| .| o|'], ['o o| o| .| .| o| o| o| o| o| .| o o o o o o o o| o| o| o| o'], ['o'], ['o o'], ['o o| o| .| o| o| o| o| o| o o o o o o o| o| o| o| o'], ['.| .| o| o| o'], ['o o| o| o'], ['o| .| .| o| o| .| .| o|'], ['o| .|'], ['o| .| .| o| o| .| o|'], ['.| .| o| o| o| o| .| .| o| o| o| o| o| o| o o o| .| .| .| o| o| o'], ['.| .| o| o| o o o'], ['o o| o| .| o| o| o| o| o| o| o| o| o| o'], ['o| o o| o| o| o| o|'], ['.| .| o| o| o| o| o| .| o| o| o| o| o| o o o| o|'], ['o o| o| o o| o'], ['o| .| o| .|'], ['o| o o| o|'], ['o| .| .| o|'], ['o| o| o| o| .| o| .|'], ['.| .| o'], ['o| o| o| o| o| o| o| .| .| .| .|'], ['o| o o| o| .| .| o| o| o| o| o| .| o| o| o| o| o| o o o o o o o| o| o| o| o|'], ['o| o| o'], ['o| .| o| o| o| o|'], ['o| o| o| o o| o| o| o| o| o| o| .| o| .| o| o|'], ['.| .| o| o| o| o'], ['o| o| .|'], ['o o| o| .| .| o| o| o| o| o| .| o| o| o| o| o| o| o| o'], ['o o| o| o o'], ['o| o| o| o| o| o| o| .| .| .| .| o| o|'], ['o| .| .| .| o| o| o o| o'], ['o| .| .| .| .| o| o|'], ['.| .| o| o| .| .| o| o o| o| .| .| o| o| o| o| o| .| o| o| o| o| o| o o o o o o o| o| o| o| o| .| o| o|'], ['o o| o| .| .| o| o| o| o| o| o| o| o| o| o'], ['o o| .|'], ['o o o'], ['o o|'], ['.| .| o| o| o| o| .| .| o| o| o| o| o| o| o o o| .| .| .| o| o|'], ['o o| o| .| o o| o| o'], ['o| o o|'], ['.| .| o| o'], ['o| o| o| o| .| o|'], ['o o| o| o o o'], ['o o o o'], ['o| .| .| o| o| .| o'], ['.| .| o| o| o| o| .| .| o| o| o| o o o'], ['o| o| o| o| o| o| o| o| o| .| .| .|'], ['o o| o| .| o| o| o| o| o| o| o| o'], ['o| o .| o| .|'], ['o| o| o| o| .| .| .| .| o| .| o| .|'], ['o .|'], ['.| .| o o'], ['o| o| o| .| o| .| o| .|'], ['o| o .|'], ['.| .| o| o| o| o| .| .| o| o| o| o| o| o| o o| .| .| .| o| o|'], ['o| .| .| o| o| o|'], ['.| .| o| o| o| o| .| .| o| o| o| o| o o| o o o| .| .| .| o| o|'], ['.| o'], ['.| .| o .|'], ['.| .| o| o| o|'], ['o| .| .| .| .| o| .| o| .|'], ['o| o| .| o|'], ['o| .| .| o| o| o| o| o| .|'], ['o| o| o| o| o| .| .| .| .| o| o|'], ['o| o| o| o| o o| o| o| o| o| o| o| .| o| .| o| o| o| o| o| o|'], ['o o o o| o o| o| o| .| .|'], ['o| .| o| .| .| o| .| .| o| .| o| .| o| .| o| .| .| o|'], ['o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .|'], ['.| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .|'], ['o o o| o o| o| o|'], ['o| o| o| o| o| o| o| o|'], ['.| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .|'], ['.| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o'], ['o o| o| o| o| o|'], ['o| o| o| o| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o|'], ['.|'], ['o o| o o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .|'], ['.| .| .| .| o o o o o o o| o| o o o o o o o| o| o| .| .|'], ['o| .| o| .| .| o| .| .| o .| o| .| o| .| .| o|'], ['o| o| o| o| o| o| o| o'], ['o| o| o o| o| o'], ['o| o| o| o| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| o|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o'], ['o o o o o o| o| o| .| .|'], ['o o o| o| .| .|'], ['o o| o| o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .|'], ['.| .|'], ['o o| o o| o o| o o| o o| o o| o o| o| .|'], ['o| o o| o o| o| o|'], ['o o o| o| o|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o o| o o| o| o| .| .| o| o'], ['o| o| o o| o| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .|'], ['o o| o o| o o| o| o| .| .|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o'], ['o| o| o o o o o o o o o| o o o o o o o| o| o| .| .|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| o'], ['o| .| o| .| .| o| .| .| o| .| o| .| o| .| o| .| .| o'], ['.| .| .| .| o o o o o o o o o| o| o| .| .|'], ['o o| o o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o| o| o| .| .|'], ['.| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o o o o| o| o| .| .|'], ['o o| o o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o| o| o| .| .|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o| .| o'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o o| o| o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .| o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o'], ['o| o| o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o o| o| o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .| o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o| o o o o o o o| o| o| .| .| o|'], ['o o o| o o| o|'], ['o o| o| o o| o| o| .| .|'], ['o| o o| o o| o|'], ['o o| o o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o o| o o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o| o| o| .| .| o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o| o| o| .| .|'], ['.| .| .| .| o o o o| o o o o| o o o o o o o| o| o| .| .|'], ['o o o| o o| o'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o| o| o| o| .| .| o'], ['o o| o o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o| o| o| .| .|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| o'], ['o o o| o|'], ['o o| .| .|'], ['o o| o| o| o o| o o| o o| o o| o o| o o| .| .| .| .|'], ['o o| o| o| o o| o o| o o| o o| o o| o o| o o| .| .|'], ['o| o| o o o o o o o o o| o o o o o o| o| o|'], ['o o| o o| o o| o o| o| o o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .|'], ['o| o o| .| .| o|'], ['o o| o o| o| o o o o o| o o o o o| o o o o o| o o o o o| o o o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| o o| o| o| o| o o| o| o| .| .|'], ['o| o| o o o o o o o o o| o o o| o o| o| o| o| o|'], ['o| o| o| o| o o| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| o|'], ['o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o| o o o o o o o| o| o| .| .|'], ['o o o o o|'], ['o o o o o o o o'], ['o o o| o| o .| .| .| .| o o| o .| o| o| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o| o| o| o| o o o o o o o o o o o o o o o o o o o o o o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o| o|'], ['o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o'], ['o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o| o| .| .| .| .|'], ['o o o| o o|'], ['.| o o| o o o| .| o o| o o o| o o o| o'], ['o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o| o| .| .| .| .|'], ['o o o| o'], ['o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o| o o| o| o| .| .| .| .|'], ['.| .| .| .| o o o o o o o o| o o o o o o o| o| o .|'], ['o o o| o o'], ['o o| o o| o| o|'], ['.| o| o| o| .| .|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o o o o o o o o| o o o o o o o| o| o .|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o o o o o o o| o o o o o o o| o| o .|'], ['o o| o o| o| o'], ['o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o o o o o o o| o o o o o o o| o| o .|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o'], ['.| .| .| .| o o o o o o o o| o o o o o| o o| o| o .|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o| o o| o o o| o o o o o o o o| o o o o o o o| o| o .|'], ['o o| o o| o o| o o| o o| o o| o o| o| o o| o o| o o| o o| o o| .| .| .| .|'], ['.| .| .| .| o o o o o o o o| o o o o o| o o| .|'], ['o o| o o| o|'], ['o o| o o| o o| o o| o o| o o| o| o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o| o| .| .| .| .|'], ['o o o| o .| .| .| .| o o o o o o o o| o o o o o o o| o| o'], ['.| o o| o o o| .| o o| o o o| .| o o o| .| o o| o o o| o o o| o o o o o o o| o o o o o o o| o| o .|'], ['o o| o o| o'], ['.| .| .| .| o o o o o o o| .| .|'], ['.| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o| o o o o o o o| o| o| .| .|'], ['.| o| o| o .|'], ['.| .| .| .| o o o o o o o o| o o o| o .|'], ['o o o o| o|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o o o o o o o| o o o o o o o o| o .|'], ['o o| o o| o o| o o| o o| o o| o| o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o|'], ['.| .| .| .| .| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o o o o o o o| o o o o o o o| o| o .| .| .|'], ['o o| o o| o o| o o| o o| o o| o| o| o o o| o .| .| .| .| o o o o o o o o| o o o o o o o| o| o o| o| .| .| .| .|'], ['.| o o| o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o| o o o| o o o o o o o o| o o o o o o| o| o .|'], ['o o| o|'], ['.| o o| o o o| .| o o| o o o| .| o o o o o o| o| o .|'], ['o o| o o| o o| o o| o o| o o| o| o| o o| o o| o o| o o| o o| o|'], ['o o o| .| o o| o o o| .| o o| o o o| .| o o| o o o|'], ['.| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .|'], ['.| .| .| .| o o| o o o o o o| o o o o o| o o| .|'], ['.| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o| o o o o o o o| o| o| .| o o o| o'], ['.| .| .| .| o o o o o o o o| o o o o o .|'], ['o o| o o| o o| o o| o o| o o o| o o| o o| o o| o o| o o| o|'], ['o| o o'], ['.| .| .| .| o o o o o o o| o o o o o o o| o| o| .| .|'], ['o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o .| .| .| .| .| .| .| .| o o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o o o| o o o o o o o| o'], ['.| .| .| .| .| .| .| .| o| o o o o o o o| o o o o o o o| o| o| .| .| o o o o o o| o o o o o o o| o| o| .| .|'], ['o o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| o o| .| .| .| .|'], ['.| o o| o o o| .| o o| o o o o| o .|'], ['.| .| .| .| .| .| .| .| .| .| .| .| .| .| .| .|']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the problem:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """
+    Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quarter note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    beat_values = []
+    for note in music_string.split():
+        if note == 'o':
+            beat_values.append(4)
+        elif note == 'o|':
+            beat_values.append(2)
+        elif note == '.|':
+            beat_values.append(1)
+    return beat_values</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    note_beats = {
+        'o': 4,
+        'o|': 2,
+        '.|': 1
+    }
+    
+    notes = music_string.split()
+    beats = [note_beats[note] for note in notes]
+    
+    return beats</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    note_values = {'o': 4, 'o|': 2, '.|': 1}
+    result = []
+    current_note = ''
+
+</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """
+    Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    note_map = {'o': 4, 'o|': 2, '.|': 1}
+    result = []
+    i = 0
+    while i < len(music_string):
+        if music_string[i] == 'o':
+            if i + 1 < len(music_string) and music_string[i + 1] == '|':
+                result.append(note_map['o|'])
+                i += 2
+            else:
+                result.append(note_map['o'])
+                i += 1
+        elif music_string[i] == '.':
+            result.append(note_map['.|'])
+            i += 2
+    return result
+
+# Test the function</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    return [4 if note == 'o' else 2 if note == 'o|' else 1 for note in music_string.split()]
+
+
+def parse_music_v2(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    return [4 if note == 'o' else 2 if note == 'o|' else 1 for note in music_string.split()]
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = [4 if note == 'o' else 2 if note == 'o|' else 1 for note in music_string.split(' | ')]
+    return beats
+
+
+# Test case
+test_music_string = 'o o| .| o| o| .| .| .| .| o o'</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    # Define a dictionary to map notes to their corresponding beats
+    note_to_beats = {'o': 4, 'o|': 2, '.|': 1}
+
+    # Split the input string by space to get a list of notes
+    notes = music_string.split(' ')
+
+    # Use list comprehension to transform each note into its corresponding number of beats
+    beats = [note_to_beats[note] for note in notes]
+
+    return beats
+```
+
+This function works by first defining a dictionary that maps each note to its corresponding number of beats. It then splits the input string by space to get a list of notes. Finally, it uses list comprehension to transform each note into its corresponding number of beats.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    note_durations = {'o': 4, 'o|': 2, '.|': 1}
+
+    notes = music_string.split()
+    for note in notes:
+        beats.append(note_durations[note])
+
+    return beats
+
+# Test the function</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    music_list = music_string.split()
+    for note in music_list:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    return [4 if x == 'o' else 2 if x == 'o|' else 1 for x in music_string.split()]
+
+
+def parse_music_2(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music_2('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    return [4 if x == 'o' else 2 if x == 'o|' else 1 for x in music_string.split()]
+
+
+def parse_music_3(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music_3('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    return [4 if x == 'o' else 2 if x == 'o|' else 1 for x in music_string.split()]
+
+
+def parse_music_4(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+```
+
+You can run the function with the provided example:
+
+```python
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))  # Output: [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+```
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+
+    return beats
+
+
+# Test case
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    music_list = music_string.split()
+    music_list = [note.replace('|', '') for note in music_list]
+    music_list = [note.replace('.', '') for note in music_list]
+    music_list = [int(note) for note in music_list]
+    return music_list</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    pass
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    beats_per_note = {
+        'o': 4,
+        'o|': 2,
+        '|': 1
+    }
+    notes = []
+    current_note = ''
+    for symbol in music_string:
+        if symbol in beats_per_note:
+            if current_note:
+                notes.append(beats_per_note[current_note])
+            current_note = symbol
+        elif current_note and symbol == '|':
+            notes.append(beats_per_note[current_note])
+            current_note = ''
+    if current_note:
+        notes.append(beats_per_note[current_note])
+    return notes
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    music_list = music_string.split()
+    beats_list = []
+    
+    for note in music_list:
+        if note == 'o':
+            beats_list.append(4)
+        elif note == 'o|':
+            beats_list.append(2)
+        elif note == '.|':
+            beats_list.append(1)
+    
+    return beats_list
+
+# Test the function
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """
+    This function parses a string representation of music notes and returns a list of integers representing how many beats each note lasts.
+
+    The music string is in ASCII format where:
+    'o' represents a whole note which lasts for 4 beats.
+    'o|' represents a half note which lasts for 2 beats.
+    '.|' represents a quarter note which lasts for 1 beat.
+
+    Example:
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    music_list = music_string.split()
+    for note in music_list:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    for note in music_string.split():
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+```
+
+The function takes a string `music_string` as input and returns a list of integers representing the number of beats each note lasts. The function splits the string into individual notes using the `split()` method and then checks each note to determine its duration. If the note is a whole note, it lasts four beats. If it's a half note, it lasts two beats. If it's a quater note, it lasts one beat. The function then appends the duration of each note to a list `beats` and returns it.
+
+The function can be tested using the `doctest` module:
+
+```python
+>>> parse_music('o o| .| o| o| .| .| .| .| o o')
+[4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+```
+
+The output is as expected.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    for note in music_string.split():
+        if note == 'o' and len(beats) == 0:
+            beats.append(4)
+        elif note == 'o|' and len(beats) == 0:
+            beats.append(2)
+        elif note == '.|' and len(beats) == 0:
+            beats.append(1)
+        elif note != 'o' and len(beats) != 0:
+            beats.append(1)
+    return beats
+
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    # Split the string into individual notes
+    notes = music_string.split()
+
+    # Initialize an empty list to store the durations
+    durations = []
+
+    # Iterate over the notes
+    for note in notes:
+        # Check the type of the note and add the corresponding duration to the list
+        if note == 'o':
+            durations.append(4)
+        elif note == 'o|':
+            durations.append(2)
+        elif note == '.|':
+            durations.append(1)
+
+    return durations
+```
+
+This function works by splitting the input string into individual notes, then iterating over these notes and adding the corresponding duration to a list. The function finally returns this list.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    music_list = music_string.split()
+    beats = []
+    for note in music_list:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = {
+        'o': 4,
+        'o|': 2,
+        '.|': 1
+    }
+    result = []
+    for note in music_string.split(' '):
+        result.append(beats[note])
+    return result</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    # Initialize an empty list to store the durations of each note
+    durations = []
+
+    # Split the input string into individual notes
+    notes = music_string.split()
+
+    # Iterate over each note and determine its duration
+    for note in notes:
+        if note == 'o':
+            durations.append(4)
+        elif note == 'o|':
+            durations.append(2)
+        elif note == '.|':
+            durations.append(1)
+        else:
+            # If the note is not recognized, raise an error
+            raise ValueError(f"Unknown note: {note}")
+
+    return durations
+
+# Example usage:
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    note last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    beats = []
+    for note in music_string.split():
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+
+    return beats
+
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    beats = []
+    for note in music_string.split():
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+```
+
+This script defines a function `parse_music` that takes a string `music_string` as input and returns a list of integers representing the duration of each note in beats. The function first initializes an empty list `beats` to store the duration of each note. It then loops through each note in the input string, splitting the string by whitespace to get individual notes. For each note, it checks if it matches one of the three possible note types (whole note, half note, or quarter note) and appends the corresponding duration to the `beats` list. Finally, the function returns the `beats` list.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Parse a string representing musical notes in a special ASCII format
+    and return a list of integers corresponding to how many beats each note lasts.
+
+    Legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+    """
+    notes = music_string.split()
+    durations = []
+    for note in notes:
+        if note == 'o':
+            durations.append(4)
+        elif note == 'o|':
+            durations.append(2)
+        elif note == '.|':
+            durations.append(1)
+        else:
+            raise ValueError(f"Unknown note: {note}")
+    return durations
+
+# Test the function
+music_string = 'o o| .| o| o| .| .| .| .| o o'
+print(parse_music(music_string))  # [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    # Initialize an empty list to store the note durations
+    note_durations = []
+
+    # Iterate over the input string
+    for note in music_string.split():
+        # Check if the note is a whole note
+        if note == 'o':
+            note_durations.append(4)
+        # Check if the note is a half note
+        elif note == 'o|':
+            note_durations.append(2)
+        # Check if the note is a quarter note
+        elif note == '.|':
+            note_durations.append(1)
+
+    return note_durations
+
+# Test the function
+music_string = 'o o| .| o| o| .| .| .| .| o o'
+print(parse_music(music_string))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+
+    return beats
+
+
+# Test cases
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))  # [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+print(parse_music('o| o o| .| .| .| o o|'))  # [2, 4, 1, 1, 1, 4, 4]
+print(parse_music('o o| .| o| o| .| .| .| .|'))  # [4, 2, 1, 2, 2, 1, 1, 1, 1]</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+
+    return beats
+</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution to the problem:
+
+```python
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    # Initialize an empty list to store the number of beats for each note
+    beats = []
+
+    # Loop through each character in the string
+    for char in music_string:
+        # If the character is a whole note, add 4 to the list
+        if char == 'o':
+            beats.append(4)
+        # If the character is a half note, add 2 to the list
+        elif char == 'o|':
+            beats.append(2)
+        # If the character is a quater note, add 1 to the list
+        elif char == '.|':
+            beats.append(1)
+
+    # Return the list of beats
+    return beats
+```
+
+This function takes in a string representing musical notes in a special ASCII format and returns a list of integers representing how many beats each note lasts. It does this by iterating through each character in the string and checking if it is a whole note, half note, or quater note. If it is a whole note, it adds 4 to the list, if it is a half note, it adds 2 to the list, and if it is a quater note, it adds 1 to the list. Finally, it returns the list of beats. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    return [4 if note == 'o' else 2 if note == 'o|' else 1 for note in music_string.split()]
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    notes = []
+    current_beats = 0
+    for char in music_string:
+        if char == 'o':
+            notes.append(4)
+            current_beats += 4
+        elif char == 'o|':
+            notes.append(2)
+            current_beats += 2
+        elif char == '.|':
+            notes.append(1)
+            current_beats += 1
+    return notes</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    beats = []
+    notes = music_string.split()
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+
+
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))
+```
+
+This code defines a function `parse_music` that takes a string `music_string` as input and returns a list of integers representing the number of beats for each note. The function splits the input string into individual notes and checks each note to determine the corresponding number of beats. The resulting beats are appended to a list, which is then returned. The provided example input is passed to the function and the result is printed.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    notes = {'o': 4, 'o|': 2, '.|': 1}
+    return [notes[note] for note in music_string.split()]
+
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """
+    Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    music_list = music_string.split()
+    for note in music_list:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+```
+
+This function works by splitting the input string into a list of notes, and then iterating over that list. For each note, it appends the corresponding number of beats to the `beats` list. The function then returns this list.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))
+```
+
+This script defines a function `parse_music` that takes a string representing musical notes in a special ASCII format as input. The function splits the string into individual notes, and then checks each note to determine how many beats it lasts. The function returns a list of integers corresponding to the number of beats for each note.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def parse_music(music_string: str) -> List[int]:
+    beats = []
+    notes = {'o': 4, 'o|': 2, '.': 1}
+
+    for note in music_string:
+        if note in notes:
+            beats.append(notes[note])
+        else:
+            beats.append(1)
+
+    return beats</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    note_map = {
+        'o': 4,
+        'o|': 2,
+        '.|': 1
+    }
+    beats = []
+    for char in music_string:
+        if char in note_map:
+            beats.append(note_map[char])
+    return beats</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    i = 0
+    while i < len(music_string):
+        if music_string[i] == 'o':
+            if i + 1 < len(music_string) and music_string[i + 1] == '|':
+                beats.append(2)
+                i += 2
+            else:
+                beats.append(4)
+                i += 1
+        elif music_string[i] == '.':
+            beats.append(1)
+            i += 2
+    return beats</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+    beats = []
+    music_list = music_string.split()
+
+    for note in music_list:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+
+    return beats</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    pass
+
+
+def main():
+    music_string = input("Enter music string: ")
+    print(parse_music(music_string))
+
+</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    beats = []
+    for note in music_string.split():
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+
+def parse_music(music_string: str) -> List[int]:
+    """ Input to this function is a string representing musical notes in a special ASCII format.
+    Your task is to parse this string and return list of integers corresponding to how many beats does each
+    not last.
+
+    Here is a legend:
+    'o' - whole note, lasts four beats
+    'o|' - half note, lasts two beats
+    '.|' - quater note, lasts one beat
+
+    >>> parse_music('o o| .| o| o| .| .| .| .| o o')
+    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+    """
+
+    beats = []
+    current_beat = 0
+    for note in music_string:
+        if note == 'o':
+            current_beat += 4
+        elif note == 'o|':
+            current_beat += 2
+        elif note == '.':
+            current_beat += 1
+        beats.append(current_beat)
+        current_beat = 0
+    return beats</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+def parse_music(music_string: str) -> List[int]:
+    notes = music_string.split()
+    beats = []
+    for note in notes:
+        if note == 'o':
+            beats.append(4)
+        elif note == 'o|':
+            beats.append(2)
+        elif note == '.|':
+            beats.append(1)
+    return beats
+
+# Test the function
+print(parse_music('o o| .| o| o| .| .| .| .| o o'))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

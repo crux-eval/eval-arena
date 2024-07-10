@@ -1,0 +1,1567 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/141 </h1>
+<pre><code> 
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    if len(list(filter(lambda ch: ch.isdigit(), file_name))) > 3:
+        return "No"
+    f_list = file_name.split(".")
+    if len(f_list) != 2: return "No"
+    if len(f_list[0]) == 0: return "No"
+    if not f_list[0][0].isalpha(): return "No"
+    if f_list[1] not in ["txt", "exe", "dll"]: return "No"
+    return "Yes"
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['example.txt'], ['1example.dll'], ['s1sdf3.asd'], ['K.dll'], ['MY16FILE3.exe'], ['His12FILE94.exe'], ['_Y.txt'], ['?aREYA.exe'], ['/this_is_valid.dll'], ['this_is_valid.wow'], ['this_is_valid.txt'], ['this_is_valid.txtexe'], ['#this2_i4s_5valid.ten'], ['@this1_is6_valid.exe'], ['this_is_12valid.6exe4.txt'], ['all.exe.txt'], ['I563_No.exe'], ['Is3youfault.txt'], ['no_one#knows.dll'], ['1I563_Yes3.exe'], ['I563_Yes3.txtt'], ['final..txt'], ['final132'], ['_f4indsartal132.'], ['.txt'], ['s.']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['example.py'], ['my.docx'], ['hello world.exe'], ['alice.123.txt'], ['abc123def.exe'], ['1script.bat'], ['validfile.txt'], ['.exe'], ['123.txt'], ['file.doc'], ['.ex'], ['heello world.exe'], ['ffile.docile.doc'], ['.exalice.12123.txt3.xtxte'], ['.exalice.123.txt'], ['.exmy.docx'], ['fle.doc'], ['1script.batt'], ['.exalic1script.bate.123.txt'], ['.exalice.123..exalice.123.tx.t'], ['my.dcx'], ['.exmy.docx.exe'], ['..ex'], ['abc123defexe'], ['hello world.exe.exmy.docx.exe'], ['alice.123.taxt.i.ex'], ['abcheello world.exe123defexe'], ['heell.exalice.12123.txt3.xtxteo world.exe'], ['.exalice.12123.ex.txt3.xtxt.e'], ['filc'], ['.eex'], ['alice.123.i.ex'], ['.e.ex'], ['.exal.123.txt'], ['123.ttxt'], ['.efile.doc.ex'], ['1script.ba.exet'], ['alice.123.i.1script.batex'], ['.exali123.ttxtc1script.bate.123.txt'], ['alice.123.i.exalice.123.txt'], ['hello world1script.bat.exe.exmy.docx.exe'], ['alice.exali123.ttxtc1script.bate.123.txt.123.i.ex'], ['.efile.dex'], ['alice.l12l3.i.exalice.123.txt'], ['.efil.exal.123.txte.dex'], ['validftile.txt'], ['1script.ba.eexert'], ['hello world1script.bat.exe.exmy.docx.exealice.12i.ex'], ['.exmy.docx.efil.exal.123.txte.dex.exe'], ['hehello world.exe.exmy.docx.exello world.exe'], ['1script.ba.xet'], ['.exali123.ttxtc1script.bate.123.tx.efil.exal.123.txte.dext'], ['.exali123.ttxtc1script.bate.123.tx.efil.exal.123.txte.defile.docxt'], ['FX'], ['.heello world.exeexalice.123..exalice.123.tx.t'], ['alice.123.i.exalice..123.txt'], ['file.dolc'], ['hehello world.exe.exmy.docx.exelwlo world.exe'], ['.exalict1script.bate.123.txt'], ['....ex'], ['validfilve.txtFX'], ['.exali123.ttxtc1script.bate.123.tx.efil.exal.123.txte.dex.exm1y.docxt'], ['....e.eexx'], ['mhello world.exe.exmy.docx.exey.dcx'], ['valfile.txit'], ['alicealice.exali123.ttxtc1script.bate.123.txt.123.i.ex.l12l3.i.exalice.123.txt'], ['.eex1script.ba.exet'], ['alice.l12validfile.txtl3.i.exalice.123.txt'], ['1.txt'], ['...ex'], ['.eeex'], ['.exmy.docx.FXexe'], ['.exali123.ttxtc1sc..exript.bate.123.tx.efil.exal.123.txte.dext'], ['hello worl.d.exe'], ['....e.eeheell.exalice.12123.txt3.xtxteo world.exe'], ['abcheelrld.exe123defexe'], ['alice.l12validfile.txtlalice.exali123.ttxtc1script.bate.123.txt.123.i.ex3.i.exalice.123.txt'], ['.exali123.ttxtc1scriptt.bate.123.txt'], ['.heello world.exheell.exalice.12123.txt3.xtxteo world.exeeexalice.123..exalice.123.tx.t'], ['.exalice.12121232d.efexexte'], ['.exalice.l12validfile.txtl3.i.exalice.123.txtal.123.txt'], ['.exalice.l12validfile.txtl3.i.my.docx'], ['.exhello worl.d.exealic1script.batFXe.12.txt'], ['.exmya.docx.efil.emy.docxxal.123.txte.dex.exe'], ['.exali123c.ttxtc1script.bate.123.txt'], ['.exali123alice.exali123.ttxtc1script.bate.123.txt.123.i.exc.ttxabc123defexetc1script.bate.123.txt'], ['alice.l12validflile.txtl3.i.exalice.123.ttxt'], ['1script.batt.exalic1script.bate.123.t'], ['.e.exali123.ttxtc1script.bate.123.tx.efil.exal.123.txte.dextfile.doc.ex'], ['.exalice.12123.txxtxte'], ['1script.bai.exet'], ['.exa.exalice.12123.txt3.xtxteli123.ttxtc1scriptt.bate.123.txt'], ['ffile.d.efile.doc.exocile.doc'], ['validfilalice.l12validflile.txtl3.i.exalice.123.ttxte.txt'], ['.efil.exal.validftile.txt123.txte.dex'], ['.eee'], ['.exalice.123.txt.exalice.123..exalice.123.tx.t'], ['.exal.123my.docx.txt'], ['.efile.dxoc.ex'], ['.exmy.docx.FX1script.ba.exetexe'], ['therearemorethan3digits1234567890inthisname.exe'], ['example.'], ['.example'], ['alreadyexists.txz'], ['éxample.exe'], ['.tx.to.'], ['example'], ['123.exe'], ['I_have_no_digits_or_dots'], ['abcd.txtt'], ['Qflg'], ['abctxtt'], ['examQflgple'], ['abcd.x.txtt'], ['.exam123.exeple'], ['I_have_n_dots'], ['abcd.x.txtt.tx.to.'], ['abctxatt'], ['e.example'], ['I_have_no_digits_or_dotsalreadyexists.txz'], ['alreadyexists.example.txz'], ['e'], ['1.exam123.exeple23.exe'], ['abcd.x.txtt.tx.to.I_have_no_digits_or_dots'], ['I_have_no_de.exampleigits_or_do_ts'], ['Qalreadyexists.txzflg'], ['abctxI_have_no_de.exampleigits_or_do_tsatt'], ['I_have_no_de.exampltherearemorethan3digits1234567890inthisnamae.exeeigits_or_do_ts'], ['I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts'], ['alralreadyexists.txzeadyexists.example.txz'], ['e.exampleabctxtt'], ['I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txz'], ['abctxI_have_no_de.exampleigits_or_do_I_have_no_de.exampltherearemorethaen3digits1234567890inthisnamae.exeeigits_or_tstsatt'], ['léxample.exe'], ['T'], ['ab1.exam123.exeple23.exetxtt'], ['abcd.ctxxtt'], ['alreadI_have_n_dotsyexists.example.txz'], ['I_have_no_de.exaampltherearemorethan3digits1234567890inthisnamae.exeeigits_or_do_ts'], ['abct'], ['abctxéxample.exett'], ['therearemorethan3digits1.tx.to.234567890inthisname.exe'], ['I_have_n_dos'], ['examlplI_have_n_dose.'], ['lQflg'], ['123.I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tsexe'], ['I_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts'], ['therearemorethan3digits1.tx.to.23456123.exe7890inthisname.exe'], ['I_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['éxample.exae'], ['Q'], ['ee.example'], ['.exam123.exeplee'], ['aabcd.x.txtt.tx.to.I_have_no_digits_or_dotsbct'], ['I_have_éxample.exaeno_digits_or_dotsalreadyexists.txz'], ['examlplexample._have_n_dose.'], ['.3.exeeplee'], ['.3.exeeplabcd.ctxxtt'], ['1.exaem123.exeple23.exe'], ['1.exexamQflgpleam123.exeple23.exe'], ['I_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['CFP'], ['e.examplctxtt'], ['examlplexample._have_n_dose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txz'], ['lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_teslg'], ['lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattempleigits_or_do_teslg'], ['therearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exe'], ['example.T'], ['I_have_éxample.exaeno_digits_or_dotsalreadyexists.txzQ'], ['p.3.exeeplee'], ['abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exett'], ['I_have_no_digits_or_dotsaltreadyexists.txz'], ['I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxtt'], ['éxtherearemorethan3digits12345123.exe67890inthiisname.exeample.exae'], ['abt'], ['I_have_no_de.Qalreadyexists.txzf1.exam123.exmpleigits_or_do_ts'], ['exam123.exeple'], ['1.exe.examplctxttaem123.exeple23.exe'], ['.exam123.exepleeexample'], ['ee'], ['therearemoreI_have_n_dotsthan3digits1234567890inthisname.exe'], ['aabcd.xI_have_no_digits_or_dotsbct'], ['p.3.exeepleeabcd.xt.txtt.tx.to.'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_teslg3.exeepleeabcd.xt.txtt.tx.to.'], ['éxampl1.exaem123.exeple23.exee.exae'], ['oI_have_no_digits_or_dots'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.'], ['I_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQ'], ['alreadI_have_ists.example.txz'], ['I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQzflgists.txz'], ['alreadI_have_ists.example.txzee'], ['CF'], ['ealreadI_hlave_ists.example.txz'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesflgpleam123.exeple23.exe'], ['alralreadyexists.txzeadyexiI_have_n_dotssts.example.txz'], ['1.exexamQflgpleam123.exeple23.exeabctxatt'], ['therearemorethan3digits1.tx.to.23456i7890inthisname.exe'], ['p.3.exeepleealralreadyexists.txzeadyexiI_have_n_dotssts.example.txzabcd.xt.txtt.tx.to.'], ['p.lQflg3.exeeplee'], ['eealreadI_hlave_ists.example.txzxample'], ['.3.exeeplabcd.ctp.lQflg3.exeepleexxtt'], ['therearemexample.Torethan3digits1.tx.to.23456i7890inthisname.exe'], ['abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct'], ['examlplexample._have_n_dose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txnz'], ['e.examplleabctxtee.examplet'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxttdo_ts'], ['1.exexamQflgpleam123.exepltherearemorethan3digits1.tx.to.23456i7890inthisname.exee23.exeabctxatt'], ['exmple'], ['abctxéxeealreadI_hlave_ists.example.txzxampleample.exett'], ['ab1.exam123.exeple23.exetxett'], ['.exam12.tx.to.xepl'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.123.exe'], ['exmmple'], ['abctI_have_n_dotsxI_have_no_de.exampleigits_or_do_tsatt'], ['I_have_no_dde.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxttdo_ts'], ['alreadI_have_n_dotsyexists.example.txvz'], ['I_have_no_de.QalreadyabctxI_havex_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['alreadI_have_n_dotsyexists.exam1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesflgpleam123.exeple23.exeple.txvz'], ['thaabcd.x.txtt.tx.to.I_have_no_digits_or_dotsbcterearemorethan3digits1234567890inthisname.exe'], ['therearemorethan3digits123456890inthisname.exe'], ['examplee.exampleabctxtt'], ['alralreadyexists.txzeadyexiexample.sts.example.txz'], ['therearemorethan3digits1.tx.to.23456789r0inthisname.exe'], ['1.exaem123.exeple23.exee'], ['atbcd.txtt'], ['I_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigitsalreadI_have_ists.example.txz_or_do_ts'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exe'], ['ealreadI_hlavtherearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['I_haabctxI_have_no_de.exampleigits_or_do_tsattve_no_digits_Qalreadyexists.txzflgor_dotsalreQzflgists.txz'], ['.exampleealreadI_hlave_ists.example.txz'], ['éxa1mpl1.exaem123.exeple23.exee.exae'], ['ealrep.3.exeepleeabcd.xt.txtt.tx.to.adI_hlave_ists.example.txz'], ['1.exaem123.exeple2ee'], ['.exam'], ['mple.'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['NVPsZuOM'], ['.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.g3.exeepleexxtt'], ['alralreadyexists.txzeadyexistabctxI_have_no_de.exampleigits_or_do_tsatts.example.p.3.exeepleez'], ['alreadI_have_n_dotsyexists.example.txI_have_no_de.exampleigits_or_do_tsvz'], ['.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txQalreadyexists.txzflgzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.g3.exeepleexxtt'], [''], ['Qflgexmple'], ['alreadI_have_n_dotsyexistsI_have_éxample.exaeno_digits_or_dotsalreadyexists.txz.example.txvz'], ['therearemorethan3digits1.tx.toabct.234alralreadyexists.txzeadyexiexample.sts.example.txz56123.exe7890inthisname.exe'], ['éxampl1.exaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exae'], ['alreadI_have_n_dotsyeCFxists.example.txvz'], ['I_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exa123.exeple23.exempleigits_or_do_tes'], ['1.exexamQflgpl123.exeeam123.exepltherearemorethan3digits1.tx.to.23456i7890inthisname.exee23.exeabctxatt'], ['I_have_no_digits_Qalreadyexixsts.txzflgor_dotsalreQflgists.txz'], ['abctxéxaoI_have_no_digits_or_dotsmple.exett'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctabctxéxample.exettxxttdo_ts'], ['1.exexamQI_have_nao_de.Qalream123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exe'], ['therearemorethan3digealreadI_hlave_ists.example.txzits1234567890inthisname.exe'], ['.exam123.e2xeple'], ['therearemorethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxttexe'], ['éxample.e.3.exeeplabcd.ctp.lQflg3.exeepleexxttxae'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalrieadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['éxample.e.3.exeeplI_have_éxample.exaeno_digits_or_dotsalreadyexists.txzQabcd.ctp.lQflg3.exeepleexxttxae'], ['alreadI_have.tx.to._ists.ep.3.exeepleexample.txzee'], ['.exam112.tx.to.xepl'], ['I_have_no__or_dotsaltreadyexistsexample..txz'], ['alreadyexists.exampp.3.exeepleetxz'], ['p.3.exeepleeabcd.xto.'], ['therearemorethant3digits1.tx.to.234567890inthisname.exe'], ['therearemoreethan3digits123456890inthisname.exe'], ['alralereadyexists.txzeadyexistabctxI_have_no_de.exampleigits_or_do_tsatts.example.p.3.exeepleez'], ['I_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexp.lQflg3.exeepleeis1ts.txzf1.exam123.exeple23.exempleigits_or_dos'], ['éxample.pexaae'], ['I_have_no_de.QalreadyabctxI_havex_no_de.exampleigits__or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['1.exe.examplctxttaem123.exeple23xe'], ['1.exaem123..exeple2ee'], ['abcQalreadyexists.ttxzflxgt'], ['e.examplleabctxtee.extherearemorethan3digits1.tx.to.23456i7890inthisname.exeamplet'], ['eealreadI_hlave_iststxzxample'], ['.tabctxéxample.exettxexamlplexample._have_n_dose..to.'], ['p.3.exeepleealralreadyexists.txzeadyexiI_have_n_dotssts.example.txzabcde.exampleabctxtt.xt.txtt.tx.to.'], ['alreadI_havab1.exam123.exeple23.exetxette_ists.example.txzee'], ['éxample.e.3.exeeplabcd.ctp.lQflg3.exeepleexxttxaeF'], ['alreadI_have_n_dotsyexists.exoample.txvz'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesflgplea1.exaem123.exeple2eem123.exeple23.exe'], ['.examplempmle.'], ['examplee.'], ['I_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exemplehigitsalr_do_ts'], ['p.3.eI_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigitsalreadI_have_ists.example.txz_or_do_tsxeeplee'], ['abcttxéxample.exett'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigitsexamplee._or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exz'], ['therearemorethan3digits1.tx.to.234561eabcd.ctxxttexe'], ['at'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['examxm123.exeple'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.ethefrearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxdttdo_ts'], ['therearemrorethan3digits1.tx.to.234561eabcd.ctxxttexe'], ['ealreadI_hlavthe.tabctxéxample.exettxexamlplexample._have_n_dose..to.rearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['exap.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to..T'], ['atat'], ['examlplexa.3.exeeplabcd.ctp.lQflg3.exeepleexxttle._have_n_dose.'], ['.3.e123.exexeeplabcd.ctp.eexxtt'], ['alQfllgtbcd.txtt'], ['alreadI_have_ists.example.txe.examplez'], ['e.examplleabctxtee.exthere.aremorethan3diabctxttname.exeamplet'], ['e.exampl'], ['1.exe.examplctxttaem123.etherearemorethan3digits1234567890inthisname.exexeple23.exe'], ['NVZuOMM.3.exeeplee'], ['I_have_no_de.exampltherearemorethaéxampl1.exaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exaen3digits1234567890inthisnamae.exeeigits_or_do_ts'], ['examexamxm123.exeple.'], ['éxampl1.exaem123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exae'], ['I_have_no_de.QalreadyabctxI_havex_no_de.exampleigits__or_do_tsattexis1ts.txzf1.exam123.exeple23.exemplei1.exe.examplctxttaem123.exeple23.exegits_or_do_tes'], ['oI__have_no_digits_or_dots'], ['I_have_no_dtigits_Qalreadyexists.txzflgor_dotsalreQzflgists.txz'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123example..exeple23.exempleigits_or_do_ts.3.exI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_teseeplabcd.ctxxttdo_ts'], ['e.exa'], ['ab'], ['alreadyyexists.exampp.3.exeepleetxz'], ['1.examlplexample._have_n_dose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txzexexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exe'], ['I_have_no_de.exaaTmpltherearemorethan3digits1234567890inthisnamae.exeeigits_or_do_ts'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.eexample.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['eaalreadI_hlave_ists.example.txz'], ['alreadI_have_atatn_dotsyexists.exoample.txvz'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exedple23.exempleigits_or_do_teslg3.exeepleeabcd.xt.txtt.tx.to.'], ['éxample.e.3.exeepltherearemorethan3digits1.tx.to.23456789r0inthisname.exe_digitI_have_no_de.QalreadyabctxI_havex_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tess_or_dotsalreadyexists.txzQabcd.ctp.lQflg3.exeepleexxttxae'], ['ab1.exam123.exeple23.exeett'], ['alreadI_have_iists.example.txzee'], ['ots'], ['bab'], ['therearemoreI_have_n_dotsthan3digits1234567890inthisnamabctxI_have_no_de.exampleigits_or_do_I_have_no_de.exampltherearemorethaen3digits1234567890inthisnamae.exeeigits_or_tstsatte'], ['I_hQave_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts'], ['éxampl1.exaeam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exae'], ['I_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzfe1.I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxttpexam123.exeple23.exempleigits_ores'], ['.examalreadI_have_n_dotsyexists.example.txz123.e2xeple'], ['alrea.exam123.e2xeples.txz'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_d.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeplQe23.exempleigits_or_do_txtt.tx.to.g3.exeepleexxtto_tesflgpleam123.exeple23.exe'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesflgplea1.exaem123.exeple2eem123.exI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_teseple23.exe'], ['abcd.x.txtt.txe.to.I_have_no_digits_or_dots'], ['aabcd.x.txtt.tx.to.I_alreadyyexists.exampp.3.exeepleetxzhav_doct'], ['I_have_no_de.exampltherearemorethaéxampl1.exaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexistealrep.3.exeepleeabcd.xt.txtt.tx.to.adI_hlave_ists.example.txzs.txzQct.exeple23.exee.exaen3digits1234567890inthisnamae.exeeigits_or_do_ts'], ['I_have_mno_de.Qalreab1.exam123.exeple23.exetxttadyexists.txzf1.exam123.exeple23.exemplehigitsalr_do_ts'], ['éxampl1.exaeam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple2'], ['.exxaem'], ['e.examplcttxtt'], ['examxem123.exeplabctxéxeealreadI_hlave_ists.example.txzxampleample.exette'], ['1.exxaem123.exeple2ee'], ['there.aremorethan3digits1.tx.to.234567890inthisname.exe'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abthave_n_dose..to.rearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['I_haveI_n_dots'], ['éxa1mplx1.exaem123.exeple23.exee.exae'], ['NPsZuOM'], ['eaalreadI_hlave_ists.examtherearemorethan3digits1.tx.to.234567890inthisname.exeple.txI_have_mno_de.Qalreab1.exam123.exeple23.exetxttadyexists.txzf1.exam123.exeple23.exemplehigitsalr_do_tsz'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexistsalralreadyexists.txzeadyexiI_have_n_dotssts.example.txzm.txzf1.exam123.exeple23.exempleigitthaabcd.x.txtt.tx.to.I_have_no_digits_or_dotsbcterearemorethan3digits1234567890inthisname.exes_or_do_ts.3.exeeplabcd.ctxxdttdo_ts'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abthave_n_dose..to.rearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_rists.example.txz'], ['therearemorethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7890inthisname.exe'], ['I_hQave_no_de.Qalreadyexists.ts'], ['abctaxatt'], ['p.lQQfI_have_no_de.Qdo_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exemple.ttxexamlplexample._abthave_n_dose..to.rearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_rists.example.txz'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abthave_n_dose..to.rearemorethan3digits12345abctaxatt6890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['there.aremorethan3digitms1.tx.to.234567890inthisname.exe'], ['alreadI_have.tx.to._ists.ep.3.exeepleexample.txzeebab'], ['e.examplmeabctxtt'], ['12I_have_no_digits_or_dots3.ex_éxampl1.exaeam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exaee'], ['alreadI_have_n_dotsyexists.example.txI_have_no_de.exampleigits_.exam112.tx.to.xeplor_do_tsvz'], ['I_haabctxI_have_no_de.exampleigzflgists.txz'], ['I_haxempleigits_or_dxo_ts.3.exeeplabcd.ctxxttdo_ts'], ['I_haxempleigits_or_dxo_ts.3.exeeplabcd.ctxxtabttdo_ts'], ['1.exaem123..exepealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.eexample.txzttexies1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txzle2ee'], ['exaQmple.T'], ['1.exexamQI_have_no_de.Qalrenadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesflgpleam123.exeple23.exe'], ['abcd.x.txtt.txe.to.I_have_no_digits_aobr_dots'], ['1.exexamQI_have_nao_de.Qalream123ts_or_do_tesflgpleam123.exeple23.exe'], ['éxampl1.etherearemoreethan3digits123456890inthisname.exexaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exae'], ['1.exe.examp.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.g3.exeepleexxttlctxttéxample.exaeaem123.exeple23xe'], ['I_have_no_dtigits_Qalreadyexists.txzflgor_dotasalreQzflgists.txz'], ['I_have_mno_de.Qalreab1.exam123.exeple23.exetxttadyexists.txzf1.exam123.exeple23.exemplehigitsalr_do_tséxample.pexaae'], ['I_haxempleigits_or_dxo_ts.3.exeeplabcd.cexamlplI_have_n_dose.txxttdo_ts'], ['therearemor'], ['NVPsZM'], ['I_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzfe1.I_have_no_de.QalreadyexistsI_have_no_de.QalreadyabctxI_havex_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxttpexam123.exeple23.exempleigits_ores'], ['I_haabctxI_have_no_de.exampleigzflgiaabcd.x.txtt.tx.to.I_have_no_digits_or_dotsbctsts.txz'], ['.eam'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txztteabctI_have_n_dotsxI_have_noleigits_or_do_txtt.tx.to.123.exe'], ['alreadye1.exe.examp.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.g3.exeepleexxttlctxttéxample.exaeaem123.exeple23xe.txz'], ['abctxéxe.exett'], ['I_have_no_dae.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['éxample.e.3.exeeplabcd.ctp.lQflg3.exe'], ['éxampl1.exaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQcéxample.e.3.exeeplabcd.ctp.lQflg3.exeepleexxttxaet.exeple23.exee.exae'], ['alralreadyexists.txzeadyexistabctxI_have_no_de.example_tsatts.example.p.3.exeepleez'], ['alreadI_have_n_dotsyexists.exam1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesflgpleam123.exeple23.exeple.txvzb'], ['alreadI_havab1.exam123Qalreadyexists.txzflg.exeple23.exetxette_ists.example.txzee'], ['therearemorethan3digits1.tx.to.9r0inthisname.exe'], ['F'], ['exampleec.exampleabctxtt'], ['therearemorethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7890insthisname.exe'], ['e.examplcttxtet'], ['alreadI_have.tx.to._ists.ep.3.exeepleeI_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxdttdo_tsxample.txzee'], ['cd.x.NVPsZMtxtt'], ['I_have_no_de.QalreadyabctxI_have_no_de.examipleigits_or_do_tsattexp.lQflg3.exeepleeis1ts.txzf1.exam123.exeple23.exempleigits_or_dos'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exdam123.exedple23.exempleigits_or_do_teslg3.exeepleeabcd.xt.txtt.tx.to.'], ['oI_have_no_digits_o'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abcttxéxample.exettabthave_n_dose..to.rearemorethan3digits12345abctaxatt6890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['alreadI_have_n_dotsyexists.exa1.exe.examplctxttaem123.exeple23xemple.txvz'], ['examéxample.e.3.exeeplabcd.ctp.lQflg3.exexm123.exeple'], ['alreadI_have_n_dotsyI_have_no_de.exaaTmpltherearemorethan3digits1234567890inthisnamae.exeeigits_or_do_tseCFxists.example.txvz'], ['I_have_no_dtigits_Qalreadyexists.txztxz'], ['therearemor1.exe.examplctxttaem123.exeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxttexe'], ['abctxéxeexaQmple.Ttt'], ['eealreadI_hlave_istI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exa123.exeple23.exempleigits_or_do_tess.example.txzxample'], ['I_have_mno_de.Qalreab1.exam123.exeple23.exetxttadyexists.txzf1.exam123.exeple23.exemplehigitsalr_do_tséxatherearemrorethan3digits1.tx.to.234561eabcd.ctxxttexemple.pexaae'], ['1.exexamQflgpleealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txzam123.exple23.exe'], ['p.lQQfI.eameple23.exempleigits_or_do_txtt.tx.to.'], ['oI__have_no_digits_or_dotrs'], ['abctabcd.x.txtt.txe.to.I_have_no_digits_or_dots'], ['alreadyextists.txz'], ['examlplexample._have_n_dose.I_hp.3.exeepleeabcd.xto.salreQflgists.txnz'], ['exéxampl1.etherearemoreethan3digits123456890inthisname.exexaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exaeple'], ['12I_have_no_digits_or_dots3.ex_éxampl1.exaeam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.ep.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txztteabctI_have_n_dotsxI_have_noleigits_or_do_txtt.tx.to.123.exexeple23.exee.exaee'], ['I_have_mno_de.Qalreab1.exam123.exeplem23.exetxttadyexists.txzf1.exam123.exeple23.exemplehigitsalr_do_ts'], ['therearemexample.T.to.23456i7890inthisname.e'], ['.31.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exe.e123.exexeeplabcd.ctp.eexxtt'], ['alreadI_have_n_dotsyeCFxists.nexample.txvz'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexiNVZuOMM.3.exeeplees1ts.txzf1.exam123.exedple23.exempleigits_or_do_teslg3.exeepleeabcd.xt.txtt.tx.to.'], ['lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam12its_or_do_teslg'], ['ealhreadI_hlave_ists.example.txz'], ['therearemoreI_have_n_dotabcQalreadyexists.ttxzflxgtsthan3digits1234567890inthisname.exe'], ['éxample.e.3.exeeplaexaQmple.Tbcd.ctp.lQflg3.exeepleexxttxae'], ['1.exe.examplctxttaem3123.exeple23xe'], ['therearemor1.exe.examplctxttaem123.exeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxttI_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigitsalreadI_have_ists.example.txz_or_do_tse'], ['examlplexample._have_n_I_have_no_digits_or_dotsaltreadyexists.txzdose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txnz'], ['éxa1mpl1.exaem123.exoI__have_no_digits_or_dotrseple23.exee.exae'], ['therearemor1.exe.examplctxttaem123x.exeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxttexe'], ['NPsZ1.exexamQI_have_nao_de.Qalream123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exeuOM'], ['exam1ple'], ['p.3.exeepleealralreadyexists.txzeadyexiI_have_n_dottssts.example.txzabcde.exampleabctxtt.xt.txtt.tx.to.'], ['I_have_no_dtigits_Qalreadyexists.txzflgor_dotsalreQzflgistI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exa123.exeple23.exempleigits_or_do_tess.txz'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23e.exe'], ['.ep.3.exeepleealralreadyexists.txzeadyexiI_have_n_dotssts.example.txzabcde.exampleabctxtt.xt.txtt.tx.to.am'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleirtdo_ts'], ['I_have_mno_de.Qalreab1.examlplexample._have_n_I_have_no_digits_or_dotsaltreadyexists.txzdose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txnzséxample.pexaae'], ['éxampl1.exaI_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tseam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exae'], ['.exam112.tx.toI_have_no_digits_oepl'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.texettxexamlplexample._abcttxéxample.exettabthave_n_dose..to.rearemorethan3digits12345abctaxatt6890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['Otherearemor1.exe.examplctxttaem123.exeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxettI_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigitsalreadI_have_ists.example.txz_or_do_tseKI'], ['I_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigitsalreadI_have_istss.example.txz_or_do_ts'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexistsalralreadyexists.txzeadyexiI_have_n_dotssts.example.txzm.txzf1.exam123.exeple23.exempleigitthaabcd.x.txtt.tx.to.I_have_no_digits_or_dotsbcterearemorethan3digits1234567890inthisalralreadyexists.txzeadyexistabctxI_have_no_de.exampleigits_or_do_tsatts.example.p.3.exeepleezname.exes_or_do_ts.3.exeeplabcd.ctxxdttdo_ts'], ['éx'], ['tI_hQave_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tsherearemorethan3digits1.tx.to.23456123.exe7890inthisname.exe'], ['examlplexample._have_n_dose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalrexamplee.exampleabctxtteQflgists.txz'], ['éxample.e.3.exeeplabcd.ctp.lQflg3.exeepleexxttexaeF'], ['exaexamplee.exampleabctxttmlplI_have_n_dose.'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_d.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeplQe2e3.exempleigits_or_do_txtt.tx.to.g3.exeepleexxtto_tesflgpleam123.exeple23.exe'], ['1.exam123.exeple23éxampl1.exaeam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.t.exeple23.exee.exaee'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple.23e.exe'], ['I_have_no_de.exampleigits_or_I_have_no_de.Qtalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctabctxéxample.exettxxttdo_ts'], ['examI_hQave_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tslplI_have_n_dose.'], ['examlplexample._have_n_I_have_no_digits_or_dotsaltreadyexists.txzdose.I_have_no_digitsi_Qalreadyexists.txzflgor_dotsalreQflgists.txnz'], ['aalreadI_have_n_dotsyexists.exa1.exe.examplctxttaem123.exeple23xemple.txvzbcd.ctxxtt'], ['gudadVYH'], ['therearemor1.exe.examplctxttaem123x.ep.3.exeepleealralreadyexists.txzeadyexiI_have_n_dotssts.example.txzabcd.xt.txtt.tx.to.xeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxttexe'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_t_xtt.tx.to.'], ['1.exexamQI_have_nao_de.Qalream1alreadI_have_atatn_dotsyexists.exoample.txvz23ts_or_do_tesflgpleam123.exeple23.exe'], ['abI_haveI_n_dots1.elxam123.exeple23.exetxett'], ['ab1.examplpe23.exeett'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abcttxéxampI_haxempleigits_or_dxo_ts.3.exeeplabcd.ctxxtabttdo_tsle.exettabthave_n_dose..to.rearemorethan3digits12345abctaxatt6890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['exp.lQQfI.eameple23.exempleigits_or_do_txtt.tx.to.amplee.'], ['abcd.ct567890inthisname.exett'], ['NOVPsZuOM'], ['1.exexamQI_have_no_deealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.ethefrearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exe'], ['CCF'], ['exam123.etherearemoreethan3digits123456890inthisname.exexeple'], ['I_hQave_n_de.Qalreadyexistse.ts'], ['alralreadyexists.txzeadyexiexample.ss.example.txz'], ['therearemoreI_have_n_dotsthan3digits1234567890inthisname.exealreadI_have_n_dotsyexists.example.txvz'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abthave_n_dose..to.rearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_istsabcttxéxample.exett.example.txz'], ['eexaQmple.T'], ['p.3.exeepleealralreadyexists.txzeadyerxiI_have_n_dotssts.example.txzabcd.xt.txtt.tx.to.'], ['alreadI_have_atatn_dotsyexists.exmple.txvz'], ['abeealreadI_hlave_iststxzxamplectxéxeexaQmple.Ttt'], ['abcdI.x.txtt.txe.to.I_have_no_digits_or_dots'], ['.exampleealreadI_hlave_ists.example.examplempmle..txz'], ['I_have_no_de.QalreadyabctxI_atathave_no_de.examipleigits_or_do_tsattexp.lQflg3.exeepleeis1ts.txzf1.exam123.exeple23.exempleigits_or_dos'], ['exéxampl1.etherearemoreethan3digits123456890inthisname.exexaem123abI_have_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exoee.exaeple'], ['e.exampltleabctxtee.examplet'], ['ab1.exam123.exeplep.3.exeepleealralreadyexists.txzeadyexiI_have_n_dotssts.example.txzabcd.xt.txtt.tx.to.23.exeett'], ['therearemorethan3digits123456890inththere.aremorethan3digitms1.tx.to.234567890inthisname.exeisname.exe'], ['.3.exeeplabcd.ctp.lQflg3.exeepleexxttp.3.exeeplee'], ['alreadI_have.tx.to._ists.ep.3.exeepleexample.txzeebababctxéxepealreadI_hlave_ists.example.txzxampleample.exett'], ['éxample.e.3.xexeeplaexaQmple.Tbcd.ctp.lQflg3.exeepleexxttxae'], ['I_have_no_de.Qalre1.exam123.exeple23éxampl1.exaeam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.t.exeple23.exee.exaeeadyabctxI_havex_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['I_have_no_de.Qalreadyexists.ttherearemorethan3digits1234567890inthisname.exexzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxtt'], ['tI_hQave_no_de.Qalreadyexists.txzf1.e.examplctxttexam123.exeple23.exempleigits_or_do_tsherearemorethan3digits1.tx.to.23456123.exe7890inthisname.exe'], ['I_haeve_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam1233.exempleigits_or_do_tesflgpleam123.exeple23e.exe'], ['.3.exeeplabcd.ctp.lQflg3.exeeplee'], ['examQflgpltherearemorethan3digits1.tx.to.23456i7890inthisname.exee'], ['1.exe.exI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesamplctxttaem123.exeple23xe'], ['eealrxeadI_have_n_dotsyeCFxists.nexample.txvz'], ['alreaadI_have_n_dotsyexists.exoample.txvz'], ['I_haabctxI_have_no_de.exampleigits_or_do_tsattve_no_digits_alreadyexists.txzflgor_dotsalreQzflgists.txz'], ['ab1.exam123.exeple23.exetxettherearemorethant3digits1.tx.to.234567890inthisname.exet'], ['I_haxempleigits_or_dxo_alreadI_have.tx.to._ists.ep.3.exeepleeI_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxdttdo_tsxample.txzeets.3.exeeplabcd.ctxxttdo_ts'], ['1.exe.exI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempNVZuOMM.3.exeepleeleigits_or_do_tesamplctxttaem123.exeple23xe'], ['thaabcd.x.txtt.tx.to.I_have_no_digits_or_dotsbcterearemorethan.exe'], ['I_have_nalreaadI_have_n_dotsyexists.exoample.txvzos'], ['alreadyyexists.'], ['there.aremorethan3digitms1.tx.to.234567890ointhisname.exe'], ['eealreadI_hlave_eistse.exaImpale.txzxample'], ['gudadVtherearemexample.T.to.23456i7890inthisname.eH'], ['abctxéxeexTaQmple.Ttt'], ['1.exaem2123.exeple2ee'], ['alrea_have_n_dotsyeCFxists.example.txvz'], ['I_hQave_no_de.Qalreadyexists.txzf1.exam123.exeple23.ex.empleigits_or_do_ts'], ['ba.exampleealreadI_hlave_ists.example.txz'], ['.exam123.e2xepl1xe'], ['tI_hQave_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tsherearemorethan3digits1.tx.to.23456123..exe7890inthisname.exe'], ['p.3.exeepleealralreadyexists.txzeadyerxiI_have_n_dotssts.example.txxzabcd.xt.txtt.tx.to.'], ['éxamI_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxttple.exae'], ['1.exaem2123.exeple1.exexamQI_have_no_de.Qalreadyexis1ts.tpxzf1.exam1233.exempleigits_or_do_tesflgpleam123.exeple23e.exe2ee'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_t_xtt.tx.toalralreadyexists.txzeadyexistabctxI_have_no_de.exampleigits_or_do_tsatts.example.p.3.exeepleez.'], ['therearemorethan3digi9ts1.tx.to.9r0inthisname.exe'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abthave_n_dose..to.rearemorethan3digits123456890inthisnamtep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['I_have_no_de.QalreadyabctxI_have_no_de.example1.exe.examplctxttaem123.exeple23xeigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tes'], ['ealCCFtxexamlplecttxéxampI_haxempleigits_or_dxo_ts.3.exeeplabcd.ctxxtabttdo_tsle.exettabthave_n_dose..to.rearemorethan3digits12345abctaxatt6890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['alreadI_have_atatn_therearemoreI_have_n_dotsthan3digits1234567890intdhisnamabctxI_have_no_de.exampleigits_or_do_I_have_no_examplee.de.exampltherearemorethaen3digits1234567890inthisnamae.exeeigits_or_tstsattedotsyexists.exmple.txvz'], ['exmmleealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.atxz'], ['I_haxempleigits_or_dxo_ts.3.exeeplabcdc.ctxxtabttdo_ts'], ['1.exexamQI_have_no_de.Qalrenadyexis1ts.txzf1.exam123.exeple23.exempleigitstherearemorethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7890inthisname.exe_or_do_tesflgpleam123.exeple23.exe'], ['I_have_no_de.QalreadyabctxI_have_no_de.examipleigits_or_do_tsattexp.lQflg3.exeepleeis1ts.txzf1.exam123.exeple23.exemealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abthave_n_dose..to.rearemorethan3digits123456890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_istsabcttxéxample.exett.example.txzpleigits_or_dos'], ['therearemoexamlplexample._have_n_dose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txnzrethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7isname.exe'], ['abctxI_have_no_de.extherearemorethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7890insthisname.exeampleigits_or_do_tsatt'], ['ex1ple'], ['I_ahave_no_digits_Qalreadyexixsts.txzflgor_dotsalreQflgists.txz'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.xQalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['aabcd.xI_have_noNVZuOMM.3.exeeplee_digits_or_dotsbct'], ['éxa1mpl1.exaem123.exoI__have.exae'], ['1.exexamQflgpleam123p.exeple23.exeabctxatt'], ['abctxat1.exexamQI_have_no_de.Qalrenadyexis1ts.txzf1.exam123.exeple23.exempleigitstherearemorethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7890inthisname.exe_or_do_tesflgpleam123.exeple23.exet'], ['therearemorethant3digits1.tx.to.234567890inthiI_have_mno_de.Qalreab1.examlplexample._have_n_I_have_no_digits_or_dotsaltreadyexists.txzdose.I_have_no_digits_Qalreadyexists.txzflgor_dotsalreQflgists.txnzséxample.pexaaesname.exe'], ['ab.exxaemctxéxe.exett'], ['I_e.examplctxttalreadyexistse.ts'], ['e.examplleabctxtebe.examlet'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexiNVZuOMM.3.exeeplees1lts.txzf1.exam123.exedple23.exempleigits_or_do_teslg3.exeepleeabcd.xt.txtt.tx.to.'], ['alreadI_have_n_dotsyeCéxampl1.exaem123.exeple23.exee.exaeFxists.nexample.txvz'], ['e.examplleabctxtee.exthere.aremorexamlplexample._have_n_I_have_no_digits_or_dotsaltreadyexists.txzdose.I_have_no_digitsi_Qalreadyexists.txzflgor_dotsalreQflgists.txnzethan3diabctxttname.exeamplet'], ['p.3.exeepleeabcd.xt.txtt.txp.to.'], ['I_hQave_n_de.yexeistse.tsexett'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.texettxexamlplexample._abcttxéxample.exettts.example.txz'], ['1.exexamQflgpleealreadI_hlave_iséxamI_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxttple.exaets.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txzam123.exple23.exe'], ['NZPsZ1.exexamQI_have_nao_de.Qalream123.exeplee23.exempleigits_or_do_tesflgpleam123.exeple23.exeuOM'], ['.3.exctp.lQflg3.exeepleexxtt'], ['aldyexists.txzeadyexiI_have_tn_dotssts.example.txz'], ['1.exe.examp.3.exeeplabcd.ctp.lQflp.lQQfI_eadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.g3.exeepleeeaem123.exeple23xe'], ['therearemor1.eéxampl1.exaI_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tseam123abI_hCFave_éxample.exaen1.exam123.exeple23.exeo_digits_or_dotsalreadyexists.txzQct.exeple23.exee.exaexe.examplctxttaem123.exeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabcd.ctxxttexe'], ['ealreadI_hlavthe.tabctxéxam.exam12.tx.to.xeplple.exettxexamlplexample._abcttxéxampI_haxempleigitxs_or_dxo_ts.3.exeeplabcd.ctxxtabttdo_tsle.exettabthave_n_dose..to.rearemorethan3digits12345abctaxatt6890inthisnamep.3.exeepleeabcd.xt.txtt.tx.to..exee_ists.example.txz'], ['NPsZ1.exexamQI_have_nao_de.Qalream123.exeplee23.exempleigiQts_or_do_te3.exeuOM'], ['alreadI_have_atatn_.txvz'], ['abat'], ['tI_hQave_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tsherearemorethan3digits1.xe7890inthisname.exe'], ['éxa.mpl1.exaem123.exeple23.exee.exae'], ['.exampleealreadtherearemorethan3digits1234567890inthisname.exeI_hlave_ists.example.txz'], ['éxa1mplx1.exaem123.exeple23.exee.exalQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam12its_or_do_teslge'], ['I_have_no_de.exampleigits_or_I_have_no_deI_have_no_digits_or_dotsalreadyexists.txz.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctabctxéxample.exettxxttdo_ts'], ['NOVPsI_haabctxI_have_no_de.exampleigits_or_do_tsattve_no_digits_alreadyexists.txzflgor_dotsalreQzflgists.txzZuOM'], ['éxa1.exee.exae'], ['ee.exam.example'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigitsexamplee._or_do_tsaalreadyexists.I_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tsexample.txzttexis1ts.txzf1.exam123.exeple23.exz'], ['éxample.e.3.xexeeplaeQxaQmple.Tbcd.ctp.lQflg3.exeepleexxttxa'], ['éxtherearemorethan3digits12345123.exe67890inthiisnample.exae'], ['ab1.exam123.exeple23.exetxettherabearemorethant3digits1.tx.to.234567890inthisname.exet'], ['1.exe.exI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempNVZuOMM.3.exeepleeleigits_or_do_tI_have_no_de.QalreadyabctxI_atathave_no_de.examipleigits_or_do_tsattexp.lQflg3.exeepleeis1ts.txzf1.exam123.exeple23.exempleigits_or_dosesamplctxttaem123.exeple23xe'], ['examI_hQave_no_de.Qalreadyexists.txzgits_or_do_tslplI_have_n_dose.'], ['léxaxmple.exe'], ['ealreadI_hlave_ists.exp.lQQfI_have_no_de.xQalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexI_haxempleigits_or_dxo_alreadI_have.tx.to._ists.ep.3.exeepleeI_have_no_de.exampleigits_or_I_have_no_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_ts.3.exeeplabcd.ctxxdttdo_tsxample.txzeets.3.exeeplabcd.ctxxttdo_tsis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txz'], ['exampexampleec.exampleabctxttle.T'], ['éxtherearemorethan3digits12e345123.exe67890inthiisnample.exae'], ['éxa1mplxe1.exaem123.exeple23.exee.exae'], ['alreadyyexists.aexampp.3.exeepleetxz'], ['1.exe.examp.3.exeeplabcd.ctp.lQflp.lQQfI_eadyexists.example.txzttherearemorethan3digits1234567890inthisname.exetexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.g3.exeepleeeaem123.exeple23xe'], ['p.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txztteabctI_have_n_dotsxI_have_noleigits_or_do_123.exe'], ['éxa1mpl1.exaem123.exoI__have_no_digiseple23.exee.exae'], ['therearemorethan3digits123456890inththere.aremorethan3digitms1.tx.to.r234567890inthisname.exeisname.exe'], ['I_have_no_de.exampleigits_or_I_have_no_de.QalreadyeI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tests.txzf1.exam123.exeple23.exempleirtdo_ts'], ['1.exe.exI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_tesamplctxttaem123.exeple23alreadI_have.tx.to._ists.ep.3.exeepleexample.txzeee'], ['examlplexample._have_n_I_have_no_digits_or_dotsaltresadyexistseQflgists.txnz'], ['abctxxtt'], ['1.exexamQflegpleam123.exeple23.exe'], ['oI_have_I_have_no_de.exampltherearemorethan3digits1234567890inthisnamae.exeeigits_or_do_tsno_digits_o'], ['ab1.exampt'], ['abctxat1.exexamQI_have_no_de.Qalrenadyexis1ts.txzf1.exam123.exepl.e23.exempleigitstherearemorethan3digits1.tx.toabct.2abcd.ctxxtherearemorethan3digits1.tx.to.234567890inthisname.exettexample.txz56123.exe7890inthisname.exe_or_do_tesflgpleam123.exeple23.exet'], ['NO_VPsI_haabctxI_have_no_de.exampleigits_or_do_tsattve_no_digits_alreadyexists.txzflgor_dotsalreQzflgists.txzZuOM'], ['éxaI_have_éxample.exaeno_digits_or_dotsalreadyexists.txzQmple.e.3.xexeeplaexaQmple.Tbcd.ctp.lQflg3.exeepleexxttxae'], ['.alreadI_have_n_dotsyexists.example.txI_have_no_de.exampleigits_or_do_tsvz'], ['.exam112e.tx.to.xepl'], ['léxaxmple.e.xe'], ['I_have_éxample.exaen1.exam12ealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigitsexamplee._or_do_tsaalreadyexists.I_have_mno_de.Qalreadyexists.txzf1.exam123.exeple23.exempleigits_or_do_tsexample.txzttexis1ts.txzf1.exam123.exeple23.exz3.exeple23.exeo_digits_or_dotsalreadyexists.txzQ'], ['alreadyyexisealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigitsexamplee._or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exzts.aexampp.3.exeepleetxz'], ['.3.exeep'], ['.3.exeeplabcd.ctp.lQflg3.exeepleexxtalreadI_have_n_dotsyexists.example.txI_have_no_de.exampleigits_.exam112.tx.to.xeplor_do_tsvzt'], ['altherearemoreI_have_n_dotabcQalreadyexists.ttxzflxgtsthan3digits1234567890inthisname.exereadyexists.txz'], ['p.lQQfI_havI_have_no_de.QalreadyabctxI_have_no_de.examipleigits_or_do_tsattexp.lQflg3.exeepleeis1ts.txzf1.exam123.exeple23.exempleigits_or_dose_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsattexiNVZuOMM.3.exeeplees1lts.txzf1.exam123.exedple23.exempleigits_or_do_teslg3.exeepleeabcd.xt.txtt.tx.to.'], ['éxampl1.exaem123abI_have_éxample.exaen1.exam1NOVPsZuOM.txzQct.exeple23.exee.exae'], ['1.exexamQI_have_no_de.Qalreadyexis1ts.txzf1.exam123.exeplee23.exempleigits_or_d.3.exeeplabcd.ctp.lQflp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.exampleigits_or_do_tsaalreadyexists.example.txztgudadVYHtexis1ts.txzf1.exam123.exeplQe23.exempleigits_or_do_txtt.tx.to.g3.exeepleexxtto_tesflgpleam123.exeple23.exe'], ['alreadI_have_n_hdotsyexists.example.txvz'], ['e.examplleabctxtee.eextherearemorethan3digits1.tx.to.23456i7890inthisname.exeamplet'], ['therearemor1.exe.examplctxttaem123x.exeple23xeethan3digits1.tx.to.23456123.exe7890inthisnameabe.examplexxttexe'], ['NPsZuéxa1mpl1.exaem123.exoI__ha1.exexamQflgpleealreadI_hlave_ists.exp.lQQfI_have_no_de.QalreadyabctxI_have_no_de.etherearemorethan3digits1.tx.toabct.23456123.exe7890inthisname.exexampleigits_or_do_tsaalreadyexists.example.txzttexis1ts.txzf1.exam123.exeple23.exempleigits_or_do_txtt.tx.to.ample.txzam123.exple23.exeve.exaeM'], ['a23.e2xeples.txz'], ['.exam12.3.exeple'], ['FWYVZodEW'], ['therearemexample.Torethan3digits1.tx.to.e23456i789inthisname.exe'], ['alreadI_have_atatn_therearemoreI_have_n_dotsthan3digits12345r67890intdhisnamabctxI_have_no_de.exampleigits_or_do_I_have_no_examplee.de.exampltherearemorethaen3digits1234567890inthisnamae.exeeigits_or_tstsattedotsyexists.exmple.txvz'], ['..txt'], ['exam_ple.com'], ['example.xlsx'], ['invalid_name'], ['example.1234.txt'], ['example.TXt'], ['example.txt.'], ['.exetxt'], ['abcalreadyexisttxzd.txtt'], ['o.tx.to.'], ['.t.x.to.'], ['éxample.e'], ['éxamabcd.txttple.e'], ['.t.123.exeo.'], ['éxaemple.exe'], ['aebcalreadyexisttxzd.txtt'], ['labcalreadyexisttxzd.txtt'], ['exameple'], ['aebcalreaéxamabcd.txttple.edyexisttxzd.txtt'], ['.exampo.tx.to.le'], ['.t.t.123.exeo..to.'], ['.exxaample'], ['eemxample.'], ['o.tx..to.'], ['o.tx...t.t.123.exeo..to.to.'], ['.exxaamplabcalreadyexisttxzd.txttle'], ['aebcaéxaemple.exelreadyexisttxzd.txtt'], ['o.tx.to.example'], ['.ttherearemorethan3digits1234567890inthisname.exe.x.to.'], ['éaxamabcd.txttple.e'], ['abcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.'], ['aabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.'], ['.ttherearemorethan3digits123456789.example0inthisname.exe.x.to.'], ['aabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.exampple.'], ['o.tx...t.t.123example..exeo..to.to.'], ['aebcaésxaemple.exelreadyexisttxzd.txtt'], ['.exampmle'], ['aebcalreaéxamabcd.txttple.tt'], ['.éxo.tx...t.t.123example..exeo..to.to.ample.e'], ['abo.tx...t.t.123.exeo..to.to.cd.txtt'], ['éx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.e'], ['o.tx...t.t.123example..exeo..taebcalreadyexisttxzd.txtto.'], ['éxamabxcd.txttple.e'], ['o.tx.tto.'], ['aebaebcalreaéxamabcd.txttple.ttcaésxaemple.exelreadyexisttxzd.txtt'], ['.ttherearemeorethan3digits1234567890inthisname.exe.hx.to.'], ['o.t.to.example'], ['aabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3éxamabcd.txttple.edi'], ['12.exxaamplabcalreadyexisttxzd.txttle3.exe'], ['éxaéxample.emabxcd.txttple.e'], ['éxa.éxample.emabxcd.txttple.e'], ['.eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.xample'], ['Hle'], ['.éxo.tx...tp.t.123example..exeo..to.to.ample.e'], ['alreéxample.exe'], ['éxaéxample.emabxcd.txttple.eabo.tx...t.t.123.exeo..to.to.cd.txtt'], ['therearemorethan3digits12345i67890inthisnhame.exe'], ['éxaéxample.emabxcd.txttplme.e'], ['o.t.to.examéxample.eple'], ['aebcaédsxaemple.exelreadyexisttxzd.txtt'], ['CDLe.t.t.123.exeo..to.Q'], ['éxaéxample.emabxcd.txttple.eabo.tx...t.t.12éxamabcd.txttple.e.e.xeo..to.to.cd.txtt'], ['éxaléxample.emabxcd.txttplme.e'], ['éxaléxample.aemabxcd.txttplme.e'], ['alreéxample.exee'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.xample'], ['éxaméxample.exeple.e'], ['aebcaédsxaemple.exelreadytexisttxzd.txtt'], ['therearemoHlerethan3digits12o.tx...t.t.123example..exeo..taebcalreadyexisttxzd.txtto.345i67890inthisnhame.exe'], ['.eo.tx..to.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.ample'], ['CDLe.t.t.123.exeo..toQ'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3digits1234567890inthisname.exe.x.to.xample'], ['.'], ['.eaabcalreadyexisttxzd.téx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.exttbcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.xample'], ['QVam'], ['al.tx.to.reéxample.exee'], ['.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.ample'], ['.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemoorethan3digits1234567890inthisnam.ttherearemeorethan3digits1234567890inthisname.exe.hx.to.e.exe.x.to.ample'], ['éxaéxample.emabxcd.txlttplme.e'], ['eemxaeemple.'], ['éxamabéx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.ecd.txtttple.e'], ['éxaéxample.emabxcd.txttple.eabo.tx...t.tt.12éxamabcd.txttple.e.e.xeo..to.to.cd.txtt'], ['Hleo.tx.tto.'], ['éaxamabc.d.txttple.e'], ['.eaabcalreadyexisttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.e.xe.x.to.xample'], ['éxaéxample.emabxcd.txttpleéxamabcd.txttple.e.e.xeo..to.to.cd.txtt'], ['aebcalreaéxamaabcalreadyexisttxzd.txttexisttxzd.txtt'], ['aebcaclreadyexisttxzd.txtt'], ['.t.t.123.e.xeo..to.'], ['aeaebcaédsxaemple.exelreadyexisttxzd.txttbcalreadyexisttxzd.txtt'], ['aebaebcalreaéxamabcad.txttple.ttcaésxaemple.exelreadyexisttxzd.txtt'], ['ample'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.e.to.xample'], ['ampal.tx.to..reéxample.exeele'], ['QV.exxaamplabcalreadyexisttxzd.txttleam'], ['QQVam'], ['aebcalreaéxamabcd.txxttple.tt'], ['abcaléxaemple.exereadyexisttxzd.txtt'], ['alr.t.t.123.e.xeo..to.eéxample.exee'], ['aabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisna1me.exe7.x.to.'], ['éxa.éxample.emabe'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890intaabcalreadyexisttxzd.txttbcd.txtt.ttherearalreadyexists.txzemorethan3digits1234567890inthisna1me.exe7.x.to.hisname.e.to.xample'], ['éxa.éxample.bemabxcd.txttple.e'], ['abcaléxa123.exeemple.exereadyexisttxzd.txtt'], ['o.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.e.to.xample.t.to.example'], ['o.tx.aebcaédsxaemple.exelreadyexisttxzd.txtt.to.'], ['aaebcalreadyexisttxzd.txtto.tx.aebcaédsxaemple.exelreadyexisttxzd.txtt.to.abcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisna1me.exe7.x.to.'], ['ulUJxJw'], ['.lexxaample.exampmle'], ['aabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digits1234567890inthisnax.to.exampple.'], ['éxaéxampl.e.emabxcd.txlttplme.e'], ['éxxample.exe'], ['éxaéxample.emabxcd.txttple.eabo.tx...t.t..123.exeo..to.to.cd.txtt'], ['aebcalreaéxamabcd.txttplet.edyexisttxzd.txtt'], ['éaéxaéxample.emabxcd.txttple.eabo.tx...t.t.12éxamabcd.txttple.e.e.xeo..to.to.cd.txttxamabcd.txttple.e'], ['aebcaéxaemple.exelreadyexisttxzd..eo.tx..to.xxa.ttherearemts1234567890inthisname.exe.x.to.ampletxtt'], ['lHHl'], ['ampal.tx.to..reéxam.ple.exeele'], ['aabcalreadyexistttxzd.txttbcd.txtt.ttherearemorethan3éxamabcd.txttple.edi'], ['HlHe'], ['o.tx...t.t.123example..exeo..to.teo.'], ['éxaléxample.aemabxcd.txt.e'], ['.eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.xample'], ['.éxo.tx...tp.t.123example..exeo..to.to.ampl.t.123.exeo3.e.e'], ['éxaéxample.emabxcd.txlttplme..exampmlee'], ['ulUJxJwo.tx..to.'], ['o.tx...t.t.12aebcalreaéxamabcd.txttplet.edyexisttxzd.txtt3example..exeo..to.to.'], ['aabcalreadyexisttxzd.txttbcd.txtt3.ttherearemorethHlean3digits1234567890inthisname.exe.x.to.'], ['o.tx...t.t.123examptle..exeo..to.to.'], ['.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits1234567890inthisname.exe.x.to.'], ['xéaxamabc.d.txttple.e'], ['ampleabcaléxa123.exeemple.exereadyexisttxzd.txtt'], ['éaxamabecd.txttpléx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.ee.e'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.x.to.xample'], ['aebcaédsxaemple.exelreadytexisttxzd.tabcaléxa123.exeemple.exereadyexisttxzd.txtt'], ['.tt.to.'], ['ex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisnamoe.e.to.xampleameple'], ['.eaabcalreadyexisttxzd.téx.tx.to.aaebcalreadyexisttxzdhan3digits1234567890inthisname.exe.x.to.xample'], ['o.tx...t.t.12axéaxamabc.d.txttple.eebcalreaéxamabcd.txttplet.edyexisttxzd.txtt3example..exeo..to..to.'], ['éaxamabecd.txttpléx.tx.to.aaebcalreadyexisttxztxttmabcd.txttple.ee.e'], ['..ttx.to.'], ['abcaléxa123.exeemple.exereadyexisttxbzd.txtt'], ['Hleo.txt.tto.'], ['o.tx.to.éxaéxampl.e.emabxcd.txlttplme.e'], ['.t.t.123.e.xeo.tx.aebcaédsxaemple.exelreadyexisttxzd.txtt.to.o..to.'], ['alreaebcalreaéxamabcd.txttplet.edyexisttxzd.txttadyexists.txz'], ['éxamabCDLe.t.t.123.exeo..to.Qxcd.txttple.e'], ['o.tx...t.t.123examplex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisnamoe.e.to.xampleameplee..exeo..to.teo.'], ['.t.t.123.e.xeo.tx.aebcaédsxaemple.eHlHexelreadyexisttxzd.txtt.to.o..to.'], ['.exampml'], ['MmaD'], ['OkzLhkzAu'], ['ex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.téxample.exetherearemorethan3digits1234567890inthisnamoe.e.to.xampleameple'], ['HlCDLe.t.t.123.exeo..to.eQ'], ['éxaéxample.emabxcd.txttple.eabo.tx...t.txtt'], ['éaxamabecd.txttpléx.tx.to.aaebcalreadyexisttxzd.txtetmabcd.txttple.ee.e'], ['éxamabéx.tx.to.aaebcalreadyexistQQVamtxzd.txttmabcd.txttple.ecd.txtttple.e'], ['therearemoHlerethan3digits12o.tx...t.t.123example...exxaampleexeo..taebcalreadyexisttxzd.txtto.345i67890inthisnhame.exe'], ['éxa.éxample.bemabxcd.xttple.e'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemorae.x.to.xample'], ['.tthereaeremorethan3diéxaéxample.emabxcd.txttple.egits1234567890inthisname.exe.x.to.'], ['aebcalreaéxamabcd.txttple.éedyexisttxzd.txtt'], ['.tt.t.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.ampleo.'], ['.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemoorethan3digits1234567890inthCDLe.t.t.123.exeo..toQisnam.ttherearemeorethan3digits1234567890inthisname.exe.hx.to.e.exe.x.to.ampleéxaléxample.aemabxcd.txt.e'], ['é.xa.éxample.emabe'], ['.éxo.tx...t.t.123exam.t.x.to.ple..exeo..to.to.ample.e'], ['éxaméxam.t.t.123.exeo..to.ple.exeple.e'], ['éaxamabecd.txttpléx.tx.to.aaebcalreadyexisttxzd.txtetmabcd.txttple.ee.ce'], ['o.tx.aebcaédsxaemple.exeelreadyexisttxzd.txtt.to.'], ['.exxaamplabcalreadyexisttxzd.txttlo.tx.aebcaédsxaemple.exelreadyexisttxzd.txtt.to.e'], ['therearemorethan3digits12345690inthisname.exe'], ['aabcalreadyéxample.exeexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemorethan3digitas1234567890inthisname.exe.x.to.xample'], ['.eo.tx..to.xxa.ttherearemorethan3digits12364567890inthisname.exe.x.to.ample'], ['éxaéxample.emabxcd.tx.ttherearemorethan3digits1234567890inthisname.exe.x.to.lttplme.e'], ['alreaebcalreaéxamabcd.txttplet.edyexisdttxzd.txttadyexists.txz'], ['CDLe.t.t.123.exeaabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digits1234567890inthisnax.to.exampple.o..to.Q'], ['aabcalrneadyexisttxzd.txttbcd.txtt3.ttherearemorethHlean3digits1234567890inthisname.exe.x.to.'], ['alr.t.t.o.tx.tto..t.x.to.ee'], ['o..tx...t.t.123example..exeéx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.eo..to.to.'], ['.eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.edxe.x.xample'], ['abcd.txtt.ttherearemorettthan3digits1234567890inthisname.exe.x.to.'], ['alreaebcalreaéxamabcd..eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.txttadyexists.txz'], ['aabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisn.'], ['éxaléxample.aemabxcd.txttplmeo.tx.tto.'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890intaabcalreadyexisttxzd.txttbcd.txtt.ttherearalreadyexists.txzemorethan3digits1234567890inthisna1me.exe7.x.to.hisname.e.toxample'], ['éxamabcd.txttpo.tx.tto.le.e'], ['aebcaédalreéxample.exesxaemple.exelreadytexisttxzd.tabcaléxa123.exeemple.exereadyexisttxzd.txtt'], ['axeéxample.exee'], ['.ttherearemeorethan3digits1234567890inthisname.e.xe.hx.to.'], ['aabcalreadyéxample.exeexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisdname.exe.x.to.'], ['é.xa.éxample.o.t.to.examéxample.epleemabe'], ['éx.tx.to.aaebcalreaebcaédsxaemple.exelreadytexisttxzd.tabcaléxa123.exeemple.exereadyexisttxzd.txtttmabcd.txttple.e'], ['éxamabxcd.txtHletple.e'], ['o.t.to.eple'], ['aabcalreadyexistttxzd.txttbcd.txtt.ttherearemorethan3éxamabcd.txttpl.e.edi'], ['Hleo.txt.o.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemxorethan3digits1234567890inthisname.e.to.xample.t.to.exampletto.'], ['aabcalreadyexisttxzd.txttbcd.txtt.ttherearemHlHeorethan3digits1234567890inthisn.'], ['ex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcdgits1234567890inthisnamoe.e.to.xampleameple'], ['éxao.tx.to.éxaéxampl.e.emabxcd.txlttplme.ele.ee'], ['alreaebcalreaéxamabcd..tbcd.txtt.ttherearemorethan3digits1234567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.txttadyexists.txz'], ['éxamabéx.tx.to.aaebcalreadyexisttxzd.txttmabcdc.txttple.ecd.txtttple.e'], ['.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemoorethan3digits1234567890inthCDLe.t.t.123.exeo..toQisnam.ttherearemeorethan3digits1234567890inthisname.exe.hx.to.e.exe.x.to.ampleéxaléxample.aemabxcd5.txt.e'], ['o.tx..o.tx.aebcaédsxaemple.exeelreadyexisttxzd.txtt.to.to.'], ['alreéxample.exée'], ['éxamabCDLe.t.t.123.exeo..to.Qxcd.tttple.e'], ['ampleabcaléxa123.exeemple.exeready.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemorethan3digitas1234567890inthisname.exe.x.to.xampleexisttxzd.txtt'], ['.eo.tx..to.xxa.ttherearemoretho.tx...t.t.123examplex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisnamoe.e.to.xampleameplee..exeo..to.teo.an3dio.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.e.to.xample.t.to.examplegits12364567890inthisname.exe.x.to.ample'], ['éxamabCDLe.t.t.123.exeo..to.Qxcd.taabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisn.ttple.e'], ['.eaabcalreadyexisttxztd.toxttbcd.txtt.ttherearemorethan3digitcs1234567890inthisname.e.xe.x.to.xample'], ['.exampleeaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.x.to.xample'], ['..ttx.to.o.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.e.to.xample.t.to.example'], ['o.tx.aebcaédsxaempale.exeelreadyexisttxzd.txtté.to.'], ['aebcaéxaemple.eexelreadyexisttxzd.txtt'], ['Yo.t.to.exampleUG'], ['éxamabéx.tx.to.a.exampleaebcalreadyexisttxzd.txttmabcd.txttple.ecd.txtttple.e'], ['éxaéxample.emabxcd.txttple.eabo.tx...t.txtéxamabcd.txttple.et'], ['éxao.tx.to.éxaéxamalreéxample.exeepl.e.emabxcd.txlttplme.ele.ee'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemoretaebcalreaéxamabcd.txttplet.edyexisttxzd.txtthan3digits1234567890inthisname.e.to.xample.d.txttple.e'], ['alreaebcttherearemorethan3digits1234567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.txttadyexists.txz'], ['o.tx...t.t.123.exe.t.x.to...to.to.'], ['.ttherearemeorethan3digits1234567890inthisame.e.xe.hx.to.'], ['aabcalreadyexisttHleo.tx.tto.xzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisn.'], ['.éxo.tx...t.t.123examp12.exxaamplabcalreadyexisttxzd.txttle3.exele..exeo..to.to.ample.e'], ['éxa.éxample.bemaabxcd.txttple.e'], ['éaxamabo.tx..o.tx.aebcaédsxaemple.exeelreadyexisttxzd.txtt.to.to.ecd.txttpléx.tx.to.aaebcalreadyexisttxzd.txtetmabcd.txttple.ee.e'], ['émxaéxample.emabxcd.txlttplme..exampmlee'], ['o.tx.to.examp'], ['éxaemplee.exe'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xample'], ['.eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits123abcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.67890inthisname.exe.x.to.xample'], ['éxaéxample.emabxcd.txlttplmme..exampm.exampmllee'], ['exaample'], ['oYo.t.to.exampleU'], ['o.tx...txisttxzd.txtt.to.to...to.to.'], ['abcd.txtt.ttherearemorettthan3digits1234567890inthisname.exe..exampmleo.'], ['alex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcdgits1234567890inthisnamoe.e.to.xampleameplereéxample.exee'], ['é.exxaamplabcalreadyexisttxzd.txttlo.tx.aebcaédsxaemple.exelreadyexisttxzd.txtt.to.ex.tx.to.aaebcalreaebcaédsxaemple.exelreadytexitsttxzd.teabcaléxa123.exeemple.exereadyexisttxzd.txtttmabcd.txttple.e'], ['o.tx...t.t.12axéaxamabc.d.txttple.eebcalreaéxamabcd.txttplet.edyexisttxzd.txtt3éexample..exeo..to..to.'], ['aebcaédsxaemplei.exelreadytexisttxzd.tabcaléxa123.exeemple.exereadyexisttxzd.txtt'], ['éxamabéx.tx.to.aaebcalreadyexisttxzd.txttmabcd.dtxttple.ecd.txtttple.e'], ['djCJo.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemoorethan3digits1234567890inthisnam.ttherearemeorethan3digits1234567890inthisname.exe.hx.to.e.exe.x.to.amplesWi'], ['CDLe.t.t.123.exeaabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digitsn1234567890inthisnax.to.exampple.o..to.Q'], ['.ttherearemorethan3digits1234567890inthisnam.eo.tx..to.xxa.ttherearemorethan3digits12364567890inthisname.exe.x.to.amplee.exe.x.to.'], ['aebcalreaéxamao.tx.to.éxaéxampl.e.emabxcd.txlttplme.ebcd.txttple.edyexisttxzd.txtt'], ['abcd.txtt.t.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampletherearemorethan3digits1234567890inthisname.exe.x.to.'], ['o..tx...t.t.123example..exeéx.tx.to.aaebcalreadyexisttxzd.txttdmabcd.txttple.eo..to.to.'], ['aelreéxample.exee'], ['therearemoHlerethan3digits12to.tx...t.t.123example...exxaampleexeo..taebcalreadyexisttxzd.txtto.345i67890inthisnhame.exe'], ['o.tx..eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to.'], ['o.tx.aebcaédsxaemple.exeelreadiyexisttxzd.txtt.to.'], ['examplabo.tx...t.t.123.exeo..to.to.cd.t'], ['aebcalreaéxamabcd.txttpo..tx...t.t.123example..exeéx.tx.to.aaebcalreadyexisttxzd.txttdmabcd.txttple.eo..to.to.le.tt'], ['éxaéxampl.e.ebaebcalreaéxamabcd.txttple.ttmacdplme.e'], ['therearaebcalreaéxamabcd.txttpo..tx...t.t.123example..exeéx.tx.to.aaebcalreadyexisttxzd.txttdmabcd.txttple.eo..to.to.le.ttemorethan3digits12345690inthisname.exe'], ['CDLe.to.tx..eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to..t.123.exeaabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digitsn1234567890inthisnax.to.exampple.o..to.Q'], ['.ttt.to.'], ['alreaebcttherearemorethan3digits1234567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.téxamabxcd.txttple.eidyexists.txz'], ['.exampleeaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits12345678o.tx...t.t.123example..exeo..taebcalreadyexisttxzd.txtto.90inthisname.exe.x.to.xample'], ['.exampo.tx.aaebcalreadyexisttxzd.txtto.tx.aebcaédsxaemple.exelreadyexisttxzd.txtt.to.abcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisna1me.exe7.x.to.to.le'], ['.eo.tx..to.xxa.ttherearem3orethan3digits1234567890inthisname.exe.x.to.ample'], ['aeaebcaédsxaemple.exelreadyexisttxzd.txttherearemorethan3digits12345eemxample.i67890inthisnhame.exetbcalreadyexisttxzd.txtt'], ['.ttt.talr.t.t.o.tx.tto.o.eeo.'], ['éxaméxample.exeple.le'], ['.ttt.talr.t.t.o.tx.tto.o.e'], ['aebaebcalre.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.x.to.xampleaéxamabcd.txtple.ttcaésxaemple.exelreadyexisttxzd.txtt'], ['exaebcaédsxaemple.exelreadyexisttxzd.txttaample'], ['.eo.aebcaédsxaemple.exelreadytexisttxzd.txtttx..to.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.ample'], ['CDLe.to.tx..eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to..t.123.exeaabcalreadyexisttxzd.txttbced.txtt.tthereareméxaéxample.emabxcd.txlttplme.eorethan3digitsn1234567890inthisnax.to.exampple.o..to.Q'], ['therearemoHlerethan3digits12to.tx...t.t.123example...exxaampleexeo..taebcal.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemorethan3digitas1234567890inthisname.exe.x.to.xamplereadyexisttxzd.txtto.345i67890inthisnhame.exe'], ['ulUJxJwo.tx..toYo.t.to.exampleUG.'], ['aelereéexample.exee'], ['RKYe'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890intaabcalreadyexisttxzd.éxa.éxample.emabetxttbcd.txtt.ttherearalreadyexists.txzemorethan3digits1234567890inthisna1me.exe7.x.to.hisname.e.toxample'], ['Céxaméxample.exeple.leDLe.t.t.123.exeaabcalreadyexisttxzd.txttbcedéxaléxample.aemabxcd.txt.ettherearemorethan3digitsn1234567890inthisnax.to.exampple.o..to.Q'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890intaabcalreadyexisttxzd.éxa.éxample.emabetxttbcd.txtt.CDLe.to.tx..eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to..t.123.exeaabcalreadyexisttxzd.txttbced.txtt.tthereareméxaéxample.emabxcd.txlttplme.eorethan3digitsn1234567890inthisnax.to.exampple.o..to.Qttherearalreadyexists.txzemorethan3digits1234567890inthisna1me.exe7.x.to.hisname.e.toxample'], ['aebcaéxaempredadyexisttxzd.txtt'], ['aabcalreadyexistttxzd.txttbcd.txtt.ttherearemorethaxn3éxamabcd.txttpl.e.edi'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemore.than3digits1234567890inthisname.e.to.xample'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemorethan3digitas1234567890inthisname.exe.x.to.xampleo.tx.tto.'], ['.exampleeaabcalreadyexistthan3drigits12345678o.tx...t.t.123example..exeo..taebcalreadyexisttxzd.txtto.90inthisname.exe.x.to.xample'], ['éxaéxample.emabxcd.txlttplme..examptmlee'], ['.exaebcalreaéxamabcd.txttple.éedyexisttxzd.txttampml'], ['éxamabCDLe.t.t.123.exeo..to.Qxcpd.txttple.e'], ['Céxaméxample.exeple.leDLe.t.t.123.exeaabcalreadyexisttxzd.txttbcedéxaléxample.aemabxcd.txt.etthereaeremorethan3digitsn1234567890inthisnax.to.exampple.o..to.Q'], ['e.t.t.123.exeo..to.Q'], ['eemxaeemmple.'], ['.eaabcalreadyexi.éxo.tx...tp.t.123exaxmple..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemore.than3digits1234567890inthisname.e.to.xample'], ['alreaebcalreaéxamabcd..tbcd.txtt.ttherearemorethan3digits1234e567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.txttadyexists.txz'], ['éxaempCéxaméxample.exeple.leDLe.t.t.123.exeaabcalreadyexisttxzd.txttbcedéxaléxample.aemabxcd.txt.ettherearemorethan3digitsn1234567890inthisnax.to.exampple.o..to.Qlee.exe'], ['éxao.tx.to.éxaéxampl.e.emabxcd.txlttplme.eele.eee'], ['aebcalreaéxamab.t.t.123.exeo..to.cd.txttple.éedyexisttxzd.txtt'], ['aelreéxaméaxamabecd.txttpléx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttpeemxaeemmple.le.ee.eple.exee'], ['éxamabCDLe.t.t.123.exeo..to.abcd.txtt.t.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampletherearemorethan3digits1234567890inthisname.exe.x.to.Qxcd.txttple.e'], ['alreaebcttherearemorethan3digits12345678xampletxttplet.edyexisdttxzd.txttadyexists.txz'], ['QfZGFbPFj'], ['o.tx...txisttxzd.txtt.to.eto...to.to..txttple.e.e.xeo..to.to.cd.txtt'], ['éxa.éxaaebcalreaéxamabcd.txttple.ttmple.emabxcd.txttple.e'], ['.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits1234567890inthisnabcaléxa123.exeemple.exereadyexisttxzd.txtt.to.'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemoretaebcalreaéxamabcd.txttplet.edyexisttxzd.txtthan3digits1234567890inthisname.e'], ['labcalreadyexisttxzéxamabCDLe.t.t.123.exeo..to.Qxcd.txttple.ed.txtt'], ['ex.eaabcalreadyexi.éxo.tx...tp.3t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisnamoe.e.to.xampleameple'], ['éaxamabecd.txttpléx.tx.to.aeaebcalreadyexisttxzd.txttmabcd.txttple.ee.e'], ['bKdJbDq'], ['lHaabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digits1234567890inthisnax.to.exampple.l'], ['.eo.tx..to.xxa.tthereCDLe.t.t.123.exeo..toQarem3orethan3digits1234567890inthisname.exe.x.to.ample'], ['éxao.taebaebcalreaéxamabcad.txttple.ttcaésxaempleéxaéxample.emabxcd.txttple.eabo.tx...t.txtt.exelreadyexisttxzd.txttx.to.éxaéxampl.e.emabxcd.txlttplme.eele.eee'], ['aebcaéxaemple.eexelreadyexistéxaéxample.emabxcd.tx.ttherearemorethan3digits1234567890inthisname.exe.x.to.lttplme.etxzd.txtt'], ['aebcaéxaebmple.exelreadyexisttxzd..eo.tx..to.xxa.ttherearemts1234567890inthisname.exe.x.to.ampletxtt'], ['fAefFQan.ttherearemorethan3digits1234567890inthisname.exe.x.to.ZV'], ['.eo.tx..to.xxa.tthereCDLe.t.t.123.exeo..toQarem3orethan3digits1234567890inthisname.exe.x.to.ampléx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.ee'], ['.eo.tx..to.xxa.ttherearem3orethan3digits1234567890inthisname.exe.x.taabcalrneadyexisttxzd.txttbcd.txtt3.ttherearemorethHlean3digits1234567890inthisname.exe.x.to.o.ample'], ['éxamabCDLe.t.t.123.exeo..to.Qxcd.txttpleaebcalreaéxamaabcalreadyexisttxzd.txttexisttxzd.txtt.e'], ['o.ttx.tto.'], ['éx.tx.to.aaebcalreaebcaédsxaemple.exelreadytexisttxzd.tabcaléxa123.exeemp.le.exereadyexisttxzd.txtttmabcd.txttple.e'], ['.eo.tx..to.xxa.ttherearemoretha3digits12364567890inthisname.exe.x.tao.ample'], ['ulUJxJwo.taebaebcalreaéxamabcad.txttple.ttcaésxaemple.exelreadyexisttxzd.txttx..toYo.t.to.exampleUG.'], ['éxaéxample.emabxcd.txttRKYe'], ['ulUJxJwo.tx..toYo.t.to.empl.'], ['CDLe.to.tx..eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3dr4567890inthisn9ame.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to..t.123.exeaabcalreadyexisttxzd.txttbced.txtt.tthereareméxaéxample.emabxcd.txlttplme.eorethan3digitsn1234567890inthisnax.to.exampple.o..to.Q'], ['.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits1230inthisname.exe.x.to.'], ['alreéxamo.tx...t.t.123example..exeo..taebcalreadyexisttxzd.txtto.ple.exée'], ['éaxamabc.txttple.e'], ['o.tx.to.ex.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemoorethan3digits1234567890inthCDLe.t.t.123.exeo..toQisnam.ttherearemeorethan3digits1234567890inthisname.exe.hx.to.e.exe.x.to.ampleéxaléxample.aemabxcd.txt.eample'], ['CDLe.t.t.123.exeo..éxa.éxample.emabxcd.txttple.etoQ'], ['o.tx..eaabcalreadyexo.tx...txisttxzd.txtt.to.eto...to.to..txttple.e.e.xeo..to.to.cd.txttisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to.'], ['éxaléxample.emabxcd.etxttplme.e'], ['o.tx...t.t.123examptle..exeo..to.oto.'], ['éxaéxampl.e.emabxcd.txlttplmaeaebcaédsxaemple.exelreadyexisttxzd.txttherearemorethan3digits12345eemxample.i67890inthisnhame.exetbcalreadyexisttxzd.txtte'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemoretaebcalpreaéxamabcd.txttplet.edyexisttxzd.txtthan3digits1234567890inthisname.e.to.xample.d.txttple.e'], ['éxaéxample.emabxcd.txttRKYo.tx...t.t.123.exe.t.x.to...to.to.e'], ['éx.tx.to.aaebcalreadyexisttxzd.txttmtabcd.txttple.e'], ['aabcalreadyexistttxzd.txttbcd.txtt.ttéxa.éxample.bemabxcd.txttple.eherearemorethan3éxamabcd.txttpl.e.edi'], ['éxamabéxaéxampl.e.emabxcd.txlttplmaeaebcaédsxaemple.exelreadyexisttxzd.txttherearemorethan3digits12345eemxample.i67890inthisnhame.exetbcalreadyexisttxzd.txtteéx.tx.to.aaebcalreadyexisttxzd.txttmabcdc.txttple.ecd.txtttple.e'], ['o.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890intéxamabCDLe.t.t.123.exeo..to.Qxcpd.txttple.ehisname.e.to.xample.t.to.example'], ['aebcaéxaebmple.exelreadyexisttxzd..e.t.t.123.exeo..to.Qrearemts1234567890inthisname.exe.x.to.ampletxtt'], ['o.aabcalreadyexisttxzd.txttbced.txtt.ttherearemorethan3digits1234567890inthisnax.to.exampple..tx...t..t.123example..exeéx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.eo..to.to.'], ['éx.eo.aebcaédsxaemple.exelreadytexisttxzd.txtttx..to.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.amplealéxample.emabxcd.etxttplme.e'], ['alreéxamo.tx...t.t.123example..exeo..taebcalraebcalreaéxamabcd.txttple.éedyexisttxzd.txtteadyexisttxzd.txtto.ple.exée'], ['.éxo.tx...t.t.123examp1a2.exxaamplabcalreadyexisttxzd.txttle3.exele..exeo..to.to.ample.e'], ['éxtherearemorethan3digits1234567890inthisname.exeample.e'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890intaabcalreadyexisttxzd.éxa.éxample.emabetxttbcd.txtt.CDLe.to.tx..eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3drigits1234567890inthisname.exe.xo.xampleaebcaédsxaemple.exeelreadyexisttxzd.txtt.to..t.123.exeaabcalreadyexisttxzd.txttbced.txtt.tthereareméxaéxample.emabxcd.txlttplme.eorethan3digitsn1234567890inthisnax.to.exampple.o..to.Qttherearalreadyexina1me.exe7.x.to.hisname.e.toxample'], ['éxamabéx.tx.to.aaebcalreadyexisttxzd.txttmabcd.dtxttple.ecd.txtéttple.e'], ['ex.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd.txtt.ttherearemor12.exxaamplabcalreadyexisttxzd.txttle3.exeethan3digits1234567890inthisnamoe.e.to.xampleameple'], ['ulUJxJwo.tux..to.'], ['émxaéxample.emabxcd..txlttplmxe..exampmlee'], ['.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits1234567aebcaéxaemple.exelreadyexisttxzd.txtt890inthisname.exe.x.to.'], ['.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits1234567890inthi.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.amplexzd.txtt.to.'], ['.eaabc.alreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3digits1234567890inthisname.exe.x.to.xample'], ['o..tx...t.t.123example..exeéx.tx.to.aaxebcalreadyexisttxzd.txttmabcd.txttple.eo..to.to.'], ['émxaéxample.emabxcd..txlttplmxe..exampxmlee'], ['o..tx.o..t.t.123example..exeéx.tx.to.aaebcalroeadyexisttxzd.txttdmabcd.txttple.eo..to.to.'], ['.eaabcalreadyexi.éxo.tx...tp.t.123example..exeo..to.to.ample.esttxztd.toxttbcd...ttx.to.txtt.ttherearemorethan3digits1234567890inthisname.e.to.xample'], ['aebcaéxaemple.exelreadyexisttxzd..eo.tx..to.xxa.ttherearemts1234567890inthisnam.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits1234567890inthi.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.amplexzd.txtt.to.e.exe.x.to.ampletxtt'], ['o..tx.o..t.t.123example..exeéx.tx.to.aaebcalroeadyeéxaléxample.aemabxcd.txttplme.exidsttxzd.txttdmabcd.txttple.eo..to.to.'], ['alreaebcalreaéxamabcd..tbcd.txtt.ttherearemorethan3digits1234567890inthisname.edxe.x.xampletxtherearemorethan3digits1234567890inthisname.exettplet.edyexisdttxzd.txttadyexists.txz'], ['éaxama..ttx.to.becd.txttpléx.tx.to.aaebcalreadyexisttxzd.txtetmabcd.txttple.ee.ce'], ['aeaebcaédsxaemple.exelreadyexisttxzd.txttherearemorethan3digits12345eemxample.i67890inthisnhame.exeadyexisttxzd.txtt'], ['therearemorethan3digit.exe'], ['ulUJxJwo.taebaebcalreaéxamabcad.txttple.ttcaésxaemple.abcaléxaemple.exereadyexisttxzd.txttexelreadyexisttxzd.txttx..toYo.t.to.exampleUG.'], ['CDLe.Lt.t.123.exeo..to.Q'], ['aeaebcaédsxaemple.exelreadyexisttxzd.txttherearemorethan3digits12345eemxample.i67890intt'], ['therearemorethan3dampal.tx.to..reéxample.exeeleigits1234567890inthisname.exe'], ['éaxamabecd.txttpléx.tx.to.aaebcalreadyexisttxztxttmabcd.txttple.exe.e'], ['alreaebcttherearemorethan3digits1234567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.edxe.x.xample.txttadyexists.txz'], ['éxa.éxample.emabxcd.txttpl.e.e'], ['aabcalreadyexisttxzd.txttbcd.txtt.ttherearemHlHeoaebcaéxaempredadyexisttxzd.txttrethan3digits1234567890inthisn.'], ['fAefFQan.ttoherearemorethan3digi.ZV'], ['.eaabcalreadyexisttxzd.txttbcd.txtt.tth12.exxaamplabcalreadyexisttxzd.txttle3.exeerearemorethan3digits123abcd.txtt.ttherearemorethan3digits1234567890inthisname.exe.x.to.67890inthisname.exe.x.to.xample'], ['éxaéxample.emabxcd.txlttplemme..exampm.exampmllee'], ['.ttt.to'], ['o.ttxt.tto.'], ['aebcaéxaemple.exelreadyexisttxzd..eo.tx..to.xxa.ttherearemts1234567890inthisnam.ttherearemorethan3diéxaéxample.emabxcd.txttple.egits12345HlHe67890inthi.eo.tx..tlabcalreadyexisttxzd.txtto.xxa.ttherearemorethan3digits1234567890inthisname.exe.x.to.amplexzd.txtt.to.e.exe.x.to.ampletxtt'], ['.éxo.tx...tp.t.1223example..exeo..to.to.ample.e'], ['aabulUJxJwo.taebaebcalreaéxamabcad.txttple.ttcaésxaemple.abcaléxaemple.exereadyexisttxzd.txttexelreadyexisttxzd.txttx..toYo.t.to.exampleUG.calreadyexisttHleoerearemorethan3digits1234567890inthisn.'], ['.eaabcalreadyexistttxztd.toxttbcd.txtt.ttherearemorethan3digits1234567890inthisname.e.xe.x.to.xample'], ['éxamabxcd.txtHleetple.e'], ['éaxamabecd.txttpléx.tx.to.aaebcalreadyexis.eo.txéxamabCDLe.t.t.123.exeo..to.Qxcd.taabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisn.ttple.e..to.xxa.tthereCDLe.t.t.123.exeo..toQarem3orethan3digits1234567890inthisname.exe.x.to.ampléx.tx.to.aaebcalreadyexisttxzd.txttmabcd.txttple.eettxzd.txtetmabcd.txttple.ee.e'], ['C'], ['aebcaéxaemple.exelreadyexisttxzd..eo.tx..to.xxa.ttherearemts1234567890inthisname.exex.x.to.ampletxtt'], ['Céxaméxample.exeple.leDLe.t.t.123.exeaabcalreadyexisttxzd.txttbcedéxaléxample.aemabxcd.txt.ettherearemorethan3digitsn1234567890inthisnax.to.eéaxamabc.txttple.exampple.o..to.Q'], ['LyPW'], ['alreaebcalreaéxamabcd..tbcd.txtt.ttherearemorethan3digits1234e567890inthisname.edxe.x.xampletxttplet.edyexisdttxmzd.txttadyexists.txz'], ['éx.tx.to.aaebcalreaebcaédsxaemple.exelreadytexisttxzd.tabcaléxa123.exee.mple.exereadyexisttxzd.txtttmabcd.txttple.e'], ['alreéxamo.tx...t.t.123example..e.xeo..taebcalereadyexisttxzd.txtto.ple.exée'], ['éxaempCéxaméxample.exeple.leDLe.t.t.123.exeaabcalreadyexisttxzd.txttbcedéxaléxaléxample.emabxcd.txttplme.eéxample.aemabxcd.txt.ettherearemorethan3digitsn1234567890inthisnax.to.exampple.o..to.Qlee.exe'], ['aabcabcd.txttalrneadyexisttxzd.txttbcd.txtt3.ttherearemorethHlean3digits1234567890inthisname.exe.x.to.'], ['.eaabcalreadyexisttxzd.toxttbcd.txtt.ttherearemoraethan3digits1234567890xample'], ['éxaéxlample.emabxcd.txlttplemme..exampm.exampmllee'], ['alreaebcalrxamabcd..eaabcalreadyexisttxzd.txttbcd.txtt.ttherearemorethan3digits1234567890inthisname.edxe.x.xampletxttplet.edyexisdttxzd.txttadyexists.txz']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the given problem:
+
+```python
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Check if the file name contains more than 3 digits
+    if sum(1 for char in file_name if char.isdigit()) > 3:
+        return 'No'
+    
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    # Split the file name into the substring before and after the dot
+    name, extension = file_name.split('.')
+    
+    # Check if the substring before the dot is not empty and starts with a latin alphabet letter
+    if not name or not name[0].isalpha():
+        return 'No'
+    
+    # Check if the substring after the dot is one of the valid extensions
+    valid_extensions = ['txt', 'exe', 'dll']
+    if extension not in valid_extensions:
+        return 'No'
+    
+    # If all conditions are met, return 'Yes'
+    return 'Yes'</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    import re
+    # Check if there are more than three digits
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+    # Check if there is exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    # Check if the substring before the dot is not empty and starts with a letter
+    if not re.match("[a-zA-Z]", file_name.split('.')[0]):
+        return 'No'
+    # Check if the substring after the dot is in the list ['txt', 'exe', 'dll']
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if there are more than three digits in the file name
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+
+    # Check if there is exactly one dot in the file name
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Check if the substring before the dot starts with a letter
+    if not file_name.split('.')[0][0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of the valid extensions
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a Python markdown block:
+
+```python
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    # Split the file name into name and extension
+    name, extension = file_name.split('.')
+    
+    # Check if the name is empty or doesn't start with a letter
+    if len(name) == 0 or not name[0].isalpha():
+        return 'No'
+    
+    # Count the number of digits in the file name
+    digit_count = sum(c.isdigit() for c in file_name)
+    
+    # Check if the number of digits exceeds three
+    if digit_count > 3:
+        return 'No'
+    
+    # Check if the extension is valid
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    return 'Yes'</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  import re
+
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if there are more than three digits in the file name
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into two parts: before and after the dot
+    before_dot, after_dot = file_name.split('.')
+
+    # Check if the substring before the dot is not empty and starts with a latin alphabet letter
+    if not before_dot or not before_dot[0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of the allowed extensions
+    if after_dot not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    # If all conditions are met, return 'Yes'
+    return 'Yes'</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if len(file_name) == 0:
+        return 'No'
+    if file_name[0].isalpha() == False:
+        return 'No'
+    if file_name.count('.') != 1:
+        return 'No'
+    if file_name.count('.') == 1:
+        if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+            return 'No'
+    if file_name.count('.') == 1:
+        if file_name.split('.')[0].count('0') + file_name.split('.')[0].count('1') + file_name.split('.')[0].count('2') + file_name.split('.')[0].count('3') + file_name.split('.')[0].count('4') + file_name.split('.')[0].count('5') + file_name.split('.')[0].count('6') + file_name.split('.')[0].count('7') + file_name.split('.')[0].count('8') + file_name.split('.')[0].count('9') > 3:
+            return 'No'
+    return 'Yes'
+
+
+print(file_name_check("example.txt"))
+print(file_name_check("1example.dll"))
+print(file_name_check("example.dll"))
+print(file_name_check("example.exe"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))
+print(file_name_check("example.txt"))</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    import re
+
+    # Check for one dot, not at the start or end
+    if file_name.count('.') != 1 or file_name.startswith('.') or file_name.endswith('.'):
+        return 'No'
+
+    # Split the file name into parts before and after the dot
+    parts = file_name.split('.')
+    
+    # Check if the part before the dot starts with a latin alphabet letter and has no more than three digits
+    if not re.match('^[a-zA-Z][a-zA-Z0-9]{0,3}\.', parts[0]):
+        return 'No'
+    
+    # Check if the part after the dot is one of the allowed extensions
+    if parts[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'
+
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that should solve the problem:
+
+```python
+import re
+
+def file_name_check(file_name):
+    # Check if there are more than three digits
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+
+    # Check if there is exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into two parts: before and after the dot
+    before_dot, after_dot = file_name.split('.')
+
+    # Check if the substring before the dot is not empty and starts with a letter
+    if not before_dot or not before_dot[0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of the allowed extensions
+    if after_dot not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'
+```
+
+This function first checks if there are more than three digits in the file name. If there are, it returns 'No'. Then it checks if there is exactly one dot in the file name. If there isn't, it returns 'No'. If there is, it splits the file name into two parts: the part before the dot and the part after the dot. It then checks if the part before the dot is not empty and starts with a letter. If it doesn't, it returns 'No'. Finally, it checks if the part after the dot is one of the allowed extensions. If it isn't, it returns 'No'. If all checks pass, it returns 'Yes'.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if there are more than three digits in the file's name
+    if len([char for char in file_name if char.isdigit()]) > 3:
+        return 'No'
+
+    # Check if the file's name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file's name into two parts: before and after the dot
+    before_dot, after_dot = file_name.split('.')
+
+    # Check if the substring before the dot is empty or starts with a non-latin alphapet letter
+    if not before_dot or not before_dot[0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of these: ['txt', 'exe', 'dll']
+    if after_dot not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'
+
+# Test the function
+assert file_name_check("example.txt") == 'Yes'
+assert file_name_check("1example.dll") == 'No'
+assert file_name_check("example123.dll") == 'No'
+assert file_name_check("example.123dll") == 'No'
+assert file_name_check("example.123.dll") == 'No'
+assert file_name_check("example.txt.dll") == 'No'
+assert file_name_check("example.txt1") == 'No'
+assert file_name_check("example.txt123") == 'No'
+assert file_name_check("example.txt123.dll") == 'No'
+assert file_name_check("example.dll123") == 'No'
+assert file_name_check("example123.txt") == 'No'
+assert file_name_check("1example.txt") == 'No'
+assert file_name_check("Aexample.txt") == 'Yes'
+assert file_name_check("Aexample123.dll") == 'Yes'</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is a Python solution for the problem using the built-in `re` library for regular expressions:
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Your code here
+    if len(file_name) > 12:
+        return 'No'
+    if file_name.count('.') != 1:
+        return 'No'
+    if file_name.count('0') > 3 or file_name.count('1') > 3 or file_name.count('2') > 3 or file_name.count('3') > 3 or file_name.count('4') > 3 or file_name.count('5') > 3 or file_name.count('6') > 3 or file_name.count('7') > 3 or file_name.count('8') > 3 or file_name.count('9') > 3:
+        return 'No'
+    if file_name[0] == '.':
+        return 'No'
+    if file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':
+        return 'No'
+    if file_name[0] == '.' or file_name[-1] == '.':</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+import re
+
+def file_name_check(file_name):
+    """
+    Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Check if there are more than three digits in the file's name
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+
+    # Check if the file's name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file's name into the name and the extension
+    name, extension = file_name.split('.')
+
+    # Check if the name is empty or starts with a digit
+    if not name or name[0].isdigit():
+        return 'No'
+
+    # Check if the extension is one of the allowed ones
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    # If all checks pass, the file's name is valid
+    return 'Yes'
+```
+
+This function uses regular expressions to check for the conditions. The `re.findall` function is used to find all occurrences of digits in the file's name</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    # Split the file name into the substring before the dot and the substring after the dot
+    parts = file_name.split('.')
+    if len(parts) != 2:
+        return 'No'  # If there is not exactly one dot, return 'No'
+
+    # Check if the substring before the dot starts with a latin alphapet letter
+    if not parts[0].isalpha():
+        return 'No'  # If it does not start with a latin alphapet letter, return 'No'
+
+    # Check if the substring after the dot is one of ['txt', 'exe', 'dll']
+    if not parts[1].lower() in ['txt', 'exe', 'dll']:
+        return 'No'  # If it is not one of these, return 'No'
+
+    # If all conditions are met, return 'Yes'
+    return 'Yes'
+
+# Test cases
+print(file_name_check("example.txt"))  # => 'Yes'
+print(file_name_check("1example.dll"))  # => 'No' (the name should start with a latin alphapet letter)</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    if file_name.count('.') != 1:
+        return 'No'
+    name, ext = file_name.split('.')
+    if not name[0].isalpha():
+        return 'No'
+    if len(name) == 0:
+        return 'No'
+    if ext not in ['txt', 'exe', 'dll']:
+        return 'No'
+    if len([c for c in name if c.isdigit()]) > 3:
+        return 'No'
+    return 'Yes'</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    name, ext = file_name.split('.')
+    
+    if not name or not name[0].isalpha():
+        return 'No'
+    
+    if ext not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    if len([char for char in name if char.isdigit()]) > 3:
+        return 'No'
+    
+    return 'Yes'</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if file_name.count('.') != 1:
+        return 'No'
+    name, extension = file_name.split('.')
+    if not name:
+        return 'No'
+    if not name[0].isalpha():
+        return 'No'
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+    if sum(1 for c in name if c.isdigit()) > 3:
+        return 'No'
+    return 'Yes'
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    """
+    if not file_name or len(file_name.split('.')) != 2:
+        return "No"
+
+    name_part, ext_part = file_name.split('.')
+    if len(name_part) == 0 or not name_part[0].isalpha():
+        return "No"
+
+    if len(name_part) > 1 or len(ext_part) != len(["txt", "exe", "dll"][::-1][file_name.split('.')[1].lower().find(i) != -1 for i in ["txt", "exe", "dll"]]):
+        return "No"
+
+    return "Yes"
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    import re
+
+    # Check if there are more than three digits in the file name
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into parts before and after the dot
+    file_parts = file_name.split('.')
+
+    # Check if the substring before the dot is not empty and starts with a latin alphapet letter
+    if not file_parts[0] or not file_parts[0][0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of these: ['txt', 'exe', 'dll']
+    if file_parts[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'
+
+# Test the function with example inputs
+print(file_name_check("example.txt"))  # => 'Yes'
+print(file_name_check("1example.dll"))  # => 'No' (the name should start with a latin alphapet letter)</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: False </p>
+      <pre><code>  import re
+
+def file_name_check(file_name):
+    """
+    This function checks if the given file name is valid or not.
+    A file name is considered valid if it meets the following conditions:
+    1. It should not have more than three digits ('0'-'9').
+    2. It should have exactly one dot '.'
+    3. The substring before the dot should not be empty and should start with a latin alphapet ('a'-'z' and 'A'-'Z').
+    4. The substring after the dot should be one of these: ['txt', 'exe', 'dll'].
+    """
+
+    # Check if the file name has more than three digits
+    if re.search(r'\d{4,}', file_name):
+        return 'No'
+
+    # Check if the file name has exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into the part before and after the dot
+    file_parts = file_name.split('.')
+
+    # Check if the part before the dot is not empty and starts with a latin alphapet letter
+    if not file_parts[0] or not file_parts[0][0].isalpha():
+        return 'No'
+
+    # Check if the part after the dot is one of the allowed file types: ['txt', 'exe', 'dll']
+    if file_parts[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'
+
+# Test the function
+print(file_name_check("example.txt"))  # => 'Yes'
+print(file_name_check("1example.dll"))  # => 'No' (the name should start with a latin alphapet letter)
+print(file_name_check("example123.txt"))  # => 'No' (more than three digits)
+print(file_name_check("example.exe"))  # => 'Yes'
+print(file_name_check("example.png"))  # => 'No' (not one of the allowed file types)</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if len(file_name) > 3 and file_name.count('.') != 1:
+        return 'No'
+    elif file_name[0].isalpha() and file_name.split('.')[1] in ['txt', 'exe', 'dll']:
+        return 'Yes'
+    else:
+        return 'No'
+```
+
+The function `file_name_check` takes a string `file_name` as input and returns 'Yes' if the file's name is valid, and 'No' otherwise. The function first checks if the length of the file's name is greater than 3 and if it contains exactly one dot. If these conditions are not met, the function returns 'No'. If the conditions are met, the function checks if the substring before the dot starts with a letter from the latin alphabet and if the substring after the dot is one of the allowed file extensions. If these conditions are not met, the function returns 'No'. If all the conditions are met, the function returns 'Yes'.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    import re
+    file_name = file_name.lower()
+    if not re.match("^[a-zA-Z][a-zA-Z0-9]{0,3}[.][a-z]{3}$", file_name):
+        return 'No'
+    if not re.match("^[a-zA-Z][a-zA-Z0-9]{0,3}[.][a-z]{3}$", file_name):
+        return 'No'
+    return 'Yes'
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+import re
+
+def file_name_check(file_name):
+    # Check if the file's name contains exactly one dot '.'
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file's name into two parts: before and after the dot
+    name, extension = file_name.rsplit('.', 1)
+
+    # Check if the substring before the dot is not empty and starts with a letter
+    if not name or not name[0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of these: ['txt', 'exe', 'dll']
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    # Check if there are not more than three digits in the file's name
+    if len(re.findall(r'\d', name)) > 3:
+        return 'No'
+
+    return 'Yes'
+```
+
+This function uses the `rsplit` method to split the file's name into two parts: the part before the dot and the part after the dot. It then checks each condition in turn. If any condition is not met, it returns 'No'. If all conditions are met, it returns 'Yes'.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if len(file_name) > 3:
+        return 'No'
+    if file_name.count('.') != 1:
+        return 'No'
+    if file_name.split('.')[0] == '':
+        return 'No'
+    if file_name.split('.')[0][0] not in string.ascii_letters:
+        return 'No'
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'
+
+def file_name_check_2(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check_2("example.txt") # => 'Yes'
+    file_name_check_2("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if len(file_name) > 3:
+        return 'No'
+    if file_name.count('.') != 1:
+        return 'No'
+    if file_name.split('.')[0] == '':
+        return 'No'
+    if file_name.split('.')[0][0] not in string.ascii_letters:
+        return 'No'
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'
+
+def file_name_check_3(file_</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if file_name.count(".") != 1:
+        return "No"
+    before_dot, after_dot = file_name.split(".")
+    if not before_dot or not before_dot[0].isalpha():
+        return "No"
+    if after_dot not in ["txt", "exe", "dll"]:
+        return "No"
+    if len([c for c in file_name if c.isdigit()]) > 3:
+        return "No"
+    return "Yes"</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Split the file name into the name and the extension
+    name, ext = file_name.rsplit('.', 1)
+    
+    # Check if there are more than three digits in the name
+    if sum(c.isdigit() for c in name) > 3:
+        return 'No'
+    
+    # Check if the name starts with a letter from the latin alphabet
+    if not name[0].isalpha():
+        return 'No'
+    
+    # Check if the extension is one of the allowed ones
+    if ext not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    # If all checks pass, return 'Yes'
+    return 'Yes'
+
+# Test the function
+print(file_name_check("example.txt")) # Should print 'Yes'
+print(file_name_check("1example.dll")) # Should print 'No'
+print(file_name_check("example.exe")) # Should print 'Yes'
+print(file_name_check("example.dll")) # Should print 'Yes'
+print(file_name_check("example123.txt")) # Should print 'Yes'
+print(file_name_check("example1234.txt")) # Should print 'No'
+print(file_name_check("example.txt.exe")) # Should print 'No'
+print(file_name_check(".txt")) # Should print 'No'
+print(file_name_check("example.txt.")) # Should print 'No'</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  import re
+
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Check if there are more than three digits
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+    
+    # Check if there is exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    # Split the file name into two parts
+    parts = file_name.split('.')
+    
+    # Check if the part before the dot is not empty and starts with a latin alphapet letter
+    if not parts[0] or not parts[0][0].isalpha() or not parts[0][0].isascii():
+        return 'No'
+    
+    # Check if the part after the dot is one of the allowed extensions
+    if parts[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    return 'Yes'</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if there are more than three digits in the file name
+    if len(file_name) > 3 and file_name[:4].isdigit():
+        return 'No'
+    
+    # Check if there is exactly one dot in the file name
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    # Check if the substring before the dot is not empty and starts with a latin alphapet letter
+    if not file_name[0].isalpha() or file_name[0].isdigit():
+        return 'No'
+    
+    # Check if the substring after the dot is one of these: ['txt', 'exe', 'dll']
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    # If all conditions are met, return 'Yes'
+    return 'Yes'
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    """Check if a file name is valid"""
+    # Check if there is exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    # Split the file name into two parts
+    name, extension = file_name.rsplit('.', 1)
+    
+    # Check if the extension is valid
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    # Check if the name starts with a latin alphabet letter
+    if not name[0].isalpha():
+        return 'No'
+    
+    # Check if the name is not empty
+    if not name:
+        return 'No'
+    
+    # Count the number of digits in the name
+    digit_count = sum(c.isdigit() for c in name)
+    
+    # Check if there are not more than three digits
+    if digit_count > 3:
+        return 'No'
+    
+    # If all conditions are met, return 'Yes'
+    return 'Yes'
+
+# Test cases
+print(file_name_check("example.txt"))  # => 'Yes'
+print(file_name_check("1example.dll"))  # => 'No'
+print(file_name_check("example.exe"))  # => 'Yes'
+print(file_name_check("example1234.txt"))  # => 'No'
+print(file_name_check("example."))  # => 'No'
+print(file_name_check(".txt"))  # => 'No'</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if the file name contains more than three digits
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into two parts
+    name, extension = file_name.split('.')
+
+    # Check if the name is empty or starts with a letter
+    if not name or not name[0].isalpha():
+        return 'No'
+
+    # Check if the extension is one of the allowed ones
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    # If all checks pass, return 'Yes'
+    return 'Yes'
+
+# Test the function
+print(file_name_check("example.txt"))  # => 'Yes'
+print(file_name_check("1example.dll"))  # => 'No'</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def file_name_check(file_name):
+    import re
+    valid_extensions = ['txt', 'exe', 'dll']
+    if re.match(r'^[a-zA-Z][a-zA-Z0-9]{0,2}\.[a-zA-Z0-9]{1,3}$', file_name.split('.')[0]):
+        if file_name.split('.')[1] in valid_extensions:
+            return 'Yes'
+    return 'No'</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Split the file name by the dot
+    parts = file_name.split('.')
+    # Check if there is exactly one dot
+    if len(parts) != 2:
+        return 'No'
+    # Check if the substring before the dot is not empty and starts with a latin alphabet letter
+    if not parts[0].isalpha() or not parts[0]:
+        return 'No'
+    # Check if the substring after the dot is one of ['txt', 'exe', 'dll']
+    if parts[1].lower() not in ['txt', 'exe', 'dll']:
+        return 'No'
+    # Check if there are more than three digits in the file name
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+    # If all conditions are met, return 'Yes'
+    return 'Yes'
+
+# Test cases
+print(file_name_check("example.txt")) # => 'Yes'
+print(file_name_check("1example.dll")) # => 'No'
+print(file_name_check("example123.txt")) # => 'No' (more than three digits)
+print(file_name_check("example.txt123")) # => 'No' (more than three digits)
+print(file_name_check("example.exe")) # => 'Yes'
+print(file_name_check("example.dll")) # => 'Yes'
+print(file_name_check("example.TXT")) # => 'No' (should be lowercase)
+print(file_name_check("example.txt123")) # => 'No' (more than three digits)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Check if there are more than three digits in the file name
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into name and extension
+    name, extension = file_name.split('.')
+
+    # Check if the name is not empty and starts with a letter
+    if not name or not name[0].isalpha():
+        return 'No'
+
+    # Check if the extension is one of the allowed ones
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if there are more than three digits in the file name
+    if len(file_name) - file_name.count('.') - file_name.count(' ') > 3:
+        return 'No'
+
+    # Check if the file name starts with a letter
+    if not file_name[0].isalpha():
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Check if the substring before the dot is not empty
+    if file_name.split('.')[0] == '':
+        return 'No'
+
+    # Check if the substring after the dot is one of the allowed extensions
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def file_name_check(file_name):
+    """
+    This function takes a string representing a file's name and returns 'Yes' if the file's name is valid, and 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    """
+    # Check if there are more than three digits in the file name
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+    
+    # Check if there is more than one dot in the file name
+    if file_name.count('.') > 1:
+        return 'No'
+    
+    # Check if there is no dot in the file name
+    if file_name.count('.') == 0:
+        return 'No'
+    
+    # Check if the substring before the dot is not empty and starts with a letter
+    if not file_name.split('.')[0] or not file_name.split('.')[0][0].isalpha():
+        return 'No'
+    
+    # Check if the substring after the dot is one of the allowed extensions
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    # If all the conditions are met, return 'Yes'
+    return 'Yes'
+```
+
+We can test the function with the given examples:
+
+```python
+print(file_name_check("example.txt")) # => 'Yes'
+print(file_name_check("1example.dll")) # => 'No'
+print(file_name_check("example.exe")) # => 'Yes'
+print(file_name_check("example.doc")) # => 'No'
+print(file_name_check("example.txt.exe")) # => 'No'
+print(file_name_check("example.dll.exe")) # => 'No'
+```
+
+Output:
+
+```
+Yes
+No
+Yes
+No
+No
+No
+``` </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+
+    if len(file_name) > 3:
+        return 'No'
+    if file_name.count('.') != 1:
+        return 'No'
+    if file_name.split('.')[0] == '':
+        return 'No'
+    if file_name.split('.')[0][0] not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
+        return 'No'
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    if (len(file_name.split('.')) != 2) or len(file_name.split('.')[1]) > 3 or file_name.split('.')[0] == '' or not file_name.split('.')[0].isalpha() or file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    else:
+        return 'Yes'</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the problem:
+
+```python
+import re
+
+def file_name_check(file_name):
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+    if file_name.count('.') != 1:
+        return 'No'
+    name, extension = file_name.split('.')
+    if not name or not name[0].isalpha():
+        return 'No'
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'
+```
+
+This code uses regular expressions to count the number of digits in the file name. It then checks if there is exactly one dot in the file name. It splits the file name into the name and extension parts and checks if the name starts with a letter. Finally, it checks if the extension is one of the allowed values.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    import re
+    
+    if len(re.findall(r'\d', file_name)) > 3:
+        return 'No'
+    elif file_name.count('.') != 1:
+        return 'No'
+    elif not re.match(r'^[a-zA-Z]', file_name.split('.')[0]):
+        return 'No'
+    elif file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    else:
+        return 'Yes'
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def file_name_check(file_name):
+    """
+    Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    import re
+
+    # Check if the file name has exactly one dot '.'
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into a list of substrings
+    file_name_list = file_name.split('.')
+
+    # Check if the file name has more than three digits
+    if len(re.findall(r'\d', file_name_list[0])) > 3:
+        return 'No'
+
+    # Check if the file name starts with a letter from the latin alphapet
+    if not re.match(r'[A-Za-z]', file_name_list[0][0]):
+        return 'No'
+
+    # Check if the file name has one of these extensions
+    if file_name_list[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'
+```
+
+This function first checks if the file name has exactly one dot '.'. If it doesn't, it returns '</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    if len([i for i in file_name if i.isdigit()]) > 3:
+        return 'No'
+    if '.' not in file_name:
+        return 'No'
+    if file_name.split('.')[0].isalpha() == False:
+        return 'No'
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if the file name contains more than three digits
+    if sum(c.isdigit() for c in file_name) > 3:
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if '.' not in file_name or file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file name into parts before and after the dot
+    parts = file_name.split('.')
+
+    # Check if the part before the dot is not empty and starts with a latin alphabet letter
+    if not parts[0] or not parts[0].isalpha():
+        return 'No'
+
+    # Check if the part after the dot is one of ['txt', 'exe', 'dll']
+    if parts[1].lower() not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+
+def file_name_check(file_name):
+    # Count the number of digits in the file name
+    digit_count = sum(c.isdigit() for c in file_name if c != ".")
+
+    # Check if there are more than three digits
+    if digit_count > 3:
+        return 'No'
+
+    # Check if the file name contains exactly one dot
+    if "." not in file_name or file_name.count(".") != 1:
+        return 'No'
+
+    # Check if the substring before the dot starts with a latin alphabetic character
+    if len(file_name.split(".")[0]) == 0 or not file_name[0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of the allowed extensions
+    extension = file_name.split(".")[1]
+    allowed_extensions = {"txt", "exe", "dll"}
+    if extension not in allowed_extensions:
+        return 'No'
+
+    # All conditions are met, return 'Yes'
+    return 'Yes'
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+    # Split the file name into two parts: before and after the dot
+    parts = file_name.split('.')
+    
+    # Check if there is exactly one dot
+    if len(parts) != 2:
+        return 'No'
+    
+    # Check if the substring before the dot starts with a letter and has at most 3 digits
+    name = parts[0]
+    if not name or not name[0].isalpha() or sum(c.isdigit() for c in name) > 3:
+        return 'No'
+    
+    # Check if the substring after the dot is one of the allowed extensions
+    extension = parts[1]
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    # If all conditions are met, return 'Yes'
+    return 'Yes'</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  import re
+
+def file_name_check(file_name):
+    # Check if there should be a dot '.' in the file's name
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file's name into string before and after the dot
+    file_name_split = file_name.split('.')
+
+    # Check if the substring before the dot is valid
+    if not re.match("^[a-zA-Z][a-zA-Z0-9]*$", file_name_split[0]) or \
+       len(file_name_split[0]) > 3 or \
+       not file_name_split[0][0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is valid and one of the allowed extensions
+    if file_name_split[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    # If all conditions are met, return 'Yes'
+    return 'Yes'</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'Z').
+    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']
+    Examples:
+    file_name_check("example.txt") # => 'Yes'
+    file_name_check("1example.dll") # => 'No' (the name should start with a latin alphapet letter)
+    """
+
+    # Your code here
+    # Check if the file name contains more than three digits
+    if len([char for char in file_name if char.isdigit()]) > 3:
+        return 'No'
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    # Check if the substring before the dot is not empty and starts with a letter
+    if not file_name.split('.')[0] or not file_name.split('.')[0][0].isalpha():
+        return 'No'
+    # Check if the substring after the dot is one of the allowed extensions
+    if file_name.split('.')[1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    return 'Yes'
+
+# Test your function
+file_name_check("example.txt") # => 'Yes'
+file_name_check("1example.dll") # => 'No'
+```
+
+This code defines a function `file_name_check` that takes a string representing a file name and returns 'Yes' if the file name is valid and 'No' otherwise. The function checks if the file name contains more than three digits, if it contains exactly one dot, if the substring before the dot is not empty and starts with a letter, and if the substring after the dot is one of the allowed extensions.
+
+You can now test the function with different file names to see if it correctly identifies valid and invalid file names.
+
+Please note that this code is not optimized for performance and may not be suitable for large datasets. It is recommended to use regular expressions for more efficient string matching and manipulation.
+
+Let me know if you need any further assistance!
+```python
+def file_name_check(file_name):
+    """Create a function which takes a string representing a file's name, and returns
+    'Yes' if the the file's name is valid, and returns 'No' otherwise.
+    A file's name is considered to be valid if and only if all the following conditions 
+    are met:
+    - There should not be more than three digits ('0'-'9') in the file's name.
+    - The file's name contains exactly one dot '.'
+    - The substring before the dot should not be empty, and it starts with a letter from 
+    the latin alphapet ('a'-'z' and 'A'-'</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if there are more than three digits in the file's name
+    if len([char for char in file_name if char.isdigit()]) > 3:
+        return 'No'
+
+    # Check if the file's name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Check if the substring before the dot is not empty and starts with a latin alphapet letter
+    dot_index = file_name.index('.')
+    if not file_name[:dot_index].isalpha() or not file_name[:dot_index][0].isalpha():
+        return 'No'
+
+    # Check if the substring after the dot is one of these: ['txt', 'exe', 'dll']
+    if file_name[dot_index+1:] not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def file_name_check(file_name):
+    # Check if the file name has more than three digits
+    if file_name.count('0-9') > 3:
+        return 'No'
+    
+    # Check if the file name contains exactly one dot
+    if file_name.count('.') != 1:
+        return 'No'
+    
+    # Check if the substring before the dot is empty or starts with a latin alphapet letter
+    if not file_name.strip('.') or not file_name.strip('.')[0].isalpha():
+        return 'No'
+    
+    # Check if the substring after the dot is one of ['txt', 'exe', 'dll']
+    if file_name.split('.')[-1] not in ['txt', 'exe', 'dll']:
+        return 'No'
+    
+    return 'Yes'</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def file_name_check(file_name):
+    import re
+
+    # Check if the file's name contains exactly one dot '.'
+    if file_name.count('.') != 1:
+        return 'No'
+
+    # Split the file's name into two parts: the substring before the dot and the substring after the dot
+    name, extension = file_name.split('.')
+
+    # Check if the substring before the dot is not empty and starts with a letter from the latin alphapet
+    if not name or not name[0].isalpha():
+        return 'No'
+
+    # Check if there are more than three digits in the substring before the dot
+    if len(re.findall(r'\d', name)) > 3:
+        return 'No'
+
+    # Check if the substring after the dot is one of these: ['txt', 'exe', 'dll']
+    if extension not in ['txt', 'exe', 'dll']:
+        return 'No'
+
+    return 'Yes'</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

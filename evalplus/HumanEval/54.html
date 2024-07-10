@@ -1,0 +1,1226 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/54 </h1>
+<pre><code> 
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    return set(s0) == set(s1)
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['eabcdzzzz', 'dddzzzzzzzddeddabc'], ['abcd', 'dddddddabc'], ['dddddddabc', 'abcd'], ['eabcd', 'dddddddabc'], ['abcd', 'dddddddabcf'], ['eabcdzzzz', 'dddzzzzzzzddddabc'], ['aabb', 'aaccc']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['ab', 'cd'], ['abcd', 'cbad'], ['aaa', 'aaa'], ['abc', 'def'], ['aaabbbccc', 'abbabcbc'], ['abcdefg', 'gfedcba'], ['abbcccddddeeeee', 'abcde'], ['12345', '54321'], ['hello', 'world'], ['', ''], ['524321', '5432'], ['cdcd', ''], ['aaabbbccc', 'abbbabcbc'], ['abbabcbc', 'abc'], ['123445', '54321'], ['hoelldefo', 'helldefo'], ['aaabbbccc', 'world'], ['adbbcccddddeeeeehelldefo', 'abcde'], ['abcde', 'abcde'], ['abecde', 'abecde'], ['5432cababecdead', 'cababecdead'], ['5432cababecdead', '5432cababecdead'], ['5432caaaababecdead', '5432cababecdead'], ['ab54321fg', 'gfedcba'], ['aaa1234a5bbbccc', 'aaa1234a5bbbccc'], ['123445', '514321'], ['5432caaaabacababecdeadbecdead', '5432cababecdead'], ['ab', 'cbad'], ['abcdegfedcba', 'abcdegfedcba'], ['5432', 'cdcd5432'], ['543543221', 'abcdeadbbcccddddeeeeehelldefogfedcba'], ['5432caaaabacaabcd', 'abcd'], ['abbcccddddeeeee', ''], ['123445', '5143241'], ['5432caaaabacaababbcccddddeeeeecd', 'abcd'], ['llo', 'helleo'], ['123445', ''], ['abcdcb5143241a514321de', 'abcdcbadcbade'], ['abcd', 'aabcdbcd'], ['abcdegfedcba', 'aabcdegfedcba'], ['abcdeadbbcccddddeeeeehelldefogfedcba', '54321'], ['abcdeadbbcccddddeeeeehelabdcba', '54321'], ['cdcd', 'ccd5143241cd'], ['aab', 'cd'], ['aabcdefgb', '12345'], ['abbbabcbc', '1234545'], ['5432', 'abcdegfedcba'], ['aabcdefgb', 'aaa'], ['abcc', 'def'], ['54342', '5432'], ['5432caaaabacababecdeadbecdead', '5432cababecdaabcdefgbead'], ['llohelldefo', 'llo'], ['abcdcb5143241a514321db', 'cd'], ['5432caaaabacaababbcccddddeeeeecd', 'abcabcdcb5143241a514321db'], ['5432', 'cababecdead'], ['abbhelleoc', 'abbhelleoc'], ['cdcd', 'cdcd'], ['aab', '123'], ['5432caaaabacaababbcccddddeeeeecd', 'cabcd'], ['abcdcbadcbade', 'aabcdefgb'], ['5432caaaababecdead', 'aabcdbcd'], ['aaa', 'aaaa'], ['abcdegfedcba', '5432'], ['5432caaaabacaababbcccddddeeeeecd', 'abbabcbc'], ['abcdeadbbcccabcdeadbbcccddddeeeeehelabdcbaa', 'abcdeadbbcccddddeeeeehelldefogfedcba'], ['aabcdcbadcbade', 'aabcdefgb'], ['llaaa1234a5bbbccco', 'llo'], ['aaabbbccc', 'a5432caaaabacababecdeadbecdeadbabcbc'], ['abcdcb5143241a514321de', 'abcdeadbbcccddddeeeeehelabdcbabecde'], ['abde', 'abcde'], ['54321', 'helldefo'], ['5432caaaababecdead', '5432c3ababecdead'], ['abcdcb5143241a514321de', '54321'], ['123454', '1234545'], ['cabbhelleoc', 'ableoc'], ['aabcdefgbcdeadbbcccabcdeadbbcccddddee5432caaaabacaabcdehelabdcbaa', 'abcdeadbbcccabcdeadbbcccddddeeeeehelabdcbaa'], ['abbbcabcbc', '1234545'], ['abc', 'abc'], ['54321', 'abcdeadbbcccddddeeeeehefogfedcba'], ['5432caaaabacaabcd', 'cabcd'], ['cabeoc', 'cabbhelldefeoc'], ['5432caaaabacaababbcccddddeeeeecd', 'cabc'], ['abaabde', 'a5432caaaabacababecdeadbecdeadbabcbc'], ['hlello', 'hlello'], ['5432caaaabacababecdeaadbecdead', '5432cababecdead'], ['abbbabcbc54321', 'abbbabcbc'], ['5432cabecdead', '5432cababecdead'], ['123abde45', '54321'], ['5c432cababecdea', '5c4aabcdcbadcbade32cababecdead'], ['abcabcdcb514324aaa1a514321db', 'abcabcdcb5143241a514321db'], ['5432caaaabacaababhoelldefobcccddddeeeeecd', 'abbaabbbabcbcbcbc'], ['544cbaaaa1234a5bbbcccd32', '544cbad32'], ['abcdcbadcbade', 'abbc'], ['aaabbbccdcd5432cc', 'abbabcbc'], ['aabcdbcd', 'hlello'], ['cd', 'abcd'], ['abbbabcbc', '1234123445545'], ['abcdeadbbcccddddeeeeehelldefogfedcba', 'abbhelleoc'], ['babbabcbc', '5432'], ['abcdeadbbcccaebcdeadbbcccddddeeeeehelabdcbaaa', 'aabcdefgbcdeadbbcccabcdeadbbcccddddee5432caaaabacaabcdehelabdcbaa'], ['aaaaaeeeiou', 'iaueoaiueiiaaa'], ['abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['Hello, World!', 'lohedrWl!o ,'], ['The quick brown fox jumps over the lazy dog', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['1234567890', '0987654321'], ['tacocat', 'cattaco'], ['may the force be with you', 'The Force Is Strong With You'], ['abcdefghijklmnopqrstuvwxyz', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['gazelle!', 'The Force Is Strong With You'], ['beabcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz'], ['tacocspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat', 'tacocspecterat'], ['gazelle!', 'The Force Is Sthrong With You'], ['Amaze', 'The hquick brown fox jumps over the lazy dog'], ['0987654321', '0987654321'], ['you', 'cattaco'], ['1234567890', 'abcdefghijklmnopqrstuvwxyz'], ['foStrongrce', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['may', '0987654321'], ['The quick brown fox jumps over the lazy dog', 'Tbrown fox jumps over the lazy dog'], ['gaz!elle!', 'gazelle!'], ['may', 'of'], ['Sthrong', '0987654321'], ['12345lohedrWl!o ,67890', 'abcdefghijklmnopqrstuvwxyz'], ['0987654321', 'foStrongrce'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!', 'abcdefghijklmnopqrstuvwxyz'], ['abcdefghijknopqrstuvwxyz', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['tacocat', 'cattlohedrWl!oco'], ['12345lohedrWl!o ,67890', '12345lohedrWl!o ,67890'], ['12345lohedrWl!o', 'The Force Is Strong With You'], ['tacocspeGod!e', 'tacocspeGod!e'], ['specter', 'habcddogefghijklmnopqrstuvwxyz'], ['specterSthrong', '0987654The quick brown fox jumps over the lazy dog21'], ['The quick brown fox jumps over the lazy dog', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'cattaco'], ['you', 'abcdefghijklmnopqrstuvwxyz'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['wSthrongith', 'cat'], ['may the force be wiaueoaiueiiaaaith you', 'The Force Is Strong With You'], ['gaze!', 'gaze!'], ['The quick brown fox jumps over the lazy dog', 'Tbrown fox jumps ovenr the lazy dog'], ['gaze!', 'tacocspecteThe Force Is Sthrong With Yourat'], ['may the force be with', 'The Force Is Strong With You'], ['caattacco', 'caattaco'], ['mayy', 'jumps'], ['1234567890', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['tacocspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat', 'tacocspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat'], ['mayy', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['dazzling', 'abcdefghijklmnopqrstuvwxyz'], ['0987654321', 'ovenr098765432gazelle!'], ['Amaze', 'Amaze'], ['with', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['cattlohedrWl!gaze!oco', 'cattlohedrWl!oco'], ['abcdefghijknopqrstuv0987654321wxyz', 'abcgorgeous,defghijknopqrstuv0987654321wxyz'], ['abcdefghijklmnoprqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz'], ['12345678gorgeous,90', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['The Force Is Sttrong With You', 'The Force Is Strong With You'], ['1234567890', 'abcdefghijklmnopqrstuvyz'], ['1234567890', '1234567890'], ['ovenr098765432gazelle!', 'ovenr098765432gazelle!'], ['09876543221', '0987654321'], ['abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz'], ['tacocspecterat', 'tacocspecterat'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeeZeZeZeZeZeZeZeZeZeZe', 'cattaco'], ['force', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['Amaze', '0987654The quick brown fox jumps over the lazy dog21'], ['m', 'of'], ['foStrongrce', 'you'], ['Tbrown fox jumps ovenr the lazy dog', 'abcdefghijklmnopqrstuvwxyz'], ['cattlohedrWl!gaze!oco', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaaa'], ['12345lohedrWl!o ,678090', '12345lohedrWl!o ,67890'], ['abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'abcdefghijklmnopqrrstuvwxyz'], ['Hello,', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['abcdefghiGod! Amaze a sltunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'abcdefghiGod! Amaze a sltunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz'], ['abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'gaze!'], ['The Force Is Sttrong With You', 'The Force Is Sttrong With You'], ['mayy', 'jpumps'], ['12345lohedr!Wl!o ,678090', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['12345lohedrWl!o', 'The Force Is Strongabcdefghijknopqrstuvwxyz With You'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz'], ['sltunning,', 'sltunning,'], ['ZYXWVUTSMRQPONMLKJIHGFEDCBA', 'abcdefghijknopqrstuvwxyz'], ['with', 'The Force Is Strongabcdefghijknopqrstuvwxyz With You'], ['sltunning,', 'sltnning,'], ['abcdefghuijknopqrstuvwxyz', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['aaaaaeeeiou', 'aaaaaeeeiou'], ['taocat', 'tacocat'], ['iaueoaiueiiaaa', 'The quick brown fox jumps ove the lazy dog'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!'], ['122345678990', '12345678990'], ['bewitching,', '0987654321'], ['Tbrown fox jumps ovenr the lazy dog', 'dog21'], ['throng', '0987654321'], ['catttaco', 'The Forceabcgorgeous,defghijknopqrstuv0987654321wxyz Is Strongabcdefghijknoxyz With You'], ['tacocat', 'tacocat'], ['12345cat678990', '12345678990'], ['dog21', 'dog21'], ['catttaco', 'tacocspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat'], ['ZYXWVUTSMRQPONMLKJIGHGFEDCBA', 'ZYXWVUTSMRQPONMLKJIGHGFEDCBA'], ['caattaco', '12345lostunning,hedrWl!o ,67890'], ['Tbrown fox jumps over the lazy dog', 'Tbrown fox jumps over the lazy dog'], ['dog', 'abcdefghijklmnopqrstuvwxyz'], ['', 'the'], ['ZYXWVUTSMRQPONMLKJIHGFEDCBA', 'ZYXWVUTSMRQPONMLKJIHGFStrongabcdefghijknopqrstuvwxyzCBA'], ['12o345lohedrWl!o', 'The Force Is Strongabcdefghijknopqrstuvwxyz With You'], ['mayyy', 'jumps'], ['ttolohedrWl!oco', 'ttlohedrWl!oco'], ['taoocat', 'tacocat'], ['m', '0987654The quick brown fox jumps over the lazy dog21'], ['abcdefghijklmnoprqrstuvwxyz', 'tacocspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat'], ['Sttrong', 'ZYXWVUTSMRQPONMLKJIGHGFEDCBA'], ['The quick brown fox jumps over the lazy dog', 'Tbrown fox jumps over the lazyx dog'], ['sltnning,', 'sltunni'], ['foxdazzling', 'abcdefghijklmnouvwxyz'], ['tacocspecterat', 'tacocspeabcdefghiGod! Amaze a sltunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz'], ['gazelle!', 'gazellze!'], ['12345You678990', '122345678990'], ['ZYXWVUTSRQPONMLKJIHGFEDCBA', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['cat', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['mayy', 'God! Amaze a stunning, g orgeous, bewitching, and dazzling specter of my gtdear gazelle!'], ['Tbrown fox jumgps over the lazy dogcattlohedrWl!oco', 'tacocat'], ['The hquick brown fox jumps over the lazy dog', 'The hquick brown fox jumps over the lazy dog'], ['12345lohedrWl!o ,67890', 'abcdefghijklmnuvwxyz'], ['forrce', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['God!', 'God!'], ['ZYXWVUTSMRQPONMLKJIHGFStrongabcdefghijknopqrstuvwxytacocatA', 'ZYXWVUTSMRQPONMLKJIHGFStrongabcdefghijknopqrstuvwxyzCBA'], ['cattlohedrWl!gaze!oco', 'Sttrong'], ['e quick brown fox jum0987654321azy dog', 'The quick brown fox jumps over the lazy dog'], ['mayy', 'mayy'], ['tacocspecterat', 'The Force Is Strong With You'], ['The quick brown fox jumps ovve the lazy dog', 'The quick brown fox jumps ove the lazy dog'], ['may the force hbe with you', 'The Force Is Strong Wth You'], ['The Force Is Stronfoxg With You', 'The Force Is Strong With You'], ['foStrongrce', 'theyou'], ['of', 'The'], ['thrtong', 'abcdefghijklmnopqrrstuvwxyz'], ['dog121', 'dog21'], ['cattlohedrWl!gaze!oco', 'cattlohedrWl!oo'], ['abcdefghijknopqrstuv0987654321wxyz', 'dog121'], ['foStrGod! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!ongrce', 'theyou'], ['caattaco', '123o45lostunning9,hedrWl!o ,67890'], ['1234r5Hello,lohedrWl!o ,678090', '1234r5lohedrWl!o ,678090'], ['aaaaaeeeiou', 'Sthrong'], ['may', 'God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!'], ['The quick brown fox jumps ovve the lazy dog', 'The quick brown fox jumps ovve the lazy dog'], ['abcdefghiGod! Amaze a stunning, abcdefghijklmnoprqrstuvwxyzgorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz'], ['tacocspecteratabcdefghijklmnoprqrstuvwxyz4321', '0987654321'], ['Ztacocspecteratabcdefghijklmnoprqrstuvwxyz4321YXWVUTSMRQPONMLKJIHGFStrongabcdefghijknopqrstuvwxyzCBA', 'God!'], ['foStron1234r5Hello,lohedrW12345lohedr!Wl!o ,678090l!ogrce', 'foStrongrce'], ['gorgeous,!', 'oStrongre'], ['orgeous,', 'The quick brown fox jumps over the lazy dog'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['09876543221', 'tacocspecterat'], ['0987654The quick brown fox jumps over the lazy dog21', 'of'], ['cat', 'abcdefghijklmnopqrstuvwxyz'], ['gazelle!', 'abcdefghijklmnopqrstuvwxyz'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!', 'abcdefghiGod! Amaze a sltunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz'], ['mayyy', '12o345lohedrWl!o'], ['abcdfefghiGod!', 'abcdfefghiGod!'], ['specter', 'force'], ['The hqudazThebStrongabcdefghijknoxyzrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', 'The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do'], ['12345567890', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['cattlohedrWl!oco', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['The quick brown fox jumps ovve the lazy dog', 'cat'], ['habcddogefghijklmnopqrstuvwxyz', 'Hello, World!'], ['ZYXWVUTSMRQPONMLKjumpsCBA', 'ZYXWVUTSMRQPONMLKJIGHGFEDCBA'], ['The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['specterSthrong', 'Strongabcdefghijknopqrstuvwxyz'], ['ovenr', '12345lohedrWl!o ,67890'], ['tacocspecteThe Force Is Sthrong With Yourat', 'tacocspecteThe Force Is Sthrong With Yourat'], ['123645567890', '12345567890'], ['foxdazzling', 'The Force Is Strong With Yuou'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['taoocafoStron1234r5Hello,lohedrW12345lohedr!Wl!o ,678090l!ogrcet', 'tacocat'], ['abofcdefghijklmnopqrstuvwxyz', 'World!'], ['12345lohedr!Wl!forceo', 'The Force Is Strong With You'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZe'], ['123456789', '1234567890'], ['Sthrobewitching,ng', 'Sthrong'], ['God! Amaze a stunning, gorgeous, dbewitching, and dazzling ar gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling ar gazelle!'], ['Sttrong', 'Sttrong'], ['12345lohedrWl!o ,678090', '12345lohedrWl!o ,678090'], ['mm', 'of'], ['habcddogecfghijklmnopqrstuvwxyz', 'habcddogefghijklmnopqrstuvwxyz'], ['The hquick brown fox juer thelazy dog', 'The hquick brown fox jumps over the lazy dog'], ['12o345lohedrWl!o', 'The Force Is Strongabcdefvwxyz Wityh You'], ['ZYXWVUTSMRQPONMLKjumpsCStrongabcdefvwxyzBA', 'ZYXWVUTSMRQPONMLKJIGHGFEDCBA'], ['abcdefghijklmnopqrstuvwxyz', 'Sttrong'], ['12345lohedr3Wl!o', '12345lohedrWl!o'], ['12345You678990', '12345You678990'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'of'], ['The hquick bro', 'The hquick brown foxdog'], ['may the force be wiaueoaiueiiaaaith you', 'e'], ['caattaco', 'caattaco'], ['Strongabcdefghijknoxyz', 'tacocspeabcdefghiGod!'], ['The Force Iofs Sttrong forrceWith You', 'The Force Is Sttrong With You'], ['you', 'you'], ['The', 'The Force Is Strong Wth You'], ['juer', 'Sttro'], ['afbcdefghijfklmnopqrstuvwxyz', 'dog'], ['the', 'The quick brown fox jumps over the lazy dog'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', 'The quick brown fox jumps over the lazy dog'], ['God! Amaze a stunning, gorgeous, dbewitching, and dazzling ar Strongabcdefghijknoxyzgazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling ar gazelle!'], ['09876543221', '09876543221'], ['gazel!le!', 'gazellze!'], ['may the force be with you', 'The Force Is Strong W ith You'], ['Yuou', 'taco122345678990cspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat'], ['mayy', 'God! Amaze a stunning, g orgeous, bewitchabcdefghijklmnopqrstuvyzing, and dazzling specter of myThe hquick brown fox jumps over the lazy dog gtdear gazelle!'], ['Tbrown fox jumgps over the lazy dogcattlohedrWl!oco', 'The quick brown fox jumps overStrongabcdefghijknoxyzgazelle!he lazy dog'], ['12o345loheWthdrWl!o', 'The Force Is Strongabcdefghijknopqrstsuvwxyz With You'], ['tacoforrceWithcspectet', 'tacocspectet'], ['The Force Is Strongabcdefvwxyz Wityh You', 'Tbrown fox jumps over the lazyx dog'], ['klmnopThe Force Is Sthrong With You', 'abcdefghijklmnopThe Force Is Sthrong With You'], ['dog21', 'mayy'], ['gazgcattaco', 'gazcattaco'], ['gggaze!', 'ggaze!'], ['gazelle!', 'juer'], ['Hello,', 'tacocspecteThe Force Is Sthrong With Yourat'], ['The Forceabcgorgeous,defghijknopqrstuv0987654321wxyz Is Strongabcdefghijknoxyz With You', 'The Forceabcgorgeous,defghijknopqrstuv0987654321wxyz Is Strongabcdefghijknoxyz With You'], ['The Force Is oStrong W ith You', 'The Force Is oStrong W ith You'], ['0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do1', '098765423221'], ['Strongabcdefghijknoxyz', 'tacocspecteThe Force Is Sthrong With Yourat'], ['madbewitching,y', 'may'], ['Tbrown fox jumps over the lazy dog', 'mm'], ['ZYXWVMLKJIHGFEDCBA', 'abcdefghijknopqrstuvwxyz'], ['ZYXWVUTSMRQPONMLZYXWVMLKJIHGFEDCBA', 'tacocspecteThe Force Is Sthrong With Yourat'], ['caatbewitchabcdefghijklmnopqrstuvyzing,taco', '123o45lostunning9,hedrWl!o ,67890'], ['speceter', 'specter'], ['122345678990', '122345678990'], ['God! Amaze a stunning, gorgeous, bewi tching, and dazzling specter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazStrongabcdefvwxyzer of my gdear gazelle!'], ['gazelle!', 'gazellae!'], ['abcdefghijklmnThe Force Is Strong Wth Youopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', 'tacoforrceWithcspectet'], ['0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter ofr my gdear gazelle!own fox jumps over the lazy do1', '098765423221'], ['abcdefghijknopqrstuvwxyz', 'tacocspectet'], ['Sttro', 'Sttro'], ['aaaaiou', 'Sthrong'], ['may theThe Force Is Strong Wth You force be with you', 'Yourat'], ['foStron1234r5Hello,lohedrW12345lohedr!Wl!o ,678090l!ogrce', '0987654The quick brown fox jumps 12345lohedrWl!oover the lazy dog21'], ['foStrGod! Amaze agazellae! stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!ongrce', 'theyou'], ['m', 'God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!'], ['gazbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaelle!nopqrstuvwxyz', 'abcdefghuijknopqrstuvwxyz'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZe', 'klmnopThe Force Is Sthrong With You'], ['gazgcattaco', 'The qugazelle!ownickZYXWVUTSMRQPONMLKjumpsCStrongabcdefvwxyzBA brown fox jumps over the lazy dog'], ['e quick brown fox jum0987654321azy dog', 'abcdefghijklmnopqrstuvyz'], ['dog121', 'dog121'], ['throng', 'rthrong'], ['0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1', '0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1'], ['0987654The quick brown fox jumps over the lazy dog21', '0987654The quick brown fox jumps over the lazy dog21'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling speZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZecter of my gdear gazelle!own fox jumps over the lazy do', 'The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do'], ['0987654The quick brown fox jumps 182345lohedrWl!oover the lazy dog21', '0987654The quick brown fox jumps 182345lohedrWl!oover the lazy dog21'], ['gazelle!', 'hqudazThebrGod!'], ['Sttorong', 'Sttrong'], ['The hquick browwn fox jumps over the lazy dog', 'The hquick brown fox jumps over the lazy dog'], ['abcdefghuijknopqrstuvwxyz', 'The quick brown fox jumps ovve the lazy dog'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling spttolohedrWl!ocoecter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['lazyx', 'juer'], ['tacoovenrcspecterat', 'tacocspecterat'], ['of', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['123456789', '123456790'], ['mayy', 'hbe'], ['tacocspectera1234r5Hello,lohedrWl!ot', 'gtdeThe Force Is Sthrong With Your'], ['of', 'of'], ['God! Amaze a stunn,678090l!ogrce', 'God! Amazar gazelle!'], ['tacocspecteroat', 'tacocspecterat'], ['mmay', 'madbewitching,y'], ['0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1', '0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitchille!own fox jumps over the lazy do1'], ['mm', 'God!'], ['gzgaze!', 'Strongabcdefghijknoxyz'], ['StrongabcddeitThe  Force Is Strong Wth Youz', 'StrongabcdeitThe  Force Is Strong Wth Youz'], ['taoocafoStron1234r5Hello,lohrW12345lohedr!Wl!o', 'The quick brown fox jumps overStrongabcdefghijknoxyzgazelle!he lazy dog'], ['gmay', '0987654The quick brown fox jumps over the lazy dog21'], ['gazcattaco', 'abcdefghuijknopqrstuvwxyz'], ['cattlohedrWl!gaze!oco', 'cattlohedrWl!gaze!oco'], ['1The Force Is Sttrong With You2345You6789960', '122345678990'], ['Strongabcdefghijknopqrstuvwxyz', '0987654322The hqudazThebrGod! Amaze a stunning,678090l!ogrce, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1'], ['m', 'm'], ['foStrongrce', 'gazelle!own'], ['0987Yourat654321', '0987Yourat654321'], ['cattlohedrWl!oco', 'gazelle!own'], ['The Force Is Strong With You', 'The Force Is Sttrong With You'], ['Sttoong', 'cat'], ['tacocspecteThe Fo With Yourat', 'tacocspecteratabcdefghijklmnoprqrstuvwxyz4321'], ['Tbrown fox jumps over the lazy dog', 'Tbrown fox abcdefghijklmnopThejumps over the lazy dog'], ['12o345lohmedrWl!o', 'Thcaattaccoe Force Is Strongabcdefghijknopqrstuvwxyz With You'], ['The hquick brown fox jumps over the lazy dog', 'The quick brown fox jumps ove the lazy dog'], ['The quick brown fox jumps over thle lazy dog', 'The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do'], ['0987Yourat654321', '0912o345loheWthdrWl!o87Yourat654321'], ['gagazelle!cteratze!', 'gaze!'], ['Strongabcdefg12345lohedrWl!o ,67890hijknopqrstuvwxyz', 'forrceWith'], ['The quick brown fox jumps over the lazy dog', 'ovenr'], ['dazzling', 'tacocspectergtdeart'], ['The quick brown fox jumps over the lThe hquick brown fox jumps over the lazy dog dog', 'Tbrown fox jumps ovenr the lazy dog'], ['orgoverStrongabcdefghijknoxyzgazelle!heeous,', 'The quick brown fox jumps over the lazy dog'], ['catmayy', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['gazel!le!', 'cattaco'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZe', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['Sthrobewitching,ng', 'Sthrobewitching,ng'], ['lazyx', 'gazgcattaco'], ['The Force Is Strongabcdefvwxyz Wityh You', 'The Force Is Strongabcdefvwxyz Wityh You'], ['God! Amaze a stunning, gorgeous, bewi tching, and dazzling specter of my gdear gazelle!', 'gaze!'], ['may the force be with you', 'may the force be with you'], ['Sthrobewitching,ng', 'The Force Is Strong W ith You'], ['foStron1234r5Hello,lohedrW12345lohedr!Wl!o ,678090l!ogrce', 'foStrongrcThe hquick brown fox jumps over the lazy doge'], ['Tbrown fox jumps over the lazyx dog', 'Tbrown fox jumps over the lazyx dog'], ['beabcdefghijklmnopqrstuvwxyz', '1234567890'], ['tacoabcdefghijklmnoprqrstuvwxyzcat', 'tacoabcdefghijklmnoprqrstuvwxyzcat'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazzlilng specter of my dear gazelle!'], ['Tbrown fox abcdefghijklmnopThejumps over the lazy dog', 'Tbrown fox jumps over the lazy dog'], ['f', 'f'], ['foxdog', 'mayyy'], ['tacocspectera1234r5Hello,lohedrWl!ot', 'tacocspecteThe Force Is Sthrong With Yourat'], ['habcddogefghijklmnopqrstuvwxyz', 'morgeous,ayy'], ['gzgaze!', '12345You678990'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!', 'The Force Is Strong Wth You'], ['Sttoong', 'Sttoong'], ['StStro', 'Sttro'], ['abcgorgeous,defghijknopqrstuv0987654321wxyz', 'abcgorgeous,defghi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv0987654321wxyz'], ['ezzzezezezezezezeeeezezezezezezezeeee', '0987654321'], ['The quick brown fox jumps ovve the lazy dog', 'The quick brown  fox jumps ovve the lazy dog'], ['mamyy', 'mayy'], ['12345lohedr!Wl!o ,678090', '12345lohedr!Wl!o ,678090'], ['12345lohedrWl!o', 'Hello, World!'], ['Hello, World!', 'gggaze!'], ['09876543221', 'Sthrong'], ['Iofs', 'cattlohedrWl!oco'], ['iaueoaiueiiaaa', 'iaueoaiueiiaaa'], ['y', 'you'], ['Yuou', 'Yuou'], ['The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', 'tacocspectet'], ['habcddogefghijklmnopqrstuvwxyz', 'The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do'], ['juer', 'juer'], ['12345lohedrWl!o', 'The Force IsYourat Strong With You'], ['theyou', 'theyou'], ['ZYXWVUTSMRQPONMLKJIGHGFEDTbrown fox jumps over the lazy dogCBA', 'ZYXWVUTSMRQPONMLKJIGHGFEDCBA'], ['0987654322The hqudazThebrGod! Amaze a stunning,678090l!ogrce, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['ZYXWVUTSMRQPONMLKjumpsCBA', 'ZYXWVUTSMRQPONMLKJI12345lohedr!Wl!forceoGHGFEDCBA'], ['Stabcdefghijklmnopqrrstuvwxyz', 'Sttro'], ['mmay', 'of'], ['wtith', 'habcddogecfghijklmnopqrstuvwxyz'], ['e quick brown fox jum0987654321azy dog', 'The hquick brown fox jumps over the lazy dog'], ['Tbrown fox jumps over the lazyx ddazTheog', 'Tbrown fox jumps over the laszyx dog'], ['ZYXWVVUTSRQPONMLKJIHGFEDCBA', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['abcdefghijklmnuvwxyz', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['yuou', 'yuou'], ['gazelle!own', 'Sthrobewitching,ng'], ['force', 'force'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of ,678090l!ogrcemy gdear gazelle!', 'God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!'], ['SttrZYXWVVUTSRQPONMLKJIHGFEDCBAong', 'Sttrong'], ['abcdefghijklabcdefghijklmnouvwxyzmnopqrstuvyz', 'abcdefghijklmnopqrstuvyz'], [',67890hijknopqrstuvwxyz', 'gaze!'], ['tacocspectera1234r5Hello,lohedrWl!ot', 'tacocspectera1234r5Hello,lohedrWl!ot'], ['abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'abcdghijklmnopqrstuvwxyz'], ['Tbrown fox jumps over the lastaoo', 'Tbrown fox jumps over the lastaoo'], ['Sttro', 'tacocspeGodof!e Amaze a stunning, gorgetacoabcdefghijklmnoprqrstuvwxyzcatous, bewitching, and dazzling specter of my dear gazelle!cterat'], ['madbewitching,,y', 'madbewitching,y'], ['tacocspecteThe Force Is Sthrong With Yourat', 'gggaze!'], ['The Force Is Strongabcdefghijknopqrstuvwxyz With You', 'iwith'], ['iwforrceith', 'juer'], ['God! Amaze a stunning, gorgeous, bewi tching, and dazzling specter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous, bewi tching, and dazzling specter of my gdear gazelle!'], ['The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gadear gazelle!own fox jumps over the lazy do', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['Tbrown fox jumps over the lazyx dog', 'may theThe Force Is Strong Wth You force be with you'], ['1234abcdefghijklmnopqrrstuvwxyz0', '12345lohedrWl!o,678090'], ['GoGd!', 'God!'], [',6708090l!ogrcemy', 'forrce'], ['12345lohedrWl!o ,67890', ','], ['tacocspeGodof!e', 'Sttrng'], ['gagazelle!cteratze!', 'cattlohedrWl!oco'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling speZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZecter of my gdear gazelle!own fox jumps over the lazy do', 'cattaco'], ['sgazelle!tunning,', 'mayy'], ['ZYXWVMLKJIHGFEDCBA', 'the'], ['The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gadear gazelle!own fox jumps over the lazy do', 'maay'], ['12345cat678990catacoovenrcspecteratttaco', 'catacoovenrcspecteratttaco'], ['gazelle!', 'gllae!'], ['The Force Is Strongabcdefghijknopqrstsuvwxyz With You', '12o345loheWthdrWl!o'], ['12345lostunning,hedrWl!o', 'iaueoaiueiiaaa'], ['StttrSo', 'Sttro'], ['f1The Force Is Sttrong With You2345You6789960', 'force'], ['dog', 'Tbrown fox abcdefghijklmnopThejumps over the lazy dog'], ['may the force be wiaueoaiueiiaaaith you', 'The quick brown fox jumps over the lThe hquick brown fox jumps over the lazy dog dog'], ['mm', 'bro'], ['ZYXWVUTSMRQPOsltunning,NMLKjumpsCBA', 'ZYXWVUTSMRQPOsltunning,NMLKjumpsCBA'], ['1234567890', 'f'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!'], ['bro', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['specter', 'fforce'], ['StrongabcdefghijklohedrWl!onopqrstuvwxyz', '0987654322The hqudazThebrGod! Amaze a stunning,678090l!ogrce, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox ejumps over the lazy do1'], ['laszyx', 'iwith'], ['tacoabcdefghijklmnoprqrstuvwxyzcat', 'tacoabcdefghijklmn,67890oprqrstuvwxyzcat'], ['Tbrown fox jumps over the lazyx dog', 'Tbrown foxgggaze! jumps over the lazyx dog'], ['caattacco', 'God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!'], ['taco122345678990cspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat', 'lastaoo'], ['abcdefghiGod! Amaze a stunning, abcdefghijklmnoprqrstuvwxyzgorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling ar gazelle!'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jtacocspecteTheumps over the lazy dog specter of my gdear gazelle!', 'The Force Is Strong Wth You'], ['abcdefgbrohijknopqrstuv0987654321wxyz', 'abcdefghijknopqrstuv0987654321wxyz'], ['e quick brownc fox jum0987654321azy dog', 'abcdefghijklmnopqrstuvyz'], ['ith', 'throng'], ['abcdefghijklmnuvwxyz', 'The'], [',67890hijknopqrstuvwxyz', 'foStron1234r5Hello,lohedrW12345lohedr!Wl!o ,678090l!ogrce'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jtacocspecteTheumps over the lThe Force Is Strongabcdefghijknopqrstsuvwxyz With Youazy dog specter of my gdear gazelle!', 'The Force Is Strong Wth You'], [',678090', '12345lohedrWl!o ,67890'], ['foStrGod! Amaze agazellae! stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!ongrce', 'Thcaattaccoe Force Is Strongabcdefghijknopqrstuvwxyz With You'], ['abcgorgeous,defghi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv09T87654321wxyz', 'abcgorgeous,defghi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv0987654321wxyz'], ['theyou', 'gzaze!'], ['abcdefghiGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'forrceWith'], ['gaaze!', 'gaze!'], ['Strongabcdefghijknopqrstuvwxyz', '0987654322The hqudazThebrGod! Amaze a stunning,678090l!ogrce, gorgeoustunn,678090l!ogrces, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1'], ['maay', 'tacocat'], ['gazel!le!', '12345You6'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', '0987654The quick brown fox jumps 12345lohedrWl!oover the lazy dog21'], ['12345lohedrWl!o ,67890', 'iaueoaiueiiaaa'], ['tacoovenrcspecterat', 'caatbewitchabcdefghijklmnopqrstuvyzing,taco'], ['theyou', 'g182345lohedrWl!ooverzaze!'], ['0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1', '0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gmay the force hbe with youazelle!own fox jumps over the lazy do1'], ['foStrGod! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!oengrce', 'foStrGod! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!ongrce'], ['12345lohedr!Wl!forceo', 'wSthrongith'], ['cattlohedrWl!oco', 'God! Amaze a stunning, gorgeous, beabcdefghuijknopqrstuvwxyzwitching, and dazzling specter of my dear gazelle!'], ['ZYXWVUTSRQPONMLKJIHGFEDCBA', '12345lohedrWl!o,678090'], ['The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!own fox jumps over the lazy do', '1234r5Hello,lohedrWl!o'], ['098765423221', 'The quick brown fox jumps ovve the lazy dog'], ['hbe', 'mayy'], ['bbbbbbbbaaaaaaaaaaaaaabcdefghijklmnThe Force Is Strong Wth Youopqrstuvwxyzaaaaaaaa', 'bbbbbbbbaaaaaaaaaaaaaabcdefghijklmnThe Force Is Strong Wth Youopqrstuvwxyzaaaaaaaa'], ['12345678gorgeous,90', 'God! nAmaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['The quick browlazyn fox jumr the lazy dog', 'The quick brown fox jumr the lazy dog'], ['jtacocspecteTheumps', 'The quick brown fox jumps over the lazy dog'], ['abcgorgeous,defguhi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv0987654321wxyz', 'abcgorgeous,defghi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv0987654321wxyz'], ['12345cat678990catacoovenrcspecteratttaco', '12345cat678990catacoovenrcspecteratttaco'], ['gazcattaco', 'gazcattaco'], ['lastaoto', 'lastaoto'], ['StrongabcdeitThe  Force Is Strong Wth YfoStrGod! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!oengrceouz', 'StrongabcdeitThe  Force Is Strong Wth Youz'], ['iwhith', 'iwith'], ['abcdefghijklmnopqrrstuvwxyz', 'abcdefghijklmnopqrrstuvwxyz'], ['gzaze!', 'gzaze!'], ['Tbrown jumps ovenr the lazy dog', 'Tbrown jumps ovenr the lazy dog'], ['of', '0987h654The quick brown fox jumps over the lazy dog21'], ['oSthrong', 'Sthrong'], ['e quick brown Strongabcdefghijknoxyzgazelle!fox jum098765432y1azy dog', 'abcdefghijklmnopqrstuvyz'], ['God! nAmaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!', 'orgeous,'], ['over', 'oIofsver'], ['The Force Is Strongabcdefghijknopqrstuvwxyz With You', 'The Force Is Strongabcdefghijknopqrstuvwxyz With You'], ['The hquick brown foxdog', '0987654321'], ['The Force Is Strongabcdefghijknopqrstsuvwxyz With You', 'The hquick brown fox jumps over the lazy dog'], ['God! Amaze a stunning, gorgeoyuouus,! bewitching, and dazThe hquick brown fox jumps over the lazy dog spoecter of my gdear gazelle!', 'God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!'], ['The hqudazThebrGod! Amaze a sgazelle!tunning, gorgeous, bewitching, and dazzling s peZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZWitheZeZeZeZeZeZeZeZeZeZeZecter of my gdear gazelle!own fox jumps over the lazy do', 'hquick'], ['lastaoto', 'lastathrongo'], ['Yourat', 'throng'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jtacocspecteTheumps over the lazy dog specter of my gdear gazelle!', 'mayyy'], ['12345lostunning,hedrWl!o', 'you'], ['Amaze', 'The quick brown fox jumps over the lazy dog'], ['Strongabcdefghijknoxyz', 'Yuou'], ['GGd!', 'God!'], ['Tbrown fox jumps ovenr the lazy dog', 'abcdefghijklmnopqrstuvwxmorgeous,ayyyz'], ['The quick brown fox jumps ovve the lazy dcattacoog', 'cat'], ['foStron1234r5Hello,lohedrW12345lohedr!Wl!o', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!'], ['specterSthrng', 'StrongabcdeitThe'], ['dog2123o45lostunning9,hedrWl!o ,678901', 'dog21'], ['ZYXWVUTSMRQPONMLKJIHGFStrongabcdefghijknopqrstuvwxyzCBA', 'f1The'], ['foStrGod! Amaze a stunning, gorgeous,! bewitching, and dazzling specter of my gdear gazelle!ongrce', 'tu'], ['tacocat', 'tacoFocat'], ['Strongabcdefghijknoxyz', 'Yu'], ['9,6708090l!ogrcemy', 'forrce'], ['abcdefghiGod! Amaze a sltunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', '12345lostunning,hedrWl!o'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['ZYXWVUTSMRQPONMLKJIHGFStrongabcdefghijknopqrstuvwxyzCBA', '1234567890'], ['GGd!m', 'God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jumps over the lazy dog specter of my gdear gazelle!'], ['tacoabcdefghijklmnoprqrstugazcattacovwxyzcat', 'tacoabcdefghijklmnoprqrstuvwxyzcat'], ['ce', 'force'], ['God! Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jtacocspecteTheumps over the lazy dog spectlohedrWl!oer of my gdear gazelle!', 'God!o Amaze a stunning, gorgeous,! bewitching, and dazThe hquick brown fox jtacocspecteTheumps over the lazy dog spectlohedrWl!oer of my gdear gazelle!'], ['cattlohedrWl!gaze!oco', 'ZYXWVUTSMRQPONMLKJIGHGFEDCBA'], ['The Force Is Strongabcdefghijknopqrstsuvwxyz With You', '12o345lohWl!o'], ['abcgorgeous,defguhi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv0987654321wxyz', 'abcgorgeous,defguhi0987654322The hqudazThebrGod! Amaze a stunning, gorgeous, bewitching, and  gdear gazelle!own fox jumps over the lazy do1jknopqrstuv0987654321wxyz'], ['ZYXWVUTSMRQPONMLKjumpsCStrongabcdefvwxyzBA', 'ZYXWVUTSMRQPONMLKjumpsCStrmay the force be wiaueoaiueiiaaaith youongabcdefvwxyzBA'], ['With', '0987654The quick brown fox jumps over the lazy dog21'], ['overStrongaabcdfefghiGod!bcdefghijknoxyzgazelle!he', ',67890hijknopqrstuvwxyz'], ['gagazellel!cterate!', 'gaze!'], ['aStttrSoaaaaeeeiou', 'aaaaiou'], ['12345lohedr!Wl!o ,678090', 'iwith'], ['gtdeThe', 'Tbrown fox jumps over the laszyx dog'], ['lastathrongo', 'lastatthrongso'], ['wtith', 'SttrSong'], ['caattacco', 'rthrong'], ['gaz!elle!', '12345lohedrWrl!o ,678090'], ['dog', 'odog'], ['abcdefghaijknopqrstuvwxyz', 'tacocspectet'], ['ezzzezezezezezezeeeezezezezezezezeeee', 'tacoabcdefghijklmnoprqrstuvwxyzcat'], ['Forceabcgorgeous,defghijknopqrstuv0987654321wxyz', 'Forceabcgorgeous,defghijknopqrstuv0987654321wxyz'], ['wittheTheh', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['Amaze', '0987654The quick brown fox jumps over the lazy dog2o1'], ['Sttrong', 'ZYXWVUTSMRQPONMLAmazarKJIGHGFEDCBA'], ['12345cat678990catacoovenrcspecteratttaco', 'Tbrown fox jumps over the lazy dog'], ['bbbbbbbbaaaaaaaaaaaaaaaaaaaaaaa', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaaaa'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!', 'abcgorgeous,defghijknopqrstuv0987654321wxyz'], ['127890', '127890'], ['God! Amaze a stunning, gorgeous, bewitchTbrown fox jumps over the laszyx doging, and dazStrongabcdefvwxyzer of my gdear gazelle!', 'God! Amaze a stunning, gorgeous, bewitching, and dazStrongabcdefvwxyzer of my gdear gazelle!'], ['foSgtdeThe Force Is Sthrong With Yourtrongrce', 'foStrongrce'], ['abcdefghiGod! Amaze a stunning, abcdefghijklmnoprqrstuvwxyzgorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyz', 'taco122345678990cspeGod!e Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!cterat'], [',678090', ',678sltunning,90'], ['God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!', 'cattlohedrWl!oco'], ['mabcdefghijklmnopThe Force Is Sthrong With Youayy', 'God! Amaze a stunning, g orgeous, bewitching, and dazzling specter of my gtdear gazelle!'], ['speceter', 'speceter'], ['aaabbbbbbbbaaaaaaaaaaaaaabcdefghijklmnThe Force Is Strong Wth Youopqrstuvwxyzaaaaaaaaaaeeeiou', 'aaaaaeeeiou'], ['gazgcattaco', 'yuou'], ['abcdefghijklmnoprqrstuvwxyz', 'may the force be with'], ['0987Yourat654321', '0912o345l1234r5lohedrWl!o ,678090urat654321'], ['12345locattlohedrWl!ocohedr3Wl!o', '12345lohedr3Wl!o'], ['oagazellae!venr', 'oagazellae!venr'], ['12345cat678990catacoovenrtacocspeabcdefghiGod! Amaze a sltunning, gorgeous, bewitching, and dazzling specter of my gdear gazelle!nopqrstuvwxyzcspecteratttaco', '12345cat678990catacoovenrcspecteratttaco'], ['', 'abcd'], ['abcd', ''], [' ', ' '], ['abcdefghijklmnopqrstuvwxyz', ''], ['', 'abcdefghijklmnopqrstuvwxyz'], ['a', 'a'], ['\n\t', '\n\t'], ['!$%^&*', '*&^%$!'], ['aaeaaaeeedogiou', 'aaaaaeeedogiou'], ['abcdefghijklmnopqrstuvwxyz', 'may'], ['12345607890', '0987654321'], ['aaeaaaeeedogiou', 'may'], ['The quick brown fox jumps over the lazy dog', 'The quick brown fox jumps over the lazy dog'], ['may', '09876541321'], ['aaaastunning,aaaaaaaaaaaaaaaaaaaaaaabbbb', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['The quick brown fobrownx jumps over the lazy dog', 'The quick brown fox jumps over the lazy dog'], ['my', 'The quick brown fox jumps over the lazy dog'], ['force', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['1234567890', 'may'], ['brown', 'brown'], ['abcdefghijklmnopqrstutvwxyz', 'abcdefghijklmnopqrstuvwxyz'], ['dear', 'abcdefghijklmnopqrstuvwxyz'], ['abcdefghijklmnopqrhstuvwxyz', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['abcdefghijklmnopqrstmayuvwxyz', 'abcdefghijklmnopqrstmayuvwxyz'], ['12034567890', 'may'], ['a', 'The quick brown fox jumps over the lazy dog'], ['The quicky brown fox jumps over the lazy dog', 'gazelle!'], ['maay', 'may the force be with you'], ['and', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['may', 'stunning,'], ['JAut', 'JAut'], ['aaaaa', 'aaaaaeeeiou'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['aaeaaaeeedogiou', 'aaaaaeeedHello,'], ['aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbdogiou', 'aaaaaeeedHello,'], ['With', 'lohedrWl!o ,'], ['The quick brown fox jumps over the lazy dog', 'God! Amaze a stunning, gorggeous, bewitching, and dazzling specter of my dear gazelle!'], ['you', 'aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['may the forcfe be with you', 'may the forcfe be with you'], ['JAuAt', 'JAut'], ['ezzzezezemay the forcfe be with youzezezezeeeezezezezezezezeeee', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['lohedrWl!o ,', 'Hello, World!'], ['nbrown', 'you'], ['may', 'may'], ['abcdefghijklmnopqrstutvwxyz', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['abcdefghijklmnopqrstutvwxyz', 'aaaaa'], ['ZeZeZeZeZeZeZeZeZeZeZeZeStrongZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['may the forcfe be with you', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['ezzmay the force be with youemay the foreee', 'ezzzezezemay the foreee'], ['dear', 'dear'], ['over', 'quick'], ['maay', 'aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou'], ['The quick brown fobHello, World!rownx jumps over the lazy dog', 'fobrownx'], ['youemay', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['brown', 'brandwn'], ['aaaastunning,aaaaaaaaaaaaaaaaaaaaaaaabbbb', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['Hello, World!', 'aaaaa'], ['nbrown', 'my'], ['abcdefghijklmnopqrstutvwxyz', 'oabcdefghijklmnopqrstutvwxyz'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'Amaze'], ['youzezezezeeeezezezezezezezeeee', 'aaaaaeeedHello,'], ['JATheuAt', 'JAut'], ['fox', 'abcdTheefghijklmnopqrstuvwxyz'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'The quick brown fobrownx jumps over the lazy dog'], ['quick', 'aaaaaeeedogiou'], ['JAuAt', 'JuAut'], ['dWorld!rownxog', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['nbrown', 'JAut'], ['aaeeaaaee', 'aaeaaaeeedogiou'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['may the force be with you', 'e Is Strong With You'], ['may the forcfe be with you', 'may the forcfe be wit'], ['ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze', 'ezzzezezemay the foreee'], ['the', 'aaaastunning,aaaaaaaaaaaaaa'], ['With', 'abcdefghijklmnopqrstuvwxyz'], [',', 'aaaaaeeedogiou'], ['ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze', 'The Force Is Strong With'], ['ezzmay the force be with youemay the foreee', 'aaaastunning,aaaaaaaaaaaaaa'], ['aaeaaaeeeGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!aaaaaaaaaaaaaaaaaabbbbdogiou', 'aaeaaaeeeGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!aaaaaaaaaaaaaaaaaabbbbdogiou'], ['may the forcfe be with you', 'may the forcfe be with yoThe quick brown fobrownx jumps over the lazy dogu'], ['abcdefghijklmnopqrtvwxyz', 'oabcdefghijklmnopqrstutvwxyz'], ['aaaaaeeeiou', 'iaueoaiquickyueiiaaa'], ['and', 'bbbbbbbbaaaaaaaaafobHello,aaaaaa'], ['abcdefghijklmnopqrstuvwxWorld!rownxyz', 'abcdefghijklmnopqrstuvwxyz'], ['yobewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'forcfe'], ['abcdefghijklmnopqrtvwxyz', 'may the forcfe be with yoThe quick brown fobrownx jumps over the lazy dogu'], ['my', 'may'], ['bewitching,', 'may the forcfe be wit,'], ['bewitching,aaaaaaaaaaaaaaaaaaaaabbbb', 'bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['abcxdefghijklmnopqrtvwxyz', 'abcdefghijklmnopqrtvwxyz'], ['maay', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['tacocat', 'The quicky brown fox jumps over the lazy dog'], ['aaaastunning,aaaaaaaaaaaaaaaaaaaaaaaabbbb', 'aaaastunning,aaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['bewitching,', 'God!'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZ,eZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['yoThe', 'ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze'], ['ezzzezezThe Force Is Strong may the force be with youWithezezezezeeeezezezezezezezeeee', 'Strong'], ['The quicky brown fox jumps over  the lazy dog', 'brandwn'], ['brandwn', 'and'], ['ZeZeZeZeZeZeZeZeZeZeZeZeStrongZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['the', 'the'], ['aaaaaa', 'aaaaa'], ['iaueoaiueiabcxdefghijklmnopqrtvwxyziaaa', 'iaueoaiueiiaaa'], ['abcdefghijklmnopqrstutvwxyz', 'oabcdefghijklmnoThe Force Is Strong Witphpqrstutvwxyz'], ['aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou', 'abcdefghijklmnopqrtvwxyz'], ['gorgeous,', 'aaaaaeeedogiou'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaiaueoaiueiabcxdefghijklmnopqrtvwxyziaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['ZYXWVUTSRQSPONMLKJIHGFEDCBA', 'ZYXWVUTSRQSPONMLKJIHGFEDCBA'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZ,eZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'my'], ['JJAut', 'JJAut'], ['ezzzezezemay tehe foreoabcdefghijklWorld!rownxmnopqrstutvwxyze', 'ezzzezezemay tehe foreoabcdefghijklWorld!rownxmnopqrstutvqwxyze'], ['abcdefghijklmnopqrstuvwxWorld!rownxyz', 'abcdefghijklmnopqrstuvwxWorld!rownxyz'], ['nbn', 'JAut'], ['The Force Is Strong With You', 'abcdefghijklmnopqrstuvwxWorld!rownxyz'], ['bewitchcattacoing,', 'bewitchhing,'], ['', 'aaaquickaaeeedogiou'], ['JuAlohedrWl!out', 'bewitching,aaaaaaaaaaaaiaueoaiueiabcxdefghijklmnopqrtvwxyziaaaaaaaaaaaaaaaaaabbbb'], ['aaeeiou', 'aaaaaeeeiou'], ['aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['abcdefghijklmnopqrstuvwxWoprld!rownxyz', 'abcdefghijklmnopqrstuvwxWorld!rownxyz'], ['mygorgeous,', 'my'], ['ezzzezezezezezezeeeezezezezezezezeeee', 'dWorld!rownxog'], ['ezzmay the force be withh youemay the foreeee', 'aaaastuanning,aaaaaaaaaaaaaa'], ['aaaastunning,aaaaaaaaaaaaaa', 'aaaastunning,aaaaaaaaaaaaaa'], ['brown', '1234567890'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZ,eZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'foreetheee'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZemay the forcfe be with youZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe'], ['dear', 'ayouemaybcdefghijklmnopqrstuvwxyz'], ['my', 'ymay'], ['eIs', 'e'], ['gorgeous,', 'aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou'], ['aaeaaaee12345607890edogiou', 'aaaaaeeedHello,'], ['e Is Strong With You', 'the'], ['ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze', 'yoThe'], ['abcdefghijklmnopqrhstuvwxyz', 'JAut'], ['abccdefghijklmnopqrstuvwxyz', 'abcdpefghijklyourstuvwxyz'], ['bewitbewitchcattacoing,ching,', 'God!'], ['aaeeiou', 'aeaaaaeeeiou'], ['abcd!rownxyz', 'abcdefghijklmnopqrstuvwxyz'], ['youzezezezeeeezezezezezezezeeee', 'abcdefghijklmnopqrtvwxyz'], ['JuAut', 'JAut'], ['force', 'ZYXWVUTSRQPOUNMLKJIHGFEDCBA'], ['nand', 'bbbbbbbbaaaaaaaaafobHello,aaaaaa'], ['wiaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbh', 'with'], ['ezzzezezezezezezeeeezezezezezezezeeeZYXWVUTSRQSPONMLKJIHGFEDCBAe', 'may'], ['ezzzezezThe', 'may'], ['yoThe', 'yoThe'], ['ezzzezezemay the foreoabcdefgGod! Amaze a stunning, gorgeou s, bewitching, and dazzling specter of my dear gazelle!hijklmnopqrstutvwxyze', 'ezzzezezemay the foreoabcdefgGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!hijklmnopqrstutvwxyze'], ['aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou', 'abcdefghijklmnopqrtvwxyyz'], ['the', 'aaaastuandnning,aaaaaaaaaaaaaa'], ['The quicky brown fox jumps over the lazy do', 'The quicky brown fox jumps over the lazy do'], ['ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze', 'ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze'], ['abcdefghijklmnopqrstmayuvwxyz', 'abcdefghijklmnopzqrstmayuvwxyz'], ['JAuAt', 'brown'], ['ezzzezezemay the foreoabcdoefghijklmZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZenopqrstutvwxyze', 'specter'], ['my', 'y'], ['The quick brown fox jumps over the lazy dog', 'Witphpqrstutvwxyz'], ['abcdefghijklmnopqrstuvwxWoprld!rownxyz', 'dogu'], ['With', 'you'], ['aaeaaaee12345607890edogiou', 'ezzezezezezezezezeeeezezezezezezezeeee'], ['abcdefghijklmnopqrstuvwxWorld!rownxyznfox', 'abcdefghijklmnopqrstuvwxWorld!rownxyzfox'], ['bewitchcattacoing,', 'iaueoaiueiiaaaaalohedrWl!oa'], ['youZeZeZeZe', 'youZeZeZeZe'], ['ezzmayabcdefghijklmnopqrstuvwxWorld!rownxyzfox the force be with youemay the foreee', 'ezzmay the force be with youemay the foreee'], ['Hello, Wodrld!', 'aThe Force Is Strong Withaaaa'], ['The quick brown fox jumpps over the lazy dog', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['ezzmay the force be withh youemay the foreeee', 'God! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!'], ['ZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZemay the forcfe be with youZeZeZeZe'], ['ezzmay the forc e be with youemay the foreee', 'ezzmay the force be with youemay the foreee'], ['abcxdefghijklmnopqrtvwxyz', 'abcxdefghijklmnopqrtvwxyz'], ['tacocat', 'brown'], ['withWithaaaa', 'with'], ['ezzzezezemay tehe foreoabcdefghijklWorld!rownxmnopqrstutvqwxyze', 'ezzzezezemay tehe foreoabcdefghijklWorld!rownxmnopqrstutvqwxyze'], ['aaeaaaee123ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bbewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee45607890edogiou', 'aaeaaaee12345607890edogiou'], ['JuAut', 'foreoabcdoefghijklmZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZenopqrstutvwxyze'], ['The Force Is Strong Withu', 'you'], ['stunniabcd!rownxyzng,', 'stunning,'], ['The Force Is Strong Withu', 'gazelle!ou'], ['ZYXWVUTSRQPOUNMLKJIHGFEDCBA', 'ZYXWVUTSRQPOUNMLKJIHGFEDCBA'], ['nbwithWithaaaan', 'nbn'], ['the', 'ZYXWVUTSRQSPONMLKJIHGFEDCBA'], ['JuAut', 'ezzzezezemay the foreee'], ['bewitching,', 'may the fwit,'], ['may the fwit,', '12345678390'], ['may the fwit,', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['nbrown', 'aaeaaaeeoeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou'], ['dWorld!rownxog', 'ZYJuAutXWVUTSRQPONMLKJIHGFEDCBA'], ['and', 'and'], ['abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopstuvwxyz'], ['yobewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'yobewitching,aaaaaaaaaaaaaaaaabbbb'], ['aaaaa', 'aaaaa'], ['stunning,', 'The quick brown fox jumps over the lazy dog'], ['ezzfwift,he foreeee', 'ezzfwift,he foreeee'], ['ezzzezezemay tehe foreoabcdefghijklWorvwxyze', 'ezzzezezemay tehe foreoabcdefghijklWorld!rownxmnopqrstutvqwxyze'], ['The quicky brown fox jumps over the lazy do', 'JuAut'], ['JAuAt', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe'], ['abhijklmnopqrtvwxyz', ','], ['may the forcfe be with you', 'may theZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZe forcfe be wit'], ['bewitchcattacwithhg,', 'bewitchhing,'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeiaueoaiquickyueiiaaaZZeZeZeZeZeZemay the forcfe be with youZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe'], ['fox', 'abcdTheefghijklmnopqrstuvwyxyz'], ['abchdTheefghijklmnopqrstuvwxyz', 'abcdTheefghijklmnopqrstuvwxyz'], ['abcdefghijklmnopqrhstuvwxyz', 'ZYXWVUTSRQPONMLwitKJIHGFEDCBA'], ['abcdTheefghijklmnopqrstuvwxyz', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['youzezezezeeeeezezezezezezezeeee', 'abcdefghijklmnopqrtvwxyz'], ['aaaastuforeoabcdefgGod!a', 'bewitchhing,'], ['12345607890', '01'], ['aaaaaaeeeiou', 'aaaaaeeeiou'], ['ZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZe', 'ZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZe'], ['over', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'aaaaaeeeedHello,'], ['ayouemaybcdefghijklmnopqrsftuvwxyz', 'ayouemaybcdefghijklmnopqrstuvwxyz'], ['Force', 'ezzzezezemay the foreee'], ['aaaeaaaee12345607890edogiou', 'aaeaaaee12345607890eThe quicky brown fox jumps over the lazy dodogiou'], ['aaeaaaee123ezzzezezezezezezeeGod!', 'The Force Is Strong With'], ['angazelle!hijklmnopqrstutvwxyzed', 'and'], ['ayouemaybwithWithaaaacdefghijklmnopqrstuvwxyz', 'ayouemaybwithWithaaaacdefghijklmnopqrstuvwxyz'], ['aafobrownxaaaeeeiou', 'aafobrownxaaaeeeiou'], ['aaaaaeeeedHello,', 'aaaaaeeedHello,'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeiaueoaiquickyueiiaaaZZeZeZeZeZeZemay', 'ZYXWVUTSRQPONMLKJIHGFEDCBA'], ['Hello, World!', 'aaaastunning,aaaaaaaaaaaaaa'], ['wit,', 'wit,'], ['bewitching,aaaaaaaaaaaaaaaaaaaaabbbb', 'bewitching,aaaaaaaaaaaaaaaaaaaaabbbb'], ['stunniabncd!rownxyzng,', 'The Force Is Strong Withu'], ['maay', 'maay'], ['iaueoaiueiaiaaa', 'iaueoaiueiiaaa'], ['brandwn', 'brandwn'], ['abcdefghijklmnopqrstmayuabcdefghijklmnopqrstuvwxWorld!rownxyznfoxvwxyz', 'abcdefghijklmnopqrstmayuabcdefghijklmnopqrstuvwxWorld!rownxyznfoxvwxyz'], ['Jt', 'JWithaaaaAut'], ['gorgeous,', 'ezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze'], ['gorgeous,', 'JAuA'], ['Amaze', 'abcxdefghijklmnopqrtvwxyz'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'foreee'], ['ZYXWVUTSRQPONMLwitKJIHGFEDCBA', '0987654321'], ['may the forcfe be with yoThe quicvk brown fobrownx jumps over the lazy dogu', 'abcdefghijkwithhlmnopqrtvwxyz'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'aaaaaaaaaaaaaaaaaaaaaabbbb'], ['ezzzezezezezezezeeeezezThe quick brown fox jumps over the lazy dogezezezezezeeee', 'ezzzezezezezezezeeeezezezezezezezeeee'], ['ezzzezezezezezezeeeezezezezezezezeeeZYXWVUTSRQSPONMLKJIHGFEDCBAe', 'mmay'], ['JuAut', 'JuAut'], ['abcdefghijklmnopqrstutvwxyz', 'ZeZeZeZeZeZeZeZeJAuAZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['oabcdefghijklmnoThe', 'ezzzezezemay the foreohabcdefghijklmnopqrstutvwxyze'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaabb', 'you'], ['abcdetuvwxWoprld!rownxyz', 'abcdefghijklmnopqrstuvwxWorld!rownxyz'], ['ablcdefghijklmnopqrstuvwxWoprld!rownxyz', 'dogoabcdefghijklmnoTheu'], ['Witphpqrstutvwxyz', 'ZYXWVUTSRQSPONMLKJIHGFEDCBA'], ['nbwithWithaaan', 'nbn'], ['aaaeaaaee12345607890edogiou', 'aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou'], ['gorggeous,', 'iaueoaiueiiaaa'], ['Jt', 'wit,'], ['ZYXWVUTSRQPONMLKJIHGFEDCBA', 'mygorgeous,'], ['aaaeaaaee12345607890edogiou', 'oabcdefghijklmnopqrstutvwxyz'], ['eIs', 'ezzmay the force be with youemay the foreee'], ['aThe', '1234567890'], ['Hello,', 'abcdefghijkwithhlmnGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!opqrtvwxyz'], ['lohedrWl!o ,', 'Amaze'], ['gazelle!eezezezezezezezeeee', 'aafobrownxaaaeeeiou'], ['youaaeaaaee12345607890eThe', 'annd'], ['iaiquickyueiiaaa', 'iaueoaiquickyueiiaaa'], ['Hello,', 'Helolo,'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'with'], ['abcdefghijklmnopqrtvwxyz', 'abcdefghijklmnopqrtvwxyz'], ['ZYXWVUTSRQSPONMFEDCBA', 'ZYXWVUTSRQSPONMFEDCBA'], ['tacocat', 'iaueoaiueiabcxdefghijklmnopqrtvwxyziaaa'], ['over', 'bewitching,'], ['abcdefghijklmnopqrstmayuabcdefghijklmnopqrstuvwxWorld!rownxyzZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZenfoxvwxyz', 'abcdefghijklmnopqrstmayuabcdefghijklmnopqrstuvwxWorld!rownnxyznfoxvwxyz'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe'], ['bewitching,aaaaaaaaaabewitching,aaaaaaaaaaabbbb', 'bewitching,aaaaaaaaaaaaaaaaaaaaabbbb'], ['ZYXWVUTSRQPONMLKJIHGFEDCBA', 'ZjumpsYXWVUTSRQPONMLKJIHGFEDCBA'], ['aaaee', 'aaeeaaaee'], ['You', 'abcdefghijklmnopqrstmayuvwxyz'], ['aaaaaeeeiou', 'aaaaaeeieiou'], ['aaeaaaeeeGod! Amazmay the forcfe be with yoThe quick brown fobrownx jumps over the lazy dogue a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!aaaaaaaaaaaaabaaaaabbbbdogiou', 'aaeaaaeeeGod! Amazmay the forcfe be with yoThe quick brown fobrownx jumps over the lazy dogue a stunning, gorgeous, bewitching, aand dazzling specter of my dear gazelle!aaaaaaaaaaaaabaaaaabbbbdogiou'], ['fox', 'aaaaaaeeeiou'], ['uJAut', 'JAut'], ['bewitching,', 'Godnand!'], ['may the force be with y', 'The Force Is Strong With You'], ['a', 'ado'], ['aaaquickaeeedogi', 'aaaquickaaeeedogi'], ['quiaaaastuandnning,aaaaaaaaaaaaaack', 'quick'], ['iaueoaiueiaiaaa', 'abcdefghijklmnopqrstmayuabcdefghijklmnopqrstuvwxWorld!rownnxyznfoxvwxyz'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeforeohabcdefghijklmnopqrstutvwxyzeeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeStrongZeZeZeZeZeZeZeZeZeZe'], ['The quicky brown fox jumps over the lazy dog', 'quicky'], ['gorgeous,', 'JJAuA'], ['ezzfwift,he fore', 'ezzfwift,he foreeee'], ['gaaaaaaaaaaaaaaaaaaaaaaaaaaaabbzelle!eezezezezezezezeeee', 'aafobrownxaaaeeeiou'], ['The quick brown fox jumps over the lazy dog', 'bewitchcattacoing,'], ['gazelle!', 'abcdefghijklmnopqrstmayuabcdefghijklmnopqrstuvwxWorld!rownnxyznfoxvwxyz'], ['abccdefghijklmnopqrstuvwxyz', 'abcd!rownxyz'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'aaaaaeeeedHell,'], ['aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou', 'aaaeaaaeea12345607890edogiou'], ['ZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZe', 'nbn'], ['aaaastunning,aaaaaaaaaaaaaaaaaaaaaaabbbb', 'oabcdefghijklmnopqrstutvwxyz'], ['The Force Is Strong Withu', 'aaaaaeeeedHello,'], ['JAuAt', '0987654321'], ['stunning,', 'aaaquickaeeedogi'], ['quiaaaasuaWorld!ndnning,aaaaaaaaaaaaaack', 'quWithu,aaaaaaaaaaaaaack'], ['nbrownoabfcdefghijklmnoeIsThe', 'The Force Is Strong With You'], ['lohedrWl!o ,', 'lohedrWl!o ,'], ['gaaaaaaaaaaaaaaaaaaaaaaaaaaaabbzelle!eezezezezezezezymayeeee', 'JuAut'], ['ZeZeZeZeZeZeZeZeJAuAZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZequicvkZeZeZeZeZeZeZeZeZeZeZeZe', 'abcdefghijklmnopqrstutvwxyz'], ['ayouemaybcdefghijklmnopqrsftuvwxyz', 'with'], ['ayouemaybwithWithaaaacdefghijklmnopqrstuvwxyz', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe'], ['aaaeaaaee12345607890edogiou', 'JuAlohedrWl!out'], ['abcdetuvwxWoprld!rownxyz', 'abcdetuovwxWoprld!rownxyz'], ['aaaastunning,aaaaaaaaaaaaaa', 'the'], ['ZeZeZeZeZeZeZeZeZeZeZeZeZeZ,eZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZ,eZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['tezzzezezemay the foreoabcdefghijklmnopqrstutvwxyze', 'the'], ['bewitbewforehcattacoing,ching,', 'God!'], ['Jt', 'The Force Is Strong With You'], ['bewitching,', 'Amazmay'], ['ezzzezezemay the foreoabcdoefghijklmZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZenopqrstutvwxyze', 'ezzzezezemay the foreoabcdoefghijklmZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZenopqrstutvwxyze'], ['aaaastunning,aaaaaaaaaaaaaaaaaaaaaaabbbb', 'abcdetuvwxWoprld!rownxyz'], ['aaeaaaee12345607890edogiou', 'aaeaaaee12345607890edogiou'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'aaaaaeeeiou'], ['ezzmayabcdefghijklmnopqrstuvwxWorld!rownxyzfox the force be with youemay the foreee', 'ezzmay the force be with youemay tthe foreee'], ['World!you', 'you'], ['Witphpqrstutvwxyz', 'ZYXWVUTSRQSPONMLKJIHGFEDCBBA'], ['nbrown', 'aaeaaaeeeaaaaaaaaaaaaaaaaaaaaaaaaaaabbbabdogiou'], ['fore', 'fore'], ['do', 'abcdefghijkwithhlmnGod!'], ['ZYXWVUTSRQPONMLKJIHGFEDCBA', 'ZeZeZeZeZeZeZeZeJAuAZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['stunniabcZYJuAutXWVUTSRQPONMLKJIHGFEDCBAd!rownxyzng,', 'stunniabcd!rownxyzng,'], ['tacocat', 'bewitbewitchcattacoing,ching,'], ['brarndwn', 'brandwn'], ['123456foreoabcdefgGod!890', '1234567890'], ['aaaeaaaee12345607890edogiou', 'oabcdefghijeklmnopqrstutvwxyz'], ['fobrowyouZeZeZeZenx', 'bbbbbbbbaaaaaaaaaaaaaaaaaaaaa'], ['ZYXWVUTSRQPONMLKJIHGFEDCBA', 'brown'], ['aaeaaaee12345607890edogiou', 'aaeaaaee123ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bbewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee45607890edogiou'], ['fabcdefghijklmnopqrhstuvwxyzoreohabcdefghijklmnopqrstutvwxyze', 'aaaaaeeedogiou'], ['ablcdefghijklmnopqrstuvwxWoprld!rownxyz', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['ZYXWVUTSRQPONMLKJIHGFEDFCBA', 'yobewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['abcdetuovwxWoprld!rownxmyyz', 'abcdetuovwxWoprld!rownxyz'], ['ZYXWVUTSRQPOUForceNMLKJIHGFEDCBA', 'brandw'], ['aaaastunning,aaaaaaaaaaaaaa', 'aaaastuquicvknning,aaaaaaaaaaaaaa'], ['nbwithWithaaan', 'nabcdefghijklmnopqrstmayuvwxyzbn'], ['specter', 'specter'], ['witheZeZeZZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZeth', 'witheZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZeth'], ['nbrownoabfcdefghijklmnoeIsThe', 'yobewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['foreetheee', 'catctaco'], ['aaaastuforeoabcdefgGod!a', 'my'], ['bewitchingwitheZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZZeZeZeZZeZeZeZeZeZeZZeZeZeZeth,', 'bewitchezzfwift,heing,'], ['mmay the fwit,ay', 'stunning,'], ['eIsZYXWVUTSRQSPONMFEDCBA', 'ezzzezezemay tehe foreoabcdefghijklWorvwxyze'], ['withWThe quick brown fox jumps over the lazy dogithaa', 'ezzmay'], ['abcdefghigazelle!eezezezezezezezeeeejklmnopqrtvwxyz', 'abcdefghigazelle!eezezezezezezezeeeejklmnopqrtvwxyz'], ['aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'], ['ee12345607890edogiou', 'aaaeaaaee12345'], ['The Force Is Strong Witrh', 'The Force Is Strong With'], ['youzezezezeeeeezezezezezezezeeee0987654321', 'God! Amaze a stunning, gorggeous, bewitching, and dazzling specter of my dear gazelle!'], ['ezzzezezemay the foreoabcdefgGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!hijklmnopqrstutvwxyze', 'e Is Strong With You'], ['ZeZeZeZeZeZeZeZeJAuAZeZeZeZeZZeZe', 'ZeZeZeZeZeZeZeZeJAuAZeZeZeZeZZeZe'], ['ZYXWVUTSRQSPONMLKJIHGFEDCBBA', 'ZYXWVUTSRQSPONMLKJIHGFEDCBBA'], ['12345607890', '12345607890'], ['AmaJJAuAze', 'aaeaaaee123ezzzezezezezezezeeGod!'], ['abcdefghijkwithhlmnopqrtvwxyz', 'stunniabcd!rownxyzng,'], ['youZeZeZeZe', 'aaeaaaeeeGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!aaaaaaaaaaaaaaaaaabbbbdogiou'], ['lohedrWl!o', 'ezzzezezemay the foreoabcdefgGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!hijklmnopqrstutvwxyze'], ['iaiquickyueiiaaa', '12345678390'], ['bewitcZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZe', 'lohedrWl!o ,'], ['dWorld!Forcerownxog', 'dWorld!rownxog'], ['stunniabcd!rownxyzng,', 'stunniabcd!rownxyzng,'], ['abcdefghijklmnopqrstuvwxWorld!rownxyz', 'abcdefghijjklmnopqrstuvwxyz'], ['ezzzezezemay the foreoabcdefgGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!hijklmnopqrstutvwxyze', 'ezzzezezemay the foreoabcdefgGod! Amaze a stunning, gorgeou s, bewitching, and dazzling specter of my dear gazelle!hijklmnopqrstutvwxyze'], ['bewidogezezezezezeeeehing,', 'Amazmay'], ['foxran', 'bran'], ['e Is Strong With You', 'e Is Strong With You'], ['abcdefghijklmnopqrstutvwx', 'aaaaa'], ['ezzzezezezezezezeeeezeezezezezezezeeee', 'ezzzeHello, Wodrld!zezezezezezeeewithhezezezezezezezeeee'], ['abcdefghijkwithhlmnGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!opqrtvwxyz', 'abcdefghijklmnotacocatpqrstmayuabcdefghijklmnopqrstuvwxWorld!rownxyznfoxvwxyz'], ['ZeZZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZemay the forcfe be with youZeZeZeZe', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZZeZeZeZZeZeZeZeZeZeZeZeZeZe'], ['aaaaa', 'aaa'], ['ezzzezezemay tehe foreorvwxyze', 'ezzzezezemay tehe foreoabcdefghijklWorld!rownxmnopqrstutvqwxyze'], ['ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee', 'ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee'], ['He!', 'Hello, Wodrld!'], ['abcdefghijklmnopqrstutvwbxyz', 'abcdefghijklmnopqrstutvwbxyz'], ['aaeaaaee123ezzzezezezezezezeeGod! Amaze a sGtunning, gorgeous, bbewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee45607890edogiou', 'aaeaaaee123ezzzezezezezezezeeGod! Amaze a stunning, gorgeous, bbewitching,aaaaaaaaaaaaaaaaaaaaaaaaaaabbbb and dazzling specter of my dear gazelle!eezezezezezezezeeee45607890edogiou'], ['dWorld!rownxog', 'dWorld!rownxog'], ['iaueoaiueiiaaaaalohedrWl!oa', 'thhe'], ['abcxdefghijkklmnopqrtvwxyz', 'JJAuA'], ['aaeaaaeeeGod! Amaze a stunning, gorgeous, bewitching, andaaaaaaaaaaaaaaabbbbdogiou', 'aaeaaaeeeGod! Amaze a stunning, gorgeous, bewitching, and dazzling specter of my dear gazelle!aaaaaaaaaaaaaaaaaabbbbdogiou'], ['quickghijklyourstuvwxyz', 'abcdpefghijklyourstuvwxyz'], ['AmaabcdefghijklmnopqrstmayuabcdefgohijklmnopqrstuvwxWorld!rownnxyznfoxvwxyzze', 'ezzezezezezezezezeeeezezezezezezezeeee'], ['dear', 'ayouremaybcdefghijklmnopqrstuvwxyz'], ['Hello, World!', 'ZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeZeforeohabcdefghijklmnopqrstutvwxyzeZeZeZeZeZeZeZeZZeZeZeZeZeZeZeZeZeZeZeZeZe'], ['09876541321', 'aaaaaeeieJAuAtu'], ['ezzmay the force be with youemay the foreee', 'ezzzezezfemay the foreee'], ['eaaeeiou', 'may the forcfe bhe wit']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the completed code for the `same_chars` function:
+
+```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    # Convert both strings to lowercase for case-insensitive comparison
+    s0 = s0.lower()
+    s1 = s1.lower()
+    
+    # Create dictionaries to store character counts for each string
+    char_count_s0 = {}
+    char_count_s1 = {}
+    
+    # Count the occurrences of each character in s0
+    for char in s0:
+        char_count_s0[char] = char_count_s0.get(char, 0) + 1
+    
+    # Count the occurrences of each character in s1
+    for char in s1:
+        char_count_s1[char] = char_count_s1.get(char, 0) + 1
+    
+    # Compare the character counts of s0 and s1
+    return char_count_s0 == char_count_s1</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    # Check if lengths are different
+    if len(s0) != len(s1):
+        return False
+
+    # Create a dictionary to count characters in s0
+    char_counts0 = {}
+    for char in s0:
+        if char in char_counts0:
+            char_counts0[char] += </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return sorted(s0) == sorted(s1)
+
+# Test cases
+assert same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc') == True
+assert same_chars('abcd', 'dddddddabc') == True
+assert same_chars('dddddddabc', 'abcd') == True
+assert same_chars('eabcd', 'dddddddabc') == False
+assert same_chars('abcd', 'dddddddabce') == False
+assert same_chars('eabcdzzzz', 'dddzzzzzzzddddabc') == False</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+
+def same_chars_set(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_set('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_set('abcd', 'dddddddabc')
+    True
+    >>> same_chars_set('dddddddabc', 'abcd')
+    True
+    >>> same_chars_set('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_set('abcd', 'dddddddabce')
+    False
+    >>> same_chars_set('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return set(s0) == set(s1)
+
+
+def same_chars_dict(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_dict('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_dict('abcd', 'dddddddabc')
+    True
+    >>> same_chars_dict('dddddddabc', 'abcd')
+    True
+    >>> same_chars_dict('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_dict('abcd', 'dddddddabce')
+    False
+    >>> same_chars_dict('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    d0 = {}
+    d1 = {}
+    for c in s0:
+        d0[c] = d0.get(c, 0) + 1
+    for c in s1:
+        d1[c] = d1.get(c, 0) + 1
+    return d0 == d1
+
+
+def same_chars_dict_2(s0: str, s1: str):
+   </code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    char_count0 = {}
+    for char in s0:
+        if char in char_count0:
+            char_count0[char] += 1
+        else:
+            char_count0[char] = 1
+            
+    char_count1 = {}
+    for char in s1:
+        if char in char_count1:
+            char_count1[char] += 1
+        else:
+            char_count1[char] = 1
+            
+    return char_count0 == char_count1
+
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that checks if two strings have the same characters, regardless of their order:
+
+```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    """
+    # Create a dictionary to count the frequency of characters in each string
+    count_dict0 = {}
+    count_dict1 = {}
+
+    # Count the characters in the first string
+    for char in s0:
+        if char in count_dict0:
+            count_dict0[char] += 1
+        else:
+            count_dict0[char] = 1
+
+    # Count the characters in the second string
+    for char in s1:
+        if char in count_dict1:
+            count_dict1[char] += 1
+        else:
+            count_dict1[char] = 1
+
+    # Check if the dictionaries are equal
+    return count_dict0 == count_dict1
+```
+
+This function works by creating two dictionaries to count the frequency of each character in the two input strings. It then checks if these two dictionaries are equal. If they are, it means that the two strings have the same characters with the same frequencies, so the function returns `True`. Otherwise, it returns `False`.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    # Create dictionaries to count character frequencies in both strings
+    s0_counts = {}
+    s1_counts = {}
+
+    # Count characters in s0
+    for char in s0:
+        if char in s0_counts:
+            s0_counts[char] += 1
+        else:
+            s0_counts[char] = 1
+
+    # Count characters in s1
+    for char in s1:
+        if char in s1_counts:
+            s1_counts[char] += 1
+        else:
+            s1_counts[char] = 1
+
+    # Compare character frequencies
+    return s0_counts == s1_counts
+
+
+# Test cases
+assert same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc') == True
+assert same_chars('abcd', 'dddddddabc') == True
+assert same_chars('dddddddabc', 'abcd') == True
+assert same_chars('eabcd', 'dddddddabc') == False
+assert same_chars('abcd', 'dddddddabce') == False
+assert same_chars('eabcdzzzz', 'dddzzzzzzzddddabc') == False</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    if len(s0) != len(s1):
+        return False
+    
+    count = {}
+    for char in s0:
+        if char in count:
+            count[char] += 1
+        else:
+            count[char] = 1
+    
+    for char in s1:
+        if char in count:
+            count[char] -= 1
+        else:
+            return False
+    
+    for k in count:
+        if count[k] != 0:
+            return False
+    
+    return True
+
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')) # True
+print(same_chars('abcd', 'dddddddabc')) # True
+print(same_chars('dddddddabc', 'abcd')) # True
+print(same_chars('eabcd', 'dddddddabc')) # False
+print(same_chars('abcd', 'dddddddabce')) # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')) # False</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+
+def same_chars_2(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_2('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_2('abcd', 'dddddddabc')
+    True
+    >>> same_chars_2('dddddddabc', 'abcd')
+    True
+    >>> same_chars_2('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_2('abcd', 'dddddddabce')
+    False
+    >>> same_chars_2('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+
+def same_chars_3(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_3('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_3('abcd', 'dddddddabc')
+    True
+    >>> same_chars_3('dddddddabc', 'abcd')
+    True
+    >>> same_chars_3('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_3('abcd', 'dddddddabce')
+    False
+    >>> same_chars_3('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+
+def same_chars_4(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_4('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_4('abcd', 'dddddddabc')
+    True
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+```
+
+This function works by sorting the characters in each string and then comparing the sorted strings. If the sorted strings are equal, the function returns `True`, indicating that the two strings have the same characters. If the sorted strings are not equal, the function returns `False`, indicating that the two strings do not have the same characters.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddddddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddddddabc')
+    False
+    """
+    # Convert both strings to lowercase and sort them
+    s0 = sorted(s0.lower())
+    s1 = sorted(s1.lower())
+
+    # Check if the sorted strings are equal
+    return s0 == s1</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    if len(s0) != len(s1):
+        return False
+    
+    for char in s0:
+        if char not in s1:
+            return False
+    
+    return True</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    if len(s0) != len(s1):
+        return False
+    for c in s0:
+        if c not in s1:
+            return False
+    return True
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+def same_chars(s0, s1):
+    """
+    Check if two words have the same characters.
+    """
+    set_s0 = set(s0)
+    set_s1 = set(s1)
+    return set_s0 == set_s1
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+
+# Test cases
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc'))  # True
+print(same_chars('abcd', 'dddddddabc'))  # True
+print(same_chars('dddddddabc', 'abcd'))  # True
+print(same_chars('eabcd', 'dddddddabc'))  # False
+print(same_chars('abcd', 'dddddddabce'))  # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc'))  # False
+</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return sorted(s0) == sorted(s1)
+
+# Test cases
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc'))  # True
+print(same_chars('abcd', 'dddddddabc'))  # True
+print(same_chars('dddddddabc', 'abcd'))  # True
+print(same_chars('eabcd', 'dddddddabc'))  # False
+print(same_chars('abcd', 'dddddddabce'))  # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc'))  # False</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return set(s0) == set(s1)
+```
+
+This function takes two strings `s0` and `s1` as input and returns `True` if they have the same characters, and `False` otherwise. The function uses the `set()` function to convert each string into a set of characters, and then compares the sets to see if they are equal. If they are equal, then the function returns `True`, otherwise it returns `False`.
+
+Here are some test cases to verify the function:
+
+```python
+assert same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc') == True
+assert same_chars('abcd', 'dddddddabc') == True
+assert same_chars('dddddddabc', 'abcd') == True
+assert same_chars('eabcd', 'dddddddabc') == False
+assert same_chars('abcd', 'dddddddabce') == False
+assert same_chars('eabcdzzzz', 'dddzzzzzzzddddabc') == False
+```
+
+All the test cases pass, so the function seems to be working correctly.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function `same_chars` implemented in a markdown style code block:
+
+```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+```
+
+This function works by sorting the characters in each string and comparing the sorted strings. If the sorted strings are equal, then the original strings have the same characters.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+def same_chars_v2(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_v2('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_v2('abcd', 'dddddddabc')
+    True
+    >>> same_chars_v2('dddddddabc', 'abcd')
+    True
+    >>> same_chars_v2('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_v2('abcd', 'dddddddabce')
+    False
+    >>> same_chars_v2('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return Counter(s0) == Counter(s1)
+
+def same_chars_v3(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_v3('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_v3('abcd', 'dddddddabc')
+    True
+    >>> same_chars_v3('dddddddabc', 'abcd')
+    True
+    >>> same_chars_v3('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_v3('abcd', 'dddddddabce')
+    False
+    >>> same_chars_v3('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+def same_chars_v4(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_v4('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_v</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  from collections import Counter
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    """
+    counter0 = Counter(s0)
+    counter1 = Counter(s1)
+    return counter0 == counter1</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    # Convert both strings to lists of characters
+    list0 = list(s0)
+    list1 = list(s1)
+    
+    # Sort both lists
+    list0.sort()
+    list1.sort()
+    
+    # Compare the sorted lists
+    return list0 == list1</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    # Convert strings to sets to remove duplicates and compare
+    return set(s0) == set(s1)
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    return sorted(s0) == sorted(s1)
+```
+
+This function takes two strings as input and returns `True` if they have the same characters, and `False` otherwise. The `sorted()` function is used to sort the characters in each string, and then the two sorted strings are compared for equality.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return sorted(s0) == sorted(s1)
+
+# Test cases
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc'))  # True
+print(same_chars('abcd', 'dddddddabc'))  # True
+print(same_chars('dddddddabc', 'abcd'))  # True
+print(same_chars('eabcd', 'dddddddabc'))  # False
+print(same_chars('abcd', 'dddddddabce'))  # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc'))  # False</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def same_chars(s0, s1):
+    s0 = ''.join(sorted(s0))
+    s1 = ''.join(sorted(s1))
+    return set(s0) == set(s1)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    # Convert both strings to sets to remove duplicates
+    set_s0 = set(s0)
+    set_s1 = set(s1)
+
+    # Check if the sets are equal
+    return set_s0 == set_s1
+
+
+# Test cases
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc'))  # True
+print(same_chars('abcd', 'dddddddabc'))  # True
+print(same_chars('dddddddabc', 'abcd'))  # True
+print(same_chars('eabcd', 'dddddddabc'))  # False
+print(same_chars('abcd', 'dddddddabce'))  # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc'))  # False</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the same_chars function:
+
+```python
+def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    # Convert the strings to sets and compare them
+    return set(s0) == set(s1)
+```
+
+This function takes two strings as input and returns True if they have the same characters, and False otherwise. It does this by converting the strings to sets and comparing them using the `==` operator. If the sets are equal, then the two strings have the same characters. The `set()` function is used to remove any duplicates and convert the strings to sets. The `==` operator compares the sets and returns True if they are equal, and False otherwise. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+
+    return set(s0) == set(s1)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the problem:
+
+```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    # Convert the strings to sets to remove duplicate characters
+    set0 = set(s0)
+    set1 = set(s1)
+    
+    # Check if the sets are equal
+    return set0 == set1
+```
+
+This function takes two strings as input and checks if they have the same characters. It converts the strings to sets to remove duplicate characters and then compares the sets to check for equality. The function returns `True` if the sets are equal and `False` otherwise.</code></pre>
+
+      <p> codebooga-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return sorted(s0) == sorted(s1)
+
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the implementation of the function `same_chars` in Python:
+
+```python
+def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return sorted(s0) == sorted(s1)
+```
+
+This function uses the `sorted` function to sort the characters in each string and then compares the sorted strings. If the sorted strings are the same, the function returns `True`, indicating that the two strings have the same characters. Otherwise, it returns `False`.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    return sorted(s0) == sorted(s1)
+
+
+# Test cases
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc'))  # True
+print(same_chars('abcd', 'dddddddabc'))  # True
+print(same_chars('dddddddabc', 'abcd'))  # True
+print(same_chars('eabcd', 'dddddddabc'))  # False
+print(same_chars('abcd', 'dddddddabce'))  # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc'))  # False
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def same_chars(s0: str, s1: str):
+    s0_set = set(s0)
+    s1_set = set(s1)
+
+    return s0_set == s1_set</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+
+def same_chars(s0: str, s1: str):
+    # First, we'll create a set to store unique characters from both strings
+    combined_chars = set(s0) | set(s1)
+
+    # Then, we'll check if the length of the combined set is equal to the length of each string
+    if len(combined_chars) == len(s0) and len(combined_chars) == len(s1):
+        # If both conditions are met, it means that both strings have the same characters
+        return True
+    else:
+        # If not, return False
+        return False</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    # Convert strings to sorted lists of characters
+    s0_sorted = sorted(s0)
+    s1_sorted = sorted(s1)
+    
+    # Check if the sorted lists are equal
+    return s0_sorted == s1_sorted</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    # Remove spaces and convert to lowercase
+    s0 = s0.replace(" ", "").lower()
+    s1 = s1.replace(" ", "").lower()
+
+    # If the lengths of the strings are not equal, they cannot have the same characters
+    if len(s0) != len(s1):
+        return False
+
+    # Create a dictionary to count the occurrence of each character in s0
+    count_s0 = {}
+    for char in s0:
+        if char in count_s0:
+            count_s0[char] += 1
+        else:
+            count_s0[char] = 1
+
+    # Subtract the occurrence of each character in s1
+    # If we end up with a dictionary that contains only zeroes, the strings have the same characters
+    # If any character count is not zero, the strings do not have the same characters
+    count_s1 = {}
+    for char in s1:
+        if char in count_s1:
+            count_s1[char] -= 1
+        else:
+            count_s1[char] = -1
+
+    return all(value == 0 for value in count_s1.values())
+
+
+# Test cases
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc'))  # True
+print(same_chars('abcd', 'dddddddabc'))  # True
+print(same_chars('dddddddabc', 'abcd'))  # True
+print(same_chars('eabcd', 'dddddddabc'))  # False
+print(same_chars('abcd', 'dddddddabce'))  # False
+print(same_chars('eabcdzzzz', 'dddzzzzzzzddddabc'))  # False</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+
+    return sorted(s0) == sorted(s1)
+
+def same_chars_set(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_set('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_set('abcd', 'dddddddabc')
+    True
+    >>> same_chars_set('dddddddabc', 'abcd')
+    True
+    >>> same_chars_set('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_set('abcd', 'dddddddabce')
+    False
+    >>> same_chars_set('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return set(s0) == set(s1)
+
+def same_chars_dict(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_dict('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_dict('abcd', 'dddddddabc')
+    True
+    >>> same_chars_dict('dddddddabc', 'abcd')
+    True
+    >>> same_chars_dict('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_dict('abcd', 'dddddddabce')
+    False
+    >>> same_chars_dict('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return Counter(s0) == Counter(s1)
+
+def same_chars_dict_comp(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars_dict_comp('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars_dict_comp('abcd', 'dddddddabc')
+    True
+    >>> same_chars_dict_comp('dddddddabc', 'abcd')
+    True
+    >>> same_chars_dict_comp('eabcd', 'dddddddabc')
+    False
+    >>> same_chars_dict_comp('abcd', 'dddddddabce')
+    False
+    >>> same_chars_dict_comp('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+    return {c: s0.count(c) for c in</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def same_chars(s0: str, s1: str) -> bool:
+    """
+    Check if two words have the same characters.
+    """
+    return sorted(s0) == sorted(s1)</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to solve the problem:
+
+```python
+def same_chars(s0: str, s1: str) -> bool:
+    return sorted(s0) == sorted(s1)</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

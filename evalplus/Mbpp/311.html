@@ -1,0 +1,1430 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/311 </h1>
+<pre><code> """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def set_left_most_unset_bit(n): 
+    if not (n & (n + 1)): 
+        return n 
+    pos, temp, count = 0, n, 0 
+    while temp: 
+        if not (temp & 1): 
+            pos = count      
+        count += 1
+        temp >>= 1
+    return (n | (1 << (pos))) 
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[10], [12], [15]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[125], [255], [1000], [98765], [1], [3], [5], [7], [9], [0], [8], [True], [124], [1001], [98764], [10], [92], [2], [False], [254], [127], [128], [6], [123], [98766], [4], [122], [1002], [126], [1003], [129], [130], [1004], [67], [253], [68], [69], [70], [98767], [98768], [121], [11], [31], [1005], [120], [91], [252], [131], [132], [66], [12], [119], [999], [28], [98769], [251], [89], [256], [29], [98770], [30], [32], [117], [257], [118], [33], [46], [90], [47], [250], [87], [94], [133], [116], [49], [27], [50], [93], [35], [34], [258], [71], [72], [1006], [86], [115], [36], [21], [51], [48], [114], [73], [259], [98763], [98771], [95], [113], [52], [26], [53], [260], [261], [25], [249], [13], [24], [262], [88], [23]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    """
+    :param n: int
+    :return: int
+    """
+    return n | (n + 1)
+
+
+if __name__ == '__main__':
+    print(set_left_most_unset_bit(10))
+    print(set_left_most_unset_bit(11))
+    print(set_left_most_unset_bit(12))
+    print(set_left_most_unset_bit(13))
+    print(set_left_most_unset_bit(14))
+    print(set_left_most_unset_bit(15))
+    print(set_left_most_unset_bit(16))
+    print(set_left_most_unset_bit(17))
+    print(set_left_most_unset_bit(18))
+    print(set_left_most_unset_bit(19))
+    print(set_left_most_unset_bit(20))
+    print(set_left_most_unset_bit(21))
+    print(set_left_most_unset_bit(22))
+    print(set_left_most_unset_bit(23))
+    print(set_left_most_unset_bit(24))
+    print(set_left_most_unset_bit(25))
+    print(set_left_most_unset_bit(26))
+    print(set_left_most_unset_bit(27))
+    print(set_left_most_unset_bit(28))
+    print(set_left_most_unset_bit(29))
+    print(set_left_most_unset_bit(30))
+    print(set_left_most_unset_bit(31))
+    print(set_left_most_unset_bit(32))
+    print(set_left_most_unset_bit(33))
+    print(set_left_most_unset_bit(34))
+    print</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n: int) -> int:
+    """
+    This function takes an integer n and returns an integer with the leftmost unset bit set to 1.
+    If all bits are set, it returns the input integer.
+    """
+    # Find the position of the leftmost unset bit
+    position = 1
+    while (n & (1 << position)) != 0:
+        position += 1
+
+    # Set the leftmost unset bit
+    result = n | (1 << position)
+
+    return result
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    # Find the position of the rightmost set bit
+    pos = 0
+    while (n & (1 << pos)) != 0:
+        pos += 1
+
+    # If all bits are set, return n as it is
+    if pos == 0:
+        return n
+
+    # Set the leftmost unset bit and return the new number
+    return n | (1 << (pos - 1))
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def set_left_most_unset_bit(num):
+    """
+    Sets the leftmost unset bit in the given number.
+    
+    Args:
+        num (int): The input number.
+    
+    Returns:
+        int: The number with the leftmost unset bit set.
+    """
+    if num == 0:
+        return 1
+    
+    # Find the position of the leftmost unset bit
+    pos = 0
+    while num & (1 << pos) != 0:
+        pos += 1
+    
+    # Set the leftmost unset bit
+    return num | (1 << pos)
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    # Find the rightmost unset bit
+    unset_bit = ~n & -~n
+
+    # Set the leftmost unset bit
+    n = n | unset_bit
+
+    return n
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+def set_left_most_unset_bit(n):
+    # Find the leftmost unset bit
+    unset_bit = 1 << (n.bit_length() - 1)
+    # Set the unset bit
+    return n | unset_bit
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem of setting the left-most unset bit, wrapped in a Python markdown block:
+
+```python
+"""
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    # Find the position of the left-most unset bit
+    pos = 1
+    while n & (1 << pos):
+        pos += 1
+    
+    # Set the left-most unset bit
+    n |= (1 << pos)
+    
+    return n</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    # Find the position of the leftmost unset bit using bitwise AND
+</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that sets the leftmost unset bit of a given number:
+
+```python
+def set_left_most_unset_bit(num):
+    """
+    Sets the leftmost unset bit of a number to 1.
+    """
+    # Find the leftmost unset bit using the XOR operator
+    left_unset_bit = num ^ (num - 1)
+    # Set the leftmost unset bit to 1 using the OR operator
+    num |= left_unset_bit
+    return num
+```
+
+Explanation:
+
+The leftmost unset bit of a number can be found by performing a bitwise XOR operation between the number and the number minus one. This will flip the leftmost unset bit to 1 and all the bits to the right of it to 0. Then, we can set the leftmost unset bit to 1 by performing a bitwise OR operation with the original number.
+
+
+For example, let's say we have the number 10 in binary:
+
+```
+1010
+```
+
+The leftmost unset bit is the second bit from the right, which is 0. To find it, we can subtract 1 from the number and perform a bitwise XOR operation:
+
+
+```
+1010
+0101
+------ XOR
+11111
+```
+
+The result is 15, which is the binary representation of 11111. We can then set the leftmost unset bit to 1 by performing a bitwise OR operation with the original number:
+
+
+```
+1010
+11111
+------ OR
+11111
+```
+
+The final result is 15, which is the binary representation of 14. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    """
+    This function sets the left most unset bit in a given number.
+    """
+    # Find the left most unset bit
+    left_most_unset_bit = 1
+    while (n & left_most_unset_bit) != 0:
+        left_most_unset_bit = left_most_unset_bit << 1
+
+    # Set the left most unset bit
+    n = n | left_most_unset_bit
+
+    return n
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    """
+    :param n:
+    :return:
+    """
+    return n | (n + 1)
+
+
+if __name__ == '__main__':
+    assert set_left_most_unset_bit(10) == 14
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    # Find the position of the leftmost unset bit
+    pos = 1
+    while (n & pos) != 0:
+        pos <<= 1
+
+    # Set the leftmost unset bit by ORing with the bit at the found position
+    return n | pos
+
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that sets the leftmost unset bit in a binary representation of a number:
+
+```python
+def set_left_most_unset_bit(n):
+    """
+    This function sets the leftmost unset bit in a binary representation of a number.
+    """
+    # In binary representation, adding 1 to a number flips the rightmost unset bit to 1.
+    # By performing a bitwise OR operation with (n+1), we can set the leftmost unset bit.
+    return n | (n + 1)
+```
+
+You can test the function with your assert statement:
+
+```python
+assert set_left_most_unset_bit(10) == 14
+```
+
+This function works by taking advantage of how binary numbers work. When you add 1 to a binary number, it flips the rightmost unset bit to 1 and carries over if necessary. By performing a bitwise OR operation with the original number, we only change the bits that were flipped to 1, and the leftmost unset bit is the first one that gets flipped.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    # if n == 0:
+    #     return 1
+    # else:
+    #     return n | (1 << (n.bit_length() - 1))
+    return n | (1 << (n.bit_length() - 1))
+
+print(set_left_most_unset_bit(10))
+print(set_left_most_unset_bit(0))
+print(set_left_most_unset_bit(1))
+print(set_left_most_unset_bit(2))
+print(set_left_most_unset_bit(3))
+print(set_left_most_unset_bit(4))
+print(set_left_most_unset_bit(5))
+print(set_left_most_unset_bit(6))
+print(set_left_most_unset_bit(7))
+print(set_left_most_unset_bit(8))
+print(set_left_most_unset_bit(9))
+print(set_left_most_unset_bit(10))
+print(set_left_most_unset_bit(11))
+print(set_left_most_unset_bit(12))
+print(set_left_most_unset_bit(13))
+print(set_left_most_unset_bit(14))
+print(set_left_most_unset_bit(15))
+print(set_left_most_unset_bit(16))
+print(set_left_most_unset_bit(17))
+print(set_left_most_unset_bit(18))
+print(set_left_most_unset_bit(19))
+print(set_left_most_unset_bit(20))
+print(set_left_most_unset_bit(21))
+print(set_left_most_unset_bit(22))
+print(set_left_most_unset_bit(23))
+print(set_left_most_unset_bit(24))
+print(</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    """
+    Write a python function to set the left most unset bit.
+    assert set_left_most_unset_bit(10) == 14
+    """
+    # If n is 0, return 1 (as there is no unset bit in 0)
+    if n == 0:
+        return 1
+
+    # Find the position of the leftmost set bit
+    pos = 0
+    while n > 0:
+        if n & 1:
+            break
+        pos += 1
+        n >>= 1
+
+    # Set the leftmost unset bit by shifting 1 to the left by pos and subtracting 1
+    return (1 << pos) + (n - (1 << pos))
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+import math
+
+def set_left_most_unset_bit(num):
+    if num == 0:
+        return 1
+    
+    if num & 1 == 1:
+        return num
+    
+    return num + 1
+
+def set_left_most_unset_bit_2(num):
+    if num == 0:
+        return 1
+    
+    if num & 1 == 1:
+        return num
+    
+    return num + 2**(int(math.log(num, 2)) + 1)
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    """
+    :param n:
+    :return:
+    """
+    if n == 0:
+        return 1
+    if n == 1:
+        return 2
+    if n == 2:
+        return 3
+    if n == 3:
+        return 4
+    if n == 4:
+        return 5
+    if n == 5:
+        return 6
+    if n == 6:
+        return 7
+    if n == 7:
+        return 8
+    if n == 8:
+        return 9
+    if n == 9:
+        return 10
+    if n == 10:
+        return 11
+    if n == 11:
+        return 12
+    if n == 12:
+        return 13
+    if n == 13:
+        return 14
+    if n == 14:
+        return 15
+    if n == 15:
+        return 16
+    if n == 16:
+        return 17
+    if n == 17:
+        return 18
+    if n == 18:
+        return 19
+    if n == 19:
+        return 20
+    if n == 20:
+        return 21
+    if n == 21:
+        return 22
+    if n == 22:
+        return 23
+    if n == 23:
+        return 24
+    if n == 24:
+        return 25
+    if n == 25:
+        return 26
+    if n == 26:
+        return 27
+    if n == 27:
+        return 28
+    if n == 28:
+        return 29
+    if n == 29:
+        return 30
+    if n == 30:
+        return 31
+    if n == 31:
+        return 32
+    if n == 32:
+        return 33
+    if</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def set_left_most_unset_bit(n):
+    if n == 0:
+        return 1
+    if n % 2 == 1:
+        return n
+    return set_left_most_unset_bit(n // 2) * 2
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14
+```
+
+This function works by recursively dividing the number by 2 until it finds a number that is not divisible by 2 (i.e., its least significant bit is 0). Then it multiplies this number by 2 to set the left most unset bit. If the input number is 0, it returns 1 because there is no unset bit in 0.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def set_left_most_unset_bit(n):
+    return n | (1 << 0)
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    n = n & (n-1)
+    n = n | 1
+    return n
+
+assert set_left_most_unset_bit(10) == 14
+assert set_left_most_unset_bit(14) == 14
+assert set_left_most_unset_bit(15) == 15
+assert set_left_most_unset_bit(16) == 16
+assert set_left_most_unset_bit(17) == 17
+assert set_left_most_unset_bit(18) == 18
+assert set_left_most_unset_bit(19) == 19
+assert set_left_most_unset_bit(20) == 20
+assert set_left_most_unset_bit(21) == 21
+assert set_left_most_unset_bit(22) == 22
+assert set_left_most_unset_bit(23) == 23
+assert set_left_most_unset_bit(24) == 24
+assert set_left_most_unset_bit(25) == 25
+assert set_left_most_unset_bit(26) == 26
+assert set_left_most_unset_bit(27) == 27
+assert set_left_most_unset_bit(28) == 28
+assert set_left_most_unset_bit(29) == 29
+assert set_left_most_unset_bit(30) == 30
+assert set_left_most_unset_bit(31) == 31
+assert set_left_most_unset_bit(32) == 32
+assert set_left_most_unset_bit(33) == 33
+assert set_left_most_unset_bit(34) == 34
+assert set_left_most_unset_bit(35) == 35
+assert set_left_most_unset_bit(36) == 36
+assert set_left_most_unset_bit(37) == 37
+assert set_left_most_unset_bit(38) == 38
+assert set_left_most_unset_bit(39) == 39
+assert set_left_most_unset_bit(40)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(value):
+    """
+    Write a python function to set the left most unset bit.
+    assert set_left_most_unset_bit(10) == 14
+    """
+    if value == 0:
+        return 1
+    return value | (1 << (value.bit_length() - value.leading_zeros() - 1))
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+def set_left_most_unset_bit(num):
+    """
+    This function sets the left most unset bit in a given number.
+    """
+    # Find the position of the left most unset bit using bitwise AND with (num-1) and bitwise XOR with num
+    left_most_unset_bit_position = 1 & (num - 1) ^ num
+    
+    # Set the left most unset bit using bitwise OR with 1 shifted left to the position of the left most unset bit
+    return num | (1 << left_most_unset_bit_position)
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    return n | (n + 1)
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to set the left most unset bit:
+
+```python
+def set_left_most_unset_bit(n):
+    """
+    Sets the left most unset bit of a number.
+    """
+    return n | (n + 1)
+```
+
+Explanation:
+
+- The `|` operator is used to perform a bitwise OR operation on two numbers.
+- The expression `n | (n + 1)` sets the left most unset bit of `n` by adding 1 to `n` and then performing a bitwise OR operation with `n`.
+- For example, if `n` is `10` (binary `1010`), then `n | (n + 1)` is `1011` (binary `1011`).
+- The function returns the result of the expression.
+
+The assertion statement checks if the function returns the expected output for the input `10`.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    return n | (n + 1)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to set the left most unset bit:
+
+```python
+def set_left_most_unset_bit(n):
+    # If all bits are set, return the number itself
+    if n == ((1 << n.bit_length()) - 1):
+        return n
+
+    # Find the leftmost unset bit
+    for i in range(n.bit_length()):
+        if not (n & (1 << i)):
+            return n | (1 << i)
+
+    # If no unset bit is found, return the number itself
+    return n
+```
+
+You can test the function with the following code:
+
+```python
+assert set_left_most_unset_bit(10) == 14
+```
+
+This function works by first checking if all bits are set. If they are, it returns the number itself. If not, it finds the leftmost unset bit and sets it. If no unset bit is found, it returns the number itself.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    """
+    Set the left most unset bit in n.
+    """
+    return n | (n + 1)
+
+"""
+Write a python function to set the right most unset bit.
+assert set_right_most_unset_bit(10) == 12
+"""
+
+def set_right_most_unset_bit(n):
+    """
+    Set the right most unset bit in n.
+    """
+    return n | (n - 1)
+
+"""
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    """
+    Set the left most unset bit in n.
+    """
+    return n | (n + 1)
+
+"""
+Write a python function to set the right most unset bit.
+assert set_right_most_unset_bit(10) == 12
+"""
+
+def set_right_most_unset_bit(n):
+    """
+    Set the right most unset bit in n.
+    """
+    return n | (n - 1)
+
+"""
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    """
+    Set the left most unset bit in n.
+    """
+    return n | (n + 1)
+
+"""
+Write a python function to set the right most unset bit.
+assert set_right_most_unset_bit(10) == 12
+"""
+
+def set_right_most_unset_bit(n):
+    """
+    Set the right most unset bit in n.
+    """
+    return n | (n - 1)
+
+"""
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    """
+    Set the left most unset bit in n.
+    </code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(num):
+    return num | (1 << (num.bit_length() - 1))
+
+print(set_left_most_unset_bit(10))
+print(set_left_most_unset_bit(11))
+print(set_left_most_unset_bit(12))
+print(set_left_most_unset_bit(13))
+print(set_left_most_unset_bit(14))
+print(set_left_most_unset_bit(15))
+print(set_left_most_unset_bit(16))
+print(set_left_most_unset_bit(17))
+print(set_left_most_unset_bit(18))
+print(set_left_most_unset_bit(19))
+print(set_left_most_unset_bit(20))
+print(set_left_most_unset_bit(21))
+print(set_left_most_unset_bit(22))
+print(set_left_most_unset_bit(23))
+print(set_left_most_unset_bit(24))
+print(set_left_most_unset_bit(25))
+print(set_left_most_unset_bit(26))
+print(set_left_most_unset_bit(27))
+print(set_left_most_unset_bit(28))
+print(set_left_most_unset_bit(29))
+print(set_left_most_unset_bit(30))
+print(set_left_most_unset_bit(31))
+print(set_left_most_unset_bit(32))
+print(set_left_most_unset_bit(33))
+print(set_left_most_unset_bit(34))
+print(set_left_most_unset_bit(35))
+print(set_left_most_unset_bit(36))
+print(set_left_most_unset_bit(37))
+print(set_left_most_unset_bit(38))
+print(set_left_most_unset_bit(</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(num: int) -> int:
+    """
+    Sets the left-most unset bit of a given number.
+    """
+    return num | (num + 1)</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(num):
+    if num == 0:
+        return 1
+    if num & (num - 1) == 0:
+        return num
+    return set_left_most_unset_bit(num - 1)
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(num):
+    # Start with the number 1 and shift it left until it is greater than the number
+    i = 1
+    while i <= num:
+        i <<= 1
+    # Now i is the smallest power of 2 greater than num
+    # Subtract 1 from i to get the number with all bits set to the right of the leftmost unset bit
+    i -= 1
+    # XOR the original number with the new number to set the leftmost unset bit
+    return num ^ i
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(num):
+    """
+    Set the left most unset bit in a given number.
+
+    :param num: Integer number
+    :return: Integer number with the left most unset bit set
+    """
+    # Find the position of the left most unset bit
+    position = num.bit_length() - 1
+
+    # Set the left most unset bit
+    result = num | (1 << position)
+
+    return result
+
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14
+assert set_left_most_unset_bit(15) == 17
+assert set_left_most_unset_bit(0) == 1
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    return n | (1 << (n & -n).bit_length() - 1)
+
+assert set_left_most_unset_bit(10) == 14
+```
+
+Explanation:
+The function `set_left_most_unset_bit` takes an integer `n` as input and returns the integer with the leftmost unset bit set.
+
+The function works by first finding the position of the leftmost unset bit using the bitwise AND operator `&` and the bitwise negation operator `~`. The expression `(n & -n)` returns the value of the leftmost set bit in `n`. The `bit_length()` method returns the number of bits required to represent the integer, so subtracting 1 gives the position of the leftmost unset bit.
+
+The function then sets the leftmost unset bit using the bitwise OR operator `|` and the left shift operator `<<`. The expression `1 << (n & -n).bit_length() - 1` shifts the value 1 to the left by the position of the leftmost unset bit, and then performs a bitwise OR with `n` to set the bit.
+
+The `assert` statement is used to test the function with the input `10`, which should return `14` with the leftmost unset bit set.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    i = 0
+    while (n & (1 << i)) != 0:
+        i += 1
+    return n | (1 << i)
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    return n | (n + 1)
+
+
+"""
+Write a python function to set the right most unset bit.
+assert set_right_most_unset_bit(10) == 11
+"""
+
+def set_right_most_unset_bit(n):
+    return n | (n - 1)
+
+
+"""
+Write a python function to set the right most set bit.
+assert set_right_most_set_bit(10) == 9
+"""
+
+def set_right_most_set_bit(n):
+    return n | (n - 1)
+
+
+"""
+Write a python function to set the left most set bit.
+assert set_left_most_set_bit(10) == 8
+"""
+
+def set_left_most_set_bit(n):
+    return n | (n + 1)
+
+
+"""
+Write a python function to set the right most set bit.
+assert set_right_most_set_bit(10) == 9
+"""
+
+def set_right_most_set_bit(n):
+    return n | (n - 1)
+
+
+"""
+Write a python function to set the left most set bit.
+assert set_left_most_set_bit(10) == 8
+"""
+
+def set_left_most_set_bit(n):
+    return n | (n + 1)
+
+
+"""
+Write a python function to set the right most set bit.
+assert set_right_most_set_bit(10) == 9
+"""
+
+def set_right_most_set_bit(n):
+    return n | (n - 1)
+
+
+"""
+Write a python function to set the left most set bit.
+assert set_left_most_set_bit(10) == 8
+"""
+
+def set_left_most_set_bit(n):
+    return n | (n + 1)
+
+
+"""
+Write a python function to set the right most set bit.
+assert set_right_most_set_bit(10) == 9
+"""
+
+def set_right_most_set_bit(n):
+    return n | (n - 1)
+
+
+"""
+Write a python function to set the left</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return n
+    if n & 1 == 0:
+        return set_left_most_unset_bit(n >> 1) << 1
+    else:
+        return set_left_most_unset_bit(n >> 1) << 1 | 1
+
+assert set_left_most_unset_bit(10) == 14
+assert set_left_most_unset_bit(14) == 14
+assert set_left_most_unset_bit(15) == 15
+assert set_left_most_unset_bit(16) == 16
+assert set_left_most_unset_bit(17) == 17
+assert set_left_most_unset_bit(18) == 18
+assert set_left_most_unset_bit(19) == 19
+assert set_left_most_unset_bit(20) == 20
+assert set_left_most_unset_bit(21) == 21
+assert set_left_most_unset_bit(22) == 22
+assert set_left_most_unset_bit(23) == 23
+assert set_left_most_unset_bit(24) == 24
+assert set_left_most_unset_bit(25) == 25
+assert set_left_most_unset_bit(26) == 26
+assert set_left_most_unset_bit(27) == 27
+assert set_left_most_unset_bit(28) == 28
+assert set_left_most_unset_bit(29) == 29
+assert set_left_most_unset_bit(30) == 30
+assert set_left_most_unset_bit(31) == 31
+assert set_left_most_unset_bit(32) == 32
+assert set_left_most_unset_bit(33) == 33
+assert set_left_most_unset_bit(34) == 34
+assert set_left_most_unset_bit(35) == 35
+assert set_left_most_unset_bit(36) == 36
+assert set_left_most_unset_</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+
+def set_left_most_unset_bit(n):
+    if n == 0:
+        return 1
+    m = n
+    mask = 1
+    # Find the leftmost unset bit
+    while m & mask:
+        mask = mask << 1
+    # Set the leftmost unset bit
+    return n | mask
+
+
+assert set_left_most_unset_bit(10) == 14
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    """
+    Write a python function to set the left most unset bit.
+
+    assert set_left_most_unset_bit(10) == 14
+    """
+    return (n & (-1) & ~((n & -1) >> (int)(~(-1) & log(n) // log(2)))) | ((n & -1) >> (int)(~(-1) & log(n) // log(2)))
+</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def set_left_most_unset_bit(n):
+    i = 0
+    while n & (1 << i):
+        i += 1
+    return n | (1 << i)
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    return n | (1 << 1)
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    return n | (n + 1)
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to set the left most unset bit:
+
+```python
+def set_left_most_unset_bit(n):
+    """
+    This function takes an integer as input and returns the integer with the left most unset bit set to 1.
+    """
+    return n | (1 << (n.bit_length())
+```
+
+Explanation:
+
+The `bit_length()` method returns the number of bits required to represent the binary representation of the given integer. For example, `10` in binary is `1010`, so `bit_length()` will return `4`. We can use this to find the position of the left most unset bit. We can then use the left shift operator `<<` to set the bit at that position to 1. The left shift operator shifts the bits of the number to the left by the specified number of positions. In this case, we shift the number to the left by the number of bits required to represent the binary representation of the integer's length.
+
+For example, if we have the number `10` in binary, which is `1010`, we need to set the left most unset bit. The left most unset bit is the least significant bit, which is at position 0. So, we left shift `1` by `4` positions to get `100000` and then bitwise OR it with `n` to set the left most unset bit to 1.
+
+Here's the step-by-step explanation:
+
+1. `n.bit_length()` returns `4` for `n=10`
+2. `1 << 4` returns `16` which is `0001000000` in binary
+3. `16 | 10` returns `14` which is `1110` in binary, which is the left most unset bit set to 1.
+
+Therefore, the function returns `14` for `n=10`. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+
+def set_left_most_unset_bit(n):
+    """
+    Set the left most unset bit.
+    :param n:
+    :return:
+    """
+    return n | (n + 1)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    return n | (1 << (32 - bin(n).count('1') - 1))
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(num):
+    if num == 0:
+        return 1
+    if num & 1 == 1:
+        return num
+    return set_left_most_unset_bit(num >> 1) << 1
+
+
+if __name__ == "__main__":
+    assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return n
+    if n & 1 == 0:
+        return set_left_most_unset_bit(n >> 1) << 1
+    else:
+        return set_left_most_unset_bit(n >> 1) << 1 | 1
+
+assert set_left_most_unset_bit(10) == 14
+assert set_left_most_unset_bit(14) == 14
+assert set_left_most_unset_bit(15) == 15
+assert set_left_most_unset_bit(16) == 16
+assert set_left_most_unset_bit(17) == 17
+assert set_left_most_unset_bit(18) == 18
+assert set_left_most_unset_bit(19) == 19
+assert set_left_most_unset_bit(20) == 20
+assert set_left_most_unset_bit(21) == 21
+assert set_left_most_unset_bit(22) == 22
+assert set_left_most_unset_bit(23) == 23
+assert set_left_most_unset_bit(24) == 24
+assert set_left_most_unset_bit(25) == 25
+assert set_left_most_unset_bit(26) == 26
+assert set_left_most_unset_bit(27) == 27
+assert set_left_most_unset_bit(28) == 28
+assert set_left_most_unset_bit(29) == 29
+assert set_left_most_unset_bit(30) == 30
+assert set_left_most_unset_bit(31) == 31
+assert set_left_most_unset_bit(32) == 32
+assert set_left_most_unset_bit(33) == 33
+assert set_left_most_unset_bit(34) == 34
+assert set_left_most_unset_bit(35) == 35
+assert set_left_most_unset_bit(36) == 36
+assert set_left_most_unset_</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(num):
+    return num | (1 << (num.bit_length() - 1))
+
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    return n | (1 << (n.bit_length() - 1))
+
+assert set_left_most_unset_bit(10) == 14
+```
+
+This Python function `set_left_most_unset_bit` takes an integer `n` as input and returns the number with the left most unset bit set. The left most unset bit is found by subtracting the number of bits in `n` from the number of bits in `n` plus one (since bit positions start from 0). The bitwise OR operator `|` is used to set the left most unset bit.
+
+The assert statement at the end checks if the function is working correctly by comparing the output of the function with the expected output for the input `10`. The expected output is `14`, which is `10` with the left most unset bit set.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    return n ^ (n - 1)
+
+assert set_left_most_unset_bit(10) == 14
+assert set_left_most_unset_bit(11) == 13
+assert set_left_most_unset_bit(12) == 12
+assert set_left_most_unset_bit(13) == 11
+assert set_left_most_unset_bit(14) == 10
+assert set_left_most_unset_bit(15) == 15
+assert set_left_most_unset_bit(16) == 16
+assert set_left_most_unset_bit(17) == 17
+assert set_left_most_unset_bit(18) == 18
+assert set_left_most_unset_bit(19) == 19
+assert set_left_most_unset_bit(20) == 20
+assert set_left_most_unset_bit(21) == 21
+assert set_left_most_unset_bit(22) == 22
+assert set_left_most_unset_bit(23) == 23
+assert set_left_most_unset_bit(24) == 24
+assert set_left_most_unset_bit(25) == 25
+assert set_left_most_unset_bit(26) == 26
+assert set_left_most_unset_bit(27) == 27
+assert set_left_most_unset_bit(28) == 28
+assert set_left_most_unset_bit(29) == 29
+assert set_left_most_unset_bit(30) == 30
+assert set_left_most_unset_bit(31) == 31
+assert set_left_most_unset_bit(32) == 32
+assert set_left_most_unset_bit(33) == 33
+assert set_left_most_unset_bit(34) == 34
+assert set_left_most_unset_bit(35) == 35
+assert set_left_most_unset_bit(36) == 36
+assert set_left_most_unset_bit(37) == 37
+assert set_left_most_unset</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    return n | (n + 1)
+
+
+if __name__ == "__main__":
+    print(set_left_most_unset_bit(10))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    # Calculate the position of the leftmost unset bit
+    pos = 0
+    while (n & (1 << pos)) == 0:
+        pos += 1
+
+    # Set the bit
+    return n | (1 << pos)
+
+# Test the function
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+def set_left_most_unset_bit(num: int) -> int:
+    # Find the number of set bits in the given number
+    count = bin(num).count('1')
+    # Shift the number right by `count` positions
+    num >>= count
+    # Perform a bitwise `OR` operation with `-1` to set the leftmost unset bit
+    num |= (1 << count)
+    return num
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+
+def set_left_most_unset_bit(n):
+    return n | (n & -n)
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to set the leftmost unset bit, along with the solution:
+
+```python
+"""
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    """
+    Set the leftmost unset bit in the given number.
+    
+    Args:
+        n (int): The input number.
+        
+    Returns:
+        int: The number with the leftmost unset bit set.
+    """
+    # Find the position of the leftmost unset bit
+    pos = 0
+    temp = n
+    while temp & (temp + 1):
+        temp >>= 1
+        pos += 1
+    
+    # Set the leftmost unset bit
+    return n | (1 << pos)
+
+# Test case
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+
+def set_left_most_unset_bit(n):
+    return n | (n + 1)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(n):
+    return n | (1 << n.bit_length())
+
+print(set_left_most_unset_bit(10))
+/python/leetcode/1001-1100/1001.py
+"""
+Given an array A of positive integers, let S be the sum of the digits of the minimal element of A.
+Return 0 if S is odd, otherwise return 1.
+
+Example 1:
+Input: [34,23,1,24,75,33,54,8]
+Output: 0
+Explanation: 
+The minimal element is 1, and the sum of those digits is S = 1 which is odd, so the answer is 0.
+
+Example 2:
+Input: [99,77,33,66,55]
+Output: 1
+Explanation: 
+The minimal element is 33, and the sum of those digits is S = 3 + 3 = 6 which is even, so the answer is 1.
+
+Note:
+1 <= A.length <= 100
+1 <= A[i] <= 100
+"""
+
+class Solution:
+    def sumOfDigits(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        return 0 if sum(map(int, str(min(A)))) % 2 else 1
+/python/leetcode/0001-0100/0094.py
+"""
+Given a binary tree, return the inorder traversal of its nodes' values.
+
+Example:
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [1,3,2]
+Follow up: Recursive solution is trivial, could you do it iteratively?
+"""
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def set_left_most_unset_bit(n):
+    # Find the left most unset bit
+    left_most_unset_bit = 0
+    while n & (1 << left_most_unset_bit):
+        left_most_unset_bit += 1
+
+    # Set the left most unset bit
+    n |= (1 << left_most_unset_bit)
+
+    return n
+
+assert set_left_most_unset_bit(10) == 14</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to set the left most unset bit.
+assert set_left_most_unset_bit(10) == 14
+"""
+
+def set_left_most_unset_bit(num):
+    return num | (num - 1)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def set_left_most_unset_bit(n):
+    # convert number to binary and reverse it
+    binary = bin(n)[2:][::-1]
+    
+    # find the index of the first 0 from the right
+    index = binary.find('0')
+    
+    # if there is no 0, return the number as it is
+    if index == -1:
+        return n
+    
+    # replace the 0 with 1 and reverse the binary back
+    binary = binary[:index] + '1' + binary[index+1:]
+    binary = binary[::-1]
+    
+    # convert binary back to decimal
+    return int(binary, 2)
+
+# test the function
+print(set_left_most_unset_bit(10))  # it should print 14</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

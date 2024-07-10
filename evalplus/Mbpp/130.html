@@ -1,0 +1,1357 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/130 </h1>
+<pre><code> """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+from collections import defaultdict
+def max_occurrences(nums):
+    d = defaultdict(int)
+    for n in nums:
+        d[n] += 1
+    return max(d, key=d.get)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[2, 3, 8, 4, 7, 9, 8, 2, 6, 5, 1, 6, 1, 2, 3, 2, 4, 6, 9, 1, 2]], [[2, 3, 8, 4, 7, 9, 8, 7, 9, 15, 14, 10, 12, 13, 16, 18]], [[10, 20, 20, 30, 40, 90, 80, 50, 30, 20, 50, 10]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 72, 542, 542, 347, 347, 72, 687, 542]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 5]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 542, 347, 347, 72, 687, 542]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 542]], [[72, 1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 12, 14]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541]], [[542, 347, 687, 789, 72, 235, 348, 542, 542, 687, 789, 789, 542, 72, 542, 542, 347, 347, 72, 687, 542]], [[542, 347, 687, 789, 3, 72, 348, 235, 542, 542, 687, 789, 789, 542, 72, 542, 542, 347, 347, 71, 687, 542]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], [[1, 2, 3, 4, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15]], [[1, 2, 3, 4, 5, 7, 8, 9, 11, 11, 12, 13, 14, 15]], [[1, 2, 3, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 6]], [[1, 2, 3, 4, 347, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10]], [[542, 347, 687, 789, 72, 235, 348, 542, 542, 687, 789, 542, 72, 542, 542, 347, 347, 72, 687, 542]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 14]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 72, 542, 542, 347, 347, 72, 687, 1, 542]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 12, 10, 11, 12, 13, 14, 15]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347]], [[72, 1, 2, 3, 4, 347, 5, 6, 3, 8, 9, 10, 11, 12, 13, 12, 14]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 12, 3]], [[1, 2, 3, 4, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15]], [[72, 1, 2, 3, 4, 347, 5, 6, 3, 8, 9, 10, 11, 12, 13, 235, 14]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 3]], [[1, 2, 3, 4, 5, 7, 8, 9, 11, 11, 12, 72, 14, 15]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10, 9, 2]], [[72, 1, 2, 3, 4, 347, 5, 6, 3, 8, 9, 10, 11, 12, 13, 235, 14, 8]], [[1, 2, 3, 4, 5, 7, 8, 9, 11, 11, 12, 687, 72, 14, 15, 1]], [[1, 2, 4, 5, 7, 8, 9, 11, 11, 12, 72, 14, 15]], [[542, 5, 687, 72, 235, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 2, 10, 11, 12, 14]], [[72, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 12, 14]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 541, 347, 347, 687, 542]], [[72, 1, 2, 3, 4, 15, 347, 5, 6, 3, 8, 9, 10, 11, 12, 13, 235, 14, 8]], [[542, 6, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 541, 347, 347, 687, 542]], [[1, 2, 3, 4, 5, 7, 8, 9, 11, 11, 12, 13, 14, 15, 1, 1]], [[542, 5, 687, 72, 236, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347]], [[72, 1, 2, 3, 4, 347, 5, 6, 3, 8, 9, 10, 11, 12, 13, 3, 14]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 542, 347, 347, 72, 687, 542, 542]], [[542, 347, 687, 72, 235, 348, 542, 542, 687, 789, 542, 72, 542, 542, 347, 347, 72, 687, 542, 347]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 12, 13, 542, 14, 15, 3]], [[1, 2, 3, 4, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 9]], [[1, 3, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10, 9, 13, 2]], [[542, 71, 347, 687, 789, 72, 235, 348, 542, 542, 687, 789, 789, 542, 72, 542, 543, 347, 347, 72, 687, 542]], [[1, 3, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10, 9, 13, 2, 7]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 7, 14, 15]], [[1, 2, 4, 5, 7, 8, 9, 11, 11, 12, 72, 14, 15, 9]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10, 11, 12, 13, 14, 15, 10]], [[1, 3, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10, 9, 13, 2, 7, 14]], [[542, 347, 687, 789, 72, 235, 542, 789, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347]], [[542, 5, 687, 72, 72, 236, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347]], [[1, 2, 4, 5, 7, 8, 9, 11, 11, 12, 72, 14, 15, 11]], [[1, 2, 4, 5, 7, 8, 9, 11, 11, 12, 13, 14, 15, 1, 1]], [[542, 5, 687, 72, 236, 542, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347, 542, 542, 789]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 14, 8]], [[72, 8, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 12, 14]], [[542, 347, 687, 789, 3, 72, 348, 235, 542, 542, 687, 789, 789, 542, 72, 542, 347, 347, 71, 687, 542]], [[1, 2, 3, 4, 6, 7, 8, 8, 9, 10, 11, 11, 13, 3, 15]], [[1, 2, 3, 347, 5, 6, 71, 8, 9, 10, 11, 12, 13, 14]], [[1, 2, 3, 4, 4, 5, 6, 8, 9, 10, 11, 3, 235, 13, 14, 15]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 10, 12, 13, 542, 14, 15, 3, 542]], [[542, 347, 687, 789, 72, 235, 542, 789, 542, 687, 789, 789, 542, 542, 2, 347, 347, 72, 687, 541, 347]], [[72, 8, 2, 3, 4, 347, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14, 8]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], [[1, 2, 3, 4, 5, 7, 8, 11, 11, 12, 72, 14, 15, 8]], [[1, 543, 2, 3, 0, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], [[72, 1, 2, 3, 3, 4, 347, 15, 6, 3, 8, 9, 10, 11, 12, 13, 14]], [[1, 2, 3, 347, 5, 6, 71, 8, 9, 10, 11, 12, 13, 14, 12]], [[1, 2, 3, 4, 15, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10, 11, 12, 13, 14, 15, 10, 10, 10]], [[542, 347, 687, 789, 72, 235, 542, 542, 687, 789, 789, 542, 72, 542, 542, 347, 347, 72, 542]], [[1, 2, 3, 4, 71, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15]], [[542, 347, 687, 789, 3, 72, 348, 235, 542, 542, 687, 789, 789, 542, 72, 542, 347, 347, 71, 687, 4, 542, 347]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10, 9, 2, 12]], [[1, 2, 3, 4, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 7, 14, 15]], [[72, 1, 2, 3, 4, 347, 5, 6, 3, 8, 9, 10, 11, 12, 13, 3, 14, 3]], [[1, 2, 3, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 12, 3]], [[1, 2, 3, 4, 5, 7, 9, 11, 11, 12, 13, 14, 235, 15]], [[1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 12, 3, 12, 14]], [[1, 2, 3, 4, 14, 5, 7, 8, 9, 11, 11, 12, 13, 14, 15, 1, 1, 1]], [[542, 347, 687, 789, 235, 542, 542, 687, 789, 789, 542, 72, 542, 542, 347, 347, 72, 687, 542]], [[1, 2, 3, 4, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 5, 9]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 14, 15, 10]], [[3, 347, 687, 789, 72, 235, 542, 542, 687, 789, 542, 542, 541, 347, 347, 687, 542, 789]], [[2, 3, 347, 5, 6, 71, 8, 9, 11, 12, 13, 14]], [[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 15, 10, 9, 5]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 542, 14, 15, 3]], [[1, 2, 3, 4, 347, 6, 7, 9, 10, 11, 12, 13, 14, 4, 13, 9]], [[1, 2, 3, 4, 5, 6, 7, 8, 10, 10, 11, 12, 13, 14, 15, 5, 9, 1]], [[3, 347, 687, 789, 72, 235, 542, 687, 789, 542, 542, 541, 347, 348, 687, 542, 789]], [[542, 347, 5, 687, 72, 72, 236, 542, 687, 789, 789, 542, 542, 347, 347, 72, 687, 541, 347]], [[0, 1, 2, 4, 5, 7, 8, 9, 11, 11, 12, 72, 14, 15, 9]], [[1, 2, 4, 5, 7, 8, 9, 1, 11, 11, 12, 13, 14, 15, 1, 1, 13]], [[1, 2, 4, 5, 7, 8, 9, 11, 11, 12, 72, 15, 9]], [[542, 71, 789, 72, 235, 542, 542, 687, 789, 789, 542, 542, 542, 347, 72, 687, 542]], [[14, 1, 2, 3, 4, 347, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 12, 3]], [[542, 347, 687, 789, 73, 235, 348, 542, 542, 687, 789, 542, 72, 542, 542, 347, 347, 72, 687, 542]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """
+    :param lst: list
+    :return: item with maximum frequency
+    """
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+
+if __name__ == '__main__':
+    print(max_occurrences([2, 3, 8, 4, 7, 9, 8, 2, 6, 5, 1, 6, 1, 2, 3, 2, 4, 6, 9, 1, 2]))
+    print(max_occurrences([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(max_occurrences([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(max_occurrences([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(max_occurrences([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, </code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(items):
+    """
+    Find the item with maximum frequency in a given list.
+
+    :param items: list
+    :return: int
+    """
+    from collections import Counter
+
+    # Count the occurrences of each item in the list
+    item_counts = Counter(items)
+
+    # Find the item with the maximum count
+    max_count = max(item_counts.values())
+
+    # Return the item(s) with the maximum count
+    return [item for item, count in item_counts.items() if count == max_count]
+
+# Test the function
+assert max_occurrences([2, 3, 8, 4, 7, 9, 8, 2, 6, 5, 1, 6, 1, 2, 3, 2, 4, 6, 9, 1, 2]) == 2</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(my_list):
+    from collections import Counter
+
+    counter = Counter(my_list)
+    return counter.most_common(1)[0][0]
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def max_occurrences(lst):
+    """
+    Find the item with maximum frequency in a given list.
+    
+    Args:
+        lst (list): The input list.
+    
+    Returns:
+        int: The item with maximum frequency.
+    """
+    count = {}
+    for item in lst:
+        if item in count:
+            count[item] += 1
+        else:
+            count[item] = 1
+    
+    max_count = 0
+    max_item = None
+    for item, c in count.items():
+        if c > max_count:
+            max_count = c
+            max_item = item
+    
+    return max_item
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    count_dict = {}
+    for item in lst:
+        if item in count_dict:
+            count_dict[item] += 1
+        else:
+            count_dict[item] = 1
+    return max(count_dict, key=count_dict.get)
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    freq_dict = {}
+    for item in lst:
+        if item in freq_dict:
+            freq_dict[item] += 1
+        else:
+            freq_dict[item] = 1
+
+    # Find the item with maximum frequency
+    max_freq = 0
+    max_item = None
+    for item, freq in freq_dict.items():
+        if freq > max_freq:
+            max_freq = freq
+            max_item = item
+
+    return max_item
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to find the item with maximum frequency in a given list, wrapped in a markdown block:
+
+```python
+def max_occurrences(lst):
+    count = {}
+    max_count = 0
+    max_item = None
+    
+    for item in lst:
+        if item in count:
+            count[item] += 1
+        else:
+            count[item] = 1
+        
+        if count[item] > max_count:
+            max_count = count[item]
+            max_item = item
+    
+    return max_item
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from collections import Counter
+
+def max_occurrences(input_list):
+    # Use Counter to count the frequency of each element in the list
+    element_count = Counter(input_list)
+    
+    # Find the maximum frequency
+    max_frequency = max(element_count.values())
+    
+    # Return the element(s) with the maximum frequency
+    return [element for element, count in element_count.items() if count == max_frequency]
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == [2]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def max_occurrences(lst):
+    """
+    Returns the item with maximum frequency in a given list.
+    """
+    # Create a dictionary to store the frequency of each item in the list
+    freq = {}
+    for item in lst:
+        if item in freq:
+            freq[item] += 1
+        else:
+            freq[item] = 1
+    
+    # Find the item with maximum frequency
+    max_freq = 0
+    max_item = None
+    for item, count in freq.items():
+        if count > max_freq:
+            max_freq = count
+            max_item = item
+    
+    return max_item
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2 </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    freq_dict = {}
+    for item in lst:
+        if item in freq_dict:
+            freq_dict[item] += 1
+        else:
+            freq_dict[item] = 1
+
+    # Find the item with maximum frequency
+    max_freq = max(freq_dict.values())
+    max_freq_item = [k for k, v in freq_dict.items() if v == max_freq]
+
+    # If there are multiple items with the same maximum frequency, return the first one
+    return max_freq_item[0]
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """
+    >>> max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    count_dict = {}
+    for item in lst:
+        if item in count_dict:
+            count_dict[item] += 1
+        else:
+            count_dict[item] = 1
+    return max(count_dict, key=count_dict.get)
+
+# Test case
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that uses the `collections.Counter` class to solve the problem:
+
+```python
+from collections import Counter
+
+def max_occurrences(lst):
+    counter = Counter(lst)
+    max_item = max(counter.keys(), key=counter.get)
+    return max_item
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+```
+
+This function works by creating a `Counter` object from the input list, which counts the occurrences of each item. Then it uses the `max()` function with the `key` parameter set to `counter.get` to find the item with the maximum count. The `assert` statement is used to verify that the function returns the correct result for the given test case.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(arr):
+    max_count = 0
+    max_item = 0
+    for i in range(len(arr)):
+        count = 0
+        for j in range(len(arr)):
+            if arr[i] == arr[j]:
+                count += 1
+        if count > max_count:
+            max_count = count
+            max_item = arr[i]
+    return max_item
+
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))
+
+"""
+Write a function to find the item with minimum frequency in a given list.
+assert min_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==1
+"""
+
+def min_occurrences(arr):
+    min_count = 0
+    min_item = 0
+    for i in range(len(arr)):
+        count = 0
+        for j in range(len(arr)):
+            if arr[i] == arr[j]:
+                count += 1
+        if count < min_count:
+            min_count = count
+            min_item = arr[i]
+    return min_item
+
+print(min_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))
+
+"""
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(arr):
+    max_count = 0
+    max_item = 0
+    for i in range(len(arr)):
+        count = 0
+        for j in range(len(arr)):
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(lst):
+    """
+    Write a function to find the item with maximum frequency in a given list.
+    assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+    """
+    from collections import Counter
+    counter = Counter(lst)
+    max_freq = max(list(counter.values()))
+    max_items = [item for item, freq in counter.items() if freq == max_freq]
+    return max_items[0] if len(max_items) == 1 else max_items
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    This function takes a list of numbers and returns the number that appears most frequently
+    """
+    # create a dictionary to store the count of each number
+    count = {}
+    # iterate over the list
+    for num in lst:
+        # if the number is not in the dictionary, add it with a count of 1
+        if num not in count:
+            count[num] = 1
+        # if the number is in the dictionary, increment the count
+        else:
+            count[num] += 1
+    # find the number with the maximum count
+    max_count = max(count.values())
+    # find the number(s) with the maximum count
+    max_nums = [num for num, c in count.items() if c == max_count]
+    # return the number(s) with the maximum count
+    return max_nums
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """
+    :param lst: list of integers
+    :return: the item with maximum frequency in the list
+    """
+    # Your code here
+    # raise NotImplementedError
+    # return max(lst, key=lst.count)
+    # return max(set(lst), key=lst.count)
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(lst), key=lambda x: lst.count(x))
+    # return max(set(</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def max_occurrences(lst):
+    count_dict = {}
+    for i in lst:
+        if i in count_dict:
+            count_dict[i] += 1
+        else:
+            count_dict[i] = 1
+    max_freq = max(count_dict.values())
+    for key, value in count_dict.items():
+        if value == max_freq:
+            return key
+
+# Test the function
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))  # Output: 2
+```
+
+This function works by first creating a dictionary where the keys are the items in the list and the values are the counts of each item. It then finds the maximum count and returns the item associated with that count. If there are multiple items with the maximum count, it returns the first one it encounters.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    frequency = {}
+    for item in lst:
+        if item in frequency:
+            frequency[item] += 1
+        else:
+            frequency[item] = 1
+
+    # Find the item with maximum frequency
+    max_frequency = 0
+    max_item = None
+    for item, count in frequency.items():
+        if count > max_frequency:
+            max_frequency = count
+            max_item = item
+
+    return max_item
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    max_count = 0
+    max_item = None
+    for item in lst:
+        if lst.count(item) > max_count:
+            max_count = lst.count(item)
+            max_item = item
+    return max_item
+
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])) #2
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2])) #2
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2])) #2
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2])) #2
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2,2,3,2,4,6,9,1,2])) #2
+print(max_occur</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(list):
+  """
+  Write a function to find the item with maximum frequency in a given list.
+  assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+  """
+  count = {}
+  for i in list:
+    if i in count:
+      count[i] += 1
+    else:
+      count[i] = 1
+  return max(count, key=count.get)</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+from collections import Counter
+
+def max_occurrences(arr):
+    """
+    Find the item with maximum frequency in a given list.
+    """
+    counter = Counter(arr)
+    max_freq = max(counter.values())
+    return counter.most_common(1)[0][0]
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    from collections import Counter
+    count = Counter(lst)
+    max_count = max(count.values())
+    max_item = [item for item, freq in count.items() if freq == max_count]
+    return max_item[0]
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def max_occurrences(lst):
+    freq = {}
+    for item in lst:
+        if item in freq:
+            freq[item] += 1
+        else:
+            freq[item] = 1
+    max_item = max(freq, key=freq.get)
+    return max_item
+```
+
+Explanation:
+
+- We first create an empty dictionary `freq` to store the frequency of each item in the list.
+- We then loop through each item in the list and check if it is already present in the dictionary. If it is, we increment its frequency by 1. If it is not, we add it to the dictionary with a frequency of 1.
+- After the loop, we find the item with the maximum frequency by using the `max()` function with the `key` parameter set to `freq.get`. This returns the key with the maximum value in the dictionary.
+- Finally, we return the item with the maximum frequency.
+
+We can test the function with the given example:
+
+```python
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+```
+
+This should pass without any errors.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(l):
+    d = {}
+    for i in l:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to find the item with maximum frequency in a given list:
+
+```python
+def max_occurrences(lst):
+    count_dict = {}
+    for item in lst:
+        if item in count_dict:
+            count_dict[item] += 1
+        else:
+            count_dict[item] = 1
+    max_count = max(count_dict.values())
+    max_items = [item for item, count in count_dict.items() if count == max_count]
+    return max_items
+```
+
+This function first creates a dictionary where the keys are the items in the list and the values are the counts of those items. It then finds the maximum count and returns a list of items that have this maximum count.
+
+Please note that if there are multiple items with the same maximum frequency, this function will return all of them. If you want only one of them, you can modify the function to return the first item in the list of maximum items.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    Find the item with maximum frequency in a given list.
+    """
+    max_item = None
+    max_count = 0
+    for item in lst:
+        count = lst.count(item)
+        if count > max_count:
+            max_item = item
+            max_count = count
+    return max_item
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(list):
+    max_count = 0
+    max_item = 0
+    for item in list:
+        if list.count(item) > max_count:
+            max_count = list.count(item)
+            max_item = item
+    return max_item
+
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))
+
+"""
+Write a function to find the item with minimum frequency in a given list.
+assert min_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==1
+"""
+
+def min_occurrences(list):
+    min_count = 0
+    min_item = 0
+    for item in list:
+        if list.count(item) < min_count:
+            min_count = list.count(item)
+            min_item = item
+    return min_item
+
+print(min_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))
+
+"""
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(list):
+    max_count = 0
+    max_item = 0
+    for item in list:
+        if list.count(item) > max_count:
+            max_count = list.count(item)
+            max_item = item
+    return max_item
+
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from collections import Counter
+
+def max_occurrences(lst):
+    counter = Counter(lst)
+    return counter.most_common(1)[0][0]</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(list):
+    max_count = 0
+    max_item = None
+    for item in list:
+        count = list.count(item)
+        if count > max_count:
+            max_count = count
+            max_item = item
+    return max_item
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    frequency = {}
+    for item in lst:
+        if item in frequency:
+            frequency[item] += 1
+        else:
+            frequency[item] = 1
+    
+    # Find the item with maximum frequency
+    max_item = None
+    max_count = 0
+    for item, count in frequency.items():
+        if count > max_count:
+            max_item = item
+            max_count = count
+    
+    return max_item
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    """
+    Find the item with maximum frequency in a given list.
+
+    :param lst: List of integers
+    :return: Integer with maximum frequency
+    """
+    # Create a dictionary to store the frequency of each item
+    frequency_dict = {}
+    for item in lst:
+        if item in frequency_dict:
+            frequency_dict[item] += 1
+        else:
+            frequency_dict[item] = 1
+
+    # Find the item with maximum frequency
+    max_freq_item = max(frequency_dict, key=frequency_dict.get)
+
+    return max_freq_item
+
+# Test the function
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    freq = {}
+    for i in lst:
+        if i in freq:
+            freq[i] += 1
+        else:
+            freq[i] = 1
+    max_freq = max(freq.values())
+    max_freq_items = [k for k, v in freq.items() if v == max_freq]
+    return max_freq_items[0]
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+```
+
+Explanation:
+The function `max_occurrences` takes a list `lst` as input and returns the item with maximum frequency in the list. The function first creates an empty dictionary `freq` to store the frequency of each item in the list. It then iterates over each item in the list and updates the frequency count in the dictionary. Finally, it finds the maximum frequency value and returns the first item with that frequency.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    freq_dict = {}
+    for item in lst:
+        if item in freq_dict:
+            freq_dict[item] += 1
+        else:
+            freq_dict[item] = 1
+    max_freq = max(freq_dict.values())
+    for key, value in freq_dict.items():
+        if value == max_freq:
+            return key
+</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    :param lst: list of integers
+    :return: integer
+    """
+    # Your code here
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+
+if __name__ == '__main__':
+    print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))
+
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    >>> max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+def max_occurrences_2(lst):
+    """
+    >>> max_occurrences_2([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+def max_occurrences_3(lst):
+    """
+    >>> max_occurrences_3([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        d[i] = d.get(i, 0) + 1
+    return max(d, key=d.get)
+
+def max_occurrences_4(lst):
+    """
+    >>> max_occurrences_4([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        d[i] = d.get(i, 0) + 1
+    return max(d, key=d.get)
+
+def max_occurrences_5(lst):
+    """
+    >>> max</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+import collections
+
+def max_occurrences(lst):
+    # Create a counter object to count the frequency of each item
+    counter = collections.Counter(lst)
+    # Find the item with the maximum frequency
+    max_occurrence_item = max(counter, key=counter.get)
+    return max_occurrence_item
+
+# Example usage
+# assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(lst):
+    """
+    Write a function to find the item with maximum frequency in a given list.
+
+    Args:
+        lst: A list of numbers.
+
+    Returns:
+        The item with maximum frequency in the list.
+    """
+
+    # Create a dictionary to store item frequencies.
+    item_frequencies = {}
+    for item in lst:
+        if item not in item_frequencies:
+            item_frequencies[item] = 0
+        item_frequencies[item] += 1
+
+    # Find the item with maximum frequency.
+    max_frequency = max(item_frequencies.values())
+    return item_frequencies[max_frequency]</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def max_occurrences(lst):
+    frequency = {}
+    for item in lst:
+        if item in frequency:
+            frequency[item] += 1
+        else:
+            frequency[item] = 1
+    max_frequency = max(frequency.values())
+    max_frequency_items = [item for item, freq in frequency.items() if freq == max_frequency]
+    return max_frequency_items
+
+# Test the function
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_occurrences(lst):
+    frequency = {}
+    for item in lst:
+        if item in frequency:
+            frequency[item] += 1
+        else:
+            frequency[item] = 1
+    return max(frequency, key=frequency.get)
+
+# Test case
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]) == 2</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    freq = {}
+    for item in lst:
+        if item in freq:
+            freq[item] += 1
+        else:
+            freq[item] = 1
+
+    # Find the item with maximum frequency
+    max_freq = max(freq.values())
+    max_items = [k for k, v in freq.items() if v == max_freq]
+
+    return max_items
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==[2]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that finds the item with maximum frequency in a given list:
+
+```python
+def max_occurrences(lst):
+    from collections import Counter
+    
+    # Create a dictionary to store the count of each element in the list
+    count_dict = Counter(lst)
+    
+    # Find the element with the highest count
+    max_count = max(count_dict.values())
+    
+    # Find all elements with the maximum count
+    max_elements = [k for k, v in count_dict.items() if v == max_count]
+    
+    # Return the first element with the maximum count
+    return max_elements[0]
+```
+
+This function uses the `Counter` class from the `collections` module to count the occurrences of each element in the list. It then finds the maximum count and returns the first element with that count. If there are multiple elements with the same maximum count, it returns the first one encountered. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """
+    Returns the item with maximum frequency in a given list.
+    """
+    # Create a dictionary to store the frequency of each item in the list.
+    freq_dict = {}
+    for item in lst:
+        if item in freq_dict:
+            freq_dict[item] += 1
+        else:
+            freq_dict[item] = 1
+    # Find the item with maximum frequency.
+    max_freq = max(freq_dict.values())
+    for item, freq in freq_dict.items():
+        if freq == max_freq:
+            return item
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(list1):
+    count = {}
+    for item in list1:
+        if item not in count:
+            count[item] = 0
+        count[item] += 1
+    max_count = max(count.values())
+    max_items = [item for item, freq in count.items() if freq == max_count]
+    return max_items
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==[2,3,6]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    Find the item with maximum frequency in a given list.
+    """
+    # Your code here
+    pass
+
+
+if __name__ == "__main__":
+    assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    >>> max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+def max_occurrences_2(lst):
+    """
+    >>> max_occurrences_2([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    return max(d, key=d.get)
+
+def max_occurrences_3(lst):
+    """
+    >>> max_occurrences_3([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        d[i] = d.get(i, 0) + 1
+    return max(d, key=d.get)
+
+def max_occurrences_4(lst):
+    """
+    >>> max_occurrences_4([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    d = {}
+    for i in lst:
+        d[i] = d.get(i, 0) + 1
+    return max(d, key=d.get)
+
+def max_occurrences_5(lst):
+    """
+    >>> max</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """
+    :param lst: list of integers
+    :return: integer
+    """
+    max_occur = 0
+    max_occur_item = 0
+    for item in lst:
+        if lst.count(item) > max_occur:
+            max_occur = lst.count(item)
+            max_occur_item = item
+    return max_occur_item
+
+
+assert max_occurrences([2, 3, 8, 4, 7, 9, 8, 2, 6, 5, 1, 6, 1, 2, 3, 2, 4, 6, 9, 1, 2]) == 2</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(lst):
+    count = {}
+    for i in lst:
+        if i in count:
+            count[i] += 1
+        else:
+            count[i] = 1
+    max_freq = max(count.values())
+    max_freq_items = [k for k, v in count.items() if v == max_freq]
+    return max_freq_items
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==[2, 6, 2]
+```
+
+This Python script defines a function `max_occurrences` that takes a list as input and returns a list of items with the maximum frequency. The function first counts the frequency of each item in the list using a dictionary. Then, it finds the maximum frequency and returns a list of items with that frequency.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """
+    >>> max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    max_count = 0
+    max_item = None
+    count = {}
+    for item in lst:
+        if item in count:
+            count[item] += 1
+        else:
+            count[item] = 1
+        if count[item] > max_count:
+            max_count = count[item]
+            max_item = item
+    return max_item
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))
+    print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    """Returns the item with maximum frequency in a given list."""
+    if not lst:
+        return None
+    max_item = max(set(lst), key=lst.count)
+    return max_item
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(lst):
+    frequency = {}
+    for item in lst:
+        frequency[item] = frequency.get(item, 0) + 1
+    max_frequency = max(frequency.values())
+    return [key for key, value in frequency.items() if value == max_frequency]
+
+assert max_occurrences([2, 3, 8, 4, 7, 9, 8, 2, 6, 5, 1, 6, 1, 2, 3, 2, 4, 6, 9, 1, 2]) == [2, 6]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+from collections import Counter
+
+def max_occurrences(lst):
+    # Create a dictionary using the `Counter` class from the `collections` module
+    # to count the occurrences of each element in the list
+    element_counts = Counter(lst)
+
+    # Find the maximum frequency
+    max_freq = max(element_counts.values())
+
+    # Get the list of items with the maximum frequency
+    max_items = [key for key, value in element_counts.items() if value == max_freq]
+
+    # Return the first item if there is only one item with the maximum frequency
+    # Otherwise, raise an error since there is ambiguity
+    if len(max_items) == 1:
+        return max_items[0]
+    else:
+        raise ValueError("Multiple items have the maximum occurrences.")
+
+# Test the function
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    max_count = 0
+    max_item = None
+    for item in lst:
+        count = lst.count(item)
+        if count > max_count:
+            max_count = count
+            max_item = item
+    return max_item
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+"""
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    freq = {}
+    for item in lst:
+        freq[item] = freq.get(item, 0) + 1
+    
+    # Find the item with maximum frequency
+    max_freq = max(freq.values())
+    max_items = [item for item, count in freq.items() if count == max_freq]
+    
+    # If there are multiple items with the same maximum frequency, return the first one
+    return max_items[0]
+
+# Test the function
+test_list = [2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]
+assert max_occurrences(test_list) == 2
+print("Test passed!")</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    return max(set(lst), key=lst.count)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+def max_occurrences(lst):
+    """
+    >>> max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])
+    2
+    """
+    max_count = 0
+    max_item = None
+    for item in lst:
+        count = lst.count(item)
+        if count > max_count:
+            max_count = count
+            max_item = item
+    return max_item
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+/week02/day02/02_02_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_01_</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_occurrences(lst):
+    return max(set(lst), key=lst.count)
+
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the item with maximum frequency in a given list.
+assert max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2])==2
+"""
+
+
+def max_occurrences(lst):
+    count = {}
+    for i in lst:
+        if i in count:
+            count[i] += 1
+        else:
+            count[i] = 1
+    return max(count, key=count.get)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def max_occurrences(lst):
+    # Create a dictionary to store the frequency of each item
+    freq_dict = {}
+    for item in lst:
+        if item in freq_dict:
+            freq_dict[item] += 1
+        else:
+            freq_dict[item] = 1
+    
+    # Find the item with maximum frequency
+    max_freq_item = None
+    max_freq = 0
+    for item, freq in freq_dict.items():
+        if freq > max_freq:
+            max_freq_item = item
+            max_freq = freq
+    
+    return max_freq_item
+
+# Test the function
+print(max_occurrences([2,3,8,4,7,9,8,2,6,5,1,6,1,2,3,2,4,6,9,1,2]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

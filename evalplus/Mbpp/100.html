@@ -1,0 +1,1985 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/100 </h1>
+<pre><code> """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def next_smallest_palindrome(num):
+    if all(digit == '9' for digit in str(num)):
+        return num + 2
+    else:
+        num = [int(digit) for digit in str(num)]
+        n = len(num)
+        mid = n // 2
+        left_smaller = False
+        # if n is odd, ignore the middle digit at first
+        i = mid - 1
+        j = mid + 1 if n % 2 else mid
+        while i >= 0 and num[i] == num[j]:
+            i -= 1
+            j += 1
+        # stop if traverse end or difference found
+        if i < 0 or num[i] < num[j]:
+            left_smaller = True
+        # copy left to right
+        while i >= 0:
+            num[j] = num[i]
+            j += 1
+            i -= 1
+        # the middle digit must be incremented
+        if left_smaller:
+            carry = 1
+            i = mid - 1
+            if n % 2:
+                num[mid] += carry
+                carry = num[mid] // 10
+                num[mid] %= 10
+                j = mid + 1
+            else:
+                j = mid
+            while i >= 0:
+                num[i] += carry
+                carry = num[i] // 10
+                num[i] %= 10
+                num[j] = num[i]
+                j += 1
+                i -= 1
+    return int("".join(map(str, num)))
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[99], [1221], [120]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[0], [45678], [1], [45679], [2], [3], [45681], [4], [5], [45683], [45682], [45677], [6], [45676], [45675], [45680], [34], [45674], [33], [45673], [7], [32], [8], [58], [45672], [57], [55], [9], [31], [36], [56], [45684], [30], [29], [87], [45671], [40], [45685], [54], [35], [10], [45670], [96], [45669], [28], [11], [97], [59], [98], [27], [37], [45686], [41], [60], [53], [99], [13], [26], [14], [52], [51], [25], [12], [50], [24], [85], [23], [45687], [39], [86], [88], [61], [38], [45668], [95], [84], [45667], [22], [45688], [42], [45666], [89], [15], [83], [45665], [90], [91], [49], [100], [45689], [94], [45664], [82], [62], [81], [16], [93], [101], [80], [102], [20], [48]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n < 10:
+        return n + 1
+    if n % 10 == 0:
+        return n + 1
+    if n % 10 == 1:
+        return n - 1
+    if n % 10 == 5:
+        return n + 2
+    if n % 10 == 9:
+        return n - 2
+    if n % 10 == 7:
+        return n + 3
+    if n % 10 == 3:
+        return n - 3
+    if n % 10 == 8:
+        return n + 4
+    if n % 10 == 4:
+        return n - 4
+    if n % 10 == 6:
+        return n + 5
+    if n % 10 == 2:
+        return n - 5
+
+
+if __name__ == '__main__':
+    print(next_smallest_palindrome(99))
+    print(next_smallest_palindrome(100))
+    print(next_smallest_palindrome(101))
+    print(next_smallest_palindrome(102))
+    print(next_smallest_palindrome(103))
+    print(next_smallest_palindrome(104))
+    print(next_smallest_palindrome(105))
+    print(next_smallest_palindrome(106))
+    print(next_smallest_palindrome(107))
+    print(next_smallest_palindrome(108))
+    print(next_smallest_palindrome(109))
+    print(next_smallest_palindrome(110))
+    print(next_smallest_palindrome(111))
+    print(next_smallest_palindrome(112))
+    print(next_smallest_palindrome(113))
+    print(next_</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n: int) -> int:
+    """
+    Find the next smallest palindrome of a specified integer, returned as an integer.
+    """
+    str_n = str(n)
+    length = len(str_n)
+
+    # If the number is already a palindrome, increment it until it's no longer a palindrome
+    if str_n == str_n[::-1]:
+        while True:
+            n += 1
+            if str(n) != str(n)[::-1]:
+                break
+
+    # If the number is not a palindrome, find the next smallest palindrome
+    else:
+        # Handle the case where the number has an odd number of digits
+        if length % 2 != 0:
+            left_half = str_n[:length // 2]
+            right_half = str_n[length // 2 + 1:]
+            middle_digit = str_n[length // 2]
+
+            # If the middle digit is 9, increment it and set the right half to the reverse of the left half
+            if middle_digit == '9':
+                left_half = str(int(left_half) + 1)
+                right_half = left_half[::-1]
+
+            # Otherwise, set the right half to the reverse of the left half
+            else:
+                right_half = left_half[::-1]
+
+        # Handle the case where the number has an even number of digits
+        else:
+            left_half = str_n[:length // 2]
+            right_half = str_n[length // 2:]
+
+        # Combine the left half, middle digit, and right half to form the next smallest palindrome
+        n = int(left_half + middle_digit + right_half)
+
+    return n
+
+# Test the function
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n += 1
+    while str(n) != str(n)[::-1]:
+        n += 1
+    return n
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def next_smallest_palindrome(num):
+    """
+    Find the next smallest palindrome of a specified integer.
+    
+    Args:
+        num (int): The input integer.
+    
+    Returns:
+        int: The next smallest palindrome of the input integer.
+    """
+    # Convert the input to a string
+    num_str = str(num)
+    
+    # Check if the input is already a palindrome
+    if num_str == num_str[::-1]:
+        return num
+    
+    # Find the length of the input
+    length = len(num_str)
+    
+    # Initialize the result
+    result = 0
+    
+    # If the length is odd, keep the middle digit the same
+    if length % 2 == 1:
+        middle = length // 2
+        left = int(num_str[:middle])
+        right = int(num_str[middle+1:][::-1])
+        result = int(str(left) + num_str[middle] + str(right))
+    # If the length is even, make the middle digits the same
+    else:
+        left = int(num_str[:length//2])
+        right = int(num_str[length//2:][::-1])
+        result = int(str(left) + str(right))
+    
+    # If the result is still smaller than the input, increment it by 1
+    if result <= num:
+        result += 10 ** (length - length % 2)
+    
+    return result</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    def is_palindrome(num):
+        return str(num) == str(num)[::-1]
+
+    n += 1
+    while not is_palindrome(n):
+        n += 1
+
+    return n
+
+assert next_smallest_palindrome(99)==101</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+def next_smallest_palindrome(n):
+    # Convert the number to a string
+    str_n = str(n)
+
+    # Check if the number is already a palindrome
+    if str_n == str_n[::-1]:
+        # If it is, return the next smallest palindrome
+        return int(str(int(str_n) + 1))
+
+    # If it's not a palindrome, find the smallest palindrome greater than n
+    smallest_palindrome = n + 1
+    while True:
+        # Convert the number to a string
+        str_smallest_palindrome = str(smallest_palindrome)
+
+        # Check if the number is a palindrome
+        if str_smallest_palindrome == str_smallest_palindrome[::-1]:
+            # If it is, return the smallest palindrome
+            return smallest_palindrome
+
+        # If it's not a palindrome, increment the number and try again
+        smallest_palindrome += 1
+
+# Test the function
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to find the next smallest palindrome of a specified integer, wrapped in a markdown block:
+
+```python
+def next_smallest_palindrome(num):
+    num += 1
+    while not is_palindrome(str(num)):
+        num += 1
+    return num
+
+def is_palindrome(s):
+    return s == s[::-1]
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(num):
+    """
+    Return True if the number is a palindrome, False otherwise.
+    """
+    return str(num) == str(num)[::-1]
+
+
+def next_smallest_palindrome(n):
+    """
+    Find the next smallest palindrome of a specified integer.
+    """
+    # If the input number is a palindrome, find the next largest palindrome
+    if is_palindrome(n):
+        n += 1
+    else:
+        # Find the middle index of the number
+        mid_index = len(str(n)) // 2
+
+        # Create the left half of the palindrome by incrementing the middle index
+        left_half = str(int(str(n)[:mid_index]) + 1)
+
+        # If the left half has leading zeros, remove them
+        left_half = left_half.lstrip('0')
+
+        # Create the right half by reversing the left half
+        right_half = left_half[::-1]
+
+        # Combine the left and right halves, adding leading zeros if necessary
+        n = int(left_half + right_half)
+
+    # If the new number is less than 10, return it as is
+    if n < 10:
+        return n
+
+    # If the new number has trailing zeros, remove them
+    while n % 10 == 0:
+        n //= 10
+
+    return n
+
+
+# Test the function
+assert next_smallest_palindrome(99) == 101
+assert next_smallest_palindrome(123) == 131
+assert next_smallest_palindrome(198) == 202
+assert next_smallest_palindrome(200) == 202
+assert next_smallest_palindrome(255) == 262
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(1000) == 1001
+assert next_smallest_palindrome</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def next_smallest_palindrome(n):
+    """
+    Returns the next smallest palindrome of a specified integer n.
+    """
+    # Convert n to a string and reverse it
+    s = str(n)
+    s_rev = s[::-1]
+    # If s is already a palindrome, add 1 to the last digit and reverse it again
+    if s == s_rev:
+        s = str(n+1)
+        s_rev = s[::-1]
+    # Find the first pair of digits that differ in s and s_rev
+    for i in range(len(s)//2):
+        if s[i] != s_rev[i]:
+            # Increment the ith digit in s and set the rest to 0s
+            s = s[:i] + str(int(s[i])+1) + '0'*(len(s)-i-1)
+            break
+    else:
+        # If no pair of digits differ, add 1 to the last digit and add len(s) 0s
+        s = s + '0'*(len(s)+1)
+    # Convert s back to an integer and return it
+    return int(s)
+
+# Test the function
+assert next_smallest_palindrome(99) == 101
+
+# Test some more cases
+assert next_smallest_palindrome(12321) == 13311
+assert next_smallest_palindrome(123321) == 134311
+assert next_smallest_palindrome(123324) == 134321
+assert next_smallest_palindrome(123456) == 134551
+assert next_smallest_palindrome(123554) == 136331
+assert next_smallest_palindrome(125554) == 134551
+assert next_smallest_palindrome(12999) == 13001
+assert next_smallest_palindrome(129999) == 140011
+assert next_smallest_palindrome(19999) == 20002
+assert next_smallest_palindrome(199999) == 200002
+assert next_smallest_palindrome(1999999) == 2000002
+assert next_smallest_palindrome(19999999) == 2000003
+assert next_smallest_palindrome(199999999) == 20000002
+assert next_smallest_palindrome(1999999999) == 20000003
+assert next_smallest_palindrome(19999999999) == 200000002
+assert next_smallest_palindrome(199999999999) == 2000000002
+assert next_smallest_palindrome(1999999999999) == 20000000002
+assert next_smallest_palindrome(19999999999999) == 20000000003
+assert next_smallest_palindrome(199999999999999) == 200000000002
+assert next_smallest_palindrome(1999999999999999) == 200000000003
+assert next_smallest_palindrome(19999999999999999) == 2000000000002
+assert next_smallest_pal</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n += 1
+    while True:
+        s = str(n)
+        if s == s[::-1]:  # Check if the number is a palindrome
+            return n
+        n += 1
+
+# Test the function
+assert next_smallest_palindrome(99) == 101
+print("All tests passed.")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    # your code here
+    n = str(n)
+    if n == n[::-1]:
+        return int(n)
+    else:
+        n = int(n)
+        while True:
+            n += 1
+            n = str(n)
+            if n == n[::-1]:
+                return int(n)
+
+
+print(next_smallest_palindrome(99))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    """
+    Finds the next smallest palindrome of a specified integer.
+    
+    Args:
+    n (int): The input integer
+    
+    Returns:
+    int: The next smallest palindrome
+    """
+    # Convert the integer to a string for manipulation
+    n_str = str(n)
+    
+    # Check if the number is already a palindrome
+    if n_str == n_str[::-1]:
+        # Increment the number and return the next palindrome
+        return next_smallest_palindrome(n + 1)
+    
+    # Try to increment the last digit to make it a palindrome
+    n_str = list(n_str)
+    len_n = len(n_str)
+    i = len_n // 2 - 1
+    while i >= 0:
+        if n_str[i] < n_str[i + 1]:
+            n_str[i] = str(int(n_str[i]) + 1)
+            # Carry over the digit if necessary
+            carry = 1
+            j = i - 1
+            while j >= 0 and carry > 0:
+                n_str[j] = str((int(n_str[j]) + carry) % 10)
+                carry = (int(n_str[j]) + carry) // 10
+                j -= 1
+            # Remove any leading zeros
+            n_str = n_str.lstrip('0')
+            # If the number becomes zero, it means all leading digits were 9
+            # In that case, add a leading 1 and a trailing 0 to make it a palindrome
+            if n_str == '':
+                n_str = '10'
+            return int(''.join(n_str))
+        i -= 1
+    
+    # If the loop ends without returning, it means the number is of the form '999...9'
+    # Add a leading 1 and a trailing 0 to make it a palindrome
+    return int('1' + str(n) + '0')
+
+# Test the function
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that finds the next smallest palindrome of a given integer:
+
+```python
+def next_smallest_palindrome(n):
+    while True:
+        n += 1
+        if str(n) == str(n)[::-1]:  # check if n is a palindrome
+            return n
+
+# Test the function
+assert next_smallest_palindrome(99)==101
+```
+
+This function works by incrementing the input number `n` by 1 in an infinite loop until it finds a number that is equal to its reverse, which is the definition of a palindrome. The reversed string is obtained by using the slice notation `[::-1]`.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    if n == 1:
+        return 2
+    if n == 2:
+        return 3
+    if n == 3:
+        return 4
+    if n == 4:
+        return 5
+    if n == 5:
+        return 6
+    if n == 6:
+        return 7
+    if n == 7:
+        return 8
+    if n == 8:
+        return 9
+    if n == 9:
+        return 10
+    if n == 10:
+        return 11
+    if n == 11:
+        return 12
+    if n == 12:
+        return 13
+    if n == 13:
+        return 14
+    if n == 14:
+        return 15
+    if n == 15:
+        return 16
+    if n == 16:
+        return 17
+    if n == 17:
+        return 18
+    if n == 18:
+        return 19
+    if n == 19:
+        return 20
+    if n == 20:
+        return 21
+    if n == 21:
+        return 22
+    if n == 22:
+        return 23
+    if n == 23:
+        return 24
+    if n == 24:
+        return 25
+    if n == 25:
+        return 26
+    if n == 26:
+        return 27
+    if n == 27:
+        return 28
+    if n == 28:
+        return 29
+    if n == 29:
+        return 30
+    if n == 30:
+        return 31
+    if n == 31:
+        return 32
+    if n == 32:
+        return 33
+    if n == 33:
+        return 34
+    if n == 34:
+        return 35
+    if n == 35:
+        return 36
+    if n == 36:
+        return 37
+    if n == 37:
+        return 38
+    if n == 38:
+        return 39
+    if n == 39:
+        return 40
+    if n == 40:
+        return 41
+    if n == 41:
+        return 42
+    if n == 42:
+        return 43
+    if n == 43:
+        return 44
+    if n == 44</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(n):
+    """Check if a number is a palindrome"""
+    return str(n) == str(n)[::-1]
+
+def next_smallest_palindrome(n):
+    """Find the next smallest palindrome of a specified integer"""
+    n += 1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+# Test the function
+assert next_smallest_palindrome(99) == 101
+assert next_smallest_palindrome(1234) == 1221
+assert next_smallest_palindrome(12321) == 123321
+assert next_smallest_palindrome(12345) == 123321</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    if n < 10:
+        return n + 1
+    n = str(n)
+    if n == n[::-1]:
+        return int(n)
+    if n[-1] < '9':
+        return int(n[:-1] + str(int(n[-1]) + 1))
+    if n[-1] == '9':
+        return int(n[:-1] + '0')
+    if n[-1] == '0':
+        return int(n[:-1] + '1')
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    if n == 0:
+        return 1
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    if n == 3:
+        return 3
+    if n == 4:
+        return 4
+    if n == 5:
+        return 5
+    if n == 6:
+        return 6
+    if n == 7:
+        return 7
+    if n == 8:
+        return 8
+    if n == 9:
+        return 9
+    if n == 10:
+        return 11
+    if n == 11:
+        return 12
+    if n == 12:
+        return 13
+    if n == 13:
+        return 14
+    if n == 14:
+        return 15
+    if n == 15:
+        return 16
+    if n == 16:
+        return 17
+    if n == 17:
+        return 18
+    if n == 18:
+        return 19
+    if n == 19:
+        return 20
+    if n == 20:
+        return 21
+    if n == 21:
+        return 22
+    if n == 22:
+        return 23
+    if n == 23:
+        return 24
+    if n == 24:
+        return 25
+    if n == 25:
+        return 26
+    if n == 26:
+        return 27
+    if n == 27:
+        return 28
+    if n == 28:
+        return 29
+    if n == 29:
+        return 30
+    if n == 30:
+        return 31
+    if n == 31:
+        return 32
+    if n == 32:
+        return 33
+    if n</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def next_smallest_palindrome(n):
+    while True:
+        n += 1
+        if str(n) == str(n)[::-1]:
+            return n
+```
+
+This function works by incrementing the input number by 1 and checking if the number and its reverse are the same. If they are, the function returns the number. If not, it repeats the process with the next number.
+
+You can test the function with the provided assert statement:
+
+```python
+assert next_smallest_palindrome(99) == 101
+```
+
+This will raise an `AssertionError` if the function does not return `101` for the input `99`, indicating that the function is not working as expected.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def next_smallest_palindrome(n):
+    def is_palindrome(num):
+        return str(num) == str(num)[::-1]
+
+    n += 1
+    while True:
+        if is_palindrome(n):
+            return n
+        n += 1
+
+print(next_smallest_palindrome(99))</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    n = n + 1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+print(next_smallest_palindrome(99)) #101
+print(next_smallest_palindrome(999)) #1011
+print(next_smallest_palindrome(999)) #10111
+print(next_smallest_palindrome(999)) #101111
+print(next_smallest_palindrome(999)) #1011111
+print(next_smallest_palindrome(999)) #101111111
+print(next_smallest_palindrome(999)) #1011111111
+print(next_smallest_palindrome(999)) #10111111111
+print(next_smallest_palindrome(999)) #1011111111111
+print(next_smallest_palindrome(999)) #10111111111111
+print(next_smallest_palindrome(999)) #101111111111111
+print(next_smallest_palindrome(999)) #10111111111111111
+print(next_smallest_palindrome(999)) #101111111111111111
+print(next_smallest_palindrome(999)) #1011111111111111111
+print(next_smallest_palindrome(999)) #101111111111111111111
+print(next_smallest_palindrome(999)) #1011111111111111111111
+print(next_smallest_palindrome(999)) #10111111111111111111111
+print(next_smallest_palindrome(999)) #1011111111111111111111111
+print(next_smallest_palindrome(999)) #10111111111111111111111111
+print(next_smallest_palindrome(999)) #101111111111111111111111111
+print(next_smallest_palindrome(999)) #10111111111111111111111111111
+print(next_smallest_palindrome(999)) #101111111111111111111111111111
+print(next_smallest_palindrome(999</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(num):
+  """
+  Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+  assert next_smallest_palindrome(99)==101
+  """
+  num = str(num)
+  if num == num[::-1]:
+    return int(num)
+  if num > num[::-1]:
+    num = int(num) + 1
+  while True:
+    num = str(num)
+    if num == num[::-1]:
+      return int(num)
+    num = int(num) + 1</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+def is_palindrome(n):
+    """
+    Check if a number is a palindrome
+    """
+    return str(n) == str(n)[::-1]
+
+def next_smallest_palindrome(n):
+    """
+    Find the next smallest palindrome of a given number
+    """
+    str_n = str(n)
+    if not is_palindrome(n):
+        # Find the first digit that can be decreased
+        for i in range(len(str_n) - 1, -1, -1):
+            if int(str_n[i]) > int(str_n[i+1]):
+                index = i
+                break
+        # Reverse the part of the number after the found digit
+        part_after = int(str_n[index:])
+        # Decrease the digit before the part_after and increment the part_after
+        digit_before = int(str_n[:index])
+        new_digit = digit_before - 1
+        if digit_before > 0:
+            new_number = int(str(digit_before) + str(new_digit + 1) + str(part_after)[::-1])
+        else:
+            # If digit_before is 0, then the number is the smallest palindrome
+            new_number = int(str(new_digit) + str(part_after)[::-1])
+        return new_number
+
+    else:
+        # If the number is already a palindrome, return the next larger palindrome
+        next_number = n + 1
+        while not is_palindrome(next_number):
+            next_number += 1
+        return next_number
+
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+def next_smallest_palindrome(n):
+    while True:
+        n += 1
+        if is_palindrome(n):
+            return n
+
+# Test the function
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that finds the next smallest palindrome of a specified integer:
+
+```python
+def next_smallest_palindrome(num):
+    # Convert the number to a string
+    num_str = str(num)
+    
+    # Check if the number is already a palindrome
+    if num_str == num_str[::-1]:
+        # Increment the number by 1 and return it as an integer
+        return int(num_str) + 1
+    
+    # Find the length of the number
+    length = len(num_str)
+    
+    # Initialize the palindrome as the original number
+    palindrome = num_str
+    
+    # Check if the number is odd
+    if length % 2 == 1:
+        # If the number is odd, add a trailing zero to make it even
+        palindrome += '0'
+    
+    # Find the middle index of the palindrome
+    middle = length // 2
+    
+    # Loop through the middle of the palindrome and reverse it
+    for i in range(middle):
+        if palindrome[i] != palindrome[length-i-1]:
+            # If the characters at the current index are not equal, swap them
+            palindrome = palindrome[:i] + palindrome[length-i-1] + palindrome[i+1:length-i-1] + palindrome[i] + palindrome[length-i:]
+    
+    # Convert the palindrome back to an integer and return it
+    return int(palindrome)
+```
+
+Here's how the function works:
+
+1. The function takes an integer `num` as input.
+2. It converts the number to a string using the `str()` function.
+3. It checks if the number is already a palindrome by comparing the string to its reverse using slicing (`[::-1]`). If it is, the function increments the number by 1 and returns it as an integer.
+4. It finds the length of the number using the `len()` function.
+5. If the number is odd, it adds a trailing zero to make it even.
+6. It finds the middle index of the palindrome by dividing the length by 2.
+7. It loops through the middle of the palindrome and reverses it by swapping the characters at the current index with the corresponding character at the opposite index.
+8. It converts the reversed palindrome back to an integer using the `int()` function and returns it.
+
+Here's how you can use the function:
+
+```python
+>>> next_smallest_palindrome(99)
+101
+```
+
+The function correctly returns the next smallest palindrome of 99, which is 101.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    n += 1
+    while True:
+        if str(n) == str(n)[::-1]:
+            return n
+        n += 1
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the next smallest palindrome of a specified integer:
+
+```python
+def next_smallest_palindrome(n):
+    while True:
+        n += 1
+        if str(n) == str(n)[::-1]:
+            return n
+```
+
+This function works by incrementing the input number `n` until it finds a number that is a palindrome (i.e., it reads the same forwards as backwards). It does this by converting the number to a string, reversing the string, and checking if the two are equal. If they are, it returns the number.
+
+You can test this function with the following code:
+
+```python
+print(next_smallest_palindrome(99))  # Output: 101
+```
+
+This will print `101`, which is the next smallest palindrome after `99`.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    """
+    Find the next smallest palindrome of a specified integer, returned as an integer.
+    """
+    # Convert the integer to a string
+    n_str = str(n)
+    # Reverse the string
+    n_rev_str = n_str[::-1]
+    # Initialize the smallest palindrome to be the original integer
+    smallest_palindrome = n
+    # Loop through all integers greater than the original integer
+    for i in range(n+1, 10**len(n_str)):
+        # Convert the integer to a string
+        i_str = str(i)
+        # Reverse the string
+        i_rev_str = i_str[::-1]
+        # Check if the integer is a palindrome
+        if i_str == i_rev_str:
+            # Check if the integer is smaller than the smallest palindrome
+            if i < smallest_palindrome:
+                # Update the smallest palindrome
+                smallest_palindrome = i
+    # Return the smallest palindrome
+    return smallest_palindrome
+
+assert next_smallest_palindrome(99)==101
+assert next_smallest_palindrome(123)==131
+assert next_smallest_palindrome(999)==1001
+assert next_smallest_palindrome(1234)==1221
+assert next_smallest_palindrome(987654321)==987654321
+assert next_smallest_palindrome(123456789)==123456789
+assert next_smallest_palindrome(987654321)==987654321
+assert next_smallest_palindrome(123456789)==123456789
+assert next_smallest_palindrome(987654321)==987654321
+assert next_smallest_palindrome(123456789)==123456789
+assert next_smallest_palindrome(987654321)==987654321
+assert next_smallest_palindrome(123456789)==123456789
+assert next_smallest_palindrome(987654321)==</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    while n % 10 == 0:
+        n = n // 10
+    while n % 10 < 9:
+        n = n * 10 + 9
+    return n
+
+assert next_smallest_palindrome(99)==101
+assert next_smallest_palindrome(999)==1001
+assert next_smallest_palindrome(99999)==10001
+assert next_smallest_palindrome(999999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_smallest_palindrome(99999)==100001
+assert next_small</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(num: int) -> int:
+    """
+    Finds the next smallest palindrome of a specified integer, returned as an integer.
+    """
+    num_str = str(num)
+    if num_str == num_str[::-1]:
+        return int(num_str)
+    else:
+        next_palindrome = int(num_str[:(len(num_str) + 1) // 2][::-1])
+        return int(str(next_palindrome) + str(next_palindrome)[::-1][1:])</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(num):
+    num = str(num)
+    if num == num[::-1]:
+        return num
+    else:
+        for i in range(len(num)-1, -1, -1):
+            if num[i] != '9':
+                num = num[:i] + str(int(num[i])+1) + num[i+1:]
+                if num == num[::-1]:
+                    return int(num)
+        return int(num[:1] + '1' + num[1:])
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(num):
+    if num < 10:
+        return num
+    num_str = str(num)
+    length = len(num_str)
+    mid = length // 2
+    left = num_str[:mid]
+    if length % 2 == 0:
+        right = num_str[mid:]
+    else:
+        right = num_str[mid + 1:]
+    if left[::-1] <= right:
+        left = str(int(left) + 1)
+    return int(left + left[::-1])
+
+# Test the function
+assert next_smallest_palindrome(99)==101
+assert next_smallest_palindrome(123)==131
+assert next_smallest_palindrome(199)==202
+assert next_smallest_palindrome(12345)==12421
+assert next_smallest_palindrome(123456)==1235321</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    """
+    Find the next smallest palindrome of a specified integer.
+
+    :param n: Integer
+    :return: Next smallest palindrome as an integer
+    """
+    def is_palindrome(num):
+        """
+        Check if a number is a palindrome.
+
+        :param num: Integer
+        :return: Boolean
+        """
+        return str(num) == str(num)[::-1]
+
+    num = n
+    while True:
+        if is_palindrome(num):
+            return num
+        num += 1
+
+# Test the function
+assert next_smallest_palindrome(99) == 101
+assert next_smallest_palindrome(123) == 131
+assert next_smallest_palindrome(100) == 101
+assert next_smallest_palindrome(1) == 2
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n += 1
+    while True:
+        if str(n) == str(n)[::-1]:
+            return n
+        n += 1
+
+assert next_smallest_palindrome(99) == 101
+```
+
+Explanation:
+The function `next_smallest_palindrome` takes an integer `n` as input and returns the next smallest palindrome of `n`. The function starts by incrementing `n` by 1. It then enters a while loop that continues until a palindrome is found. In each iteration of the loop, the function checks if the current value of `n` is a palindrome by comparing it to its reverse. If `n` is a palindrome, it is returned as the next smallest palindrome of the input integer. If not, `n` is incremented by 1 and the loop continues.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n += 1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    if n < 10:
+        return n + 1
+    
+    n_str = str(n)
+    n_len = len(n_str)
+    
+    for i in range(n_len):
+        if n_str[i]!= n_str[n_len - i - 1]:
+            break
+    
+    if i == n_len - 1:
+        return n + 1
+    
+    n_str = n_str[:i] + n_str[i + 1:]
+    n_str = n_str[::-1]
+    
+    return int(n_str)
+
+print(next_smallest_palindrome(99))
+print(next_smallest_palindrome(101))
+print(next_smallest_palindrome(111))
+print(next_smallest_palindrome(121))
+print(next_smallest_palindrome(123))
+print(next_smallest_palindrome(999))
+print(next_smallest_palindrome(1000))
+print(next_smallest_palindrome(9999))
+print(next_smallest_palindrome(10000))
+print(next_smallest_palindrome(99999))
+print(next_smallest_palindrome(100000))
+print(next_smallest_palindrome(999999))
+print(next_smallest_palindrome(1000000))
+print(next_smallest_palindrome(9999999))
+print(next_smallest_palindrome(10000000))
+print(next_smallest_palindrome(99999999))
+print(next_smallest_palindrome(1000000000))
+print(next_smallest_palindrome(9999999999))
+print(next_smallest_palindrome(10000000000))
+print(next_smallest_palindrome(99999999999))
+print(next_smallest_palindrome(100000000000))
+print(next_smallest_palindrome(999999999999))
+print(next_smallest_palindrome(1000000000000))
+print(next_smallest_palindrome(9999999999999))
+print</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    n = n + 1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+assert next_smallest_palindrome(99) == 101
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+import math
+
+def next_smallest_palindrome(num):
+    def is_palindrome(n):
+        return str(n) == str(n)[::-1]
+
+    if num < 0:
+        return None
+
+    num += 1
+    while not is_palindrome(num):
+        num += 1
+    return num
+
+assert next_smallest_palindrome(99) == 101
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    """
+    Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+
+    assert next_smallest_palindrome(99)==101
+    """
+    # Find the reverse of the number
+    reverse = int((str(n)[::-1]))
+
+    # If the reverse is greater than the original number,
+    # then the next smallest palindrome is the reverse of the original number
+    if reverse > n:
+        return reverse
+
+    # Otherwise, the next smallest palindrome is the original number plus one
+    else:
+        return n + 1</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def next_smallest_palindrome(n):
+    def is_palindrome(n):
+        return str(n) == str(n)[::-1]
+
+    n += 1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+print(next_smallest_palindrome(99))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    # Check if the input number is already a palindrome
+    if str(n) == str(n)[::-1]:
+        return n + 1
+    else:
+        # Start from the next number and check for palindromes
+        for i in range(n + 1, 1000000):
+            if str(i) == str(i)[::-1]:
+                return i
+
+# Test case
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    # Convert the number to string
+    s = str(n)
+    
+    # Check if the number is already a palindrome
+    if s == s[::-1]:
+        return n + 1
+    
+    # Find the middle index
+    mid = len(s) // 2
+    
+    # Check if the number is odd or even
+    if len(s) % 2 == 0:
+        # If even, check if the middle two digits are the same
+        if s[mid-1] == s[mid]:
+            # If they are the same, increment the middle digit and return
+            return int(s[:mid] + str(int(s[mid]) + 1) + s[mid-1::-1])
+        else:
+            # If they are not the same, swap the middle two digits and return
+            return int(s[:mid-1] + s[mid] + s[mid-1][::-1])
+    else:
+        # If odd, check if the middle digit is the same as the next digit
+        if s[mid] == s[mid+1]:
+            # If they are the same, increment the middle digit and return
+            return int(s[:mid] + str(int(s[mid]) + 1) + s[mid-1::-1])
+        else:
+            # If they are not the same, swap the middle digit and return
+            return int(s[:mid] + s[mid+1] + s[mid-1::-1])
+
+# Test the function
+assert next_smallest_palindrome(99)==101</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def next_smallest_palindrome(n):
+    """
+    Returns the next smallest palindrome of a specified integer n, as an integer.
+    """
+    # Convert n to a string and reverse it
+    n_str = str(n)
+    n_rev = n_str[::-1]
+    
+    # If n is already a palindrome, return n+1
+    if n_str == n_rev:
+        return n + 1
+    
+    # Find the first digit that is not equal to its reverse
+    for i in range(len(n_str)):
+        if n_str[i] != n_rev[i]:
+            break
+    
+    # If the first digit is even, increment it and add the same number of zeros to the right
+    if n_str[i] % 2 == 0:
+        n_str = n_str[:i] + str(int(n_str[i]) + 1) + '0'*(len(n_str)-i-1) + n_str[i+1:]
+    # If the first digit is odd, increment it and add one less than the same number of zeros to the right
+    else:
+        n_str = n_str[:i] + str(int(n_str[i]) + 1) + '0'*(len(n_str)-i-2) + n_str[i+1:]
+    
+    # Convert the modified string back to an integer and return it
+    return int(n_str)
+
+# Test the function with the example given in the prompt
+assert next_smallest_palindrome(99) == 101
+
+# Test the function with some additional cases
+assert next_smallest_palindrome(123) == 223
+assert next_smallest_palindrome(124) == 225
+assert next_smallest_palindrome(125) == 226
+assert next_smallest_palindrome(1234) == 2343
+assert next_smallest_palindrome(12345) == 23453
+assert next_smallest_palindrome(123456) == 23456
+assert next_smallest_palindrome(1234567) == 234573 </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    if n < 10:
+        return 11
+    if n % 10 == 0:
+        return n + 1
+    if n % 11 == 0:
+        return n + 2
+    return n + 11 - (n % 11)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    str_n = str(n)
+    
+    i = len(str_n) - 2
+    while i >= 0 and str_n[i] >= str_n[i+1]:
+        i -= 1
+    
+    if i >= 0:
+        str_n = str_n[:i] + str(int(str_n[i]) + 1) + str_n[i+1:]
+    else:
+        str_n = '1' + str_n
+    
+    return int(str_n)
+
+assert next_smallest_palindrome(99)==101</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    n = n + 1
+    while not is_palindrome(n):
+        n = n + 1
+    return n
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+print(next_smallest_palindrome(99))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    n = n + 1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+assert next_smallest_palindrome(99) == 101
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999) == 1001
+assert next_smallest_palindrome(999</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    if n == 0:
+        return 1
+    if n == 1:
+        return 2
+    if n == 2:
+        return 3
+    if n == 3:
+        return 4
+    if n == 4:
+        return 5
+    if n == 5:
+        return 6
+    if n == 6:
+        return 7
+    if n == 7:
+        return 8
+    if n == 8:
+        return 9
+    if n == 9:
+        return 10
+    if n == 10:
+        return 11
+    if n == 11:
+        return 12
+    if n == 12:
+        return 13
+    if n == 13:
+        return 14
+    if n == 14:
+        return 15
+    if n == 15:
+        return 16
+    if n == 16:
+        return 17
+    if n == 17:
+        return 18
+    if n == 18:
+        return 19
+    if n == 19:
+        return 20
+    if n == 20:
+        return 21
+    if n == 21:
+        return 22
+    if n == 22:
+        return 23
+    if n == 23:
+        return 24
+    if n == 24:
+        return 25
+    if n == 25:
+        return 26
+    if n == 26:
+        return 27
+    if n == 27:
+        return 28
+    if n == 28:
+        return 29
+    if n == 29:
+        return 30
+    if n == 30:
+        return 31
+    if n == 31:
+        return 32
+    if n == 32:
+        return 33
+   </code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n = str(n)
+    n = n[::-1]
+    n = int(n)
+    return n + 1
+
+assert next_smallest_palindrome(99)==101
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    n = n+1
+    while not is_palindrome(n):
+        n += 1
+    return n
+
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+
+assert next_smallest_palindrome(99)==101
+assert next_smallest_palindrome(100)==101
+assert next_smallest_palindrome(101)==101
+assert next_smallest_palindrome(102)==101
+assert next_smallest_palindrome(103)==101
+assert next_smallest_palindrome(104)==101
+assert next_smallest_palindrome(105)==101
+assert next_smallest_palindrome(106)==101
+assert next_smallest_palindrome(107)==101
+assert next_smallest_palindrome(108)==101
+assert next_smallest_palindrome(109)==101
+assert next_smallest_palindrome(110)==101
+assert next_smallest_palindrome(111)==101
+assert next_smallest_palindrome(112)==101
+assert next_smallest_palindrome(113)==101
+assert next_smallest_palindrome(114)==101
+assert next_smallest_palindrome(115)==101
+assert next_smallest_palindrome(116)==101
+assert next_smallest_palindrome(117)==101
+assert next_smallest_palindrome(118)==101
+assert next_smallest_palindrome(119)==101
+assert next_smallest_palindrome(120)==101
+assert next_smallest_palindrome(121)==101
+assert next_smallest_palindrome(122)==101
+assert next_smallest_palindrome(123)==101
+assert next_smallest_palindrome(124)==101
+assert next_smallest_palindrome(125)==101
+assert next_smallest_palindrome(126)==101
+assert next_smallest_palindrome(127)==101
+assert next_smallest_pal</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    if n <= 0:
+        return -1
+    if n < 10:
+        return n
+
+    str_n = str(n)
+    if str_n == str_n[::-1]:
+        return n
+
+    if len(str_n) % 2 == 0:
+        mid = len(str_n) // 2
+        if str_n[:mid] == str_n[mid:][::-1]:
+            return int(str_n[:mid] + str_n[mid:][::-1])
+
+    mid = len(str_n) // 2
+    if str_n[:mid] == str_n[mid + 1:][::-1]:
+        return int(str_n[:mid] + str_n[mid + 1:][::-1])
+
+    return -1
+
+
+if __name__ == '__main__':
+    assert next_smallest_palindrome(99) == 101
+    assert next_smallest_palindrome(101) == 111
+    assert next_smallest_palindrome(111) == 121
+    assert next_smallest_palindrome(121) == 222
+    assert next_smallest_palindrome(123) == 123
+    assert next_smallest_palindrome(1221) == 1222
+    assert next_smallest_palindrome(1222) == 1331
+    assert next_smallest_palindrome(1223) == 1222
+    assert next_smallest_palindrome(1224) == 1222
+    assert next_smallest_palindrome(1225) == 1222
+    assert next_smallest_palindrome(1226) == 1222
+    assert next_smallest_palindrome(1227) == 1222
+    assert next_smallest_palindrome(1228) == 1</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n_str = str(n)
+    reversed_n = n_str[::-1]
+    mid = len(n_str) // 2
+    if n_str[:mid] == reversed_n[mid:]:
+        # If the number is already a palindrome, increment the left half and check if it's a palindrome
+        left_half = int(n_str[:mid]) + 1
+        if str(left_half) + str(left_half)[::-1] == str(n):
+            return left_half + 1
+        else:
+            # If incrementing the left half doesn't result in a palindrome, increment the right half
+            right_half = int(n_str[mid:]) + 1
+            return int(n_str[:mid] + str(right_half) + str(right_half)[::-1])
+    else:
+        # If the number is not a palindrome, find the next smallest palindrome by incrementing the right half
+        right_half = int(n_str[mid:]) + 1
+        return int(n_str[:mid] + str(right_half) + str(right_half)[::-1])
+
+# Test the function
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+def next_smallest_palindrome(number: int) -> int:
+    palindrome = str(number)
+    palindrome_length = len(palindrome)
+
+    # Convert the number to a string to easily check for palindromes
+    number_str = str(number)
+
+    # Check if the given number is already a palindrome
+    if number_str == palindrome[::-1]:
+        return number + 1
+
+    # Find the next smallest palindrome
+    next_palindrome = number * 10 + number % 10
+    for i in range(1, 10):
+        if palindrome_length < i:
+            next_palindrome = next_valid_palindrome(next_palindrome, i)
+        else:
+            next_palindrome = next_valid_palindrome(next_palindrome, palindrome_length)
+
+    return next_palindrome
+
+
+def next_valid_palindrome(palindrome: int, length: int) -> int:
+    # Find the next palindrome by incrementing the last digit
+    palindrome = str(palindrome)
+    palindrome = palindrome[:-1] + str(int(palindrome[-1]) + 1) + palindrome[::-1][1:]
+    return int(palindrome)
+
+assert next_smallest_palindrome(99) == 101</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    if n < 10:
+        return n
+    n = str(n)
+    for i in range(len(n)):
+        if n[i] == '9':
+            n = n[:i] + str(int(n[i]) + 1) + n[i+1:]
+        else:
+            n = n[:i] + str(int(n[i]) + 1) + n[i+1:]
+    return int(n)
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to find the next smallest palindrome of a specified integer, wrapped in a markdown block:
+
+```python
+def next_smallest_palindrome(num):
+    """
+    Find the next smallest palindrome of a specified integer.
+
+    Args:
+        num (int): The input integer.
+
+    Returns:
+        int: The next smallest palindrome.
+    """
+    # Convert the input integer to a string
+    num_str = str(num)
+    length = len(num_str)
+
+    # Check if the input is already a palindrome
+    if num_str == num_str[::-1]:
+        # If the input is a palindrome, increment the middle digit(s)
+        mid = length // 2
+        mid_digits = int(num_str[:mid])
+        if length % 2 == 0:
+            mid_digits += 1
+        else:
+            mid_digits += 1 if num_str[mid] == '9' else int(num_str[mid]) + 1
+        new_num_str = str(mid_digits) + str(mid_digits)[::-1]
+        if length % 2 != 0:
+            new_num_str = new_num_str[:-1]
+        return int(new_num_str)
+
+    # If the input is not a palindrome, find the next palindrome
+    for i in range(num + 1, 10 ** (length + 1)):
+        num_str = str(i)
+        if num_str == num_str[::-1]:
+            return i
+
+# Test cases
+assert next_smallest_palindrome(99) == 101
+assert next_smallest_palindrome(101) == 111
+assert next_smallest_palindrome(121) == 131
+assert next_smallest_palindrome(123) == 131
+assert next_smallest_palindrome(1234) == 1331</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(n):
+    if n < 10:
+        return n + 1
+    if n % 10 == 0:
+        return n + 1
+    if n % 10 == 9:
+        return n + 2
+    if n % 10 == 8:
+        return n + 4
+    if n % 10 == 7:
+        return n + 6
+    if n % 10 == 6:
+        return n + 8
+    if n % 10 == 5:
+        return n + 10
+    if n % 10 == 4:
+        return n + 20
+    if n % 10 == 3:
+        return n + 40
+    if n % 10 == 2:
+        return n + 60
+    if n % 10 == 1:
+        return n + 80
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+def next_smallest_palindrome(n):
+    """
+    :param n: int
+    :return: int
+    """
+    # TODO: Implement this function
+    return 0
+
+"""
+Write a function to find the next largest palindrome of a specified integer, returned as an integer.
+assert next_largest_palindrome(99)==101
+"""
+
+def next_largest_palindrome(n):
+    """
+    :param n: int
+    :return: int
+    """
+    # TODO: Implement this function
+    return 0
+
+"""
+Write a function to find the next smallest palindrome of a specified integer, returned as a string.
+assert next_smallest_palindrome_str(99)=='101'
+"""
+
+def next_smallest_palindrome_str(n):
+    """
+    :param n: int
+    :return: str
+    """
+    # TODO: Implement this function
+    return ''
+
+"""
+Write a function to find the next largest palindrome of a specified integer, returned as a string.
+assert next_largest_palindrome_str(99)=='101'
+"""
+
+def next_largest_palindrome_str(n):
+    """
+    :param n: int
+    :return: str
+    """
+    # TODO: Implement this function
+    return ''
+
+"""
+Write a function to find the next smallest palindrome of a specified integer, returned as a list of digits.
+assert next_smallest_palindrome_list(99)==[1,0,1]
+"""
+
+def next_smallest_palindrome_list(n):
+    """
+    :param n: int
+    :return: list
+    """
+    # TODO: Implement this function
+    return []
+
+"""
+Write a function to find the next largest palindrome of a specified integer, returned as a list of digits.
+assert next_largest_palindrome_list(99)==[1,0,1]
+"""
+
+def next_largest_palindrome_list(n):
+    """
+    :param n: int
+    :return: list
+    """
+    # TODO: Implement this function
+    return []
+
+"""
+Write a function to find the next smallest palindrome of a specified integer, returned as a list of digits.
+assert next_smallest_palindrome_list(99)==[1,0,1</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def next_smallest_palindrome(n):
+    n = str(n)
+    mid = len(n) // 2
+    left = n[:mid]
+    right = n[mid:] if len(n) % 2 == 0 else n[mid+1:]
+    right = right[::-1]
+
+    if int(right) > int(left):
+        return int(n)
+    else:
+        if len(n) % 2 == 0:
+            left = str(int(left) + 1)
+            right = left[::-1]
+        else:
+            left = str(int(left) + 1)
+            right = left[::-1]
+            right = right[:-1]
+        return int(left + right)
+
+assert next_smallest_palindrome(99)==101</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the next smallest palindrome of a specified integer, returned as an integer.
+assert next_smallest_palindrome(99)==101
+"""
+
+
+def next_smallest_palindrome(num):
+    num = str(num)
+    if len(num) == 1:
+        return int(num)
+    if len(num) == 2:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 3:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 4:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 5:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 6:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 7:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 8:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 9:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 10:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 11:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 12:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 13:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 14:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 15:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 16:
+        return int(num[1] + num[0] + num[1])
+    if len(num) == 17:
+        return int(num[</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def next_smallest_palindrome(n):
+    while True:
+        n += 1
+        if str(n) == str(n)[::-1]:
+            return n
+
+# Test the function
+print(next_smallest_palindrome(99))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

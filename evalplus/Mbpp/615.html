@@ -1,0 +1,1443 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/615 </h1>
+<pre><code> """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def average_tuple(nums):
+    result = [sum(x) / len(x) for x in zip(*nums)]
+    return result
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)),), (((1, 1, -5), (30, -15, 56), (81, -60, -39), (-10, 2, 3)),), (((100, 100, 100, 120), (300, 450, 560, 450), (810, 800, 390, 320), (10, 20, 30, 40)),)] </code></pre>
+<h2>plus input</h2>
+<pre><code> [(((7, 8, 9), (-2, -4, -6), (0, 20, 30)),), (((-10, 10), (2, -2), (-5, 5), (-1, 1)),), (((1000, 2000, 3000, 4000), (500, 1000, 1500, 2000), (-100, -200, -300, -400)),), (((-7, 14), (-9, 18), (0, 0)),), (((2, 4, 6), (8, 10, 12), (14, 16, 18), (20, 22, 24)),), (((2, 4), (8, 10, 12), (14, 16, 18), (20, 22, 24)),), (((1000,), (500, 1000, 1500, 2000), (-100, -200, -300, -400)),), (((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, -39, 32), (1, 2, 3, -4)),), (((-1, 1, -5), (30, -15, 56), (81, -60, -39), (-10, 2, 3)),), (((7,), (-2, -4, -6), (0, 20, 30)),), (((-10, 10, -5), (2, -2, 3), (-5, 5, -10), (-1, 1, -3)),), (((2, 4, 6), (-8, 10), (14, -16, 18, -20), (22, 24)),), (((-2, 4, 8, -6), (-10, 12, -7), (14, -16, 18, -12), (20, -22, 24)),), (((10, -10, -10, 12, -5), (30, -45, 56), (-81, 80, -39), (32, -1, 2, 3, -4)),), (((7, -9, -1), (-2, -4, -6), (0,), (20, 30, -40)),), ((),), (((1,), (2, 3, 4)),), (((-1, -2, -3, -4), (5, 10, 15)),), (((0, 0, 0, 0), (100, -100, 100, -100), (-100, 100, -100, 100)),), (((-10, -20, -30, -40), (50, 60, 70), (80, 90)),), (((1, 2, 3, 4, 5), (-5, -4, -3, -2, -1), (0, 0, 0, 0)),), (((1, 2, 3, 4, 5, 6, 7), (0, 10, 20, 30, 40, 50), (-9, -6, -3, 0, 3, 6, 9)),), (((-1, 3, -5, 7, -9), (2, -4, 6, -8, 10), (-3, 5, -7, 9, -11)),), (((10, 20, 30), (-10, -20, -30), (100, 200, 300), (-100, -200, -300)),), (((1, 2, 3, 4), (5, 6, 7, 8), (9, 10, 11, 12), (13, 14, 15, 16)),), (((1, 2, 3), (4, 5), (6, 7, 8, 9), (10, 11, 12, 13, 14)),), (((1,), (2, 3, 4), (5, 6), (7, 8, 9)),), (((1, 2, 3, 4), (5,), (6, 7, 8), (9, 10, 11, 12)),), (((-7, 5, 13), (1, 2, 3, 4), (-10, -15)),), (((100, 200), (-500, 1000), (0, 0), (10, 20, 30)),), (((11, 22), (33, 44), (55, 66), (77, 88), (99, 110)),), (((-1, -2, -3), (-4, -5, -6), (-7, -8, -9, -10)),), (((-1, 2, 3, 4), (-5, -6), (0, 0, 0, 0)),), (((1,), (2,), (3,), (4,)),), (((-1, -2, -3, -4, -5, -6), (1, 2, 3, 4, 5, 6)),), (((0,), (0,), (0,), (0,)),), (((-1, -2, -3, -4, -5), (1, 2, 3, 4, 5), (-1, -2, -3, -4, -5)),), (((1, 2, 3, 4, 5), (-5, -4, -3, -2, -1), (0, 0, 0, 0), (10, 20, 30)),), (((-1, -2, -3, -4), (-5, -6, -7, -8), (-9, -10, -11, -12), (-13, -14, -15, -16)),), (((1, 3, 5), (2, 4, 6), (10, 20, 30), (100, 200, 300)),), (((0, 0, 0, 0, 0), (1, 1, 1, 1, 1), (2, 2, 2, 2, 2), (3, 3, 3, 3, 3)),), (((1, 2, 3), (4, 5, 6), (7, 8, 9)),), (((1, 1, 1), (2, 2, 2, 2), (3, 3, 3, 3, 3)),), (((-5, 10, -15), (20, -25, 30), (-35, 40, -45)),), (((-1, -2, -3, -4, -5), (-5, -4, -3, -2, -1)),), (((-10, -5, 0), (1, 2, 3), (4, 5, 6), (7, 8, 9)),), (((1.5, 2.5, 3.5, 4.5), (5.5, 6.5, 7.5, 8.5), (9.5, 10.5, 11.5, 12.5), (13.5, 14.5, 15.5, 16.5)),), (((3, 3, 3, 3, 3),),), (((100, 200), (100, 1000), (0, 0), (10, 20, 30)),), (((1000, 2000, 3000, 4000), (500, 1000, 1500, 2000)),), (((2, 4), (8, 10, 12), (8, 10, 12, 10), (20, 22, 24)),), (((501, 1000, 1500, 2000), (1000,), (500, 1000, 1500, 2000), (-100, -200, -300, -400)),), (((1,), (), (3,), (4,)),), (((2, 4, 6), (8, 10, 12), (14, 16, 18), (20, 22, 24), (20, 22, 24)),), (((1, 2, 3, 4), (5,), (6, 7, 8), (9, 10, 11, 12), (9, 10, 11, 12)),), (((2, 4, 6), (2, 4, 90, 6), (8, 10, 12), (14, 16, 18), (20, 22, 24), (20, 22, 24)),), (((1000,), (-100, -200, -300, -400, -400), (500, 1000, 1500, 2000), (-100, -200, -300, -400), (-100, -200, -300, -400)),), (((10, 20, 30), (-10, -20, -30), (-10, -400, -30), (10, -39, 30), (100, 200, 300), (-100, -200, -300), (-10, -20, -30)),), (((-10, 10, -5), (2, -2, 3), (-5, 5, -10), (-1, 1, -3), (-10, 10, -5), (-1, 1, -3)),), (((1, 2, 3), (4, 5), (6, 7, 8, 9), (10, 11, 12, 13, 14), (4, 5)),), (((7, 8, 9), (-2, -4, -6), (0, 20, 30), (7, 8, 9)),), (((14, -16, 18, -20), (22, 24)),), (((2, 2, 2, 2), (3, 3, 3, 3, 3)),), (((2, 2, 2, 2, 2), (2, 2, 2, 2), (2, 2, 2, 1, 2), (3, 3, 3, 3, 3)),), (((10, -10, -10, 12, -5), (30, -45, 56), (32, -1, 2, 3, -4)),), (((-1, 1, -5), (81, -60, -39), (-10, 2, 3)),), (((1, 3, 5), (2, 4, 6), (100, 300, 200, 300)),), (((-10, 10, -5), (2, -2, 3), (-1, 1, -3), (-1, 1, -3)),), (((-2, 4, 8, -6, 8), (14, -16, 18, -12), (20, -22)),), (((2, 4, 6), (-8, 10), (2, -3, 4, 6), (14, -16, 18, -20), (22, 24)),), (((2,), (3,), (4,)),), (((-5, 10, -15), (20, -25), (20, -25, 30), (-35, 40, -45)),), (((-10, -20, -30, -40), (50, 60, 70)),), (((-10, -5), (-10, -5, 0), (1, 2, 3), (4, 5, 6), (7, 8, 9)),), (((-2, 4, 8, -6), (-10, 12, -7), (14, -16, 18, -12), (20, -22, 24), (20, -22, 24)),), (((501, 1000, 1500, 2000), (501, 12, 1500, 2000), (1000,), (500, 1000, 1500, 2000), (-100, -200, -300, -400)),), (((-10, 10, -5), (2, -2, 3), (-5, 5, -10), (-1, 1, -3), (-10, 10, -5), (-1, 1, -3), (-10, 10, -5)),), (((0, 0, 0, 3000), (-5,), (0, 0, 0, 0)),), (((-4, -1, -2, -3), (-4, -5, -6), (-7, -8, -9, -10)),), (((-1, -2, -3, -4, -5), (1, 2, 3, 4, 5, 4), (88, -2, -3, -4, -5)),), (((1, 2, 3, 4, 5, 6, 7), (0, 10, 20, 30, 40, 50), (-9, -6, -3, 0, 3, 6, 9, 0)),), (((2,), (4,)),), (((1,), (2, 3, 4), (5, 6), (5, 6)),), (((2, 2, 2, 2, 2), (2, 2, 2, 2), (2, 2, 2, 1, 2), (3, 3, 3, 3, 3), (2, 2, 2, 1, 2)),), (((-10, 10), (2, -2, -2), (-5, 5), (-1, 1)),), (((7, 8, 9), (-2, -4, -6), (0, 20, 30, 20), (7, 8, 9), (-2, -4, -6)),), (((88, -2, -3, -4, -5), (-1, -2, -3, -4, -5, -1), (-1, -2, -3, -4, -5), (30, 1, 2, 3, 4, 5, 4), (88, -2, -3, -4, -5)),), (((1, 2, 3), (4, 5), (1000, 1, 2, 3), (6, 7, 8, 9), (10, 11, 12, 13, 14), (4, 5)),), (((3, 3, 3, 3, 3, 3),),), (((7, 8, 9), (-4, -6), (0, 20, 30), (7, 8, 9)),), (((1, 1, 1), (2, 2, 2, 2), (3, 3, 3, 3, 3), (3, 3, 3, 3, 3)),), (((2, 4, 6), (8, 10, 12), (20, 22, -12), (14, 16, 18), (20, 22, 24)),), (((500, 1000, 1500, 2000), (-100, -200, -300, -400), (500, 1000, 1500, 2000)),), (((1,), (6,), (2, 3, 4), (5, 6), (7, 8, 9)),), (((7, 8, 9), (1, 20, 30), (-2, -4, -6), (1500, -4, -6), (-2, 77, -6), (0, 20, 30)),), (((11, 22, 11), (78, 88), (33, 44), (55, 66), (77, 88), (99, 110), (33, 44)),), (((-10, -200, -5), (2, -2, 3), (-5, 5, -10), (-1, 1, -3), (-10, 10, -5), (-1, 1, -3)),), (((0, 0, 0, 3000), (-5,)),), (((10, 20, 30), (-10, -20, -30), (100, 200, 300), (-100, -200, -300), (-10, -20, -30)),), (((-4, -5, -6), (-7, -8, -9, -10)),), (((-1, 1, -5), (81, -60), (-10, 2, 3, -10), (-10, 2, 3), (-10, 2, 3)),), (((-5, 10, -15), (20, -25, 30), (-35, 40, -45), (-35, 40, -45)),), (((2, 4, 6), (8, 10, 12), (14, 16, 18, 16), (20, 22, 24), (20, 22, 24)),), (((24,),),), (((1, 2, 3), (4, 5), (1000, 1, 2, 3), (6, 7, 8, 9), (4, 5)),), (((-100, -200, -300, -400, -400), (500, 1000, 1500, 2000), (-100, -200, -300, -400), (-100, -200, -300, -400)),), (((1, 2, 3, 4, 5, 6, 7), (1, 2, 3, 4, 5, 6), (0, 10, 20, 30, 40, 50), (-9, -6, -3, 0, 3, 6, 9, 0)),), (((2, 2, 2, 2, 2), (2, 2, 2, 2), (2, 2, 2), (2, 2, 2, 2, 2, 2), (2, 2, 2, 1, 2), (3, 3, 3, 3, 3)),), (((-10, 10, -5, -5), (2, -2, 3), (-5, 5, -10), (-1, 1, -3), (-10, 10, -5), (-1, 1, -3), (-10, 10, -5)),), (((-1, -2, -3, -4), (-5, -5, -7, -8), (-9, -10, -11, -12), (-13, -14, -15, -16)),), (((7, 8, 9), (-4, -6), (-12, 20, 30), (7, 8, 9), (-12, 20, 30)),), (((-1, 1, -5, 1), (81, -60), (-10, 2, 3, -10, -10), (-10, 2, 3), (-10, 2, 3)),), (((11, 22, 11), (78, 77, 88), (78, 88), (33, 44), (55, 66), (77, 88), (99, 110), (33, 44)),), (((-1, -2, -3, -4), (5, 10, 15), (5, 10), (-1, -2, -3, -4)),), (((10, -10, -10, 12, -5), (30, -45, 56), (1000, 80, -39), (32, -1, 2, 3, -4)),), (((1, 2, 3), (4, 5, 5), (7, 8, 9), (1, 2, 3), (1, 2, 3)),), (((0, 0, 0, 3000), (-5,), (), (0, 0, 0, 0), (0, 0, 0, 3000)),), (((1,), (2, 3, 4), (5, 6), (7, 8, 9), (1,)),), (((1, 2, 3, 4, 5), (-5, -4, -3, -2, -1), (0, 0, 0, 0), (1, 2, 3, 4, 5), (1, 2, 3, 4, 5)),), (((-1, -2, -3, -4, -5), (-5, -4, -2, -2, -1)),), (((1, 2, 3, 4, 5), (0, 0, 0, 0), (1, 2, 3, 4, 5), (1, 2, 3, 4, 5)),), (((1, 2, 3, 3), (4, 5, 6), (7, 8, 9)),), (((2, 4), (8, 10, 12), (8, 10, 12, 10), (20, 24)),), (((1, 2, 3, 4, 5), (-5, -4, -3, -2, -1), (0, 0, 0, 0), (10, 20, 30), (1, 2, 3, 4, 5)),), (((1000,), (500, 1000, 1500, 2000), (-100, -200, -300, -400), (-100, -200, -300, -400)),), (((-1, -2, -3, -4, -5, -6), (-1, -3, -4, -5, -6), (1, 2, 3, 4, 5, 6)),), (((-1, -2, -3, -4, -5), (1, 2, 3, 4, 5), (-1, -2, -3, -4, -5), (-1, -2, -3, -4, -5)),), (((14, -16, 18, -20), (88, 24)),), (((-1, 1, -5), (30, -15, 56), (81, -60, -39), (-10, 2, 3), (30, -15, 56)),), (((-1, -2, -3, -4), (-5, -6, -7, -8), (-13, -14, -16), (-9, -10, -11, -12), (-13, -14, -15, -16)),), (((1, 2, 3), (4, 5), (6, 7, 8, 9), (10, 11, 12, 13, 14), (4, 5), (6, 7, 8, 9)),), (((88, -2, -3, -4, -5), (-1, -2, -3, -4, -5, -1), (-1, -2, -3, -4, -5), (88, -2, -3, -4, -5)),), (((0, 0, 0, 0, 0), (1, 1, 1, 1, 1), (0, 0, 0, 0, 0, 0), (2, 2, 2, 2, 2), (3, 3, 3, 3, 3)),), (((14, 13, 18, -20), (2, 4, 6), (-8, 10), (14, -16, 18, -20), (23, 22, 24), (22, 24)),), (((100, 200), (100, 1000), (0, 0), (10, 20, 30), (10, 20, 30)),), (((1, 3, 5), (3, 2, 4, 6), (10, 20, 30), (100, 200, 300)),), (((88, -2, -3, -4, -5), (-1, -2, -3, 1500, -4, -5, -1), (-1, -2, -3, -4, -5), (88, -2, -3, -4, -5)),), (((-1, -2, -3), (-5, -6, -7, -8), (-13, -14, -16), (-9, -10, -11, -12, -12), (-13, -14, -15, -16)),), (((1, 2, 3, 4), (5,), (6, 7, 8), (9, 10, 11, 12), (9, 10, 11, 12), (1, 2, 3, 4)),), (((1, 1, 1), (2, 2, 2, 2), (3, 3, 3, 3, 3, 3), (3, 3, 3, 3, 3)),), (((2,), (3,), (4,), (3,)),), (((2, 2, 2, 2, 2), (2, 2, 2, 2), (2, 2, 2), (2, 2, 2, 2, 2, 2), (2, 2, 2, 1, 2), (3, 3, 3, 3, 3), (2, 2, 2, 1, 2), (3, 3, 3, 3, 3)),), (((1.5, 2.5, 3.5, 4.5), (5.5, 8.285192165167475, 7.5, 5.4466803900799565, 8.5), (5.5, 6.5, 7.5, 8.5), (9.5, 10.5, 11.5, 12.5), (5.5, 6.5, 7.5, 5.4466803900799565, 8.5), (13.5, 14.5, 15.5, 16.5)),), (((2, 4, 6, 2), (8, 10, 12), (14, 16, 18, 16), (20, 22, 24), (20, 22, 24)),), (((-1, -2, -3, -4, -5, -6), (1, 2, 3, 4, 5, 6, 6)),), (((-1, -2, -3, -4),),), (((1,), (6,), (2, 3, 4), (5, 6), (6, 6), (7, 8, 9), (2, 3, 4)),)] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuple_of_tuples):
+    """
+    :param tuple_of_tuples: tuple of tuples
+    :return: list of averages
+    """
+    return [sum(t) / len(t) for t in tuple_of_tuples]
+
+
+if __name__ == '__main__':
+    print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+    print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4), (1, 2, 3, 4))))
+    print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4))))
+    print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4))))
+    print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4), (1, 2, 3, 4), (1,</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    """
+    This function takes a tuple of tuples and returns the average value for each tuple as a list.
+    """
+    avg_list = []
+    for t in tuples:
+        avg_list.append(sum(t) / len(t))
+    return avg_list
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def average_tuple(test_tup: tuple[tuple[int, ...], ...]) -> list[float]:
+    result = [sum(i) / len(i) for i in zip(*test_tup)]
+    return result
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def average_tuple(tuples):
+    averages = []
+    for t in tuples:
+        avg = sum(t) / len(t)
+        averages.append(avg)
+    return averages
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    averages = []
+    for t in tuples:
+        averages.append(sum(t) / len(t))
+    return averages
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+def average_tuple(tuples):
+    averages = []
+    for t in tuples:
+        total = sum(t)
+        average = total / len(t)
+        averages.append(average)
+    return averages
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def average_tuple(tuples):
+    return [sum(t) / len(t) for t in tuples]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    avg_list = []
+    for t in tuples:
+        avg = sum(t) / len(t)
+        avg_list.append(avg)
+    return avg_list
+
+# Test case
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 2.75]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code for the function:
+
+```python
+def average_tuple(tuples):
+    result = []
+    for tup in tuples:
+        avg = sum(tup)/len(tup)
+        result.append(avg)
+    return result
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25])
+```
+
+The function takes a tuple of tuples as an argument and initializes an empty list called `result`. It then iterates through each tuple in the input tuple and calculates the average of the values using the `sum()` function and the `len()` function. The average is then appended to the `result` list. Finally, the function returns the `result` list. The `assert` statement is used to test the function with the given input and expected output. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    return [sum(t) / len(t) for t in tuples]
+
+# Test the function
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 2.5]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tup):
+    return [sum(i)/len(i) for i in tup]
+
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    averages = []
+    for t in tuples:
+        if len(t) > 0:
+            averages.append(sum(t) / len(t))
+        else:
+            averages.append(0)
+    return averages
+
+# Test case
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that calculates the average of each tuple in a tuple of tuples:
+
+```python
+def average_tuple(tuples):
+    averages = []
+    for t in tuples:
+        sum_t = sum(t)
+        len_t = len(t)
+        avg_t = sum_t / len_t if len_t else 0
+        averages.append(avg_t)
+    return averages
+```
+
+This function works by iterating over each tuple in the input tuple of tuples. For each tuple, it calculates the sum of its elements, divides by the number of elements to get the average, and appends this average to a list. The function then returns this list of averages.
+
+You can use this function to assert the condition you provided like this:
+
+```python
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]
+```
+
+This assertion will pass if the function is working correctly.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [(sum(x)/len(x)) for x in zip(*tuple_of_tuples)]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [(sum(x)/len(x)) for x in zip(*tuple_of_tuples)]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [(sum(x)/len(x)) for x in zip(*tuple_of_tuples)]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples_list):
+    """
+    Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+    assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+    """
+    return [sum(t) / len(t) for t in tuples_list]
+
+# Test the function
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(i)/len(i) for i in zip(*tup)]
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(i)/len(i) for i in tup]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def average_tuple(tuples):
+    averages = []
+    for tup in tuples:
+        averages.append(sum(tup) / len(tup))
+    return averages
+
+# Test the function
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]
+```
+
+This function works by iterating over each tuple in the input, summing the values, and then dividing by the number of values to get the average. The averages are then appended to a list which is returned at the end. The assert statement at the end is used to test the function with the provided example.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def average_tuple(tuples):
+    result = []
+    for tup in tuples:
+        avg = sum(tup) / len(tup)
+        result.append(avg)
+    return result
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuple_of_tuples):
+    return [sum(x)/len(x) for x in zip(*tuple_of_tuples)]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))) #[30.5, 34.25, 27.0, 23.25]
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuple_of_tuples):
+    """
+    Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+    assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+    """
+    average_list = []
+    for tuple in tuple_of_tuples:
+        sum = 0
+        for value in tuple:
+            sum += value
+        average = sum / len(tuple)
+        average_list.append(average)
+    return average_list</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+def average_tuple(tuples):
+    """
+    Takes a tuple of tuples and returns a list of averages for each sub-tuple.
+    """
+    return [sum(tuple(map(float, sub_tuple)) / len(sub_tuple) for sub_tuple in tuples]
+
+# Test case
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples_list):
+    averages = []
+    for t in tuples_list:
+        avg = sum(t) / len(t)
+        averages.append(avg)
+    return averages
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def average_tuple(tuples):
+    result = []
+    for tup in tuples:
+        avg = sum(tup)/len(tup)
+        result.append(avg)
+    return result
+```
+
+The function takes a tuple of tuples as input and initializes an empty list to store the average values. It then iterates through each tuple in the input tuple of tuples and calculates the average value by dividing the sum of the tuple by its length. It then appends the average value to the result list. Finally, it returns the result list containing the average values for each tuple in the input tuple of tuples.
+
+The assertion statement in the problem checks if the function returns the expected output for the given input tuple of tuples.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuples):
+    return [sum(tup) / len(tup) for tup in tuples]
+
+
+def test_average_tuple():
+    assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+
+if __name__ == '__main__':
+    test_average_tuple()
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def average_tuple(tuples):
+    return [sum(t) / len(t) for t in tuples]
+```
+
+This function uses a list comprehension to iterate over each tuple in the input tuple of tuples. For each tuple, it calculates the sum of its elements and divides by the number of elements to get the average. The results are returned as a list.
+
+You can test this function with the provided test case:
+
+```python
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+```
+
+This should output:
+
+```python
+[30.5, 34.25, 27.0, 23.25]
+```
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(i)/len(i) for i in tup]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+```
+
+2. Write a function that takes a tuple of tuples and returns the maximum value for each tuple as a list.
+```python
+"""
+Write a function which takes a tuple of tuples and returns the maximum value for each tuple as a list.
+assert max_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[12, 56, 81, 4]
+"""
+
+def max_tuple(tup):
+    return [max(i) for i in tup]
+
+assert max_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[12, 56, 81, 4]
+```
+
+3. Write a function that takes a tuple of tuples and returns the minimum value for each tuple as a list.
+```python
+"""
+Write a function which takes a tuple of tuples and returns the minimum value for each tuple as a list.
+assert min_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[10, 30, 32, 1]
+"""
+
+def min_tuple(tup):
+    return [min(i) for i in tup]
+
+assert min_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[10, 30, 32, 1]
+```
+
+4. Write a function that takes a tuple of tuples and returns the sum of all the values in the tuple as a list.
+```python
+"""</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuple_of_tuples):
+    return [sum(t)/len(t) for t in tuple_of_tuples]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(t)/len(t) for t in tuple_of_tuples]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(t)/len(t) for t in tuple_of_tuples]
+
+assert average_tuple</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(input_tuple):
+    return [sum(t)/len(t) for t in input_tuple]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(i)/len(i) for i in tup]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    return [sum(t) / len(t) for t in tuples]
+
+# Test the function
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    """
+    This function takes a tuple of tuples and returns the average value for each tuple as a list.
+    """
+    averages = []
+    for tup in tuples:
+        avg = sum(tup) / len(tup)
+        averages.append(avg)
+    return averages
+
+# Test the function
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 2.5]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    averages = []
+    for tup in tuples:
+        total = sum(tup)
+        avg = total / len(tup)
+        averages.append(avg)
+    return averages
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    return [sum(t) / len(t) for t in tuples]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [11.0, 34.25, 58.0, 2.5]</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(t):
+    return [sum(x)/len(x) for x in t]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a list of lists and returns the average value for each list as a list.
+assert average_list([[10, 10, 10, 12], [30, 45, 56, 45], [81, 80, 39, 32], [1, 2, 3, 4]])==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_list(l):
+    return [sum(x)/len(x) for x in l]
+
+print(average_list([[10, 10, 10, 12], [30, 45, 56, 45], [81, 80, 39, 32], [1, 2, 3, 4]]))
+
+"""
+Write a function which takes a list of lists and returns the average value for each list as a list.
+assert average_list([[10, 10, 10, 12], [30, 45, 56, 45], [81, 80, 39, 32], [1, 2, 3, 4]])==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_list(l):
+    return [sum(x)/len(x) for x in l]
+
+print(average_list([[10, 10, 10, 12], [30, 45, 56, 45], [81, 80, 39, 32], [1, 2, 3, 4]]))
+
+"""
+Write a function which takes a list of lists and returns the average value for each list as a list.
+assert average_list([[10, 10, 10, 12], [30, 45, 56, 45], [81, 80, 39, 32], [1, 2, 3, 4]])==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_list(l):
+    return [sum(x)/len(x) for x in l]
+
+print(average_list([[10, 10</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(x)/len(x) for x in zip(*tuple_of_tuples)]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(x)/len(x) for x in zip(*tuple_of_tuples)]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(x)/len(x) for x in zip(*tuple_of_tuples)]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+import json
+
+def average_tuple(tuples):
+    return [sum(t) / len(t) for t in tuples]
+
+# Example usage
+# averages = average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))
+# print(averages)  # Output: [10.5, 44.0, 58.0, 2.5]
+
+# Test
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [10.5, 44.0, 58.0, 2.5]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    result = []
+    for sub_tuple in tuples:
+        avg = sum(sub_tuple) / len(sub_tuple)
+        result.append(avg)
+    return result</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def average_tuple(tuples):
+    averages = []
+    for tup in tuples:
+        averages.append(sum(tup) / len(tup))
+    return averages
+
+# Test the function
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    result = []
+    for tup in tuples:
+        total = sum(tup)
+        avg = total / len(tup)
+        result.append(avg)
+    return result
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(t):
+    return [sum(x) / len(x) for x in t]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script to solve the problem:
+
+```python
+def average_tuple(tuples):
+    result = []
+    for tup in tuples:
+        avg = sum(tup)/len(tup)
+        result.append(avg)
+    return result
+```
+
+We can use a for loop to iterate through each tuple in the input tuple of tuples and calculate the average of each tuple using the `sum()` and `len()` functions. Then, we can append the average value to a new list and return it. The `assert` statement is used to test the function with the given input and expected output. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuples):
+    return [sum(x)/len(x) for x in tuples]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuple_of_tuples):
+    result = []
+    for sub_tuple in tuple_of_tuples:
+        result.append(sum(sub_tuple) / len(sub_tuple))
+    return result
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tup):
+    return [sum(i) / len(i) for i in tup]
+
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(i)/len(i) for i in tuple_of_tuples]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(i)/len(i) for i in tuple_of_tuples]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(i)/len(i) for i in tuple_of_tuples]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuples):
+    return [sum(tup)/len(tup) for tup in tuples]
+
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    return [sum(t)/len(t) for t in tuples]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuple_of_tuples):
+    return [sum(tuple_of_tuples[i])/len(tuple_of_tuples[i]) for i in range(len(tuple_of_tuples))]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(tuple_of_tuples[i])/len(tuple_of_tuples[i]) for i in range(len(tuple_of_tuples))]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tuple_of_tuples):
+    return [sum(tuple_of_tuples[i])/len(tuple_of_tuples[i]) for i in range(len(tuple_of_tuples))]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(i)/len(i) for i in tup]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(tuples):
+    result = []
+    
+    for tup in tuples:
+        total = sum(tup)
+        count = len(tup)
+        result.append(total / count)
+        
+    return result
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+def average_tuple(tuples_of_tuples: tuple) -> list:
+    result = []
+    for inner_tuple in tuples_of_tuples:
+        total = sum(inner_tuple)
+        count = len(inner_tuple)
+        avg = total / count
+        result.append(avg)
+    return result
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))) == [30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuples):
+    return [sum(tup)/len(tup) for tup in tuples]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def average_tuple(tuples):
+    """
+    Takes a tuple of tuples and returns the average value for each tuple as a list.
+    
+    Args:
+        tuples (tuple): A tuple of tuples containing numeric values.
+        
+    Returns:
+        list: A list of average values for each tuple.
+    """
+    averages = []
+    for tup in tuples:
+        avg = sum(tup) / len(tup)
+        averages.append(avg)
+    return averages
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+
+def average_tuple(tuple_of_tuples):
+    return [sum(t)/len(t) for t in tuple_of_tuples]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(x)/len(x) for x in tup]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(x)/len(x) for x in tup]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))
+
+"""
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(x)/len(x) for x in tup]
+
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def average_tuple(t):
+    return [sum(i)/len(i) for i in t]
+
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function which takes a tuple of tuples and returns the average value for each tuple as a list.
+assert average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)))==[30.5, 34.25, 27.0, 23.25]
+"""
+
+def average_tuple(tup):
+    return [sum(t)/len(t) for t in tup]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def average_tuple(tuples):
+    averages = []
+    for tup in tuples:
+        avg = sum(tup) / len(tup)
+        averages.append(avg)
+    return averages
+
+# Test the function
+print(average_tuple(((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

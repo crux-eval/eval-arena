@@ -1,0 +1,1936 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/286 </h1>
+<pre><code> """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def max_sub_array_sum_repeated(a, n, k): 
+	modifed = a * k
+	pre = 0	# dp[i-1]
+	res = modifed[0]
+	for n in modifed:
+		pre = max(pre + n, n)
+		res = max(pre, res)
+	return res
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[10, 20, -30, -1], 4, 3], [[-1, 10, 20], 3, 2], [[-1, -2, -3], 3, 3]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[5, -2, 10, 4, -7, 3], 6, 5], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 2], [[5, -2, 11, 4, -7, 3], 6, 5], [[5, -2, 10, 5, -7, 3], 6, 6], [[5, -2, 10, 5, -7, 3], 6, 1], [[5, -2, 10, 5, -7, 3, 10], 7, 6], [[5, -2, 10, 5, -7, 3, 10], 7, 10], [[5, -2, 10, 5, -7, 3, 10], 7, 5], [[5, -2, 10, 5, -7, 3, 10], 7, 9], [[5, -2, 11, 4, -7, 3], 6, 4], [[5, -2, 10, 4, -7, 3], 6, 4], [[5, -2, 10, -7, 3, 5], 6, 1], [[5, -2, 10, 5, -7, 4, 10], 7, 6], [[5, -2, 10, -7, 3, 5], 6, 3], [[5, -2, 10, 5, -7, 4, 10], 7, 7], [[1, 2, 3, -4, -5, 6, 7, -8, 10, 10], 10, 2], [[9, -2, 10, 5, -7, 3, 10], 7, 5], [[5, -2, 10, 4, -7, 3], 6, 6], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 1], [[5, -2, 10, 5, -7, 3, 10], 7, 7], [[5, -2, 10, 5, -7, 3, 10], 7, 4], [[-7, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 1], [[5, -2, 10, 4, -7, 3, 10], 7, 5], [[-7, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 11], [[-7, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 10], [[6, -2, 9, -7, 3, 5], 6, 3], [[5, -2, 10, 4, -7, 3, 10], 7, 6], [[6, -2, 9, -7, 3, 5], 6, 6], [[5, -2, 10, 5, -7, 3], 6, 9], [[5, -2, 10, 5, -7, 3, 10], 7, 1], [[5, -2, 10, 5, -4, 3, 10], 7, 7], [[6, -2, 9, -7, 3, 5], 6, 2], [[-2, -3, 9, -7, 3, 5], 6, 3], [[6, -2, 10, 4, -7, 3, 10], 7, 6], [[1, 2, 11, -4, -5, 6, 7, -8, 9, 10], 10, 1], [[5, -2, 5, -7, 4, 10], 6, 6], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 10], [[1, 2, 3, -4, -5, 6, 7, -8, 10, 10], 10, 3], [[-7, 2, 3, -4, 1, 6, 7, -8, 9, 10], 10, 11], [[4, -2, 10, -7, 3, 5], 6, 3], [[5, -2, 10, -7, 3, 5], 6, 6], [[5, -1, 10, 4, -7, 3], 6, 4], [[5, -2, 10, 5, -7, 3, 10], 7, 11], [[1, 2, 3, -4, -5, 6, 7, -8, 10, 10], 10, 4], [[9, -2, 10, 5, -7, 3, 10], 7, 6], [[5, -1, 10, 3, -7, 3], 6, 4], [[6, -2, 10, 4, -8, 3, 10], 7, 6], [[5, -2, 10, 4, -7, 3], 6, 11], [[5, -2, 10, 5, -7, 3], 6, 2], [[5, -2, 10, 5, -8, 3], 6, 9], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10, 7], 11, 1], [[6, -2, 10, 4, -8, 3, 10, 10], 8, 6], [[1, 11, 2, 3, -4, -5, 7, -8, 10, 10], 10, 10], [[5, -2, 10, 4, -7, 3, 10], 7, 4], [[5, -2, 10, 5, -7, 3], 6, 10], [[5, -2, 10, 4, -7, 3, -2], 7, 3], [[1, 11, 2, 3, -4, -5, 7, -8, 10, 10], 10, 5], [[-7, 2, 3, -4, -5, 6, 6, -8, 9, 10], 10, 1], [[5, -2, 10, 5, -7, 3, 9], 7, 5], [[5, -2, 10, -7, 3, 5], 6, 7], [[5, -2, 10, 4, -7, 3, 10], 7, 7], [[-7, 2, 3, -4, -5, 6, 6, -8, 9, 10, 6], 11, 1], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 4], [[9, -2, 10, 5, -7, 3, 10], 7, 7], [[-7, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 8], [[9, -2, 10, 4, -7, 3, 10], 7, 5], [[6, -2, 10, 4, -7, 3, 10], 7, 5], [[5, -1, 10, 3, -7, 3], 6, 3], [[1, 2, 11, -4, -5, 6, 7, -8, 9, 10], 10, 10], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 9], [[9, -2, 10, 4, -7, 3, 10], 7, 4], [[5, -2, 10, -7, 3, 5], 6, 5], [[5, -2, 10, 4, -7, 3], 6, 7], [[5, -2, 10, 4, 4, 3], 6, 11], [[-2, -3, 9, -7, -1, 5], 6, 3], [[5, -2, -2, 5, -7, 3, 10], 7, 11], [[5, -2, 10, 4, -7, 3, 8], 7, 7], [[6, -2, 10, 5, -4, 3, 10], 7, 7], [[6, -2, 10, 4, -7, 3, 10], 7, 4], [[1, 2, 3, -4, -5, 6, 7, -8, 10, 10], 10, 10], [[9, -2, 10, 4, -7, 3], 6, 7], [[5, -2, 10, 3, 3, 5], 6, 6], [[-2, 10, 5, -8, 3], 5, 9], [[5, -2, 10, 5, -7, 3], 6, 5], [[6, -1, 9, -7, 3, 5], 6, 3], [[5, -2, -2, 5, -7, 3, 10], 7, 12], [[1, 2, 3, -4, -5, 6, 7, -8, 9, 10], 10, 11], [[5, -2, 5, -7, 4, 10], 6, 7], [[5, -2, 10, 4, -6, 3], 6, 2], [[6, -2, 10, 4, -7, 3, 10], 7, 7], [[-2, -3, 9, -1, -1, 5], 6, 3], [[-2, -3, 9, -7, -1, 5], 6, 4], [[5, -2, 11, 4, -7, 3], 6, 3], [[1, 2, 3, -3, -5, 6, 7, -8, 10, 10], 10, 10], [[7, -2, 10, 4, -7, 3, 10], 7, 6], [[5, -2, 10, 5, -7, 3], 6, 11], [[9, -2, 10, 5, -7, 3, 10], 7, 2], [[5, -2, 10, 5, -7, 3], 6, 7], [[5, -2, 10, 5, -7, 3, 10], 7, 12], [[6, -3, 10, 5, -4, 3, 10], 7, 7], [[6, -1, 9, -4, 3, 5], 6, 3], [[-7, 2, 3, -4, -5, 6, -7, -8, 9, 10], 10, 8]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    :param arr: array of integers
+    :param k: number of times to repeat the array
+    :param n: number of elements in the array
+    :return: maximum sum of a contiguous array in the modified array
+    """
+    if k == 1:
+        return max(arr)
+    if k == 2:
+        return max(arr) + max(arr)
+    if k == 3:
+        return max(arr) + max(arr) + max(arr)
+    if k == 4:
+        return max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 5:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 6:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 7:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 8:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 9:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 10:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr)
+    if k == 11:
+        return max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max(arr) + max</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    """
+    Find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+    """
+    # Calculate the total sum of the original array
+    total_sum = sum(arr)
+
+    # Initialize the maximum sum and the current sum
+    max_sum = float('-inf')
+    current_sum = 0
+
+    # Iterate through the array
+    for i in range(n):
+        # Calculate the sum of the current subarray
+        current_sum += arr[i]
+
+        # If the current sum is greater than the maximum sum, update the maximum sum
+        if current_sum > max_sum:
+            max_sum = current_sum
+
+        # If the current sum is less than 0, reset it to 0
+        if current_sum < 0:
+            current_sum = 0
+
+    # If the total sum is positive, return the maximum sum multiplied by k
+    if total_sum > 0:
+        return max_sum * k
+
+    # If the total sum is negative, return the maximum sum
+    return max_sum</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr: list[int], k: int, n: int) -> int:
+    def kadane(arr):
+        max_sum = float("-inf")
+        current_sum = 0
+        for num in arr:
+            current_sum = max(num, current_sum + num)
+            max_sum = max(max_sum, current_sum)
+        return max_sum
+
+    total_sum = kadane(arr) * k
+    if n <= 0 or n > k:
+        return total_sum
+
+    def find_max_sum(l, r):
+        max_sum = float("-inf")
+        curr_sum = 0
+        for i in range(l, r + 1):
+            curr_sum += arr[i % n]
+            max_sum = max(max_sum, curr_sum)
+        return max_sum
+
+    max_sum = float("-inf")
+    for i in range(n):
+        left_max = find_max_sum(i, i)
+        right_max = find_max_sum(i, n - 1)
+        max_sum = max(max_sum, left_max, right_max)
+
+    return max(total_sum, max_sum)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    Find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+    
+    Args:
+        arr (list): The input array.
+        k (int): The number of times the array is repeated.
+        n (int): The length of the input array.
+    
+    Returns:
+        int: The largest sum of a contiguous array in the modified array.
+    """
+    max_sum = float('-inf')
+    current_sum = 0
+    
+    for i in range(k * n):
+        current_sum += arr[i % n]
+        max_sum = max(max_sum, current_sum)
+        
+        if current_sum < 0:
+            current_sum = 0
+    
+    return max_sum</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, times):
+    # Create the repeated array
+    repeated_arr = arr * times
+    
+    # Initialize the maximum sum as negative infinity
+    max_sum = -float('inf')
+    
+    # Iterate over the repeated array
+    for i in range(len(repeated_arr)):
+        # Iterate over all possible subarrays
+        for j in range(i, len(repeated_arr)):
+            # Calculate the sum of the current subarray
+            current_sum = sum(repeated_arr[i:j+1])
+            
+            # Update the maximum sum if necessary
+            max_sum = max(max_sum, current_sum)
+    
+    # Return the maximum sum
+    return max_sum * k
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the sum of the array
+    total_sum = sum(arr)
+
+    # Calculate the maximum subarray sum
+    max_sum = max(arr)
+
+    # If the array is empty or has only one element, return the maximum subarray sum
+    if len(arr) <= 1:
+        return max_sum
+
+    # Calculate the maximum subarray sum in the modified array
+    max_sum_repeated = max_sum * k
+
+    # Calculate the minimum subarray sum
+    min_sum = min(arr)
+
+    # Calculate the minimum subarray sum in the modified array
+    min_sum_repeated = min_sum * k
+
+    # Calculate the maximum subarray sum in the modified array
+    max_sum_repeated = max(max_sum_repeated, total_sum * k - min_sum_repeated)
+
+    return max_sum_repeated</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to find the largest sum of a contiguous subarray in the modified array formed by repeating the given array k times:
+
+```python
+def max_sub_array_sum_repeated(arr, n, k):
+    def max_sub_array_sum(arr, n):
+        max_so_far = arr[0]
+        max_ending_here = arr[0]
+        for i in range(1, n):
+            max_ending_here = max(arr[i], max_ending_here + arr[i])
+            max_so_far = max(max_so_far, max_ending_here)
+        return max_so_far
+
+    def max_prefix_sum(arr, n):
+        prefix_sum = 0
+        max_prefix_sum = float('-inf')
+        for i in range(n):
+            prefix_sum += arr[i]
+            max_prefix_sum = max(max_prefix_sum, prefix_sum)
+        return max_prefix_sum
+
+    def max_suffix_sum(arr, n):
+        suffix_sum = 0
+        max_suffix_sum = float('-inf')
+        for i in range(n - 1, -1, -1):
+            suffix_sum += arr[i]
+            max_suffix_sum = max(max_suffix_sum, suffix_sum)
+        return max_suffix_sum
+
+    max_sum = max_sub_array_sum(arr, n)
+
+    if k > 1:
+        max_prefix = max_prefix_sum(arr, n)
+        max_suffix = max_suffix_sum(arr, n)
+        array_sum = sum(arr)
+
+        if array_sum > 0:
+            max_sum = max(max_sum, max_suffix + max_prefix + (k - 2) * array_sum)
+        else:
+            max_sum = max(max_sum, max_suffix + max_prefix)
+
+    return max_sum
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, modulo):
+    """
+    This function calculates the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+    :param arr: list, the original array
+    :param k: int, the number of times the array is repeated
+    :param modulo: int, the modulo value to consider
+    :return: int, the largest sum of a contiguous array in the modified array
+    """
+    # Calculate the sum of the entire array and its repetitions
+    total_sum = sum(arr) * k
+
+    # Initialize the current sum and maximum sum variables
+    current_sum = max_sum = arr[0]
+
+    # Iterate through the array
+    for i in range(1, len(arr)):
+        # Update the current sum by adding the current element and subtracting the modulo if necessary
+        current_sum = max(arr[i], current_sum + arr[i]) % modulo
+
+        # Update the maximum sum if the current sum is greater
+        max_sum = max(max_sum, current_sum)
+
+    # Return the maximum sum
+    return max_sum
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    Finds the largest sum of a contiguous subarray in the modified array formed by repeating the given array k times.
+    """
+    # Create the modified array by repeating the original array k times
+    modified_arr = arr * k
+    
+    # Initialize variables to keep track of the current sum and the maximum sum
+    current_sum = 0
+    max_sum = float('-inf')
+    
+    # Iterate through the modified array and update the current sum and maximum sum
+    for i in range(len(modified_arr)):
+        current_sum += modified_arr[i]
+        if current_sum > max_sum:
+            max_sum = current_sum
+        if current_sum < 0:
+            current_sum = 0
+            
+    # Return the maximum sum
+    return max_sum
+
+# Test the function with the given example
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3)) # Output: 30
+
+# Test the function with some additional examples
+assert max_sub_array_sum_repeated([1, 2, 3, -100, 4], 3, 2) == 9
+assert max_sub_array_sum_repeated([-1, -2, -3, -4], 5, 1) == -1
+assert max_sub_array_sum_repeated([1, -2, 3, -4, 5, -6], 2, 4) == 5
+assert max_sub_array_sum_repeated([1, -2, 3, -4, 5, -6], 1, 1) == 3
+assert max_sub_array_sum_repeated([1, -2, 3, -4, 5, -6], 0, 1) == 0 </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, repeats):
+    # Calculate the total sum of the array
+    total_sum = sum(arr) * repeats
+
+    # Initialize variables to store the current sum and the maximum sum
+    current_sum = 0
+    max_sum = float('-inf')
+
+    # Iterate through the array
+    for num in arr * repeats:
+        # Add the current number to the current sum
+        current_sum += num
+
+        # If the current sum is less than 0, reset it to 0
+        if current_sum < 0:
+            current_sum = 0
+
+        # Update the maximum sum if necessary
+        max_sum = max(max_sum, current_sum)
+
+    # If the total sum is less than 0, return 0
+    if total_sum < 0:
+        return 0
+
+    # If the maximum sum is less than the total sum, return the total sum
+    if max_sum < total_sum:
+        return total_sum
+
+    # Otherwise, return the maximum sum
+    return max_sum
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    :param arr: list of integers
+    :param k: number of times to repeat the array
+    :param n: number of elements in the array
+    :return: max sum of a contiguous subarray in the modified array
+    """
+    max_sum = float('-inf')
+    for i in range(k):
+        curr_sum = 0
+        for j in range(i * n, (i + 1) * n):
+            curr_sum += arr[j % n]
+            max_sum = max(max_sum, curr_sum)
+            if curr_sum < 0:
+                curr_sum = 0
+    return max_sum
+
+
+if __name__ == '__main__':
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 4) == 30
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the length of the repeated array
+    total_len = len(arr) * k
+    
+    # Create a new array with repeated elements
+    repeated_arr = arr * k
+    
+    # Use Kadane's algorithm to find the maximum sum of contiguous subarray
+    max_sum = repeated_arr[0]
+    current_sum = repeated_arr[0]
+    
+    for i in range(1, total_len):
+        current_sum = max(repeated_arr[i], current_sum + repeated_arr[i])
+        max_sum = max(max_sum, current_sum)
+    
+    # Return the maximum sum divided by the original array length to get the sum of a contiguous subarray in the modified array
+    return max_sum / n
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def max_sub_array_sum_repeated(arr, n, k):
+    # Kadane's algorithm to find maximum sum of a contiguous subarray
+    max_current = max_global = arr[0]
+    for i in range(1, n):
+        max_current = max(arr[i], max_current + arr[i])
+        if max_global < max_current:
+            max_global = max_current
+
+    # If all elements are negative, return the maximum element
+    if max_global < 0:
+        return max_global
+
+    # Create an array by concatenating the given array 'k' times
+    new_arr = [0] * (n * k)
+    for i in range(n * k):
+        new_arr[i] = arr[i % n]
+
+    # Find the maximum sum of a contiguous subarray in the new array
+    max_current = max_global = new_arr[0]
+    for i in range(1, n * k):
+        max_current = max(new_arr[i], max_current + new_arr[i])
+        if max_global < max_current:
+            max_global = max_current
+
+    return max_global
+```
+
+This code first uses Kadane's algorithm to find the maximum sum of a contiguous subarray in the given array. If all elements are negative, it returns the maximum element. Otherwise, it creates a new array by concatenating the given array 'k' times and finds the maximum sum of a contiguous subarray in the new array.
+
+You can test the function with your example like this:
+
+```python
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+```</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    :param: arr - input array
+    :param: k - size of the repetition
+    :param: n - number of times the array should be repeated
+    return - the maximum sum of a non-empty subarray of arr which is repeated n times
+    """
+    # max_sum = -float('inf')
+    # for i in range(n):
+    #     for j in range(i, n):
+    #         max_sum = max(max_sum, sum(arr[i:j+1]))
+    # return max_sum
+    
+    # O(n) time | O(n) space
+    # for i in range(n):
+    #     sum_arr = 0
+    #     for j in range(i, n):
+    #         sum_arr += arr[j]
+    #         if sum_arr == 0:
+    #             return sum_arr
+    # return sum_arr
+    
+    # O(n) time | O(1) space
+    # max_sum = 0
+    # sum_arr = 0
+    # for i in range(n):
+    #     sum_arr += arr[i]
+    #     if sum_arr == 0:
+    #         max_sum = sum_arr
+    #     else:
+    #         max_sum = max(max_sum, sum_arr)
+    # return max_sum
+    
+    # O(n) time | O(1) space
+    # max_sum = 0
+    # sum_arr = 0
+    # for i in range(n):
+    #     sum_arr += arr[i]
+    #     max_sum = max(max_sum, sum_arr)
+    #     if sum_arr == 0:
+    #         return max_sum
+    # return max_sum
+    
+    # O(n) time | O(1) space
+    # max_sum = 0
+    # sum_arr = 0
+    # for i in range(n):
+    #     sum_arr += arr[i]
+    #     max_sum = max(max_sum, sum_arr)
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, m):
+    """
+    Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+    """
+    # Repeat the array k times
+    repeated_arr = arr * k
+
+    # Initialize variables for Kadane's algorithm
+    max_so_far = float('-inf')
+    max_ending_here = 0
+
+    # Iterate over the repeated array
+    for i in range(len(repeated_arr)):
+        # Update max_ending_here
+        max_ending_here = max_ending_here + repeated_arr[i]
+
+        # If max_ending_here becomes negative, reset it to 0
+        if max_ending_here < 0:
+            max_ending_here = 0
+
+        # Update max_so_far if max_ending_here is greater
+        if max_so_far < max_ending_here:
+            max_so_far = max_ending_here
+
+        # If we have found a subarray of length m, break the loop
+        if i >= m - 1:
+            break
+
+    return max_so_far
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+import sys
+import math
+import time
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+import matplotlib.cm as cm
+import pandas as pd
+import os
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import re
+import string
+import collections
+import itertools
+import time
+import copy
+import random
+import math
+import sys
+import</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    :param arr:
+    :param k:
+    :param n:
+    :return:
+    """
+    if k == 1:
+        return max_sub_array_sum(arr, n)
+
+    # 1. Find the max sub array sum of the original array
+    max_sum = max_sub_array_sum(arr, n)
+
+    # 2. Find the max sub array sum of the repeated array
+    repeated_arr = [arr[i % n] for i in range(n * k)]
+    max_sum_repeated = max_sub_array_sum(repeated_arr, n * k)
+
+    return max(max_sum, max_sum_repeated)
+
+
+def max_sub_array_sum(arr, n):
+    """
+    :param arr:
+    :param n:
+    :return:
+    """
+    max_sum = arr[0]
+    current_sum = arr[0]
+
+    for i in range(1, n):
+        current_sum = max(arr[i], current_sum + arr[i])
+        max_sum = max(max_sum, current_sum)
+
+    return max_sum
+
+
+if __name__ == '__main__':
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 2) == 20
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 1) == 10
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 0) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 5) == </code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def max_sub_array_sum_repeated(arr, k, m):
+    # Calculate the sum of the array
+    total_sum = sum(arr)
+
+    # Calculate the sum of the array repeated k times
+    repeated_sum = total_sum * k
+
+    # Calculate the maximum subarray sum
+    max_sum = max_sub_array_sum(arr * m)
+
+    # Return the maximum of the repeated sum and the maximum subarray sum
+    return max(repeated_sum, max_sum)
+
+def max_sub_array_sum(arr):
+    # Initialize the maximum sum and the current sum
+    max_sum = current_sum = 0
+
+    # Iterate over the array
+    for num in arr:
+        # Update the current sum
+        current_sum = max(current_sum + num, num)
+
+        # Update the maximum sum
+        max_sum = max(max_sum, current_sum)
+
+    return max_sum
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+```
+
+This function first calculates the sum of the array and then the sum of the array repeated k times. It then calculates the maximum subarray sum of the modified array using the helper function `max_sub_array_sum`. Finally, it returns the maximum of the repeated sum and the maximum subarray sum.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = float('-inf')
+    for i in range(len(arr)):
+        for j in range(i, len(arr) * k):
+            sub_arr = arr[i:j]
+            sub_sum = sum(sub_arr)
+            max_sum = max(max_sum, sub_sum)
+    return max_sum
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if k == 1:
+        return max(arr)
+    if k == n:
+        return sum(arr)
+    max_sum = sum(arr[:k])
+    for i in range(k, n):
+        arr[i] += arr[i-k]
+        max_sum = max(max_sum, sum(arr[i-k+1:i+1]))
+    return max_sum
+
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 4))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 5))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 6))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 7))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 8))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 9))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 10))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 11))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 12))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 13))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 14))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 15))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 16))
+print</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, n, k):
+    """
+    Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+    """
+    max_so_far = float('-inf')
+    max_ending_here = float('-inf')
+    for i in range(n * k):
+        max_ending_here = max(max_ending_here + arr[i % n], arr[i % n])
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    Finds the largest sum of a contiguous subarray in the modified array which is formed by repeating the given array k times.
+
+    :param arr: List of integers representing the array.
+    :param k: Integer representing the number of repetitions.
+    :param n: Integer representing the length of the array after repetition.
+    :return: Integer representing the largest sum of a contiguous subarray.
+    """
+
+    # Calculate the sum of all elements in the modified array
+    total_sum = sum(arr) * k
+
+    # Initialize current sum and maximum sum with the first element of the array
+    current_sum = max_sum = arr[0]
+
+    # Iterate through the array starting from the second element
+    for i in range(1, len(arr) * k):
+        # Update current sum by adding the next element and subtracting the previous one
+        current_sum += arr[i % len(arr)] - arr[i % len(arr) - 1] if i % len(arr) > 0 else arr[i]
+        # Update maximum sum if current sum is greater
+        max_sum = max(max_sum, current_sum)
+
+    # Return the maximum sum
+    return max_sum
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    def max_sub_array_sum(arr):
+        max_sum = float('-inf')
+        current_sum = 0
+        for num in arr:
+            current_sum = max(num, current_sum + num)
+            max_sum = max(max_sum, current_sum)
+        return max_sum
+
+    repeated_arr = arr * k
+    return max_sub_array_sum(repeated_arr)
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = float('-inf')
+    for i in range(k):
+        temp_sum = 0
+        for j in range(n):
+            temp_sum += arr[j]
+        if temp_sum > max_sum:
+            max_sum = temp_sum
+    return max_sum
+```
+
+Explanation:
+
+- The function `max_sub_array_sum_repeated` takes three arguments: `arr` (the given array), `k` (the number of times the array is to be repeated), and `n` (the length of the array).
+- We initialize a variable `max_sum` to negative infinity.
+- We use a nested loop to iterate over all possible starting positions of the sub-arrays.
+- For each starting position, we initialize a variable `temp_sum` to zero.
+- We then add up the elements of the sub-array and store the result in `temp_sum`.
+- If `temp_sum` is greater than `max_sum`, we update `max_sum` to `temp_sum`.
+- Finally, we return `max_sum`.
+
+The time complexity of this function is O(kn), where n is the length of the array. This is because we are iterating over all possible starting positions of the sub-arrays and adding up the elements of each sub-array.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(k):
+        max_sum += max_sub_array_sum(arr, n)
+    return max_sum
+
+def max_sub_array_sum(arr, n):
+    max_so_far = 0
+    max_ending_here = 0
+    for i in range(0, n):
+        max_ending_here = max_ending_here + arr[i]
+        if (max_so_far < max_ending_here):
+            max_so_far = max_ending_here
+ 
+        if max_ending_here < 0:
+            max_ending_here = 0
+    return max_so_far
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def max_sub_array_sum_repeated(arr, n, k):
+    # Create a new array by repeating the given array k times
+    new_arr = arr * k
+
+    # Initialize:
+    # max_so_far is maximum sum found so far
+    # max_ending_here is maximum sum ending at current position
+    max_so_far = float('-inf')
+    max_ending_here = 0
+
+    for i in range(0, n*k):
+        max_ending_here = max_ending_here + new_arr[i]
+        if max_so_far < max_ending_here:
+            max_so_far = max_ending_here
+
+        if max_ending_here < 0:
+            max_ending_here = 0
+    return max_so_far
+```
+
+This function works by creating a new array by repeating the given array k times. It then uses Kadane's algorithm to find the maximum sum of a contiguous subarray in the new array.
+
+The time complexity of this function is O(n), where n is the length of the array. This is because the function only needs to iterate through the array once.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    :param arr: array
+    :param k: number of times array is repeated
+    :param n: length of array
+    :return: max sum of contiguous subarray
+    """
+    max_sum = float('-inf')
+    for i in range(n):
+        for j in range(i, n):
+            sub_array = arr[i:j+1]
+            if len(sub_array) == n:
+                max_sum = max(max_sum, sum(sub_array))
+            else:
+                max_sum = max(max_sum, sum(sub_array) * k)
+    return max_sum
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 2, 5) == 30
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 3, 5) == 60
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 4, 5) == 120
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 5, 5) == 150
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 6, 5) == 180
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 7, 5) == 210
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 8, 5) == 240
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 9, 5) == 270
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 10, 5) == 300
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5], 11, 5) == 330
+assert max_sub_array_sum_repeated([1, 2, 3, 4, 5</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(n):
+        for j in range(i+1, n+1):
+            if j-i+1 == k:
+                max_sum = max(max_sum, sum(arr[i:j]))
+    return max_sum
+
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(n):
+        for j in range(i+1, n+1):
+            if j-i+1 == k:
+                max_sum = max(max_sum, sum(arr[i:j]))
+    return max_sum
+
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(n):
+        for j in range(i+1, n+1):
+            if j-i+1 == k:
+                max_sum = max(max_sum, sum(arr[i:j]))
+    return max_sum
+
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(n):
+        for j in range(i+1, n+1):
+            if j-i+1 == k:
+                max_sum = max(max_sum, sum(arr[i:j]))
+    return max_sum
+
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(n):
+        for j in</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, n, k):
+    max_sum = float("-inf")
+    for i in range(n):
+        sum = 0
+        for j in range(i, min(i + k, n)):
+            sum += arr[j]
+        max_sum = max(max_sum, sum)
+    return max_sum</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    for i in range(n):
+        sum = 0
+        for j in range(k):
+            sum += arr[i]
+        if sum > max_sum:
+            max_sum = sum
+    return max_sum
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the sum of the original array
+    original_sum = sum(arr)
+    
+    # If k is 1, the largest sum is the sum of the original array
+    if k == 1:
+        return original_sum
+    
+    # Calculate the maximum sum of a non-contiguous subarray in the original array
+    max_non_contiguous_sum = max(arr)
+    
+    # If all elements are negative, the largest sum is the maximum non-contiguous sum
+    if max_non_contiguous_sum < 0:
+        return max_non_contiguous_sum
+    
+    # Calculate the maximum sum of a contiguous subarray in the original array
+    max_contiguous_sum = max_sub_array_sum(arr)
+    
+    # If the sum of the original array is positive, the largest sum is the maximum of the following:
+    # 1. The maximum sum of a contiguous subarray in the original array
+    # 2. The sum of the original array times (k-2) plus the maximum sum of a contiguous subarray in the original array
+    # 3. The sum of the original array times (k-2) plus the maximum non-contiguous sum
+    if original_sum > 0:
+        return max(max_contiguous_sum, original_sum * (k-2) + max_contiguous_sum, original_sum * (k-2) + max_non_contiguous_sum)
+    else:
+        # If the sum of the original array is negative, the largest sum is the maximum of the following:
+        # 1. The maximum sum of a contiguous subarray in the original array
+        # 2. The maximum non-contiguous sum
+        return max(max_contiguous_sum, max_non_contiguous_sum)
+
+def max_sub_array_sum(arr):
+    max_so_far = arr[0]
+    current_max = arr[0]
+    
+    for i in range(1, len(arr)):
+        current_max = max(</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, repetitions):
+    """
+    Find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+
+    :param arr: List of integers
+    :param k: Number of times the array is repeated
+    :param repetitions: Number of repetitions of the array
+    :return: Largest sum of a contiguous array in the modified array
+    """
+    # Repeat the array k times
+    repeated_arr = arr * repetitions
+
+    # Initialize variables
+    max_sum = float('-inf')
+    current_sum = 0
+
+    # Iterate through the repeated array
+    for num in repeated_arr:
+        current_sum += num
+        max_sum = max(max_sum, current_sum)
+        # Reset current_sum if it becomes negative
+        if current_sum < 0:
+            current_sum = 0
+
+    return max_sum
+
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+assert max_sub_array_sum_repeated([1, 2, 3, -2, 5], 2, 3) == 13
+assert max_sub_array_sum_repeated([-2, -3, 4, -1, -2, 1, 5, -3], 3, 2) == 7
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Initialize max_sum to negative infinity
+    max_sum = float('-inf')
+    
+    # Repeat the array k times
+    repeated_arr = arr * k
+    
+    # Iterate over all possible subarrays of length n
+    for i in range(len(repeated_arr) - n + 1):
+        # Calculate the sum of the current subarray
+        subarray_sum = sum(repeated_arr[i:i+n])
+        
+        # Update max_sum if the current subarray sum is greater
+        max_sum = max(max_sum, subarray_sum)
+    
+    return max_sum
+
+# Test the function with the given example
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, n, k):
+    def max_sub_array_sum(arr):
+        max_sum = float('-inf')
+        current_sum = 0
+        for num in arr:
+            current_sum = max(num, current_sum + num)
+            max_sum = max(max_sum, current_sum)
+        return max_sum
+
+    max_sum = max_sub_array_sum(arr * k)
+    if k > 1:
+        max_sum = max(max_sum, max_sub_array_sum(arr * (k - 2)) + max_sub_array_sum(arr))
+    return max_sum
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    # Write your code here
+    arr = arr * k
+    max_sum = 0
+    for i in range(n):
+        for j in range(i, n):
+            sum = 0
+            for k in range(i, j+1):
+                sum += arr[k]
+            if sum > max_sum:
+                max_sum = sum
+    return max_sum
+
+# Test cases
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 4))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 5))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 6))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 7))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 8))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 9))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 10))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 11))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 12))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 13))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 14))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 15))
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 16))
+print(max_sub_</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if k == 1:
+        return max(arr)
+    if k == n:
+        return sum(arr)
+    max_sum = 0
+    for i in range(n):
+        max_sum += max_sub_array_sum_repeated(arr[i:], k-1, n-i)
+    return max_sum
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 4) == 60
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 5) == 70
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 6) == 80
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 7) == 90
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 8) == 100
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 9) == 110
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 10) == 120
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 11) == 130
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 12) == 140
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 13) == 150
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 14) == 160
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 15) == 170
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 16) == 180
+assert max_sub_</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+import itertools
+
+def max_sub_array_sum_repeated(arr, n, k):
+    # Repeat the array k times
+    extended_arr = list(itertools.chain.from_iterable(itertools.repeat(arr, k)))
+    # Initialize variables to store the maximum sum and current sum
+    max_sum = float('-inf')
+    current_sum = 0
+
+    # Iterate over the extended array to find the maximum subarray sum
+    for num in extended_arr:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+
+    return max_sum
+
+# Example usage
+# assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, r):
+    n = len(arr)
+    arr_r = arr * r
+    max_sum = float('-inf')
+    curr_sum = 0
+    for i in range(n):
+        curr_sum = max(curr_sum, arr_r[i] + arr_r[i-1] if i else arr_r[i])
+        max_sum = max(max_sum, curr_sum)
+    return max_sum</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def max_sub_array_sum_repeated(arr, n, k):
+    # Create a new array by repeating the given array k times
+    new_arr = arr * k
+
+    # Initialize variables
+    max_sum = float('-inf')
+    curr_sum = 0
+
+    # Iterate through the new array
+    for i in range(len(new_arr)):
+        # Add the current element to the current sum
+        curr_sum += new_arr[i]
+
+        # If the current sum is greater than the max sum, update the max sum
+        if curr_sum > max_sum:
+            max_sum = curr_sum
+
+        # If the current sum is negative, reset it to 0
+        if curr_sum < 0:
+            curr_sum = 0
+
+    # Return the max sum
+    return max_sum</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Repeat the array k times
+    repeated_arr = arr * k
+    # Initialize variables to store the maximum sum and the current sum
+    max_sum = float('-inf')
+    current_sum = 0
+    
+    # Iterate through the repeated array
+    for i in range(n * k):
+        # Add the current element to the current sum
+        current_sum += repeated_arr[i]
+        # Update the maximum sum if the current sum is greater
+        max_sum = max(max_sum, current_sum)
+        # If the current sum is negative, reset it to 0
+        if current_sum < 0:
+            current_sum = 0
+    
+    return max_sum
+
+# Test the function
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))  # Output: 30</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the sum of the array
+    total_sum = sum(arr)
+
+    # Calculate the sum of the array repeated k times
+    repeated_sum = total_sum * k
+
+    # Calculate the sum of the array repeated n times
+    n_sum = sum(arr) * n
+
+    # Calculate the sum of the array repeated k times and n times
+    k_n_sum = sum(arr) * k * n
+
+    # Calculate the sum of the array repeated k times and n times minus the sum of the array repeated k times
+    k_n_minus_k_sum = k_n_sum - k_sum
+
+    # Calculate the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times
+    k_n_minus_k_n_sum = k_n_sum - k_n_minus_k_sum
+
+    # Calculate the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times minus the sum of the array repeated k times
+    k_n_minus_k_n_minus_k_sum = k_n_minus_k_sum - k_sum
+
+    # Calculate the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times
+    k_n_minus_k_n_minus_k_n_sum = k_n_minus_k_n_sum - k_n_minus_k_sum
+
+    # Calculate the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times minus the sum of the array repeated k times
+    k_n_minus_k_n_minus_k_n_minus_k_sum = k_n_minus_k_n_minus_k_sum - k_sum
+
+    # Calculate the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times minus the sum of the array repeated k times and n times
+    k_n_minus_k_n_minus_k_n_minus_k_n_sum = k_</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that solves the problem:
+
+```python
+def max_sub_array_sum_repeated(arr, k, n):
+    # repeat the array k times
+    arr = arr * k
+    # initialize variables to store the maximum sum and current sum
+    max_sum = float('-inf')
+    curr_sum = 0
+    # initialize variables to store the start and end indices of the subarray
+    start = 0
+    end = 0
+    # initialize variables to store the maximum sum and current sum of the subarray
+    max_subarray_sum = float('-inf')
+    curr_subarray_sum = 0
+    # loop through the array
+    for i in range(len(arr)):
+        # add the current element to the current sum
+        curr_sum += arr[i]
+        # if the current sum is greater than the maximum sum, update the maximum sum and the end index
+        if curr_sum > max_sum:
+            max_sum = curr_sum
+            end = i
+        # if the current sum becomes negative, reset it to 0 and update the start index
+        if curr_sum < 0:
+            curr_sum = 0
+            start = i + 1
+        # update the maximum sum of the subarray if the current subarray sum is greater than the maximum sum
+        if curr_sum > max_subarray_sum:
+            max_subarray_sum = curr_sum
+    # return the maximum sum of the subarray
+    return max_subarray_sum
+```
+
+This function takes in an array `arr`, an integer `k` representing the number of times to repeat the array, and an integer `n` representing the length of the subarray to find the maximum sum of. It first repeats the array `k` times by multiplying it by `k`. Then, it initializes variables to store the maximum sum and current sum, as well as the start and end indices of the subarray. It loops through the repeated array and updates the current sum and maximum sum as needed. If the current sum becomes negative, it resets it to 0 and updates the start index. If the current sum is greater than the maximum sum, it updates the maximum sum and end index. Finally, it returns the maximum sum of the subarray. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if k == 1:
+        return max_sub_array_sum(arr, n)
+    else:
+        max_sum = -1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = 0
+    current_sum = 0
+
+    for i in range(n):
+        current_sum = max(current_sum + arr[i], arr[i])
+        max_sum = max(max_sum, current_sum)
+
+    return max_sum * k
+</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = -1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if k == 1:
+        return max(arr)
+    if k == n:
+        return sum(arr)
+    max_sum = 0
+    for i in range(n):
+        max_sum += max_sub_array_sum_repeated(arr[i:], k-1, n-i)
+    return max_sum
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 4) == 60
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 5) == 70
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 6) == 80
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 7) == 90
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 8) == 100
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 9) == 110
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 10) == 120
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 11) == 130
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 12) == 140
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 13) == 150
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 14) == 160
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 15) == 170
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 16) == 180
+assert max_sub_</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    # Write your code here
+    if n == 1:
+        return max(arr)
+    if n == 2:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[0] + arr[2])
+    if n == 3:
+        return max(arr[0] + arr[1] + arr[2], arr[1] + arr[2] + arr[3], arr[0] + arr[2] + arr[3], arr[0] + arr[1] + arr[3])
+    if n == 4:
+        return max(arr[0] + arr[1] + arr[2] + arr[3], arr[1] + arr[2] + arr[3] + arr[4], arr[0] + arr[2] + arr[3] + arr[4],
+                   arr[0] + arr[1] + arr[3] + arr[4], arr[0] + arr[1] + arr[2] + arr[4])
+    if n == 5:
+        return max(arr[0] + arr[1] + arr[2] + arr[3] + arr[4], arr[1] + arr[2] + arr[3] + arr[4] + arr[5],
+                   arr[0] + arr[2] + arr[3] + arr[4] + arr[5], arr[0] + arr[1] + arr[3] + arr[4] + arr[5],
+                   arr[0] + arr[1] + arr[2] + arr[4] + arr[5], arr[0] + arr[1] + arr[2] + arr[3] + arr[5])
+    if n == 6:
+        return max(arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5], arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6],
+                   arr[0] + arr[2] + arr[3</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the sum of the modified array
+    modified_sum = sum(arr * k * n)
+    
+    # Initialize the maximum sum to be the sum of the modified array
+    max_sum = modified_sum
+    
+    # Iterate through the array
+    for i in range(len(arr)):
+        # Calculate the sum of the current subarray
+        sub_sum = sum(arr[i:])
+        
+        # Update the maximum sum if the current subarray sum is greater
+        max_sum = max(max_sum, sub_sum)
+    
+    # Return the maximum sum
+    return max_sum
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+```
+
+This Python script defines a function `max_sub_array_sum_repeated` that takes three arguments: an array `arr`, an integer `k` representing the number of times the array is repeated, and an integer `n` representing the length of the modified array. The function calculates the sum of the modified array by multiplying the sum of the original array by `k` and `n`. It then initializes the maximum sum to be the sum of the modified array. The function iterates through the original array, calculating the sum of each subarray and updating the maximum sum if the current subarray sum is greater. Finally, the function returns the maximum sum. The function is tested with the given assertion.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if n == 0:
+        return 0
+    if k == 0:
+        return max(arr)
+    if k > n:
+        return max_sub_array_sum_repeated(arr, n, n)
+    return max(max_sub_array_sum_repeated(arr, k, n // k), max_sub_array_sum_repeated(arr, n, n // k) + max_sub_array_sum_repeated(arr, k, n // k + 1))
+
+if __name__ == '__main__':
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 2, 3) == 30
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 3, 3) == 30
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 2) == 30
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 1) == 20
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 0) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 0, 4) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 0, 3) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 0, 2) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 0, 1) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 0, 0) == 0
+    assert max_sub_array_sum_repeated([10, 20, -30, -1], 1, 4) == 20
+    assert max</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    Find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+    """
+    if k == 1:
+        return max_sub_array_sum(arr, n)
+
+    max_sum = 0
+    for i in range(n):
+        curr_sum = 0
+        for j in range(i, i + n * k, n):
+            curr_sum += arr[j % n]
+            max_sum = max(max_sum, curr_sum)
+
+    return max_sum
+
+
+def max_sub_array_sum(arr, n):
+    """
+    Find the largest sum of a contiguous array in the given array.
+    """
+    max_sum = 0
+    curr_sum = 0
+    for i in range(n):
+        curr_sum += arr[i]
+        max_sum = max(max_sum, curr_sum)
+
+    return max_sum
+
+
+def main():
+    arr = [10, 20, -30, -1]
+    k = 4
+    n = 3
+    print(max_sub_array_sum_repeated(arr, k, n))
+
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    total_sum = sum(arr * k)
+    max_sum = max_current_sum = current_sum = 0
+
+    for i in range(n):
+        current_sum += arr[i]
+        max_current_sum = max(max_current_sum + arr[i], current_sum)
+        current_sum = max(current_sum - arr[i], 0)
+
+        max_sum = max(max_sum, max_current_sum)
+
+    return max_sum % (10**9 + 7)
+
+
+# Test the function
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+def max_sub_array_sum_repeated(arr, k, expected_result):
+    n = len(arr)
+    max_sum = 0
+    for i in range(n):
+        curr_sum = arr[i]
+        for j in range(1, k):
+            curr_sum = curr_sum + arr[(i + j) % n]
+            max_sum = max(max_sum, curr_sum)
+    if max_sum != expected_result:
+        raise AssertionError(f"Expected result {expected_result}, but got {max_sum}")
+    return max_sum
+
+arr = [10, 20, -30, -1]
+k = 4
+max_sub_array_sum_repeated(arr, k, 30)</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if k == 1:
+        return max(arr)
+    else:
+        arr_sum = 0
+        for i in range(n):
+            arr_sum += arr[i]
+        return max(arr_sum, max_sub_array_sum_repeated(arr, k - 1, n))
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    Find the largest sum of a contiguous array in the modified array
+    which is formed by repeating the given array k times.
+
+    Args:
+        arr (list): The input array.
+        k (int): The number of times the array is repeated.
+        n (int): The size of the input array.
+
+    Returns:
+        int: The maximum sum of a contiguous subarray in the modified array.
+    """
+    # Calculate the maximum subarray sum in the original array
+    max_sum = max_subarray_sum(arr, n)
+
+    # Calculate the sum of the entire array
+    total_sum = sum(arr)
+
+    # If the maximum subarray sum is negative, return it
+    if max_sum < 0:
+        return max_sum
+
+    # Calculate the maximum subarray sum in the modified array
+    max_modified_sum = max(max_sum, total_sum * (k - 2) + max_subarray_sum_circular(arr, n))
+
+    return max_modified_sum
+
+def max_subarray_sum(arr, n):
+    """
+    Find the maximum sum of a contiguous subarray in the given array.
+
+    Args:
+        arr (list): The input array.
+        n (int): The size of the input array.
+
+    Returns:
+        int: The maximum sum of a contiguous subarray.
+    """
+    max_sum = float('-inf')
+    current_sum = 0
+
+    for num in arr:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+
+    return max_sum
+
+def max_subarray_sum_circular(arr, n):
+    """
+    Find the maximum sum of a contiguous circular subarray in the given array.
+
+    Args:
+        arr (list): The input array.
+        n (int): The size of the input array.
+
+    Returns:
+        int: The maximum sum of a contiguous circular subarray.
+    """
+    max_sum = max_subarray_sum(arr, n)
+    total_sum = sum(arr)
+
+    # Invert the signs of the array elements
+    arr = [-num for num in arr]
+
+    # Find the maximum subarray sum of the inverted array
+    max_inverted_sum = max_subarray_sum(arr, n)
+
+    # The maximum circular subarray sum is the maximum of:
+    # 1. The maximum subarray sum in the original array
+    # 2. The total sum of the original array - the maximum subarray sum of the inverted array
+    return max(max_sum, total_sum + max_inverted_sum)
+
+# Test case
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+
+def max_sub_array_sum_repeated(arr, k, n):
+    max_sum = float('-inf')
+    for i in range(n):
+        sum = 0
+        for j in range(k):
+            sum += arr[i]
+            if sum > max_sum:
+                max_sum = sum
+    return max_sum
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    """
+    :param arr: input array
+    :param k: number of times the array is repeated
+    :param n: length of the array
+    :return: maximum sum of the subarray
+    """
+    # Write your code here
+    max_sum = 0
+    for i in range(n):
+        sum = 0
+        for j in range(k):
+            sum += arr[i]
+        if sum > max_sum:
+            max_sum = sum
+    return max_sum
+
+
+def main():
+    print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))
+
+
+main()
+/Arrays/max_sum_subarray.py
+"""
+Given an array of positive numbers and a positive number ‘k,’ find the maximum sum of any contiguous subarray of size ‘k’.
+
+Example 1:
+
+Input: [2, 1, 5, 1, 3, 2], k=3
+Output: 9
+Explanation: Subarray with maximum sum is [5, 1, 3].
+
+Example 2:
+
+Input: [2, 3, 4, 1, 5], k=2
+Output: 7
+Explanation: Subarray with maximum sum is [3, 4].
+
+Example 3:
+
+Input: [2, 1, 5, 1, 3, 2], k=3
+Output: 9
+Explanation: Subarray with maximum sum is [5, 1, 3].
+"""
+
+def max_sum_subarray(arr, k):
+    """
+    :param arr: input array
+    :param k: size of the subarray
+    :return: maximum sum of the subarray
+    """
+    # Write your code here
+    max_sum = 0
+    for i in range(len(arr) - k + 1):
+        sum = 0
+        for j in range(i, i + k):
+            sum += arr[j]
+        if sum > max_sum:
+            max_sum = sum
+    return max_sum
+
+
+def main():
+    print(max_sum_subarray([2, 1, 5, 1, 3, </code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the sum of the original array
+    sum_arr = sum(arr)
+
+    # Calculate the maximum sum of a contiguous array in the modified array
+    max_sum = float('-inf')
+    for i in range(k):
+        sum_sub_arr = 0
+        for j in range(n):
+            sum_sub_arr += arr[(i + j) % k]
+        max_sum = max(max_sum, sum_sub_arr)
+
+    return max_sum
+
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.
+assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30
+"""
+
+def max_sub_array_sum_repeated(arr, k, n):
+    if k == 0:
+        return 0
+    if n == 1:
+        return arr[0] * k
+    if n == 2:
+        return max(arr[0] * k, arr[1] * k)
+    if n == 3:
+        return max(arr[0] * k, arr[1] * k, arr[2] * k, arr[0] + arr[1] + arr[2], arr[1] + arr[2] + arr[0], arr[0] + arr[2] + arr[1], arr[1] + arr[0] + arr[2], arr[2] + arr[0] + arr[1])
+    if n == 4:
+        return max(arr[0] * k, arr[1] * k, arr[2] * k, arr[3] * k, arr[0] + arr[1] + arr[2] + arr[3], arr[1] + arr[2] + arr[3] + arr[0], arr[2] + arr[3] + arr[0] + arr[1], arr[3] + arr[0] + arr[1] + arr[2], arr[0] + arr[1] + arr[0] + arr[1], arr[1] + arr[2] + arr[1] + arr[2], arr[2] + arr[3] + arr[2] + arr[3], arr[3] + arr[0] + arr[3] + arr[0], arr[0] + arr[1] + arr[2] + arr[3], arr[1] + arr[2] + arr[3] + arr[0], arr[2] + arr[3] + arr[0] + arr[1], arr[3] + arr[0] + arr[1] + arr[2], arr[0] + arr[1] + arr[0] + arr[1], arr[1] + arr[2] + arr[1] + arr[2], arr[2] + arr[3] + arr[2] + arr[3], arr[3] + arr[</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def max_sub_array_sum_repeated(arr, k, n):
+    # Calculate the maximum subarray sum for the original array
+    max_sub_array_sum = max_sub_array_sum_original(arr)
+    
+    # Calculate the maximum subarray sum for the repeated array
+    max_sub_array_sum_repeated = max_sub_array_sum * k
+    
+    return max_sub_array_sum_repeated
+
+def max_sub_array_sum_original(arr):
+    max_sum = float('-inf')
+    current_sum = 0
+    
+    for num in arr:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+    
+    return max_sum
+
+# Test the function
+print(max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

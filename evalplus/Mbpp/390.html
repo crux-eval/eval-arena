@@ -1,0 +1,1012 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/390 </h1>
+<pre><code> """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def add_string(list_, string):
+    return [string.format(i) for i in  list_]
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 2, 3, 4], 'temp{0}'], [['a', 'b', 'c', 'd'], 'python{0}'], [[5, 6, 7, 8], 'string{0}']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[], 'format{0}'], [[1, 'two', 3, 'four'], 'item_{0}'], [[9], 'element{0}'], [[], ''], [['apple', 2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruit_{0}'], [[2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruit_{0}'], [[[3, 'orange', [4, 'banana'], 5], 'mango'], 'fruitorange_{0}'], [[3, 1, 3], 'format{0}'], [[[3, [4, 'element{0}'], 'orange', [4, 'element{0}'], 5], [3, [4, 'element{0}'], 'orange', [4, 'element{0}'], 5], 'mango'], 'fruitorange_{0}'], [[2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruitorange_{0}'], [[3, 1, 3, 1], 'format{0}'], [['mafourngo', 2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruit_{0}'], [[[3, 'orange', [4, 'banana'], 5], 'mango'], 'fruittorange_{0}'], [[3, 1, 2, 3, 1], 'format{0}'], [['mafourngo', 2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruittorange_{0}'], [[3, 1, 2, 1, 3, 1], 'format{0}'], [[[3, [4, 'element{0}'], 'orange', [4, 'element{0}'], 5], [3, [4, 'element{0}'], 'orange', [4, 'element{0}'], 5], 'mango', [3, [4, 'element{0}'], 'orange', [4, 'element{0}'], 5]], 'format{0}'], [[2, 'mo', [3, 'orange', [4, 'banana'], 5], 'mango'], ''], [[2, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruit_{0}'], [[2, 'mo', [3, 'orange', [4, 'banana'], 5], 'mango'], 'two'], [[3, 1, 3], 'fruit_{0}'], [[2, 'fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 'mango'], 'orange'], [[3, 1, 3], 'fruit_element{0}{0}'], [[], 'element{0}'], [[9], 'elformat{0}ement{0}'], [[3, 1, 2, 3, 1], 'item_{0}'], [[3, 1, 2, 3, 1], 'fformat{0}'], [[3, 1], 'fruit_element{0}{0}'], [['mafourngo', 2, [3, 'orange', [4, 'banana'], 5], 'manelement{0}go'], 'fruit_{0}'], [[2, 'fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 'mango'], 'orangge'], [['mafourngo', 'magngo', 2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruit_{0}'], [[2, [3, 'orange', [4, 'banana'], 5], 'mafourngo'], 'fruit_{0}'], [[3, 1, 3], 'formappleat{0}'], [[3, 1, 2, 3, 1], 'fruit_{0}'], [[[3, 'orange', [4, 'banana'], 5], 'mango', 'mango'], 'fruitorange_{0}'], [[1, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruit_{0}'], [[2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruitornge_{0}'], [[3, 1, 3, 3], 'format{0}'], [[3, 1, 3, 3], 'formamagngot{0}'], [[1, 3], 'fruit_element{0}{0}'], [[3, 2, 3, 1], 'four'], [['mafourngo', 2, [3, 'orange', [4, 'banana'], 5], 'mango', 'mafourngo'], 'fruit_{0}'], [[2, 'fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 'mango'], 'orangelformat{0}ement{0}ge'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016, 8.963897856760099], 'element{0}'], [[3, 1, 2, 3, 5, 2], 'forangeormat{0}'], [[2, 'fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 9, 'mango', 'fruitorange_{0}'], 'orangelformat{0}ement{0}ge'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016], 'element{0}'], [[3, 0, 2, 2, 3, 1], 'manfruitorange_{0}o'], [[2, 'fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 9, 'mango', 'fruitorange_{0}', 9], 'orangelformat{0}ement{0}ge'], [[2, [3, 'orange', [4, 'banana'], 5], 0, 'mango'], 'fruitorange_{0}'], [[3, 1, 3, 1, 3], 'format{0}'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016, 8.963897856760099, -1.103432736060796], 'element{0}'], [[2, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruiut_{0}'], [['fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 'mango'], 'orange'], [['fruitorange_{0}', [3, 'orange', [4, 'banana'], 5, 'orange'], 'mango'], 'orange'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016], 'eletwoment{0}'], [[2, 'fruitorange_{0}', [3, 'orange', [4, 'banana'], 5], 'mango'], 'fruittorange_{0}'], [['mafourngo', 2, [3, 'orange', [4, 'banana'], 5], 'manelement{0}go', 2], 'fruit_{0}'], [[3, 1, 3, 3, 3, 3], 'formamagngot{0}'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016, 8.963897856760099, -1.103432736060796, -20.472707728369016], 'element{0}'], [[3, 1, 3, 3], 'formaelformat{0}ement{0}t{0}'], [[65.38356734647485, {'5': -38.15549188624485, '0': 77.08571014199265, '72': 26.909869216336247, '-79': -59.110541980068355, '19': -38.15549188624485, '94': -5.540379742792084, '4': -9.108805577472495, '2': 53.05257624758963}, [0, 4], 'orange', False, {'-20.472707728369016': 1, '-18.449283331918025': 10}, [-31, 90, 93.5906374974764, None, True, 5, ['fruitornge_{0}'], False, True], ['mafourngo', 'xd', 'AOqy', 'magngo', '', 'elformat{0}ement{0}', 'UYjd', 'mafourngo', 'fruit_element{0}{0}'], 'ocuNQbFmSX'], 'fruiut_{0}'], [['mafourngo', 2, [3, 'orange', [4, 'banana'], 5], 'mango'], 'two'], [[3, 72, 3, 1], 'format{0}'], [[2, [3, 'orange', [4, 'banana'], 5], 'mango', 2], 'fruitorange_{0}'], [[3, 1, 3, 3], 'two'], [['mafourngo', 'magngo', 2, [3, 'orange', [4, 'banana'], 5], 'fruiut_{0}', 'mango'], 'fruit_{0}'], [['mango'], 'fruittorange_{0}'], [['mafourngo', 2, 'mafourgo', [3, 'orange', [4, 'banana'], 5], 'manelement{0}go'], 'apple'], [['mao', 'fruitornge_{0}', 'mango'], 'fruittorange_{0}'], [[-54.79207046236099, -59.110541980068355, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016], 'eletwometnt{0}'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016, 8.963897856760099, -1.103432736060796, -20.472707728369016, 8.963897856760099], 'formappleat{0}'], [[2, 'man', 'mango', [3, 'orange', [4, 'banana'], 5, [4, 'banana']], 'mango'], 'fruittorange_{0}'], [[[3, 'orange', [4, 'banana'], 5], 'mango'], 'fruittorangmantgoe_{0}'], [[[3, 'orange', [4, 'banana'], 5], 'mango', 'mango'], 'fruitorangmanfruitorange_{0}oe_{0}'], [[[3, 'orange', [4, 'banana'], 5, 5], 2, [3, 'orange', [4, 'banana'], 5, 5], 'mango'], 'fruit_{0}'], [[2, [3, 'orange', [4, 'banana'], 5], 'mafourngo'], 'formaelformat{0}ement{0}t{0}'], [[[3, [4, 'element{0}'], 'orange', [4, 'element{0}'], 5], 'mango'], 'fruitorange_{0}'], [[3, 1, 3, 3], 'tmanfruitorange_{0}oo'], [[3, 0, 2, 2, 2, 3, 1], 'manfruitorange_{0}o'], [['formamagngot{0}', 2, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango', [3, 'orange', [4, 'banana'], 5]], 'fruiut_{0}'], [[3, 2, 0, 2, 2, 3, 1, 2, 1, 2], 'manfruitorange_{0}o'], [[2, 0, 2, 2, 3, 1, 2, 1, 2, 2], 'manfruitorange_{0}o'], [[3, 0, 1, 3, 3], 'formaelformat{0}ement{0}t{0}'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016, 8.963897856760099, -1.103432736060796, -20.472707728369016], 'elelment{0}'], [[3, 1, 1, 1, 3, 1], 'tformat{0}'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.472707728369016, 8.963897856760099], 'elemelnt{0}'], [['formamagngot{0}', 2, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango', [3, 'orange', [4, 'banana'], 5]], 'formappleat{0}'], [[2, 'mo', [3, 'orange', [4, 'banana'], 5], 'mango'], 'wtwo'], [[3, 1, 3, 3], 'formaelformat{0}emment{0}t{0}'], [[65.38356734647485, {'5': -38.15549188624485, '0': 77.08571014199265, '72': 26.909869216336247, '-79': -59.110541980068355, '19': -38.15549188624485, '94': -5.540379742792084, '4': -9.108805577472495, '2': 53.05257624758963}, [0, 4], 'orange', False, {'-20.472707728369016': 1, '-18.449283331918025': 10}, [-31, 90, 93.5906374974764, None, True, 5, ['fruitornge_{0}'], False, True], ['mafourngo', 'xd', 'AOqy', 'magngo', '', 'elformat{0}ement{0}', 'UYjd', 'mafourngo', 'fruit_element{0}{0}'], 'ocuNQbFmSX'], 'apple'], [[2, [3, 'orange', [4, 'banana'], 5], 'mango'], ''], [['mafourngo', 2, 'mafourgo', [3, 'orange', [4, 'banana'], 5], 'manelement{0}go'], 'appltmanfruitorange_{0}ooe'], [[[3, '', [4, 'banana'], 5], 'formamagngot{0}', 2, 'manfruitorange_{0}o', [3, '', [4, 'banana'], 5], 'mango', [3, '', [4, 'banana'], 5]], 'formapplet{0}'], [[30.380744152211463, -1.103432736060796], 'four'], [[-54.79207046236099, -1.103432736060796, -5.540379742792084, 30.380744152211463, -38.15549188624485, -20.177981698336826, 8.963897856760099], 'eletwoment{0}'], [[2, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango', 'manfruitorange_{0}o'], 'fruiut_{0}'], [[1, 'manfruitorange_{0}o', [3, 'orange', [4, 'banana'], 5], 'mango'], 'tmanfruitorange_{0}oo'], [[], 'orangelformat{0}ement{0}ge'], [['mafourngo', 2, [3, 'orange', 'fruit_element{0}{0}', [4, 'banana'], 5], 'mango'], 'two'], [['mafourngo', 'magngo', 2, [3, 'orange', [4, 'banana'], 5], 'fruiut_{0}', 'mango', 'mafourngo'], 'fruit_{0}'], [[2, 'mafourgo', [3, 'orange', [4, 'banana'], 5], 'manelement{0}go', 'manelement{0}go'], 'appltmanfruitorange_{0}ooe'], [[2, [3, 'orange', [4, 'banana'], 5], 'mafourngo'], 'fruit_elelment{0}{0}'], [[3, 2, 0, 2, 2, 3, 1, 2, 1, 2], 'formapplet{0}'], [['mafournfruitorange_{0}go', 2, [3, 'orange', [4, 'banana'], 5], 'mango', 'mafourngo'], 'fruiut_{0}']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(list, format_string):
+    """
+    :param list: list of elements
+    :param format_string: format string
+    :return: list of elements with format string applied
+    """
+    return [format_string.format(i) for i in list]
+
+
+if __name__ == '__main__':
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string([1, 2, 3, 4], 'temp{0}'))
+    print(add_string</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def apply_format_string(input_list, format_string):
+    """
+    Apply a given format string to all of the elements in a list.
+
+    Parameters:
+    input_list (list): List of elements to format.
+    format_string (str): Format string to apply to each element.
+
+    Returns:
+    list: New list with format string applied to each element.
+    """
+    return [format_string.format(element) for element in input_list]
+
+# Test the function
+assert apply_format_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(l, format_str):
+    return [format_str.format(i) for i in l]
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def add_string(lst, format_str):
+    """
+    Applies a given format string to all elements in a list.
+    
+    Args:
+        lst (list): The list of elements to format.
+        format_str (str): The format string to apply to each element.
+        
+    Returns:
+        list: A new list with the formatted elements.
+    """
+    return [format_str.format(str(item)) for item in lst]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, s):
+    return [s.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+def add_string(lst, format_string):
+    return [format_string.format(i+1) for i in range(len(lst))]
+
+# Test the function
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def add_string(lst, format_string):
+    return [format_string.format(item) for item in lst]
+
+assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, fmt_str):
+    """
+    Applies a given format string to all elements in a list.
+    :param lst: A list of items to format.
+    :param fmt_str: A format string to apply to each item in the list.
+    :return: A new list where each item is the result of applying the format string to the corresponding item in the input list.
+    """
+    return [fmt_str.format(i) for i in lst]
+
+# Test the function
+assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code for the function:
+
+```python
+def add_string(lst, fmt_str):
+    """
+    Applies a given format string to all elements in a list.
+    
+    Args:
+    lst: A list of elements.
+    fmt_str: A format string to apply to each element in the list.
+    
+    Returns:
+    A new list with the format string applied to each element in the original list.
+    """
+    return [fmt_str.format(elem) for elem in lst]
+```
+
+The function takes in a list `lst` and a format string `fmt_str` as arguments. It uses a list comprehension to iterate over each element in the list and applies the format string to it using the `format()` method. The resulting list is then returned.
+
+
+Here's how you can use the function:
+
+```python
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+```
+
+This will call the `add_string()` function with a list of integers and a format string that includes a placeholder `{0}`. The function will apply the format string to each element in the list and return a new list with the formatted elements. The `assert` statement checks if the returned list is equal to `['temp1', 'temp2', 'temp3', 'temp4']`. If it is, the test passes. If not, an `AssertionError` is raised. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_string):
+    """
+    This function applies a given format string to all of the elements in a list.
+    :param lst: The list of elements to which the format string will be applied.
+    :param format_string: The format string to be applied to each element in the list.
+    :return: A new list with the format string applied to each element.
+    """
+    return [format_string.format(i) for i in lst]
+
+# Test the function
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(list, format_string):
+    return [format_string.format(i) for i in list]
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, fmt):
+    return [fmt.format(i) for i in lst]
+
+# Test case
+assert add_string([1,2,3,4],'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that should do what you're asking for:
+
+```python
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+# Test the function
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+print("All tests passed.")
+```
+
+This function uses a list comprehension to apply the given format string to each element in the list. The `format` method is used to insert each element into the format string. The `{0}` in the format string is a placeholder that gets replaced with the current element.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+
+"""
+Write a function that takes a list of numbers and returns a list of the squares of those numbers.
+assert square_list([1,2,3,4])==[1,4,9,16]
+"""
+
+def square_list(lst):
+    return [i**2 for i in lst]
+
+assert square_list([1,2,3,4])==[1,4,9,16]
+
+"""
+Write a function that takes a list of numbers and returns a list of the cubes of those numbers.
+assert cube_list([1,2,3,4])==[1,8,27,64]
+"""
+
+def cube_list(lst):
+    return [i**3 for i in lst]
+
+assert cube_list([1,2,3,4])==[1,8,27,64]
+
+"""
+Write a function that takes a list of numbers and returns a list of the squares of those numbers.
+assert square_list([1,2,3,4])==[1,4,9,16]
+"""
+
+def square_list(lst):
+    return [i**2 for i in lst]
+
+assert square_list([1,2,3,4])==[1,4,9,16]
+
+"""
+Write a function that takes a list of numbers and returns a list of the cubes of those numbers.
+assert cube_list([1,2,3,4])==[1,8,27,64]
+"""
+
+def cube_list(lst):
+    return [i**3 for i in lst]
+
+assert cube_list([1,2,3,4])==[1,8,27,64]
+
+"""
+Write a function that takes a list of numbers and returns a list of the cubes of those numbers.
+assert cube_list([1,2,3,4])==[1,8,27,64]
+"""
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_str):
+    """
+    Write a function to apply a given format string to all of the elements in a list.
+    assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+    """
+    return [format_str.format(i) for i in lst]
+
+# Test the function
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst,format):
+    return [format.format(item) for item in lst]
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(list_of_numbers, format_string):
+    """
+    :param list_of_numbers: list of numbers
+    :param format_string: format string
+    :return: list of strings
+    """
+    return [format_string.format(i) for i in list_of_numbers]
+
+
+def test_add_string():
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+    assert add_string([1, 2, 3, 4</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def add_string(lst, fmt_str):
+    return [fmt_str.format(i) for i in lst]
+
+# Test the function
+print(add_string([1,2,3,4],'temp{0}'))  # Output: ['temp1', 'temp2', 'temp3', 'temp4']
+```
+
+This function uses a list comprehension to apply the format string to each element in the list. The `{0}` in the format string is replaced by the corresponding element from the list.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(list, format):
+  return [format.format(item) for item in list]</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+def add_string(lst, format_str):
+    """
+    Apply a given format string to all of the elements in a list.
+    """
+    return [format_str.format(i=i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_string):
+    return [format_string.format(x) for x in lst]
+
+assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def add_string(lst, format_str):
+    """
+    This function applies a given format string to all of the elements in a list.
+    """
+    return [format_str.format(i) for i in lst]
+```
+
+The function takes two arguments: `lst` and `format_str`. `lst` is the list of elements to which the format string is to be applied. `format_str` is the format string that is to be applied to each element of the list.
+
+The function uses a list comprehension to apply the format string to each element of the list. The `format()` method is used to apply the format string to each element of the list. The `format_str.format(i)` expression formats the `i`-th element of the list using the format string `format_str`.
+
+The function returns a new list containing the formatted strings.
+
+The `assert` statement is used to test the function. The `add_string()` function is called with the list `[1,2,3,4]` and the format string `'temp{0}'`. The expected output is `['temp1', 'temp2', 'temp3', 'temp4']`. The `assert` statement checks if the actual output of the function is equal to the expected output. If the assertion is true, the test passes. If the assertion is false, the test fails.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(l,s):
+    return [s.format(i) for i in l]
+
+
+
+l = [1,2,3,4]
+s = 'temp{0}'
+print(add_string(l,s))</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def add_string(lst, fmt):
+    return [fmt.format(i) for i in lst]
+```
+
+This function uses a list comprehension to iterate over each element in the input list `lst`. For each element, it applies the `format` method to the format string `fmt`, replacing `{0}` with the current element. The results are collected into a new list which is returned by the function.
+
+You can test the function with the provided test case:
+
+```python
+print(add_string([1,2,3,4],'temp{0}'))  # Output: ['temp1', 'temp2', 'temp3', 'temp4']
+```
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+
+"""
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+
+"""
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+
+"""
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+
+"""
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+print(add_string([1,2,3,4],'temp{0}'))
+
+"""
+Write a function that takes a list of strings and returns a list of strings with all the strings joined together.
+assert add_string(['a','b','c'], 'temp{0}')==['temp1', 'temp2', 'temp3']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.join(lst)]
+
+print(add_string(['a','b','c'], 'temp{0}'))
+
+"""
+Write a function that takes a list of strings and returns a list of strings with all the strings joined together.
+assert add_string(['a','b','c'], 'temp{0}')==['temp1', 'temp2', 'temp3']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.join(lst)]
+
+print(add_string(['a','b','c'], 'temp{0}'))
+
+"""
+Write a function that takes a list of strings and returns a list of strings with all the strings joined together.
+assert add_string(['a','b','c'], 'temp{0}')==['temp1', 'temp2', 'temp3']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.join(lst)]
+
+print(add_string(['a','b','c'], 'temp{0}'))
+
+"""
+Write a function that takes a list of strings and returns a list of strings with all the strings joined together.
+assert add_string(['a','b','c'], 'temp{0}')==['temp1', 'temp2', 'temp3']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.join(lst)]
+
+print(add_string(['a','b','c'], 'temp{0}'))
+
+"""
+Write a function that takes a list of strings and</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(input_list, format_string):
+    return [format_string.format(element) for element in input_list]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(list,format):
+    return [format.format(i) for i in list]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, fmt):
+    return [fmt.format(item) for item in lst]
+
+# Test the function
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def apply_format(lst, format_str):
+    """
+    Apply a given format string to all elements in a list.
+
+    Parameters:
+    lst (list): The list of elements to format.
+    format_str (str): The format string to apply to each element.
+
+    Returns:
+    list: A list of formatted strings.
+    """
+    return [format_str.format(item) for item in lst]
+
+# Test the function
+assert apply_format([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, fmt_str):
+    return [fmt_str.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, fmt_str):
+    return [fmt_str.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(list, string):
+    return [string.format(i) for i in list]
+
+print(add_string([1,2,3,4],'temp{0}'))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_numbers([1,2,3,4])==10
+"""
+
+def sum_numbers(list):
+    return sum(list)
+
+print(sum_numbers([1,2,3,4]))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_numbers([1,2,3,4])==10
+"""
+
+def sum_numbers(list):
+    return sum(list)
+
+print(sum_numbers([1,2,3,4]))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_numbers([1,2,3,4])==10
+"""
+
+def sum_numbers(list):
+    return sum(list)
+
+print(sum_numbers([1,2,3,4]))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_numbers([1,2,3,4])==10
+"""
+
+def sum_numbers(list):
+    return sum(list)
+
+print(sum_numbers([1,2,3,4]))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_numbers([1,2,3,4])==10
+"""
+
+def sum_numbers(list):
+    return sum(list)
+
+print(sum_numbers([1,2,3,4]))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_numbers([1,2,3,4])==10
+"""
+
+def sum_numbers(list):
+    return sum(list)
+
+print(sum_numbers([1,2,3,4]))
+
+"""
+Write a function that takes a list of numbers and returns the sum of all of the numbers.
+assert sum_</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+assert add_string([1,2,3,4],'temp{0:.2f}')==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1.0))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1.0))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1.0))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1.0))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1.0))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3,4],'temp{0:.2f}'.format(1.0))==['temp1.00', 'temp2.00', 'temp3.00', 'temp4.00']
+assert add_string([1,2,3</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+
+def add_string(lst, format_string):
+    return [format_string.format(item) for item in lst]
+
+# Example usage
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_str):
+    return [format_str.format(i) for i in lst]</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def add_string(lst, fmt):
+    return [fmt.format(i) for i in lst]
+
+# Test the function
+print(add_string([1,2,3,4],'temp{0}'))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_str):
+    return [format_str.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that takes a list of elements and a format string as input and applies the format string to each element to create a new list:
+
+```python
+def add_string(lst, fmt_str):
+    new_lst = []
+    for elem in lst:
+        new_lst.append(fmt_str.format(elem))
+    return new_lst
+```
+
+This function uses a for loop to iterate over each element in the input list and applies the format string to it using the `format()` method. The resulting string is then appended to a new list, which is returned at the end. For example, if we call `add_string([1,2,3,4], 'temp{0}')`, it will return `['temp1', 'temp2', 'temp3', 'temp4']`. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(lst, string):
+    return [string.format(i) for i in lst]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(list1, format_string):
+    return [format_string.format(x) for x in list1]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst,string):
+    return [string.format(i) for i in lst]
+
+print(add_string([1,2,3,4],'temp{0}'))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+assert add_string([1,2,3,4],'{0}')==['1', '2', '3', '4']
+assert add_string([1,2,3,4],'{0} {1}')==['1 2', '2 3', '3 4']
+assert add_string([1,2,3,4],'{0} {1} {0}')==['1 2 1', '2 3 2', '3 4 3']
+assert add_string([1,2,3,4],'{0} {1} {0} {1}')==['1 2 1 2', '2 3 2 3', '3 4 3 4']
+assert add_string([1,2,3,4],'{0} {1} {0} {1} {0}')==['1 2 1 2 2', '2 3 2 3 3', '3 4 3 4 4']
+assert add_string([1,2,3,4],'{0} {1} {0} {1} {0} {1}')==['1 2 1 2 2 2', '2 3 2 3 3 3', '3 4 3 4 4 4 4']
+assert add_string([1,2,3,4],'{0} {1} {0} {1} {0} {1} {0}')==['1 2 1 2 2 2 2', '2 3 2 3 3 3 3', '3 4 3 4 4 4 4 4']
+assert add_string([1,2,3,4],'{0} {1} {0} {1} {0} {1} {0} {1}')==['1 2 1 2 2 2 2 2', '2 3 2 3 3 3 3 3', '3 4 3 4 4 4 4 4 4']
+assert add_string([1,2,3,4],'{0} {1} {0} {1} {0} {1} {0} {</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(list,format):
+    return [format.format(i) for i in list]
+
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(add_string([1,2,3,4],'temp{0}'))
+print(</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(list_in, string):
+    return [string.format(x) for x in list_in]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_str):
+    return [format_str.format(i) for i in lst]
+
+# Test the function
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+def add_string(numbers_list: list, format_string: str) -> list:
+    result = []
+    for num in numbers_list:
+        formatted_string = format_string.format(num)
+        result.append(formatted_string)
+    return result
+
+assert add_string([1, 2, 3, 4], 'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(lst, format_str):
+    return [format_str.format(i) for i in lst]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+"""
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+def add_string(lst, format_str):
+    result = []
+    for i, item in enumerate(lst):
+        result.append(format_str.format(item))
+    return result
+
+# Test case
+assert add_string([1,2,3,4],'temp{0}') == ['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+def add_string(list, format):
+    return [format.format(i) for i in list]
+
+"""
+Write a function to apply a given function to all of the elements in a list.
+assert apply_to_all([1,2,3,4],lambda x: x*2)==[2,4,6,8]
+"""
+def apply_to_all(list, function):
+    return [function(i) for i in list]
+
+"""
+Write a function that takes a list of strings and returns a list with the strings in sorted order from shortest to longest.
+assert sort_by_length(['a','abc','ab','abcd'])==['ab','abc','abcd','a']
+"""
+def sort_by_length(list):
+    return sorted(list, key=len)
+
+"""
+Write a function that takes a list of strings and returns a list with the strings sorted alphabetically.
+assert sort_by_alphabet(['a','abc','ab','abcd'])==['a','ab','abc','abcd']
+"""
+def sort_by_alphabet(list):
+    return sorted(list)
+
+"""
+Write a function that takes a list of strings and returns a list with the strings sorted alphabetically, ignoring case.
+assert sort_by_alphabet_ignore_case(['a','abc','ab','abcd'])==['a','ab','abc','abcd']
+"""
+def sort_by_alphabet_ignore_case(list):
+    return sorted(list, key=str.lower)
+
+"""
+Write a function that takes a list of strings and returns a list with the strings sorted by length.
+assert sort_by_length(['a','abc','ab','abcd'])==['ab','abc','abcd','a']
+"""
+def sort_by_length(list):
+    return sorted(list, key=len)
+
+"""
+Write a function that takes a list of strings and returns a list with the strings sorted by length, ignoring case.
+assert sort_by_length_ignore_case(['a','abc','ab','abcd'])==['a','ab','abc','abcd']
+"""
+def sort_by_length_ignore_case(list):
+    return sorted(list, key=str.lower)
+
+"""
+Write a function that takes a list of strings and returns a list with the strings sorted by length,</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def add_string(lst, format_string):
+    return [format_string.format(i) for i in lst]
+
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to apply a given format string to all of the elements in a list.
+assert add_string([1,2,3,4],'temp{0}')==['temp1', 'temp2', 'temp3', 'temp4']
+"""
+
+
+def add_string(list, format):
+    return [format.format(i) for i in list]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def add_string(lst, fmt_str):
+    return [fmt_str.format(i) for i in lst]
+
+# Test the function
+print(add_string([1,2,3,4],'temp{0}'))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

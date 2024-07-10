@@ -1,0 +1,1358 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/767 </h1>
+<pre><code> """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def get_pairs_count(arr, sum_):
+    cnt = 0
+    for n in arr:
+        cnt += arr.count(sum_ - n)
+        if sum_ - n == n:
+            cnt -= 1
+    return cnt / 2
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 1, 1, 1], 2], [[1, 5, 7, -1, 5], 6], [[1, -2, 3], 1], [[-1, -2, 3], -3]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[], 0], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 8], [[], 5], [[-1, 0, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 0], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8], 0], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1], 0], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 4], 8], [[-1, 0, 1, 2, 3, 4, 5, 7, 8, 9], 8], [[97.69700646889478], 5], [[-1, 6, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1], 1], [[], -1], [[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8], 8], [[-1, 0, 1, 2, 3, 4, 5, 7, 8, 9], 9], [[-1, 0, 1, 2, 3, 4, 5, 7, 8, 9], 4], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 1], [[-1, 1, 2, 4, 5, 6, 8, 9], 8], [[-1, 1, 2, 3, 4, 5, 7, 8, 9], 8], [[True, False, False, True, True, False, True, True, True], 1], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 4], 2], [[True, False, False, True, True, False, True, True, True], 2], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1], -1], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 3], 4], [[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], 1], [[97.69700646889478], 6], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 7], -1], [[-1, 0, 6, 1, 2, 3, 4, 5, 6, 5, 7, 8, 9, 7], 8], [[-1, 0, 1, 2, 3, 4, 5, 1, 6, 7, 8, 9, 9, 4], 2], [[-1, 0, 1, 2, 3, 8, 5, 6, 7, 8, 9, 3], 4], [[True, False, True, True, False, True, True, True, True, True], 3], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 9, 1], 8], [[9, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8], 2], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 5], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 9, 1], -1], [[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], 9], [[97.69700646889478, 97.69700646889478], 6], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 7], [[-1, 1, 1, 4, 5, 6, 8, 9], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 4], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8], 4], [[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 4], 8], [[-1, 0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9], 8], [[-1, 8, 0, 1, 2, 3, 4, 5, 7, 8, 9], 9], [[-1, 8, 0, 1, 2, 3, 4, 5, 7, 8, 9], 10], [[], 6], [[-1, 0, 1, 2, 3, 4, 5, 7, 8, 9], 7], [[-1, 0, 1, 2, 3, 4, 5, 7, 8, 9, -1], 8], [[97.69700646889478], 7], [[-1, -1, 1, 1, 4, 5, 6, 8, 9], 8], [[-1, 6, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 6], 1], [[-1, 0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9], 2], [[-1, 0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9], 4], [[-1, 1, 2, 3, 4, 5, 7, 8, 9, 9, 4], 8], [[-1, 0, 1, 2, 3, 8, 5, 6, 7, 8, 9, 3], 5], [[True, False, False, True, True, False, True, True, False, True], 2], [[4, 24, 20], 1], [[True, False, True, True, False, False, True, True, True, True, True], 3], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 9, 1], 9], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 5], 9], [[-1, 0, 1, 2, 3, 8, 5, 6, 7, 8, 9, 3], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8], 3], [[-1, 0, 1, 2, 3, 4, 5, 10, 7, 8, 1, 9, 9, 1], -2], [[-1, 0, 1, 2, 3, 4, 5, 7, 8, 9, -1], -2], [[97.69700646889478, 97.69700646889478], 8], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 5, 5], 8], [[0, 1, 2, 3, 6, 8, 5, 6, 7, 8, 9, 3], 5], [[5, -1, 1, 2, 4, 5, 6, 8, 9], 8], [[-1, 1, 24, 2, 3, 4, 5, 6, 7, 8, 9], 1], [[-1, 1, 24, 2, 3, 4, 5, 6, 7, 8, 9], 2], [[97.69700646889478, 97.23101051556709], 8], [[-1, 0, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8], 8], [[-1, 0, 6, 1, 2, 3, 4, 5, 2, 6, 7, 8, 9, 6], 9], [[5, 24, 24, -1, 1, 2, 4, 5, 6, 8, 9], 8], [[97.35909695921131, 97.69700646889478], 7], [[-1, 0, 1, 3, 20, 3, 4, 5, 6, -2, 7, 8], 3], [[-1, -1, 1, 1, 4, 5, 6, 8, 9, -1], 8], [[-1, 0, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8], 9], [[], 8], [[-73, 8, -86, -19], 5], [[-1, -73, 1, 2, 3, 4, 5, 7, 8, 9, -1], -2], [[6, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 5, 5, 6], 3], [[-1, 0, 2, 2, 3, 4, 5, 6, 7, 8, 1, 9, 9, 1], 2], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 9, 1], 6], [[-1, 0, 1, 3, 4, 5, 6, 7, 8, 9, 1, 7], -1], [[-1, 0, 1, 2, 3, 8, 5, 6, 8, 9, 3, 8], 5], [[-1, 2, 2, 4, 5, 6, 8, 9], 7], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4], [[-1, -1, 1, 1, 4, 5, 6, 9, -1, 1], 7], [[-1, 0, 1, 2, 3, 8, 5, 6, 7, 8, 9, 3, 8], 8], [[False, True, True, False], 1], [[-1, 0, 6, 1, 2, 3, 4, 5, 6, 7, 8, 8], 9], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1], -2], [[-1, 0, 1, 2, 3, 4, 4, 5, 6, 7, 8, 9], 8], [[5, -1, 1, 2, 4, 5, 6, 8, 9, 5], 8], [[True, False, False, True, True, False, False, True, True, True], 1], [[-1, 8, 0, 1, 2, 3, 4, 5, 7, 8, 9], 6], [[-1, 0, 2, 2, 3, 4, 5, 6, 7, 8, 9, 9, 5, 5], 2], [[9, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8], -19], [[9, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8], -1], [[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 4], 9], [[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4], 1]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(nums, sum):
+    """
+    :param nums: list of numbers
+    :param sum: sum of the pairs
+    :return: number of pairs
+    """
+    nums.sort()
+    count = 0
+    for i in range(len(nums)):
+        if nums[i] > sum:
+            break
+        if i == 0:
+            count += nums.count(sum)
+        else:
+            count += nums.count(sum) - nums.count(nums[i - 1])
+    return count
+
+
+if __name__ == '__main__':
+    print(get_pairs_count([1, 1, 1, 1], 2))
+    print(get_pairs_count([1, 1, 1, 1], 1))
+    print(get_pairs_count([1, 1, 1, 1], 3))
+    print(get_pairs_count([1, 1, 1, 1], 4))
+    print(get_pairs_count([1, 1, 1, 1], 5))
+    print(get_pairs_count([1, 1, 1, 1], 6))
+    print(get_pairs_count([1, 1, 1, 1], 7))
+    print(get_pairs_count([1, 1, 1, 1], 8))
+    print(get_pairs_count([1, 1, 1, 1], 9))
+    print(get_pairs_count([1, 1, 1, 1], 10))
+    print(get_pairs_count([1, 1, 1, 1], 11))
+    print(get_pairs_count([1, 1, 1, 1], 12))
+    print(get_pairs_count([1, 1, 1, 1], 13))
+    print(get_pairs_count([1, 1, 1, 1], 14))
+    print(</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_pairs_count(numbers, sum_value):
+    """
+    This function counts the number of pairs in the list of numbers whose sum is equal to the given sum_value.
+    :param numbers: list of numbers
+    :param sum_value: integer
+    :return: integer
+    """
+    pairs_count = 0
+    numbers_set = set(numbers)
+
+    for num in numbers_set:
+        pairs_count += numbers.count(sum_value - num)
+
+    return pairs_count // 2
+
+# Test the function
+assert get_pairs_count([1, 1, 1, 1], 2) == 6</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, target_sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+def test_get_pairs_count():
+    assert get_pairs_count([1, 1, 1, 1], 2) == 6
+    assert get_pairs_count([1, 2, 3, 4], 5) == 2
+    assert get_pairs_count([1, 1, 3, 5], 6) == 1
+    assert get_pairs_count([1, 2, 2, 3], 4) == 2
+    print("All tests passed!")
+
+test_get_pairs_count()</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem:
+
+```python
+def get_pairs_count(numbers, sum):
+    """
+    Counts the number of pairs in the given list of numbers whose sum is equal to the given sum.
+    
+    Args:
+        numbers (list): A list of numbers.
+        sum (int): The target sum.
+        
+    Returns:
+        int: The count of pairs whose sum is equal to the given sum.
+    """
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+# Test the function
+assert get_pairs_count([1, 1, 1, 1], 2) == 6</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, target_sum):
+    count = 0
+    num_dict = {}
+    
+    for num in numbers:
+        complement = target_sum - num
+        if complement in num_dict:
+            count += num_dict[complement]
+        if num in num_dict:
+            num_dict[num] += 1
+        else:
+            num_dict[num] = 1
+    
+    return count
+
+# Test the function
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a Python markdown block:
+
+```python
+"""
+Write a python function to count the number of pairs whose sum is equal to 'sum'. The function gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(numbers, target_sum):
+    count = 0
+    n = len(numbers)
+    
+    for i in range(n):
+        for j in range(i+1, n):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    
+    return count
+
+# Test the function
+assert get_pairs_count([1,1,1,1], 2) == 6
+print("Assertion passed!")</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_pairs_count(numbers, sum):
+    # Create an empty set to store unique numbers
+    unique_numbers = set()
+    # Create a variable to store the count of pairs
+</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to count the number of pairs whose sum is equal to 'sum':
+
+
+```python
+def get_pairs_count(numbers, target_sum):
+    count = 0
+    num_dict = {}
+    for num in numbers:
+        if target_sum - num in num_dict:
+            count += num_dict[target_sum - num]
+        num_dict[num] = num_dict.get(num, 0) + 1
+    return count
+```
+
+Explanation:
+
+We use a dictionary to keep track of the count of each number in the list. We iterate through the list of numbers and check if the difference between the target_sum and the current number is present in the dictionary. If it is, we increment the count. If it's not, we add the current number to the dictionary with a count of 1. This is because if we have a pair of numbers whose sum is equal to the target_sum, one of them must be the current number and the other must be the difference between the target_sum and the current number. If we have already seen the difference before, we increment the count. Finally, we return the count of pairs whose sum is equal to the target_sum. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, sum):
+    count = 0
+    num_dict = {}
+
+    for num in numbers:
+        complement = sum - num
+        if complement in num_dict:
+            count += num_dict[complement]
+        if num in num_dict:
+            num_dict[num] += 1
+        else:
+            num_dict[num] = 1
+
+    return count
+
+# Test the function
+assert get_pairs_count([1,1,1,1], 2) == 6</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+
+print(get_pairs_count([1,1,1,1],2))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, target_sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+# Test case
+assert get_pairs_count([1, 1, 1, 1], 2) == 6</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that solves the problem:
+
+```python
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+```
+
+This function uses two nested loops to iterate over all pairs of numbers in the list. If the sum of a pair is equal to the target sum, it increments a counter. The function then returns the counter.
+
+However, this function has a time complexity of O(n^2), which means it can be slow for large lists. If you're dealing with large lists, you might want to consider a more efficient algorithm.
+
+Here's an optimized version of the function that uses a dictionary to store the numbers and their counts. This version has a time complexity of O(n):
+
+```python
+def get_pairs_count_optimized(numbers, sum):
+    num_dict = {}
+    count = 0
+    for num in numbers:
+        if num in num_dict:
+            num_dict[num] += 1
+        else:
+            num_dict[num] = 1
+        complement = sum - num
+        if complement in num_dict:
+            if complement != num or num_dict[num] > 1:
+                count += num_dict[complement]
+    return count // 2
+```
+
+This function iterates over the list once and for each number, it checks if its complement (i.e., the number that would add up to the target sum) is in the dictionary. If it is, it increments the counter. If the number and its complement are the same, it checks that there are at least two of this number in the list before incrementing the counter. Finally, it returns half the counter because each pair has been counted twice.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(nums, target_sum):
+    """
+    Write a python function to count the number of pairs whose sum is equal to 'sum'. 
+    The function gets as input a list of numbers and the sum.
+    """
+    count = 0
+    num_dict = {}
+
+    for num in nums:
+        complement = target_sum - num
+        if complement in num_dict:
+            count += num_dict[complement]
+        num_dict[num] = num_dict.get(num, 0) + 1
+
+    return count
+
+# Test the function
+assert get_pairs_count([1,1,1,1], 2) == 6</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(list, sum):
+    count = 0
+    for i in range(len(list)):
+        for j in range(len(list)):
+            if i != j and list[i] + list[j] == sum:
+                count += 1
+    return count
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+
+if __name__ == '__main__':
+    print(get_pairs_count([1, 1, 1, 1], 2))
+    print(get_pairs_count([1, 2, 3, 4], 3))
+    print(get_pairs_count([1, 2, 3, 4], 5))
+    print(get_pairs_count([1, 2, 3, 4], 6))
+    print(get_pairs_count([1, 2, 3, 4], 7))
+    print(get_pairs_count([1, 2, 3, 4], 8))
+    print(get_pairs_count([1, 2, 3, 4], 9))
+    print(get_pairs_count([1, 2, 3, 4], 10))
+    print(get_pairs_count([1, 2, 3, 4], 11))
+    print(get_pairs_count([1, 2, 3, 4], 12))
+    print(get_pairs_count([1, 2, 3, 4], 13))
+    print(get_pairs_count([1, 2, 3, 4], 14))
+    print(get_pairs_count([1, 2, 3, 4], 15))
+    print(get_pairs_count([1, 2, 3, 4], 16))
+    print(get_pairs_count([1, 2, 3, 4], 17))
+    print(get_pairs_count([1, 2, 3, 4], 18))
+    print(get_pairs_count([1, 2, 3</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def get_pairs_count(lst, total):
+    count = 0
+    length = len(lst)
+    for i in range(0, length):
+        for j in range(i+1, length):
+            if lst[i] + lst[j] == total:
+                count += 1
+    return count
+
+# Test the function
+assert get_pairs_count([1,1,1,1],2) == 6
+```
+
+This function works by iterating over each pair of numbers in the list and checking if their sum equals the target total. If it does, it increments the count. The time complexity of this function is O(n^2), where n is the length of the list.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def get_pairs_count(nums, target_sum):
+    count = 0
+    num_set = set(nums)
+    
+    for num in num_set:
+        complement = target_sum - num
+        if complement in num_set:
+            count += 1
+    
+    return count
+
+print(get_pairs_count([1, 1, 1, 1], 2))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+print(get_pairs_count([1,1,1,1],3))
+print(get_pairs_count([1,1,1,1],4))
+print(get_pairs_count([1,1,1,1],5))
+print(get_pairs_count([1,1,1,1],6))
+print(get_pairs_count([1,1,1,1],7))
+print(get_pairs_count([1,1,1,1],8))
+print(get_pairs_count([1,1,1,1],9))
+print(get_pairs_count([1,1,1,1],10))
+print(get_pairs_count([1,1,1,1],11))
+print(get_pairs_count([1,1,1,1],12))
+print(get_pairs_count([1,1,1,1],13))
+print(get_pairs_count([1,1,1,1],14))
+print(get_pairs_count([1,1,1,1],15))
+print(get_pairs_count([1,1,1,1],16))
+print(get_pairs_count([1,1,1,1],17))
+print(get_pairs_count([1,1,1,1],18))
+print(get_pairs_count([1,1,1,1],19))
+print(get_pairs_count([1,1,1,1],20))
+print(get_pairs_count([1,1,1,1],21))
+print(get_pairs_count([1,1,1,1],22))
+print(get_pairs_count([1,1,1,1],23))
+</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(nums, sum):
+  count = 0
+  for i in range(len(nums)):
+    for j in range(i + 1, len(nums)):
+      if nums[i] + nums[j] == sum:
+        count += 1
+  return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+def get_pairs_count(numbers, sum):
+    """
+    Function to count the number of pairs in a list whose sum equals to given sum.
+
+    :param numbers: List of numbers
+    :param sum: Sum of pair
+    :return: Number of pairs
+    """
+    return len([pair for pair in zip(numbers, numbers[1:]) if sum == (pair[0] + pair[1])]) + \
+           len([num for num in numbers if sum - num in numbers])
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, target_sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1, 1, 1, 1], 2) == 6</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to count the number of pairs whose sum is equal to 'sum':
+
+```python
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+```
+
+This function takes two arguments: a list of numbers and the sum. It initializes a count variable to 0 and then loops through all possible pairs of numbers in the list. For each pair, it checks if their sum is equal to the given sum. If it is, it increments the count variable. Finally, it returns the count of pairs whose sum is equal to the given sum.
+
+To test the function, we can use the example given in the problem statement:
+
+```python
+assert get_pairs_count([1,1,1,1],2) == 6
+```
+
+This assert statement checks if the function returns 6 for the input list [1,1,1,1] and sum 2. If the function returns the correct output, the assert statement will pass.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+def get_pairs_count(numbers, sum):
+    pairs_count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                pairs_count += 1
+    return pairs_count
+
+print(get_pairs_count([1,1,1,1],2))</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to solve the problem:
+
+```python
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+```
+
+This function works by iterating over each pair of numbers in the list. If the sum of a pair equals the target sum, it increments a counter. The function finally returns the counter, which represents the number of pairs whose sum equals the target sum.
+
+You can test the function with the following code:
+
+```python
+print(get_pairs_count([1,1,1,1],2))  # Output: 6
+```
+
+This will output `6`, which is the expected result.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(l,sum):
+    count=0
+    for i in range(len(l)):
+        for j in range(i+1,len(l)):
+            if l[i]+l[j]==sum:
+                count+=1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+print(get_pairs_count([1,1,1,1],3))
+print(get_pairs_count([1,1,1,1],4))
+print(get_pairs_count([1,1,1,1],5))
+print(get_pairs_count([1,1,1,1],6))
+print(get_pairs_count([1,1,1,1],7))
+print(get_pairs_count([1,1,1,1],8))
+print(get_pairs_count([1,1,1,1],9))
+print(get_pairs_count([1,1,1,1],10))
+print(get_pairs_count([1,1,1,1],11))
+print(get_pairs_count([1,1,1,1],12))
+print(get_pairs_count([1,1,1,1],13))
+print(get_pairs_count([1,1,1,1],14))
+print(get_pairs_count([1,1,1,1],15))
+print(get_pairs_count([1,1,1,1],16))
+print(get_pairs_count([1,1,1,1],17))
+print(get_pairs_count([1,1,1,1],18))
+print(get_pairs_count([1,1,1,1],19))
+print(get_pairs_count([1,1,1,1],20))
+print(get_pairs_count([1,1,1,1],21))
+print(get_pairs_count([1,1,1,1],22))
+print(get_pairs_count([1,1,1,1],23))
+print(</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(nums, sum):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if nums[i] + nums[j] == sum:
+                count += 1
+    return count
+assert get_pairs_count([1,1,1,1],2) == 6
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(list,sum):
+    count=0
+    for i in range(len(list)):
+        for j in range(i+1,len(list)):
+            if list[i]+list[j]==sum:
+                count+=1
+    return count</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, target_sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+# Test the function</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_pairs_count(nums, target_sum):
+    """
+    Count the number of pairs in a list of numbers whose sum is equal to the target sum.
+
+    :param nums: List of numbers
+    :param target_sum: Target sum
+    :return: Number of pairs whose sum is equal to the target sum
+    """
+    nums.sort()  # Sort the list to make it easier to find pairs
+    left, right = 0, len(nums) - 1
+    count = 0
+
+    while left < right:
+        current_sum = nums[left] + nums[right]
+
+        if current_sum == target_sum:
+            count += 1
+            left += 1
+            right -= 1
+        elif current_sum < target_sum:
+            left += 1
+        else:
+            right -= 1
+
+    return count
+
+# Test the function
+assert get_pairs_count([1, 1, 1, 1], 2) == 6
+assert get_pairs_count([1, 2, 3, 4], 5) == 2
+assert get_pairs_count([1, 1, 2, 2], 3) == 2
+assert get_pairs_count([1, 1, 1, 1], 3) == 0</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, target_sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6
+```
+
+This Python script defines a function `get_pairs_count` that takes a list of numbers and a target sum as input. It then iterates through the list using nested loops to compare each pair of numbers and increment a count variable if their sum equals the target sum. Finally, it returns the count variable.
+
+The `assert` statement at the end of the script tests the function with the example input `[1,1,1,1]` and target sum `2`, and asserts that the function returns `6`, which is the correct number of pairs whose sum equals `2` in the given list.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(nums, target_sum):
+    count = 0
+    num_dict = {}
+    for num in nums:
+        complement = target_sum - num
+        if complement in num_dict:
+            count += num_dict[complement]
+        num_dict[num] = num_dict.get(num, 0) + 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of triples whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_triples_count([1,1,1,1],2) == 4
+"""
+
+def get_triples_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            for k in range(j+1, len(arr)):
+                if arr[i] + arr[j] + arr[k] == sum:
+                    count += 1
+    return count
+
+print(get_triples_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of fours whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_fours_count([1,1,1,1],2) == 4
+"""
+
+def get_fours_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            for k in range(j+1, len(arr)):
+                for l in range(k+1, len(arr)):
+                    if arr[i] + arr[j] + arr[k] + arr[l] == sum:
+                        count += 1
+    return count
+
+print(get_fours_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of fives whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_fives_count</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_pairs_count(nums, sum):
+    pairs_count = 0
+    nums.sort()
+    for i in range(len(nums) - 1):
+        target_sum = sum - nums[i]
+        # Check if the target sum is in the dictionary
+        if target_sum in pairs_count:
+            pairs_count += pairs_count[target_sum]
+    return pairs_count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def get_pairs_count(nums, target_sum):
+    count = 0
+    num_dict = {}
+
+    for num in nums:
+        if target_sum - num in num_dict:
+            count += num_dict[target_sum - num]
+        if num in num_dict:
+            num_dict[num] += 1
+        else:
+            num_dict[num] = 1
+
+    return count
+
+# Test the function
+print(get_pairs_count([1,1,1,1],2))  # Output: 6</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def get_pairs_count(numbers, target_sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+# Test the function
+assert get_pairs_count([1,1,1,1], 2) == 6
+assert get_pairs_count([1,2,3,4,5], 5) == 2
+assert get_pairs_count([1,2,3,4,5], 6) == 1
+assert get_pairs_count([1,2,3,4,5], 7) == 0
+assert get_pairs_count([1,2,3,4,5], 0) == 0
+assert get_pairs_count([1,2,3,4,5], 1) == 6
+assert get_pairs_count([1,2,3,4,5], 3) == 3
+assert get_pairs_count([1,2,3,4,5], 4) == 3
+assert get_pairs_count([1,2,3,4,5], 10) == 0
+assert get_pairs_count([1,2,3,4,5], -1) == 0
+assert get_pairs_count([], 10) == 0
+assert get_pairs_count([1], 1) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], 10) == 2
+assert get_pairs_count([1,2,3,4,5,5,5], 11) == 1
+assert get_pairs_count([1,2,3,4,5,5,5], 6) == 3
+assert get_pairs_count([1,2,3,4,5,5,5], 7) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], 0) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], -1) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], 5) == 10
+assert get_pairs_count([1,2,3,4,5,5,5], 4) == 5
+assert get_pairs_count([1,2,3,4,5,5,5], 3) == 10
+assert get_pairs_count([1,2,3,4,5,5,5], 2) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], 1) == 10
+assert get_pairs_count([1,2,3,4,5,5,5], 0) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], -1) == 0
+
+# Test the function with some edge cases
+assert get_pairs_count([], 10) == 0
+assert get_pairs_count([1], 1) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], 10) == 2
+assert get_pairs_count([1,2,3,4,5,5,5], 11) == 1
+assert get_pairs_count([1,2,3,4,5,5,5], 6) == 3
+assert get_pairs_count([1,2,3,4,5,5,5], 7) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], 0) == 0
+assert get_pairs_count([1,2,3,4,5,5,5], -1) == 0
+assert get_p</code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_pairs_count(numbers, sum):
+    count = 0
+    numbers.sort()
+    left = 0
+    right = len(numbers) - 1
+
+    while left < right:
+        current_sum = numbers[left] + numbers[right]
+        if current_sum == sum:
+            count += (right - left)
+            left += 1
+            right -= 1
+        elif current_sum < sum:
+            left += 1
+        else:
+            right -= 1
+
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(nums, sum):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if nums[i] + nums[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(numbers, sum):
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+
+print(get_pairs_count([1, 1, 1, 1], 2))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(nums, sum):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if nums[i] + nums[j] == sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6
+```
+
+This Python function `get_pairs_count` takes a list of numbers and a sum as input. It then iterates through the list, checking for pairs of numbers that add up to the given sum. If it finds such a pair, it increments a counter. Finally, it returns the counter, which represents the number of pairs whose sum is equal to the given sum.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+print(get_pairs_count([1,1,1,1],3))
+print(get_pairs_count([1,1,1,1],4))
+print(get_pairs_count([1,1,1,1],5))
+print(get_pairs_count([1,1,1,1],6))
+print(get_pairs_count([1,1,1,1],7))
+print(get_pairs_count([1,1,1,1],8))
+print(get_pairs_count([1,1,1,1],9))
+print(get_pairs_count([1,1,1,1],10))
+print(get_pairs_count([1,1,1,1],11))
+print(get_pairs_count([1,1,1,1],12))
+print(get_pairs_count([1,1,1,1],13))
+print(get_pairs_count([1,1,1,1],14))
+print(get_pairs_count([1,1,1,1],15))
+print(get_pairs_count([1,1,1,1],16))
+print(get_pairs_count([1,1,1,1],17))
+print(get_pairs_count([1,1,1,1],18))
+print(get_pairs_count([1,1,1,1],19))
+print(get_pairs_count([1,1,1,1],20))
+print(get_pairs_count([1,1,1,1],21))
+print(get_pairs_count([1,1,1,1],22))
+print(get_pairs_count([1,1,1,</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(nums, sum):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if nums[i] + nums[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],19))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],18))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],17))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],16))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],15))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],14))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],13))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],12))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],11))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],10))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],9))
+print(get_pairs_count([1,2,3,4,5,6,7,8,9,10],8))
+print(get_pairs_count([</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_pairs_count(numbers, sum):
+    count = 0
+    numbers.sort()
+    left, right = 0, len(numbers) - 1
+
+    while left < right:
+        current_sum = numbers[left] + numbers[right]
+        if current_sum == sum:
+            count += (right - left) // 2
+            left += 1
+        elif current_sum < sum:
+            left += 1
+        else:
+            right -= 1
+
+    return count
+
+assert get_pairs_count([1,1,1,1], 2) == 6</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+def get_pairs_count(numbers: list, sum: int) -> int:
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1, 1, 1, 1], 2) == 6</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to solve the problem, wrapped in a markdown block:
+
+```python
+def get_pairs_count(numbers, target_sum):
+    """
+    Count the number of pairs in the given list of numbers whose sum is equal to the target sum.
+
+    Args:
+        numbers (list): A list of numbers.
+        target_sum (int): The target sum for the pairs.
+
+    Returns:
+        int: The count of pairs whose sum is equal to the target sum.
+    """
+    count = 0
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            if numbers[i] + numbers[j] == target_sum:
+                count += 1
+    return count
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(nums, sum):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            if nums[i] + nums[j] == sum:
+                count += 1
+    return count
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+def get_pairs_count(arr, sum):
+    count = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] + arr[j] == sum:
+                count += 1
+    return count
+
+print(get_pairs_count([1,1,1,1],2))
+
+"""
+Write a python function to find the maximum sum of a subarray of size ‘k’ in an array.
+assert max_sub_array_of_size_k([1,2,3,4],2) == 6
+"""
+
+def max_sub_array_of_size_k(arr, k):
+    max_sum = 0
+    for i in range(len(arr)-k+1):
+        temp_sum = 0
+        for j in range(i, i+k):
+            temp_sum += arr[j]
+        if temp_sum > max_sum:
+            max_sum = temp_sum
+    return max_sum
+
+print(max_sub_array_of_size_k([1,2,3,4],2))
+
+"""
+Write a python function to find the maximum sum of a subarray of size ‘k’ in an array.
+assert max_sub_array_of_size_k([1,2,3,4],2) == 6
+"""
+
+def max_sub_array_of_size_k(arr, k):
+    max_sum = 0
+    for i in range(len(arr)-k+1):
+        temp_sum = 0
+        for j in range(i, i+k):
+            temp_sum += arr[j]
+        if temp_sum > max_sum:
+            max_sum = temp_sum
+    return max_sum
+
+print(max_sub_array_of_size_k([1,2,3,4],2))
+
+"""
+Write a python function to find the maximum sum of a subarray of size ‘k’ in an array.
+assert max_sub_array_of_size_k([1,2,3,4],2) == 6
+"""
+
+def max_sub_array_of_size_k(arr, k):
+    max_sum = 0
+    for i in</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i+1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+
+assert get_pairs_count([1,1,1,1],2) == 6</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of pairs whose sum is equal to ‘sum’. The funtion gets as input a list of numbers and the sum,
+assert get_pairs_count([1,1,1,1],2) == 6
+"""
+
+
+def get_pairs_count(lst, sum):
+    count = 0
+    for i in range(len(lst)):
+        for j in range(i + 1, len(lst)):
+            if lst[i] + lst[j] == sum:
+                count += 1
+    return count
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def get_pairs_count(numbers, target_sum):
+    count = 0
+    num_dict = {}
+    for num in numbers:
+        if target_sum - num in num_dict:
+            count += num_dict[target_sum - num]
+        if num in num_dict:
+            num_dict[num] += 1
+        else:
+            num_dict[num] = 1
+    return count
+
+# Test the function
+print(get_pairs_count([1,1,1,1],2))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1132 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/427 </h1>
+<pre><code> """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import re
+def change_date_format(dt):
+    return re.sub(r'(\d{4})-(\d{1,2})-(\d{1,2})', '\\3-\\2-\\1', dt)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['2026-01-02'], ['2020-11-13'], ['2021-04-26']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['2021-1-026'], ['2024-02-29'], ['0001-01-01'], ['0000-00-00'], ['2100-45-98'], ['2020-00-15'], ['2025-13-01'], ['2022-02-29'], ['2020-02-29'], ['2022-04-31'], ['2023-06-31'], ['2030-09-31'], ['2022-04-32030-09-311'], ['0000-00-2022-02-290'], ['2020-02-20000-00-2022-02-2909'], ['2025-13-2020-02-20000-00-2022-02-290901'], ['2024-02-299'], ['2022-0-2-29'], ['2020-02-2002002024-02-299-00-2022-02-2909'], ['2024-02-2'], ['2022-0-2-22024-02-2999'], ['2022-0-2-2'], ['2020-02-2002002024-02-299-02-2909'], ['2022-04-30000-00-001'], ['2022-0-22-22024-02-299'], ['2022-0-2-22024-02-2020-02-292999'], ['2022-0-2-22024-02-2-999'], ['2022-0-2-22024-02-2020-02-2929909'], ['2020-02-20000--00-2022-02-2909'], ['2020-02-2-00-2022-02-2909'], ['2020-02-20020202024-02-299-02-2909'], ['2025-13-2020-02-20000-100-2022-02-290901'], ['2020-02-20020202022020-00-154-02-299-02-2909'], ['2020-02-2000001-01-012002024-02-299-002-2022-02-2909'], ['2025-13-2020-02-20000-100-22020-02-20000-00-2022-02-290922-02-290901'], ['2022-0-22-22024-02-29-9'], ['2020-00-1-5'], ['2022-0-02-22024-02-2020-02-292999'], ['2022-04-302030-09-311'], ['0000-00-2022-0290'], ['2020-02-200-2909'], ['2020-00-12022-0-2-295'], ['0000-00-2002-290'], ['2022-04-302000-00-001'], ['2022-0-2020-02-2902-22024-02-2020-02-292999'], ['2022-02-292022-04-32030-09-311'], ['2020-02-20000--00-2022-02-29092022-0-2-22024-02-2023-06-31999'], ['2022-04-302-001'], ['2020-00-12022-0-2-2022-0-2-22024-02-2020-02-292999295'], ['2020-02-20000-0'], ['2020-02-20020202022020-00-154-02-299-020-2909'], ['2022-0-2020-02-29002-22024-02-2020-02-292999'], ['2020-02-2002002024-02-22022-02-2999-00-2022-02-2909'], ['2020-02-20000-'], ['0000-00-2022-02-20001-01-0190'], ['2020-02-2000200202020-00-1-524-02-299-02-2909'], ['2020-02-200022025-13-0100202020-00-1-524-02-299-02-2909'], ['2022-0-22-22024-02025-13-2020-02-200000-00-2022-02-20001-01-0190000-00-2022-02-290901'], ['2020-02-20000-00-2022022-04-31909'], ['2022-04-30000-00-02022-0-2020-02-29002-22024-02-2020-02-292999'], ['2020-00-12022-0-22999295'], ['2022-0-2-22024-02020-02-20020202022020-00-154-02-299-020-29092-2-999'], ['0000-00-202022-02-290'], ['2020-02-2002024-02-22022-02-2999-00-2022-02-2902022-0-22-22024-02025-13-2020-02-200000-00-2022-02-20001-01-00-00-2022-02-2909019'], ['2025-13-2020--02-20000-100-2022-02-22020-00-151'], ['2025-13-2020--02-20000-100-2022-02-22151'], ['2030-09-2025-13-2020--02-20000-100-2022-02-22020-00-151'], ['2022-02-22020-02-20020202022020-00-154-902-299-02-290992022-04-32030-09-311'], ['2020-00-1202020-022023-06-31-20000-00-2022022-04-3190922-0-2-295'], ['2020-00-120922-0-2-20222-0-2-22024-02-2020-02-292999295'], ['2020-02-20000--2020-02-20020202022020-00-154-02-299-020-290900-2022-02-2909'], ['2020-02-2000002022-0-22-22024-02-29-91-01-012002024-02-299-002-2022-2030-09-2025-13-2020--02-20000-100-2022-02-22020-00-15102-2909'], ['2020-02-2000002022-0-22-22024-02-29-911-01-012002024-02-299-002-2022-2030-09-2025-13-2020--02-20000-100-2022-02-22020-00-15102-2909'], ['2020-00-1202020-022023-06-31-22-295'], ['2022-0-02-22024-02-2020--02-292999'], ['2022-04-302030-09-1311'], ['2022-04-302-0001'], ['2022-04-30000001'], ['2030-09-312020-02-2002002024-02-299-00-2022-02-2909'], ['2020-02-202000--2020-02-20020202022020-00-154-02-299-020-290900-2022-02-2909'], ['2020-02-2000002022-0-22-22024-02-29-91-01-012002024-02-299-002-2022-2030-09-2025-13-2020--02-20000-100-2022-02-22020-00-15102-29009'], ['2025-13-2025-13-2020-02-20000-100-22020-02-20000-00-2022-02-290922-02-2909012020-02-20000-100-22020-02-20000-00-2022-02-290922-02-290901'], ['2020-00-12022-2020-02-2002024-02-22022-02-2999-00-2022-02-2902022-0-22-22024-02025-13-2020-02-200000-00-2022-02-20001-01-00-00-2022-02-2909019295'], ['2022-04-3020002024-02-2-00-02020-02-20000-001'], ['2020-02-209'], ['2022-0-22-220024-02-29-9'], ['2021-1-0226'], ['2030-09-3120000-00-2022-0290020-02-2002002024-02-299-00-2022-02-2909'], ['2022-0-2-22024-022020-02-20000-99'], ['2020-02-200020202022020-00-154-02-299-020-2909'], ['2020-02-2002002024-022020-00-12022-0-22999295-299-02-2909'], ['2020-02-2002002024-02-299-00-2022-02-29209'], ['2020-00-12022-2020-02-2002024-02-22022-02-2999-00-2022-02-029020022-0-22-22024-02025-13-2020-02-200000-00-2022-02-20001-01-00-00-2022-02-2909019295'], ['2030-09-312020-02-2002002024-02-299-02022-04-302030-09-3110-2022-02-2909'], ['2020-02-20000-00-2022022-04-3190'], ['2022-0-2-2202909'], ['2022-20-2999'], ['2022-0-222020-02-2002002024-02-299-00-2022-02-292092-29-9'], ['2022-0-2020-02-29002-22024-02-20202020-00-1202020-022023-06-31-22-295-02-292999'], ['2020-02-2002002024-02-292024-02-29909'], ['2020-02-20000-002-2022022-04-31909'], ['2020-02-20000-00-2'], ['2020-02-200022025-13-0100202020--00-1-524-02-299-02-2909'], ['2022-00-2-22024-02-2-999'], ['0000-00-202022-02-222022-02-22020-02-20020202022020-00-154-902-299-02-290992022-04-32030-09-31190'], ['2020-02-200022025-13-0100202020--2020-02-20020202022020-00-154-02-299-02-290900-1-524-02-299-02-2909'], ['2020-02-2000031909'], ['2022-0-222020-02-2002002024-02-299-00-2022-02-292092-29--9'], ['2020-02-20000--2020-02-200202020220200000-00-202022-02-222022-02-22020-02-20020202022020-00-154-902-299-02-290992022-04-32030-09-31190-00-154-02-299-020-290900-2022-02-2909'], ['2020-02-209000-0-00-202022-02-290'], ['2025-13-2020--02-20000-100-202020-02-2000002022-0-22-22024-02-29-91-01-012002024-02-299-002-2022-2030-09-2025-13-2020--02-20000-100-2022-02-22020-00-15102-2900922-02-22151'], ['2020-02-202000--2020-02-20020202022020-00-154-02-2022-0-22-22024-02025-13-2020-02-200000-00-2022-02-20001-01-0190000-00-2022-02-290901299-020-290900-2022-02-2909']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    """
+    :param date: date in yyyy-mm-dd format
+    :return: date in dd-mm-yyyy format
+    """
+    return '-'.join(reversed(date.split('-')))
+
+
+if __name__ == '__main__':
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-01-02"))
+    print(change_date_format("2026-</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date: str) -> str:
+    """
+    Convert a date from yyyy-mm-dd format to dd-mm-yyyy format.
+
+    :param date: str, date in yyyy-mm-dd format
+    :return: str, date in dd-mm-yyyy format
+    """
+    return '-'.join(date.split('-')[::-1])
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date_str):
+    year, month, day = date_str.split("-")
+    return f"{day}-{month}-{year}"
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def change_date_format(date_str):
+    """
+    Converts a date string from yyyy-mm-dd format to dd-mm-yyyy format.
+    
+    Args:
+        date_str (str): A date string in the format 'yyyy-mm-dd'.
+    
+    Returns:
+        str: The date string in the format 'dd-mm-yyyy'.
+    """
+    year, month, day = date_str.split('-')
+    return f"{day}-{month}-{year}"
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    year, month, day = date.split('-')
+    return f'{day}-{month}-{year}'
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+def change_date_format(date):
+    # Split the date string into year, month, and day
+    year, month, day = date.split('-')
+
+    # Reorder the year, month, and day to dd-mm-yyyy format
+    return f"{day}-{month}-{year}"
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def change_date_format(date):
+    year, month, day = date.split('-')
+    return f"{day}-{month}-{year}"
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def change_date_format(date_input):
+    # Split the input date by '-'
+    date_parts = date_input.split('-')
+    # Reverse the order of the date parts
+    date_parts = date_parts[::-1]
+    # Join the date parts with '-'
+</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to convert a date of yyyy-mm-dd format to dd-mm-yyyy format:
+
+```python
+def change_date_format(date):
+    """
+    This function takes a date in yyyy-mm-dd format and returns the date in dd-mm-yyyy format.
+    """
+    day, month, year = date.split('-')
+    return f"{day}-{month}-{year}"
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'
+```
+
+Explanation:
+
+The `split()` method is used to split the input date string into three parts: day, month, and year. Then, these parts are concatenated in the required format using an f-string. The `assert` statement is used to test the function with the given example input and expected output. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  from datetime import datetime
+
+def change_date_format(date):
+    """
+    This function converts a date from yyyy-mm-dd format to dd-mm-yyyy format.
+    """
+    # Parse the input date string
+    dt = datetime.strptime(date, "%Y-%m-%d")
+
+    # Format the date in the desired output format
+    new_date = dt.strftime("%d-%m-%%Y")
+
+    return new_date
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    """
+    :param date: str
+    :return: str
+    """
+    return date[8:10] + '-' + date[5:7] + '-' + date[:4]
+
+
+if __name__ == '__main__':
+    print(change_date_format("2026-01-02"))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date_str):
+    return date_str[8:] + '-' + date_str[5:7] + '-' + date_str[:4]
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that should do the trick:
+
+```python
+def change_date_format(date_string):
+    """
+    This function converts a date from yyyy-mm-dd format to dd-mm-yyyy format.
+    """
+    # Split the date string into year, month, and day
+    year, month, day = date_string.split('-')
+
+    # Return the date in the new format
+    return '{}-{}-{}'.format(day, month, year)
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'
+```
+
+This function works by splitting the input date string on the '-' character, which gives us a list of strings representing the year, month, and day. Then, it returns a new string with these parts in the desired order.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+print(change_date_format("2026-01-02"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+print(change_date_format("02-01-2026"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+print(change_date_format("02-01-2026"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date_str):
+    """
+    Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+    assert change_date_format("2026-01-02") == '02-01-2026'
+    """
+    year, month, day = date_str.split('-')
+    return f"{day}-{month}-{year}"
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return f"{date[-2:]}-{date[5:7]}-{date[:4]}"
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    """
+    :param date: date in yyyy-mm-dd format
+    :return: date in dd-mm-yyyy format
+    """
+    return date[8:] + '-' + date[5:7] + '-' + date[:4]
+
+
+def main():
+    print(change_date_format("2026-01-02"))
+
+
+if __name__ == '__main__':
+    main()
+
+
+# Test cases
+# Edge cases:
+# 1. date is None
+# 2. date is empty
+# 3. date is not in yyyy-mm-dd format
+# 4. date is not a string
+# 5. date is a string but not in yyyy-mm-dd format
+# 6. date is a string in yyyy-mm-dd format
+# Correct output:
+# 1. None
+# 2. None
+# 3. None
+# 4. None
+# 5. None
+# 6. 02-01-2026
+
+# Edge cases:
+# 1. date is None
+# 2. date is empty
+# 3. date is not in yyyy-mm-dd format
+# 4. date is not a string
+# 5. date is a string but not in yyyy-mm-dd format
+# 6. date is a string in yyyy-mm-dd format
+# Correct output:
+# 1. None
+# 2. None
+# 3. None
+# 4. None
+# 5. None
+# 6. 02-01-2026
+
+# Edge cases:
+# 1. date is None
+# 2. date is empty
+# 3. date is not in yyyy-mm-dd format
+# 4. date is not a string
+# 5. date is a string but not in yyyy-mm-dd format
+# 6. date is a string in yyyy-mm-dd format
+# Correct output:
+# 1. None
+# 2. None
+# 3. None
+# 4. None</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def change_date_format(date):
+    """
+    This function takes a date in the format yyyy-mm-dd and returns it in the format dd-mm-yyyy.
+
+    Args:
+    date (str): A string representing the date in the format yyyy-mm-dd.
+
+    Returns:
+    str: A string representing the date in the format dd-mm-yyyy.
+
+    Example:
+    >>> change_date_format("2026-01-02")
+    '02-01-2026'
+    """
+    date_parts = date.split('-')
+    return f'{date_parts[2]}-{date_parts[1]}-{date_parts[0]}'
+```
+
+You can use this function by calling `change_date_format("2026-01-02")`, which will return `'02-01-2026'`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+def change_date_format(date):
+    # Split the date into year, month, and day
+    year, month, day = date.split('-')
+    
+    # Reverse the order of year, month, and day
+    reversed_date = day + '-' + month + '-' + year
+    
+    return reversed_date
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    return date[6:] + "-" + date[3:5] + "-" + date[:2]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+print("All tests passed successfully.")
+
+"""
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return date[6:] + "-" + date[3:5] + "-" + date[:2]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+print("All tests passed successfully.")
+
+"""
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return date[6:] + "-" + date[3:5] + "-" + date[:2]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+print("All tests passed successfully.")
+
+"""
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return date[6:] + "-" + date[3:5] + "-" + date[:2]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+print("All tests passed successfully.")
+
+"""
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    </code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+  """
+  Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+  assert change_date_format("2026-01-02") == '02-01-2026'
+  """
+  year, month, day = date.split("-")
+  return f"{day}-{month}-{year}"</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+import datetime
+def change_date_format(date_str):
+    """
+    Convert a date string from yyyy-mm-dd format to dd-mm-yyyy format.
+    """
+    date_object = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    return date_object.strftime("%d-%m-%Y")
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date: str) -> str:
+    year, month, day = date.split('-')
+    return f'{day}-{month}-{year}'
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def change_date_format(date):
+    year, month, day = map(int, date.split('-'))
+    return f"{day:02d}-{month:02d}-{year}"
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+```
+
+The `change_date_format` function takes a date string in the format of `yyyy-mm-dd` and returns a date string in the format of `dd-mm-yyyy`. The function first splits the input string into year, month, and day components using the `split` method. It then uses the `map` function to convert these components from strings to integers. Finally, it uses an f-string to format the date components into the desired output format. The `02d` format specifier in the f-string ensures that the day and month components are zero-padded to two digits.
+
+The `assert` statement at the end of the script tests the function with an example input and expected output. If the function returns the expected output, the assertion passes.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date: str) -> str:
+    """Converts date of yyyy-mm-dd format to dd-mm-yyyy format.
+
+    Args:
+        date (str): date in yyyy-mm-dd format.
+
+    Returns:
+        str: date in dd-mm-yyyy format.
+    """
+    return "-".join(reversed(date.split("-")))
+
+
+if __name__ == "__main__":
+    print(change_date_format("2026-01-02"))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format:
+
+```python
+def change_date_format(date):
+    """
+    This function converts a date of yyyy-mm-dd format to dd-mm-yyyy format.
+    """
+    # Split the date string into a list of strings
+    date_list = date.split('-')
+
+    # Reverse the list to get the day, month, and year
+    reversed_date_list = date_list[::-1]
+
+    # Join the list into a string with '-' as the separator
+    new_date = '-'.join(reversed_date_list)
+
+    return new_date
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'
+```
+
+This function works by first splitting the input string into a list of strings using the `split` method. Then it reverses the list to get the day, month, and year in the correct order. Finally, it joins the list into a string with '-' as the separator using the `join` method.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return date.split('-')[::-1]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date: str) -> str:
+    """
+    Converts a date from yyyy-mm-dd format to dd-mm-yyyy format.
+    """
+    date_parts = date.split("-")
+    return "-".join(date_parts[::-1])
+assert change_date_format("2026-01-02") == '02-01-2026'
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    date = date.split("-")
+    date = date[2] + "-" + date[1] + "-" + date[0]
+    return date
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date_str):
+    # Split the date string into year, month, and day components
+    year, month, day = date_str.split('-')
+    # Return the formatted date string with day, month, and year
+    return f"{day}-{month}-{year}"
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    """
+    Convert a date from yyyy-mm-dd format to dd-mm-yyyy format.
+
+    :param date: str, date in yyyy-mm-dd format
+    :return: str, date in dd-mm-yyyy format
+    """
+    year, month, day = date.split('-')
+    return f'{day}-{month}-{year}'
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    return date[8:] + '-' + date[5:7] + '-' + date[:4]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  from datetime import datetime
+
+def change_date_format(date_str):
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+    return date_obj.strftime("%d-%m-%Y")
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return date.split("-")[2] + "-" + date.split("-")[1] + "-" + date.split("-")[0]
+
+print(change_date_format("2026-01-02"))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    """
+    :param date: a string of date in yyyy-mm-dd format
+    :return: a string of date in dd-mm-yyyy format
+    """
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+
+def change_date_format_2(date):
+    """
+    :param date: a string of date in yyyy-mm-dd format
+    :return: a string of date in dd-mm-yyyy format
+    """
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+
+def change_date_format_3(date):
+    """
+    :param date: a string of date in yyyy-mm-dd format
+    :return: a string of date in dd-mm-yyyy format
+    """
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+
+def change_date_format_4(date):
+    """
+    :param date: a string of date in yyyy-mm-dd format
+    :return: a string of date in dd-mm-yyyy format
+    """
+    date_list = date.split('-')
+    date_list[0], date_list[1], date_list[2] = date_list[2], date_list[1], date_list[0]
+    return '-'.join(date_list)
+
+
+def change_date_format_5(date):
+    """
+    :param date: a string of date in yyyy-mm-dd format
+    :return: a string of</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+import re
+
+def change_date_format(date_str):
+    # Check if the input date_str matches the yyyy-mm-dd format
+    if re.match(r'^\d{4}-\d{2}-\d{2}$', date_str):
+        # Split the date by '-' and reverse the components
+        parts = date_str.split('-')
+        return '-'.join(parts[::-1])
+    else:
+        raise ValueError('Invalid date format. Please use yyyy-mm-dd format.')
+
+# Example usage:
+# assert change_date_format("2026-01-02") == '02-01-2026'
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  import datetime
+
+def change_date_format(date_str):
+    """
+    Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+
+    Args:
+        date_str: A date in yyyy-mm-dd format.
+
+    Returns:
+        A date in dd-mm-yyyy format.
+    """
+
+    # Convert the date string to a datetime object.
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+
+    # Format the date object into the desired format.
+    return date_obj.strftime("%d-%m-%Y")</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def change_date_format(date):
+    year, month, day = date.split('-')
+    return f'{day}-{month}-{year}'
+
+# Test the function
+print(change_date_format("2026-01-02"))  # Output: '02-01-2026'</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    return date.split('-')[2] + '-' + date.split('-')[1] + '-' + date.split('-')[0]
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    year, month, day = date.split('-')
+    return f'{day}-{month}-{year}'
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script to convert a date of yyyy-mm-dd format to dd-mm-yyyy format:
+
+```python
+def change_date_format(date):
+    """
+    This function takes a date in yyyy-mm-dd format and returns it in dd-mm-yyyy format.
+    """
+    year, month, day = date.split('-')
+    return f"{day}-{month}-{year}"
+```
+
+We can use the `split()` method to split the date string into its year, month, and day components, and then use string formatting to reorder the components in the desired format. The `f` string syntax is used to concatenate the day, month, and year components with hyphens in between. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+
+def change_date_format(date):
+    return "-".join(reversed(date.split("-")))
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    """
+    Convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+
+    Args:
+        date (str): The date in yyyy-mm-dd format.
+
+    Returns:
+        str: The date in dd-mm-yyyy format.
+    """
+    return date[2:] + '-' + date[1:3] + '-' + date[:4]
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    date_list = date.split("-")
+    return f"{date_list[2]}-{date_list[1]}-{date_list[0]}"
+
+
+print(change_date_format("2026-01-02"))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+import re
+
+def change_date_format(date):
+    date_format = re.compile(r'(\d{4})-(\d{2})-(\d{2})')
+    match = date_format.match(date)
+    if match:
+        day = match.group(3)
+        month = match.group(2)
+        year = match.group(1)
+        return day + '-' + month + '-' + year
+    else:
+        return None
+
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01-02"))
+print(change_date_format("2026-01</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    return date[6:] + date[3:5] + date[:2]
+
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date):
+    return date.split('-')[2] + '-' + date.split('-')[1] + '-' + date.split('-')[0]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    return date[6:] + "-" + date[3:5] + "-" + date[:2]
+
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-01-2026'
+assert change_date_format("2026-01-02") == '02-</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    date_list = date.split("-")
+    return date_list[2] + "-" + date_list[1] + "-" + date_list[0]
+
+
+print(change_date_format("2026-01-02"))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def change_date_format(date_str):
+    date_list = date_str.split('-')
+    return f"{date_list[2]}-{date_list[1]}-{date_list[0]}"
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+def change_date_format(date_str: str) -> str:
+    year, month, day = date_str.split('-')
+    new_date = f'{day}-{month}-{year}'
+    return new_date
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+
+def change_date_format(date):
+    return date.split('-')[2] + '-' + date.split('-')[1] + '-' + date.split('-')[0]
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def change_date_format(date):
+    """
+    Convert a date string from yyyy-mm-dd format to dd-mm-yyyy format.
+
+    Args:
+        date (str): A date string in yyyy-mm-dd format.
+
+    Returns:
+        str: The date string in dd-mm-yyyy format.
+    """
+    year, month, day = date.split('-')
+    return f"{day}-{month}-{year}"
+
+# Test case
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+def change_date_format(date):
+    date_parts = date.split('-')
+    return f'{date_parts[2]}-{date_parts[1]}-{date_parts[0]}'
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+def change_date_format(date):
+    return date.replace("-", "-")
+
+print(change_date_format("2026-01-02"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    return date.replace("-", "-")
+
+print(change_date_format("02-01-2026"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    return date.replace("-", "-")
+
+print(change_date_format("02-01-2026"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    return date.replace("-", "-")
+
+print(change_date_format("02-01-2026"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def change_date_format(date):
+    return date.replace("-", "-")
+
+print(change_date_format("02-01-2026"))
+
+"""
+Write a function to convert a date of dd-mm-yyyy format to yyyy-mm-dd format.
+assert change_date_format("02-01-2026") == '2026-01-02'
+"""
+
+def</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  from datetime import datetime
+
+def change_date_format(date_str):
+    date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+    return date_obj.strftime('%d-%m-%Y')
+
+assert change_date_format("2026-01-02") == '02-01-2026'</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.
+assert change_date_format("2026-01-02") == '02-01-2026'
+"""
+
+
+import datetime
+
+def change_date_format(date):
+    return datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%d-%m-%Y")
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def change_date_format(date):
+    # Split the date by '-'
+    date_parts = date.split('-')
+    
+    # Rearrange the date parts in dd-mm-yyyy format
+    rearranged_date = date_parts[2] + '-' + date_parts[1] + '-' + date_parts[0]
+    
+    return rearranged_date
+
+# Test the function
+assert change_date_format("2026-01-02") == '02-01-2026'
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

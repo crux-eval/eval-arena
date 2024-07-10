@@ -1,0 +1,1308 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/49 </h1>
+<pre><code> 
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    res, x = 1, 2
+    while n != 0:
+        if n % 2 == 1:
+            res = res * x % p
+        x = x * x % p
+        n //= 2
+    return res % p
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[3, 5], [1101, 101], [0, 101], [3, 11], [100, 101], [30, 5], [31, 5]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[5, 17], [10, 23], [20, 37], [50, 79], [100, 89], [200, 113], [7, 3], [12, 7], [50, 23], [101, 103], [20, 20], [37, 37], [200, 112], [19, 19], [3, 3], [200, 200], [79, 79], [17, 20], [100, 20], [100, 3], [6, 6], [23, 200], [78, 79], [6, 78], [5, 5], [6, 19], [5, 6], [7, 78], [113, 112], [3, 20], [6, 20], [7, 101], [101, 101], [7, 6], [5, 200], [17, 21], [21, 5], [10, 10], [20, 21], [20, 17], [17, 100], [19, 2], [99, 20], [17, 17], [7, 7], [79, 3], [6, 10], [99, 98], [78, 100], [79, 112], [112, 101], [112, 20], [19, 6], [8, 78], [79, 200], [112, 113], [10, 88], [112, 112], [12, 101], [8, 200], [80, 50], [113, 113], [20, 19], [50, 20], [12, 4], [202, 200], [19, 200], [98, 4], [19, 50], [113, 100], [8, 100], [200, 8], [17, 78], [37, 80], [88, 21], [202, 202], [10, 17], [19, 5], [19, 4], [36, 200], [101, 200], [112, 114], [88, 97], [17, 5], [200, 37], [100, 18], [88, 20], [20, 103], [6, 21], [7, 20], [19, 18], [21, 103], [80, 37], [21, 102], [36, 7], [100, 100], [20, 99], [36, 101], [80, 5], [36, 78], [234, 101], [50, 17], [4321, 1009], [100000, 7], [9876, 54321], [1000000, 999983], [999999, 100019], [172870, 530123], [1048576, 523], [523, 1048576], [233, 101], [172870, 9876], [9875, 54321], [172871, 523], [1009, 17], [172871, 172871], [999983, 999983], [233, 233], [101, 54321], [999984, 999984], [1000002, 1000000], [50, 9875], [172870, 101], [232, 101], [523, 523], [172871, 172870], [7, 999999], [4321, 4321], [54321, 17], [172872, 172871], [54321, 54321], [233, 530123], [4321, 999999], [235, 234], [1000002, 1000001], [233, 234], [172870, 172871], [17, 1009], [1000003, 1000003], [1000003, 17], [999999, 172871], [172870, 172870], [999984, 172871], [523, 100000], [100019, 172872], [9877, 54321], [16, 16], [7, 233], [18, 235], [1000002, 1000002], [101, 530123], [999984, 101], [172871, 235], [101, 50], [1000002, 18], [999984, 999983], [172869, 172869], [524, 523], [233, 172871], [1000000, 172871], [999984, 235], [999999, 999999], [101, 1000000], [232, 232], [172871, 172869], [9877, 9877], [1000000, 524], [1000001, 7], [1048576, 524], [51, 50], [530123, 530123], [9877, 9875], [522, 524], [7, 9877], [9876, 9876], [999984, 999999], [530123, 9877], [999984, 999985], [1000003, 523], [172869, 172871], [999984, 999998], [4321, 233], [9877, 9876], [999999, 18], [1000000, 1000000], [172871, 530123], [9874, 9875], [523, 99999], [1000003, 54321], [9, 1000001], [172872, 1009], [54323, 523], [235, 1009], [522, 999983], [233, 9877], [1000000, 999999], [9875, 530123], [9877, 54322], [231, 231], [18, 9875], [172869, 18], [1000000, 172870], [522, 100000], [524, 1009], [530124, 530123], [234, 16], [102, 1000000], [51, 1009], [18, 172869], [51, 51], [9875, 172871], [1000003, 1000002], [523, 524], [17, 172872], [523, 1048577], [522, 17], [99999, 99999], [530122, 231], [234, 999984], [8, 9877], [999983, 999984], [9, 101], [7, 999984], [232, 530122], [523, 172869], [999999, 19], [9875, 99999], [54320, 54321], [233, 999985], [522, 9876], [4322, 172869], [16, 9875], [17, 9877], [522, 9877], [232, 999984], [172870, 9875], [9875, 9875], [54322, 7], [172870, 172869], [4320, 1009], [1000001, 524], [530122, 19], [54322, 4321], [19, 17], [54323, 530124], [233, 9878], [54323, 232], [172869, 4322], [4320, 999984], [9878, 9875], [52, 51], [1000001, 1000000], [1048577, 1000001], [54322, 1000000], [530122, 530123], [8, 530122], [7, 1000001], [100019, 172871], [9876, 523], [1048576, 1009], [4322, 530123], [6, 100000], [172871, 18], [100, 101], [232, 522], [1000000, 18], [9877, 9878], [524, 51], [1009, 233], [172872, 1010], [6, 530123], [1009, 234], [523, 172870], [18, 524], [530123, 1009], [100019, 100019], [9875, 524], [1048576, 4322], [9874, 999983], [530124, 9875], [54320, 101], [172870, 1048577], [1048577, 54322], [1000001, 999984], [19, 9], [233, 100], [1000001, 1000001], [9878, 9877], [234, 235], [1048576, 100019], [19, 1000001], [9874, 9874], [19, 10], [54320, 1010], [1000000, 9877], [234, 1000001], [1000000, 999984], [232, 172872], [1000000, 4320], [19, 524], [172871, 1009], [1000002, 1000003], [235, 100000], [4320, 4320], [8, 232], [523, 999985], [100019, 530122], [19, 235], [1009, 1009], [101, 1009], [54321, 100], [236, 236], [1000001, 530123], [172871, 6], [4322, 1010], [172872, 172872], [9876, 18], [235, 236], [50, 523], [9876, 999983], [172873, 172872], [234, 233], [19, 100], [18, 18], [172870, 172868], [172873, 1009], [1048577, 4322], [19, 9875], [522, 522], [999983, 530123], [530123, 524], [999998, 999999], [523, 17], [18, 1000001], [172868, 235], [1000002, 530122], [172869, 232], [4320, 233], [7, 999983], [172869, 9875], [18, 523], [101, 999999], [8, 54321], [9875, 1048577], [172869, 172870], [9877, 233], [10, 999983], [525, 9877], [9878, 9874], [99999, 9877], [4321, 999985], [52, 172872], [17, 172873], [999984, 530122], [1009, 4320], [999985, 999983], [530122, 100019], [999998, 18], [172872, 530122], [522, 9875], [1000000, 54322], [172871, 172872], [1009, 235], [99999, 523], [99999, 1048576], [19, 4322], [1000000, 525], [4319, 4320], [525, 17], [530124, 999997], [522, 54322], [54323, 9877], [522, 530124], [9875, 530124], [523, 18], [172868, 172868], [54323, 231], [100000, 100000], [999984, 7], [172873, 19], [9876, 9877], [172871, 999983], [18, 19], [233, 236], [4320, 50], [234, 9878], [999985, 172871], [1048576, 1048576], [102, 54322], [999997, 100019], [4318, 4320], [238, 236], [101, 52], [4322, 1009], [999997, 18], [999985, 8], [1048577, 49], [19, 102], [4323, 999985], [1011, 1010], [999984, 18], [1048576, 1048575], [231, 530122], [172868, 172869], [4323, 4320], [8, 999999], [999998, 999998], [9877, 4320], [54322, 54322], [525, 525], [525, 524], [100019, 232], [102, 9876], [233, 102], [9877, 999998], [4321, 1000001], [9877, 999983], [522, 100001], [525, 54323], [16, 20], [10, 236], [4318, 19], [7, 232], [999984, 232], [9875, 9877], [100000, 236], [100018, 100019], [1000002, 54322], [172869, 172868], [100018, 172873], [999985, 52], [99, 54321], [9878, 17], [20, 18], [233, 172872], [1048577, 1048577], [236, 102], [16, 6], [1000002, 999984], [1000002, 100000], [999983, 172870], [9878, 9878], [232, 17], [1011, 1009], [234, 530124], [238, 99], [530122, 530122], [100000, 172871], [999997, 16], [999985, 172872], [100018, 100018], [530124, 530124], [9, 4322], [999997, 17], [231, 523], [16, 999997], [9875, 52], [1011, 9878], [172870, 100000], [102, 4321], [100019, 530123], [999983, 9875], [530123, 521], [18, 20], [1008, 1009], [1000002, 525], [530123, 530124], [172870, 9878], [100000, 6], [524, 524], [52, 1000001], [172873, 236], [10, 234], [236, 172874], [10, 1000001], [9875, 9876], [1009, 18], [19, 1048577], [999984, 1009], [9875, 9874], [18, 231], [172873, 1048576], [999983, 172871], [4322, 1048576], [99999, 9878], [233, 232], [4322, 172870], [19, 1000002], [54319, 54320], [7, 8], [999985, 999986], [100000, 9], [50, 50], [530121, 530122], [1010, 100018], [238, 238], [999984, 100001], [172871, 1010], [100000, 524], [1008, 18], [524, 18], [9, 530122], [16, 82], [1009, 16], [52, 522], [100001, 172871], [54323, 530123], [172873, 172873], [100018, 233], [530122, 7], [4321, 4319], [52, 17], [1000001, 999998], [100001, 100001], [231, 1000003], [100, 1011], [100000, 999985], [524, 999999], [54321, 172871], [18, 999984], [9, 9], [54322, 172873], [172869, 100001], [235, 9878], [237, 236], [999986, 9875], [77, 1010], [172871, 999999], [232, 4322], [17, 4320], [18, 1009], [172873, 172874], [172871, 524], [100001, 1048576], [100, 16], [19, 999986], [525, 523], [54318, 172873], [1000003, 530122], [1009, 9], [77, 172871], [1008, 234], [9, 521], [9874, 530124], [52, 1000002], [9875, 54319], [234, 54320], [54323, 522], [100, 999984], [9877, 530124], [100, 999997], [231, 8], [524, 17], [54320, 54322], [4320, 523], [1000000, 999986], [51, 1011], [4322, 100019], [18, 9874], [522, 521], [1000002, 4323], [54323, 54322], [52, 52], [172870, 1000004], [16, 1009], [82, 82], [999998, 524], [9874, 54321], [231, 54322], [4318, 54321], [100018, 999986], [4322, 232], [1000002, 172872], [4322, 4322], [999986, 1048576], [54318, 231], [234, 524], [54318, 4319], [8, 8], [530122, 9877], [521, 233], [172869, 54321], [1000004, 1000001], [999983, 530122], [54322, 54319], [8, 172869], [530121, 530121], [51, 54319], [1011, 1048576], [4319, 9875], [172870, 4323], [17, 530124], [1048576, 1048577], [1048578, 1048577], [172872, 18], [172873, 999997], [100001, 4322], [100018, 1008], [0, 1], [1, 1], [0, 2], [1, 2], [2, 2], [99, 2], [100, 2], [2, 1], [0, 100], [50, 1000000], [99999, 100000], [234, 523], [999999, 1048576], [530123, 234], [99997, 100000], [99997, 9877], [99997, 9878], [99997, 99997], [999999, 999983], [1048577, 172870], [99999, 100019], [234, 100], [101, 523], [99998, 99997], [7, 100], [17, 234], [54321, 172870], [999983, 99997], [17, 999984], [9876, 54322], [530124, 234], [50, 100019], [99997, 523], [17, 99997], [99999, 100020], [999982, 999982], [100, 7], [100000, 9876], [54322, 100], [16, 999984], [1000000, 1000001], [99, 7], [999998, 100019], [530124, 235], [234, 234], [9878, 1048576], [530124, 9878], [7, 234], [98, 99], [530123, 54321], [100, 99], [1000000, 234], [16, 523], [4321, 99997], [1048576, 530123], [999985, 999984], [172870, 999998], [101, 530122], [999982, 524], [999983, 524], [99, 101], [999998, 9878], [530123, 235], [1048576, 999982], [530123, 99997], [8, 7], [54322, 530125], [999982, 4321], [76, 100000], [7, 523], [99999, 16], [54322, 234], [999982, 999983], [101, 100], [530122, 524], [1048575, 46], [99999, 15], [999998, 76], [99, 100], [9876, 1010], [99998, 100000], [101, 99998], [999981, 4321], [1000000, 233], [9877, 1048576], [100020, 9878], [17, 1000000], [523, 522], [100, 9876], [54322, 99997], [999981, 1048577], [54322, 54321], [100000, 233], [4321, 999983], [1048575, 99], [98, 101], [530123, 99996], [98, 98], [999981, 4320], [523, 99997], [1048579, 1048577], [99996, 99997], [522, 523], [15, 54321], [98, 1048577], [17, 999999], [522, 1000000], [54321, 1000000], [999999, 100020], [99, 999981], [233, 54322], [530124, 99997], [9876, 522], [999998, 530122], [100019, 4321], [99996, 9877], [999985, 999985], [100020, 54322], [16, 9878], [1048576, 234], [235, 999998], [530123, 100], [234, 999999], [9876, 1048577], [235, 46], [15, 9878], [15, 523], [999999, 100018], [523, 99], [100020, 99], [97, 172870], [235, 999999], [101, 234], [8, 99], [1048575, 1048575], [530122, 99996], [999999, 4321], [100, 999981], [76, 76], [99997, 98], [1048576, 9876], [521, 1000000], [999999, 234], [530124, 530125], [54321, 4320], [1048574, 172870], [1048578, 1048576], [530124, 1048575], [1048576, 7], [1048576, 9877], [9879, 9878], [99998, 530122], [9876, 524], [524, 172870], [4320, 99997], [233, 1000000], [16, 1048576], [54322, 1048576], [98, 97], [9878, 530123], [523, 54321], [7, 172870], [99998, 1048576], [4320, 99999], [1011, 99997], [46, 235], [999983, 99999], [999998, 172870], [1000000, 999982], [100020, 50], [100020, 1048576], [101, 99997], [530125, 999982], [1048575, 100001], [4321, 1011], [9878, 521], [1011, 1011], [54322, 99998], [1010, 1010], [1048576, 522], [530122, 99995], [1000000, 100020], [97, 98], [172871, 9878], [101, 9878], [9876, 1048575], [9876, 530125], [54321, 100001], [999999, 530122], [234, 999998], [99997, 530125], [235, 99997], [234, 530125], [15, 101], [530122, 522], [1000001, 172872], [54322, 999984], [530125, 54321], [530122, 100], [88, 88], [99999, 999983], [1048577, 9878], [530124, 99999], [16, 1048577], [172870, 100019], [1048576, 99995], [1000001, 234], [17, 999985], [99999, 4321], [233, 99996], [1048577, 9877], [100021, 100021], [97, 9878], [100021, 54322], [100021, 99996], [7, 54321], [530122, 9878], [521, 17], [100019, 1048578], [1048574, 1048574], [235, 1000000], [521, 521], [1010, 8], [530122, 172871], [1000000, 15], [1048581, 1048580], [235, 8], [97, 76], [99998, 172872], [4319, 99999], [9878, 54321], [46, 1048575], [98, 999981], [98, 100018], [99996, 100000], [235, 521], [100020, 100020], [17, 1048578], [99998, 99998], [530124, 100000], [523, 1048575], [522, 999985], [14, 15], [999986, 999983], [99997, 97], [233, 523], [999985, 1048574], [99995, 99998], [100000, 100001], [1048578, 1048578], [99999, 1048578], [1048574, 100020], [99997, 1048576], [1048576, 100001], [4321, 99999], [99996, 99996], [17, 99998], [234, 530123], [530122, 1048576], [1048577, 1048576], [97, 99996], [522, 54321], [9879, 1048580], [4320, 100000], [999983, 100000], [9876, 77], [101, 99], [98, 4321], [98, 9876], [1048574, 999998], [235, 99999], [16, 9879], [99998, 234], [100018, 100000], [17, 99999], [15, 50], [99999, 99998], [530122, 530121], [172872, 4321], [100019, 100020], [235, 235], [49, 50], [100000, 14], [99996, 16], [999984, 100019], [233, 524], [76, 523], [100021, 530122], [99, 99997], [100020, 100021], [1048580, 99995], [523, 999983], [54321, 233], [1010, 101], [234, 232], [100018, 232], [100, 98], [100, 99998], [100020, 9879], [100020, 1048577], [76, 9878], [77, 9876], [76, 99999], [50, 49], [99996, 999999], [100020, 1048578], [1048576, 999983], [99999, 102], [4321, 530123], [1048577, 1048578], [46, 530122], [1048574, 100019], [530125, 99], [999999, 1000000], [1010, 999986], [235, 530123], [999981, 54322], [9879, 9880], [88, 89], [1000000, 54321], [999981, 999981], [4319, 999982], [76, 530125], [1048575, 1048576], [47, 47], [101, 102], [1048579, 100], [530122, 101], [100002, 100001], [9876, 4319], [1011, 521], [54321, 54322], [7, 100017], [4320, 9876], [99999, 9876], [97, 97], [99999, 1048579], [9880, 100000], [999985, 522], [54320, 54320], [234, 97], [76, 234], [89, 89], [7, 97], [99996, 172870], [9879, 999999], [1048575, 999985], [999984, 99999], [15, 1000001], [530122, 100021], [17, 523], [9876, 999981], [530122, 523], [999985, 98], [98, 530124], [999986, 999982], [46, 46], [1048580, 1048580], [16, 524], [101, 7], [530125, 47], [999999, 999984], [100, 100018], [1048574, 88], [54320, 1048578], [1012, 1011], [9878, 7], [14, 54321], [172871, 100019], [96, 172870], [4318, 1048576], [89, 100000], [530122, 999983], [1048575, 99997], [235, 530125], [8, 236], [999981, 172870], [89, 54322], [530125, 530124], [47, 89], [100002, 999998], [1048581, 46], [76, 530123], [1048576, 521], [7, 9880]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the completed code for the given problem:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n == 1:
+        return 2 % p
+    else:
+        result = 1
+        for _ in range(n):
+            result = (result * 2) % p
+        return result</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics)."""
+    return pow(2, n, p)
+
+
+# Test cases
+print(modp(3, 5))  # Expected output: 3
+print(modp(1101, 101))  # Expected output: 2
+print(modp(0, 101))  # Expected output: 1
+print(modp(3, 11))  # Expected output: 8
+print(modp(100, 101))  # Expected output: 1</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    result = 1
+    base = 2
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * base) % p
+        base = (base * base) % p
+        n //= 2
+    return result</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int):
+    # Calculate 2^n using modular exponentiation
+    result = (2 ** n) % p
+    return result</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    """
+    result = 1
+    for _ in range(n):
+        result = (result * 2) % p
+    return result
+
+# Test cases
+assert modp(3, 5) == 3
+assert modp(1101, 101) == 2
+assert modp(0, 101) == 1
+assert modp(3, 11) == 8
+assert modp(100, 101) == 1
+
+print("All test cases pass")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n % 2 == 0:
+        return modp(n // 2, p) ** 2 % p
+    else:
+        return modp(n - 1, p) * 2 % p
+
+
+def modp_inv(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_inv(3, 5)
+    4
+    >>> modp_inv(1101, 101)
+    100
+    >>> modp_inv(0, 101)
+    1
+    >>> modp_inv(3, 11)
+    4
+    >>> modp_inv(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n % 2 == 0:
+        return modp_inv(n // 2, p) ** 2 % p
+    else:
+        return modp_inv(n - 1, p) * 2 % p
+
+
+def modp_pow(n: int, p: int, k: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_pow(3, 5, 10)
+    1
+    >>> modp_pow(1101, 101, 10)
+    100
+    >>> modp_pow(0, 101, 10)
+    1
+    >>> modp_pow(3, 11, 10)
+    1
+    >>> modp_pow(100, 101, 10)
+    1
+    """
+    if k == 0:
+        return 1
+    elif k % 2 == 0:
+        return modp_pow(n, p, k // 2) ** 2 % p
+    else:
+        return modp_pow(n, p, k - 1) * n % p
+
+
+def modp_pow_inv(n: int, p: int, k: int</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    result = 1
+    base = 2
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * base) % p
+        n = n // 2
+        base = (base * base) % p
+    return result
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, I can help with that. The function `modp(n, p)` needs to calculate 2^n modulo p. However, direct calculation might lead to numeric overflow for large values of n. To avoid this, we can use the property of modulo operation that (a*b) % m = ((a % m) * (b % m)) % m. Here's a Python function that uses this property:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics)."""
+    result = 1
+    for _ in range(n):
+        result = (2 * result) % p
+    return result
+```
+
+This function works by repeatedly doubling the result and taking the modulus, which keeps the intermediate values small and prevents numeric overflow. However, this function has a time complexity of O(n), which can be slow for large values of n.
+
+For a more efficient solution, we can use the technique of exponentiation by squaring, which reduces the time complexity to O(log n). Here's how you can do it:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics)."""
+    result = 1
+    base = 2
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * base) % p
+        base = (base * base) % p
+        n = n // 2
+    return result
+```
+
+This function works by expressing the exponent n as a sum of powers of 2, and using the modulo property to keep the intermediate values small. This is much faster than the previous function, especially for large values of n.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    # Initialize result
+    result = 1
+
+    # Binary exponentiation
+    while n > 0:
+        # If n is odd, multiply result with 2
+        if n % 2 == 1:
+            result = (result * 2) % p
+
+        # n must be even now
+        n = n // 2
+
+        # Square the base
+        result = (result * result) % p
+
+    return result
+
+# Test the function</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is a Python solution using the built-in pow() function. This function is aware of large numbers and will return the remainder of the power operation.
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    if n == 1:
+        return 2
+    if n % 2 == 0:
+        return modp(n // 2, p) ** 2 % p
+    else:
+        return modp(n // 2, p) ** 2 % p * 2 % p
+
+
+def modp_iter(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_iter(3, 5)
+    3
+    >>> modp_iter(1101, 101)
+    2
+    >>> modp_iter(0, 101)
+    1
+    >>> modp_iter(3, 11)
+    8
+    >>> modp_iter(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    if n == 1:
+        return 2
+    if n % 2 == 0:
+        return modp_iter(n // 2, p) ** 2 % p
+    else:
+        return modp_iter(n // 2, p) ** 2 % p * 2 % p
+
+
+def modp_iter_2(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_iter_2(3, 5)
+    3
+    >>> modp_iter_2(1101, 101)
+    2
+    >>> modp_iter_2(0, 101)
+    1
+    >>> modp_iter_2(3, 11)
+    8
+    >>> modp_iter_2(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    if n == 1:
+        return 2
+    if n % 2 == 0:
+        return modp_iter_2(n // 2, p) ** 2 % p
+    else:
+        return modp_iter_2(</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python function in a markdown style code block:
+
+```python
+def modp(n: int, p: int) -> int:
+    """
+    Return 2^n modulo p (be aware of numerics).
+
+    Parameters:
+    n (int): The exponent.
+    p (int): The modulus.
+
+    Returns:
+    int: The result of 2^n modulo p.
+
+    Examples:
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+```
+
+This function uses the built-in `pow` function with three arguments, which calculates `(base, exponent, modulus)`. It's a more efficient way to calculate large powers modulo a number.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def modp(n: int, p: int):
+    return pow(2, n, p)
+
+print(modp(3, 5))
+print(modp(1101, 101))
+print(modp(0, 101))
+print(modp(3, 11))
+print(modp(100, 101))</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n % 2 == 0:
+        return (modp(n // 2, p) ** 2) % p
+    else:
+        return (2 * (modp((n - 1) // 2, p) ** 2)) % p</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    if n % 2 == 0:
+        return modp(n // 2, p) ** 2 % p
+    else:
+        return 2 * modp(n - 1, p) % p
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+def modp(n, p):
+    """Return 2^n modulo p (be aware of numerics)."""
+    if n < 0:
+        n = (n % p + p) % p  # handle negative numbers
+    result = 1
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * 2) % p
+        n = n // 2
+    return result
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+
+# Test cases
+print(modp(3, 5))  # Output: 3
+print(modp(1101, 101))  # Output: 2
+print(modp(0, 101))  # Output: 1
+print(modp(3, 11))  # Output: 8
+print(modp(100, 101))  # Output: 1</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    # Check if n is 0, in this case the result will be 1
+    if n == 0:
+        return 1
+    # Check if n is negative, in this case we will convert it to positive
+    elif n < 0:
+        n = -n
+
+    # Calculate 2^n
+    result = 1
+    for _ in range(n):
+        result *= 2
+
+    # Apply modulo operation
+    return result % p</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics)."""
+    result = 1
+    for i in range(n):
+        result = (result * 2) % p
+    return result
+```
+
+This function takes two arguments, `n` and `p`, and returns `2^n` modulo `p`. It does this by iterating `n` times and multiplying the result by 2 in each iteration. The modulo operation is performed at each step to ensure that the result is within the range of the modulus.
+
+Here are some test cases:
+
+```python
+assert modp(3, 5) == 3
+assert modp(1101, 101) == 2
+assert modp(0, 101) == 1
+assert modp(3, 11) == 8
+assert modp(100, 101) == 1
+```
+
+Note that the function assumes that `n` is a non-negative integer and `p` is a prime number. If either of these assumptions is violated, the function may produce unexpected results or raise errors.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+```
+
+This function uses the built-in `pow` function in Python, which can take three arguments: the base, the exponent, and the modulus. The `pow` function calculates the power of the base to the exponent, and then returns the result modulo the modulus. This is more efficient than calculating the power and then taking the modulus, especially for large numbers.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+
+def modp_inv(n: int, p: int):
+    """Return the multiplicative inverse of n modulo p.
+    >>> modp_inv(3, 5)
+    2
+    >>> modp_inv(1101, 101)
+    0
+    >>> modp_inv(0, 101)
+    1
+    >>> modp_inv(3, 11)
+    4
+    >>> modp_inv(100, 101)
+    0
+    """
+    return pow(n, p - 2, p)
+
+def modp_sqrt(n: int, p: int):
+    """Return the square root of n modulo p.
+    >>> modp_sqrt(3, 5)
+    2
+    >>> modp_sqrt(1101, 101)
+    0
+    >>> modp_sqrt(0, 101)
+    1
+    >>> modp_sqrt(3, 11)
+    4
+    >>> modp_sqrt(100, 101)
+    0
+    """
+    return pow(n, (p + 1) // 4, p)
+
+def modp_isqrt(n: int, p: int):
+    """Return the integer square root of n modulo p.
+    >>> modp_isqrt(3, 5)
+    2
+    >>> modp_isqrt(1101, 101)
+    0
+    >>> modp_isqrt(0, 101)
+    1
+    >>> modp_isqrt(3, 11)
+    4
+    >>> modp_isqrt(100, 101)
+    0
+    """
+    return pow(n, (p + 1) // 8, p)
+
+def modp_isqrt_inv(n: int, p: int):
+    """Return the multiplicative inverse of the integer square root of n modulo p.
+    >>> modp_isqrt_inv(3, 5)
+    2
+    >>> modp_isqrt_inv(1101, 101)
+    0
+    >>> modp_isqrt_inv(0, 101)
+    1
+    >>> modp_isqrt_inv(3,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    if n % 2 == 0:
+        return (modp(n // 2, p) ** 2) % p
+    else:
+        return (2 * modp(n // 2, p) ** 2) % p</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    # Initialize result
+    res = 1
+    
+    # Update n if it is more than or equal to p
+    n = n % (p - 1)
+    
+    # If n is now 0, return 1
+    if n == 0:
+        return 1
+    
+    # If n is even, use the square method
+    while n > 0:
+        if n & 1:
+            res = (res * 2) % p
+        n = n >> 1
+        res = (res * res) % p
+    
+    return res</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+```
+
+Explanation:
+The `pow` function in Python has a third optional argument `modulus` which can be used to calculate the modular exponentiation. In this case, we want to calculate `2^n modulo p`, so we pass `2`, `n`, and `p` as the first, second, and third arguments to `pow` respectively. The result is the remainder of `2^n` when divided by `p`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics)."""
+    return pow(2, n, p)
+
+# Test cases
+print(modp(3, 5))  # 3
+print(modp(1101, 101))  # 2
+print(modp(0, 101))  # 1
+print(modp(3, 11))  # 8
+print(modp(100, 101))  # 1</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    
+    Args:
+    n: int - the power of 2 to be raised
+    p: int - the modulo value
+    
+    Returns:
+    int - the result of 2^n modulo p
+    
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    
+    # Initialize the result variable
+    result = 1
+    
+    # Loop through n times and multiply result by 2 each time
+    for i in range(n):
+        result = (result * 2) % p
+    
+    return result
+```
+
+Explanation:
+
+The function `modp` takes two arguments, `n` and `p`. It initializes a variable `result` to 1 and then loops `n` times, multiplying `result` by 2 each time. The `%` operator is used to ensure that the result stays within the range of `p`. Finally, the result is returned. This is because the modulo operator `%` returns the remainder of a division operation, which is the same as the result of raising 2 to the power of `n` modulo `p`. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+
+    return pow(2, n, p)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    if n % 2 == 1:
+        return pow(2, n, p) % p
+    else:
+        return (modp(n // 2, p) * modp(n // 2, p)) % p</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the problem:
+
+```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+```
+
+This code uses the built-in `pow()` function with three arguments to calculate `2^n modulo p`. The third argument `p` is used to specify the modulus.</code></pre>
+
+      <p> codebooga-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n % 2 == 0:
+        return modp(n // 2, p) ** 2 % p
+    else:
+        return (2 * modp(n // 2, p)) % p
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def modp(n: int, p: int) -> int:
+    """
+    Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)
+```
+
+This function uses the built-in `pow` function in Python, which computes the power of a number modulo another number. The `pow` function takes three arguments: the base number, the exponent, and the modulo number. The function returns the result of the power operation modulo the modulo number.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return (2**n) % p
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n % 2 == 0:
+        return modp(n // 2, p) ** 2 % p
+    else:
+        return (modp(n - 1, p) * 2) % p</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+def modp(n: int, p: int):
+    # First, we convert the number n from decimal to binary
+    binary_n = bin(n)[2:]
+    # Pad zeros at the beginning to make the binary length equal to the number of digits in p
+    binary_n = '0' * (len(str(p)) - len(binary_n)) + binary_n
+
+    # Initialize result as 1
+    result = 1
+
+    # Iterate through the binary representation of n
+    for bit in binary_n:
+        if bit == '1':
+            result = (result * 2) % p
+
+    return result</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    # Handle the case when n is 0
+    if n == 0:
+        return 1
+
+    # Initialize the result with 2
+    result = 2
+
+    # Compute 2^n modulo p using repeated squaring
+    for _ in range(n - 1):
+        result = (result * result) % p
+
+    return result % p</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    # Explanation:
+    # We are using the property of Exponentiation:
+    # a^b = (a mod n) * (a^b mod n)
+    # So, 2^n = (2 mod p) * (2^n mod p)
+    # We can apply the modulo operation to the base and the result of the exponentiation,
+    # and then multiply them together.
+    return (2 % p) * (2 ** n % p)
+
+
+# Test Cases
+print(modp(3, 5))  # Should print: 3
+print(modp(1101, 101))  # Should print: 2
+print(modp(0, 101))  # Should print: 1
+print(modp(3, 11))  # Should print: 8
+print(modp(100, 101))  # Should print: 1</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+
+    if n == 0:
+        return 1
+    if n % 2 == 0:
+        return modp(n // 2, p) ** 2 % p
+    else:
+        return 2 * modp(n // 2, p) ** 2 % p
+
+
+def modp_iter(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_iter(3, 5)
+    3
+    >>> modp_iter(1101, 101)
+    2
+    >>> modp_iter(0, 101)
+    1
+    >>> modp_iter(3, 11)
+    8
+    >>> modp_iter(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    result = 1
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * 2) % p
+        n = n // 2
+        result = (result * result) % p
+    return result
+
+
+def modp_iter_fast(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_iter_fast(3, 5)
+    3
+    >>> modp_iter_fast(1101, 101)
+    2
+    >>> modp_iter_fast(0, 101)
+    1
+    >>> modp_iter_fast(3, 11)
+    8
+    >>> modp_iter_fast(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    result = 1
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * 2) % p
+        n = n // 2
+        result = (result * result) % p
+    return result
+
+
+def modp_iter_fast_2(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp_iter_fast_2(3, 5)
+    3
+    >>> modp_iter_fast_2(1101, 101)
+    2
+    >>></code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def modp(n: int, p: int):
+    return pow(2, n, p)</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def modp(n: int, p: int) -> int:
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    if n == 0:
+        return 1
+    elif n < 0:
+        return modp(-n, p)
+    elif n % 2 == 0:
+        return modp(n//2, p)
+    else:
+        return modp(n-1, p) + modp(n//2, p)</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def modp(n: int, p: int):
+    """Return 2^n modulo p (be aware of numerics).
+    >>> modp(3, 5)
+    3
+    >>> modp(1101, 101)
+    2
+    >>> modp(0, 101)
+    1
+    >>> modp(3, 11)
+    8
+    >>> modp(100, 101)
+    1
+    """
+    return pow(2, n, p)</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

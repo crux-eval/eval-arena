@@ -1,0 +1,1539 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/10 </h1>
+<pre><code> 
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    if is_palindrome(string):
+        return string
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[i-1::-1]
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[''], ['x'], ['xyz'], ['xyx'], ['jerry']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['race'], ['level'], ['tenet'], ['noon'], ['redder'], ['refer'], ['dewed'], ['madam'], ['malayalam'], ['radar'], ['r'], ['rrefrerace'], ['erace'], ['raracece'], ['rrrefrear'], ['raceredder'], ['araracecae'], ['rradar'], ['racrrefreraceereddrce'], ['levevl'], ['lracrrefreraceereddrceevel'], ['rrefreracrefere'], ['rardar'], ['levevltenet'], ['racrrefreraceeredrdrce'], ['racrrefracrrefreraceereddrceaceereddrce'], ['ararracrrefreraceeredrdrceacecae'], ['noradarolevevln'], ['rrefreralevevlce'], ['racrrefreraceereddrcerrefrerace'], ['onoon'], ['rrefreraracecee'], ['tene'], ['racrrefddrce'], ['dedwed'], ['erradarrace'], ['acece'], ['leevel'], ['racrrefrracrrefracrrefreraceereddrceaceereddrceacrrefreraceereddrceaceereddrce'], ['rr'], ['rrefreracrdewede'], ['rrrarteneacecee'], ['malaylalam'], ['rarcrrefreraceereddrcerrefrerace'], ['rrraertracrrefracrrefreraceereddrceaceereddrceeneacededwedcee'], ['erradarracerradarracee'], ['lveevel'], ['rrefreracreerradarracefere'], ['lracrrefreraceereddrceeveltenet'], ['rrraertracrrefraclracrrefreraceereddrceeveltenetrrefreraceereddrceaceereddrceeneacededwedcee'], ['rardaar'], ['erradarracerrlracrrefreraceereddrceeveladarracee'], ['levevllevevl'], ['rrerradarracerradarraceeefreracrefere'], ['maadam'], ['ded'], ['CIB'], ['rarcrrefreraceereddrcerrrefrefrace'], ['lvevl'], ['re'], ['lracrrefreraceedewedreddrceevel'], ['rrraertracrrefraclracrrefreraceereddrceeveltenetrrefreraceereddrceaceerceddrceeneacededwedcee'], ['racrraefracrrefreraceereddrcerrraertracrrefracrrefreraceereddrceaceereddrceeneacededwedceeaceereddrce'], ['rdewedr'], ['rrraertracrrefraclracrrefreracceereddrceeveltenetrrefreraceereddrceaceerceddrceeneacededwedcee'], ['mraceredderadam'], ['onnoon'], ['lenet'], ['lrrraertracrrefracrrefreraceereddrceaceereddrceeneacededwedceeveevel'], ['racrraefracrrefreraceereddrcerrraertracrrefracerrefreraceereddrceaceereddrceeneacededwedceeaceereddrce'], ['malalam'], ['erac'], ['malaararacecaelam'], ['levelevellonoon'], ['acracrrefreraceeredrdrcee'], ['errradarracerradarracee'], ['rarcrrefreraceereddrccerrrefrefrace'], ['malatenetlam'], ['levelevellonoonracrrefddrce'], ['malatenetlamrardaar'], ['rrefreralevevlmalalamce'], ['malalllam'], ['rraddar'], ['acracrrerardaarcee'], ['lracrrefrereddrceeveltenet'], ['CCIB'], ['racelevevlredder'], ['redderradar'], ['mracereddreradam'], ['rarcrrefreraceereddrrrefreralevevlmalalamcecerrefrerace'], ['rarcrrefreraceereddrcerlevelevellonoonracrrefddrcerrefrefrace'], ['errrefrerar'], ['malarrefreracraeerradarraceferelam'], ['rlevevltenetrefreracrdewede'], ['rrraertracrrefraclracrrefreraceereddrceeveltenetrrefreraceereddrceaceereddrceeneaceredderdedwedcee'], ['rrraertracrrefraclracrrefreraceereddrceeveltenetrrerfreraceereddrceaceereddrceeneacededwedcee'], [''], ['rmraceredderadamefer'], ['malalllnoonam'], ['zzzazyzzz'], ['racecar'], ['pneumonoultramicroscopicsilicovolcanoconiosis'], ['babad'], ['abab'], ['a'], ['ab'], ['abc'], ['abacabadabacaba'], ['aaaaa'], ['aabc'], ['racababecar'], ['abacabadabaccaba'], ['zzzabzz'], ['abbc'], ['m'], ['abaacabadabacaba'], ['baad'], ['zzzabaacabadabacabaazyzzz'], ['rababecar'], ['dbabad'], ['baabacabadabaccabaad'], ['P'], ['zzabaazyzzz'], ['p'], ['aaab'], ['racabaacabadabacabaecar'], ['aapneumonoultranmicroscopicsilicovolcanoconiosis'], ['Pdbabad'], ['abacacbadabacaba'], ['pnababamicroscopicsilicovolcanoconiosis'], ['pneumonoultramicroscopicsilicovolcanoconiosi'], ['aaa'], ['pneumonoultramicroscoabacabadabaccababapicsilicovolcanoconiosis'], ['baabacabadabaccabaadaaab'], ['mp'], ['pneumonoultramicroscoabiacabadabaccababapicsilicovolcanoconiosis'], ['abacacbadabacabababad'], ['abacabaaaabdabacca'], ['racabaacabadabacababcaecar'], ['bbac'], ['baabacabadabcabaccabaadaaab'], ['pnevolcanoconiosi'], ['Pdbababd'], ['pneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconiosis'], ['mm'], ['pneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosis'], ['pneumonoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosis'], ['abaad'], ['pneumonoacabadabaccababapicsilicovolcanoconiosis'], ['pneumonoultramicroscopicsilicovconiosis'], ['pnababascopicsilicovolcanoconiosis'], ['abca'], ['zzabaazabacacbadabacabayzzz'], ['raabacabaecar'], ['bbaracababecarc'], ['pneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['mmm'], ['babbc'], ['pneumonoultramicroscoabacabadabaccababapicsilabcicbabadovolcanoconiosis'], ['mmmlicovolcanoconiosis'], ['abaadd'], ['azzabaazyzzz'], ['pnababascopicsilicovolcaanoconiosis'], ['rababecrar'], ['pnebaabacabadabaccabaadaaabumonoultramicroscopicsilicovconiosis'], ['rpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecar'], ['apneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconiosisb'], ['ppneumonoacabadabaccababapicsilicovolcanoconiosis'], ['mmmlicovolcanoconiosiabcas'], ['pneumonoultramicroscoabioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsilicovolcanoconiosis'], ['pneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['racabbabecar'], ['aaaa'], ['apneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconniosisb'], ['pnababamicrosopicsilicovolcanoconiosis'], ['pneumonoultramicroscoabiacaracababecarbadabaccababapicsilicovolcanoconiosiabcas'], ['d'], ['apneumonoultramicroscopicsilicovconiosis'], ['rpneumoncoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecar'], ['mmpneumonoultramicroscoabioacabadabaccababapicsilicovolcanooniosis'], ['zzzabaacabadabacabammmlicovolcanoconiosiabcas'], ['aaaaabab'], ['zzzabaacababdabazyzzz'], ['pneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosis'], ['zzzabaacababdababaadazyzzz'], ['babbbc'], ['pneumonoultramicroscoabiacaracababecarbadabaccilicovolcanoconiosiabcas'], ['babbcabca'], ['ababad'], ['babbcabcad'], ['abacacbadabacaaba'], ['pneumonoultramicroscopicsilicovolcnanoconiosis'], ['pneuababadmonoultramicroscopicsilicovconiosis'], ['dd'], ['abbcabpneumonoultramicroscoabiacabadabaccababapicsilicovolcanoconiosiscad'], ['apneumonoultramicroscoabioacabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconiosisb'], ['baabacabca'], ['raceacar'], ['zzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosisz'], ['apneumonoultramicroscoabioacabadabaccababapicsilibaad'], ['pneumonoultramicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosis'], ['pppneumonoacabadabaccababapicsilicovolcanoconiosisneumonoacabadabaccababapicsilicovolcanoconiosis'], ['bbbabbbc'], ['mmpnababamicroscopicsilicovolcanoconiosisP'], ['pneumonoultramicroscoabracabbabecarioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsilicovolcanoconiosis'], ['aa'], ['ppneumonoacabadabaccababapicsilicovoilcanoconiosis'], ['UBI'], ['UBIracabaacabadabacababcaecarI'], ['pneumonoacabadabaccababapicsilicovolcis'], ['aaaaabzzabaazyzzzab'], ['WXcKAI'], ['rar'], ['bbabad'], ['pneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaapneumonoultramicroscopicsilicovconiosislcanoconiosis'], ['pneumonaaaaoacabadabaccababapicsilicovolcis'], ['baabaacabadabcabaccabab'], ['abacabadaabaccaba'], ['apneumonoultramicrovolcanoconiosisnoconoiosisb'], ['pneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicsilicovolcanoconiosis'], ['aba'], ['apneunmonoultramisclibaad'], ['bc'], ['UBIzzabaazyzzz'], ['abacabaaaabdabacc'], ['zzzabaacabadabacapneumonoacabadabaccababapicsilicovolcisbammmlicovolcanoconiosiabcas'], ['add'], ['mmpnababamicroscopicsilcicovolcanoconiosisP'], ['rabaabecrar'], ['racabbar'], ['rapneumonoacabadabaccababapicsilicovolcisr'], ['pneumonoacabadabaccababapicsiliecovolcanoconiosis'], ['rrar'], ['mmmlicovolcanoconiosiabcaracabbars'], ['apneumonoultramicroscozzabaazabacacbadabacabayzzzabioacabadabaccababapicsilibad'], ['aracabbpneumonoultramicroscoabioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsilicovolcanoconiosisabecar'], ['apneumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosisbaccababapiabacabadabacabacsilibaad'], ['rpneumoncoultramicroscoabacabadabaccababapicsbaabaacabadabcabaccababilabcicovolcanoconiosisacecar'], ['raracecarcabaacabadabacabaecar'], ['pneumonoultramicroscoabioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsailicovolcanoconiosis'], ['pneumonoultramicroscopicsilicovolcanoaosis'], ['abba'], ['pnoeumonoultramicroscoabacabadabaccababapicsilabcicbabadovolcanoconiosis'], ['aaabababbaracababecarc'], ['racababecaar'], ['rpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanobabbcconiosisacecar'], ['baabacabadabcabacaab'], ['pneumonoultramicroscoabacabadabaccababapicsilabcimcovolcanoconiosis'], ['zzzabaacabbabdabazyzzz'], ['mmmlirababecrarcovolcanoconiosiabcaracabbars'], ['ammmlicovolcanoconiosiabcasb'], ['babba'], ['pneumonoultramiroscopicsilicovolcanoaosis'], ['pneumonoultramirbadabaccababapicsilicovolcanoconiosiabcas'], ['bbaracabaabacabadabcabacbaabaacabadabcabaccababcabaadaaabbabecarc'], ['raceacrpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecardr'], ['rababecraar'], ['canoconiosisnoconoiosisb'], ['abaaabacabadabacaba'], ['mmpnababamicroscopicsilicovzzabaazyzzzolcanoconiosisP'], ['rabaecraar'], ['pppneumonoacabadabaccababapicsilicovolcanoconiosisneumonoacapbadabaccababapicsilicovolcanoconiosis'], ['pnevolcanocoabcaniobabbcabcadsi'], ['abacabadaaabacaba'], ['bbaracababebaabacabcacarc'], ['babbcbc'], ['pneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacabaabacabadabaccabaadaaabnoconiosisabaccababapicsilabcicovolcanoconiosis'], ['pppneumonoacabadabaccababapicsilicovolcanoconiocovolcanoconiosis'], ['abaaabacabadabacaaba'], ['pnev'], ['pneumonoultramicroscopicsilicovconiois'], ['yzzzabaacabadabacabaazyzzz'], ['mmmm'], ['apneumonoultramicrpneumonoacabadabaccababapicsiliecovolcanoconiosisoscopicsilimmcovconiosis'], ['pneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicsilicovolcanoconiosiscababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['baabacabadabaccabaadaaaab'], ['pneumonoultramicroscoabacabadabaccababapicsilabcimcovolcanoconaaaaioabacabaaaabdabaccsis'], ['baabacabadabaccabaadaaaaab'], ['abaca'], ['pneumonoultramicroscoabacabadabaccababapicsilabcimcovolcanocon'], ['pneumonoultramicroscoasbacabadabaccababapicsilabcimcovolcanocon'], ['mmpnababamicroscopicsilicovzzabzzolcanoconiosisP'], ['baabba'], ['rpneumoncoultramicroscoabacabadabaccababapicsbaabaacabadabcabaccababpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaapneumonoultramicroscopicsilicovconiosislcanoconiosis'], ['zzabaazabacacbadabacabazz'], ['apneumonoultramicroscoabioacabadabaaaaaaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconiosisb'], ['pnababascopicspneumonoultramicroscopicsilicovolcanoaosisilicovolcanocoosis'], ['pneumonoultramicroscoabiacaracabazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszbecarbadabaccilicovolcanoconiosiabcas'], ['abbaa'], ['zzzzz'], ['baacbacabadabaccabaadaaaab'], ['apneuapneumonoultramicroscoabioacabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconiosisbmonoultramicroscozzabaazabacacbadabacabayzzzabioacabadabaccababapicsilibad'], ['IuyepBB'], ['aapneumonoultranmicroscopicasialicovolcanoconiosis'], ['abaaabacabadabacabazzzazyzzz'], ['amma'], ['abacabadabaaccaba'], ['baabaacabadabcabacbaabbacabab'], ['UBUI'], ['zzzabaacabammpnababamicroscopicsilicovzzabzzolcanoconiosisPbdababaadazyzzz'], ['zzzabaacabbabdabazabzyzzz'], ['abacabadabaaccacbaa'], ['raddar'], ['pneumonoultramicroscoasbacabadrpneumoncoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecarabaccababapicsilabcimcocanocon'], ['abacaa'], ['pneevolcanoconiosi'], ['pneuababadmonoultramicroscopicsilrababecaricovconiosis'], ['reabaecraarbaad'], ['pneumonoultramicnroscoabacabadabaccababapicsilabcicbabadovolcanoconiosis'], ['pneumonoacabadacbaccababapicsiliecovolcanoconiosis'], ['pneumonoultramicroscoasbacabadabaccababapibcimcovolcanocon'], ['pneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzizicsilicovolaaacanoconiosis'], ['ddbaabacabadabcabacaab'], ['aaabababbaracabapneumonoultramicrpneumonoacaebadabaccababapicsiliecovolcanoconiosisoscopicsiblimmcovabaadconiosiscarc'], ['pnevoaapneumonoultranmicroscopicasialicovolcanoconiosiscanoconiosi'], ['baabacabbadabaccabaadaaaab'], ['mmmlicovolcanoconiosiabccaracabbars'], ['baadcbacabadabaccabaadaaaab'], ['pnevoaapneumonoultranmicroscopicasialicovolcanoconioosiscanoconiosi'], ['rrababecrar'], ['abacabadaabaccaaapneumonoultranmicroscopicsilicovolcanoconiosisba'], ['mmpcnababamicroscopicsilicovzzabzzolcanoconiosisP'], ['RgxE'], ['abaadracababecadrd'], ['abacacbadabacabcababaad'], ['pneumonoultrpneumonoultramiroscommpnababamicroscopicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoabacabadababacaaaccababapicsilabcimcovolcanocon'], ['abd'], ['rpneumonoultramicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdar'], ['pneumonoultramicroscoabacabadabaccababapicsilabcimcovolcaabacabadaaabacabaconiosis'], ['bababacabca'], ['pneumonoultramicroscoabacabadabaccababapicsilabcimcovolcaabacabadbbabadaaabacabaconiosis'], ['pneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicspneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisilicovolcanoconiosiscababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['pneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovoolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['pneumonoultramicnroscoabacababadovolcanoconiosis'], ['pppneumonoacabadabaccababapicsilicovolcanocoiniosisneumonoacabadabaccababapicsilicovolcanoconiosis'], ['rrmmmlicovolcanoconiosiabcaracabbarsababecrar'], ['aapneunmonoultramisclibaaddd'], ['aad'], ['abacabadabacaa'], ['apneumonoultramicroscoabioacabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconicosisb'], ['pneumonoultramicroscoabioaacabadabaccababapicsilicovolcanoconmiosis'], ['zzzabaacabadabacapneumonoacabadabaccababapicsilicovolcisbammmlicovolcanoconiosiabca'], ['rpneumonoultramicroscoabacasbadabaccababapicsilabcicovolcanobabbcconiosisacecar'], ['abacabadabaaccrpneumoncoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecar'], ['pnn'], ['canoconiosisnoconoiommmmsisb'], ['rpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanocosniosisacecar'], ['bbarbabecarc'], ['apneumonoultramicbbaracababecarcbadabaaaaaaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconiosisb'], ['raacababecar'], ['pneumonoultramiacroscoabacabadabaccababapicsilabcimcovolcanoconiosis'], ['abacabaaaabdazzabaazyzzzbacc'], ['UBIzzbabaazyzzz'], ['pneumonoacabadabaccababapicsiliecovolcanoconiosais'], ['zzabaazabacacbaadabacabazz'], ['apneumonoultramicroscoabioacabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnpneumonoultramicroscoabacabadabaccababapicsilicovolcanoconiosisoconiosisb'], ['pneuababadmonoultramicrosis'], ['mmpnababamiicroscopicsilicovzzabaazyzzzolcanoconiosisP'], ['abacabadabcaccaba'], ['pneumonoultrazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszbadabaccababapicsilabcimcovolcanoconn'], ['baabacabadabcabaccabaadaaabpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicsilicovolcanoconiosis'], ['zzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadasilicovolcanoconmiosisz'], ['rdracabbabecarar'], ['rpneumoncoultramicroscoabacabadabaccababapicsilabciacovolcanoconiosisacecar'], ['apneumonoultramicroscoabacabadabaccababapicsilabcimcovolcanoconiosisbacabadabacaba'], ['pneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaczcababapicsilicovolcanoconmiosiszabapicspneumonoultramicroscoabacabaddpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisilicovolcanoconiosiscababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconpneumonopneumonoacabadabaccababapicsilicovolcisultramicroscoabioacabadabaccababapicsilicovolcanoconiosisiosis'], ['ddbaabacabadabcabacaaab'], ['aceacar'], ['abacabadabacaaabacabadaaabacaba'], ['pneumonoultrpneumonoultramiroscommpnababamicroscopicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoabacabadababacaaaccababapicsilabcimcovolcaanocon'], ['zzzaraddarabazabzyzzz'], ['abbacacbadabacabcababaad'], ['apneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconniabaacabadabacabaosisb'], ['abacabadaaabaaaaaabzzabaazyzzzabcaba'], ['pneumonoultramicroscoabacabadabaccababapicsilabcimcabdovolcanoconiosis'], ['pneumonoultrpneumonoultramiroscommpnababamicroscopicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoababbcabcadbacabadababacaaaccababapicsilabcimcovolcaanocon'], ['mmmlicovolrpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanocosniosisacecarcanoconiosis'], ['pnnn'], ['pneumonoultramicroscoabracabbabecarioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsilicovolcanoco'], ['pneumonoultrpneumonoultramiroscommpnababamracabaacabadabacabaecaricpnababascopicspneumonoultramicroscopicsilicovolcanoaosisilicovolcanocoosisroscopicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoabacabadababacaaaccababapicovolcaanocon'], ['zzzabaacabadabacapneumonoacabadabaccababapicsilicovolcissiabcas'], ['abaabbadd'], ['abaapneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisd'], ['apneunmonoultramismclibaad'], ['baabacabbaad'], ['IuyepB'], ['bbabaabcad'], ['mmmmm'], ['pneumonoultramicroscoabibabecarbadabaccababapicsilicovolcanoconiosiabcas'], ['pneumonaaaaoacabadabaccababapicsilicobvolcis'], ['mmpnababamicroscsilicovolcanoconiosisP'], ['aaaabab'], ['Pdbabzzzabaacabadabacapneumonoacabadabaccababapicsilicovolcisbammmlicovolcanoconiosiaaaabababcad'], ['pneumonoultramicroscoabracabbabecarioacabadabaccaabacacbadabacaababoabapipneumonoultramicroscopicsilicovconiosiscsilicovolcansoco'], ['apneumonoultramicroscoabioacabadabaccababapicsiosisb'], ['mmmlicovolcanocpneumonoultramicroscoabacabadabaccababapicsilabcimcovolcanocononpnevolcanoconiosiiosiabcaracabbars'], ['mmpcnababamiicroscopicsilicovzzabzzolcanoconiosisP'], ['baabaacababacacbadabacabcababaadadabcabacbaabbacabab'], ['zzzabzzz'], ['rpneumonoultramicroscoabioacabadabaccababapicsilpneumonoulbtramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdar'], ['abbacacbadabacabpnevoaapneumonoultranmicroscopicasialicovolcanoconioosiscanoconiosicababbbabaabcadaad'], ['pneumonoultramicroscoabioaacabadabaccababapicsilbicovolcanoconmiosis'], ['zzzabaacabbabdabazabzzzz'], ['pppneumonoacabadabaccababapicsilicovolcanoconiosisneccababapicsilicovolcanoconiosis'], ['apneumonoultramicroscoabioacabadabaccababapimcsilicovolcapnababamicroscopicsilicovolcanocbabadoniosisnoconiosisb'], ['racarpneumoncoultramicroscoabacabadabaccababapicsbaabaacabadabcabaccababpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaapneumonoultramicroscopicsilicovconiosislcanoconiosisbbar'], ['yzzzabaacabadabacaybaazyzzz'], ['aaaaabzzaabaazyzzzaab'], ['pneumonoultramicrosoconmiosis'], ['apneumonoultramicroscozzabaazabacacbadabacabayzzzabioaacabadabaccababapicsilibad'], ['pneumonoultramicrapneumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosisbaccababapiabacabadabacabacsilibaadoscopicsilicovolcanoconiosi'], ['pneumonoultramicrosconiosis'], ['abammpnaaaaababamicroscsilicovolcanoconiosisP'], ['mpp'], ['aabaad'], ['pneumonoultraddarosi'], ['pneumonoultramicrosilabcimcovolcanoconaaaaioabacabaaaabdabaccsis'], ['apneuapneumonoultramicroscoabioacabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconiosisbmonoulpneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosistramicroscozzabaazabacacbadabacabayzzzabioacabadabaccababapicsilibad'], ['pneumonoultrazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszbadabaccababapicsilabcimacovolcanoconn'], ['pneumonoultrpneumonoultramiroscommpnababamicroscoapicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoababbcabcadbacabadababacaaaccababapicsilabcimcovolcaanocon'], ['aaazzzabzaacabbabdabazabzyzzza'], ['abpneumonoultrpneumonoultramiroscommpnababamicroscopicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoabacabadababacaaaccababapicsilabcimcovolcaanoconabbadd'], ['pnababapneumonoultramiroscopicsilicovolcanoaosisosis'], ['pnzzzabaacabadabacabammmlicovolcanoconiosiabcasoeumonoultramicroscoabacabadabaccababapicsilabcicbabadovolcanoconiosis'], ['rpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanocosniosisaceccar'], ['pppneumonoacabadabaccababapicsilicovolcanoconiosisneumonoacapbadabaccababapicsilicovolcanocs'], ['raaacababecar'], ['babbbrpneumonoultramicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdarc'], ['raacaebabecar'], ['abacabadaabacaba'], ['mmmlirababecrarcovolcainoconiosiabcaracabbars'], ['pneumonoupneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicspneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisilicovolcanoconiosiscababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisltramiacroscoabacabadabaccababapicsilabcimcovolcanoconiosis'], ['gPHBVvlHnc'], ['rababaecrmmmmmaar'], ['ammmlicovolcanoconiosiabcaracabbarscca'], ['bbaracababebaabacabcaca'], ['pneumonoacabadabaccababapicsiliscovolcis'], ['pabca'], ['pneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzizicsiliconoconiosis'], ['pneumonoultramicroscoabacabadabaccababapicsilabcicbabadovolcanoconioabacabadaaabacabasis'], ['pneumonoultramicroscoabioacabadabaccababapicsilcanoconmiosis'], ['abzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadasilicovolcanoconmiosiszd'], ['rpneumoncoultramicroscoabacabadabaccababapicsbaasbaacabadabcabaccababilacbcicovolcanoconiosisacecar'], ['pnevamma'], ['zzzabaacabadabaccabammmlicovolcanoconiosiabcas'], ['mmmlicovoloconiosis'], ['pneumonoultramicroscoabacabadabaccabbapicsilicovolcanoconiosis'], ['rpneumonouddbaabacabadabcabacaaabltramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecar'], ['zzzazyzzzz'], ['zzzabaacabadaapneumonoultramicroscozzabaazabacacbadabacabayzzzabioacabadabaccababapicsilibadbacabaazyzzz'], ['abadabacaba'], ['VNPgo'], ['pneumonoultramicrpneumoncoultramicroscoabacabadabaccababapicsbaasbaacabadabcabaccababilacbcicovolcanoconiosisacecarroscoabiacaracabazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapiocsilicovolcanoconmiosiszbecarbadabaccilicovolcanoconiosiabcas'], ['abacacbadabd'], ['racarpneumoncoultramicroscoabacabadabaccababapicsbaabaacabadabcabaccababaapneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisdabpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaapneumonoultramicroscopicsilicovconiosislcanoconiosisbbar'], ['bunqzNWMJ'], ['pneumonoultramirbabbbcbadabaccababapicsilicoivolcanoconiosiabcas'], ['mmmlicovolrpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanocosniosisacebaadcbacabadabaccabaadaaaabcarcanoconiosis'], ['poniosis'], ['aazzzazyzzzzad'], ['pneumonoultramicroscoabioacabadabaccababapicsilpneumonoultrneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanocsisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosis'], ['pmpp'], ['abacabacaba'], ['pneumonoultramicrpneumoncoultramicroscoabacabadabaccababapicsbaasbaacabadabcabaccababilacbcicovolcanoconiosisacecarroscoabiacaracabazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapiocsilicovolcanoconmiosiszbecarbadabaccilicovolcanoconiorarsiabcas'], ['aaba'], ['babbbrpneumonoultrasmicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdarc'], ['abbcabpneumonoultramicroscoabiacabadabaccababapicsilicpneumonoultramicroscoabiacaracababecarbadabaccababapicsilicovolcanoconiosiabcasovolcanoconiosiscad'], ['pneumonoultramabacabadaabaccaaapneumonoultranmicroscopicsilicovolcanoconiosisbaicroscopicsilicovolcanoconiosis'], ['pneumonoultrpneumonoultramiroscommpnababamicroscoapicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoababbcabcadbacabadababacaaaccsababapicsilabcimcovolcaanocon'], ['rpneumonoultramicroscoacabadabacabaazyzzzicsilicovolcvolcanoconmiosisdar'], ['apnracababecaareumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosisbaccababapiabacabadabacabacsilibaad'], ['pneumonoultramiroscopipneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosiscsilicovolcanoaosis'], ['bunqzNWMJJ'], ['racabar'], ['ppneuzzzabzzzcababapicsilicovolcanoconiosis'], ['abbacacbadabacabpnevoaapneumonoultranmicroscopicasialivcovolcanoconioosiscanoconiosicababbbabaabcadaad'], ['pneumonoultramicroscoabioacabadabaccababapipneumonoultramicroscopicsilicovconabacaiosiscsailicovolcanoconiosis'], ['pvamma'], ['pnnmmmlirababecrarcovolcanoconiosiabcaracabbars'], ['IpBB'], ['pneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzizicsilciconoconiosis'], ['rpneumonoultramicroscoacabadabacabaazyzzzicsilicovolcvzzzabaacabadabacapneumonoacabadabaccababapicsilicovolcissiabcasolcanoconmiosisdar'], ['pneumonoacaobadabaccabzzabaappneumonoacabadabaccababapicsilicovolcanoconiosiszabacacbadabacabayzpneumonoultramicroscoaabioacabadabaccababapicsilicovolcanoconmiosiszabapicsilicovolcanoconiosis'], ['zzzzabaacabadbdababaadazyzzzapneumonoultramicroscopicsilicovconiosis'], ['pneumonoacadbadabaccababapicsiliscovolcis'], ['pneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramiczyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconpneumonopneumonoacabadabaccababapicsilicovolcisultramicroscoabioacabadabaccababapicsilicovolcanoconiosisiosis'], ['apneumonoultrapnevoaapneumonoultranmicroscopicasialicovolcanoconioosiscanoconiosimicbbaracababecarcbadabaaaaaaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconiosisb'], ['zbgPHBVvlHnczNWMJzzabaacabbabdabazabzyzz'], ['RgxEE'], ['raaacababecammmlicovolcanoconiosiabcaracabbarsr'], ['babbcaa'], ['apneumonoultramicroscoabioaocabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconicosisb'], ['abacabaabacabbadabaccabaadaaaab'], ['pneumonoultramicroscbabbcoabacabadabaccababapicsilabcicbabadovolcanoconiosis'], ['zzzabaacabadabacabammmlicovolcanoconiosiabcacs'], ['apneumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosiccababapiabacabadabacabacsilibaad'], ['pnrrababecrarlcanoconiosi'], ['racabbpneumonoultramicroscopicsilicovolcnanoconiosisabecar'], ['am'], ['abaapneumonoultramicroscoabacabadpneumonoultramicroscoabioacabaammadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisd'], ['pnababascopicsapneumonoultramicroscoabioacabadabaccababapicsiosisbilicovolcanoconiosis'], ['azzaazypneumonoultramicroscoabracabbabecarioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsilicovolcanoconiosiszzz'], ['rpneumonoultramicroscoabacabadabaccababapicsilabcicovolcanocosnisaceccar'], ['abaapneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisd'], ['apneumapneumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosisbaccababapiabacabadabacabacsilibaadonoultramicroscoabacabadabaccababapicsilabcimcovolcanoconiosisbacabadabacaba'], ['abacabadaaabacab'], ['baabaacabadabpabcacabaccabab'], ['baabacabadabaccabzzzabzzaadaaaaab'], ['baacbcacabammmlicovolcanoconiosisdabaccabaadaaaab'], ['pabacabaaaabdazzabaazyzzzbaccnevammapneumonoultramicroscopicpneumonoultrpneumonoultramiroscommpnababamicroscoapicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoababbcabcadbacabadababacaaaccababapicsilabcimcovolcaanocon'], ['babbbrpneumonoultramicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicrosbccoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdarc'], ['pneumonoultramicroscoabacabadabaccababapicsilicovolcanoconiosisbbarbabrc'], ['aabcpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosis'], ['apneumonoultramicroscozzabaazabacacbadabacabayzzzabioacabadabacbababacaapneumonoultramicroscoabioacabadabaccababapicsilicovolcapnababamicroscopicsilicovolcanoconiosisnoconicosisbbcacababapicsilibad'], ['azzabaaazyzzz'], ['pneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicspneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovlolcanoconiosisilicovolcanoconiosiscababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['zzzabaacabadabacapneumonoacabadabaccababapicsilicovolcisbammmliolcanoconiosiabca'], ['pabaapneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapbicsilabcicovolcanoconiosisdnnn'], ['pneumonoacabadabaccababapicsiliecovolzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadasilicovolcanoconmiosiszcanoconiosis'], ['pmppp'], ['UBBBI'], ['raracUBUIecarcabaacabadabacabaecar'], ['cpbabbc'], ['rnpneumoncoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecar'], ['pbpneumonoacabadabaccababapicsilicovolcanoconiosis'], ['pneumonoultramicrpneumoncoultramicroscoabacabadabaccababapicsbaasbaacabadabcabaccababilacbcicovolcanoconiosisacecarroscoabiacaracabazzabaazabacacbaddabacabayzpneumonoultramicroscoabioacabadabaccababapiocsilicovolcanoconmiosiszbecarbadabaccilicovolcanoconiosiabcas'], ['aUBIzzbabaazyzzzbacacbadabacabcababaad'], ['aapneumonoultranmicpneumonoultramicroscopicsilicovolcanoconiosiroscopconiosis'], ['pneumonoultrpneumonoultramiroscommpnababamicbbaracababecarcroscoapicsilicovolcanoconiosisPpicsilicovolcanoaosisamicroscoababbcabcadbacabadababacaaaccsababapicsilabcimcovolcaanocon'], ['racababecaazzabaazabacacbadabacabazz'], ['pneumonoultramicaroscoabioacabadabaccababapicsilicovolcanoconiosis'], ['apneumonoultramicroscoabioacabadbabbbrpneumonoultramicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdarcabaccababapicsilicovolcanoconniabaacabadabacabaosisb'], ['aapneumonoultranmicroscopicasiailicovolcanoconiosis'], ['pneumonoultramicroscopicsicnanoconiosis'], ['apneumonoultramicroscoabioacabadabaaaaaaccababapicsilicovolcapnababamicroscopicsaapneumonoultranmicroscopicasiailicovolcanoconiosisilicovolcanoconiosisnoconiosisb'], ['reabaecraaarbazzzabaacabadabacapneumonoacabadabaccababapicsilicovolcisbammmlicovolcanoconiosiabcad'], ['pzzabaazabacacbadabacabayzbabadpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosisznnn'], ['pnababamicroscopicsilaaazzzabzaacabbabdabazabzyzzzanoconiosis'], ['reabaecraarbaaad'], ['aracabbpneumonoultramicroscoabioacabadabaccababapipneumonoultramicroscopicsiliaapneumonoultranmicroscopicasiailicovolcanoconiosiscovconiosiscsilicovolcanoconiosisabecar'], ['pneumonoultnramicroscoabioacabadabaccababapipneumonoultramicroscopicsilicovconiosiscsilicovolcanoconiosis'], ['pneumonoultramicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicRgxEovolcanoconiosisicovolcanoconmiosis'], ['zzzzazbzz'], ['aaabababbaracababecarcrnpneumoncoultramicroscoabacabadabaccababapicsilabcicovolcanoconiosisacecar'], ['apneumonoultramicroscobioacabadabaccababapicsilicovolcapnabaobamicroscopicsilicovolcanoconiosisnoconiosisb'], ['RgxErpneumonoultramicroscoabacasbadabaccababapicsilabcicovolcanobabbcconiosisacecar'], ['pneumonoulrpneumonoultramicroscoabacabadabpneumonoultramicroscoabibabecarbadabaccababapicsilicovolcanoconiosiabcasaccababapicsilabcicovolcanocosniosisaceccartramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['mmpinababamicroscsilicovolcanocooniosisP'], ['opneumonoultramicnroscoabacabadabaccababapicsilabcicbabadovolcanoconiosis'], ['abacaba'], ['pneumonoultramicroscoabacabadpneumocpneumonoacaobadabaccabzzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabapicspneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabbbabaabcadaccababapicsilabcicovlolcanoconiosisilicovolcanoconiosiscababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosis'], ['pnababascopicsapneumonoultramicroscoabioacabnadabaccababapicsiosisbilicovolcanoconiosis'], ['babarbabecarc'], ['pneumonoultramicroscoabacabadpneumoccababapzzzabaacabadabacabaazyzzzicsilicovolaaacabaabacabadabaccabaadaaabnoconiosisabaccaababapicsilabcicovolcanoconiosis'], ['pneumonoultramicnroscoabacabadabaccababapicsilabcicbabadovbolcanoconiosis'], ['rpneumonoultramicroscoabacabadabaccababapicsilabcicovcolcanocosniosisacecar'], ['rrpneumonoultramicroscoabacabadabaccababapicsilabcicovoabacabadaaabacabalcanobabbcconiosisacecaracabIuyepBBabecaar'], ['pneumonoultramicroscoabacabadpneumocpnabaccababapicsilicovolcisultramicroscoabioacabadabaccababapicsilicovolcanoconiosisiosis'], ['abaacabcadabacaba'], ['zzzabaacabammpnababamicrobaabacabadabaccabaadaaabcovzzabzzolcanoconiosisPbdababaadazyzzz'], ['abammpreabaecraaarbazzzabaacabadabacapneumonoacabadabaccababapicsilicovolcisbammmlicovolcanoconiosiabcadnaaaaababamicroscsilicovolcanoconiosisP'], ['panebaabacabadabaccabaadaaabumonoultramicroscopicsilicovconiosis'], ['pneumonoacabadabaccababapicsiliscaadovolcis'], ['baabaacabadabcabacbazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabbacabab'], ['pnevolcanocoabcaniobabbceabcadsi'], ['reabaecraaarbaad'], ['pnzzzabaacapneumonoulrpneumonoultramicroscoabacabadabpneumonoultramicroscoabibabecarbadabaccababapicsilicovolcanoconiosiabcasaccababapicsilabcicovolcanocosniosisaceccartramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadapneumapneumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosisbaccababapiabacabadabacabacsilibaadonoultramicroscoabacabadabaccababapicsilabcimcovolcanoconiosisbacabadabacabaabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosiscanoconiosis'], ['ddbaayzzzabaacabadabacabaazyzzzbacabadabcabacaaab'], ['apneumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiospiccababapiabacabadabacabacsilibaad'], ['rpneumonoultramicroscoabacabadabaccababappicsilabcicovcolcanocosniosisacecar'], ['pneumonnoacabadabaccabapicsiliscaadovolcis'], ['mmmlicovolrpneumonoultramicroscoabacabadabaccabocosniosisacecarcanoconiosis'], ['zzzabaacabbabdabazabzzz'], ['rpneumoncoultramicroscoabacabadabaccababappicsbaabaacabadabcaabaccababilabcicovolcanoconiosisacecar'], ['baasbaacabadabcabacbazzabaazabacacbadabacabayzpneumonoultramicroscoabioacabadabaccababapicsilicovolcanoconmiosiszabbacabab'], ['opneumonoultramicnrobabbbrpneumonoultrasmicroscoabioacabadabaccababapicsilpneumonoultramicroscoabacabadpneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzzicsilicovolaaacanoconiosisabaccababapicsilabcicovolcanoconiosisicovolcanoconmiosisdarcsilabcicbabadovolcanoconiosis'], ['pneumonoultramicroscoasbacabadrpneumoncoultramicroscoabacabapneumonoultramicroscoabioacabadabaccababapzzzabaacabadabacabaazyzzizicsiliconoconiosisaccababapicsilabcimcocanocon'], ['zzzabzaacababdabazyzzz'], ['ddbaabacabadabcabacabab'], ['abadaapnracababecaareumonoultramicroscoabioacabadbapneumonoultramicroscopicsilicovolcanoconiosisbaccababapiabacabadabacabacsilibaadbaababaabacabadabcabacaabcabadabacaacaba'], ['zzyzazyzzz'], ['pneumonoultramicroscopneumonoultramicrooscopicsicnanoconiosisabacabadabaccababapicsilabcimcovolcanocon'], ['baabacabadabacbcab'], ['pneumonoultramsiroscopicsilicovolcanoaosis'], ['rraraapneumonoultranmicroscopicasiailicovolcanoconiosis'], ['pneuababapdmonoultramicrosis'], ['pneumonoultramicroscoabioaacabadabaccababapicsilbicovolcanoconmcanoconiosisnoconoiommmmsisbiosis'], ['yyyy'], ['ababbaba'], ['xyyyx'], ['A man, a plan, a canal, Panama!'], ['aaaaaaaabac'], ['abcdedcba'], ['l4v4l4c4'], ['abacabadabacba'], ['zzzzazyzzz'], ['abacabadabacbaa'], ['abababadabacabadabacba'], ['abacabadabacab'], ['abacabadabacabaabc'], ['abaabacabadabacabaaaaaaa'], ['ababaabacabadabacabaaaaaaaacabadabacaba'], ['zzzzazyz'], ['abacabadaaaaaabacba'], ['abacabadabacabacabadabacabaabcaba'], ['bab'], ['pnebabumonoultramicroscopicsilicovolcanoconiosis'], ['pneumonoultramicrosracecarcopicsilicovolcanoconiosis'], ['abacaabadabacabaabc'], ['babaabcd'], ['racecaabacabadaaaaaabacbar'], ['bbab'], ['abacabzzzzazyzzbabadadaabacabaabc'], ['abacabadabacaabadabacabaabcaba'], ['babb'], ['zzzazyabcz'], ['abacaabadabacabaabac'], ['bazzzzazyzzzbaaabcd'], ['abaaabacabadaacabaaaaaaa'], ['abababadabacabadabacbabacabadabacbaa'], ['zzzzazyzzzazyzzzz'], ['abacabadabacbaabacabadabacabaa'], ['abababaabacabadabacabaaaaaaaacabadabacabaacabadabacabaabc'], ['pneumonoultramicroscopicsilicovolcanocovniosis'], ['bb'], ['abbab'], ['aaaaabb'], ['ababazzzazyzzzabadabacba'], ['raabacaabadabacabaabcceca'], ['racecaabacababdaaaaaabacbar'], ['abacabadabacabacabadabacabaabcabaaabab'], ['baab'], ['abb'], ['abacaabadabacbaa'], ['abababadabacabadpnebabumonoultramicroscopicsilicovolcanoconiosisabacbabacabadabacbaa'], ['pneumonoultramicrosracecarcoipicsilicovolcanoconiosis'], ['abacaabaabacabadabacabadabacbaa'], ['dbabaaabcd'], ['aabacabadabacbaabacabadabacab'], ['abababaabacabadabacabbbaaaaaaaacabadabacabaacabadabacabaabc'], ['abababaabacabadabacabaaababaabcdaaaaacabadabacabaacabadabacabaabc'], ['abacabadabaca'], ['pneumonoultramabaaabacabadaacabaaaaaaaicrosracecarcopicsilicovolcanoconiosis'], ['bbbad'], ['abaabacbbbadabadabacabaaaaaaa'], ['H'], ['ababaabacabadabacaabadabacabaabcababadabacabadabacba'], ['zabacabadabacaabadabacabaabcabazz'], ['zzzzaabacabadabacabacabadabacabaabcabazyz'], ['bbabbab'], ['ababb'], ['zzzzazracecaabacabadaaaaaabacbaryz'], ['abaababazzzzazyzzzbaaabcdcabadabacabaaaaaaa'], ['abacaaabadabacbaa'], ['abababaabacabadabacabbbaaaaaaaacaabadabacabaacabadabababaabacabadabacabaaaaaaaacabadabacabaacabadabacabaabcbaabc'], ['abzzzzazyabacabadabacbaazzzazyzzzzbadabacba'], ['bbd'], ['bbaabacaabaabacabadabacabadabacbaa'], ['babaad'], ['FBaYOc'], ['abaababaabacabadabacabaaababaabcdaaaaacabadabacababacabaabc'], ['abababadabacaabacabadabacabacabadabacabaabcabaaababbadpnebabumonoultramicroscopicsilicovolcanoconiosisabacbabacabadabacbaa'], ['abacabzzzzazyzzbabadadaabacabadabacabaaabacabaabc'], ['abacabacaabadabacbaaacbaa'], ['zzzzaabacabadabacabacabadabacabaabcbazyz'], ['zzzzazyzz'], ['abacabadabacaabacaaabadabacbaa'], ['abaabacbbbadabadabbdbacabaaaaaaa'], ['babracecaabacabadaaaaaabacbar'], ['abzzzzazyzzzazyzzzzacabadabacabacabadabacabaabcabaaabab'], ['abacaabbbadabacab'], ['pneumonoultramicrbabracecaabacabadaaaaaabacbarracecarcopicsilicovolcanoconiosis'], ['raabacabadabacabacabadabacabaabcabaaababecar'], ['bbaapneumonloultramicrosrpnebabumonoultramicroscopicsilicovolcanoconiosisacecarcopicsilicovolcanoconiosisbacaabaabacabadabacabadabacbaa'], ['pneumonoultramicrosracecarcopiocsilicovolcanoconiosis'], ['racecaabacababdaaabbabaaabacbar'], ['ababaabacabadabaabaababaabacabadabacabaaababaabcdaaaaacabadabacababacabaabccabaaaaaaaacabadabacaba'], ['zzzzazababaabacabadabacabaaaaaaaabaabacbbbadabadabacabaaaaaaaacabadabacabayzzz'], ['apneumonoultramicroscopicsilicovolcanocovniosisbab'], ['bbaabacaabaabacazzzazyzzzbadabacabadabacbaa'], ['raabacaabadabacabaapnebumonoultramicroscopicsilicovolcanocovniosisbababcceca'], ['abacaabbbbadabacab'], ['zzzzazyzzzazyzzabacabadabacbaabacabadabacabaazzz'], ['abaabacabadabacababaaaaaa'], ['zzzzazzyzzzazyzzabacabadabacbaabacabadabacabaazzz'], ['abacaabadabacaba'], ['bbbab'], ['bazzzazyzzzbaaabcd'], ['aabaababaabacabadabacabaaababaabcdaaaaacabadabacababacabaabc'], ['abababaabacabadabacabaaababaabcdaaaaacabadabacabaacabadabacabaFBaYOcabc'], ['abzzzzazyzzzazyzzzzacabadaabacabacabadabacababacabadabacbaabacabadabacabaaaabcabaaabab'], ['bazzzazyzzzbaabacaabadabacbaaaabcd'], ['pneumonoultramicroscopicsilicovolcanniosis'], ['abababaabacabadabacabaaababaabcdaaaaacabadabacabaacabadaabacabaabc'], ['bazzzzazyzzzbaaababaabacabadabacabaaaaaaaacabadabacabaabcd'], ['zzzzazababaabacabadabacabaaaaaaababaabacbbbadabadabacabaaaaaaaacabadabacabayzzz'], ['bbaapneumonloultramicrosrpnebabumonoultramicroscopicsilicovolcanoconiosisaababaabacabadabacaabadabacabaabcababadabacabadabacbacecarcopicsilicovolcanoconiosisbacaabaabacabadabacabadabacbaa'], ['abababaabacabadabacabaaaaaaaacabadabacabaacabaabacabadabacbaabacabadabacabaadabacabaabc'], ['acabadabacaebacabadabacabaabcabaaababecar'], ['abacabacaabadabacbbabaadaaaa'], ['abababaabacabadabacabbbaaaaaaaacaabadabacabaacabadabababaabacabadabacabaaaaaaaacapneumonoultramicrbabracecaabacabadaaaaaabacbarracecarcopicsilicovolcanoconiosisbadabacabaacabadabacabaabcbaabc'], ['aaaaabbb'], ['zzzzaabacabadabazzzzazyzzacabaabcabazyz'], ['abacabacaabaadabacbaaacbaa'], ['bbbaa'], ['abacabbbacaabacaaabadabacbaa'], ['babbabaadzzzazyzabacabadabacaabadabacabaabcabazzbaaabcd'], ['zzzzazz'], ['abababaabacabadabacabaaababaabcdaaaaacabadabacabaacabadababababaabacabadabacabbbaaaaaaaacaabadabacabaacabadabababaabacabadabacabaaaaaaaacabadabacabaacabadabacabaabcbaabcBaYOcabc'], ['abaabacabadabacababaabacabadabacaabadabacabaabcabaaaaaa'], ['bazzzzazyzzzbaaababaabacbbdabadabacabaaaaaaaacabadabacabaabcd'], ['abbaab'], ['babababcd'], ['bbbb'], ['ababaabacabadabacaabadabacaabaabcababadabacabadabacba'], ['zzzzazracecaabacabadaaaaaabacbarabacabadabacabayz'], ['racecaabacabbabdaaaaaabacbar'], ['abacbaababacaabadabacbbabaadaaaa'], ['bazzzzazyzzzbazaababaabacbbdabadabacabaaaaaaaacabadabacabaabcd'], ['apneumonouisbab'], ['abacabadabbacba'], ['abacaabbbadpnebabumonoultramicroscopicsilnicovolcanoconiosisbacab'], ['bazzzaaaacabadabacabaabcd'], ['aaaraabacaabadabacabaapnebumonoultramicroscopicsilicovolcanocovniosisbababccecaaabbb'], ['zabzzabababadabacabadabacbabacabadabacbaazzazyabacabadabacbaazzzazyzzzzbadabacba'], ['abababaabacabadabadbabaaabcdcabaaababaabcdaaaaacabadabacabaacabadaabacabaabc'], ['ababazzzazyzzzabadabacbaab'], ['abababaabacabadabacabaaababaabcdaaaaacabadabacabaacabadabacpneumonoultramicroscopicsilicovolcanniosisabaabc'], ['ababaabacabadabaabaabababadabacababacabaabccabaaaaaaaacabadabacaba'], ['racecaabacabadaaaaaaabaacbar'], ['dabacabaaababaabcdaaaaacabadabacabaacabadabacabaFBaYOcabc'], ['zzzz'], ['abacabadabacabacabadababcabaabcaba'], ['racecaabacabababaababazzzzazyzzzbaaabcdcabadabacabaaaaaaadaaaaaabacbar'], ['racecaabpneumonoultramicrbabracecaabacabadaaaaaabacbarracecarcopicsilicisaaadaaaaaabacbar'], ['ababadbabaaabcdbadabacabadabacbabacabadabacbaa'], ['racecaabcacab'], ['ababazzzazyzzzabadabaa'], ['ababaabacadabacabaaababaabcdaaaaacabadabacabaacabadabacabaFBaYOcabcba'], ['ababazzzzzzabadabaa'], ['zzzzaabzacabadabacabacabadabacabaabcbazabacabacaabadabacbaaacbaayz'], ['racecaabacabadaaaaaabacbarabb'], ['abacabadaabacbaabababacabadaaaaaabacbaacaabadabacbbabaadaaaabacbaa'], ['abababaabacabadabacabbbaaaaaaaacabadabacaabaacabadabacabaabc'], ['zzzzzazyz'], ['bbaab'], ['bazzzzazyzzzbaaababaabacabadabdacabaaaaaaaacabadabacabaabcd'], ['abacaabaabacabadabacabadaabacbaa'], ['aaaaabbabaaabacabadaacabaaaaaaab'], ['zzzzazyzzzazyzzabacabadabacbabaababazzzzazyzzzbaaabcdcabadabacabaaaaaaaaabacabadabacabaazzz'], ['bazzzdzazyzzzbaaababaabacabadabdacabaaaaaaaacabadabacabaabcd'], ['ababaabacabadabaabaababaabacabadabacabaaababaabcdaaaaacabadabacababacaaaaaaaaacabadabacaba'], ['abbapneumonoultramicroscopicsilicovolcanniosis'], ['abbaaracecaabacababdaaabbabaaabacbarb'], ['ababaabacabadabaabaababaabacabadabacababaababaabcdaaaaacabadabacababacabaabccabaaaaaaaacabadabacaba'], ['bazzzazyzzzbaabacaabadabacbaaaabacabadabacbaabcd'], ['bazzzdzazyzzzbbaaababaabacabadabdacabaaaaaaaacabadabacabaabcd'], ['pabababaabacabadabacabaaaaaaaacabadabacabaacabadabacabaabcneumoanniosis'], ['abababaabacabadabacabaaababaabcdaaaaacabadabacabaacabadabacabracecaabacababdaaabbabaaabacbaraabc'], ['abacabacaabaadabacbaaacbaabacabadabacabaabca'], ['racecaabacabaar'], ['ababazzzazyzzzbaababazzzzazyzzzbaaababaabacabadabdacabaaaaaaaacabadabacabaabcdcaabadabacbaaaabcdaabc'], ['ababaabacabadabacabaaaaaaaacabadabaababaabacabadabaabaababaabacabadabacabaaababaabcdaaaaacabadabacabaabacaaaaaaaaacabadabacabacaba'], ['abzzzzazyabacabadabacbaaazzzazyzzzzbadabacba'], ['abraabacaabadabacabaapnebumonoultramicroscopicsilicovolcanocovniosisbababccecaacaabadabacabaabacbbaabacaabaabacabadabcacabadabacbaa'], ['raabacaabadabacabaabccecca'], ['baabazzzdzazyzzzbbaaababaabacabadabdacabaaaaaaaacabadabacabaabcdb'], ['ababaabacabadabacaabadabacaabaabcababadabacaabadabacba'], ['abacaababazzzzazyzzzbazaababaabacbbdabadabacabaaaaaaaacabadabacabaabcddabacbaa'], ['racecaaabababadabacabadabacbabacabadabacbaabcacab'], ['abacaabbbbadabaababaabacadabacabaaababaabcdaaaaacabadabacabaacabadabacabaFBaYOcabcbacab'], ['ababaabacabadabaabaababaabacabadabacabaaababaabcdaaaaacabadabacababacaaaaaaaaacabadabacabaa'], ['abacabadabacaabcadabacabaabcaba'], ['abacabadabacabpneumonoultramicrbabracecaabacabadaaaaaabacbarracecarcopicsilicovolcanoconiosis'], ['pneumonoultramabaaabacabadaacabaaaaaaaicrosracecarcopicsuilicovolcanoconiosis'], ['aabaababaabacabadabacabaaababaabbcdaaaaacabadabacababacabaaabc'], ['oQbCC'], ['abacaababazzzzazyzzzbazaababaabacbabdabadabacabaaaaaaaacabadabacabaabcddabacbaa'], ['ababaabacabadabacaabadabacaabzzzzazyabacabadabacbaazzzazyzzzzbadabacbaabadabacaabadabacba'], ['zzzazabababaabacabadabacabaaaaaaaacabadabacabaacabadabacabaabcyzzz']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the completed code to solve the problem:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    for i in range(len(string), -1, -1):
+        if is_palindrome(string[:len(string) - i]):
+            return string + string[len(string) - i:][::-1]
+
+    return string[::-1] + string</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if is_palindrome(string):
+        return string
+
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+
+    return string + string[::-1]
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    if not string:
+        return ''
+
+    for i in range(len(string)):
+        prefix = string[:i+1]
+        suffix = string[i+1:]
+
+        if is_palindrome(suffix):
+            return prefix + suffix + suffix[::-1]
+
+    return string + string[::-1]
+
+
+# Test cases
+print(make_palindrome(''))
+print(make_palindrome('cat'))
+print(make_palindrome('cata'))</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    beginning_of_suffix = 0
+
+    while not is_palindrome(string[beginning_of_suffix:]):
+        beginning_of_suffix += 1
+
+    return string + string[:beginning_of_suffix][::-1]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def expand_around_center(string: str, left: int, right: int) -> str:
+    while left >= 0 and right < len(string) and string[left] == string[right]:
+        left -= 1
+        right += 1
+    return string[left + 1: right]
+
+def make_palindrome(string: str) -> str:
+    if is_palindrome(string):
+        return string
+
+    longest_palindrome = ''
+    max_length = 0
+
+    # Iterate through all possible centers
+    for i in range(len(string)):
+        # Find palindrome length around the center
+        palindrome = expand_around_center(string, i, i)
+        palindrome_length = len(palindrome)
+
+        # Update the longest palindrome if needed
+        if palindrome_length > max_length:
+            longest_palindrome = palindrome
+            max_length = palindrome_length
+
+        # Check the case when the center is between two characters
+        palindrome = expand_around_center(string, i, i + 1)
+        palindrome_length = len(palindrome)
+
+        if palindrome_length > max_length:
+            longest_palindrome = palindrome
+            max_length = palindrome_length
+
+    return longest_palindrome + longest_palindrome[::-1]</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string
+
+# Test cases
+assert make_palindrome('') == ''
+assert make_palindrome('cat') == 'catac'
+assert make_palindrome('cata') == 'catac'
+assert make_palindrome('racecar') == 'racecar'
+assert make_palindrome('python') == 'pythonnohtyp'</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[:i]):
+            return string + string[:i][::-1]
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    n = len(string)
+    for i in range(n):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[::-1]
+
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's the Python code to solve the problem:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if len(string) == 0:
+        return string
+
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[-i:]):
+            return string + string[:len(string) - i][::-1]
+```
+
+This code first checks if the string is empty. If it is, it just returns the string. Then it iterates over the string from the end to the beginning, checking if the substring from the current index to the end of the string is a palindrome. If it finds a palindrome, it appends the reverse of the substring before the found palindrome to the end of the original string and returns the result.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[::-1]  # if no palindrome found, return the string itself reversed
+
+
+# Test cases
+assert make_palindrome('') == ''
+assert make_palindrome('cat') == 'catac'
+assert make_palindrome('cata') == 'catac'</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    # Find the longest postfix of supplied string that is a palindrome
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            break
+            
+    # Append to the end of the string reverse of a string prefix that comes before the palindromic suffix
+    prefix = string[:i]
+    return string + prefix[::-1]</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    # Find the longest postfix of supplied string that is a palindrome.
+    # If the string is a palindrome, the longest postfix is the whole string.
+    # If the string is not a palindrome, the longest postfix is the longest palindrome suffix.
+    # For example, for 'cata' the longest postfix is 'a'.
+    # For 'catac' the longest postfix is 'ac'.
+    # For 'cataca' the longest postfix is 'aca'.
+    # For 'catacac' the longest postfix is 'acac'.
+    # For 'catacaca' the longest postfix is 'acaca'.
+    # For 'catacacac' the longest postfix is 'acacac'.
+    # For 'catacacaca' the longest postfix is 'acacaca'.
+    # For 'catacacacac' the longest postfix is 'acacacac'.
+    # For 'catacacacacac' the longest postfix is 'acacacacac'.
+    # For 'catacacacacacac' the longest postfix is 'acacacacacac'.
+    # For 'catacacacacacacac' the longest postfix is 'acacacacacacac'.
+    # For 'catacacacacacacacac' the longest postfix is 'acacacacacacacac'.
+    # For 'catacacacacacacacacac' the longest postfix is 'acacacacacacacacac'.
+    # For 'catacacacacacacacacacac' the longest postfix is 'acacacacacacacacacac'.
+    # For 'catacacacacacacacacacacac' the longest postfix is 'acacacacacacacacacacac'.
+    # For 'catacacacacacacacacacacacac' the longest postfix is 'acacacacacacacacacacacac'.
+    # For 'catacacacacacacacacacacacacac' the longest postfix is</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+```
+
+You can run the function `make_palindrome` with a string as an argument to get the shortest palindrome that begins with the supplied string. The function `is_palindrome` is used to check if a string is a palindrome.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    # Find the longest palindromic suffix
+    suffix = ""
+    for i in range(len(string)):
+        for j in range(i, len(string)):
+            if is_palindrome(string[i:j+1]):
+                suffix = string[i:j+1]
+                break
+
+    # Find the longest prefix that is not a palindrome
+    prefix = ""
+    for i in range(len(string)-len(suffix)+1):
+        if not is_palindrome(string[i:i+len(suffix)]):
+            prefix = string[i:i+len(suffix)]
+            break
+
+    # Append the reversed prefix to the end of the string
+    return string + prefix[::-1]</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if is_palindrome(string):
+        return string
+    else:
+        for i in range(len(string)):
+            if is_palindrome(string[i:]):
+                return string + string[:i][::-1]</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return string
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[:i]):
+            return string + string[:i][::-1]</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    for i in range(len(string)):
+        suffix = string[i:]
+        if is_palindrome(suffix):
+            return string + string[:i][::-1]
+
+    raise RuntimeError('We should never get here')
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def longest_palindrome_suffix(string: str) -> str:
+    """ Find the longest palindromic suffix of given string """
+    n = len(string)
+    start = max((i for i in range(n, 0, -1) if is_palindrome(string[:i])))
+    return string[start:]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string. """
+    suffix = longest_palindrome_suffix(string)
+    prefix = suffix[:len(suffix) // 2] if len(suffix) % 2 == 0 else suffix[:len(suffix) // 2] + suffix[len(suffix) // 2 + 1:]
+    return prefix + suffix + prefix
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return string
+
+    # Find the longest postfix of supplied string that is a palindrome
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[i:]):
+            # Append to the end of the string reverse of a string prefix that comes before the palindromic suffix
+            return string + string[i-1::-1]
+
+
+# Test cases
+print(make_palindrome(''))  # ''
+print(make_palindrome('cat'))  # 'catac'
+print(make_palindrome('cata'))  # 'catac'</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    # Find the longest palindromic suffix
+    n = len(string)
+    suffix = n - 1
+    while suffix >= 0 and string[suffix] == string[n - suffix - 1]:
+        suffix -= 1
+
+    # Find the shortest palindromic prefix
+    prefix = 0
+    while string[prefix] == string[suffix]:
+        prefix += 1
+
+    # Return the concatenation of the prefix and the suffix
+    return string[:prefix] + string[suffix + 1:n]
+
+print(make_palindrome('cata'))  # Output: 'catac'</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    if is_palindrome(string):
+        return string
+
+    # Find the longest postfix of supplied string that is a palindrome
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[:i]):
+            break
+
+    # Append to the end of the string reverse of a string prefix that comes before the palindromic suffix
+    return string[:i] + string[i:][::-1]
+```
+
+The `is_palindrome` function takes a string as input and returns `True` if it is a palindrome, and `False` otherwise. The `make_palindrome` function takes a string as input and returns the shortest palindrome that begins with the input string. If the input string is already a palindrome, it is returned as is. Otherwise, the function finds the longest postfix of the input string that is a palindrome, and appends to the end of the string the reverse of a string prefix that comes before the palindromic suffix.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    def is_palindrome(s: str) -> bool:
+        return s == s[::-1]
+
+    def longest_palindromic_postfix(s: str) -> str:
+        for i in range(len(s)):
+            if is_palindrome(s[i:]):
+                return s[i:]
+        return ''
+
+    def reverse(s: str) -> str:
+        return s[::-1]
+
+    palindromic_postfix = longest_palindromic_postfix(string)
+    prefix = string[:-len(palindromic_postfix)]
+    return string + reverse(prefix)
+
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function `make_palindrome` implemented in a markdown style code block:
+
+```python
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[::-1]
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+```
+
+This function works by iterating over the string from the start to the end. For each index, it checks if the rest of the string is a palindrome. If it is, it returns the original string concatenated with the reverse of the prefix that comes before the palindromic suffix. If no palindrome is found, it returns the original string concatenated with its reverse.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[:-1][::-1]
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if is_palindrome(string):
+        return string
+    for i in range(len(string)-1, 0, -1):
+        if is_palindrome(string[i:]):
+            return string + string[i-1::-1]</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+    for i in range(len(string)):
+        if is_palindrome(string[:i + 1]):
+            return string + string[i + 1:][::-1]
+    return string + string[::-1]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    # Edge case: empty string
+    if not string:
+        return ''
+
+    # Find the longest palindromic suffix
+    for i in range(len(string), 0, -1):
+        suffix = string[i-1:]
+        if is_palindrome(suffix):
+            break
+
+    # Construct the palindrome
+    prefix = string[:i-1]
+    return prefix + suffix[::-1]
+
+
+# Test cases
+assert make_palindrome('') == ''
+assert make_palindrome('cat') == 'catac'
+assert make_palindrome('cata') == 'catac'
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[::-1]
+
+
+if __name__ == "__main__":
+    print(make_palindrome(""))  # ""
+    print(make_palindrome("cat"))  # "catac"
+    print(make_palindrome("cata"))  # "catac"
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    for i in range(len(string), -1, -1):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+
+
+# Test cases
+print(make_palindrome(''))  # ''
+print(make_palindrome('cat'))  # 'catac'
+print(make_palindrome('cata'))  # 'catac'</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    for i in range(len(string), -1, -1):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+
+
+if __name__ == '__main__':
+    print(make_palindrome(''))
+    print(make_palindrome('cat'))
+    print(make_palindrome('cata'))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[::-1]</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    def longest_palindrome_suffix(s: str) -> str:
+        length = len(s)
+        for i in range(length):
+            if is_palindrome(s[i:]):
+                return s[i:]
+        return ""
+
+    def reverse_prefix(s: str) -> str:
+        return s[::-1]
+
+    suffix = longest_palindrome_suffix(string)
+    prefix = string[:-len(suffix)]
+    return string + reverse_prefix(prefix)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    if is_palindrome(string):
+        return string
+
+    for i in range(len(string), -1, -1):
+        if is_palindrome(string[:i]):
+            return string[:i] + string[:i][::-1]
+
+    return string + string[::-1]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string. """
+    if not string:
+        return ''
+    
+    for i in range(len(string), -1, -1):
+        prefix = string[:i]
+        suffix = string[i:]
+        if is_palindrome(suffix):
+            return prefix + suffix[::-1]
+    
+    return string + string[::-1]
+```
+
+The `is_palindrome` function checks if a given string is a palindrome by comparing it with its reverse. If the string is equal to its reverse, it returns `True`, otherwise `False`.
+
+The `make_palindrome` function takes a string as input and returns the shortest palindrome that begins with the given string. It first checks if the string is empty, in which case it returns an empty string. Otherwise, it iterates over all possible prefixes of the string and checks if the suffix is a palindrome. If it finds a palindrome, it returns the concatenation of the prefix and the reverse of the suffix. If it doesn't find any palindrome, it returns the concatenation of the string and its reverse. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+
+    if is_palindrome(string):
+        return string
+    for i in range(len(string), 0, -1):
+        if is_palindrome(string[:i]):
+            return string + string[:i - 1][::-1]
+    return string
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    if is_palindrome(string):
+        return string
+
+    left, right = 0, len(string) - 1
+    max_length = 0
+
+    while left <= right:
+        if is_palindrome(string[left:right + 1]):
+            max_length = right - left + 1
+            break
+        if left > 0:
+            left -= 1
+        else:
+            right += 1
+
+    return string[:left] + string[::-1][:max_length]</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the completed code:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if is_palindrome(string):
+        return string
+    
+    for i in range(len(string)-1, -1, -1):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+```</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+    return string + string[::-1]
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the `is_palindrome` and `make_palindrome` functions in Python:
+
+```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if is_palindrome(string):
+        return string
+
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+
+    return string + string[::-1]
+```
+
+This function works by first checking if the input string is a palindrome. If it is, it returns the string as it is. If it's not, it then tries to find the longest postfix of the string that is a palindrome. If it can't find a palindrome, it returns the string with the reverse of the string prefix that comes before the palindromic suffix appended to the end.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+    palindrome_suffix = string[::-1]
+    for i in range(len(string)):
+        if string[i:] == palindrome_suffix:
+            return string[:i] + palindrome_suffix + string[i:]
+    return ''
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def make_palindrome(string: str) -> str:
+    def is_palindrome(string: str) -> bool:
+        """ Test if given string is a palindrome """
+        return string == string[::-1]
+
+    def longest_palindrome_suffix(string: str) -> str:
+        """ Find the longest postfix of supplied string that is a palindrome. """
+        n = len(string)
+        for i in range(n):
+            j = n - 1
+            while j >= i and is_palindrome(string[i:j+1]):
+                j -= 1
+            if j >= i:
+                return string[i:j+1]
+        return ""
+
+    def reverse_prefix(string: str, k: int) -> str:
+        """ Reverse the first k characters of a string """
+        return string[:k][::-1] + string[k:]
+
+    string = string.strip()
+    if not string:
+        return ""
+
+    palindrome_suffix = longest_palindrome_suffix(string)
+    if len(palindrome_suffix) == len(string):
+        return string
+
+    prefix = string[:-len(palindrome_suffix)]
+    return string[:-len(palindrome_suffix)] + reverse_prefix(string, len(prefix))</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+
+    # Find the longest palindromic suffix
+    suffix_start = len(string) - 1
+    while suffix_start >= 0 and suffix_start > 0 and is_palindrome(string[suffix_start:]):
+        suffix_start -= 1
+    palindromic_suffix = string[suffix_start:]
+
+    # Find the prefix that comes before the palindromic suffix
+    prefix = string[:suffix_start]
+
+    # Reverse the prefix
+    reversed_prefix = prefix[::-1]
+
+    # Concatenate the palindromic suffix, reversed prefix, and palindromic suffix
+    return palindromic_suffix + reversed_prefix + palindromic_suffix</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to complete the `make_palindrome` function:
+
+```python
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    n = len(string)
+    rev_str = string[::-1]
+    
+    for i in range(n):
+        if string[i:] == string[i:][::-1]:
+            return string + rev_str[:i]
+    
+    return string</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    # Helper function to check if a string is a palindrome
+    def is_palindrome_helper(string: str) -> bool:
+        return string == ''.join(reversed(string))
+
+    # Helper function to get the longest postfix of a string that is a palindrome
+    def longest_palindrome_postfix(string: str) -> str:
+        for i in range(len(string)):
+            if is_palindrome_helper(string[i:]):
+                return string[i:]
+        return ''
+
+    # Get the longest postfix of the given string that is a palindrome
+    max_palindrome_postfix = longest_palindrome_postfix(string)
+
+    # Find the prefix of the given string that comes before the palindromic suffix
+    prefix = string[:-len(max_palindrome_postfix)]
+
+    # Return the result by appending the reversed prefix to the end of the string
+    return string + max_palindrome_postfix + prefix[::-1]
+
+# Test cases
+print(make_palindrome(''))  # Should print: ''
+print(make_palindrome('cat'))  # Should print: 'catac'
+print(make_palindrome('cata'))  # Should print: 'catac'</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+
+    if is_palindrome(string):
+        return string
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[i-1::-1]
+
+</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if is_palindrome(string):
+        return string
+    else:
+        for i in range(len(string)):
+            if is_palindrome(string[i:]):
+                return string + string[i-1::-1]</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+
+    def longest_palindrome_postfix(string: str) -> str:
+        """ Find the longest palindrome postfix of a string """
+        n = len(string)
+        for i in range(n // 2):
+            # Manually check if odd length palindromes are possible
+            if n % 2 == 1 and i == n // 2:
+                return string[i:i+2]
+            if string[i:i+2] == string[i:i+2][::-1]:
+                return string[i:i+2]
+        return ''
+
+    def shortest_palindrome_prefix(string: str) -> str:
+        """ Find the shortest palindrome prefix of a string """
+        n = len(string)
+        for i in range(n // 2):
+            if string[i:i+2] == string[i:i+2][::-1]:
+                return string[i:i+2]
+        return ''
+
+    palindrome_postfix = longest_palindrome_postfix(string)
+    palindrome_prefix = shortest_palindrome_prefix(palindrome_postfix)
+    return palindrome_prefix + palindrome_postfix
+
+
+# Testing
+print(is_palindrome(''))  # True
+print(is_palindrome('cat'))  # True
+print(is_palindrome('cata'))  # True
+print(is_palindrome('hello'))  # False
+
+print(make_palindrome(''))  # ''
+print(make_palindrome('cat'))  # 'catac'
+print(make_palindrome('cata'))  # 'catac'
+print(make_palindrome('hello'))  # 'hellolleh'</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    """
+    if is_palindrome(string):
+        return string
+
+    for i in range(len(string)):
+        if is_palindrome(string[i:]):
+            return string + string[:i][::-1]
+
+    return string + string[::-1]
+
+# Test cases
+print(make_palindrome(''))        # Expected: ''
+print(make_palindrome('cat'))     # Expected: 'catac'
+print(make_palindrome('cata'))    # Expected: 'catac'
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

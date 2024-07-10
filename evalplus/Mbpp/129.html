@@ -1,0 +1,2359 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/129 </h1>
+<pre><code> """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def magic_square_test(my_matrix):
+    s = sum(my_matrix[0])
+    # row
+    if any(sum(row) != s for row in my_matrix):
+        return False
+    # column
+    if any(sum(row[i] for row in my_matrix) != s for i in range(len(my_matrix[0]))):
+        return False
+    # diagonal
+    if sum(my_matrix[i][i] for i in range(len(my_matrix))) != s:
+        return False
+    # anti-diagonal
+    if sum(my_matrix[i][len(my_matrix) - i - 1] for i in range(len(my_matrix))) != s:
+        return False
+    return True
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]], [[[2, 7, 6], [9, 5, 1], [4, 3, 8]]], [[[2, 7, 6], [9, 5, 1], [4, 3, 7]]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5]]], [[[-2, 7, 6], [9, -5, 1], [4, 3, -7]]], [[[4, 19, -3], [12, 7, 1], [0, 9, -16]]], [[[1, 2, 3], [4, 5, 6]]], [[[4, 19, -3], [0, 9, -16]]], [[[7, 12, 1, 14], [2, 13, 8, 11]]], [[[7, 1, 14], [7, 1, 14]]], [[[7, 1, 14]]], [[[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [2, 13, 8, 11]]], [[[7, 12, 1, 14]]], [[[7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14]]], [[[4, 19, -3], [12, 7, 1], [-16, 9, -16], [12, 7, 1]]], [[[7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14]]], [[[7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14]]], [[[-2, 7, 6], [9, -5, 1]]], [[[1, 2, 3], [4, 5, 6], [4, 5, 6]]], [[[4, 19, -3], [12, 7, 1], [0, 9, -16], [12, 7, 1]]], [[[11, 12, 1, 14], [11, 12, 1, 14], [11, 12, 1, 14], [11, 12, 1, 14], [11, 12, 1, 14]]], [[[4, 19, -3], [12, 7, 1], [12, 7, 1]]], [[[4, 5, 6]]], [[[-2, 7, 6], [9, -5, 1], [4, 3, -7], [9, -5, 1]]], [[[0, 9, -16], [4, 19, -3], [12, 7, 1], [0, 9, -16]]], [[[0, 9, -16], [4, 19, -3], [12, 7, 1], [0, 9, -16], [0, 9, -16]]], [[[9, -5, 1], [4, 3, -7]]], [[[7, 12, 1, 2, 14], [7, 12, 1, 2, 14]]], [[[7, 12, 1, 14, 12], [7, 12, 1, 14, 12], [7, 12, 1, 14, 12], [7, 12, 1, 14, 12], [7, 12, 1, 14, 12], [7, 12, 1, 14, 12]]], [[[7, 1, 14, 1], [7, 1, 14, 1]]], [[[7, 12, 1, 2], [7, 12, 1, 2]]], [[[7, 14]]], [[[12, 7, -3], [4, 19, -3], [12, 7, -3], [0, 9, -16], [12, 7, -3]]], [[[12, 7, -3], [4, 19, -3], [12, 7, -3], [12, 7, -3]]], [[[9, -5, 1, 9]]], [[[7, 12, 2, 14, 12], [7, 12, 2, 14, 12], [7, 12, 2, 14, 12], [7, 12, 2, 14, 12], [7, 12, 2, 14, 12], [7, 12, 2, 14, 12]]], [[[1, 14], [1, 14], [1, 14]]], [[[7, 12, 1, 14], [7, 12, 1, 14]]], [[[7, 1, 14, 1]]], [[[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [2, 13, 8, 11], [7, 12, 1, 14]]], [[[0, 9, -16], [4, 19, -3], [12, 7, 1]]], [[[2, 8, 11, 2], [2, 8, 11, 2], [2, 8, 11, 2]]], [[[7, 14, 14]]], [[[7, 12, 1, 12], [7, 12, 1, 12], [7, 12, 1, 12], [7, 12, 1, 12], [7, 12, 1, 12], [7, 12, 1, 12]]], [[[7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6]]], [[[0, 9, -16], [4, 19, -3], [0, 9, -16], [0, 9, -16]]], [[[7, 12, 1, 14], [16, 3, 10, 5], [2, 13, 8, 11]]], [[[7, 12, 16], [7, 12, 16], [7, 12, 16], [7, 12, 16]]], [[[7, 7], [7, 7]]], [[[7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12]]], [[[7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14]]], [[[7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13]]], [[[9, -5, 1], [4, 3, -6]]], [[[7, 12, 1, 2, 14]]], [[[12, 8, 7, 1], [12, 8, 7, 1]]], [[[7, -5, 14], [7, -5, 14], [7, -5, 14], [7, -5, 14]]], [[[7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14], [7, 12, 1, 14]]], [[[7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13], [7, 12, 2, 14, 13]]], [[[8, 12, 1, 14], [8, 12, 1, 14], [8, 12, 1, 14], [8, 12, 1, 14], [8, 12, 1, 14], [8, 12, 1, 14], [8, 12, 1, 14]]], [[[7, 12, 1, 14, 12, 12], [7, 12, 1, 14, 12, 12], [7, 12, 1, 14, 12, 12], [7, 12, 1, 14, 12, 12], [7, 12, 1, 14, 12, 12]]], [[[4, 19, -16], [12, 7, 1]]], [[[4, 19, -3], [12, 7, 1], [0, 9, -16], [0, 9, -16]]], [[[7, 12, 2, 15], [7, 12, 2, 15], [7, 12, 2, 15], [7, 12, 2, 15], [7, 12, 2, 15], [7, 12, 2, 15], [7, 12, 2, 15], [7, 12, 2, 15]]], [[[6, 4, 5, 6]]], [[[7, 7, 7], [7, 7, 7], [7, 7, 7]]], [[[-6, 7, 12, 1, 12, 12], [-6, 7, 12, 1, 12, 12], [-6, 7, 12, 1, 12, 12], [-6, 7, 12, 1, 12, 12], [-6, 7, 12, 1, 12, 12], [-6, 7, 12, 1, 12, 12], [-6, 7, 12, 1, 12, 12]]], [[[7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12]]], [[[7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12]]], [[[7, 12, 1, 2], [7, 12, 1, 2], [7, 12, 1, 2]]], [[[-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7], [-6, 7, 12, 1, 12, 12, 7]]], [[[14], [14], [14]]], [[[7, 12, 1, 1, 14], [7, 12, 1, 1, 14], [7, 12, 1, 1, 14], [7, 12, 1, 1, 14]]], [[[6, 12, 1, 14], [16, 3, 10, 5], [2, 13, 8, 11]]], [[[7, 1, 1, 14], [7, 1, 1, 14], [7, 1, 1, 14], [7, 1, 1, 14]]], [[[-2, 7, 6]]], [[[-5, 13, 8, 11], [7, 12, 1, 14], [-5, 13, 8, 11], [16, 3, 10, 5]]], [[[7, 12, 1, 14], [2, 13, 8, 11], [2, 13, 8, 11]]], [[[7, 12, 1, 2, 14], [7, 12, 1, 2, 14], [7, 12, 1, 2, 14], [7, 12, 1, 2, 14]]], [[[1, -16, 3], [4, 5, 6], [4, 5, 6]]], [[[7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12]]], [[[7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6], [7, 12, 1, 6]]], [[[7, 12, 2, 15, 2], [7, 12, 2, 15, 2], [7, 12, 2, 15, 2], [7, 12, 2, 15, 2], [7, 12, 2, 15, 2], [7, 12, 2, 15, 2], [7, 12, 2, 15, 2], [7, 12, 2, 15, 2]]], [[[7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12]]], [[[7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12], [7, 8, 14, 12]]], [[[7, 15, 1, 2, 14], [7, 15, 1, 2, 14], [7, 15, 1, 2, 14]]], [[[12, 2, 15], [12, 2, 15], [12, 2, 15], [12, 2, 15], [12, 2, 15], [12, 2, 15], [12, 2, 15], [12, 2, 15]]], [[[7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13]]], [[[7, 12, 1, 14], [14, 13, 8, 11], [16, 3, 10, 5], [14, 13, 8, 11]]], [[[7, 14, 14], [7, 14, 14]]], [[[7, 12, 1, 14, 14], [7, 12, 1, 14, 14]]], [[[7, 12, 1, 14], [2, 13, 8, 11], [2, 13, 8, 11], [2, 13, 8, 11]]], [[[6, 12, 1, 1, 14], [6, 12, 1, 1, 14], [6, 12, 1, 1, 14], [6, 12, 1, 1, 14], [6, 12, 1, 1, 14]]], [[[7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12], [7, 12, 2, 13, 14, 12]]], [[[7, 12, 1], [7, 12, 1], [7, 12, 1], [7, 12, 1], [7, 12, 1]]], [[[12, 7, -3], [4, 19, -3], [12, 7, -3], [12, 7, -3], [12, 7, -3]]], [[[7, 12, 1, 14], [16, 3, 10, 5], [14, 13, 8, 11]]], [[[7, 12, 1, 14, 12, 11], [7, 12, 1, 14, 12, 11], [7, 12, 1, 14, 12, 11], [7, 12, 1, 14, 12, 11], [7, 12, 1, 14, 12, 11], [7, 12, 1, 14, 12, 11], [7, 12, 1, 14, 12, 11]]], [[[2, 8, 2], [2, 8, 2], [2, 8, 2], [2, 8, 2]]], [[[7, 15, 1, 2, 14], [7, 15, 1, 2, 14]]], [[[7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12], [7, 12, 1, 12, 12]]], [[[7, 8, 14, 12, 7], [7, 8, 14, 12, 7], [7, 8, 14, 12, 7], [7, 8, 14, 12, 7], [7, 8, 14, 12, 7], [7, 8, 14, 12, 7], [7, 8, 14, 12, 7], [7, 8, 14, 12, 7]]], [[[7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12], [7, 12, 14, 12]]], [[[7, 12, 1, 14, 14]]], [[[7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13], [7, 11, 2, 14, 13]]], [[[7, 12, 1, 10, 14]]], [[[6, 1, 1, 14], [6, 1, 1, 14], [6, 1, 1, 14], [6, 1, 1, 14]]], [[[7, 12, 1, 14, 12, 12, 12], [7, 12, 1, 14, 12, 12, 12], [7, 12, 1, 14, 12, 12, 12], [7, 12, 1, 14, 12, 12, 12], [7, 12, 1, 14, 12, 12, 12], [7, 12, 1, 14, 12, 12, 12]]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    """
+    :param matrix: a matrix
+    :return: True if the matrix is a magic square, False otherwise
+    """
+    # Your code here
+    # You can use the following variables to access the matrix
+    # matrix_rows = len(matrix)
+    # matrix_cols = len(matrix[0])
+    # You can use the following functions to access the matrix
+    # matrix[row][col]
+    # matrix[row][:]
+    # matrix[:][col]
+    # matrix[:][:]
+    # You can use the following functions to calculate the sum of a row or column
+    # sum(matrix[row][:])
+    # sum(matrix[:][col])
+    # You can use the following functions to calculate the sum of the matrix
+    # sum(matrix[row][:]) * matrix_cols
+    # sum(matrix[:][col]) * matrix_rows
+    # You can use the following functions to calculate the sum of the diagonal
+    # sum(matrix[row][row])
+    # sum(matrix[row][matrix_cols - row - 1])
+    # You can use the following functions to calculate the sum of the matrix
+    # sum(matrix[row][:]) * matrix_cols
+    # sum(matrix[:][col]) * matrix_rows
+    # You can use the following functions to calculate the sum of the diagonal
+    # sum(matrix[row][row])
+    # sum(matrix[row][matrix_cols - row - 1])
+    # You can use the following functions to calculate the sum of the matrix
+    # sum(matrix[row][:]) * matrix_cols
+    # sum(matrix[:][col]) * matrix_rows
+    # You can use the following functions to calculate the sum of the diagonal
+    # sum(matrix[row][row])
+    # sum(matrix[row][matrix_cols - row - 1])
+    # You can use the following functions to calculate the sum of the matrix
+    # sum(matrix[row][:]) * matrix_cols
+    # sum(matrix[:][col]) * matrix_rows
+    # You can use the following functions to calculate the sum of the diagonal
+    # sum(matrix[row][row])
+    #</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_magic_square(matrix):
+    n = len(matrix)
+    if n == 0 or len(matrix[0]) != n:
+        return False
+    sum_diagonal1 = sum(matrix[i][i] for i in range(n))
+    sum_diagonal2 = sum(matrix[i][n-i-1] for i in range(n))
+    if sum_diagonal1 != sum_diagonal2:
+        return False
+    for i in range(n):
+        row_sum = sum(matrix[i])
+        col_sum = sum(matrix[j][i] for j in range(n))
+        if row_sum != sum_diagonal1 or col_sum != sum_diagonal1:
+            return False
+    return True
+
+def magic_square_test(matrix):
+    return is_magic_square(matrix)
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix: list[list[int]]) -> bool:
+    n = len(matrix)
+    sum_list = []
+
+    # check if all numbers are present
+    all_numbers_present = set(range(1, n * n + 1)) == set(sum(matrix[i] for i in range(n)))
+
+    if not all_numbers_present:
+        return False
+
+    # check rows
+    for row in matrix:
+        if sum(row) != n * (n * n + 1) // 2:
+            return False
+
+    # check columns
+    for i in range(n):
+        if sum(matrix[j][i] for j in range(n)) != n * (n * n + 1) // 2:
+            return False
+
+    # check diagonals
+    if sum(matrix[i][i] for i in range(n)) != n * (n * n + 1) // 2:
+        return False
+    if sum(matrix[i][n - i - 1] for i in range(n)) != n * (n * n + 1) // 2:
+        return False
+
+    return True
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem:
+
+```python
+def magic_square_test(matrix):
+    """
+    Checks if the given matrix is a magic square.
+    
+    Args:
+        matrix (list of lists): The matrix to be tested.
+    
+    Returns:
+        bool: True if the matrix is a magic square, False otherwise.
+    """
+    # Check if the matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+    
+    # Calculate the expected sum of each row, column, and diagonal
+    expected_sum = sum(matrix[0])
+    
+    # Check if all rows have the expected sum
+    for row in matrix:
+        if sum(row) != expected_sum:
+            return False
+    
+    # Check if all columns have the expected sum
+    for i in range(len(matrix)):
+        column_sum = 0
+        for j in range(len(matrix)):
+            column_sum += matrix[j][i]
+        if column_sum != expected_sum:
+            return False
+    
+    # Check if the main diagonal has the expected sum
+    diagonal_sum = 0
+    for i in range(len(matrix)):
+        diagonal_sum += matrix[i][i]
+    if diagonal_sum != expected_sum:
+        return False
+    
+    # Check if the secondary diagonal has the expected sum
+    diagonal_sum = 0
+    for i in range(len(matrix)):
+        diagonal_sum += matrix[i][len(matrix) - i - 1]
+    if diagonal_sum != expected_sum:
+        return False
+    
+    return True</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    # check if the matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+    # check if all rows have the same sum
+    target_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != target_sum:
+            return False
+    # check if all columns have the same sum
+    for col in range(len(matrix[0])):
+        if sum(row[col] for row in matrix) != target_sum:
+            return False
+    # check if both diagonals have the same sum
+    if sum(matrix[i][i] for i in range(len(matrix))) != target_sum or sum(matrix[i][len(matrix)-i-1] for i in range(len(matrix))) != target_sum:
+        return False
+    return True
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+def magic_square_test(matrix):
+    # Check if the matrix is a square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Calculate the size of the matrix
+    size = len(matrix)
+
+    # Calculate the sum of elements in the first row
+    sum_row = sum(matrix[0])
+
+    # Check if all rows have the same sum
+    for row in matrix:
+        if sum(row) != sum_row:
+            return False
+
+    # Calculate the sum of elements in the first column
+    sum_col = sum([row[0] for row in matrix])
+
+    # Check if all columns have the same sum
+    for col in range(size):
+        if sum([row[col] for row in matrix]) != sum_col:
+            return False
+
+    # Calculate the sum of elements in the main diagonal
+    sum_diagonal = sum([matrix[i][i] for i in range(size)])
+
+    # Check if the main diagonal has the same sum
+    if sum_diagonal != sum_row:
+        return False
+
+    # Calculate the sum of elements in the secondary diagonal
+    sum_diagonal_secondary = sum([matrix[i][size - i - 1] for i in range(size)])
+
+    # Check if the secondary diagonal has the same sum
+    if sum_diagonal_secondary != sum_row:
+        return False
+
+    # If all checks pass, the matrix is a magic square
+    return True</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def magic_square_test(matrix):
+    n = len(matrix)
+    magic_sum = sum(matrix[0])
+
+    # Check rows
+    for row in matrix:
+        if sum(row) != magic_sum:
+            return False
+
+    # Check columns
+    for col in range(n):
+        col_sum = sum(matrix[row][col] for row in range(n))
+        if col_sum != magic_sum:
+            return False
+
+    # Check diagonals
+    diagonal_sum1 = sum(matrix[i][i] for i in range(n))
+    diagonal_sum2 = sum(matrix[i][n-1-i] for i in range(n))
+    if diagonal_sum1 != magic_sum or diagonal_sum2 != magic_sum:
+        return False
+
+    return True</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    # Check if the matrix is a square
+    if not all(len(row) == n for row in matrix):
+        return False
+
+    # Check if the sums of each row, column, and diagonal are equal
+    row_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != row_sum:
+            return False
+
+    for col in range(n):
+        if sum(matrix[i][col] for i in range(n)) != row_sum:
+            return False
+
+    if sum(matrix[i][i] for i in range(n)) != row_sum or sum(matrix[i][n - i - 1] for i in range(n)) != row_sum:
+        return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that checks whether a given matrix is a magic square or not:
+
+
+```python
+def magic_square_test(matrix):
+    n = len(matrix)
+    # calculate the sum of the first row
+    row_sum = sum(matrix[0])
+    # check if all rows have the same sum
+    for i in range(1, n):
+        if sum(matrix[i]) != row_sum:
+            return False
+    # check if all columns have the same sum
+    for j in range(n):
+        col_sum = 0
+        for i in range(n):
+            col_sum += matrix[i][j]
+        if col_sum != row_sum:
+            return False
+    # check if both diagonals have the same sum
+    diag1_sum = sum(matrix[i][i] for i in range(n))
+    diag2_sum = sum(matrix[i][n-i-1] for i in range(n))
+    if diag1_sum != row_sum or diag2_sum != row_sum:
+        return False
+    return True
+```
+
+The function takes a matrix as input and returns True if it is a magic square, and False otherwise. A magic square is a square matrix where the sum of each row, column, and diagonal is equal. In the given example, the sum of each row and column is 30, and the sum of both diagonals is also 30, so the function should return True. Here's how you can use it:
+
+
+```python
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+print(magic_square_test(matrix)) # True
+```
+
+Note that this function assumes that the matrix is a square matrix (i.e., all rows have the same length). If you want to make it more general, you can add a check for that as well:
+
+
+```python
+def magic_square_test(matrix):
+    n = len(matrix)
+    if not all(len(row) == n for row in matrix):
+        return False
+    # calculate the sum of the first row
+    row_sum = sum(matrix[0])
+    # check if all rows have the same sum
+    for i in range(1, n):
+        if sum(matrix[i]) != row_sum:
+            return False
+    # check if all columns have the same sum
+    for j in range(n):
+        col_sum = 0
+        for i in range(n):
+            col_sum += matrix[i][j]
+        if col_sum != row_sum:
+            return False
+    # check if both diagonals have the same sum
+    diag1_sum = sum(matrix[i][i] for i in range(n))
+    diag2_sum = sum(matrix[i][n-i-1] for i in range(n))
+    if diag1_sum != row_sum or diag2_sum != row_sum:
+        return False
+    return True
+```
+
+This version of the function first checks if all rows have the same length, and returns False if they don't. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    sum_diagonal1 = sum_diagonal2 = sum_row = sum_col = 0
+
+    # Calculate the sum of the first diagonal
+    for i in range(n):
+        sum_diagonal1 += matrix[i][i]
+
+    # Calculate the sum of the second diagonal
+    for i in range(n):
+        sum_diagonal2 += matrix[i][n - i - 1]
+
+    # Calculate the sum of the first row
+    for i in range(n):
+        sum_row += matrix[0][i]
+
+    # Check if the sum of the diagonals and the first row are equal
+    if sum_diagonal1 != sum_row or sum_diagonal2 != sum_row:
+        return False
+
+    # Check if the sum of each row and column is equal to the sum of the diagonals
+    for i in range(n):
+        sum_col = 0
+        for j in range(n):
+            sum_col += matrix[j][i]
+            if sum_col != sum_row:
+                return False
+
+    # Check if the sum of each row is equal to the sum of the diagonals
+    for i in range(1, n):
+        sum_row = 0
+        for j in range(n):
+            sum_row += matrix[i][j]
+            if sum_row != sum_diagonal1:
+                return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    # your code here
+    # check if the matrix is a square
+    if len(matrix) != len(matrix[0]):
+        return False
+    # check if the sum of each row is the same
+    row_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != row_sum:
+            return False
+    # check if the sum of each column is the same
+    col_sum = sum(matrix[0][0:len(matrix)])
+    for i in range(len(matrix)):
+        if sum(matrix[i][0:len(matrix)]) != col_sum:
+            return False
+    # check if the sum of the diagonal is the same
+    diag_sum = sum(matrix[0][0:len(matrix)])
+    if sum(matrix[0][0:len(matrix)]) != diag_sum:
+        return False
+    if sum(matrix[0][len(matrix)-1::-1]) != diag_sum:
+        return False
+    return True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_magic_square(matrix):
+    # Check if the matrix is a square
+    n = len(matrix)
+    if n != len(matrix[0]):
+        return False
+
+    # Initialize variables
+    sum_diag1 = sum(matrix[0])
+    sum_diag2 = sum(matrix[-1])
+    row_sums = [sum(row) for row in matrix]
+    col_sums = [sum(col) for col in zip(*matrix)]
+
+    # Check all sums
+    for i in range(1, n):
+        if sum_diag1 != sum(matrix[i]) or sum_diag2 != sum(matrix[i-n+i]):
+            return False
+        if row_sums[i] != row_sums[0] or col_sums[i] != col_sums[0]:
+            return False
+
+    return True
+
+# Test the function
+matrix_test = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+assert is_magic_square(matrix_test) == True</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that checks if a matrix is a magic square. A magic square is a matrix where the sums of rows, columns and diagonals are all equal.
+
+```python
+def magic_square_test(matrix):
+    n = len(matrix)
+    magic_constant = n * ((n * n) + 1) // 2
+
+    # Check rows
+    for row in matrix:
+        if sum(row) != magic_constant:
+            return False
+
+    # Check columns
+    for col in range(n):
+        if sum([row[col] for row in matrix]) != magic_constant:
+            return False
+
+    # Check main diagonal
+    if sum([matrix[i][i] for i in range(n)]) != magic_constant:
+        return False
+
+    # Check other diagonal
+    if sum([matrix[i][n - i - 1] for i in range(n)]) != magic_constant:
+        return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True
+```
+This function first calculates the magic constant, which is the sum that we expect for all rows, columns and diagonals. It then checks each row, column and diagonal to see if their sums equal the magic constant. If any do not, it returns False. If they all do, it returns True.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: bool
+    """
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]) or len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    # Check if the matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Calculate the sum of the first row
+    row_sum = sum(matrix[0])
+
+    # Check if all rows have the same sum
+    for row in matrix:
+        if sum(row) != row_sum:
+            return False
+
+    # Check if all columns have the same sum
+    for col in range(len(matrix[0])):
+        col_sum = sum(matrix[row][col] for row in range(len(matrix)))
+        if col_sum != row_sum:
+            return False
+
+    # Check if the main diagonal has the same sum
+    diag_sum = sum(matrix[i][i] for i in range(len(matrix)))
+    if diag_sum != row_sum:
+        return False
+
+    # Check if the secondary diagonal has the same sum
+    diag_sum = sum(matrix[i][len(matrix) - 1 - i] for i in range(len(matrix)))
+    if diag_sum != row_sum:
+        return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    # Write your code here
+    return True
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    """
+    :param matrix:
+    :return:
+    """
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # check if the sum of each row is the same
+    for row in matrix:
+        if sum(row) != sum(matrix[0]):
+            return False
+
+    # check if the sum of each column is the same
+    for i in range(len(matrix)):
+        col_sum = 0
+        for j in range(len(matrix)):
+            col_sum += matrix[j][i]
+        if col_sum != sum(matrix[0]):
+            return False
+
+    # check if the sum of each diagonal is the same
+    diag_sum = 0
+    for i in range(len(matrix)):
+        diag_sum += matrix[i][i]
+    if diag_sum != sum(matrix[0]):
+        return False
+
+    diag_sum = 0
+    for i in range(len(matrix)):
+        diag_sum += matrix[i][len(matrix) - i - 1]
+    if diag_sum != sum(matrix[0]):
+        return False
+
+    return True
+
+
+if __name__ == '__main__':
+    matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+    print(magic_square_test(matrix))
+
+    matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    print(magic_square_test(matrix))
+
+    matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+    print(magic_square_test(matrix))
+
+    matrix = [[1, 2, 3, 4, 5], [6</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python function to check if a matrix is a magic square:
+
+```python
+def magic_square_test(matrix):
+    # Get the size of the matrix
+    size = len(matrix)
+
+    # Calculate the sum of the first row
+    magic_constant = sum(matrix[0])
+
+    # Check the rows
+    for row in matrix:
+        if sum(row) != magic_constant:
+            return False
+
+    # Check the columns
+    for i in range(size):
+        if sum(row[i] for row in matrix) != magic_constant:
+            return False
+
+    # Check the diagonals
+    if sum(matrix[i][i] for i in range(size)) != magic_constant:
+        return False
+    if sum(matrix[i][size - i - 1] for i in range(size)) != magic_constant:
+        return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True
+```
+
+This function first calculates the sum of the first row, which is the magic constant. It then checks if the sum of each row, each column, and the two diagonals is equal to the magic constant. If all these sums are equal to the magic constant, the matrix is a magic square, and the function returns True. Otherwise, it returns False.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def magic_square_test(matrix):
+    # Calculate the size of the matrix
+    size = len(matrix)
+    
+    # Check if the matrix is a square
+    if size != len(matrix[0]):
+        return False
+    
+    # Calculate the sum of the elements in the first row
+    first_row_sum = sum(matrix[0])
+    
+    # Check if the sum of the first row is equal to the sum of the other rows
+    for row in matrix[1:]:
+        if sum(row) != first_row_sum:
+            return False
+    
+    # Check if the sum of the elements in the first column is equal to the sum of the other columns
+    first_column_sum = sum(matrix[i][0] for i in range(size))
+    for i in range(1, size):
+        if sum(matrix[i][i]) != first_column_sum:
+            return False
+    
+    # Check if the sum of the elements in the main diagonal is equal to the sum of the other elements
+    main_diagonal_sum = sum(matrix[i][i] for i in range(size))
+    for i in range(size):
+        if sum(matrix[i][i] for i in range(size)) != main_diagonal_sum:
+            return False
+    
+    # Check if the sum of the elements in the anti-diagonal is equal to the sum of the other elements
+    anti_diagonal_sum = sum(matrix[i][size - i - 1] for i in range(size))
+    for i in range(size):
+        if sum(matrix[i][size - i - 1] for i in range(size)) != anti_diagonal_sum:
+            return False
+    
+    return True
+
+
+# Test the function
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+print(magic_square_test(matrix))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    n = len(matrix)
+    sum_row = [0] * n
+    sum_col = [0] * n
+    sum_diag = 0
+    for i in range(n):
+        for j in range(n):
+            sum_row[i] += matrix[i][j]
+            sum_col[j] += matrix[i][j]
+            if i == j:
+                sum_diag += matrix[i][j]
+    if sum_row == sum_col == sum_diag == n * (n ** 2 + 1) / 2:
+        return True
+    else:
+        return False
+
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+print(magic_square_test([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+  """
+  Write a function to calculate whether the matrix is a magic square.
+  assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+  """
+  sum_of_diagonal = 0
+  sum_of_diagonal2 = 0
+  sum_of_row = 0
+  sum_of_column = 0
+  for i in range(len(matrix)):
+    for j in range(len(matrix)):
+      if i == j:
+        sum_of_diagonal += matrix[i][j]
+      if i + j == len(matrix) - 1:
+        sum_of_diagonal2 += matrix[i][j]
+      if i == 0:
+        sum_of_row += matrix[i][j]
+      if j == 0:
+        sum_of_column += matrix[i][j]
+  if sum_of_diagonal == sum_of_diagonal2 and sum_of_diagonal == sum_of_row and sum_of_diagonal == sum_of_column:
+    return True
+  else:
+    return False</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+def is_magic_square(matrix):
+    """
+    Function to check if given matrix is a magic square.
+    A magic square is a square matrix where the sum of the elements is the same in all rows, all columns and both diagonals.
+    """
+    n = len(matrix)
+    if len(matrix) != len(matrix[0]):
+        raise ValueError("Matrix must be a square.")
+
+    # Check if all elements in the matrix are integers
+    for row in matrix:
+        if not all(isinstance(i, int) for i in row):
+            raise TypeError("All elements in the matrix must be integers.")
+
+    # Check if all elements in the matrix are unique
+    if len(set(sum(row) for row in matrix)) != 1:
+        return False
+
+    # Check if the sum of elements in each row, column and both diagonals are equal
+    row_sum = sum(sum(row) for row in matrix)
+    col_sum = [sum(col) for col in zip(*matrix)]
+    if all(row_sum == col_sum[i] for i in range(n)):
+        diagonal_sum = sum(matrix[i][i] for i in range(n))
+        return diagonal_sum == row_sum and diagonal_sum == sum(matrix[-i-1][i] for i in range(n))
+
+# Test the function
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+assert is_magic_square(matrix) == True</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    magic_sum = sum(matrix[0])
+
+    # Check rows and columns
+    for i in range(n):
+        if sum(matrix[i]) != magic_sum or sum([matrix[j][i] for j in range(n)]) != magic_sum:
+            return False
+
+    # Check diagonals
+    if sum([matrix[i][i] for i in range(n)]) != magic_sum or sum([matrix[i][n - i - 1] for i in range(n)]) != magic_sum:
+        return False
+
+    return True
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python script that checks whether a given matrix is a magic square:
+
+```python
+def magic_square_test(matrix):
+    # Check if matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+    
+    # Calculate the sum of each row and column
+    row_sums = [sum(row) for row in matrix]
+    col_sums = [sum(col) for col in zip(*matrix)]
+    
+    # Check if the sum of each row and column is the same
+    if row_sums != col_sums:
+        return False
+    
+    # Calculate the sum of the diagonals
+    diag_sum1 = sum(matrix[i][i] for i in range(len(matrix)))
+    diag_sum2 = sum(matrix[i][len(matrix)-i-1] for i in range(len(matrix)))
+    
+    # Check if the sum of the diagonals is the same
+    if diag_sum1 != diag_sum2:
+        return False
+    
+    # If all checks pass, the matrix is a magic square
+    return True
+```
+
+To use this function, simply call it with a matrix as an argument:
+
+```python
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+if magic_square_test(matrix):
+    print("The matrix is a magic square")
+else:
+    print("The matrix is not a magic square")
+```
+
+This will output:
+
+```
+The matrix is a magic square
+```</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(square):
+    # check if square is a list of lists
+    if not isinstance(square[0], list):
+        return False
+
+    # check if all lists in the list have equal length
+    prev_len = 0
+    for row in square:
+        if prev_len == 0:
+            prev_len = len(row)
+        if prev_len != len(row):
+            return False
+
+    # check if all rows and columns have equal sum
+    row_sums = []
+    for row in square:
+        row_sum = 0
+        for num in row:
+            row_sum += num
+        row_sums.append(row_sum)
+
+    if row_sums.count(row_sums[0]) != len(row_sums):
+        return False
+
+    column_sums = []
+    for i in range(len(square)):
+        column_sum = 0
+        for row in square:
+            column_sum += row[i]
+        column_sums.append(column_sum)
+
+    if column_sums.count(column_sums[0]) != len(column_sums):
+        return False
+
+    # check if all diagonals have equal sum
+    diagonals_sums = []
+    # top left to bottom right
+    diag_sum = 0
+    for i in range(len(square)):
+        diag_sum += square[i][i]
+    diagonals_sums.append(diag_sum)
+
+    # top right to bottom left
+    diag_sum = 0
+    j = len(square) - 1
+    for i in range(len(square)):
+        diag_sum += square[i][j]
+        j -= 1
+    diagonals_sums.append(diag_sum)
+
+    if diagonals_sums.count(diagonals_sums[0]) != len(diagonals_sums):
+        return False
+
+    return True
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to solve the problem:
+
+```python
+def magic_square_test(matrix):
+    # Get the size of the matrix
+    size = len(matrix)
+
+    # Calculate the sum of the first row
+    magic_sum = sum(matrix[0])
+
+    # Check the sum of each row
+    for row in matrix:
+        if sum(row) != magic_sum:
+            return False
+
+    # Check the sum of each column
+    for col in range(size):
+        if sum(row[col] for row in matrix) != magic_sum:
+            return False
+
+    # Check the sum of the diagonals
+    if sum(matrix[i][i] for i in range(size)) != magic_sum or \
+       sum(matrix[i][size-i-1] for i in range(size)) != magic_sum:
+        return False
+
+    return True
+```
+
+You can test the function with the provided example:
+
+```python
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))  # Output: True
+```
+
+This function works by first calculating the sum of the first row. It then checks each row, each column, and both diagonals to see if they all have the same sum. If they do, the function returns `True`, indicating that the matrix is a magic square. If any of these sums do not match the first row's sum, the function returns `False`.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    """
+    :param matrix: a square matrix
+    :return: True if the matrix is a magic square, False otherwise
+    """
+    n = len(matrix)
+    magic_sum = sum(matrix[0])
+    for i in range(n):
+        if sum(matrix[i])!= magic_sum:
+            return False
+        if sum(matrix[j][i] for j in range(n))!= magic_sum:
+            return False
+    if sum(matrix[i][i] for i in range(n))!= magic_sum:
+        return False
+    if sum(matrix[i][n-i-1] for i in range(n))!= magic_sum:
+        return False
+    return True
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 10]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 15]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 10]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])==False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    if len(matrix)!= len(matrix[0]):
+        return False
+    for i in range(len(matrix)):
+        if len(matrix[i])!= len(matrix[i][0]):
+            return False
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] % 2!= 0:
+                return False
+    return True
+
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    magic_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != magic_sum:
+            return False
+    for col in range(n):
+        col_sum = sum(matrix[i][col] for i in range(n))
+        if col_sum != magic_sum:
+            return False
+    diagonal_sum = sum(matrix[i][i] for i in range(n))
+    if diagonal_sum != magic_sum:
+        return False
+    diagonal_sum = sum(matrix[i][n - i - 1] for i in range(n))
+    if diagonal_sum != magic_sum:
+        return False
+    return True
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    # Check if the matrix is a square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Calculate the size of the square
+    n = len(matrix)
+
+    # Calculate the sum of the first row
+    row_sum = sum(matrix[0])
+
+    # Check if all rows have the same sum
+    for row in matrix:
+        if row_sum != sum(row):
+            return False
+
+    # Calculate the sum of the first column
+    col_sum = sum(matrix[0])
+
+    # Check if all columns have the same sum
+    for i in range(n):
+        if col_sum != sum(matrix[i]):
+            return False
+
+    # Calculate the sum of the first diagonal
+    diag_sum = sum([matrix[i][i] for i in range(n)])
+
+    # Check if all diagonals have the same sum
+    if diag_sum != sum([matrix[i][n - i - 1] for i in range(n)]):
+        return False
+
+    # Calculate the sum of the second diagonal
+    diag_sum = sum([matrix[i][n - i - 1] for i in range(n)])
+
+    # Check if all diagonals have the same sum
+    if diag_sum != sum([matrix[i][i] for i in range(n)]):
+        return False
+
+    # If all checks pass, the matrix is a magic square
+    return True
+
+# Test the function
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    # Check if the matrix is square
+    if not all(len(row) == len(matrix) for row in matrix):
+        return False
+
+    # Calculate the sum of the first row
+    sum_of_first_row = sum(matrix[0])
+
+    # Check if each row and column has the same sum
+    for row in matrix:
+        if sum(row) != sum_of_first_row:
+            return False
+
+    for col in zip(*matrix):
+        if sum(col) != sum_of_first_row:
+            return False
+
+    # Check if the diagonals have the same sum
+    diagonal_sum = sum(matrix[i][i] for i in range(len(matrix)))
+    if diagonal_sum != sum_of_first_row:
+        return False
+
+    anti_diagonal_sum = sum(matrix[i][len(matrix) - i - 1] for i in range(len(matrix)))
+    if anti_diagonal_sum != sum_of_first_row:
+        return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    """
+    Checks if the given matrix is a magic square.
+
+    Args:
+    matrix (list of list of int): The matrix to be checked.
+
+    Returns:
+    bool: True if the matrix is a magic square, False otherwise.
+    """
+    n = len(matrix)
+
+    # Calculate the sum of the first row
+    magic_sum = sum(matrix[0])
+
+    # Check rows and columns
+    for i in range(n):
+        if sum(matrix[i]) != magic_sum or sum([row[i] for row in matrix]) != magic_sum:
+            return False
+
+    # Check diagonals
+    if sum(matrix[i][i] for i in range(n)) != magic_sum or sum(matrix[i][n-i-1] for i in range(n)) != magic_sum:
+        return False
+
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    magic_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != magic_sum:
+            return False
+    for col in range(n):
+        if sum(matrix[i][col] for i in range(n)) != magic_sum:
+            return False
+    if sum(matrix[i][i] for i in range(n)) != magic_sum:
+        return False
+    if sum(matrix[i][n-i-1] for i in range(n)) != magic_sum:
+        return False
+    return True
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    expected_sum = n * (n**2 + 1) // 2
+    row_sums = [sum(row) for row in matrix]
+    col_sums = [sum(matrix[i][j] for i in range(n)) for j in range(n)]
+    diag1_sum = sum(matrix[i][i] for i in range(n))
+    diag2_sum = sum(matrix[i][n-i-1] for i in range(n))
+    return all(sum == expected_sum for sum in row_sums + col_sums + [diag1_sum, diag2_sum])
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    # check if matrix is square
+    if len(matrix)!= len(matrix[0]):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(len, matrix))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, matrix))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix)))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix)[::-1]))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])[::-1]))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])[::-1][::-1]))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])[::-1][::-1][::-1]))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])[::-1][::-1][::-1][::-1]))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])[::-1][::-1][::-1][::-1][::-1]))):
+        return False
+    # check if matrix is square
+    if len(matrix)!= len(set(map(sum, zip(*matrix[::-1])[::-1][::-1][::-1][::-1][::-1][::-1]))</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: bool
+    """
+    if len(matrix) == 0:
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+import numpy as np
+
+def magic_square_test(matrix):
+    matrix = np.array(matrix)
+    if matrix.shape[0] != matrix.shape[1]:
+        return False
+    n = matrix.shape[0]
+    magic_sum = n * (n**2 + 1) // 2
+    
+    # Check rows and columns
+    for i in range(n):
+        if sum(matrix[i, :]) != magic_sum or sum(matrix[:, i]) != magic_sum:
+            return False
+    
+    # Check diagonals
+    if sum(np.diag(matrix)) != magic_sum or sum(np.diag(np.fliplr(matrix))) != magic_sum:
+        return False
+    
+    return True
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+    """
+    Calculates whether a matrix is a magic square.
+
+    Args:
+        matrix: A 2D list representing the magic square.
+
+    Returns:
+        True if the matrix is a magic square, False otherwise.
+    """
+
+    # Check if the matrix is square.
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Check if the matrix is symmetric.
+    if matrix != matrix.T:
+        return False
+
+    # Check if the sum of each row is equal to the target sum.
+    target_sum = sum(matrix.sum()) // 3
+    for row in matrix:
+        if sum(row) != target_sum:
+            return False
+
+    # Check if the sum of each column is equal to the target sum.
+    for col in zip(*matrix):
+        if sum(col) != target_sum:
+            return False
+
+    # Check if the sum of the diagonals is equal to the target sum.
+    if (matrix[0][0] + matrix[1][1] + matrix[2][2]) != target_sum or (matrix[0][2] + matrix[1][1] + matrix[2][0]) != target_sum:
+        return False
+
+    # If all conditions are met, return True.
+    return True</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def magic_square_test(matrix):
+    # Calculate the sum of the first row
+    sum_row = sum(matrix[0])
+
+    # Check if all rows have the same sum
+    for row in matrix:
+        if sum(row) != sum_row:
+            return False
+
+    # Check if all columns have the same sum
+    for col in range(len(matrix)):
+        if sum(matrix[i][col] for i in range(len(matrix))) != sum_row:
+            return False
+
+    # Check if the two diagonals have the same sum
+    if sum(matrix[i][i] for i in range(len(matrix))) != sum_row or sum(matrix[i][len(matrix)-i-1] for i in range(len(matrix))) != sum_row:
+        return False
+
+    return True</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    # Check if the matrix is a square
+    if n != len(matrix[0]):
+        return False
+
+    # Check if the sum of each row is the same
+    row_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != row_sum:
+            return False
+
+    # Check if the sum of each column is the same
+    col_sum = sum(matrix[0][0] for _ in range(n))
+    for col in range(n):
+        if sum(matrix[row][col] for row in range(n)) != col_sum:
+            return False
+
+    # Check if the sum of each diagonal is the same
+    diag_sum = sum(matrix[i][i] for i in range(n))
+    if diag_sum != col_sum:
+        return False
+
+    diag_sum = sum(matrix[i][n-i-1] for i in range(n))
+    if diag_sum != col_sum:
+        return False
+
+    return True
+
+# Test case
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    # Check if the matrix is a square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Calculate the size of the matrix
+    size = len(matrix)
+
+    # Calculate the sum of the first row
+    sum_first_row = sum(matrix[0])
+
+    # Check if the sum of the first row is equal to the sum of the other rows
+    for row in matrix[1:]:
+        if sum(row) != sum_first_row:
+            return False
+
+    # Check if the sum of the first column is equal to the sum of the other columns
+    for col in range(size):
+        if sum(matrix[i][col] for i in range(size)) != sum_first_row:
+            return False
+
+    # Check if the sum of the main diagonal is equal to the sum of the other diagonals
+    if sum(matrix[i][i] for i in range(size)) != sum_first_row:
+        return False
+
+    if sum(matrix[i][size-i-1] for i in range(size)) != sum_first_row:
+        return False
+
+    # If all checks pass, the matrix is a magic square
+    return True
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that checks if a given matrix is a magic square:
+
+```python
+def magic_square_test(matrix):
+    n = len(matrix)
+    magic_sum = sum(range(1, n**2+1))
+    
+    # Check if the sum of each row is equal to the magic sum
+    for row in matrix:
+        if sum(row) != magic_sum:
+            return False
+    
+    # Check if the sum of each column is equal to the magic sum
+    for i in range(n):
+        if sum(matrix[j][i] for j in range(n)) != magic_sum:
+            return False
+    
+    # Check if the sum of the diagonal is equal to the magic sum
+    if sum(matrix[i][i] for i in range(n)) != magic_sum:
+        return False
+    
+    # Check if the sum of the anti-diagonal is equal to the magic sum
+    if sum(matrix[i][n-i-1] for i in range(n)) != magic_sum:
+        return False
+    
+    return True
+```
+
+This function takes a matrix as input and returns True if it is a magic square, and False otherwise. It first calculates the magic sum, which is the sum of all numbers from 1 to n^2. Then, it checks if each row, column, and diagonal of the matrix has the same sum as the magic sum. If any of these conditions fail, the function returns False. If all conditions pass, it returns True. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    # check if the matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # check if the matrix is symmetric
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            if matrix[i][j] != matrix[j][i]:
+                return False
+
+    # check if the matrix is a magic square
+    for i in range(len(matrix)):
+        if sum(matrix[i]) != 15:
+            return False
+
+    for i in range(len(matrix)):
+        if sum(matrix[j][i] for j in range(len(matrix))) != 15:
+            return False
+
+    return True
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def magic_square_test(matrix):
+    # Check if the matrix is a square matrix
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Check if the sum of each row, column, and diagonal is equal
+    for i in range(len(matrix)):
+        row_sum = sum(matrix[i])
+        column_sum = sum([matrix[j][i] for j in range(len(matrix))])
+        diagonal_sum1 = sum([matrix[i][i] for i in range(len(matrix))])
+        diagonal_sum2 = sum([matrix[i][len(matrix)-i-1] for i in range(len(matrix))])
+        if row_sum != column_sum or row_sum != diagonal_sum1 or row_sum != diagonal_sum2:
+            return False
+
+    return True</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    # your code here
+    pass
+
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True
+assert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]]) == True
+assert magic_square_test([[16, 3, 2, 13], [5, 10, 11, 8], [9, 6, 7, 12], [4, 15, 14, 1]]) == True
+assert magic_square_test([[1, 14, 2, 11], [16, 3, 10, 5], [9, 6, 7, 12], [4, 13, 15, 8]]) == True
+assert magic_square_test([[1, 14, 2, 11], [16, 3, 10, 5], [9, 6, 7, 12], [4, 13, 15, 8]]) == True
+assert magic_square_test([[1, 14, 2, 11], [16, 3, 10, 5], [9, 6, 7, 12], [4, 13, 15, 8]]) == True
+assert magic_square_test([[1, 14, 2, 11], [16, 3, 10, 5], [9, 6, 7, 12], [4, 13, 15, 8]]) == True
+assert magic_square_test([[1, 14, 2, 11], [16, 3, 10, 5], [9, 6, 7, 12], [4, 13,</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: bool
+    """
+    if len(matrix) == 0:
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix)!= len(matrix[0]):
+        return</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    """
+    :param matrix:
+    :return:
+    """
+    if len(matrix) != len(matrix[0]):
+        return False
+    sum_row = 0
+    sum_col = 0
+    sum_diag = 0
+    sum_diag_2 = 0
+    for i in range(len(matrix)):
+        sum_row += matrix[i][i]
+        sum_col += matrix[i][len(matrix) - i - 1]
+        sum_diag += matrix[i][i]
+        sum_diag_2 += matrix[i][len(matrix) - i - 1]
+    if sum_row == sum_col == sum_diag == sum_diag_2:
+        return True
+    return False
+
+
+if __name__ == '__main__':
+    matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+    print(magic_square_test(matrix))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    sum_row = 0
+    sum_col = 0
+    sum_diag = 0
+    sum_rev_diag = 0
+    for i in range(n):
+        sum_row += matrix[i][i]
+        sum_col += matrix[i][n-i-1]
+        sum_diag += matrix[i][i]
+        sum_rev_diag += matrix[i][n-i]
+    if sum_row == sum_col == sum_diag == sum_rev_diag:
+        return True
+    else:
+        return False
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    if len(matrix)!= len(matrix[0]):
+        return False
+    if len(matrix) == 1:
+        return True
+    if len(matrix) == 2:
+        return matrix[0][0] + matrix[0][1] + matrix[1][0] + matrix[1][1] == matrix[0][0] + matrix[1][0] + matrix[0][1] + matrix[1][1]
+    if len(matrix) == 3:
+        return matrix[0][0] + matrix[0][1] + matrix[0][2] + matrix[1][0] + matrix[1][1] + matrix[1][2] + matrix[2][0] + matrix[2][1] + matrix[2][2] == matrix[0][0] + matrix[1][0] + matrix[2][0] + matrix[0][1] + matrix[1][1] + matrix[2][1] + matrix[0][2] + matrix[1][2] + matrix[2][2]
+    if len(matrix) == 4:
+        return matrix[0][0] + matrix[0][1] + matrix[0][2] + matrix[0][3] + matrix[1][0] + matrix[1][1] + matrix[1][2] + matrix[1][3] + matrix[2][0] + matrix[2][1] + matrix[2][2] + matrix[2][3] + matrix[3][0] + matrix[3][1] + matrix[3][2] + matrix[3][3] == matrix[0][0] + matrix[1][0] + matrix[2][0] + matrix[3][0] + matrix[0][1] + matrix[1][1] + matrix[2][1] + matrix[3][1] + matrix[0][2] + matrix[1][2] + matrix[2][2] + matrix[3][2] + matrix[0][3] + matrix[1][3] + matrix[2][3] + matrix[3][3]
+    return False
+
+print(magic_square_test([[7, 12, 1</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    # check if matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # check if all rows and columns have the same sum
+    row_sum = sum(matrix[0])
+    for row in matrix:
+        if sum(row) != row_sum:
+            return False
+
+    # check if diagonals have the same sum
+    diagonal_sum = 0
+    for i in range(len(matrix)):
+        diagonal_sum += matrix[i][i]
+    if diagonal_sum != row_sum:
+        return False
+
+    diagonal_sum = 0
+    for i in range(len(matrix)):
+        diagonal_sum += matrix[i][len(matrix) - i - 1]
+    if diagonal_sum != row_sum:
+        return False
+
+    return True
+
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [9, 8, 7]]) == False
+assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False
+assert magic_square_test([[4, 9, 2], [3, 5, 7], [8, 1, 6]]) == True
+assert magic_square_test([[3, 5, 7], [4, 9, 2], [8, 1, 6]]) == True
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+    n = len(matrix)
+    row_sum = [0] * n
+    col_sum = [0] * n
+    diag_sum = 0
+    anti_diag_sum = 0
+
+    for i in range(n):
+        for j in range(n):
+            row_sum[i] += matrix[i][j]
+            col_sum[j] += matrix[i][j]
+
+    for i in range(n):
+        diag_sum += matrix[i][i]
+        anti_diag_sum += matrix[i][n - i - 1]
+
+    avg = (n * (n**2 + 1)) // 4
+
+    return (all(row_sum == avg) and all(col_sum == avg) and diag_sum == avg and anti_diag_sum == avg)
+
+# Test the function
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+assert magic_square_test(matrix) == True</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+def is_magic_square(matrix):
+    row_count = len(matrix)
+    col_count = len(matrix[0])
+
+    # Check if the matrix has a square number of rows and columns
+    if row_count != col_count or row_count < 2:
+        return False
+
+    # Calculate the sum of all elements in the matrix
+    total_sum = sum([sum(row) for row in matrix])
+
+    # Calculate the sum of each row, column, and diagonal
+    row_sums = [sum(row) for row in matrix]
+    col_sums = [sum(col) for col in zip(*matrix)]
+    main_diagonal_sum = sum([matrix[i][i] for i in range(row_count)])
+    anti_diagonal_sum = sum([matrix[i][row_count - i - 1] for i in range(row_count)])
+
+    # Check if all row, column, and diagonal sums are equal to the total sum
+    if all(row_sum == total_sum for row_sum in row_sums) and all(col_sum == total_sum for col_sum in col_sums) and main_diagonal_sum == total_sum and anti_diagonal_sum == total_sum:
+        return True
+    else:
+        return False
+
+
+# Test the function with the given input
+matrix = [[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]
+assert is_magic_square(matrix) == True</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    if len(matrix) != len(matrix[0]):
+        return False
+    for i in range(len(matrix)):
+        if sum(matrix[i]) != sum(matrix):
+            return False
+    for i in range(len(matrix)):
+        if sum(matrix[i]) != sum(matrix):
+            return False
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            if matrix[i][j] != matrix[j][i]:
+                return False
+    return True
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def magic_square_test(matrix):
+    """
+    Checks if the given matrix is a magic square.
+    
+    Args:
+        matrix (list): A 2D list representing the matrix.
+        
+    Returns:
+        bool: True if the matrix is a magic square, False otherwise.
+    """
+    n = len(matrix)
+    
+    # Calculate the expected sum of each row, column, and diagonal
+    expected_sum = sum(matrix[0])
+    
+    # Check rows
+    for row in matrix:
+        if sum(row) != expected_sum:
+            return False
+    
+    # Check columns
+    for col in range(n):
+        column_sum = sum(row[col] for row in matrix)
+        if column_sum != expected_sum:
+            return False
+    
+    # Check diagonals
+    diag_sum1 = sum(matrix[i][i] for i in range(n))
+    diag_sum2 = sum(matrix[i][n-i-1] for i in range(n))
+    if diag_sum1 != expected_sum or diag_sum2 != expected_sum:
+        return False
+    
+    return True
+
+# Test case
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    n = len(matrix)
+    if n == 0:
+        return False
+    if n != len(matrix[0]):
+        return False
+    if n % 2 == 0:
+        return False
+    if n == 1:
+        return True
+    if n == 2:
+        return False
+    if n == 3:
+        return False
+    if n == 4:
+        return False
+    if n == 5:
+        return False
+    if n == 6:
+        return False
+    if n == 7:
+        return False
+    if n == 8:
+        return False
+    if n == 9:
+        return False
+    if n == 10:
+        return False
+    if n == 11:
+        return False
+    if n == 12:
+        return False
+    if n == 13:
+        return False
+    if n == 14:
+        return False
+    if n == 15:
+        return False
+    if n == 16:
+        return False
+    if n == 17:
+        return False
+    if n == 18:
+        return False
+    if n == 19:
+        return False
+    if n == 20:
+        return False
+    if n == 21:
+        return False
+    if n == 22:
+        return False
+    if n == 23:
+        return False
+    if n == 24:
+        return False
+    if n == 25:
+        return False
+    if n == 26:
+        return False
+    if n == 27:
+        return False
+    if n == 28:
+        return False
+    if n == 29:
+        return False
+    if n == 30:
+        return False
+    if n == 31:
+        return False
+    if n == 32:
+        return False
+    if n == 33:
+        return False
+    if n == 34:
+        return False
+    if n == 35:
+        return False
+    if n == 36:
+        return False
+    if n == 37:
+        return False
+    if n == 38:
+        return False
+    if n == 39:
+        return False
+    if n == 40:
+        return False
+    if n == 41:
+        return False
+    if n == 42:
+        return False
+    if n == </code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+def magic_square_test(matrix):
+    # check if the matrix is a square matrix
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # check if the matrix is a magic square
+    magic_square = sum(matrix[0])
+    for i in range(len(matrix)):
+        if sum(matrix[i]) != magic_square:
+            return False
+        for j in range(len(matrix)):
+            if sum(matrix[j]) != magic_square:
+                return False
+            if matrix[i][j] != magic_square:
+                return False
+
+    return True
+
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4], [1, 2, 3, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4], [1, 2, 3, 4], [1, 2, 3, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]]))
+print(magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def magic_square_test(matrix):
+    # Check if the matrix is square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    # Calculate the sum of the first row
+    row_sum = sum(matrix[0])
+
+    # Check if all rows sum to the same value
+    for row in matrix:
+        if sum(row) != row_sum:
+            return False
+
+    # Check if all columns sum to the same value
+    for i in range(len(matrix)):
+        column_sum = sum(matrix[j][i] for j in range(len(matrix))) )
+        if column_sum != row_sum:
+            return False
+
+    # Check if the diagonal sums to the same value
+    diagonal_sum = sum(matrix[i][i] for i in range(len(matrix))) )
+    if diagonal_sum != row_sum:
+        return False
+
+    # Check if the other diagonal sums to the same value
+    other_diagonal_sum = sum(matrix[i][len(matrix)-1-i] for i in range(len(matrix))) )
+    if other_diagonal_sum != row_sum:
+        return False
+
+    # If all checks pass, the matrix is a magic square
+    return True
+
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate whether the matrix is a magic square.
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True
+"""
+
+
+def magic_square_test(matrix):
+    if len(matrix) == len(matrix[0]) and len(matrix) % 2 == 1:
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def magic_square_test(matrix):
+    # Get the size of the matrix
+    n = len(matrix)
+    
+    # Calculate the sum of the first row
+    magic_constant = sum(matrix[0])
+    
+    # Check the rows
+    for row in matrix:
+        if sum(row) != magic_constant:
+            return False
+    
+    # Check the columns
+    for j in range(n):
+        if sum(matrix[i][j] for i in range(n)) != magic_constant:
+            return False
+    
+    # Check the diagonals
+    if sum(matrix[i][i] for i in range(n)) != magic_constant or sum(matrix[i][n-i-1] for i in range(n)) != magic_constant:
+        return False
+    
+    # If all checks pass, the matrix is a magic square
+    return True
+
+# Test the function
+assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

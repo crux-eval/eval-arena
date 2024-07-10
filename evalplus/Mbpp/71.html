@@ -1,0 +1,1652 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/71 </h1>
+<pre><code> """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def comb_sort(nums):
+    n = len(nums)
+    gap = n
+    shrink = 1.3
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / shrink)
+        if gap < 1:
+            gap = 1
+        swapped = False
+        for i in range(n - gap):
+            if nums[i] > nums[i + gap]:
+                nums[i], nums[i + gap] = nums[i + gap], nums[i]
+                swapped = True
+    return nums
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[5, 15, 37, 25, 79]], [[41, 32, 15, 19, 22]], [[99, 15, 13, 47]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[500, 1000, 1500, 2000, 3000]], [[444444444, 555555555, 777777777, 888888888, 999999999]], [[1000000000, 2000000000, 5000000000, 10000000000]], [[1, 2, 2, 3, 4, 7, 8, 8]], [[1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]], [[11, 22, 33, 44, 55, 66, 77, 88, 99]], [[11, 22, 33, 44, 55, 66, 77, 88, 99]], [[99, 444444444, 777777777, 888888888, 999999999]], [[11, 22, 31, 32, 33, 55, 66, 77, 88]], [[500, 999, 1500, 3000]], [[11, 22, 33, 55, 66, 77, 88, 99, 10000000000]], [[11, 22, 31, 32, 33, 55, 66, 66, 77, 77]], [[1, 2, 3, 4, 4, 5, 7, 8, 9, 10]], [[11, 22, 33, 44, 44, 55, 66, 77, 88, 99]], [[11, 22, 33, 33, 55, 66, 77, 88, 99, 9999999999]], [[11, 22, 32, 33, 33, 55, 66, 66, 77, 77]], [[11, 22, 22, 31, 32, 32, 33, 55, 66, 77, 88]], [[1, 2, 3, 4, 5, 6, 6, 7, 9, 9, 10]], [[11, 11, 22, 33, 44, 55, 66, 66, 88, 99]], [[11, 11, 22, 44, 55, 66, 66, 89, 99]], [[2, 3, 4, 5, 6, 6, 7, 9, 9, 10, 6999]], [[11, 11, 44, 55, 66, 66, 89, 99]], [[11, 11, 22, 22, 22, 33, 55, 66, 77, 99, 10000000000]], [[1000000000, 2000000000, 2000000000, 10000000000]], [[1, 2, 3, 4, 4, 7, 8, 8]], [[1, 2, 3, 4, 7, 8, 8, 77]], [[500, 500, 1000, 3001, 4000, 5000, 6000, 7000, 8000, 9000, 10000]], [[11, 22, 33, 44, 55, 66, 66, 77, 88, 99]], [[1, 2, 3, 4, 4, 5, 7, 8, 9, 9, 10]], [[1, 2, 2, 3, 4, 7, 8, 8, 1000000000]], [[1999999999, 2000000000, 5000000000, 10000000000]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10]], [[11, 33, 44, 44, 55, 66, 77, 88, 88, 99]], [[11, 22, 31, 32, 33, 55, 66, 67, 77, 77]], [[11, 22, 33, 33, 44, 55, 66, 66, 77, 88, 99]], [[8, 11, 22, 33, 44, 66, 77, 88, 99]], [[500, 500, 1000, 3001, 4000, 5000, 6000, 7000, 8000, 8000, 9000, 10000]], [[1, 2, 3, 4, 4, 5, 7, 8, 9, 9, 10, 99]], [[11, 33, 44, 44, 55, 66, 77, 88, 88, 99, 99]], [[99, 6999, 444444444, 777777777, 888888888, 888888889, 999999999]], [[1999999999, 2000000000, 9999999999, 10000000000]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10]], [[1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 10]], [[11, 22, 33, 33, 44, 55, 65, 66, 77, 88, 99]], [[1, 2, 3, 5, 6, 7, 9, 9, 10, 888888888, 888888888]], [[1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10]], [[11, 22, 33, 33, 44, 55, 65, 66, 77, 88, 99, 4000]], [[11, 22, 33, 33, 44, 55, 65, 66, 77, 88, 99, 4000, 444444444]], [[1999999999, 2000000000, 5000000000, 5000000000, 10000000000]], [[11, 22, 31, 32, 33, 55, 66, 66, 66, 77, 77]], [[22, 33, 1999999999, 2000000000, 10000000000]], [[11, 22, 33, 33, 44, 55, 65, 66, 77, 99]], [[500, 500, 1000, 3000, 3001, 4000, 5000, 6000, 7000, 7001, 8000, 8000, 9000, 10000]], [[1, 23, 33, 1999999999, 2000000000, 9999999999, 10000000000]], [[11, 33, 43, 44, 54, 55, 66, 77, 77, 88, 88, 99, 99]], [[10, 22, 33, 33, 44, 55, 65, 65, 66, 77, 99]], [[55, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]], [[1, 2, 3, 4, 4, 4, 7, 7, 8]], [[11, 22, 33, 44, 44, 55, 66, 66, 77, 88, 99]], [[11, 22, 32, 33, 34, 66, 66, 77, 77]], [[1, 2, 3, 4, 4, 7, 7, 8, 8]], [[1, 2, 3, 4, 4, 5, 7, 8, 9, 10, 100]], [[99, 6999, 444444444, 777777777, 888888888, 888888888, 888888889, 999999999]], [[11, 11, 44, 55, 66, 89, 99]], [[1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 9, 10]], [[11, 22, 33, 33, 65, 66, 77, 88, 99, 4000, 444444444]], [[11, 22, 23, 31, 32, 32, 33, 55, 66, 77, 88]], [[99, 6999, 444444444, 888888888, 888888889, 999999999, 9999999999]], [[11, 11, 44, 44, 55, 66, 66, 89, 89, 99]], [[1, 2, 3, 4, 4, 5, 6, 8, 9, 10, 888888889]], [[11, 22, 32, 33, 33, 55, 66, 77, 88, 9999999999]], [[11, 22, 32, 33, 33, 66, 66, 88, 9999999999]], [[11, 22, 32, 33, 33, 55, 66, 77, 88, 9999999999]], [[4000, 444444444, 1000000000, 2000000000, 2000000000, 5000000000, 10000000000]], [[11, 22, 33, 44, 55, 66, 77, 88, 99, 10000000000]], [[11, 22, 32, 33, 33, 33, 55, 66, 77, 77]], [[11, 22, 33, 33, 44, 55, 65, 77, 99]], [[11, 22, 33, 33, 65, 66, 77, 88, 99, 500, 501, 4000, 444444444]], [[55, 777777777, 888888888, 999999999]], [[11, 33, 33, 44, 55, 65, 66, 77, 77, 99, 4000, 444444444]], [[1, 2, 3, 4, 4, 4, 5, 7, 8, 9, 9, 9, 10, 99]], [[11, 23, 33, 44, 55, 66, 77, 88, 99, 10000000000]], [[44, 500, 500, 1000, 3001, 4000, 5000, 6000, 7000, 8000, 9000, 10000]], [[11, 22, 31, 32, 33, 33, 55, 66, 66, 77, 77]], [[1, 2, 3, 4, 5, 5, 6, 6, 8, 9, 9, 10]], [[11, 22, 31, 32, 32, 33, 55, 66, 77, 88]], [[1999999999, 2000000000, 2000000000, 9999999999, 10000000000]], [[444444444, 777777777, 888888888, 999999999, 1000000000]], [[65, 4000, 444444444, 1000000000, 2000000000, 2000000000, 5000000000, 10000000000]], [[33, 33, 44, 55, 65, 66, 77, 99, 4000, 444444444]], [[500, 500, 1000, 3000, 3001, 4000, 5000, 6000, 7000, 7001, 8000, 9000, 10000]], [[500, 999, 1500, 1500, 3000]], [[5, 11, 33, 33, 44, 55, 66, 77, 77, 99, 4000, 444444444]], [[44, 100, 500, 500, 1000, 3001, 5000, 6000, 7000, 8000, 9000, 10000]], [[1, 2, 3, 4, 4, 4, 4, 5, 7, 8, 8, 9, 9, 9, 10, 99]], [[3, 11, 22, 31, 32, 33, 55, 66, 66, 77, 77]], [[11, 11, 22, 33, 44, 66, 66, 88, 99]], [[1, 2, 3, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10]], [[100, 500, 1000, 3001, 4000, 5000, 6000, 7000, 8000, 8000, 9000, 10000]], [[8, 11, 22, 31, 32, 33, 33, 55, 66, 66, 77, 77, 77]], [[1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 10]], [[4, 99, 6999, 444444444, 777777777, 888888888, 888888888, 888888889, 999999999]], [[11, 22, 30, 32, 32, 33, 55, 66, 77, 88, 5000000000]], [[1, 2, 5, 6, 7, 8, 9, 9, 10, 888888888, 888888888]], [[11, 33, 44, 44, 55, 66, 77, 88, 88, 99, 100]], [[11, 32, 33, 33, 44, 55, 65, 66, 77, 77, 99, 4000, 444444444]], [[64, 65, 4000, 444444444, 1000000000, 2000000000, 2000000000, 5000000000, 10000000000]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        if gap > 1:
+            gap = int(gap / 1.247330950103979)
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+
+if __name__ == "__main__":
+    print(comb_sort([5, 15, 37, 25, 79]))
+    print(comb_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(comb_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]))
+    print(comb_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 5</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+
+    while gap > 1 or swapped:
+        if gap > 1:
+            gap = int(gap * 10 / 13)
+
+        swapped = False
+        i = 0
+
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+            i += 1
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def comb_sort(arr: list[int]) -> list[int]:
+    gap = len(arr)
+    shrink_factor = 1.3
+    sorted_ = False
+
+    while not sorted_:
+        gap = int(gap / shrink_factor)
+        if gap <= 1:
+            gap = 1
+            sorted_ = True
+
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                sorted_ = False
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to the problem, wrapped in a Python markdown block:
+
+```python
+def comb_sort(arr):
+    n = len(arr)
+    gap = n
+    swaps = True
+
+    while gap > 1 or swaps:
+        gap = max(1, int(gap / 1.25))
+        swaps = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swaps = True
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    n = len(arr)
+    gap = n
+    swapped = True
+
+    while gap > 1 or swapped:
+        gap = int(gap / 1.3)
+        swapped = False
+
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+def comb_sort(arr):
+    n = len(arr)
+    swapped = True
+    gap = n
+    while gap != 1 or swapped == True:
+        gap = int(gap / 1.25)
+        if gap < 1:
+            gap = 1
+        swapped = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def comb_sort(arr):
+    n = len(arr)
+    gap = n
+    swaps = True
+    
+    while gap > 1 or swaps:
+        gap = max(1, int(gap / 1.25))
+        swaps = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swaps = True
+    return arr
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    """
+    Implementation of comb sort algorithm.
+
+    Args:
+    arr (list): List of elements to be sorted.
+
+    Returns:
+    list: Sorted list of elements.
+    """
+
+    # Calculate the initial gap value
+    gap = len(arr)
+
+    # Continue swapping while gap is greater than 1
+    while gap > 1:
+        # Calculate the new gap value
+        gap = int(gap / 1.25)
+
+        # Initialize start and end indices
+        i, j = 0, gap
+
+        # Perform comparison and swapping
+        while j < len(arr):
+            if arr[i] > arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+            j += 1
+
+    # Return the sorted list
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that implements the comb sort algorithm to sort a list of elements:
+
+
+```python
+def comb_sort(arr):
+    def swap(arr, i, j):
+        arr[i], arr[j] = arr[j], arr[i]
+
+    n = len(arr)
+    gap = n
+    shrink = 1.3
+    sorted = False
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+        i = 0
+        while i + gap < n:
+            if arr[i] > arr[i + gap]:
+                swap(arr, i, i + gap)
+                sorted = False
+            i += 1
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+```
+
+The comb sort algorithm is a variation of the bubble sort algorithm that uses a gap value to determine the number of elements to compare at each iteration. The gap value is initially set to the length of the list and is then divided by a constant factor (in this case, 1.3) at each iteration until it reaches 1. At each iteration, the list is compared from the beginning up to the gap value and elements are swapped if they are out of order. The algorithm continues until the list is sorted or the gap value is 1. The function `swap` is a helper function that swaps two elements in the list. The `assert` statement at the end tests the function with the given input and expected output to ensure that it works correctly. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(input_list):
+    gap = len(input_list)
+    shrink = 1.3
+    swapped = True
+
+    while gap > 1 or swapped:
+        gap = int(gap / shrink)
+        if gap < 1:
+            gap = 1
+
+        swapped = False
+        for i in range(len(input_list) - gap):
+            j = i + gap
+            if input_list[i] > input_list[j]:
+                input_list[i], input_list[j] = input_list[j], input_list[i]
+                swapped = True
+
+    return input_list
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = max(1, int(gap / shrink))
+        sorted = True
+        i = 0
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                sorted = False
+            i += 1
+
+    return arr
+
+# Test case
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that uses the Comb Sort algorithm to sort a list of elements. Comb Sort is a relatively simple sorting algorithm, designed to improve on Bubble Sort.
+
+```python
+def comb_sort(lst):
+    gap = len(lst)
+    shrink_factor = 1.3
+    swapped = True
+
+    while gap > 1 or swapped:
+        gap = int(gap / shrink_factor)
+        if gap < 1:
+            gap = 1
+
+        swapped = False
+        for i in range(len(lst) - gap):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                swapped = True
+
+    return lst
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+```
+
+This function works by initially setting the gap between compared elements to the length of the list, then repeatedly shrinking the gap by a factor of 1.3 (a common choice for the shrink factor in Comb Sort) until the gap reaches 1, at which point the algorithm effectively becomes a Bubble Sort. The swapped variable keeps track of whether any swaps were made in a pass; if not, the list is already sorted and the function can terminate early.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(arr):
+    """
+    Comb sort algorithm
+    """
+    n = len(arr)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+
+"""
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(arr):
+    """
+    Comb sort algorithm
+    """
+    n = len(arr)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+
+"""
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(arr):
+    """
+    Comb sort algorithm
+    """
+    n = len(arr)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    # Initialize gap and shrink factor
+    gap = len(arr)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        # Update the gap value for a next comb
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        # Perform a gapped insertion sort
+        i = 0
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                sorted = False
+            i += 1
+
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(array):
+    """
+    >>> comb_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    gap = len(array)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.25))
+        swapped = False
+        for i in range(len(array) - gap):
+            if array[i] > array[i + gap]:
+                array[i], array[i + gap] = array[i + gap], array[i]
+                swapped = True
+    return array
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    """
+    :param arr: list of elements
+    :return: sorted list
+    """
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / 1.3)
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+
+if __name__ == '__main__':
+    print(comb_sort([5, 15, 37, 25, 79]))
+    print(comb_sort([5, 15, 37, 25, 79, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 8</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to sort a list of elements using the comb sort algorithm:
+
+```python
+def comb_sort(lst):
+    gap = len(lst)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(lst):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                sorted = False
+            i += 1
+
+    return lst
+```
+
+You can test the function with the provided test case:
+
+```python
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+```
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+
+    while gap > 1 or swapped is True:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+
+        for i in range(len(arr) - 1):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+
+    return arr
+
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(lst):
+    n = len(lst)
+    gap = n
+    swapped = True
+    while gap!= 1 or swapped:
+        gap = int(gap / 1.3)
+        if gap < 1:
+            gap = 1
+        swapped = False
+        for i in range(0, n-gap):
+            if lst[i] > lst[i+gap]:
+                lst[i], lst[i+gap] = lst[i+gap], lst[i]
+                swapped = True
+    return lst
+
+print(comb_sort([5, 15, 37, 25, 79]))
+print(comb_sort([5, 15, 37, 25, 79, 1]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7, 8]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7, 8, 9]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7, 8, 9, 10]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]))
+print(comb_sort([5, 15, 37, 25, 79, 1, 2, 3, 4, 6, 7</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 0 and swapped:
+        swapped = False
+        for i in range(gap, len(arr)):
+            j = i - gap
+            while j >= 0 and arr[j] > arr[j + gap]:
+                arr[j], arr[j + gap] = arr[j + gap], arr[j]
+                swapped = True
+        gap //= 2
+    return arr</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+def comb_sort(arr):
+    """
+    Combsort is a simple sorting algorithm that works by repeatedly shrinking the elements which are far from their correct position.
+    """
+    n = len(arr)
+    gap = int(0.80 * n + 0.10 * n // 3)
+    while gap > 0:
+        for i in range(n):
+            j = i + gap
+            while j < n and arr[i] >= arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+                j += 1
+        gap = int(gap * 0.87 if gap > 1 else 1)
+    return arr
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    def next_gap(gap):
+        gap = (gap * 10) // 13
+        if gap < 1:
+            return 1
+        return gap
+
+    n = len(arr)
+    gap = n
+    swapped = True
+
+    while gap != 1 or swapped:
+        gap = next_gap(gap)
+        swapped = False
+
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python script that implements the comb sort algorithm to sort a list of elements:
+
+```python
+def comb_sort(arr):
+    n = len(arr)
+    gap = n
+    shrink = 1.3
+    sorted = False
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap > 1:
+            sorted = False
+        else:
+            gap = 1
+            sorted = True
+        i = 0
+        while i + gap < n:
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                sorted = False
+            i += 1
+    return arr
+```
+
+The `comb_sort` function takes a list `arr` as input and returns the sorted list. The algorithm works by iteratively shrinking the gap between elements to be compared, until the gap is 1. At this point, the algorithm is considered sorted. The `shrink` parameter controls the rate at which the gap shrinks, and is set to 1.3 by default.
+
+The algorithm works by iterating over the list, comparing adjacent elements and swapping them if they are in the wrong order. If the gap between elements is greater than 1, the algorithm sets the `sorted` flag to `False`, indicating that the list is not yet sorted. If the gap is 1 and the `sorted` flag is still `False`, the algorithm sets the `sorted` flag to `True`, indicating that the list is sorted.
+
+The function returns the sorted list at the end of the algorithm.
+
+To test the function, we can use the `assert` statement to compare the output of the function with the expected output. Here's an example:
+
+```python
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+```
+
+This assert statement checks that the output of the `comb_sort` function when called with the input `[5, 15, 37, 25, 79]` is `[5, 15, 25, 37, 79]`. If the function returns the expected output, the assertion passes. If the function returns a different output, the assertion fails and an error message is displayed.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+
+    is_sorted = False
+    while not is_sorted:
+        gap = int(gap // shrink)
+        if gap <= 1:
+            is_sorted = True
+            gap = 1
+
+        for i in range(len(arr) - gap):
+            j = i + gap
+            if arr[i] > arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+                is_sorted = False
+
+    return arr
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to sort a list of elements using Comb Sort algorithm:
+
+```python
+def comb_sort(lst):
+    gap = len(lst)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(lst):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                sorted = False
+            i += 1
+
+    return lst
+```
+
+You can test the function with the provided example:
+
+```python
+print(comb_sort([5, 15, 37, 25, 79]))  # Output: [5, 15, 25, 37, 79]
+```
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    swapped = True
+    while gap > 0 or swapped:
+        gap = int(gap / shrink)
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(list):
+    """
+    Comb sort algorithm
+    """
+    n = len(list)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+        for i in range(n - gap):
+            if list[i] > list[i + gap]:
+                list[i], list[i + gap] = list[i + gap], list[i]
+                swapped = True
+    return list
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+assert comb_sort([5, 15, 37, 25, 79]) == [5,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(elements):
+    gap = len(elements)
+    shrink = 1.3
+    while gap > 1:
+        gap = int(gap / shrink)
+        if gap < 1:
+            gap = 1
+        i = 0
+        while i + gap < len(elements):
+            if elements[i] > elements[i + gap]:
+                elements[i], elements[i + gap] = elements[i + gap], elements[i]
+            i += 1
+    return elements</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(list):
+    gap = len(list)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.25))
+        swapped = False
+        for i in range(len(list) - gap):
+            if list[i] > list[i + gap]:
+                list[i], list[i + gap] = list[i + gap], list[i]
+                swapped = True
+    return list
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                sorted = False
+            i += 1
+
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    """
+    Sorts a list of elements using the Comb Sort algorithm.
+
+    :param arr: List of elements to be sorted
+    :return: Sorted list
+    """
+    def swap(i, j):
+        arr[i], arr[j] = arr[j], arr[i]
+
+    gap = len(arr)
+    shrink = 1.3  # Shrink factor
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                swap(i, i + gap)
+                sorted = False
+            i += 1
+
+    return arr
+
+# Test the function
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = gap * 10 // 13
+        swapped = False
+        i = 0
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+            i += 1
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+```
+
+This script defines a function called `comb_sort` that takes a list of elements as input and returns the sorted list. The function uses the Comb Sort algorithm to sort the list. The algorithm works by comparing elements that are a certain distance apart (the "gap") and swapping them if they are out of order. The gap size is gradually reduced until it reaches 1, at which point the list is sorted. The `assert` statement at the end of the script checks that the function works correctly by sorting the list `[5, 15, 37, 25, 79]` into the correct order.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    def swap(i, j):
+        arr[i], arr[j] = arr[j], arr[i]
+
+    gap = len(arr)
+    shrink = 1.3
+
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+
+        if gap > 1:
+            sorted = False
+        else:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                swap(i, i + gap)
+                sorted = False
+            i += 1
+
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(arr):
+    n = len(arr)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / 1.3)
+        if gap == 0:
+            gap = 1
+        swapped = False
+        for i in range(0, n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+print(comb_sort([5, 15, 37, 25, 79]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(lst):
+    """
+    >>> comb_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    n = len(lst)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / 1.3)
+        if gap < 1:
+            gap = 1
+        swapped = False
+        for i in range(0, n - gap):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                swapped = True
+    return lst
+
+"""
+Write a function to sort a list of elements.
+assert bubble_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def bubble_sort(lst):
+    """
+    >>> bubble_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    n = len(lst)
+    for i in range(n):
+        for j in range(n - i - 1):
+            if lst[j] > lst[j + 1]:
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+    return lst
+
+"""
+Write a function to sort a list of elements.
+assert selection_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def selection_sort(lst):
+    """
+    >>> selection_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    n = len(lst)
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if lst[j] < lst[min_index]:
+                min_index = j
+        lst[i], lst[min_index] = lst[min_index</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+import math
+
+def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        index = 0
+        while index + gap < len(arr):
+            if arr[index] > arr[index + gap]:
+                arr[index], arr[index + gap] = arr[index + gap], arr[index]
+                sorted = False
+            index += 1
+
+    return arr
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  import random
+
+def comb_sort(arr):
+    n = len(arr)
+    gap = n // 2
+
+    for i in range(gap, -1, -1):
+        for j in range(i, n):
+            key = arr[j]
+            min_index = j
+            for l in range(j - i, -1, -1):
+                if key < arr[min_index]:
+                    min_index = l
+            arr[j] = arr[min_index]
+            arr[min_index] = key
+
+    return arr</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def comb_sort(lst):
+    gap = len(lst)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(lst):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                sorted = False
+            i += 1
+
+    return lst
+
+print(comb_sort([5, 15, 37, 25, 79]))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: False </p>
+      <pre><code>  def comb_sort(lst):
+    gap = len(lst)
+    while gap > 1:
+        prev_gap = gap
+        for i in range(len(lst) - gap):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+        gap = prev_gap // 2
+    return lst
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.3))
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that sorts a list of elements using the Comb Sort algorithm:
+
+```python
+def comb_sort(lst):
+    n = len(lst)
+    shrink = 1.3
+    sorted = False
+    while not sorted:
+        shrink = shrink * 0.9
+        sorted = True
+        for i in range(1, n):
+            if lst[i - 1] > lst[i]:
+                lst[i], lst[i - 1] = lst[i - 1], lst[i]
+                sorted = False
+        for i in range(0, n - 1):
+            if abs(lst[i] - lst[i + 1]) > shrink:
+                sorted = False
+                j = i - 1
+                while j >= 0 and lst[j] > lst[i]:
+                    lst[j + 1], lst[j] = lst[j], lst[j + 1]
+                    j -= 1
+                if j != i - 1:
+                    sorted = False
+    return lst
+```
+
+This function uses the Comb Sort algorithm to sort the list. The algorithm is similar to the Bubble Sort algorithm, but it has a shrink factor that reduces the distance between swaps. It works by comparing adjacent elements and swapping them if they are out of order, and then comparing non-adjacent elements with a smaller gap until the list is sorted. The shrink factor is reduced each time the list is sorted, and the loop continues until the list is sorted or the shrink factor becomes too small.
+
+To test the function, you can call it with the list [5, 15, 37, 25, 79] and it should return [5, 15, 25, 37, 79]. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    sorted = False
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            sorted = True
+        else:
+            for i in range(len(arr) - gap):
+                if arr[i] > arr[i + gap]:
+                    arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                    sorted = False
+    return arr
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def comb_sort(arr):
+    n = len(arr)
+    gap = n
+    done = False
+
+    while not done:
+        gap //= 1.3
+        done = True
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                done = False
+
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(lst):
+    gap = len(lst)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap > 1:
+            sorted = False
+        else:
+            gap = 1
+            sorted = True
+
+        i = 0
+        while i + gap < len(lst):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                sorted = False
+            i += 1
+
+    return lst
+
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(lst):
+    """
+    >>> comb_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    n = len(lst)
+    gap = n
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / 1.3)
+        if gap < 1:
+            gap = 1
+        swapped = False
+        for i in range(0, n - gap):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                swapped = True
+    return lst
+
+"""
+Write a function to sort a list of elements.
+assert bubble_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def bubble_sort(lst):
+    """
+    >>> bubble_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    n = len(lst)
+    for i in range(n):
+        for j in range(n - i - 1):
+            if lst[j] > lst[j + 1]:
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+    return lst
+
+"""
+Write a function to sort a list of elements.
+assert selection_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def selection_sort(lst):
+    """
+    >>> selection_sort([5, 15, 37, 25, 79])
+    [5, 15, 25, 37, 79]
+    """
+    n = len(lst)
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if lst[j] < lst[min_index]:
+                min_index = j
+        lst[i], lst[min_index] = lst[min_index</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(list_of_elements):
+    """
+    :param list_of_elements: list of elements to sort
+    :return: sorted list of elements
+    """
+    gap = len(list_of_elements)
+    while gap > 1:
+        gap = int(gap / 1.247)
+        for i in range(gap, len(list_of_elements)):
+            if list_of_elements[i] < list_of_elements[i - gap]:
+                list_of_elements[i], list_of_elements[i - gap] = list_of_elements[i - gap], list_of_elements[i]
+    return list_of_elements
+
+
+if __name__ == '__main__':
+    assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(lst):
+    n = len(lst)
+    gap = n
+    while gap > 1:
+        gap = gap // 2
+        for i in range(gap, n):
+            temp = lst[i]
+            j = i
+            while j >= gap and lst[j - gap] > temp:
+                lst[j] = lst[j - gap]
+                j -= gap
+            lst[j] = temp
+    return lst
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(lst):
+    gap = len(lst)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.25))  # minimum gap is 1
+        swapped = False
+        for i in range(len(lst) - gap):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                swapped = True
+    return lst
+
+print(comb_sort([5, 15, 37, 25, 79]))
+print(comb_sort([5, 15, 37, 25, 79, 25, 79]))
+print(comb_sort([5, 15, 37, 25, 79, 25, 79, 25, 79]))
+print(comb_sort([5, 15, 37, 25, 79, 25, 79, 25, 79, 25, 79]))
+print(comb_sort([5, 15, 37, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79]))
+print(comb_sort([5, 15, 37, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25, 79, 25,</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(array):
+    gap = len(array)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = max(1, int(gap / 1.25))
+        swapped = False
+        for i in range(len(array) - gap):
+            if array[i] > array[i + gap]:
+                array[i], array[i + gap] = array[i + gap], array[i]
+                swapped = True
+    return array
+
+
+if __name__ == "__main__":
+    assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    n = len(arr)
+    gap = n // 2
+
+    while gap > 0:
+        for i in range(gap, n):
+            key = arr[i]
+            j = i - gap
+
+            while j >= 0 and key < arr[j]:
+                arr[j + gap] = arr[j]
+                j -= gap
+
+            arr[j + gap] = key
+
+        gap //= 2
+
+    return arr
+
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+def comb_sort(lst):
+    n = len(lst)
+    while n > 1:
+        # Find the largest i such that lst[i-1] < lst[i]
+        for i in range(1, n):
+            if lst[i - 1] > lst[i]:
+                lst[i - 1], lst[i] = lst[i], lst[i - 1]
+        # Shift the last element to its final position
+        for i in range(n - 1, 0, -1):
+            lst[i - 1], lst[n - 1] = lst[n - 1], lst[i - 1]
+        n -= 1
+    return lst
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            if arr[i] > arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+    return arr
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def comb_sort(arr):
+    """
+    Comb Sort is an improved version of Bubble Sort.
+    It works by eliminating smaller values first and then larger ones.
+    The gap starts with a large value and shrinks by a factor of 1.3 in each iteration.
+    """
+    n = len(arr)
+    gap = n
+    swaps = True
+
+    while gap > 1 or swaps:
+        gap = max(1, int(gap / 1.25))  # minimum gap is 1
+        swaps = False
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swaps = True
+
+    return arr
+
+# Test case
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+print("Test case passed!")</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / shrink)
+        if gap < 1:
+            gap = 1
+        i = 0
+        swapped = False
+        while i + gap < len(arr):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+            i += 1
+    return arr
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        gap = int(gap / 1.3)
+        if gap < 1:
+            gap = 1
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+
+print(comb_sort([5, 15, 37, 25, 79]))
+/python/data_structures/linked_list/linked_list.py
+"""
+Implement a linked list.
+"""
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        if self.head is None:
+            self.head = Node(data)
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = Node(data)
+
+    def prepend(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def insert_after_node(self, prev_node, data):
+        if not prev_node:
+            print("Previous node is not in the list")
+            return
+        new_node = Node(data)
+        new_node.next = prev_node.next
+        prev_node.next = new_node
+
+    def delete_node(self, key):
+        current = self.head
+        if current.data == key:
+            self.head = current.next
+            current = None
+            return
+        while current.next:
+            if current.next.data == key:
+                break
+            current = current.next
+        if current.next is None:
+            return
+        temp = current.next
+        current.next = temp.next
+        temp = None
+
+    def delete_node_at_pos(self, pos):
+        current = self.head
+        if pos == 0:
+            self.head = current.next
+            current = None
+            return
+        for i in range(pos - 1</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def comb_sort(arr):
+    gap = len(arr)
+    shrink = 1.3
+    swapped = True
+
+    while gap > 1 or swapped:
+        gap = int(gap / shrink)
+        if gap < 1:
+            gap = 1
+        swapped = False
+
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+
+    return arr
+
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort a list of elements.
+assert comb_sort([5, 15, 37, 25, 79]) == [5, 15, 25, 37, 79]
+"""
+
+
+def comb_sort(arr):
+    gap = len(arr)
+    swapped = True
+    while gap > 1 or swapped:
+        if gap > 1:
+            gap = int(gap / 1.24733)
+        swapped = False
+        for i in range(len(arr) - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                swapped = True
+    return arr
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def comb_sort(lst):
+    gap = len(lst)
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap / shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+        i = 0
+        while i + gap < len(lst):
+            if lst[i] > lst[i + gap]:
+                lst[i], lst[i + gap] = lst[i + gap], lst[i]
+                sorted = False
+            i += 1
+    return lst
+
+# Test the function
+print(comb_sort([5, 15, 37, 25, 79]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

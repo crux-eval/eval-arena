@@ -1,0 +1,1531 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/763 </h1>
+<pre><code> """
+Write a python function to find the minimum difference between any two elements in a given array. 
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def find_min_diff(arr,n): 
+    arr = sorted(arr) 
+    diff = 10**20 
+    for i in range(n-1): 
+        if arr[i+1] - arr[i] < diff: 
+            diff = arr[i+1] - arr[i]  
+    return diff 
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[(1, 5, 3, 19, 18, 25), 6], [(4, 3, 2, 6), 4], [(30, 5, 20, 9), 4]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[(15, 12, 20, 30, 8, 4, 19, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 29, 8, 4, 19, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 30, 8, 4, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 29, 11, 4, 18, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 30, 8, 4, 19, 30, 22, 28, 11, 25), 12], [(15, 12, 20, 30, 8, 4, 30, 22, 28, 11, 25, 22), 12], [(15, 12, 20, 29, 11, 4, 18, 37, 22, 28, 11, 26), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 28, 11, 25, 22), 13], [(15, 12, 31, 30, 8, 4, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 31, 11, 25, 22), 13], [(15, 12, 20, 30, 8, 20, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 29, 11, 4, 19, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 30, 8, 4, 30, 22, 28, 11, 26, 22), 12], [(15, 12, 20, 29, 8, 4, 18, 38, 22, 31, 11, 25, 22), 13], [(15, 12, 20, 18, 8, 20, 19, 37, 22, 28, 11, 37), 12], [(15, 30, 20, 30, 8, 4, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 30, 8, 4, 19, 36, 22, 28, 11, 25), 12], [(15, 15, 20, 29, 11, 4, 19, 37, 22, 28, 11, 25), 12], [(15, 12, 30, 8, 4, 19, 37, 22, 3, 28, 11, 37), 12], [(15, 12, 12, 20, 29, 11, 4, 18, 37, 22, 28, 25), 12], [(15, 26, 20, 30, 8, 4, 30, 22, 28, 11, 25, 22), 12], [(15, 30, 20, 30, 8, 4, 29, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 30, 11, 5, 18, 37, 22, 28, 11, 26), 12], [(15, 30, 20, 30, 8, 4, 19, 37, 22, 36, 11, 37), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 28, 20, 25), 12], [(15, 12, 20, 30, 8, 20, 19, 37, 22, 28, 11, 37, 8), 13], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 28, 9, 11, 25), 13], [(9, 15, 20, 29, 11, 4, 19, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 13, 11, 4, 18, 37, 22, 28, 11, 26), 12], [(15, 12, 31, 20, 8, 4, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 21, 31, 11, 25, 22), 13], [(15, 12, 21, 18, 8, 20, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 11, 4, 19, 37, 22, 28, 11, 25), 11], [(28, 12, 20, 29, 8, 4, 18, 37, 22, 28, 20, 25), 12], [(15, 12, 20, 29, 12, 4, 18, 37, 22, 31, 11, 25, 22), 13], [(15, 12, 20, 29, 12, 4, 18, 37, 22, 4, 11, 25, 22), 13], [(15, 12, 20, 18, 8, 20, 19, 37, 22, 28, 11, 20), 12], [(15, 12, 20, 30, 8, 4, 19, 36, 22, 11, 11, 25), 12], [(15, 23, 12, 20, 29, 8, 4, 18, 37, 22, 28, 11, 25, 22), 14], [(15, 12, 20, 30, 8, 4, 19, 38, 22, 28, 11, 37), 12], [(15, 12, 20, 30, 8, 4, 19, 36, 22, 11, 11, 23), 12], [(15, 12, 20, 30, 8, 4, 19, 36, 22, 28, 11, 37), 12], [(15, 12, 20, 30, 8, 4, 12, 36, 22, 11, 11, 23), 12], [(14, 12, 20, 29, 11, 4, 18, 37, 22, 28, 11, 25), 12], [(15, 12, 30, 8, 4, 19, 38, 22, 3, 28, 11, 37), 12], [(15, 12, 20, 30, 8, 4, 18, 30, 22, 28, 11, 25), 12], [(9, 30, 15, 20, 29, 11, 4, 19, 37, 22, 28, 11, 25), 13], [(15, 12, 29, 8, 4, 19, 38, 22, 3, 28, 11, 37), 12], [(15, 23, 12, 20, 29, 8, 4, 18, 37, 4, 22, 28, 11, 25, 22), 15], [(15, 12, 20, 30, 8, 4, 30, 22, 28, 14, 25, 22), 12], [(15, 12, 20, 30, 11, 5, 18, 37, 22, 28, 29, 11, 26), 13], [(15, 12, 14, 30, 8, 4, 19, 38, 22, 28, 11, 37), 12], [(15, 12, 20, 29, 11, 4, 18, 37, 22, 29, 11, 26), 12], [(15, 12, 20, 30, 8, 4, 18, 30, 22, 28, 11, 26), 12], [(15, 12, 20, 28, 11, 4, 18, 37, 22, 29, 11, 26), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 28, 11, 25, 37), 13], [(15, 12, 20, 30, 8, 4, 30, 5, 28, 11, 26, 22), 12], [(37, 12, 12, 20, 29, 11, 4, 18, 37, 22, 28, 25), 12], [(28, 12, 20, 29, 8, 4, 18, 37, 22, 27, 20, 25), 12], [(15, 12, 20, 3, 8, 4, 30, 22, 28, 11, 26, 22), 12], [(15, 12, 20, 28, 11, 4, 18, 37, 22, 29, 11, 25), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 5, 11, 25, 37), 13], [(15, 12, 29, 8, 5, 19, 38, 22, 3, 28, 11, 37), 12], [(15, 12, 20, 29, 10, 4, 19, 37, 22, 28, 11, 25), 12], [(37, 12, 12, 20, 29, 37, 4, 18, 37, 22, 28, 25), 12], [(15, 12, 20, 30, 8, 4, 19, 30, 25, 28, 11, 25), 12], [(15, 20, 29, 12, 4, 18, 37, 22, 4, 11, 25, 22), 12], [(15, 12, 12, 20, 29, 11, 5, 18, 37, 22, 28, 25), 12], [(15, 3, 20, 30, 11, 5, 18, 37, 22, 28, 11, 26), 12], [(15, 15, 20, 29, 11, 4, 18, 37, 22, 28, 11, 25), 12], [(15, 12, 20, 30, 20, 19, 37, 22, 28, 11, 37, 11), 12], [(25, 15, 20, 29, 11, 4, 19, 37, 22, 28, 11, 25), 12], [(28, 12, 20, 29, 8, 4, 18, 30, 22, 28, 20, 25), 12], [(15, 12, 20, 29, 9, 4, 18, 37, 22, 28, 9, 11, 25), 13], [(5, 12, 20, 30, 8, 20, 19, 37, 22, 28, 11, 37), 12], [(15, 12, 20, 29, 8, 4, 18, 37, 22, 28, 5, 25, 22, 22), 14], [(15, 12, 20, 29, 8, 18, 18, 37, 22, 28, 11, 25, 22), 13], [(15, 15, 20, 29, 11, 4, 18, 18, 22, 28, 11, 25), 12], [(28, 29, 20, 29, 8, 4, 18, 37, 22, 27, 20, 25), 12], [(15, 12, 20, 29, 12, 4, 18, 37, 22, 30, 11, 25, 26), 13], [(11, 12, 20, 30, 8, 4, 18, 30, 22, 28, 11, 25), 12], [(37, 12, 12, 20, 29, 10, 4, 18, 37, 22, 28, 25), 12], [(15, 15, 20, 29, 11, 4, 18, 37, 22, 28, 14, 25), 12], [(15, 12, 31, 20, 8, 4, 19, 37, 22, 28, 12, 37), 12], [(9, 30, 15, 20, 29, 11, 4, 19, 37, 22, 28, 11, 24), 13], [(37, 12, 12, 20, 29, 10, 4, 18, 38, 22, 28, 25), 12], [(15, 30, 30, 8, 4, 29, 37, 22, 28, 11, 37, 37), 12], [(37, 12, 12, 20, 29, 37, 4, 13, 37, 22, 28, 25), 12], [(26, 12, 20, 29, 8, 4, 19, 37, 22, 28, 11, 25), 12], [(37, 12, 12, 20, 29, 25, 10, 4, 18, 37, 22, 28, 25), 13], [(15, 12, 20, 29, 9, 4, 18, 38, 22, 28, 9, 11, 25), 13], [(9, 30, 15, 20, 29, 11, 4, 19, 37, 22, 28, 11, 24, 11), 14], [(15, 12, 29, 9, 4, 19, 38, 22, 3, 28, 11, 37), 12], [(15, 12, 20, 4, 8, 4, 30, 22, 28, 11, 26, 22), 12], [(15, 12, 36, 30, 11, 5, 18, 37, 22, 28, 29, 11, 26), 13], [(15, 37, 12, 20, 30, 8, 20, 19, 37, 22, 28, 11, 37, 8), 14], [(37, 22, 12, 20, 29, 10, 4, 18, 37, 22, 28, 25), 12], [(15, 23, 27, 20, 29, 8, 4, 18, 37, 4, 22, 28, 11, 25, 22), 15], [(37, 12, 12, 20, 29, 37, 9, 18, 37, 22, 28, 25), 12], [(15, 12, 29, 12, 4, 19, 38, 22, 3, 28, 11, 37), 12]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr, n):
+    """
+    :param arr: array of integers
+    :param n: length of array
+    :return: minimum difference between any two elements in the array
+    """
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(n-1):
+        min_diff = min(min_diff, arr[i+1]-arr[i])
+    return min_diff
+
+
+if __name__ == '__main__':
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 6))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 7))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 8))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 9))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 10))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 11))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 12))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 13))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 14))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 15))
+    print(find_min_diff((1, 5, 3, 19, 18, 25), 16))
+    print(find_min_diff((1, 5, 3, 19,</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    """
+    This function finds the minimum difference between any two elements in a given array.
+    :param arr: list of integers
+    :param k: integer
+    :return: integer
+    """
+    if len(arr) < 2:
+        return 0
+
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+
+    for i in range(1, len(arr)):
+        diff = arr[i] - arr[i - 1]
+        if diff < min_diff:
+            min_diff = diff
+
+    return min_diff
+
+assert find_min_diff((1, 5, 3, 19, 18, 25), 6) == 1</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr: list[int], n: int) -> int:
+    arr.sort()
+    minimum_difference = float("inf")
+    for i in range(n - 1):
+        difference = arr[i + 1] - arr[i]
+        if difference < minimum_difference:
+            minimum_difference = difference
+    return minimum_difference
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def find_min_diff(arr, n):
+    """
+    Find the minimum difference between any two elements in a given array.
+    
+    Args:
+        arr (tuple): The input array.
+        n (int): The length of the array.
+    
+    Returns:
+        int: The minimum difference between any two elements in the array.
+    """
+    # Sort the array
+    arr = sorted(arr)
+    
+    # Initialize the minimum difference
+    min_diff = float('inf')
+    
+    # Iterate through the array and find the minimum difference
+    for i in range(1, n):
+        min_diff = min(min_diff, arr[i] - arr[i-1])
+    
+    return min_diff</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    arr.sort()
+
+    # Store the minimum difference value
+    min_diff = float('inf')
+    
+    for i in range(1, n):
+        diff = arr[i] - arr[i-1]
+        min_diff = min(min_diff, diff)
+        
+    return min_diff
+
+# Test the function
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+def find_min_diff(arr, diff):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(len(arr) - 1):
+        if abs(arr[i] - arr[i + 1]) <= diff:
+            min_diff = min(min_diff, abs(arr[i] - arr[i + 1]))
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to find the minimum difference between any two elements in a given array, wrapped in a Python markdown block:
+
+```python
+def find_min_diff(arr, n):
+    # Sort the array in ascending order
+    arr = sorted(arr)
+
+    # Initialize the minimum difference to a large value
+    min_diff = float('inf')
+
+    # Iterate through the array and find the minimum difference
+    for i in range(n - 1):
+        diff = abs(arr[i] - arr[i + 1])
+        min_diff = min(min_diff, diff)
+
+    return min_diff
+
+# Test the function
+assert find_min_diff((1, 5, 3, 19, 18, 25), 6) == 1</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, diff):
+    # First, we need to sort the array in ascending order
+    arr.sort()
+
+    # Initialize variables to keep track of the minimum difference found
+    # and the indices of the elements that give this minimum difference
+    min_diff = float('inf')
+    i, j = 0, 1
+
+    # Iterate through the sorted array, comparing each pair of elements
+    while j < len(arr):
+        current_diff = abs(arr[j] - arr[i])
+        if current_diff < min_diff:
+            min_diff = current_diff
+            if min_diff == diff:
+                # If the desired difference is found, return immediately
+                return min_diff
+
+        # Move the second index forward
+        j += 1
+
+        # If the difference between the current pair exceeds the desired difference,
+        # move the first index forward
+        if current_diff >= diff:
+            i += 1
+
+    return min_diff
+
+# Test the function
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the minimum difference between any two elements in a given array:
+
+
+```python
+def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = float('inf')
+    n = len(arr)
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    if min_diff > k:
+        return -1
+    return min_diff
+```
+
+Explanation:
+
+1. The function takes two arguments, an array `arr` and an integer `k`.
+2. The array is sorted in ascending order using the `sort()` method.
+3. The variable `min_diff` is initialized to positive infinity.
+4. A loop is run from the first element to the second last element of the array.
+5. The difference between the current element and the next element is calculated and compared with `min_diff`. If it is less than `min_diff`, it is updated.
+6. If `min_diff` is greater than `k`, the function returns `-1` as there is no pair with a difference less than `k`.
+7. Otherwise, the function returns `min_diff`.
+
+The time complexity of this function is O(nlogn) due to the sorting operation. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    """
+    This function finds the minimum difference between any two elements in a given array.
+    :param arr: The input array.
+    :param n: The size of the array.
+    :return: The minimum difference between any two elements in the array.
+    """
+    # Sort the array in non-decreasing order
+    arr.sort()
+
+    # Initialize the minimum difference as the difference between the first two elements
+    min_diff = arr[1] - arr[0]
+
+    # Iterate over the array from the second element to the last element
+    for i in range(2, n):
+        # Update the minimum difference if the difference between the current element and the previous element is smaller
+        min_diff = min(min_diff, arr[i] - arr[i - 1])
+
+    # Return the minimum difference
+    return min_diff
+
+# Test the function
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+
+if __name__ == "__main__":
+    arr = [1,5,3,19,18,25]
+    n = len(arr)
+    print(find_min_diff(arr, n))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    """
+    This function finds the minimum difference between any two elements in a given array.
+    """
+    arr.sort()
+    min_diff = float('inf')
+    
+    for i in range(1, n):
+        diff = arr[i] - arr[i-1]
+        if diff < min_diff:
+            min_diff = diff
+            
+    return min_diff
+
+# Test case
+assert find_min_diff((1, 5, 3, 19, 18, 25), 6) == 1</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I'd be happy to help with that. Here's a Python function that solves the problem:
+
+```python
+def find_min_diff(arr, n):
+    # First, sort the array
+    arr.sort()
+
+    # Initialize minimum difference as maximum possible
+    min_diff = arr[n-1] - arr[0]
+
+    # Find the minimum difference by comparing difference
+    # of all possible pairs in sorted array
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+
+    return min_diff
+```
+
+This function works by first sorting the array, then iterating through it and finding the minimum difference between consecutive elements. The time complexity is O(n log n) due to the sorting operation.
+
+However, please note that the assert statement you provided will not work with this function because the function expects two arguments: a list (or tuple) of numbers and the length of the list (or tuple). The assert statement is passing a tuple and a number, but the number is not the length of the tuple. If you want to use an assert statement to test this function, you should do it like this:
+
+```python
+assert find_min_diff((1,5,3,19,18,25), len((1,5,3,19,18,25))) == 1
+```
+
+Or simply:
+
+```python
+arr = (1,5,3,19,18,25)
+assert find_min_diff(arr, len(arr)) == 1
+```</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(len(arr)-k+1):
+        min_diff = min(min_diff, arr[i+k-1] - arr[i])
+    return min_diff
+
+"""
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(len(arr)-k+1):
+        min_diff = min(min_diff, arr[i+k-1] - arr[i])
+    return min_diff
+
+"""
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(len(arr)-k+1):
+        min_diff = min(min_diff, arr[i+k-1] - arr[i])
+    return min_diff
+
+"""
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(len(arr)-k+1):
+        min_diff = min(min_diff, arr[i+k-1] - arr[i])
+    return min_diff
+
+"""
+Write a python function to</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    # Sort the array
+    arr.sort()
+
+    # Initialize difference as infinite
+    diff = float('inf')
+
+    # Traverse array elements
+    for i in range(n-1):
+        # Find difference between current and next element
+        if arr[i+1] - arr[i] < diff:
+            diff = arr[i+1] - arr[i]
+
+    return diff
+
+# Test the function
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr,n):
+    arr = sorted(arr)
+    min_diff = arr[1]-arr[0]
+    for i in range(n-1):
+        if arr[i+1]-arr[i] < min_diff:
+            min_diff = arr[i+1]-arr[i]
+    return min_diff
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+
+def find_min_diff_2(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+
+def find_min_diff_3(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+
+def find_min_diff_4(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+
+def find_min_diff_5(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+
+def find_min_diff_6(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def find_min_diff(arr, n):
+    # Sort the array
+    arr = sorted(arr)
+    
+    # Initialize minimum difference
+    min_diff = float('inf')
+    
+    # Find the minimum difference by comparing adjacent pairs
+    for i in range(1, n):
+        diff = arr[i] - arr[i-1]
+        min_diff = min(min_diff, diff)
+    
+    return min_diff
+
+# Test the function
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+```
+
+This function first sorts the input array. Then it initializes the minimum difference as infinity. It iterates over the sorted array, calculating the difference between each pair of adjacent elements and updating the minimum difference if a smaller difference is found. Finally, it returns the minimum difference.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_min_diff(arr, target):
+    min_diff = float('inf')
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            diff = abs(arr[i] - arr[j])
+            if diff < min_diff:
+                min_diff = diff
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1,n-1):
+        min_diff = min(min_diff, arr[i+1] - arr[i])
+    return min_diff
+
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6))
+print(find_min_diff((1,5,3,19,18,25),6</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    """
+    Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+    assert find_min_diff((1,5,3,19,18,25),6) == 1
+    """
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(1, n):
+        if arr[i] - arr[i-1] < min_diff:
+            min_diff = arr[i] - arr[i-1]
+    return min_diff</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. 
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+def find_min_diff(arr):
+    """
+    Finds the minimum difference between any two elements in a given array.
+
+    :param arr: list or tuple of numbers
+    :return: int, minimum difference between any two elements in the array
+    """
+    if not arr:
+        raise ValueError("Array cannot be empty")
+
+    min_diff = float('inf')
+    for num in arr:
+        for other in arr:
+            if other != num and abs(num - other) < min_diff:
+                min_diff = abs(num - other)
+
+    return min_diff
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    arr = sorted(arr)
+    min_diff = float('inf')
+    for i in range(len(arr) - k + 1):
+        diff = arr[i + k - 1] - arr[i]
+        if diff < min_diff:
+            min_diff = diff
+    return min_diff
+
+# Test the function
+assert find_min_diff((1, 5, 3, 19, 18, 25), 6) == 1</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the minimum difference between any two elements in a given array:
+
+```python
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(n-1):
+        diff = arr[i+1] - arr[i]
+        if diff < min_diff:
+            min_diff = diff
+    return min_diff
+```
+
+The function takes two arguments: `arr` is the input array and `n` is the size of the array. The function first sorts the array in ascending order. Then, it initializes a variable `min_diff` to infinity. It then loops through the array and calculates the difference between each pair of adjacent elements. If the difference is less than the current minimum difference, it updates the `min_diff` variable. Finally, it returns the `min_diff` variable.
+
+To test the function, we can use the following code:
+
+```python
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+```
+
+This code creates an input array `(1,5,3,19,18,25)` and passes it to the `find_min_diff` function along with its size `6`. The function returns `1`, which is the minimum difference between any two elements in the array. The assertion passes, indicating that the function works correctly.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the minimum difference between any two elements in a given array:
+
+```python
+def find_min_diff(arr, n):
+    # Sort array in ascending order
+    arr = sorted(arr)
+    
+    # Initialize difference as infinite
+    diff = float('inf')
+    
+    # Find the min diff by comparing adjacent
+    # pairs in sorted array
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < diff:
+            diff = arr[i+1] - arr[i]
+
+    # Return min diff
+    return diff
+```
+
+You can test the function with the following code:
+
+```python
+print(find_min_diff([1,5,3,19,18,25],6)) # Output: 1
+```
+
+This function works by first sorting the array in ascending order. Then it iterates over the sorted array, comparing each pair of adjacent elements and keeping track of the smallest difference found. The function finally returns this smallest difference.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(1, n):
+        min_diff = min(min_diff, arr[i] - arr[i-1])
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+assert find_min_diff((1,5,3,19,18,25),7) == 1
+assert find_min_diff((1,5,3,19,18,25),8) == 1
+assert find_min_diff((1,5,3,19,18,25),9) == 1
+assert find_min_diff((1,5,3,19,18,25),10) == 1
+assert find_min_diff((1,5,3,19,18,25),11) == 1
+assert find_min_diff((1,5,3,19,18,25),12) == 1
+assert find_min_diff((1,5,3,19,18,25),13) == 1
+assert find_min_diff((1,5,3,19,18,25),14) == 1
+assert find_min_diff((1,5,3,19,18,25),15) == 1
+assert find_min_diff((1,5,3,19,18,25),16) == 1
+assert find_min_diff((1,5,3,19,18,25),17) == 1
+assert find_min_diff((1,5,3,19,18,25),18) == 1
+assert find_min_diff((1,5,3,19,18,25),19) == 1
+assert find_min_diff((1,5,3,19,18,25),20) == 1
+assert find_min_diff((1,5,3,19,18,25),21) == 1
+assert find_min_diff((1,5,3,19,18,25),22) == 1
+assert find_min_diff((1,5,3,19,18,25),23) == 1
+assert find_min_diff((1,5</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1,n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+print(find_min_diff((1,5,3,19,18,25),6))
+
+"""
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1,n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+print(find_min_diff((1,5,3,19,18,25),6))
+
+"""
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1,n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+print(find_min_diff((1,5,3,19,18,25),6))
+
+"""
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-diff</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_min_diff(arr, n):
+    arr = sorted(arr)
+    min_diff = float('inf')
+    for i in range(n-1):
+        min_diff = min(min_diff, arr[i+1] - arr[i])
+    return min_diff
+
+assert find_min_diff([1,5,3,19,18,25], 6) == 1
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[n-1] - arr[0]
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+arr = [1,5,3,19,18,25]
+n = len(arr)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    # Sort the array in ascending order
+    arr.sort()
+    
+    # Initialize minimum difference
+    min_diff = float('inf')
+    
+    # Find the minimum difference by comparing adjacent elements
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    
+    return min_diff
+
+# Test the function
+assert find_min_diff([1,5,3,19,18,25], 6) == 1</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, target):
+    """
+    Finds the minimum difference between any two elements in a given array.
+
+    Parameters:
+    arr (list): The input array.
+    target (int): The target difference.
+
+    Returns:
+    int: The minimum difference between any two elements in the array that is less than or equal to the target.
+    """
+    arr.sort()
+    min_diff = float('inf')
+
+    for i in range(len(arr) - 1):
+        diff = arr[i + 1] - arr[i]
+        if diff <= target and diff < min_diff:
+            min_diff = diff
+
+    return min_diff if min_diff != float('inf') else -1
+
+# Test the function
+assert find_min_diff([1, 5, 3, 19, 18, 25], 6) == 1</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(n-1):
+        diff = arr[i+1] - arr[i]
+        min_diff = min(min_diff, diff)
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+```
+
+Explanation:
+The function `find_min_diff` takes two arguments: an array `arr` and an integer `n`. The function first sorts the array in ascending order using the `sort()` method. It then initializes a variable `min_diff` to infinity. The function then iterates through the sorted array, calculating the difference between each adjacent pair of elements and updating `min_diff` if the current difference is smaller than the current minimum difference. Finally, the function returns the minimum difference found.
+
+The `assert` statement at the end of the code checks that the function works correctly by asserting that the minimum difference between any two elements in the array `(1,5,3,19,18,25)` is `1`, as expected.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_min_diff(arr, n):
+    arr = sorted(arr)
+    return min(arr[i+1] - arr[i] for i in range(n-1))
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+print(find_min_diff((1,5,3,19,18,25),6))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n):
+        min_diff = min(min_diff, arr[i] - arr[i-1])
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+assert find_min_diff((1,5,3,19,18,25),2) == 1
+assert find_min_diff((1,5,3,19,18,25),3) == 1
+assert find_min_diff((1,5,3,19,18,25),4) == 1
+assert find_min_diff((1,5,3,19,18,25),5) == 1
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+assert find_min_diff((1,5,3,19,18,25),7) == 1
+assert find_min_diff((1,5,3,19,18,25),8) == 1
+assert find_min_diff((1,5,3,19,18,25),9) == 1
+assert find_min_diff((1,5,3,19,18,25),10) == 1
+assert find_min_diff((1,5,3,19,18,25),11) == 1
+assert find_min_diff((1,5,3,19,18,25),12) == 1
+assert find_min_diff((1,5,3,19,18,25),13) == 1
+assert find_min_diff((1,5,3,19,18,25),14) == 1
+assert find_min_diff((1,5,3,19,18,25),15) == 1
+assert find_min_diff((1,5,3,19,18,25),16) == 1
+assert find_min_diff((1,5,3,19,18,25),17) == 1
+assert find_min_diff((1,5,3,19,18,25),18) == 1
+assert find_min_</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+import sys
+
+def find_min_diff(arr, n):
+    # Sort the array
+    arr = sorted(arr)
+    
+    # Initialize difference as infinite
+    min_diff = sys.maxsize
+    
+    # Find the min diff by comparing adjacent pairs in sorted array
+    for i in range(n - 1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    
+    return min_diff
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    # Sort the array in ascending order
+    arr.sort()
+
+    # Calculate the minimum difference
+    min_diff = float('inf')
+    for i in range(len(arr) - 1):
+        for j in range(i + 1, len(arr)):
+            diff = abs(arr[i] - arr[j])
+            if diff < min_diff:
+                min_diff = diff
+
+    # Return the minimum difference
+    return min_diff</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def find_min_diff(arr, n):
+    # Sort array in ascending order
+    arr.sort()
+
+    # Initialize minimum difference
+    min_diff = float('inf')
+
+    # Find the minimum difference by comparing adjacent elements
+    for i in range(1, n):
+        diff = arr[i] - arr[i-1]
+        if diff < min_diff:
+            min_diff = diff
+
+    return min_diff
+
+# Test the function
+print(find_min_diff([1,5,3,19,18,25],6))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(len(arr)-1):
+        diff = arr[i+1] - arr[i]
+        if diff < min_diff and diff >= k:
+            min_diff = diff
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    arr.sort()
+    n = len(arr)
+    min_diff = float('inf')
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the minimum difference between any two elements in a given array:
+
+```python
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(n-1):
+        diff = arr[i+1] - arr[i]
+        if diff < min_diff:
+            min_diff = diff
+    return min_diff
+```
+
+Explanation:
+
+1. First, we sort the array in ascending order using the `sort()` method.
+2. We initialize a variable `min_diff` to `float('inf')` to store the minimum difference between any two elements.
+3. We loop through the array from the first element to the second last element using a `for` loop.
+4. For each element, we calculate the difference between it and the next element and store it in a variable `diff`.
+5. If `diff` is less than `min_diff`, we update `min_diff` with the new value of `diff`.
+6. Finally, we return `min_diff`.
+
+Example:
+
+```python
+>>> find_min_diff((1,5,3,19,18,25),6)
+1
+```
+
+The minimum difference between any two elements in the array `(1,5,3,19,18,25)` is `1`. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        diff = arr[i+1] - arr[i]
+        if diff < min_diff:
+            min_diff = diff
+    return min_diff
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    if len(arr) < 2:
+        return None
+
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+
+    for i in range(len(arr) - 1):
+        for j in range(i + 1, len(arr)):
+            if arr[j] - arr[i] < min_diff and arr[j] - arr[i] >= k:
+                min_diff = arr[j] - arr[i]
+
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1,n-1):
+        min_diff = min(min_diff,arr[i+1]-arr[i])
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n):
+        if arr[i] - arr[i - 1] < min_diff:
+            min_diff = arr[i] - arr[i - 1]
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+assert find_min_diff((1,5,3,19,18,25),5) == 1
+assert find_min_diff((1,5,3,19,18,25),4) == 1
+assert find_min_diff((1,5,3,19,18,25),3) == 1
+assert find_min_diff((1,5,3,19,18,25),2) == 1
+assert find_min_diff((1,5,3,19,18,25),1) == 1
+assert find_min_diff((1,5,3,19,18,25),0) == 1
+assert find_min_diff((1,5,3,19,18,25),-1) == 1
+assert find_min_diff((1,5,3,19,18,25),-2) == 1
+assert find_min_diff((1,5,3,19,18,25),-3) == 1
+assert find_min_diff((1,5,3,19,18,25),-4) == 1
+assert find_min_diff((1,5,3,19,18,25),-5) == 1
+assert find_min_diff((1,5,3,19,18,25),-6) == 1
+assert find_min_diff((1,5,3,19,18,25),-7) == 1
+assert find_min_diff((1,5,3,19,18,25),-8) == 1
+assert find_min_diff((1,5,3,19,18,25),-9) == 1
+assert find_min_diff((1,5,3,19,18,25),-10) == 1
+assert find_min_diff</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = abs(arr[0] - arr[1])
+    for i in range(1, n-1):
+        min_diff = min(min_diff, abs(arr[i] - arr[i+1]))
+    return min_diff
+
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(n-1):
+        min_diff = min(min_diff, arr[i+1] - arr[i])
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+```
+
+This Python function `find_min_diff` takes an array and its size as input. It sorts the array in ascending order and then iterates through it. For each element, it calculates the difference with the next element and updates the minimum difference if the current difference is smaller. Finally, it returns the minimum difference.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr,n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1,n):
+        if arr[i] - arr[i-1] < min_diff:
+            min_diff = arr[i] - arr[i-1]
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+assert find_min_diff((1,5,3,19,18,25),5) == 1
+assert find_min_diff((1,5,3,19,18,25),4) == 1
+assert find_min_diff((1,5,3,19,18,25),3) == 1
+assert find_min_diff((1,5,3,19,18,25),2) == 1
+assert find_min_diff((1,5,3,19,18,25),1) == 1
+assert find_min_diff((1,5,3,19,18,25),0) == 1
+assert find_min_diff((1,5,3,19,18,25),-1) == 1
+assert find_min_diff((1,5,3,19,18,25),-2) == 1
+assert find_min_diff((1,5,3,19,18,25),-3) == 1
+assert find_min_diff((1,5,3,19,18,25),-4) == 1
+assert find_min_diff((1,5,3,19,18,25),-5) == 1
+assert find_min_diff((1,5,3,19,18,25),-6) == 1
+assert find_min_diff((1,5,3,19,18,25),-7) == 1
+assert find_min_diff((1,5,3,19,18,25),-8) == 1
+assert find_min_diff((1,5,3,19,18,25),-9) == 1
+assert find_min_diff((1,5,3,19,18,25),-10) == 1
+assert find_min_diff</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = abs(arr[0] - arr[1])
+    for i in range(n-1):
+        if abs(arr[i] - arr[i+1]) < min_diff:
+            min_diff = abs(arr[i] - arr[i+1])
+    return min_diff
+
+
+if __name__ == "__main__":
+    print(find_min_diff((1,5,3,19,18,25),6))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, k):
+    if len(arr) < 2:
+        return 0
+
+    arr.sort()
+
+    min_diff = float('inf')
+
+    for i in range(len(arr) - 1):
+        min_diff = min(min_diff, arr[i + 1] - arr[i])
+
+    return min_diff
+
+
+assert find_min_diff((1, 5, 3, 19, 18, 25), 6) == 1</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+def find_min_diff(arr, expected_result):
+    arr.sort()
+    min_diff = abs(arr[1] - arr[0])
+    for i in range(1, len(arr) - 1):
+        diff = abs(arr[i] - arr[i - 1])
+        if diff < min_diff:
+            min_diff = diff
+    assert min_diff == expected_result, f"Expected result is {expected_result}, but found {min_diff}"
+    return min_diff
+
+find_min_diff((1, 5, 3, 19, 18, 25), 6)</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr, n):
+    if n == 1:
+        return 0
+    if n == 2:
+        return abs(arr[0] - arr[1])
+    min_diff = find_min_diff(arr[1:], n-1)
+    return min(arr[0] - arr[1], min_diff)
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def find_min_diff(arr, n):
+    """
+    Function to find the minimum difference between any two elements in a given array.
+    
+    Args:
+        arr (list): The input array of integers.
+        n (int): The size of the array.
+        
+    Returns:
+        int: The minimum difference between any two elements in the array.
+    """
+    
+    # Sort the array in ascending order
+    arr.sort()
+    
+    # Initialize the minimum difference with a large value
+    min_diff = float('inf')
+    
+    # Iterate through the sorted array and find the minimum difference
+    for i in range(n-1):
+        diff = abs(arr[i] - arr[i+1])
+        min_diff = min(min_diff, diff)
+    
+    return min_diff
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = arr[1] - arr[0]
+    for i in range(1, n-1):
+        if arr[i+1] - arr[i] < min_diff:
+            min_diff = arr[i+1] - arr[i]
+    return min_diff
+
+print(find_min_diff((1,5,3,19,18,25),6))
+/python/leetcode/1001-1100/1001.py
+"""
+Given an array of integers A and let n to be its length.
+
+Assume Bk to be an array obtained by rotating the array A k positions clock-wise, we define a "rotation function" F on A as follow:
+
+F(k) = 0 * Bk[0] + 1 * Bk[1] + ... + (n-1) * Bk[n-1].
+
+Calculate the maximum value of F(0), F(1), ..., F(n-1).
+
+Note:
+n is guaranteed to be less than 105.
+
+Example:
+
+A = [4, 3, 2, 6]
+
+F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 0 + 3 + 4 + 18 = 25
+F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 0 + 4 + 6 + 6 = 16
+F(2) = (0 * 2) + (1 * 6) + (2 * 4) + (3 * 3) = 0 + 6 + 8 + 9 = 23
+F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
+
+So the maximum value of F(0), F(1), F(2), F(3) is F(3)</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_diff(arr, n):
+    arr.sort()
+    min_diff = float('inf')
+    for i in range(n-1):
+        diff = arr[i+1] - arr[i]
+        if diff < min_diff:
+            min_diff = diff
+    return min_diff
+
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the minimum difference between any two elements in a given array. https://www.geeksforgeeks.org/find-minimum-difference-pair/
+assert find_min_diff((1,5,3,19,18,25),6) == 1
+"""
+
+import sys
+import math
+import os
+import random
+import re
+import time
+import functools
+import collections
+import itertools
+import string
+import array
+import bisect
+import heapq
+import copy
+import functools
+import itertools
+import math
+import operator
+import queue
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import heapq
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import itertools
+import math
+import operator
+import random
+import re
+import string
+import sys
+import time
+import bisect
+import collections
+import functools
+import</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def find_min_diff(arr, n):
+    # Sort the array
+    arr.sort()
+    
+    # Initialize difference as a large number
+    diff = float('inf')
+    
+    # Find the minimum difference by comparing adjacent pairs
+    for i in range(n-1):
+        if arr[i+1] - arr[i] < diff:
+            diff = arr[i+1] - arr[i]
+    
+    # Return the minimum difference
+    return diff
+
+# Test the function
+assert find_min_diff((1,5,3,19,18,25),6) == 1</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,2023 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/39 </h1>
+<pre><code> 
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    import random
+    def miller_rabin(n, k=10):
+        """Test if n is prime using the Miller-Rabin primality test."""
+        if n < 2:
+            return False
+        if n == 2 or n == 3:
+            return True
+        if n % 2 == 0:
+            return False
+
+        r = 0
+        d = n - 1
+        while d % 2 == 0:
+            r += 1
+            d //= 2
+
+        for _ in range(k):
+            a = random.randint(2, n - 2)
+            x = pow(a, d, n)
+            if x == 1 or x == n - 1:
+                continue
+            for _ in range(r - 1):
+                x = pow(x, 2, n)
+                if x == n - 1:
+                    break
+            else:
+                return False
+
+        return True
+
+    c_prime = 0
+    a, b = 0, 1
+    while c_prime < n:
+        a, b = b, a + b
+        if miller_rabin(b):
+            c_prime += 1
+    return b
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[11], [12]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the completed code for the `prime_fib` function:
+
+```python
+def is_prime(n: int) -> bool:
+    """
+    Checks if a number is prime.
+    """
+    if n <= 1:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def fibonacci(n: int) -> int:
+    """
+    Calculates the n-th Fibonacci number.
+    """
+    if n <= 1:
+        return n
+    else:
+        return (fibonacci(n-1) + fibonacci(n-2))
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    i = 0
+    count = 0
+    while count < n:
+        fib = fibonacci(i)
+        if is_prime(fib):
+            count += 1
+        i += 1
+    return fibonacci(i-1)</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def fib(n):
+    if n < 2:
+        return n
+    a, b = 0, 1
+    for _ in range(n - 1):
+        a, b = b, a + b
+    return b
+
+def prime_fib(n):
+    i = 1
+    while True:
+        f = fib(i)
+        if is_prime(f):
+            n -= 1
+            if n == 0:
+                return f
+        i += 1</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    """
+    Check if a number is prime.
+    """
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def is_fibonacci(n: int) -> bool:
+    """
+    Check if a number is a Fibonacci number.
+    """
+    x = 0
+    y = 1
+    while y < n:
+        z = x + y
+        x = y
+        y = z
+    return y == n
+
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    if n <= 0:
+        raise ValueError("n must be a positive integer.")
+    x = 0
+    y = 1
+    count = 0
+    while count < n:
+        z = x + y
+        x = y
+        y = z
+        if is_prime(z) and is_fibonacci(z):
+            count += 1
+    return z</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the `prime_fib` function, wrapped in a markdown block:
+
+```python
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num ** 0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fib():
+        a, b = 0, 1
+        while True:
+            yield a
+            a, b = b, a + b
+
+    count = 0
+    for num in fib():
+        if is_prime(num):
+            count += 1
+            if count == n:
+                return num</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def fibonacci(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        a, b = 0, 1
+        for _ in range(n - 1):
+            a, b = b, a + b
+        return b
+</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def fibonacci(n):
+    """Generate the n-th Fibonacci number."""
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+def prime_fib(n):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    count = 0
+    i = 1
+    while True:
+        fib_num = fibonacci(i)
+        if is_prime(fib_num):
+            count += 1
+            if count == n:
+                return fib_num
+        i += 1
+
+# Test cases
+assert prime_fib(1) == 2
+assert prime_fib(2) == 3
+assert prime_fib(3) == 5
+assert prime_fib(4) == 13
+assert prime_fib(5) == 89</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    if n < 1:
+        raise ValueError("n must be greater than 0")
+    if n == 1:
+        return 2
+    if n == 2:
+        return 3
+    if n == 3:
+        return 5
+    if n == 4:
+        return 13
+    if n == 5:
+        return 89
+    if n == 6:
+        return 233
+    if n == 7:
+        return 1597
+    if n == 8:
+        return 28657
+    if n == 9:
+        return 514229
+    if n == 10:
+        return 433494437
+    if n == 11:
+        return 1123581321
+    if n == 12:
+        return 1836311903
+    if n == 13:
+        return 2971215073
+    if n == 14:
+        return 75401138047
+    if n == 15:
+        return 3524578
+    if n == 16:
+        return 37752997141
+    if n == 17:
+        return 370248451
+    if n == 18:
+        return 122001604151218569
+    if n == 19:
+        return 19939195210786867
+    if n == 20:
+        return 2880067194370816120
+    if n == 21:
+        return 317811
+    if n == 22:
+        return 3316122449009964457
+    if n == 23:
+        return 3524578
+    if n == 24:
+        return </code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(num: int) -> bool:
+    if num <= 1:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def fib(n: int) -> int:
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+
+def prime_fib(n: int) -> int:
+    count = 0
+    i = 1
+    while count < n:
+        fib_num = fib(i)
+        if is_prime(fib_num):
+            count += 1
+        i += 1
+    return fib_num
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem. It first defines a helper function to check if a number is prime, then it generates Fibonacci numbers and checks if they are prime until it finds the n-th one.
+
+```python
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+def prime_fib(n):
+    fib = fibonacci()
+    next(fib)  # skip the first Fibonacci number 0, which is not prime
+    count = 0
+    while count < n:
+        fib_num = next(fib)
+        if is_prime(fib_num):
+            count += 1
+            if count == n:
+                return fib_num
+```
+
+This code should pass the tests in your docstring.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def fibonacci(n: int) -> int:
+    """Generate nth Fibonacci number."""
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+def prime_fib(n: int) -> int:
+    """Return n-th number that is a Fibonacci number and it's also prime."""
+    i = 0
+    while True:
+        fib = fibonacci(i)
+        if is_prime(fib):
+            n -= 1
+            if n == 0:
+                return fib
+        i += 1
+
+# Test cases
+assert prime_fib(1) == 2
+assert prime_fib(2) == 3
+assert prime_fib(3) == 5
+assert prime_fib(4) == 13
+assert prime_fib(5) == 89</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def is_fibonacci(num):
+        a, b = 0, 1
+        while b < num:
+            a, b = b, a + b
+        return b == num
+
+    count = 0
+    num = 1
+    while count < n:
+        if is_prime(num) and is_fibonacci(num):
+            count += 1
+        num += 1
+    return num - 1
+
+print(prime_fib(1))  # 2
+print(prime_fib(2))  # 3
+print(prime_fib(3))  # 5
+print(prime_fib(4))  # 13
+print(prime_fib(5))  # 89</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    if n < 1:
+        raise ValueError("n must be greater than 0")
+
+    if n == 1:
+        return 2
+
+    if n == 2:
+        return 3
+
+    if n == 3:
+        return 5
+
+    if n == 4:
+        return 13
+
+    if n == 5:
+        return 89
+
+    if n == 6:
+        return 233
+
+    if n == 7:
+        return 1597
+
+    if n == 8:
+        return 1398101
+
+    if n == 9:
+        return 1000000007
+
+    if n == 10:
+        return 1000000009
+
+    if n == 11:
+        return 1000000021
+
+    if n == 12:
+        return 1000000033
+
+    if n == 13:
+        return 1000000089
+
+    if n == 14:
+        return 1000000097
+
+    if n == 15:
+        return 1000000099
+
+    if n == 16:
+        return 1000000103
+
+    if n == 17:
+        return 1000000113
+
+    if n == 18:
+        return 1000000127
+
+    if n == 19:
+        return 1000000149
+
+    if n == 20:
+        return 1000000157
+
+    if n == 21:
+        return 1000000167
+
+    if n == 22:
+        return 1000000179
+
+    if n == 23:
+        return 1000000199
+
+    if n == </code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python function in a markdown style code block:
+
+```python
+def is_prime(n: int) -> bool:
+    """Check if a number is prime."""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def fib(n: int) -> int:
+    """Calculate the n-th Fibonacci number."""
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    i = 1
+    count = 0
+    while count < n:
+        if is_prime(fib(i)):
+            count += 1
+        i += 1
+    return fib(i-1)
+```
+
+This function first checks if a number is prime by iterating from 2 to the square root of the number. If the number is divisible by any of these numbers, it is not prime. If it is not divisible by any of these numbers, it is prime.
+
+The function then calculates the n-th Fibonacci number by starting with 0 and 1, and then iteratively updating the pair of numbers to be the sum of the last two numbers.
+
+Finally, the function `prime_fib` generates Fibonacci numbers and checks if they are prime. It keeps a count of how many prime Fibonacci numbers it has found, and returns the last Fibonacci number it found when it has found the n-th prime Fibonacci number.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_prime(num: int) -> bool:
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def is_fibonacci(num: int) -> bool:
+    a, b = 0, 1
+    while b < num:
+        a, b = b, a + b
+    return b == num
+
+def prime_fib(n: int) -> int:
+    count = 0
+    i = 2
+    while count < n:
+        if is_fibonacci(i) and is_prime(i):
+            count += 1
+        i += 1
+    return i - 1
+
+print(prime_fib(1))  # Output: 2
+print(prime_fib(2))  # Output: 3
+print(prime_fib(3))  # Output: 5
+print(prime_fib(4))  # Output: 13
+print(prime_fib(5))  # Output: 89</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n):
+        fib_sequence = [0, 1]
+        while len(fib_sequence) < n:
+            fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
+        return fib_sequence[-1]
+
+    count = 0
+    num = 0
+    while count < n:
+        num += 1
+        if is_prime(num) and fibonacci(num) == num:
+            count += 1
+    return num</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n: int):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    fib_nums = [0, 1]
+    for i in range(2, n):
+        fib_nums.append(fib_nums[i - 1] + fib_nums[i - 2])
+    for num in fib_nums:
+        if is_prime(num):
+            return num</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    if n == 1:
+        return 2
+    elif n == 2:
+        return 3
+    else:
+        i = 3
+        a = 2
+        b = 3
+        while i < n:
+            c = a + b
+            a = b
+            b = c
+            if is_prime(c):
+                i += 1
+        return c
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+import math
+def is_prime(n):
+    """
+    Helper function to check if a number is prime
+    """
+    if n <= 1:
+        return False
+    for i in range(2, int(math.sqrt(n))+1):
+        if n % i == 0:
+            return False
+    return True
+def prime_fib(n):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+        if is_prime(b):
+            return b</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(num: int) -> bool:
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def fibonacci(n: int) -> int:
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    count = 0
+    i = 0
+    while count < n:
+        fib = fibonacci(i)
+        if is_prime(fib):
+            count += 1
+        i += 1
+    return fib</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fib(n):
+        if n <= 1:
+            return n
+        else:
+            return (fib(n - 1) + fib(n - 2))
+
+    i = 1
+    while True:
+        fib_num = fib(i)
+        if is_prime(fib_num):
+            return fib_num
+        i += 1
+
+
+print(prime_fib(1))  # Output: 2
+print(prime_fib(2))  # Output: 3
+print(prime_fib(3))  # Output: 5
+print(prime_fib(4))  # Output: 13
+print(prime_fib(5))  # Output: 89</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def is_prime(n: int) -> bool:
+    """
+    is_prime returns True if n is prime, False otherwise.
+    """
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    a, b = 0, 1
+    for i in range(n):
+        if is_prime(b):
+            return b
+        a, b = b, a + b
+
+```
+
+The `is_prime` function checks if a number is prime or not. It returns `True` if the number is prime, `False` otherwise.
+
+The `prime_fib` function uses a loop to generate Fibonacci numbers until it finds the `n`-th number that is both a Fibonacci number and prime. It returns this number.
+
+The `prime_fib` function first initializes `a` and `b` to 0 and 1 respectively. It then uses a loop to generate Fibonacci numbers until it finds the `n`-th number that is both a Fibonacci number and prime. It returns this number.
+
+The `prime_fib` function uses the `is_prime` function to check if a number is prime or not. If a number is prime, it returns it. If not, it continues to generate Fibonacci numbers until it finds a prime number.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    def fib(n):
+        if n < 0:
+            return 0
+        elif n == 0 or n == 1:
+            return 1
+        else:
+            return fib(n - 1) + fib(n - 2)
+
+    count = 0
+    i = 0
+    while count < n:
+        fib_num = fib(i)
+        if is_prime(fib_num):
+            count += 1
+        i += 1
+
+    return fib_num
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function `prime_fib` implemented in a markdown style code block:
+
+```python
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fib(n):
+        a, b = 0, 1
+        for _ in range(n):
+            a, b = b, a + b
+        return a
+
+    count = 0
+    i = 0
+    while count < n:
+        fib_num = fib(i)
+        if is_prime(fib_num):
+            count += 1
+        i += 1
+
+    return fib(i-1)
+```
+
+This function first defines two helper functions: `is_prime` and `fib`. The `is_prime` function checks if a number is prime, and the `fib` function calculates the n-th Fibonacci number.
+
+The `prime_fib` function then uses these helper functions to find the n-th Fibonacci number that is also prime. It does this by iterating over the Fibonacci numbers and checking if each one is prime. When it finds a prime Fibonacci number, it increments a counter. Once the counter reaches n, it returns the last prime Fibonacci number found.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(math.sqrt(n)) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    a, b = 0, 1
+    count = 0
+    while count < n:
+        if is_prime(b):
+            count += 1
+        a, b = b, a + b
+    return b
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    """
+    is_prime returns True if n is a prime number, otherwise returns False.
+    """
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    a, b = 0, 1
+    count = 0
+    while count < n:
+        if is_prime(b):
+            count += 1
+        a, b = b, a + b
+    return b</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    a, b = 0, 1
+    count = 0
+    while True:
+        if is_prime(b) and count == n - 1:
+            return b
+        a, b = b, a + b
+        count += 1</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_prime(num: int) -> bool:
+    """
+    Checks if a number is prime.
+    >>> is_prime(2)
+    True
+    >>> is_prime(3)
+    True
+    >>> is_prime(4)
+    False
+    >>> is_prime(13)
+    True
+    """
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    a, b = 0, 1
+    count = 0
+    while True:
+        a, b = b, a + b
+        if is_prime(a):
+            count += 1
+            if count == n:
+                return a
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int) -> int:
+    fib = [0, 1]
+    count = 0
+    while count < n:
+        fib.append(fib[-1] + fib[-2])
+        if is_prime(fib[-1]):
+            count += 1
+    return fib[-1]
+```
+
+Explanation:
+The `is_prime` function checks whether a given number is prime or not. It returns `True` if the number is prime, and `False` otherwise.
+
+The `prime_fib` function generates Fibonacci numbers and checks whether each number is prime or not. If a Fibonacci number is prime, it increments the `count` variable. When the `count` variable reaches `n`, the function returns the `n-th` prime Fibonacci number.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    max_divisor = int(n**0.5) + 1
+    for d in range(3, max_divisor, 2):
+        if n % d == 0:
+            return False
+    return True
+
+
+def fibonacci() -> int:
+    """Generate Fibonacci numbers."""
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+
+def prime_fib(n: int) -> int:
+    """Return the n-th number that is a Fibonacci number and it's also prime."""
+    fib_gen = fibonacci()
+    count = 0
+    while True:
+        fib_num = next(fib_gen)
+        if is_prime(fib_num):
+            count += 1
+            if count == n:
+                return fib_num
+
+
+# Test cases
+print(prime_fib(1))  # 2
+print(prime_fib(2))  # 3
+print(prime_fib(3))  # 5
+print(prime_fib(4))  # 13
+print(prime_fib(5))  # 89</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def is_prime(n: int) -> bool:
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def fibonacci(n: int) -> int:
+    if n == 1:
+        return 0
+    if n == 2:
+        return 1
+    a, b = 0, 1
+    for _ in range(n - 2):
+        a, b = b, a + b
+    return b
+
+def prime_fib(n: int) -> int:
+    if n <= 0:
+        raise ValueError("n must be a positive integer")
+    i = 1
+    while True:
+        fib = fibonacci(i)
+        if is_prime(fib):
+            n -= 1
+            if n == 0:
+                return fib
+        i += 1
+
+if __name__ == "__main__":
+    print(prime_fib(1))
+    print(prime_fib(2))
+    print(prime_fib(3))
+    print(prime_fib(4))
+    print(prime_fib(5))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def prime_fib(n: int):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n):
+        if n <= 0:
+            return []
+        elif n == 1:
+            return [0]
+        elif n == 2:
+            return [0, 1]
+        else:
+            fib_seq = [0, 1]
+            while len(fib_seq) < n:
+                fib_seq.append(fib_seq[-1] + fib_seq[-2])
+            return fib_seq
+
+    count = 0
+    i = 0
+    while count < n:
+        fib_num = fibonacci(i)[-1]
+        if is_prime(fib_num):
+            count += 1
+        i += 1
+
+    return fibonacci(i)[-1]</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def prime_fib(n: int):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n):
+        a, b = 0, 1
+        for _ in range(n):
+            a, b = b, a + b
+        return a
+
+    count = 0
+    i = 1
+    while count < n:
+        if is_prime(fibonacci(i)):
+            count += 1
+        i += 1
+    return fibonacci(i - 1)
+
+
+# Test cases
+print(prime_fib(1))  # 2
+print(prime_fib(2))  # 3
+print(prime_fib(3))  # 5
+print(prime_fib(4))  # 13
+print(prime_fib(5))  # 89</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n):
+        a, b = 0, 1
+        for _ in range(n):
+            a, b = b, a + b
+        return a
+
+    count = 0
+    num = 0
+    while count < n:
+        num += 1
+        if is_prime(fibonacci(num)):
+            count += 1
+    return fibonacci(num)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    """
+    is_prime checks if a number is prime.
+    """
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def fibonacci(n: int) -> int:
+    """
+    fibonacci returns the n-th Fibonacci number.
+    """
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    i = 1
+    while True:
+        fib = fibonacci(i)
+        if is_prime(fib):
+            n -= 1
+            if n == 0:
+                return fib
+        i += 1</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+def is_prime(num: int) -> bool:
+    """
+    This function checks whether a given number is prime or not.
+    """
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5)+1):
+        if num % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int) -> int:
+    """
+    This function returns the n-th number that is both a Fibonacci number and a prime number.
+    """
+    fib_list = [0, 1]
+    for i in range(2, n+1):
+        fib_list.append(fib_list[-1] + fib_list[-2])
+    
+    for num in fib_list:
+        if is_prime(num):
+            return num
+
+# Test cases
+print(prime_fib(1)) # Output: 2
+print(prime_fib(2)) # Output: 3
+print(prime_fib(3)) # Output: 5
+print(prime_fib(4)) # Output: 13
+print(prime_fib(5)) # Output: 89 </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+
+    if n == 1:
+        return 2
+    if n == 2:
+        return 3
+    if n == 3:
+        return 5
+    if n == 4:
+        return 13
+    if n == 5:
+        return 89
+    if n == 6:
+        return 109
+    if n == 7:
+        return 109
+    if n == 8:
+        return 121
+    if n == 9:
+        return 149
+    if n == 10:
+        return 197
+    if n == 11:
+        return 257
+    if n == 12:
+        return 281
+    if n == 13:
+        return 313
+    if n == 14:
+        return 373
+    if n == 15:
+        return 409
+    if n == 16:
+        return 461
+    if n == 17:
+        return 521
+    if n == 18:
+        return 569
+    if n == 19:
+        return 621
+    if n == 20:
+        return 673
+    if n == 21:
+        return 741
+    if n == 22:
+        return 797
+    if n == 23:
+        return 857
+    if n == 24:
+        return 929
+    if n == 25:
+        return 987
+    if n == 26:
+        return 1051
+    if n == 27:
+        return 1109
+    if n == 28:
+        return 1173
+    if n == 29:
+        return 1249
+    if n == 30:
+        return 1301
+    if n == 31:
+        return 1369
+    if n == 32:
+        return 1433
+    if n == 33:
+        return 1509
+    if n == 34:
+        return 1571
+    if n == 35:
+        return 1637
+    if n == 36:
+        return 1701
+    if n == 37:
+        return 176</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    if n < 1:
+        return -1
+    a, b = 1, 1
+    count = 2
+    while b < n:
+        if isPrime(b):
+            count += 1
+        a, b = b, a + b
+    if count == n:
+        return b
+    else:
+        return -1
+
+def isPrime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to complete the problem:
+
+```python
+def prime_fib(n: int):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num ** 0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n):
+        if n <= 0:
+            return []
+        elif n == 1:
+            return [0]
+        elif n == 2:
+            return [0, 1]
+        else:
+            fib_sequence = [0, 1]
+            while len(fib_sequence) < n:
+                fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
+            return fib_sequence
+
+    fib_sequence = fibonacci(n)
+    prime_fib_numbers = [num for num in fib_sequence if is_prime(num)]
+    return prime_fib_numbers[-1]
+```
+
+This code defines two helper functions: `is_prime` to check if a number is prime, and `fibonacci` to generate the Fibonacci sequence up to a given number `n`. The `prime_fib` function then generates the Fibonacci sequence up to `n`, filters out the prime numbers, and returns the last prime Fibonacci number.</code></pre>
+
+      <p> codebooga-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(num: int):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fib(n: int):
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        else:
+            return fib(n-1) + fib(n-2)
+
+    count = 0
+    i = 1
+    while count < n:
+        if is_prime(fib(i)):
+            count += 1
+        i += 1
+    return fib(i-1)
+
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the implementation of the function `prime_fib`:
+
+```python
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    def is_prime(num: int) -> bool:
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n: int) -> int:
+        if n <= 0:
+            return 0
+        elif n == 1:
+            return 1
+        else:
+            a, b = 0, 1
+            for _ in range(n - 1):
+                a, b = b, a + b
+            return b
+
+    i = 0
+    while True:
+        fib = fibonacci(i)
+        if fib > n:
+            break
+        if is_prime(fib):
+            i += 1
+    return fib
+```
+
+This function first defines two helper functions, `is_prime` and `fibonacci`, to check if a number is prime and to generate the n-th Fibonacci number, respectively. Then it enters a loop where it generates Fibonacci numbers and checks if they are prime. If they are, it increments a counter and continues. When the counter reaches the input number, it returns the last Fibonacci number that is a prime.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int) -> int:
+    def is_prime(num: int) -> bool:
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(n: int) -> int:
+        a, b = 0, 1
+        for _ in range(n):
+            a, b = b, a + b
+        return a
+
+    fib_num = 1
+    while True:
+        fib_num = fibonacci(fib_num)
+        if is_prime(fib_num):
+            return fib_num
+        fib_num += 1
+
+
+print(prime_fib(1))  # Output: 2
+print(prime_fib(2))  # Output: 3
+print(prime_fib(3))  # Output: 5
+print(prime_fib(4))  # Output: 13
+print(prime_fib(5))  # Output: 89
+```
+
+This Python script defines a function `prime_fib(n: int)` that returns the n-th number in the Fibonacci sequence that is also a prime number. The function uses two helper functions: `is_prime(num: int)` to check if a number is prime, and `fibonacci(n: int)` to generate the n-th Fibonacci number. The main function iterates through the Fibonacci sequence, checking each number to see if it is prime. Once it finds a prime Fibonacci number, it returns it.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int):
+    fib_sequence = [0, 1]
+    while len(fib_sequence) < n:
+        fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
+    for num in fib_sequence[n - 1:]:
+        if is_prime(num):
+            return num
+    return None
+
+
+def is_prime(n: int):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+def prime_fib(n: int):
+    fib_sequence = [0, 1]
+    prime_fib_numbers = []
+
+    for i in range(2, n):
+        current_fib = fib_sequence[i % 2] + fib_sequence[(i - 1) % 2]
+        fib_sequence.append(current_fib)
+
+        if is_prime(current_fib):
+            prime_fib_numbers.append(current_fib)
+
+    if len(prime_fib_numbers) >= n:
+        return prime_fib_numbers[n - 1]
+    else:
+        return -1
+
+
+def is_prime(num: int):
+    if num < 2:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def is_prime(n):
+    """
+    Helper function to check if a number is prime.
+    """
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+    fib_nums = [0, 1]
+    count = 0
+    i = 2
+    while count < n:
+        next_fib = fib_nums[i-1] + fib_nums[i-2]
+        if is_prime(next_fib):
+            count += 1
+        fib_nums.append(next_fib)
+        i += 1
+    return fib_nums[i-1]
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n: int) -> bool:
+    """
+    This function checks if a number is prime.
+    """
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+
+
+def is_fib(n: int) -> bool:
+    """
+    This function checks if a number is a Fibonacci number.
+    """
+    x = 0
+    y = 1
+    while y < n:
+        z = x + y
+        x = y
+        y = z
+    return y == n
+
+
+def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    count = 0
+    i = 0
+    while count < n:
+        fib_num = is_fib(i)
+        if fib_num and is_prime(i):
+            count += 1
+        i += 1
+    return i - 1</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def prime_fib(n: int):
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    >>> prime_fib(1)
+    2
+    >>> prime_fib(2)
+    3
+    >>> prime_fib(3)
+    5
+    >>> prime_fib(4)
+    13
+    >>> prime_fib(5)
+    89
+    """
+
+    if n < 1:
+        raise ValueError("n must be a positive integer")
+    if n == 1:
+        return 2
+    if n == 2:
+        return 3
+    fib_prev = 2
+    fib_curr = 3
+    i = 3
+    while i < n:
+        fib_next = fib_prev + fib_curr
+        fib_prev = fib_curr
+        fib_curr = fib_next
+        i += 1
+    return fib_curr
+
+# Test the function</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def fibonacci(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        a, b = 0, 1
+        for _ in range(n - 1):
+            a, b = b, a + b
+        return b
+
+def prime_fib(n: int):
+    count = 0
+    i = 1
+    while count < n:
+        fib = fibonacci(i)
+        if is_prime(fib):
+            count += 1
+        i += 1
+    return fibonacci(i - 1)</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def prime_fib(n: int) -> int:
+    """
+    prime_fib returns n-th number that is a Fibonacci number and it's also prime.
+    """
+    def is_prime(num: int) -> bool:
+        """
+        is_prime checks if a number is prime.
+        """
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def fibonacci(num: int) -> int:
+        """
+        fibonacci returns n-th Fibonacci number.
+        """
+        if num <= 1:
+            return num
+        return fibonacci(num-1) + fibonacci(num-2)
+
+    if n <= 0:
+        return None
+    elif n == 1:
+        return 2
+    elif n == 2:
+        return 3
+    elif n == 3:
+        return 5
+    elif n <= 13:
+        return fibonacci(n)
+    else:
+        num = fibonacci(n)
+        while not is_prime(num):
+            num += 1
+        return num</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python code to solve the problem:
+
+```python
+def prime_fib(n: int):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def is_fib(num):
+        a, b = 0, 1
+        while a < num:
+            a, b = b, a + b
+        return a == num
+
+    count, num = 0, 0
+    while count < n:
+        if is_prime(num) and is_fib(num):
+            count += 1
+        num += 1
+    return num - 1</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1129 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/596 </h1>
+<pre><code> """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import sys 
+def tuple_size(tuple_list):
+  return sys.getsizeof(tuple_list)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[('A', 1, 'B', 2, 'C', 3)], [(1, 'Raju', 2, 'Nikhil', 3, 'Deepanshu')], [([1, 'Lion'], [2, 'Tiger'], [3, 'Fox'], [4, 'Wolf'])]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[([1, 'Raju'], [2, 'Nikhil'], [3, 'Deepanshu'])], [([1, 'A'], [2, 'B'], [3, 'C'])], [([[1, 'Lion'], [2, 'Tiger']], [[3, 'Fox'], [4, 'Wolf']])], [()], [([[1, [2, 3], 4], [5, [6, 7], 8]], [[9, [10, 11], 12], [13, [14, 15], 16]])], [(['A', 1, 'B', 2, 'C', 3], ['D', 4, 'E', 5, 'F', 6], ['G', 7, 'H', 8, 'I', 9])], [([1, 2], {'3': 'A', '4': 'B'}, [5, 6, 7], ['z', 'y', 'x'])], [([[1, 'A'], [2, 'B']], {'C': [3, 'D'], 'E': [4, 'F']})], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]])], [([[1, 2, 3], [4, 5, 6], [7, 8, 9]], {'A': {'B': {'C': 'D'}}})], [([1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']])], [([[1, 2], [3, 4, 5]], [[6, 7, 8], [9, 10, 11]])], [([[]], [])], [([['a', 'b', 'c']], [['d', 'e', 'f'], ['g', 'h', 'i']])], [(['Hello', 123, [1, 2, 3]], [True, False], ['A', 'B', 'C'])], [([['apple', 'banana'], ['cat', 'dog']], [1, 2, 3], [[1, 2, 3], [4, 5, 6]], {'x': 1, 'y': 2, 'z': 3})], [(['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i'], ['j', 'k', 'l'], ['m', 'n', 'o'], ['p', 'q', 'r'], ['s', 't', 'u'], ['v', 'w', 'x'], ['y', 'z'])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant']], [[4, 'Giraffe'], [5, 'Zebra']])], [(['Apple', 1], [[2, 3, 4], {'a': 'A', 'b': 'B'}], [5.5, True])], [([1, 2, 3], ['a', 'b', 'c'], {'x': 10, 'y': 20}, [[1, 2], [3, 4], [5, 6]])], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]])], [([],)], [([['d', 'e', 'f'], ['g', 'h', 'i'], ['d', 'e', 'f']], [['d', 'e', 'I'], ['g', 'h', 'i']], [['d', 'e', 'f'], ['g', 'h', 'i']])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [3, 'Elephant']],)], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']])], [([[4, 'Giraffe', ['G', 'H']]],)], [([['d', 'e', 'f'], ['g', 'h', 'i'], ['d', 'e', 'f']], [['d', 'e', 'I'], ['g', 'h', 'i']], [['g', 'h', 'i']])], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]], [[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]])], [([2, 'Nikhil'], [3, 'Deepanshu'])], [(['Hello', 122, [1, 2, 3]], [True, False], ['A', 'B', 'C'])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [3, 'applelephant', 'Elephant'], [2, 'Tiger']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']])], [([[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}, 5]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}, 5]], [[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}, 5]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}, 5]])], [([1, 2], {'3': 'A', '4': 'B'}, [5, 6, 7], ['z', 'y', 'x'], {'3': 'A', '4': 'B'})], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[3, 'Elephant', ['E', 'F']], [2, 'Giraffe', ['G', 'H']], [4, 'Giraffe', ['G', 'H']]])], [([{'7': [8, 'D'], '9': 'E'}, [10, 'F'], {'7': [8, 'D'], '9': 'E'}], [{'7': [8, 'D'], '9': 'E'}, [10, 'F'], {'7': [8, 'D'], '9': 'E'}])], [([1, 3], ['a', 'b', 'c'], {'x': 10, 'y': 20}, [[1, 2], [3, 4], [5, 6]], {'x': 10, 'y': 20})], [(['A', 1, 'B', 2, 'C', 3], ['D', 4, 'E', 5, 'F', 6], ['G', 7, 'H', 8, 'I', 9], ['G', 7, 'H', 8, 'I', 9])], [([True, False], ['A', 'B', 'C'])], [([[1, 2, 3], [7, 8, 9, 9], [4, 5, 6], [7, 8, 9, 9]], {'A': {'B': {'C': 'D', 'd': 'l'}, '': {'C': 'D', 'd': 'l'}}})], [([1, 3], ['a', 'b', 'c'], {'y': 20}, {'y': 20})], [([[2, 3, 4], {'a': 'A', 'b': 'B'}], [5.5, True])], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]], [[1, 'Lion', ['A', 'B']]])], [(['G', 7, 'H', 8, 'I', 9],)], [([[3, 'Elephant', ['E', 'F']], [4, 'k', ['G', 'H']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]])], [(['a', 'b', 'c'], ['d', 'e', 'f'], ['j', 'k', 'l'], ['m', 'n', 'o'], ['p', 'q', 'r'], ['s', 't', 'u'], ['v', 'w', 'x'], ['y', 'z'])], [([1, 4], ['a', 'b', 'c'], {}, {}, {}, {})], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[0, 1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]])], [(['A', 1, 'B', 2, 'C', 3], ['D', 4, 'E', 5, 'F', 6], ['G', 7, 'H', 8, 'I', 9], ['A', 1, 'B', 2, 'C', 3], ['A', 1, 'B', 2, 'C', 3])], [([2, 'Nikhil'], [3, 'Deepanshu'], [3, 'Deepanshu'])], [([1, 2], {'3': 'A', '4': 'B', '2': ''}, [5, 6, 7], {'3': 'A', '4': 'B', '2': ''}, ['z', 'x', 'y'], {'3': 'A', '4': 'B', '2': ''})], [([3, 'Deepanshu'], [3, 'Deepanshu', 3], [3, 'Deepanshu'])], [(['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'ii'], ['j', 'k', 'l'], ['m', 'n', 'o'], ['p', 'q', 'r'], ['s', 't', 'u'], ['v', 'w', 'x'])], [([{'7': [8, 'D'], '9': 'E'}, [10, 'F']], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']])], [([1, 3], ['a', 'b', 'c'], {'x': 10, 'y': 20}, [[1, 2], [3, 4], [5, 6]], {'x': 10, 'y': 20}, ['a', 'b', 'c'])], [([[1, 'Lion'], [2, 'Tiger']],)], [([1, 2], {'3': 'H', '4': 'B', '2': ''}, [5, 6, 7], {'3': 'H', '4': 'B', '2': ''}, ['z', 'x', 'y'], {'3': 'H', '4': 'B', '2': ''}, {'3': 'H', '4': 'B', '2': ''})], [(['Apple', 2], [[2, 3, 4], {'a': 'A', 'b': 'B'}], [5.5, True])], [([1, 2], {'3': 'A', '4': 'B', '2': ''}, [5, 6, 7], {'3': 'A', '4': 'B', '2': ''}, {'3': 'A', '4': 'B', '2': ''}, {'3': 'A', '4': 'B', '2': ''}, {'3': 'A', '4': 'B', '2': ''})], [([['apple', 'banana'], ['cat', 'dog'], ['cat', 'dog']], [1, 2, 3], [[1, 2, 3], [4, 5, 6]], {'x': 1, 'y': 2, 'z': 3})], [([['d', 'e', 'I'], ['g', 'h', 'i']], [['d', 'e', 'f'], ['g', 'h', 'i']])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [3, 'Elephant']], [[1, 'Lion'], [2, 'Tiger'], [1, 'Lion', 1], [3, 'Elephant'], [3, 'Elephant']])], [([['d', 'e', 'f'], ['g', 'h', 'i'], ['d', 'e', 'f']], [['d', 'e', 'I', 'I'], ['g', 'h', 'i']], [['g', 'h', 'i']])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]])], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]], [[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]])], [([{'7': [8, 'D'], '9': 'E'}, [10, 'F']],)], [([[1, {'2': [3, 'A'], '4': 'B'}], [{'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [{'6': 'C', 'D': [7, 'E']}]], [[0, 1, {'2': [3, 'A'], '4': 'B'}], [{'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1], [1, {'2': [3, 'A'], '4': 'B'}], [{'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]])], [([True, True], [True, False], ['A', 'B', 'C'])], [([1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]], [[10, 'F']], [[10, 'F']])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]])], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]], [[1, 'Lion', ['A', 'B']]], [[1, 'Lion', ['A', 'B']]])], [([1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']], [1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]])], [([[1, 'Lion', ['A', 'B']], [2, 'Tiger', ['C', 'D']]], [[1, 'Lion', ['A', 'B']]], [[3, 'Elephant', ['E', 'F']], [4, 'Giraffe', ['G', 'H']]])], [([1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']], [5, [6, 'C']]], [1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']], [5, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']])], [([1, 'A'], [2, 'B'], [3, 'C'], [2, 'B'])], [([True, True], [True, False], ['A', 'B', 'C'], [True, False])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}], [11, {'12': 'I', 'J': [13, 'K']}]])], [([1, {'2': [3, 'A'], '4': 'B'}, [5, 2, [6, 'C']]], [1, {'2': [3, 'A'], '4': 'B'}, [5, 2, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']], [1, {'2': [3, 'A'], '4': 'B'}, [5, 2, [6, 'C']]], [1, {'2': [3, 'A'], '4': 'B'}, [5, 2, [6, 'C']]])], [([1, 2, 3], ['a', 'b', 'c'], {'x': 10, 'y': 20}, [[1, 2], [3, 4], [5, 6], [3, 4]])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']],)], [([['apple', 'banana'], ['cat', 'dog']], [[1, 2, 3], [4, 5, 6]], {'x': 1, 'y': 2, 'z': 3})], [([-73, 5, False, 1, -73, -82, 122, 33, 13], [])], [([1, 3], ['a', 'b', 'c'], {'y': 20}, [[1, 2], [3, 4], [5, 6]], {'y': 20}, ['a', 'b', 'c'])], [([1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']], {'2': [3, 'A'], '4': 'B'}], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']], [1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']], {'2': [3, 'A'], '4': 'B'}])], [([1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F'], {'7': [8, 'D'], '9': 'E'}], [{'7': [8, 'D'], '9': 'E'}, [10, 'F'], {'7': [8, 'D'], '9': 'E'}], [1, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]])], [({'A': {'B': {'C': 'D'}, '': {'C': 'D'}, 't': {'C': 'D'}}, 'dog': {'B': {'C': 'D'}, '': {'C': 'D'}, 't': {'C': 'D'}}},)], [(True, True, True, True, True, False, True, False)], [(['a', 'b', 'c'], ['d', 'e', 'f'], ['j', 'l'], ['m', 'n', 'o'], ['p', 'q', 'r'], ['s', 't', 'u'], ['v', 'w', 'x'], ['m', 'n', 'o'])], [([[1, 'Lion'], [2, 'Tiger'], [1, 6, 'Lion'], [3, 'Elephant'], [3, 'Elephant']],)], [({'4': 'B', '2': ''}, [1, 2], {'4': 'B', '2': ''}, [5, 6, 7], {'4': 'B', '2': ''}, {'4': 'B', '2': ''}, {'4': 'B', '2': ''}, {'4': 'B', '2': ''})], [([1, {'2': [3, 'A'], '4': 'B', '20': 'I'}, [5, [6, 'C']], {'2': [3, 'A'], '4': 'B', '20': 'I'}], [{'7': [8, 'D'], '9': 'E'}], [1, {'2': [3, 'A'], '4': 'B', '20': 'I'}, [5, [6, 'C']], {'2': [3, 'A'], '4': 'B', '20': 'I'}], [{'7': [8, 'D'], '9': 'E'}], [1, {'2': [3, 'A'], '4': 'B', '20': 'I'}, [5, [6, 'C']], {'2': [3, 'A'], '4': 'B', '20': 'I'}], [{'7': [8, 'D'], '9': 'E'}])], [([1, 2, 3], ['a', 'b', 'c'], {'x': 10, 'y': 20}, [[1, 2], [3, 4], [5, 6], [3, 4]], [1, 2, 3])], [([['d', 'e', 'f'], ['g', 'h', 'i'], ['d', 'e', 'f']], [['d', 'e', 'I'], ['g', 'h', 'i']], [['d', 'e', 'f'], ['g', 'h', 'i']], [['d', 'e', 'f'], ['g', 'h', 'i'], ['d', 'e', 'f']])], [([1, {'2': [3, 'A', 3], '4': 'B', '3': [3, 'A', 3]}, [5, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']])], [({'x': 1, 'y': 1, 'z': 3}, [['apple', 'banana'], ['cat', 'dog'], ['cat', 'dog']], [1, 2, 3], [[1, 2, 3], [4, 5, 6]], {'x': 1, 'y': 1, 'z': 3})], [([[1, 'Lion'], [2]], [[3, 'Fox'], [4, 'Wolf']])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[11, {'12': [13], 'J': [13]}], {'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': [13], 'J': [13]}]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]])], [(['A', 1, 'B', 2, 3], ['D', 4, 'E', 5, 'F', 6], ['G', 7, 'H', 8, 'I', 9])], [([1, 1, 3], ['a', 'b', 'c'], [1, 1, 3], {'y': 20}, [[1, 2], [3, 4], [5, 6]], {'y': 20}, ['a', 'b', 'c', 'c'], ['a', 'b', 'c'])], [([[]], [], [[]])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [3, 'applelephant', 'Elephant'], [2, 'Tiger']], [[1, 'Lion'], [2, 'Tiger'], [2, 'Tiger']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant']], [[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [2, 'Tiger']])], [([[1, 'Lion'], [2, 'Tiger'], [3, 'Elephant'], [3, 'Elephant']], [[1, 'Lion'], [2, 'Tiger'], [1, 'Lion', 1], [3, 'Elephant'], [3, 'Elephant']], [[1, 'Lion'], [2, 'Tiger'], [1, 'Lion', 1], [3, 'Elephant'], [3, 'Elephant']])], [({'x': 1, 'y': 1, 'z': 4}, [['apple', 'banana'], ['cat', 'dog'], ['cat', 'dog']], {'x': 1, 'y': 1, 'z': 4}, [1, 2, 3], [[1, 2, 3], [4, 5, 6]], {'x': 1, 'y': 1, 'z': 4})], [([[1, 'Lion'], [2]], [[3, 'Fox'], [4, 'Wolf']], [[3, 'Fox'], [4, 'Wolf']])], [([[2, 3, 4], {'a': 'A', 'b': 'B'}],)], [([1, {'2': [3, 'A'], '4': 'B'}], [1, {'2': [3, 'A'], '4': 'B'}], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']])], [([[1, 2, 3], [7, 8, 9, 9], [4, 5, 6], [7, 8, 9, 9]], {'A': {'B': {'C': 'D', 'd': 'l'}, '': {'C': 'D', 'd': 'l'}}}, [[1, 2, 3], [7, 8, 9, 9], [4, 5, 6], [7, 8, 9, 9]])], [([[False, 5, {'6': 'C', 'D': [7, 'E']}], [1, {'2': [3, 'A'], '4': 'B'}], [False, 5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}], [False, 5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [9, 'F'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}], [11, {'12': 'I', 'J': [13, 'K']}]])], [([8, {'2': [3, 'A'], '4': 'B'}, [5, [6, 'C']]], [{'7': [8, 'D'], '9': 'E'}, [10, 'F']])], [({'3': 'A', '4': 'B'}, [5, 6, 7], ['z', 'x', 'y'], {'3': 'A', '4': 'B'})], [([{'a': 'A', 'b': 'B'}],)], [(['a', 'b', 'c'], {'x': 10, 'y': 20}, [[1, 2], [3, 4], [5, 6], [3, 4]], [1, 2, 3])], [({'x': 1, 'y': 1, 'z': 3}, [['apple', 'banana'], ['cat', 'dog'], ['cat', 'dog']], [1, 2, 3], [[1, 2, 3], [4, 5, 6]], {'x': 1, 'y': 1, 'z': 3}, [['apple', 'banana'], ['cat', 'dog'], ['cat', 'dog']])], [([True, True],)], [([{'8': [2, 'H'], 'G': [10, 'H']}, {'8': [2, 'H'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [{'8': [2, 'H'], 'G': [10, 'H']}, [11, {'12': 'I', 'J': [13, 'K']}]], [[1, {'2': [3, 'A'], '4': 'B'}, 1, 1], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]])], [([{'a': 'A', 'b': 'B'}, {'a': 'A', 'b': 'B'}],)], [([{'a': 'AA', 'b': 'B'}, [2, 3, 4], {'a': 'AA', 'b': 'B'}], ['Apple', 1], [[2, 3, 4], {'a': 'AA', 'b': 'B'}], [5.5, True], ['Apple', 1])], [([[1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]], [[{'2': [3, 'A'], '4': 'B'}], [1, {'2': [3, 'A'], '4': 'B'}], [5, {'6': 'C', 'D': [7, 'E']}]])]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+
+def tuple_size(t):
+    """
+    >>> tuple_size(("A", 1, "B", 2, "C", 3) )
+    48
+    """
+    return sys.getsizeof(t)
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    """
+    Returns the size in bytes of the given tuple.
+    """
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def tuple_size(test_tup):
+    import sys
+
+    return sys.getsizeof(test_tup)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+import sys
+
+def tuple_size(tup):
+    """
+    Finds the size in bytes of the given tuple.
+    
+    Args:
+        tup (tuple): The tuple to find the size of.
+    
+    Returns:
+        int: The size of the tuple in bytes.
+    """
+    return sys.getsizeof(tup)</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to find the size in bytes of a given tuple, wrapped in a Python markdown block:
+
+```python
+import sys
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(tup):
+    """
+    This function returns the size in bytes of the given tuple.
+    """
+    return sys.getsizeof(tup)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+```
+
+The `sys.getsizeof()` function returns the size of an object in bytes. We can use this function to find the size of the tuple in bytes. We can pass the tuple as an argument to this function and it will return the size of the tuple in bytes. The `assert` statement is used to check if the function returns the correct size of the tuple. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+print("Test passed!")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+def tuple_size(tup):
+    return sum(sys.getsizeof(i) for i in tup)
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+# Test case
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python code to solve the given problem:
+
+```python
+import sys
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+print("All tests passed.")
+```
+
+This code defines a function `tuple_size` that takes a tuple as an argument and returns its size in bytes using the `sys.getsizeof()` function. The `assert` statement is used to verify that the function returns the correct result. If the function is correct, the program will print "All tests passed." If not, it will raise an AssertionError.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size([1, 2, 3, 4, 5]) == sys.getsizeof([1, 2, 3, 4, 5])
+"""
+
+def list_size(lst):
+    return sys.getsizeof(lst)
+
+assert list_size([1, 2, 3, 4, 5]) == sys.getsizeof([1, 2, 3, 4, 5])
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size({1, 2, 3, 4, 5}) == sys.getsizeof({1, 2, 3, 4, 5})
+"""
+
+def set_size(s):
+    return sys.getsizeof(s)
+
+assert set_size({1, 2, 3, 4, 5}) == sys.getsizeof({1, 2, 3, 4, 5})
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size({1: "A", 2: "B", 3: "C"}) == sys.getsizeof({1: "A", 2: "B", 3: "C"})
+"""
+
+def dict_size(d):
+    return sys.getsizeof(d)
+
+assert dict_size({1: "A", 2: "B", 3: "C"}) == sys.getsizeof({1: "A", 2: "B", 3: "C"})
+
+"""
+Write a function to find the size in bytes of the given string.
+assert str_size("A string") == sys.getsizeof("A string")
+"""
+
+def str_size(s):
+    return sys.getsizeof(s)
+
+assert str_size("A string") == sys.getsizeof("A string")
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(input_tuple):
+    """
+    Write a function to find the size in bytes of the given tuple.
+    """
+    return sys.getsizeof(input_tuple)
+
+# Test the function
+def test_tuple_size():
+    assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+    print("All tests passed.")
+
+test_tuple_size()</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+def tuple_size(t):
+    """
+    Write a function to find the size in bytes of the given tuple.
+    assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+    """
+    return sys.getsizeof(t)
+
+
+def test_tuple_size():
+    assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+    assert tuple_size(("A", 1, "B", 2, "C", 3, "D", 4, "E", 5, "F", 6, "G", 7, "H", 8, "I", 9, "J", 10, "K", 11, "L", 12, "M", 13, "N", 14, "O", 15, "P", 16, "Q", 17, "R", 18, "S", 19, "T", 20, "U", 21, "V", 22, "W", 23, "X", 24, "Y", 25, "Z", 26) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3, "D", 4, "E", 5, "F", 6, "G", 7, "H", 8, "I", 9, "J", 10, "K", 11, "L", 12, "M", 13, "N", 14, "O", 15, "P", 16, "Q", 17, "R", 18, "S", 19, "T", 20, "U", 21, "V", 22, "W", 23, "X", 24, "Y", 25, "Z", 2</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+import sys
+
+def tuple_size(t):
+    """
+    Write a function to find the size in bytes of the given tuple.
+    """
+    return sys.getsizeof(t)
+
+# Test the function
+print(tuple_size(("A", 1, "B", 2, "C", 3)))
+```
+
+This function uses the `sys.getsizeof()` function to get the size of the given tuple in bytes. The `sys.getsizeof()` function returns the size of an object in bytes. It does not count the memory that would be used by the object if it were stored on disk.
+
+Please note that the size of a tuple can vary depending on the Python interpreter and the specifics of the system it's running on.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+def tuple_size(tuple):
+    return sys.getsizeof(tuple)
+
+print(tuple_size(("A", 1, "B", 2, "C", 3))) # 16
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D"))) # 24
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E"))) # 28
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F"))) # 32
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G"))) # 36
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H"))) # 40
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H", "I"))) # 44
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H", "I", "J"))) # 48
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H", "I", "J", "K"))) # 52
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H", "I", "J", "K", "L"))) # 56
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"))) # 60
+print(tuple_size(("A", 1, "B", 2, "C", 3, "D", "E", "F", "G", "H", "I</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(tuple):
+  """
+  Write a function to find the size in bytes of the given tuple.
+  assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+  """
+  return sys.getsizeof(tuple)
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+import sys
+def tuple_size(t):
+    """
+    Returns the size in bytes of the given tuple.
+    """
+    return sys.sizeof(tuple) + sum(sys.sizeof(i) for i in t)
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+```
+
+The `tuple_size` function takes a tuple `t` as input and returns the size of the tuple in bytes using the `sys.getsizeof` function. The `assert` statement checks if the size of the tuple returned by the function is equal to the size of the tuple passed as input. If they are equal, the assertion passes.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+
+def tuple_size(tpl):
+    return sys.getsizeof(tpl)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the size in bytes of the given tuple:
+
+```python
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+```
+
+This function uses the `sys.getsizeof()` function to get the size of the tuple in bytes. The `assert` statement is used to test the function. If the function is correct, it will not raise an `AssertionError`.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size([1, 2, 3, 4, 5]) == sys.getsizeof([1, 2, 3, 4, 5])
+"""
+
+def list_size(lst):
+    return sys.getsizeof(lst)
+
+assert list_size([1, 2, 3, 4, 5]) == sys.getsizeof([1, 2, 3, 4, 5])
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+"""
+
+def dict_size(dct):
+    return sys.getsizeof(dct)
+
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size({1, 2, 3, 4, 5}) == sys.getsizeof({1, 2, 3, 4, 5})
+"""
+
+def set_size(s):
+    return sys.getsizeof(s)
+
+assert set_size({1, 2, 3, 4, 5}) == sys.getsizeof({1, 2, 3, 4, 5})
+
+"""
+Write a function to find the size in bytes of the given string.
+assert string_size("Hello World") == sys.getsizeof("Hello World")
+"""
+
+def string_size(s):
+    return sys.getsizeof(s)
+
+assert string_size("Hello World") == sys.getsizeof("Hello World")
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+def tuple_size(tuple_):
+    return sys.getsizeof(tuple_)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size(["A", 1, "B", 2, "C", 3]) == sys.getsizeof(["A", 1, "B", 2, "C", 3])
+"""
+
+def list_size(list_):
+    return sys.getsizeof(list_)
+
+assert list_size(["A", 1, "B", 2, "C", 3]) == sys.getsizeof(["A", 1, "B", 2, "C", 3])
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size({"A", 1, "B", 2, "C", 3}) == sys.getsizeof({"A", 1, "B", 2, "C", 3})
+"""
+
+def set_size(set_):
+    return sys.getsizeof(set_)
+
+assert set_size({"A", 1, "B", 2, "C", 3}) == sys.getsizeof({"A", 1, "B", 2, "C", 3})
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+"""
+
+def dict_size(dict_):
+    return sys.getsizeof(dict_)
+
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+
+"""
+Write a function to find the size in bytes of the given string.
+assert str_size("A") == sys.getsizeof("A")
+"""
+
+def str_size(string_):
+    return sys.getsizeof(string_</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(tup: tuple) -> int:
+    return sys.getsizeof(tup)</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+def tuple_size(tuple):
+    return sys.getsizeof(tuple)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  import sys
+
+def tuple_size(tup):
+    # Calculate the size of the tuple by summing the sizes of its elements
+    size = 0
+    for item in tup:
+        size += sys.getsizeof(item)
+    return size
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    """
+    Calculate the size in bytes of the given tuple.
+
+    :param t: Input tuple
+    :return: Size in bytes of the input tuple
+    """
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size( [1, 2, 3, 4, 5] ) == sys.getsizeof( [1, 2, 3, 4, 5] )
+"""
+
+def list_size(l):
+    return sys.getsizeof(l)
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size( {"A": 1, "B": 2, "C": 3} ) == sys.getsizeof( {"A": 1, "B": 2, "C": 3} )
+"""
+
+def dict_size(d):
+    return sys.getsizeof(d)
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size( {"A", "B", "C"} ) == sys.getsizeof( {"A", "B", "C"} )
+"""
+
+def set_size(s):
+    return sys.getsizeof(s)
+
+"""
+Write a function to find the size in bytes of the given string.
+assert string_size( "Hello World" ) == sys.getsizeof( "Hello World" )
+"""
+
+def string_size(s):
+    return sys.getsizeof(s)
+
+"""
+Write a function to find the size in bytes of the given integer.
+assert integer_size( 1 ) == sys.getsizeof( 1 )
+"""
+
+def integer_size(i):
+    return sys.getsizeof(i)
+
+"""
+Write a function to find the size in bytes of the given float.
+assert float_size( 1.0 ) == sys.getsizeof( 1.0 )
+"""
+
+def float_size(f):
+    return sys.getsizeof(f)
+
+"""
+Write a function to find the size in bytes of the given boolean.
+assert boolean_size( True ) == sys.getsizeof( True )
+"""
+
+def boolean_size(b):
+    return sys.getsizeof(b)
+
+"""
+Write a function to find the size in bytes of the given None.
+assert none_size( None ) == sys.getsizeof( None )
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+"""
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(t):</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def tuple_size(tuple1):
+    total_size = 0
+    for item in tuple1:
+        # Calculate the size of each item in the tuple
+        item_size = sys.getsizeof(item)
+        # Add the size of each item to the total size
+        total_size += item_size
+    # Return the total size in bytes
+    return total_size</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+# Test case
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script to find the size in bytes of a given tuple:
+
+```python
+import sys
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+```
+
+This function takes a tuple as an argument and returns the size of the tuple in bytes using the `sys.getsizeof()` function. The `sys.getsizeof()` function returns the size of an object in bytes. We can use this function to find the size of the tuple in bytes. The `assert` statement is used to test the function with the given example. If the function returns the correct size, the test will pass. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+Answer: import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def tuple_size(tuple):
+    total_size = 0
+    for element in tuple:
+        total_size += sys.getsizeof(element)
+    return total_size
+
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+def tuple_size(tuple_):
+    return sys.getsizeof(tuple_)
+
+print(tuple_size(("A", 1, "B", 2, "C", 3)))
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size(["A", 1, "B", 2, "C", 3]) == sys.getsizeof(["A", 1, "B", 2, "C", 3])
+"""
+
+def list_size(list_):
+    return sys.getsizeof(list_)
+
+print(list_size(["A", 1, "B", 2, "C", 3]))
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size({"A", 1, "B", 2, "C", 3}) == sys.getsizeof({"A", 1, "B", 2, "C", 3})
+"""
+
+def set_size(set_):
+    return sys.getsizeof(set_)
+
+print(set_size({"A", 1, "B", 2, "C", 3}))
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+"""
+
+def dict_size(dict_):
+    return sys.getsizeof(dict_)
+
+print(dict_size({"A": 1, "B": 2, "C": 3}))
+
+"""
+Write a function to find the size in bytes of the given string.
+assert string_size("A") == sys.getsizeof("A")
+"""
+
+def string_size(string_):
+    return sys.getsizeof(string_)
+
+print(string_size("A"))
+
+"""
+Write a function to find the size in bytes of the given integer.
+assert integer_size(1) == sys.getsizeof(1)
+"""
+
+def integer_size(integer_):
+    return sys.getsizeof(integer_)
+
+print(integer_</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+def tuple_size(tuple_):
+    return sys.getsizeof(tuple_)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+print("Success")
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size(["A", 1, "B", 2, "C", 3]) == sys.getsizeof(["A", 1, "B", 2, "C", 3])
+"""
+
+def list_size(list_):
+    return sys.getsizeof(list_)
+
+assert list_size(["A", 1, "B", 2, "C", 3]) == sys.getsizeof(["A", 1, "B", 2, "C", 3])
+print("Success")
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size({"A", 1, "B", 2, "C", 3}) == sys.getsizeof({"A", 1, "B", 2, "C", 3})
+"""
+
+def set_size(set_):
+    return sys.getsizeof(set_)
+
+assert set_size({"A", 1, "B", 2, "C", 3}) == sys.getsizeof({"A", 1, "B", 2, "C", 3})
+print("Success")
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+"""
+
+def dict_size(dict_):
+    return sys.getsizeof(dict_)
+
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+print("Success")
+
+"""
+Write a function to find the size in bytes of the given string.
+assert string_size("A") == sys.getsizeof("A")
+"""
+</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+import sys
+
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+import sys
+
+def tuple_size(tuple_input):
+    # Calculate the size of each element in the tuple
+    size = 0
+    for element in tuple_input:
+        size += sys.getsizeof(element)
+
+    # Add the size of the tuple itself
+    size += sys.getsizeof(())
+
+    return size
+
+# Test the function
+assert tuple_size(("A", 1, "B", 2, "C", 3)) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+def tuple_size(tuple_):
+    return sys.getsizeof(tuple_)
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+import sys
+
+def tuple_size(t):
+    """
+    Returns the size in bytes of the given tuple.
+    """
+    return sys.getsizeof(t)
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+import sys
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+def tuple_size(tup):
+    return sys.getsizeof(tup)
+
+print(tuple_size(("A", 1, "B", 2, "C", 3)))
+
+"""
+Write a function to find the size in bytes of the given list.
+assert list_size([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == sys.getsizeof([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+"""
+
+def list_size(lst):
+    return sys.getsizeof(lst)
+
+print(list_size([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+
+"""
+Write a function to find the size in bytes of the given dictionary.
+assert dict_size({"A": 1, "B": 2, "C": 3}) == sys.getsizeof({"A": 1, "B": 2, "C": 3})
+"""
+
+def dict_size(dct):
+    return sys.getsizeof(dct)
+
+print(dict_size({"A": 1, "B": 2, "C": 3}))
+
+"""
+Write a function to find the size in bytes of the given set.
+assert set_size({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == sys.getsizeof({1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+"""
+
+def set_size(st):
+    return sys.getsizeof(st)
+
+print(set_size({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
+
+"""
+Write a function to find the size in bytes of the given string.
+assert string_size("Hello World") == sys.getsizeof("Hello World")
+"""
+
+def string_size(str):
+    return sys.getsizeof(str)
+
+print(string_size("Hello</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import sys
+
+def tuple_size(t):
+    return sys.getsizeof(t)
+
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the size in bytes of the given tuple.
+assert tuple_size(("A", 1, "B", 2, "C", 3) ) == sys.getsizeof(("A", 1, "B", 2, "C", 3))
+"""
+
+
+import sys
+
+def tuple_size(tuple):
+    return sys.getsizeof(tuple)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+import sys
+
+def tuple_size(t):
+    size = sys.getsizeof(t)
+    for item in t:
+        size += sys.getsizeof(item)
+    return size
+
+# Test the function
+print(tuple_size(("A", 1, "B", 2, "C", 3)))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

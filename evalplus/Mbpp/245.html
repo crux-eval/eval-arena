@@ -1,0 +1,1841 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/245 </h1>
+<pre><code> """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def max_sum(arr): 
+	MSIBS = arr[:] 
+	for i in range(len(arr)): 
+		for j in range(0, i): 
+			if arr[i] > arr[j] and MSIBS[i] < MSIBS[j] + arr[i]: 
+				MSIBS[i] = MSIBS[j] + arr[i] 
+	MSDBS = arr[:] 
+	for i in range(1, len(arr) + 1): 
+		for j in range(1, i): 
+			if arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]: 
+				MSDBS[-i] = MSDBS[-j] + arr[-i] 
+	max_sum = float("-Inf") 
+	for i, j, k in zip(MSIBS, MSDBS, arr): 
+		max_sum = max(max_sum, i + j - k) 
+	return max_sum
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 15, 51, 45, 33, 100, 12, 18, 9]], [[80, 60, 30, 40, 20, 10]], [[2, 3, 14, 16, 21, 23, 29, 30]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]], [[10, 9, 8, 7, 6, 5, 4, 4, 3, 2, 1]], [[10, 9, 8, 7, 6, 5, 4, 4, 3, 3, 1, 6]], [[10, 9, 8, 7, 6, 4, 3, 2, 1]], [[10, 8, 7, 6, 5, 4, 4, 3, 3, 1, 6]], [[10, 9, 8, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9]], [[10, 9, 8, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 10]], [[9, 8, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 10]], [[10, 9, 8, 7, 6, 5, 3, 3, 2, 1]], [[1, 9, 8, 7, 7, 5, 4, 4, 3, 3, 1, 6]], [[1, 9, 8, 7, 7, 5, 4, 4, 3, 3, 1, 5, 8]], [[10, 9, 9, 7, 6, 5, 3, 3, 2, 1, 9]], [[6, 9, 6, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9]], [[10, 7, 10, 5, 4, 4, 3, 1, 6]], [[0, 10, 8, 7, 6, 5, 4, 4, 3, 3, 1, 5, 6]], [[10, 8, 8, 7, 6, 5, 3, 3, 2, 10]], [[10, 4, 9, 8, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9]], [[10, 9, 9, 7, 5, 3, 3, 2, 1, 9]], [[10, 4, 9, 8, 7, 6, 5, 9, 4, 4, 3, 6, 9]], [[6, 9, 6, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9, 9, 9]], [[10, 9, 9, 7, 5, 3, 3, 2, 9]], [[0, 10, 7, 7, 6, 5, 4, 4, 3, 3, 1, 5, 6]], [[6, 9, 6, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9, 9]], [[10, 9, 8, 7, 4, 5, 4, 4, 3, 3, 1, 6]], [[1, 5, 9, 8, 7, 7, 5, 4, 0, 3, 3, 1, 6]], [[10, 9, 8, 7, 4, 5, 4, 4, 3, 3, 9, 1, 6]], [[10, 9, 8, 7, 6, 5, 4, 4, 5, 3, 2, 1]], [[10, 9, 8, 7, 4, 4, 3, 2, 1]], [[6, 9, 6, 2, 7, 0, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9]], [[0, 10, 7, 7, 6, 4, 3, 3, 1, 5, 6, 6]], [[6, 9, 6, 2, 7, 0, 6, 5, 9, 4, 4, 3, 3, 1, 6, 6]], [[6, 9, 6, 2, 7, 0, 6, 5, 9, 4, 8, 2, 4, 3, 3, 1, 6, 6, 4]], [[10, 8, 7, 4, 4, 3, 2, 1, 7]], [[10, 9, 9, 7, 5, 3, 3, 2, 0, 9]], [[7, 10, 5, 4, 4, 3, 1, 6]], [[10, 8, 7, 6, 5, 4, 4, 3, 1, 6, 6]], [[10, 9, 9, 7, 6, 5, 4, 4, 3, 2, 1]], [[0, 10, 7, 6, 4, 3, 3, 6, 1, 5, 6, 6]], [[10, 8, 7, 6, 5, 4, 4, 3, 1, 6]], [[10, 9, 8, 9, 7, 5, 3, 3, 2, 1, 9]], [[10, 10, 5, 4, 4, 3, 1, 6, 7]], [[10, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1]], [[1, 5, 9, 9, 7, 7, 5, 4, 0, 3, 3, 1, 6]], [[10, 9, 8, 7, 6, 5, 4, 4, 5, 3, 2, 1, 2]], [[10, 6, 9, 8, 7, 6, 5, 4, 5, 3, 2]], [[6, 9, 6, 2, 7, 0, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9, 6]], [[9, 9, 8, 7, 4, 5, 4, 4, 7, 3, 1, 6]], [[10, 9, 8, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9, 9]], [[10, 10, 9, 8, 7, 6, 4, 3, 2, 2]], [[9, 9, 7, 5, 3, 3, 2, 1]], [[10, 9, 8, 7, 6, 5, 4, 4, 5, 3, 2, 1, 2, 5]], [[10, 9, 7, 6, 5, 9, 9, 4, 4, 3, 3, 1, 6, 10]], [[10, 9, 9, 7, 5, 4, 4, 3, 2, 1]], [[10, 9, 9, 7, 9, 5, 3, 3, 2, 1, 9]], [[10, 8, 0, 5, 4, 4, 3, 1, 6, 7]], [[10, 9, 7, 9, 7, 6, 5, 3, 2, 1, 9]], [[1, 9, 8, 7, 7, 5, 4, 3, 3, 1, 6]], [[10, 9, 9, 7, 7, 5, 3, 3, 2, 1, 9, 9]], [[11, 9, 8, 7, 0, 5, 3, 1]], [[True, False]], [[10, 4, 9, 8, 7, 6, 5, 4, 4, 3, 3, 1, 6, 9]], [[10, 7, 9, 9, 7, 5, 3, 2, 9]], [[1, 9, 8, 7, 4, 5, 4, 4, 3, 3, 9, 1, 6]], [[0, 10, 7, 6, 4, 3, 3, 6, 5, 6, 6, 3]], [[10, 9, 9, 7, 6, 5, 4, 9, 3, 2, 1, 9]], [[9, 8, 7, 4, 4, 3, 2, 1]], [[10, 8, 0, 5, 4, 4, 1, 6, 7]], [[10, 1, 8, 7, 6, 5, 4, 3, 11, 1, 11]], [[10, 9, 7, 10, 5, 9, 9, 4, 4, 3, 3, 1, 6, 10]], [[10, 7, 7, 6, 5, 4, 4, 3, 3, 1, 5, 6]], [[True, True, False]], [[10, 8, 8, 7, 4, 6, 5, 3, 3, 2, 10]], [[1, 5, 9, 8, 7, 7, 5, 4, 0, 3, 3, 3, 1, 6]], [[6, 9, 6, 7, 5, 9, 4, 4, 3, 8, 3, 1, 6, 9]], [[10, 9, 7, 5, 4, 4, 3, 2, 1]], [[6, 9, 6, 7, 6, 5, 9, 4, 4, 3, 3, 1, 6, 9, 6, 9]], [[True, True, True, False]], [[10, 9, 8, 7, 4, 5, 4, 4, 3, 0, 7, 1, 6]], [[7, 9, 9, 7, 5, 3, 2, 9]], [[2, 10, 8, 8, 7, 6, 5, 3, 3, 2, 10]], [[10, 4, 9, 8, 7, 5, 9, 4, 4, 3, 6, 9]], [[10, 10, 9, 8, 7, 6, 6, 4, 3, 2, 2]], [[8, 9, 8, 7, 4, 3, 2, 1]], [[10, 9, 7, 5, 4, 4, 3, 2, 2, 4]], [[11, 9, 9, 7, 5, 3, 3, 2, 1, 9]], [[10, 4, 9, 8, 7, 6, 5, 4, 4, 3, 3, 1, 5, 9]], [[10, 9, 7, 5, 3, 4, 3, 2, 4]], [[10, 9, 8, 7, 6, 1, 5, 4, 3, 2, 1]], [[10, 9, 9, 7, 6, 5, 3, 3, 2, 1, 9, 3]], [[1, 9, 8, 7, 4, 5, 4, 4, 3, 3, 9, 1, 6, 3]], [[10, 9, 7, 10, 5, 9, 9, 9, 4, 4, 3, 3, 1, 6, 10]], [[10, 9, 8, 7, 6, 4, 3, 2, 1, 10]], [[1, 9, 8, 7, 7, 4, 4, 4, 3, 3, 1, 5, 8]], [[6, 9, 6, 7, 0, 6, 5, 9, 4, 4, 3, 1, 6, 6]], [[10, 9, 8, 7, 6, 4, 0, 3, 2, 1]], [[1, 9, 8, 4, 5, 4, 4, 3, 3, 9, 1, 6]], [[7, 9, 7, 5, 3, 2, 9]], [[1, 9, 2, 7, 4, 5, 6, 4, 4, 3, 3, 9, 1, 6]], [[1, 9, 8, 7, 4, 5, 4, 4, 3, 1, 6, 3]], [[10, 8, 0, 5, 4, 4, 1, 7]], [[10, 9, 8, 8, 9, 7, 5, 3, 3, 2, 1, 9]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+    if len(arr) == 4:
+        return max(arr[0], arr[1], arr[2], arr[3])
+    if len(arr) == 5:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4])
+    if len(arr) == 6:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5])
+    if len(arr) == 7:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6])
+    if len(arr) == 8:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7])
+    if len(arr) == 9:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8])
+    if len(arr) == 10:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9])
+    if len(arr) == 11:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10])
+    if len(arr) == 12:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10],</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_sum(arr):
+    if not arr:
+        return 0
+
+    n = len(arr)
+    increasing = [0] * n
+    decreasing = [0] * n
+
+    # Calculate the maximum sum of an increasing subsequence ending at each index
+    for i in range(n):
+        increasing[i] = arr[i]
+        for j in range(i):
+            if arr[i] > arr[j] and increasing[i] < increasing[j] + arr[i]:
+                increasing[i] = increasing[j] + arr[i]
+
+    # Calculate the maximum sum of a decreasing subsequence starting at each index
+    for i in range(n - 1, -1, -1):
+        decreasing[i] = arr[i]
+        for j in range(n - 1, i, -1):
+            if arr[i] > arr[j] and decreasing[i] < decreasing[j] + arr[i]:
+                decreasing[i] = decreasing[j] + arr[i]
+
+    # Find the maximum sum of a bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, increasing[i] + decreasing[i] - arr[i])
+
+    return max_sum
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    left_max = [0] * n
+    right_max = [0] * n
+
+    left_max[0] = arr[0]
+    for i in range(1, n):
+        left_max[i] = max(left_max[i - 1], arr[i])
+
+    right_max[n - 1] = arr[n - 1]
+    for i in range(n - 2, -1, -1):
+        right_max[i] = max(right_max[i + 1], arr[i])
+
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, left_max[i] + right_max[i])
+
+    return max_sum
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+    lis = [1] * n  # Longest Increasing Subsequence
+    lds = [1] * n  # Longest Decreasing Subsequence
+
+    # Compute the Longest Increasing Subsequence
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                lis[i] = max(lis[i], lis[j] + 1)
+
+    # Compute the Longest Decreasing Subsequence
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 1, n):
+            if arr[i] > arr[j]:
+                lds[i] = max(lds[i], lds[j] + 1)
+
+    # Find the maximum sum of a bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, lis[i] + lds[i] - 1)
+
+    return max_sum
+
+# Example usage
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+
+    # Create two arrays and store maximum sum for each element
+    # when array is reversed
+    i, j = 0, n - 1
+    max_arr_1 = [0] * n
+    max_arr_2 = [0] * n
+
+    # Initialize first array
+    max_arr_1[i] = arr[i]
+    i += 1
+
+    # Initialize second array
+    max_arr_2[j] = arr[j]
+    j -= 1
+
+    # Construct first array
+    while i < n:
+        max_arr_1[i] = max(max_arr_1[i - 1], arr[i])
+        i += 1
+
+    # Construct second array
+    while j >= 0:
+        max_arr_2[j] = max(max_arr_2[j + 1], arr[j])
+        j -= 1
+
+    # Find maximum sum of bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, max_arr_1[i] + max_arr_2[i])
+
+    return max_sum
+
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+def max_sum(arr):
+    if not arr:
+        return 0
+
+    n = len(arr)
+    left_sum = [0] * n
+    right_sum = [0] * n
+
+    left_sum[0] = arr[0]
+    right_sum[n - 1] = arr[n - 1]
+
+    for i in range(1, n):
+        left_sum[i] = max(arr[i], left_sum[i - 1] + arr[i])
+
+    for i in range(n - 2, -1, -1):
+        right_sum[i] = max(arr[i], right_sum[i + 1] + arr[i])
+
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, left_sum[i] + right_sum[i] - arr[i])
+
+    return max_sum
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to the problem, wrapped in a markdown block:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+    increasing_sum = [0] * n
+    decreasing_sum = [0] * n
+
+    # Calculate the maximum sum of increasing subsequence
+    for i in range(n):
+        max_sum = 0
+        for j in range(i):
+            if arr[i] > arr[j]:
+                max_sum = max(max_sum, increasing_sum[j])
+        increasing_sum[i] = max_sum + arr[i]
+
+    # Calculate the maximum sum of decreasing subsequence
+    for i in range(n - 1, -1, -1):
+        max_sum = 0
+        for j in range(n - 1, i, -1):
+            if arr[i] > arr[j]:
+                max_sum = max(max_sum, decreasing_sum[j])
+        decreasing_sum[i] = max_sum + arr[i]
+
+    # Find the maximum sum of bitonic subsequence
+    max_bitonic_sum = 0
+    for i in range(n):
+        max_bitonic_sum = max(max_bitonic_sum, increasing_sum[i] + decreasing_sum[i] - arr[i])
+
+    return max_bitonic_sum
+
+# Test the function</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_sum_bitonic(arr):
+    if not arr:
+        return 0
+
+    # Find the maximum sum of an increasing subsequence
+    inc_subseq = [1] * len(arr)
+    for i in range(1, len(arr)):
+        for j in range(i):
+            if arr[i] > arr[j] and inc_subseq[i] < inc_subseq[j] + arr[i]:
+                inc_subseq[i] = inc_subseq[j] + arr[i]
+
+    # Find the maximum sum of a decreasing subsequence
+    dec_subseq = [1] * len(arr)
+    for i in range(len(arr) - 2, -1, -1):
+        for j in range(len(arr) - 1, i, -1):
+            if arr[i] > arr[j] and dec_subseq[i] < dec_subseq[j] + arr[i]:
+                dec_subseq[i] = dec_subseq[j] + arr[i]
+
+    # Combine the results to find the maximum sum of a bitonic subsequence
+    return max(inc_subseq + dec_subseq[1:])
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that finds the maximum sum of a bitonic subsequence for a given array:
+
+```python
+def max_sum(arr):
+    # Initialize variables to keep track of the maximum sum and the current sum
+    max_sum = 0
+    current_sum = 0
+    
+    # Initialize variables to keep track of the maximum and minimum values in the array
+    max_val = arr[0]
+    min_val = arr[0]
+    
+    # Loop through the array
+    for i in range(1, len(arr)):
+        # If the current value is greater than the maximum value, update the maximum value and add the difference to the current sum
+        if arr[i] > max_val:
+            max_val = arr[i]
+            current_sum += arr[i] - max_val
+        # If the current value is less than the minimum value, update the minimum value and subtract the difference from the current sum
+        elif arr[i] < min_val:
+            min_val = arr[i]
+            current_sum -= min_val - arr[i]
+        # If the current value is between the maximum and minimum values, add it to the current sum
+        else:
+            current_sum += arr[i] - min_val
+            
+        # Update the maximum sum if the current sum is greater
+        max_sum = max(max_sum, current_sum)
+    
+    # Return the maximum sum
+    return max_sum
+```
+
+Explanation:
+
+The function starts by initializing variables to keep track of the maximum sum and the current sum. It also initializes variables to keep track of the maximum and minimum values in the array. It then loops through the array, checking each value in the array against the maximum and minimum values. If the current value is greater than the maximum value, it updates the maximum value and adds the difference to the current sum. If the current value is less than the minimum value, it updates the minimum value and subtracts the difference from the current sum. If the current value is between the maximum and minimum values, it adds it to the current sum. Finally, it updates the maximum sum if the current sum is greater than the previous maximum sum. This algorithm works because the bitonic sequence must start with an increasing subsequence followed by a decreasing subsequence, so we can keep track of the maximum and minimum values and calculate the sum of the increasing subsequence by subtracting the minimum value from each value in the array. Once we reach the end of the increasing subsequence, we can start subtracting values from the current sum to get the maximum sum of the decreasing subsequence. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+
+    # Initialize the arrays to store the maximum sum of increasing subsequence
+    # and decreasing subsequence ending at each index
+    inc = [0] * n
+    dec = [0] * n
+
+    # Initialize the first elements of the arrays
+    inc[0] = arr[0]
+    dec[n - 1] = arr[n - 1]
+
+    # Compute the maximum sum of increasing subsequence ending at each index
+    for i in range(1, n):
+        inc[i] = max(arr[i], inc[i - 1] + arr[i])
+
+    # Compute the maximum sum of decreasing subsequence ending at each index
+    for i in range(n - 2, -1, -1):
+        dec[i] = max(arr[i], dec[i + 1] + arr[i])
+
+    # Compute the maximum sum of bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, inc[i] + dec[i] - arr[i])
+
+    return max_sum
+
+# Test the function
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    # Write your code here.
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+    
+    max_sum = 0
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            if arr[i] < arr[j]:
+                max_sum = max(max_sum, sum(arr[i:j+1]))
+    return max_sum
+
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    if not arr:
+        return 0
+
+    increasing = [arr[0]]
+    decreasing = []
+
+    for i in range(1, len(arr)):
+        if len(increasing) < 2 or arr[i] > increasing[-1]:
+            increasing.append(arr[i])
+        elif len(decreasing) < 2 or arr[i] < decreasing[-1]:
+            decreasing.append(arr[i])
+
+    max_sum = max(sum(increasing), sum(decreasing))
+    if increasing and decreasing:
+        max_sum = max(max_sum, sum(increasing[:-1]) + sum(decreasing[1:]))
+    return max_sum
+
+# Test case
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that solves the problem:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+
+    # Create two arrays to store the increaing and decreasing sums
+    inc = [0] * n
+    dec = [0] * n
+
+    # Initialize first element of inc and last element of dec
+    inc[0] = arr[0]
+    dec[n - 1] = arr[n - 1]
+
+    # Fill rest of the entries in inc[] and dec[]
+    for i in range(1, n):
+        inc[i] = max(arr[i], inc[i - 1] + arr[i])
+
+    for i in range(n - 2, -1, -1):
+        dec[i] = max(arr[i], dec[i + 1] + arr[i])
+
+    # Find the maximum sum by adding
+    # elements of inc[] and dec[]
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, inc[i] + dec[i] - arr[i])
+
+    return max_sum
+```
+
+This function works by creating two arrays, `inc` and `dec`, to store the maximum sums of increasing and decreasing subsequences respectively. It then iterates through the input array, updating the `inc` and `dec` arrays at each step. Finally, it finds the maximum sum by adding corresponding elements of `inc` and `dec` and subtracting the current element of the input array to avoid counting it twice.
+
+You can test the function with your assert statement:
+
+```python
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+```
+
+This function assumes that the input array is not empty. If the array can be empty, you should add a check at the beginning of the function to handle this case.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    else:
+        left_max = max_sum(arr[:len(arr)//2])
+        right_max = max_sum(arr[len(arr)//2:])
+        return max(left_max, right_max, left_max + right_max)
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+
+"""
+Write a function that takes an array and finds the minimum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first decreasing and then increasing.
+assert min_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 9
+"""
+
+def min_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    else:
+        left_min = min_sum(arr[:len(arr)//2])
+        right_min = min_sum(arr[len(arr)//2:])
+        return min(left_min, right_min, left_min + right_min)
+
+print(min_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+
+"""
+Write a function that takes an array and finds the maximum sum of a subsequence for the given array, where a subsequence is defined as a set of numbers that are arranged in order but not necessarily contiguous.
+assert max_sum_sub([1, 2, 3, 4, 5], 3) == 9
+"""
+
+def max_sum_sub(arr, k):
+    if len(arr) == 1:
+        return arr[0]
+    else:
+        if k == 1:
+            return max(arr[0], arr[1])
+        else:
+            left_max = max_sum_sub(arr[:k], k)
+            right_max = max_sum_sub(arr[k:], k)
+            return max(left_max, right_max, left_max + right_max)
+
+print(max_sum_sub([1, 2, 3, 4, 5],</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+
+    # Initialize arrays to store the increasing and decreasing sequences
+    inc = [0] * n
+    dec = [0] * n
+
+    # Initialize the first element of both arrays
+    inc[0] = dec[0] = arr[0]
+
+    # Compute the increasing sequence
+    for i in range(1, n):
+        if arr[i] > inc[i - 1]:
+            inc[i] = arr[i]
+        else:
+            inc[i] = inc[i - 1]
+
+    # Compute the decreasing sequence
+    for i in range(n - 2, -1, -1):
+        if arr[i] > dec[i + 1]:
+            dec[i] = arr[i]
+        else:
+            dec[i] = dec[i + 1]
+
+    # Find the maximum sum of a bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, inc[i] + dec[i] - arr[i])
+
+    return max_sum
+
+# Test the function
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if not arr:
+        return 0
+    
+    max_sum = [arr[0]]
+    
+    for i in range(1, len(arr)):
+        if arr[i] > max_sum[-1]:
+            max_sum.append(arr[i])
+        else:
+            max_sum.append(max_sum[-1])
+    
+    for i in range(len(arr)-2, -1, -1):
+        if arr[i] > max_sum[-1]:
+            max_sum[-1] = arr[i]
+    
+    return sum(max_sum)
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    """
+    :param arr:
+    :return:
+    """
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+
+    max_sum = 0
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            if arr[i] < arr[j]:
+                max_sum = max(max_sum, arr[i] + arr[j])
+
+    return max_sum
+
+
+if __name__ == '__main__':
+    assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+    assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100, 12, 18, 9, 100</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+    if n < 3:
+        return sum(arr)
+
+    # Initialize variables
+    inc = [0]*n
+    dec = [0]*n
+    max_bitonic = [0]*n
+
+    # Calculate increasing subsequence values
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:
+                inc[i] = inc[j] + arr[i]
+
+    # Calculate decreasing subsequence values
+    for i in range(n-2, -1, -1):
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:
+                dec[i] = dec[j] + arr[i]
+
+    # Calculate maximum bitonic sum
+    for i in range(n):
+        max_bitonic[i] = max(inc[i], dec[i])
+        if i > 0:
+            max_bitonic[i] = max(max_bitonic[i], max_bitonic[i-1])
+        if i < n-1:
+            max_bitonic[i] = max(max_bitonic[i], inc[i] + dec[i] - arr[i])
+
+    return max_bitonic[-1]
+
+# Test the function
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+```
+
+This function uses dynamic programming to solve the problem. It first calculates the maximum sum of an increasing subsequence ending at each index, then calculates the maximum sum of a decreasing subsequence starting at each index. The maximum sum of a bitonic subsequence is then the maximum of these two sums. The time complexity of this function is O(n^2), where n is the length of the input array.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def max_sum(arr):
+    n = len(arr)
+    dp = [0] * (n + 1)
+    dp[0] = arr[0]
+    dp[1] = max(arr[0], arr[1])
+
+    for i in range(2, n + 1):
+        dp[i] = max(dp[i - 1], dp[i - 2] + arr[i])
+
+    return dp[n]
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    max_sum = 0
+    for i in range(len(arr)):
+        max_sum += arr[i]
+        if i > 0 and arr[i] < arr[i-1]:
+            max_sum -= arr[i-1]
+    return max_sum
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7, -8])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7, -8, -9])) # 194
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18,</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(array):
+  """
+  Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+  assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+  """
+  max_sum = -float('inf')
+  for i in range(len(array)):
+    for j in range(i + 1, len(array)):
+      if array[i] < array[j]:
+        for k in range(j + 1, len(array)):
+          if array[j] > array[k]:
+            max_sum = max(max_sum, array[i] + array[j] + array[k])
+  return max_sum
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+def max_bitonic_subsequence(arr):
+    n = len(arr)
+    if n <= 1:
+        return arr[0] if arr else 0
+
+    # Find the maximum subarray sum ending with arr[i]
+    left_sum = [0] * n
+    left_sum[0] = arr[0]
+    max_ending_here = arr[0]
+    for i in range(1, n):
+        max_ending_here = max(arr[i], max_ending_here + arr[i])
+        left_sum[i] = max_ending_here
+
+    # Find the maximum subarray sum ending with arr[i] in the decreasing part
+    right_sum = [0] * n
+    right_sum[-1] = arr[-1]
+    max_ending_there = arr[-1]
+    for i in range(n-2, -1, -1):
+        max_ending_there = max(arr[i], max_ending_there + arr[i])
+        right_sum[i] = max_ending_there
+
+    # Find the maximum sum of the entire bitonic subsequence
+    return max(sum(left_sum) + sum(right_sum[-i:]) for i in range(1, n))
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    inc = [0] * n
+    dec = [0] * n
+
+    inc[0] = arr[0]
+    for i in range(1, n):
+        max_sum = 0
+        for j in range(i):
+            if arr[i] > arr[j]:
+                max_sum = max(max_sum, inc[j])
+        inc[i] = max_sum + arr[i]
+
+    dec[n - 1] = arr[n - 1]
+    for i in range(n - 2, -1, -1):
+        max_sum = 0
+        for j in range(n - 1, i, -1):
+            if arr[i] > arr[j]:
+                max_sum = max(max_sum, dec[j])
+        dec[i] = max_sum + arr[i]
+
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, inc[i] + dec[i])
+
+    return max_sum
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+    dp = [[0 for i in range(n)] for j in range(n)]
+
+    # Initialize the first row
+    for i in range(n):
+        dp[i][i] = arr[i]
+
+    # Fill the remaining rows
+    for gap in range(1, n):
+        for i in range(n-gap):
+            j = i + gap
+            if arr[i] < arr[j]:
+                dp[i][j] = max(dp[i][j-1], arr[i] + dp[i+1][j])
+            else:
+                dp[i][j] = max(dp[i+1][j], arr[j] + dp[i][j-1])
+
+    # Find the maximum sum of a bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        for j in range(i, n):
+            if dp[i][j] > max_sum:
+                max_sum = dp[i][j]
+
+    return max_sum
+```
+
+Explanation:
+
+The function `max_sum` takes an array `arr` as input and returns the maximum sum of a bitonic subsequence for the given array.
+
+We first initialize a 2D array `dp` of size `n x n` where `n` is the length of the array. The element `dp[i][j]` represents the maximum sum of a bitonic subsequence that ends at index `j` and starts at index `i`.
+
+We then fill the remaining rows of the `dp` array using a nested loop. The outer loop iterates over all possible gaps between two indices `i` and `j` such that `0 <= i < j < n`. The inner loop iterates over all possible pairs of indices `i` and `j` such that `i+gap <= j < n`.
+
+For each pair of indices `i` and `j`, we check if the element at index `i` is less than the element at index `j`. If it is, then we can extend the bitonic subsequence that ends at index `j-1` and starts at index `i` by adding the element at index `i` to the maximum sum of a bitonic subsequence that ends at index `j-1` and starts at index `i+1`. We take the maximum of these two options.
+
+If the element at index `i` is greater than the element at index `j`, then we can extend the bitonic subsequence that ends at index `j` and starts at index `i+1` by adding the element at index `j` to the maximum sum of a bitonic subsequence that ends at index `j` and starts at index `i`. We take the maximum of these two options.
+
+Finally, we find the maximum sum of a bitonic subsequence by iterating over all possible pairs of indices `i` and `j` such that `0 <= i < j < n` and taking the maximum of all `dp[i][j]` values.
+
+The time complexity of this algorithm is O(n^2) and the space complexity is O(n^2).</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    # find the maximum sum of a bitonic subsequence for the given array
+    # return the maximum sum
+    pass
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+    inc = [0]*n
+    dec = [0]*n
+
+    # Initialize increasing sequence
+    for i in range(n):
+        inc[i] = arr[i]
+        for j in range(i):
+            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:
+                inc[i] = inc[j] + arr[i]
+
+    # Initialize decreasing sequence
+    for i in range(n-1, -1, -1):
+        dec[i] = arr[i]
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:
+                dec[i] = dec[j] + arr[i]
+
+    # Find maximum sum of bitonic sequence
+    max_sum = inc[0] + dec[0] - arr[0]
+    for i in range(1, n):
+        if inc[i] + dec[i] - arr[i] > max_sum:
+            max_sum = inc[i] + dec[i] - arr[i]
+
+    return max_sum
+```
+
+This function works by first initializing two arrays, `inc` and `dec`, to store the maximum sum of increasing and decreasing subsequences ending at each index of the input array, respectively. It then iterates over the input array, updating the `inc` and `dec` arrays as it goes. Finally, it iterates over the `inc` and `dec` arrays to find the maximum sum of a bitonic subsequence, which is the maximum sum of the sum of the `inc` and `dec` arrays at each index, minus the value at that index (since it is counted twice in the sum).
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    n = len(arr)
+    dp = [0] * n
+    dp[0] = arr[0]
+    dp[1] = max(arr[0], arr[1])
+    for i in range(2, n):
+        dp[i] = max(dp[i-1], dp[i-2] + arr[i])
+    return dp[-1]
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    else:
+        left = max_sum(arr[:len(arr)//2])
+        right = max_sum(arr[len(arr)//2:])
+        if left > right:
+            return left + sum(arr[len(arr)//2:])
+        else:
+            return right + sum(arr[:len(arr)//2])
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+
+"""
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    else:
+        left = max_sum(arr[:len(arr)//2])
+        right = max_sum(arr[len(arr)//2:])
+        if left > right:
+            return left + sum(arr[len(arr)//2:])
+        else:
+            return right + sum(arr[:len(arr)//2])
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+
+"""
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    else:
+        left = max_sum(arr[:len(arr)//2])
+        right = max_sum(arr[len(arr)//2:])
+        if left > right:
+            return left + sum(arr[len(arr)//2:])
+        else:
+            return</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    max_sum = 0
+    for i in range(len(arr)):
+        left_sum = 0
+        right_sum = 0
+        for j in range(i):
+            if arr[j] < arr[j + 1]:
+                left_sum += arr[j]
+            else:
+                break
+        for j in range(i, len(arr) - 1):
+            if arr[j] > arr[j + 1]:
+                right_sum += arr[j]
+            else:
+                break
+        max_sum = max(max_sum, left_sum + right_sum)
+    return max_sum</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    if len(arr) < 3:
+        return 0
+    
+    max_sum = 0
+    
+    for i in range(len(arr)):
+        left_max = max(arr[:i])
+        right_max = max(arr[i:])
+        
+        if left_max < right_max:
+            max_sum = max(max_sum, right_max - left_max)
+    
+    return max_sum
+
+# Test cases</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    inc = [0] * n
+    dec = [0] * n
+
+    # Compute the increasing subsequence
+    for i in range(n):
+        inc[i] = arr[i]
+        for j in range(i):
+            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:
+                inc[i] = inc[j] + arr[i]
+
+    # Compute the decreasing subsequence
+    for i in range(n-1, -1, -1):
+        dec[i] = arr[i]
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:
+                dec[i] = dec[j] + arr[i]
+
+    # Find the maximum sum of inc[i] + dec[i] - arr[i]
+    max_sum = inc[0] + dec[0] - arr[0]
+    for i in range(1, n):
+        if inc[i] + dec[i] - arr[i] > max_sum:
+            max_sum = inc[i] + dec[i] - arr[i]
+
+    return max_sum
+
+# Test the function
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum_bitonic(arr):
+    """
+    Finds the maximum sum of a bitonic subsequence in the given array.
+    A sequence is bitonic if it is first increasing and then decreasing.
+    """
+    n = len(arr)
+    inc_dp = [0] * n
+    dec_dp = [0] * n
+
+    # Calculate the maximum sum of increasing subsequence ending at each index
+    for i in range(1, n):
+        inc_dp[i] = max(inc_dp[i - 1] + arr[i], arr[i])
+
+    # Calculate the maximum sum of decreasing subsequence starting from each index
+    for i in range(n - 2, -1, -1):
+        dec_dp[i] = max(dec_dp[i + 1] + arr[i], arr[i])
+
+    # The maximum sum of a bitonic subsequence is the maximum sum of increasing subsequence
+    # followed by the maximum sum of decreasing subsequence
+    return max(inc_dp[-1], dec_dp[0])
+
+
+# Test the function
+assert max_sum_bitonic([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    elif n == 1:
+        return arr[0]
+    else:
+        max_ending_here = arr[0]
+        max_ending_so_far = arr[0]
+        max_sum = arr[0]
+        for i in range(1, n):
+            max_ending_here = max(arr[i], max_ending_here + arr[i])
+            max_ending_so_far = max(max_ending_so_far, max_ending_here)
+            max_sum = max(max_sum, max_ending_so_far + (arr[n-1] - arr[i]))
+        return max_sum
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+```
+
+Explanation:
+The function `max_sum` takes an array `arr` as input and returns the maximum sum of a bitonic subsequence for the given array. The function first checks if the array is empty or contains only one element, and returns 0 or the element itself respectively. Otherwise, it initializes three variables: `max_ending_here`, `max_ending_so_far`, and `max_sum`. `max_ending_here` keeps track of the maximum sum ending at the current index, `max_ending_so_far` keeps track of the maximum sum ending at any index so far, and `max_sum` keeps track of the maximum sum of a bitonic subsequence.
+
+The function then iterates through the array, updating the three variables at each index. `max_ending_here` is updated to be the maximum of the current element and the sum of the current element and the previous `max_ending_here`. `max_ending_so_far` is updated to be the maximum of the previous `max_ending_so_far` and the current `max_ending_here`. Finally, `max_sum` is updated to be the maximum of the previous `max_sum` and the sum of the current `max_ending_so_far` and the difference between the last element and the current element.
+
+After iterating through the array, the function returns the value of `max_sum`, which is the maximum sum of a bitonic subsequence for the given array.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    inc = [0] * n
+    dec = [0] * n
+    inc[0] = arr[0]
+    max_sum = arr[0]
+    for i in range(1, n):
+        inc[i] = arr[i]
+        for j in range(i):
+            if arr[i] > arr[j]:
+                inc[i] = max(inc[i], inc[j] + arr[i])
+        max_sum = max(max_sum, inc[i])
+    dec[n-1] = arr[n-1]
+    for i in range(n-2, -1, -1):
+        dec[i] = arr[i]
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j]:
+                dec[i] = max(dec[i], dec[j] + arr[i])
+    max_sum = max(max_sum, max(inc[i] + dec[i] - arr[i] for i in range(n)))
+    return max_sum
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if arr[0] > arr[1]:
+        return max(arr[0], arr[1] + max_sum(arr[2:]))
+    else:
+        return max(arr[0] + max_sum(arr[1:]), max_sum(arr[2:]))
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+    if len(arr) == 4:
+        return max(arr[0], arr[1], arr[2], arr[3])
+    if len(arr) == 5:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4])
+    if len(arr) == 6:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5])
+    if len(arr) == 7:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6])
+    if len(arr) == 8:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7])
+    if len(arr) == 9:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8])
+    if len(arr) == 10:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9])
+    if len(arr) == 11:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10])
+    if len(arr) == 12:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10], arr[11])</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+import numpy as np
+
+def max_sum(arr):
+    n = len(arr)
+    inc = np.zeros(n)
+    dec = np.zeros(n)
+
+    # Initialize increasing and decreasing sequences
+    for i in range(n):
+        inc[i] = arr[i]
+        dec[i] = arr[i]
+
+    # Fill increasing sequence
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:
+                inc[i] = inc[j] + arr[i]
+
+    # Fill decreasing sequence
+    for i in range(n-2, -1, -1):
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:
+                dec[i] = dec[j] + arr[i]
+
+    # Find the maximum sum of bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        max_sum = max(max_sum, inc[i] + dec[i] - arr[i])
+
+    return max_sum
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    if not arr:
+        return 0
+
+    # Find the peak element in the array
+    peak = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] > peak:
+            peak = arr[i]
+
+    # Calculate the sum of the bitonic subsequence
+    sum = peak
+    for i in range(len(arr) - 1, -1, -1):
+        if arr[i] < peak:
+            sum = max(sum, arr[i] + peak)
+
+    return sum</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def max_sum(arr):
+    n = len(arr)
+    lis = [1]*n
+    lds = [1]*n
+
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j] and lis[i] < lis[j] + 1:
+                lis[i] = lis[j] + 1
+
+    for i in range(n-2, -1, -1):
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j] and lds[i] < lds[j] + 1:
+                lds[i] = lds[j] + 1
+
+    max_sum = 0
+    for i in range(n):
+        if max_sum < lis[i] + lds[i] - 1:
+            max_sum = lis[i] + lds[i] - 1
+
+    return max_sum
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    dp = [[0 for _ in range(n)] for _ in range(2)]
+    for i in range(n):
+        dp[0][i] = arr[i]
+    for i in range(1, n):
+        for j in range(i, n):
+            if arr[j] > dp[0][j-1]:
+                dp[i%2][j] = max(dp[(i-1)%2][j-1] + arr[j], dp[i%2][j-1])
+            else:
+                dp[i%2][j] = dp[(i-1)%2][j-1]
+    return dp[(n-1)%2][n-1]
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    lis = [1]*n
+    lds = [1]*n
+
+    for i in range(1, n):
+        for j in range(0, i):
+            if arr[i] > arr[j] and lis[i] < lis[j] + 1:
+                lis[i] = lis[j] + 1
+
+    for i in range(n-2, -1, -1):
+        for j in range(n-1, i, -1):
+            if arr[i] > arr[j] and lds[i] < lds[j] + 1:
+                lds[i] = lds[j] + 1
+
+    max_val = float('-inf')
+    for i in range(n):
+        max_val = max(max_val, lis[i] + lds[i] - 1)
+
+    return max_val
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that takes an array and finds the maximum sum of a bitonic subsequence:
+
+```python
+def max_sum(arr):
+    n = len(arr)
+    if n == 1:
+        return arr[0]
+    
+    incl = arr[:]
+    # initialize the incl array with the first element
+    incl[1] = max(arr[0], arr[1])
+    
+    # initialize the excl array with the first element
+    excl = [0] * n
+    excl[0] = arr[0]
+    
+    # initialize the maximum sum of a bitonic subsequence
+    max_sum = 0
+    
+    # loop through the array from index 2 to n-1
+    for i in range(2, n):
+        incl[i] = max(incl[i-1] + arr[i], arr[i])
+        excl[i] = max(excl[i-1], incl[i-1])
+        
+        # update the maximum sum of a bitonic subsequence
+        max_sum = max(max_sum, excl[i] + incl[i])
+    
+    return max_sum
+```
+
+Explanation:
+
+We first check if the length of the array is 1, in which case the maximum sum of a bitonic subsequence is simply the element itself. Otherwise, we initialize two arrays, `incl` and `excl`, with the first element of the array. We then loop through the array from index 2 to n-1 and update the `incl` and `excl` arrays accordingly. The `incl` array keeps track of the maximum sum of a bitonic subsequence that ends at each index, while the `excl` array keeps track of the maximum sum of a bitonic subsequence that ends before the current index. We update the `incl` array by taking the maximum of the current element and the sum of the previous element and the current element. We update the `excl` array by taking the maximum of the previous element and the current element. Finally, we return the maximum of the sum of the `excl` and `incl` arrays.
+
+The `incl` array keeps track of the maximum sum of a bitonic subsequence that ends at each index, while the `excl` array keeps track of the maximum sum of a bitonic subsequence that ends before the current index. We update the `incl` array by taking the maximum of the current element and the sum of the previous element and the current element. We update the `excl` array by taking the maximum of the previous element and the current element. Finally, we return the maximum of the sum of the `excl` and `incl` arrays. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+
+    max_sum_left = max_sum(arr[:len(arr)//2])
+    max_sum_right = max_sum(arr[len(arr)//2:])
+
+    max_sum_left_right = 0
+    for i in range(len(arr)//2):
+        max_sum_left_right += arr[i]
+    for i in range(len(arr)//2, len(arr)):
+        max_sum_left_right += arr[i]
+
+    return max(max_sum_left, max_sum_right, max_sum_left_right)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    if not arr:
+        return 0
+
+    n = len(arr)
+    if n <= 1:
+        return arr[0]
+
+    inc = [0] * n
+    dec = [0] * n
+
+    inc[0] = arr[0]
+    dec[n - 1] = arr[n - 1]
+
+    for i in range(1, n):
+        inc[i] = max(inc[i], inc[i - 1] + arr[i])
+
+    for i in range(n - 2, -1, -1):
+        dec[i] = max(dec[i], dec[i + 1] + arr[i])
+
+    max_sum = inc[n - 1]
+    for i in range(n - 2, -1, -1):
+        max_sum = max(max_sum, inc[i] + dec[i + 1])
+
+    return max_sum</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    if n == 1:
+        return arr[0]
+    if n == 2:
+        return max(arr[0], arr[1])
+
+    # find the peak
+    peak = -1
+    for i in range(1, n - 1):
+        if arr[i] > arr[i - 1] and arr[i] > arr[i + 1]:
+            peak = i
+            break
+
+    if peak == -1:
+        return max(arr[0], arr[-1])
+
+    # find the maximum sum of the increasing subsequence
+    max_sum_inc = 0
+    for i in range(peak):
+        if arr[i] < arr[i + 1]:
+            max_sum_inc += arr[i]
+        else:
+            max_sum_inc += arr[i + 1]
+            arr[i + 1] = arr[i]
+
+    # find the maximum sum of the decreasing subsequence
+    max_sum_dec = 0
+    for i in range(n - 1, peak, -1):
+        if arr[i] < arr[i - 1]:
+            max_sum_dec += arr[i]
+        else:
+            max_sum_dec += arr[i - 1]
+            arr[i - 1] = arr[i]
+
+    return max_sum_inc + max_sum_dec + arr[peak]
+
+
+print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+    if len(arr) == 4:
+        return max(arr[0], arr[1], arr[2], arr[3])
+    if len(arr) == 5:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4])
+    if len(arr) == 6:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5])
+    if len(arr) == 7:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6])
+    if len(arr) == 8:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7])
+    if len(arr) == 9:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8])
+    if len(arr) == 10:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9])
+    if len(arr) == 11:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10])
+    if len(arr) == 12:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10], arr[11])</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    n = len(arr)
+    if n == 1:
+        return arr[0]
+    if n == 2:
+        return max(arr[0], arr[1])
+    if n == 3:
+        return max(arr[0] + arr[1], arr[1] + arr[2])
+    if n == 4:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3])
+    if n == 5:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3], arr[3] + arr[4])
+    if n == 6:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3], arr[3] + arr[4], arr[4] + arr[5])
+    if n == 7:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3], arr[3] + arr[4], arr[4] + arr[5], arr[5] + arr[6])
+    if n == 8:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3], arr[3] + arr[4], arr[4] + arr[5], arr[5] + arr[6], arr[6] + arr[7])
+    if n == 9:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3], arr[3] + arr[4], arr[4] + arr[5], arr[5] + arr[6], arr[6] + arr[7], arr[7] + arr[8])
+    if n == 10:
+        return max(arr[0] + arr[1], arr[1] + arr[2], arr[2] + arr[3], arr[3] + arr[4], arr[4</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    if n < 2:
+        return arr[0]
+
+    dp = [0] * n
+    dp[0] = arr[0]
+    dp[1] = max(arr[0], arr[1])
+
+    for i in range(2, n):
+        dp[i] = max(dp[i - 1], dp[i - 2] + arr[i])
+
+    return dp[n - 1]
+
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+```
+
+This Python script defines a function `max_sum` that takes an array as input and returns the maximum sum of a bitonic subsequence for the given array. The function uses dynamic programming to solve the problem. It initializes two variables `dp[0]` and `dp[1]` with the first two elements of the array, then iterates through the rest of the array, updating `dp[i]` as the maximum of `dp[i - 1]` and `dp[i - 2] + arr[i]`. Finally, it returns `dp[n - 1]`, which is the maximum sum of a bitonic subsequence for the given array.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    return max([sum(arr[i:j]) for i in range(len(arr)) for j in range(i+1, len(arr)+1)])
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7, -8]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7, -8, -9]) == 194
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == 194
+assert max_sum([1, 15, 51, 45,</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    n = len(arr)
+    max_ending_here = 0
+    max_so_far = 0
+    for i in range(n):
+        max_ending_here = max_ending_here + arr[i]
+        max_ending_here = max(max_ending_here, 0)
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    if n < 2:
+        return sum(arr)
+
+    # Initialize LIS and LDS arrays
+    LIS, LDS = [0] * n, [0] * n
+
+    # Compute LIS and LDS using dynamic programming
+    for i in range(1, n):
+        LIS[i] = 1
+        LDS[i] = 1
+        for j in range(i - 1, -1, -1):
+            if arr[i] > arr[j] and LIS[i] < LIS[j] + 1:
+                LIS[i] = LIS[j] + 1
+            if arr[i] < arr[j] and LDS[i] < LDS[j] + 1:
+                LDS[i] = LDS[j] + 1
+
+    # Compute the maximum sum of a bitonic subsequence
+    max_sum = 0
+    for i in range(n):
+        if LIS[i] + LDS[i] - 1 == n - 1:
+            max_sum = max(max_sum, arr[i] * LIS[i])
+
+    return max_sum
+
+# Test the function
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+def max_sum_bitonic_subsequence(arr):
+    n = len(arr)
+    max_sum = 0
+    left, right = 0, n - 1
+
+    while left < right:
+        # Find the maximum of the three elements: left, right, and their sum
+        max_element = max(arr[left], arr[right], arr[left] + arr[right])
+        # Update max_sum if the current max_element contributes to a larger sum
+        if max_sum < max_element:
+            max_sum = max_element
+        # Move the pointer left if the element at right is larger than the element at left
+        if arr[left] >= arr[right]:
+            left += 1
+        else:
+            right -= 1
+
+    return max_sum
+
+
+# Test the function
+assert max_sum_bitonic_subsequence([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+    if len(arr) == 4:
+        return max(arr[0], arr[1], arr[2], arr[3])
+    if len(arr) == 5:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4])
+    if len(arr) == 6:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5])
+    if len(arr) == 7:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6])
+    if len(arr) == 8:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7])
+    if len(arr) == 9:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8])
+    if len(arr) == 10:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9])
+    if len(arr) == 11:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10])
+    if len(arr) == 12:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10], arr</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def max_sum(arr):
+    """
+    Finds the maximum sum of a bitonic subsequence for the given array.
+
+    Args:
+        arr (list): A list of integers.
+
+    Returns:
+        int: The maximum sum of a bitonic subsequence.
+    """
+    n = len(arr)
+    inc = [1] * n  # Initialize increasing subsequence lengths
+    dec = [1] * n  # Initialize decreasing subsequence lengths
+
+    # Calculate increasing subsequence lengths
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                inc[i] = max(inc[i], inc[j] + 1)
+
+    # Calculate decreasing subsequence lengths
+    for i in range(n - 2, -1, -1):
+        for j in range(n - 1, i, -1):
+            if arr[j] < arr[i]:
+                dec[i] = max(dec[i], dec[j] + 1)
+
+    max_sum = 0
+    for i in range(n):
+        if inc[i] > 1 and dec[i] > 1:
+            max_sum = max(max_sum, sum(arr[i - inc[i] + 1:i + dec[i]]))
+
+    return max_sum
+
+# Test case
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+
+def max_sum(arr):
+    n = len(arr)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = arr[i]
+    for l in range(2, n+1):
+        for i in range(n-l+1):
+            j = i+l-1
+            dp[i][j] = max(dp[i+1][j], dp[i][j-1]) + arr[i] * arr[j]
+    return dp[0][n-1]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+def max_sum(arr):
+    """
+    :param: arr: input array
+    :return: max sum of a bitonic subsequence
+    """
+    # TODO: Write your code here
+    pass
+
+
+if __name__ == '__main__':
+    print(max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]))
+/src/main/java/com/leetcode/problems/easy/ValidParentheses.java
+package com.leetcode.problems.easy;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+/**
+ * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+ * <p>
+ * An input string is valid if:
+ * <p>
+ * Open brackets must be closed by the same type of brackets.
+ * Open brackets must be closed in the correct order.
+ * Note that an empty string is also considered valid.
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: "()"
+ * Output: true
+ * Example 2:
+ * <p>
+ * Input: "()[]{}"
+ * Output: true
+ * Example 3:
+ * <p>
+ * Input: "(]"
+ * Output: false
+ * Example 4:
+ * <p>
+ * Input: "([)]"
+ * Output: false
+ * Example 5:
+ * <p>
+ * Input: "{[]}"
+ * Output: true
+ */
+public class ValidParentheses {
+
+    public static void main(String[] args) {
+        System.out.println(isValid("()"));
+        System.out.println(isValid("()[]{}"));
+        System.out.println(isValid("(]"));
+        System.out.println(isValid("([)]"));
+        System.out.println(isValid("{[]}"));
+    }
+
+    public static boolean isValid(String s) {
+        if (s == null || s.length() == 0) {
+            return true;
+        }
+        Map<Character, Character> map = new HashMap<>();
+        map.put('(', ')');
+        map.put('{', '}');
+        map.put('[', ']');
+        Stack<Character</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_sum(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    if n == 1:
+        return arr[0]
+
+    # Create two arrays to store the maximum sum
+    # ending at the current position in the increasing
+    # and decreasing subsequence respectively.
+    inc = [0] * n
+    dec = [0] * n
+
+    # Initialize the first element of both arrays
+    inc[0] = arr[0]
+    dec[n - 1] = arr[n - 1]
+
+    # Fill the increasing array
+    for i in range(1, n):
+        inc[i] = max(arr[i], inc[i - 1])
+
+    # Fill the decreasing array
+    for i in range(n - 2, -1, -1):
+        dec[i] = max(arr[i], dec[i + 1])
+
+    # Find the maximum sum of a bitonic subsequence
+    max_sum = float('-inf')
+    for i in range(n):
+        max_sum = max(max_sum, inc[i] + dec[i] - arr[i])
+
+    return max_sum
+
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194
+"""
+
+import unittest
+
+
+def max_sum(arr):
+    if not arr:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    if len(arr) == 3:
+        return max(arr[0], arr[1], arr[2])
+    if len(arr) == 4:
+        return max(arr[0], arr[1], arr[2], arr[3])
+    if len(arr) == 5:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4])
+    if len(arr) == 6:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5])
+    if len(arr) == 7:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6])
+    if len(arr) == 8:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7])
+    if len(arr) == 9:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8])
+    if len(arr) == 10:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9])
+    if len(arr) == 11:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10])
+    if len(arr) == 12:
+        return max(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7],</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def max_sum(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    if n == 1:
+        return arr[0]
+
+    # Initialize variables
+    max_sum = [0] * n
+    max_sum[0] = arr[0]
+    max_sum[1] = max(arr[0], arr[1])
+
+    # Find maximum sum of bitonic subsequence
+    for i in range(2, n):
+        max_sum[i] = max(max_sum[i-1], max_sum[i-2] + arr[i])
+
+    return max_sum[n-1]
+
+# Test the function
+assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

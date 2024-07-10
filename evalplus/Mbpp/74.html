@@ -1,0 +1,1447 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/74 </h1>
+<pre><code> """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def is_samepatterns(colors, patterns):    
+    if len(colors) != len(patterns):
+        return False    
+    pattern_color_dict = {pattern: set() for pattern in patterns}
+    for color, pattern in zip(colors, patterns):
+        pattern_color_dict[pattern].add(color)
+    return all(len(pattern_color_dict[pattern]) == 1 for pattern in patterns)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[['red', 'green', 'green'], ['a', 'b', 'b']], [['red', 'green', 'greenn'], ['a', 'b', 'b']], [['red', 'green', 'greenn'], ['a', 'b']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[['red', 'green', 'blue'], ['a', 'b', 'c']], [['red', 'red', 'red'], ['a', 'a', 'a']], [['red', 'blue', 'green'], ['a', 'b', 'c']], [['red', 'green', 'blue', 'red'], ['a', 'b', 'c', 'a']], [['red', 'red', 'blue', 'blue'], ['a', 'a', 'b', 'b']], [['red', 'green', 'green', 'blue'], ['a', 'b', 'b', 'c']], [['red', 'red', 'red', 'red'], ['a', 'a', 'a', 'a']], [['red', 'red', 'green', 'blue'], ['a', 'a', 'b', 'c']], [['red', 'green', 'green', 'green'], ['a', 'b', 'b', 'b']], [[], ['a', 'b', 'c']], [[], []], [['red', 'green', 'blue', 'yellow'], ['a', 'b', 'b', 'c']], [['red', 'green', 'blue', 'yellow'], ['a', 'b', 'c', 'a']], [['red', 'red', 'red', 'red', 'red', 'red'], ['a', 'b', 'c', 'a', 'b', 'c']], [['red', 'green', 'blue', 'red', 'green', 'blue'], ['a', 'b', 'c', 'a', 'b', 'c']], [['red', 'green', 'blue', 'red', 'red', 'red'], ['a', 'b', 'c', 'a', 'b', 'c']], [['red', 'green', 'blue', 'red', 'blue', 'green'], ['a', 'b', 'c', 'a', 'b', 'c']], [['a', 'b', 'cc', 'c', 'a'], ['a', 'b', 'cc', 'c', 'a']], [['red', 'green', 'yellow'], ['a', 'b', 'c', 'a']], [['b', 'c', 'a', 'b', 'c'], ['red', 'red', 'red', 'red', 'bluered', 'red']], [['blue', 'red', 'red', 'red', 'red'], ['a', 'a', 'a', 'a']], [['a', 'a', 'b', 'b', 'b'], ['a', 'a', 'b', 'b', 'b']], [['blue', 'red', 'red', 'red', 'red'], ['ared', 'a']], [['red', 'red', 'red', 'red', 'red', 'red'], ['a', 'b', 'ared', 'c', 'a', 'b', 'c']], [['red', 'green', 'blue', 'red', 'red', 'red', 'red'], ['a', 'b', 'ccc', 'a', 'b']], [['red', 'green', 'bluue', 'red', 'red', 'red'], ['red', 'green', 'bluue', 'red', 'red', 'red']], [['red', 'red', 'red'], ['red', 'red', 'red']], [[False, True, False], [False, True, False]], [['red', 'green', 'blue', 'yellow'], ['red', 'green', 'blue', 'yellow']], [['a', 'b', '', 'c'], ['a', 'b', '', 'c']], [['ared', 'a'], ['blue', 'red', 'red', 'red', 'red']], [['blue', 'red', 'red', 'red', 'red'], ['blue', 'red', 'red', 'red', 'red']], [['bluered', 'red', 'yellow', 'red', 'reyellow', 'cc', 'red'], ['bluered', 'red', 'yellow', 'red', 'reyellow', 'cc', 'red']], [['ared', 'rred', 'green'], ['ared', 'rred', 'green']], [[False], [False]], [['red', 'green', 'green', 'green'], ['ccc', 'b', 'b', 'b']], [['blueccc', 'blue', 'red', 'red', 'red', 'cc'], ['bluue', 'a', 'a', 'a', 'a']], [['red', 'green', 'bluue', 'red', 'red'], ['red', 'green', 'bluue', 'red', 'red']], [['red', 'green', 'blue', 'eblue', 'yellow', 'blue'], ['red', 'green', 'blue', 'eblue', 'yellow', 'blue']], [['blueccc', 'blue', 'red', 'red', 'red', 'cc'], ['bluue', 'a', 'a', 'a']], [['a', 'a', 'b', 'bblueccc', 'b', 'b'], ['a', 'a', 'b', 'bblueccc', 'b', 'b']], [['red', 'green', 'blue', 'yellow'], ['a', 'b', 'c', 'a', 'a']], [['blue', 'red', 'red', 'red', 'red'], ['a', 'a', 'cc', 'a']], [['blueccc', 'ared', 'a'], ['blue', 'red', 'red', 'red', 'red']], [[False, True, False, False], [False, True, False, False]], [['belue', 'red', 'red', 'green', 'blue', 'red'], ['belue', 'red', 'red', 'green', 'blue', 'red']], [['red', 'greeen', 'blue', 'red', 'red', 'red', 'red', 'red'], ['red', 'greeen', 'blue', 'red', 'red', 'red', 'red', 'red']], [['red', 'green', 'blue', 'yellow'], ['a', 'b', 'c', 'a', 'a', 'aa']], [['red', 'blue', 'green'], ['a', 'byellow', 'c']], [['red', 'green', 'green'], ['ccc', 'b', 'b', 'b']], [['red', 'green', 'blue', 'red', 'blue', 'green'], ['b', 'c', 'a', 'b', 'c']], [['blueccc', 'blue', 'red', 'red', 'blcccueccc', 'red', 'cc'], ['blueccc', 'blue', 'red', 'red', 'blcccueccc', 'red', 'cc']], [['red', 'rred', 'green', 'blue', 'yellw', 'eblue', 'yellow', 'blue'], ['red', 'rred', 'green', 'blue', 'yellw', 'eblue', 'yellow', 'blue']], [['gbluered', 'yellow', 'red', 'blue', 'green'], ['gbluered', 'yellow', 'red', 'blue', 'green']], [[True, False], [True, False]], [['red', 'green', 'red'], ['a', 'b', 'c', 'a']], [['belue', 'a'], ['belue', 'a']], [['green', 'rred', 'yellw', 'green'], ['green', 'rred', 'yellw', 'green']], [['bluaredue', 'red', 'green', 'bluue', 'red', 'red', 'red'], ['bluaredue', 'red', 'green', 'bluue', 'red', 'red', 'red']], [['bluue', 'a', 'a', 'a'], ['bluue', 'a', 'a', 'a']], [['a', 'bb', 'c', 'a'], ['a', 'bb', 'c', 'a']], [['a', 'b', 'c', 'a', 'b', 'c'], ['a', 'b', 'c', 'a', 'b', 'c']], [['red', 'greeen', 'blue', 'red', 'red', 'red', 'red', 'red', 'greeen'], ['red', 'greeen', 'blue', 'red', 'red', 'red', 'red', 'red', 'greeen']], [['blueccc', 'blue', 'red', 'red', 'blueccc', 'red', 'cc', 'red', 'red', 'blueccc'], ['blueccc', 'blue', 'red', 'red', 'blueccc', 'red', 'cc', 'red', 'red', 'blueccc']], [['a', 'red', 'b', 'rred', 'c'], ['a', 'red', 'b', 'rred', 'c']], [['a', 'b', 'c', 'a', 'a', 'aa'], ['red', 'green', 'blue', 'yellow']], [['red', 'green', 'red'], ['a', 'b', 'c', 'a', 'a']], [['ared', 'rred', 'green', 'green'], ['ared', 'rred', 'green', 'green']], [['red', 'blue', 'yellow', 'red'], ['red', 'blue', 'yellow', 'red']], [['red', 'green', 'blue', 'bluue', 'red', 'red', 'red'], ['red', 'green', 'blue', 'bluue', 'red', 'red', 'red']], [['red', 'red', 'gbegen', 'gbeen', 'blue'], ['a', 'a', 'b', 'c']], [['red', 'green', 'blue', 'red', 'red', 'red', 'green', 'green'], ['red', 'green', 'blue', 'red', 'red', 'red', 'green', 'green']], [['green', 'c', 'yellw', 'green', 'green'], ['green', 'c', 'yellw', 'green', 'green']], [['red', 'green', 'blue', 'bluue', 'red', 'red'], ['red', 'green', 'blue', 'bluue', 'red', 'red']], [['a', 'b', 'aa', 'c', 'a'], ['a', 'b', 'aa', 'c', 'a']], [['red', 'greeen', 'red', 'red', 'red', 'red', 'red'], ['red', 'greeen', 'red', 'red', 'red', 'red', 'red']], [['red', 'red', 'red', 'red', 'red', 'yellow', 'red'], ['red', 'red', 'red', 'red', 'red', 'yellow', 'red']], [['green', 'rred', 'yellw'], ['green', 'rred', 'yellw']], [['gbluered', 'yellow', 'belue', 'blue', 'green'], ['gbluered', 'yellow', 'belue', 'blue', 'green']], [['gbluered', 'yellow', 'red', 'blue', 'green', 'red'], ['gbluered', 'yellow', 'red', 'blue', 'green', 'red']], [['red', 'green', 'blue', 'red', 'red', 'dred', 'red'], ['red', 'green', 'blue', 'red', 'red', 'dred', 'red']], [['gbluered', 'yellow', 'byellow', 'breyellowyellow', 'blue', 'green', 'red'], ['gbluered', 'yellow', 'byellow', 'breyellowyellow', 'blue', 'green', 'red']], [['red', 'green', 'blue', 'red', 'red', 'red'], ['red', 'green', 'blue', 'red', 'red', 'red']], [['red', 'green', 'yellow'], ['red', 'green', 'yellow']], [['gbegen', 'a', 'b', '', 'c'], ['gbegen', 'a', 'b', '', 'c']], [['blue', 'red', 'red', 'blueccc', 'cc', 'red', 'red', 'blueccc'], ['blue', 'red', 'red', 'blueccc', 'cc', 'red', 'red', 'blueccc']], [['red', 'green', 'blue', 'yellow'], ['a', 'b', 'b', 'c', 'b', 'a']], [['red', 'green', 'blue', 'red', 'blue', 'green'], ['b', 'c', 'bb', 'a', 'b', 'c']], [['green', 'blue', 'yellow', 'green'], ['a', 'b', 'c', 'a', 'a']], [['green', 'blue', 'bluue', 'red', 'red', 'red'], ['green', 'blue', 'bluue', 'red', 'red', 'red']], [['red', 'red', 'red', 'gbegen'], ['a', 'a', 'a', 'a']], [['red', 'red', 'rebd', 'red', 'bluered', 'red', 'red'], ['red', 'red', 'rebd', 'red', 'bluered', 'red', 'red']], [['red', 'green', 'blue', 'eblue', 'yellw', 'yellow', 'blue', 'blue'], ['red', 'green', 'blue', 'eblue', 'yellw', 'yellow', 'blue', 'blue']], [['aa', 'bluue', 'a', 'a', 'a'], ['aa', 'bluue', 'a', 'a', 'a']], [['red', 'rred', 'green', 'blue', 'yellw', 'eblue', 'yelolow', 'blue'], ['red', 'rred', 'green', 'blue', 'yellw', 'eblue', 'yelolow', 'blue']], [['a', 'b', '', 'c', 'a', 'a', 'aa'], ['red', 'green', 'blue', 'yellow']], [['red', 'green', 'red', 'green', 'blue'], ['red', 'green', 'red', 'green', 'blue']], [['red', 'green', 'blue', 'yellow'], ['a', 'b', 'c', 'green', 'a', 'a']], [['red', 'yellow', 'red'], ['red', 'yellow', 'red']], [['red', 'green', 'green', 'green', 'green'], ['red', 'green', 'green', 'green', 'green']], [['green', 'rred', 'yellw', 'breyellowyellow', 'green'], ['green', 'rred', 'yellw', 'breyellowyellow', 'green']], [['green', 'blue', 'yellow', 'green'], ['a', 'b', 'c', 'a']], [['reed', 'blue', 'red', 'red', 'red'], ['reed', 'blue', 'red', 'red', 'red']], [['blueccc', 'blue', 'red', 'red', 'blueccc', 'red', 'cc', 'red', 'blueccc', 'red'], ['blueccc', 'blue', 'red', 'red', 'blueccc', 'red', 'cc', 'red', 'blueccc', 'red']], [['red', 'green', 'green', 'green', 'bb'], ['ccc', 'b', 'b', 'b', 'ccc']], [['b', 'green', 'rred', 'yellw', 'breyellowyellow', 'breyellowyellow', 'green'], ['b', 'green', 'rred', 'yellw', 'breyellowyellow', 'breyellowyellow', 'green']], [['gbluered', 'yellow', 'bb', 'belue', 'rebd', 'blue', 'green', 'yellow'], ['gbluered', 'yellow', 'bb', 'belue', 'rebd', 'blue', 'green', 'yellow']], [['red', 'greeen', 'blue', 'red', 'red', 'reyellowd', 'red'], ['red', 'greeen', 'blue', 'red', 'red', 'reyellowd', 'red']], [['red', 'blue', 'yellow', 'yellow'], ['red', 'blue', 'yellow', 'yellow']], [['red', 'green', 'eblue', 'blue'], ['a', 'b', 'b', 'c']], [['red', 'green', 'gbluered', 'blue', 'bluue', 'gbluered', 'red', 'red'], ['red', 'green', 'gbluered', 'blue', 'bluue', 'gbluered', 'red', 'red']], [['ared'], ['blue', 'red', 'red', 'red', 'red']], [['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red'], ['a', 'b', 'ared', 'c', 'a', 'b', 'c', 'a']], [['red', 'red', 'red', 'red', 'red', 'red', 'red', 'rrebded'], ['a', 'b', 'ared', 'c', 'a', 'b', 'c', 'a']], [['a', 'b', 'abluered', 'aa', 'c', 'aa', 'aa'], ['a', 'b', 'abluered', 'aa', 'c', 'aa', 'aa']], [['a', '', 'a', 'b', 'b'], ['a', '', 'a', 'b', 'b']], [['gbegen', 'a', 'b', 'c', 'c'], ['gbegen', 'a', 'b', 'c', 'c']]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, words):
+    if len(patterns) != len(words):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] != words[i] and patterns[i] != words[i][0]:
+            return False
+    return True
+
+
+if __name__ == '__main__':
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "b", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "b", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "b", "b", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b", "b", "b", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b", "b</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, colors):
+    """
+    Check whether the given colors follow the sequence in the patterns array.
+
+    :param patterns: List of strings representing the pattern sequence.
+    :param colors: List of strings representing the colors to check against the pattern.
+    :return: True if the colors follow the pattern, False otherwise.
+    """
+    if len(patterns) != len(colors):
+        return False
+
+    pattern_dict = {pattern: i for i, pattern in enumerate(set(patterns))}
+
+    for pattern, color in zip(patterns, colors):
+        if pattern != colors[pattern_dict[pattern]]:
+            return False
+
+    return True
+
+# Test the function
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "b"]) == True
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "c"]) == False
+assert is_samepatterns(["red", "green", "blue"], ["a", "b", "b"]) == False
+assert is_samepatterns(["red", "red", "green"], ["a", "a", "b"]) == True
+assert is_samepatterns(["red"], ["a"]) == True
+assert is_samepatterns(["red", "green"], ["a"]) == False</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, sequence):
+    i = 0
+    for item in sequence:
+        if patterns[i] != item:
+            return False
+        i = (i + 1) % len(patterns)
+    return True
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def is_samepatterns(words, patterns):
+    if len(words) != len(patterns):
+        return False
+
+    word_to_pattern = {}
+    pattern_to_word = {}
+
+    for word, pattern in zip(words, patterns):
+        if word in word_to_pattern:
+            if word_to_pattern[word] != pattern:
+                return False
+        else:
+            word_to_pattern[word] = pattern
+
+        if pattern in pattern_to_word:
+            if pattern_to_word[pattern] != word:
+                return False
+        else:
+            pattern_to_word[pattern] = word
+
+    return True</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    color_dict = {}
+    pattern_dict = {}
+    
+    for i in range(len(colors)):
+        if colors[i] not in color_dict:
+            color_dict[colors[i]] = patterns[i]
+        else:
+            if color_dict[colors[i]] != patterns[i]:
+                return False
+            
+        if patterns[i] not in pattern_dict:
+            pattern_dict[patterns[i]] = colors[i]
+        else:
+            if pattern_dict[patterns[i]] != colors[i]:
+                return False
+            
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+def is_samepatterns(patterns, colors):
+    if len(patterns) != len(colors):
+        return False
+
+    pattern_dict = {}
+    for i in range(len(patterns)):
+        if patterns[i] not in pattern_dict:
+            pattern_dict[patterns[i]] = []
+        pattern_dict[patterns[i]].append(colors[i])
+
+    for value in pattern_dict.values():
+        if len(set(value)) != 1:
+            return False
+
+    return True</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def is_samepatterns(colors, patterns):
+    if len(colors) != len(patterns):
+        return False
+    
+    color_to_pattern = {}
+    pattern_to_color = {}
+    
+    for color, pattern in zip(colors, patterns):
+        if color not in color_to_pattern and pattern not in pattern_to_color:
+            color_to_pattern[color] = pattern
+            pattern_to_color[pattern] = color
+        elif color in color_to_pattern and color_to_pattern[color] != pattern:
+            return False
+        elif pattern in pattern_to_color and pattern_to_color[pattern] != color:
+            return False
+    
+    return True
+
+# Test the function</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is\_samepatterns(colors, patterns):
+    # Create a dictionary to map each color to its corresponding pattern
+    color\_pattern\_map = {}
+    
+    # Populate the dictionary with the first set of colors and patterns
+    for color, pattern in zip(colors, patterns):
+        if color not in color\_pattern_map:
+            color\_pattern_map[color] = pattern
+        elif color\_pattern_map[color] != pattern:
+            return False
+    
+    # Check if the remaining patterns follow the same mapping
+    for color, pattern in zip(colors[1:], patterns[1:]):
+        if color not in color\_pattern_map:
+            return False
+    return True
+
+# Test the function
+assert is\_samepatterns(["red","green","green"], ["a", "b", "b"])==True</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def is_samepatterns(colors, patterns):
+    """
+    This function takes two lists as input and returns True if the sequence of colors and patterns are the same, otherwise False.
+    """
+    if len(colors) != len(patterns):
+        return False
+    
+    pattern_dict = {}
+    for i in range(len(colors)):
+        if colors[i] not in pattern_dict:
+            pattern_dict[colors[i]] = patterns[i]
+        elif pattern_dict[colors[i]] != patterns[i]:
+            return False
+    
+    return True
+
+# Testing the function with the given example
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"])) # Output: True
+```
+
+Explanation:
+
+We create an empty dictionary `pattern_dict` to store the mapping of colors and patterns. We iterate through the `colors` list and check if the color is already present in the dictionary. If it is not present, we add the color as a key and its corresponding pattern as its value. If it is present, we check if the pattern of the color matches with the value in the dictionary. If it doesn't match, we return False. If all the patterns match, we return True. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    if len(colors) != len(patterns):
+        return False
+    color_patterns = {}
+    for color, pattern in zip(colors, patterns):
+        if pattern not in color_patterns:
+            color_patterns[pattern] = color
+        elif color_patterns[pattern] != color:
+            return False
+    return True
+
+# Test cases
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"]) == True
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"]) == False
+assert is_samepatterns(["red","green","green"], ["a", "a", "a"]) == False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"]) == False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b"]) == False
+assert is_samepatterns(["red","green","green"], ["a", "b"]) == False
+assert is_samepatterns([], []) == True</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, colors):
+    if len(patterns) != len(colors):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] not in colors:
+            return False
+    return True
+
+
+print(is_samepatterns(["red", "green", "green"], ["a", "b", "b"]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns1, patterns2):
+    """
+    Check whether two sequences follow the same pattern.
+    
+    Args:
+    patterns1 (list): First sequence
+    patterns2 (list): Second sequence
+    
+    Returns:
+    bool: True if both sequences follow the same pattern, False otherwise.
+    """
+    if len(patterns1) != len(patterns2):
+        return False
+
+    pattern_count = {}
+    for i in range(len(patterns1) - 1):
+        key = (patterns1[i], patterns1[i + 1])
+        if key in pattern_count:
+            pattern_count[key] += 1
+        else:
+            pattern_count[key] = 1
+
+    for i in range(len(patterns2) - 1):
+        key = (patterns2[i], patterns2[i + 1])
+        if key in pattern_count:
+            pattern_count[key] -= 1
+            if pattern_count[key] < 0:
+                return False
+        else:
+            return False
+
+    return True
+
+# Test the function
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"]) == True</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that checks if the sequence of two lists are the same:
+
+```python
+def is_samepatterns(lst1, lst2):
+    if len(lst1) != len(lst2):
+        return False
+    dict1 = {}
+    dict2 = {}
+    for i in range(len(lst1)):
+        if lst1[i] not in dict1:
+            dict1[lst1[i]] = 1
+        else:
+            dict1[lst1[i]] += 1
+        if lst2[i] not in dict2:
+            dict2[lst2[i]] = 1
+        else:
+            dict2[lst2[i]] += 1
+    return dict1 == dict2
+
+# Test the function
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))  # Returns: True
+```
+
+This function works by creating two dictionaries where the keys are the elements of the lists and the values are the frequencies of these elements. It then checks if these two dictionaries are the same. If they are, it means that the two lists have the same sequence.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, string):
+    if len(patterns)!= len(string):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= string[i]:
+            return False
+    return True
+
+"""
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, string):
+    if len(patterns)!= len(string):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= string[i]:
+            return False
+    return True
+
+"""
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, string):
+    if len(patterns)!= len(string):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= string[i]:
+            return False
+    return True
+
+"""
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, string):
+    if len(patterns)!= len(string):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= string[i]:
+            return False
+    return True
+
+"""
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, string):
+    if len(patterns)!= len(string):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= string[i]:
+            return False
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(strings, patterns):
+    """
+    Write a function to check whether it follows the sequence given in the patterns array.
+    assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+    """
+    pattern_dict = {}
+    for string, pattern in zip(strings, patterns):
+        if pattern not in pattern_dict:
+            pattern_dict[pattern] = string
+        else:
+            if pattern_dict[pattern] != string:
+                return False
+    return True
+
+# Test cases
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"]) == True
+assert is_samepatterns(["red","green","blue"], ["a", "b", "b"]) == False
+assert is_samepatterns(["red","red","red"], ["a", "a", "a"]) == True
+assert is_samepatterns(["red","green","blue"], ["a", "b", "c"]) == True</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(arr1, arr2):
+    if len(arr1)!=len(arr2):
+        return False
+    for i in range(len(arr1)):
+        if arr1[i] in arr2:
+            if arr1.count(arr1[i])!=arr2.count(arr1[i]):
+                return False
+        else:
+            return False
+    return True
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, sequence):
+    if len(patterns) != len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] != sequence[i]:
+            return False
+    return True
+
+
+if __name__ == "__main__":
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "a"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "a", "a"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "a", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "a"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "c", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "c", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "c", "a"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "a", "c"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "c", "a"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "a", "a"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "a", "b"]))
+    print(is_samepatterns(["red", "green", "green"], ["a", "b", "a"]))
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def is_samepatterns(patterns1, patterns2):
+    if len(patterns1) != len(patterns2):
+        return False
+    for i in range(len(patterns1)):
+        if patterns1[i] != patterns2[i]:
+            return False
+    return True
+
+# Test the function
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))  # Output: True
+```
+
+This function `is_samepatterns` takes two lists of patterns as input. It first checks if the two lists have the same length. If not, it immediately returns `False`. If the lengths are the same, it then checks each corresponding element in the two lists. If any pair of elements is not the same, it returns `False`. If all pairs of elements are the same, it returns `True`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_samepatterns(patterns, sequence):
+    pattern_length = len(patterns)
+    sequence_length = len(sequence)
+    
+    if pattern_length != sequence_length:
+        return False
+    
+    for i in range(pattern_length):
+        if patterns[i] != sequence[i]:
+            return False
+    
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, sequence):
+    if len(patterns)!= len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= sequence[i]:
+            return False
+    return True
+
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_same</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, result):
+    if len(patterns) != len(result):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] != result[i]:
+            return False
+    return True</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+def is_samepatterns(patterns1, patterns2):
+    """
+    Check if two given lists follow the same sequence pattern.
+    """
+    if len(patterns1) != len(patterns2):
+        return False
+
+    return all(patterns1[i] == patterns2[i] or patterns1[i] is None and patterns2[i] is not None
+                 or patterns1[i] is not None and patterns2[i] is None
+                 for i in range(len(patterns1)))
+
+# Test case
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "b"]) == True</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    if len(colors) != len(patterns):
+        return False
+
+    color_pattern_dict = {}
+    for color, pattern in zip(colors, patterns):
+        if color not in color_pattern_dict:
+            if pattern in color_pattern_dict.values():
+                return False
+            color_pattern_dict[color] = pattern
+        elif color_pattern_dict[color] != pattern:
+            return False
+
+    return True
+
+# Test the function
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "b"]) == True</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def is_samepatterns(patterns, sequence):
+    if len(patterns) != len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] != sequence[i]:
+            return False
+    return True
+```
+
+The function takes two arguments, `patterns` and `sequence`. It first checks if the length of `patterns` is equal to the length of `sequence`. If they are not equal, it returns `False`. Otherwise, it iterates through the `patterns` list and checks if each element is equal to the corresponding element in the `sequence` list. If any element is not equal, it returns `False`. If all elements are equal, it returns `True`.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, sequences):
+    if len(patterns) != len(sequences):
+        return False
+    patterns_map = {}
+    sequences_map = {}
+    for i in range(len(patterns)):
+        if patterns[i] not in patterns_map:
+            patterns_map[patterns[i]] = sequences[i]
+        if sequences[i] not in sequences_map:
+            sequences_map[sequences[i]] = patterns[i]
+        if patterns_map[patterns[i]] != sequences[i] or sequences_map[sequences[i]] != patterns[i]:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a",</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function that checks if the given sequences follow the same pattern:
+
+```python
+def is_samepatterns(seq1, seq2):
+    """
+    This function checks whether the two sequences follow the same pattern.
+    """
+    # Create a dictionary to map elements from seq1 to elements from seq2
+    mapping = {}
+
+    # Check if the sequences have the same length
+    if len(seq1) != len(seq2):
+        return False
+
+    # Iterate over the sequences
+    for i in range(len(seq1)):
+        # If the element from seq1 is not in the mapping dictionary, add it
+        if seq1[i] not in mapping:
+            mapping[seq1[i]] = seq2[i]
+        # If the element from seq1 is in the mapping dictionary, check if it maps to the same element in seq2
+        elif mapping[seq1[i]] != seq2[i]:
+            return False
+
+    # If we have not returned False yet, the sequences follow the same pattern
+    return True
+```
+
+You can use this function to check if two sequences follow the same pattern. For example:
+
+```python
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))  # Returns: True
+print(is_samepatterns(["red","green","blue"], ["a", "b", "c"]))  # Returns: False
+```
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, sequences):
+    if len(patterns)!= len(sequences):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= sequences[i]:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "a", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "a", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"],</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, sequences):
+    if len(patterns)!= len(sequences):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i]!= sequences[i]:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"], ["a", "b", "b"])==True
+assert is_samepatterns(["a","b","b"],</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    pattern_dict = {}
+    for color, pattern in zip(colors, patterns):
+        if color not in pattern_dict:
+            pattern_dict[color] = pattern
+        elif pattern_dict[color] != pattern:
+            return False
+    return True</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, sequence):
+    for i in range(len(patterns)):
+        if patterns[i] in sequence:
+            if patterns[i] == sequence[i]:
+                return True
+        else:
+            return False
+    return True
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    pattern_map = {}
+    for i in range(len(colors)):
+        if colors[i] not in pattern_map:
+            pattern_map[colors[i]] = patterns[i]
+        elif pattern_map[colors[i]] != patterns[i]:
+            return False
+    return True
+
+# Test the function
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "b"]) == True
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "c"]) == False</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_same_patterns(patterns1, patterns2):
+    """
+    Checks whether the given patterns follow the same sequence.
+
+    Args:
+    patterns1 (list): The first list of patterns.
+    patterns2 (list): The second list of patterns.
+
+    Returns:
+    bool: True if the patterns follow the same sequence, False otherwise.
+    """
+    # Check if the lengths of the patterns are equal
+    if len(patterns1) != len(patterns2):
+        return False
+
+    # Create a dictionary to store the mapping between patterns
+    pattern_mapping = {}
+
+    # Iterate through the patterns
+    for i in range(len(patterns1)):
+        # Check if the current pattern is already mapped
+        if patterns1[i] in pattern_mapping:
+            # Check if the current pattern in patterns2 matches the mapped pattern
+            if patterns2[i] != pattern_mapping[patterns1[i]]:
+                return False
+        else:
+            # Map the current pattern from patterns1 to patterns2
+            pattern_mapping[patterns1[i]] = patterns2[i]
+
+    # If all patterns match, return True
+    return True
+
+# Test the function
+assert is_same_patterns(["red","green","green"], ["a", "b", "b"]) == True</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    for i in range(len(colors)):
+        if colors[i] != patterns[i]:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, sequence):
+    if len(patterns) != len(sequence):
+        return False
+    pattern_map = {}
+    for i in range(len(patterns)):
+        if patterns[i] not in pattern_map:
+            pattern_map[patterns[i]] = sequence[i]
+        elif pattern_map[patterns[i]] != sequence[i]:
+            return False
+    return True
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, sequence):
+    if len(patterns)!= len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] == "red":
+            if sequence[i]!= "a":
+                return False
+        elif patterns[i] == "green":
+            if sequence[i]!= "b":
+                return False
+    return True
+
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "c"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i", "j"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, words):
+    for i in range(len(patterns)):
+        if patterns[i] not in words:
+            return False
+        words = words[words.index(patterns[i])+1:]
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+
+def is_samepatterns(colors, patterns):
+    if not colors or not patterns or len(colors) != len(patterns):
+        return False
+
+    pattern_dict = {}
+    used_patterns = set()
+
+    for color, pattern in zip(colors, patterns):
+        if color in pattern_dict:
+            if pattern_dict[color] != pattern:
+                return False
+        else:
+            if pattern in used_patterns:
+                return False
+            pattern_dict[color] = pattern
+            used_patterns.add(pattern)
+
+    return True
+
+# Example usage:
+# assert is_samepatterns(["red","green","green"], ["a", "b", "b"]) == True
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, sequence):
+    for i in range(len(sequence)):
+        if sequence[i] not in patterns[i]:
+            return False
+    return True</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def is_samepatterns(patterns, sequence):
+    pattern_dict = {}
+    for i, pattern in enumerate(patterns):
+        if pattern not in pattern_dict:
+            pattern_dict[pattern] = sequence[i]
+        elif pattern_dict[pattern] != sequence[i]:
+            return False
+    return True
+
+# Test the function
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))  # Output: True</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_same_patterns(patterns1, patterns2):
+    if len(patterns1) != len(patterns2):
+        return False
+    for i in range(len(patterns1)):
+        if patterns1[i] != patterns2[i]:
+            return False
+    return True
+
+# Test case
+assert is_same_patterns(["red", "green", "green"], ["a", "b", "b"]) == True</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, sequence):
+    # Check if the length of patterns and sequence are same
+    if len(patterns) != len(sequence):
+        return False
+
+    # Create a dictionary to store the frequency of each pattern
+    pattern_freq = {}
+
+    # Iterate over the patterns
+    for pattern in patterns:
+        # If the pattern is already in the dictionary, increment its frequency
+        if pattern in pattern_freq:
+            pattern_freq[pattern] += 1
+        # If the pattern is not in the dictionary, add it with a frequency of 1
+        else:
+            pattern_freq[pattern] = 1
+
+    # Create a dictionary to store the frequency of each sequence element
+    sequence_freq = {}
+
+    # Iterate over the sequence
+    for element in sequence:
+        # If the element is already in the dictionary, increment its frequency
+        if element in sequence_freq:
+            sequence_freq[element] += 1
+        # If the element is not in the dictionary, add it with a frequency of 1
+        else:
+            sequence_freq[element] = 1
+
+    # Check if the frequency of each pattern in the dictionary is equal to the frequency of each sequence element in the dictionary
+    for pattern, freq in pattern_freq.items():
+        if pattern not in sequence_freq or sequence_freq[pattern] != freq:
+            return False
+
+    return True
+
+# Test the function
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def is_samepatterns(patterns):
+    """
+    Checks whether the given patterns follow the same pattern.
+    
+    Args:
+    patterns (list): A list of strings representing the patterns to check.
+    
+    Returns:
+    bool: True if the patterns follow the same pattern, False otherwise.
+    """
+    
+    # Get the first pattern and its length
+    first_pattern = patterns[0]
+    first_pattern_len = len(first_pattern)
+    
+    # Check if all the other patterns have the same length as the first pattern
+    for pattern in patterns[1:]:
+        if len(pattern) != first_pattern_len:
+            return False
+    
+    # Check if all the patterns have the same characters in the same order
+    for i in range(first_pattern_len):
+        for pattern in patterns[1:]:
+            if first_pattern[i] != pattern[i]:
+                return False
+    
+    # If all the patterns have the same length and the same characters in the same order, they follow the same pattern
+    return True
+
+# Test the function with the example given in the prompt
+assert is_samepatterns(["red","green","green"]) == True
+assert is_samepatterns(["red","green","blue"]) == False
+assert is_samepatterns(["red","green","grey"]) == False
+assert is_samepatterns(["red","green","grey", "grey"]) == True
+assert is_samepatterns(["red","green","grey", "grey", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green","grey", "grey", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"]) == False
+assert is_samepatterns(["red","green</code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, sequence):
+    if len(patterns) != len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] != sequence[i]:
+            return False
+    return True
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, sequence):
+    if len(patterns) != len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if sequence[i] != patterns[i]:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(colors, patterns):
+    if len(colors) != len(patterns):
+        return False
+    for i in range(len(colors)):
+        if colors[i] != patterns[i]:
+            return False
+    return True
+
+
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, words):
+    """
+    :type patterns: List[str]
+    :type words: List[str]
+    :rtype: bool
+    """
+    if len(patterns)!= len(words):
+        return False
+    for i in range(len(patterns)):
+        if len(patterns[i])!= len(words[i]):
+            return False
+    for i in range(len(patterns)):
+        for j in range(len(patterns[i])):
+            if patterns[i][j]!= words[i][j]:
+                return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, strings):
+    for i in range(len(patterns)):
+        if len(patterns[i]) != len(strings[i]):
+            return False
+    return True
+
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "b", "b", "b", "b", "b</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_same_patterns(patterns1, patterns2):
+    if len(patterns1) != len(patterns2):
+        return False
+    for i in range(len(patterns1)):
+        if patterns1[i] != patterns2[i]:
+            return False
+    return True
+
+assert is_same_patterns(["red","green","green"], ["a", "b", "b"])==True
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, sequence):
+    if len(patterns)!= len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] == sequence[i]:
+            continue
+        else:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "c"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "a"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b"])==False
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b", "b", "a"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b", "b", "a", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b", "b", "a", "b", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b", "b", "a", "b", "b", "a"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a", "b", "b", "a", "b", "b", "a", "b"])==True
+assert is_samepatterns(["red","green","green"], ["a", "b", "b", "a",</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(colors, patterns):
+    if len(colors) != len(patterns):
+        return False
+    if len(colors) == 0:
+        return True
+    if len(colors) == 1:
+        return True
+    if len(colors) == 2:
+        if colors[0] == colors[1]:
+            return patterns[0] == patterns[1]
+        else:
+            return True
+    if len(colors) == 3:
+        if colors[0] == colors[1] and colors[1] == colors[2]:
+            return patterns[0] == patterns[1] and patterns[1] == patterns[2]
+        if colors[0] == colors[1] and colors[1] != colors[2]:
+            return patterns[0] == patterns[1]
+        if colors[0] != colors[1] and colors[1] == colors[2]:
+            return patterns[0] != patterns[1]
+        if colors[0] != colors[1] and colors[1] != colors[2]:
+            return True
+
+
+print(is_samepatterns(["red", "green", "green"], ["a", "b", "b"]))
+print(is_samepatterns(["red", "green", "red"], ["a", "b", "b"]))
+print(is_samepatterns(["red", "green", "blue"], ["a", "b", "b"]))
+print(is_samepatterns(["red", "green", "green"], ["a", "a", "a"]))
+print(is_samepatterns(["red", "green", "green"], ["a", "a", "b"]))
+print(is_samepatterns(["red", "green", "green"], ["a", "b", "a"]))
+print(is_samepatterns(["red", "green", "green"], ["a", "b", "c"]))
+print(is_samepatterns(["red", "green", "green"], ["a", "b", "d"]))
+print(is_samepatterns(["red", "green", "green"], ["a", "b", "e"]))
+print(is_same</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(patterns, sequences):
+    if len(patterns) != len(sequences):
+        return False
+
+    for i in range(len(patterns)):
+        if patterns[i] != sequences[i]:
+            return False
+
+    return True
+
+# Test the function
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "b"]) == True</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+def is_samepatterns(patterns1: list, patterns2: list) -> bool:
+    if len(patterns1) != len(patterns2):
+        return False
+
+    for i in range(len(patterns1)):
+        if patterns1[i] == patterns2[i - 1] or i == 0:
+            continue
+        if patterns1[i] != patterns2[i]:
+            return False
+    return True</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, arr):
+    for i in range(len(patterns)):
+        if arr[i] == patterns[i]:
+            return True
+    return False
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+def is_samepatterns(patterns, strings):
+    """
+    Check if the patterns in the two lists are the same.
+
+    Args:
+        patterns (list): A list of strings representing patterns.
+        strings (list): A list of strings to check against the patterns.
+
+    Returns:
+        bool: True if the patterns in both lists are the same, False otherwise.
+    """
+    if len(patterns) != len(strings):
+        return False
+
+    pattern_map = {}
+    string_map = {}
+
+    for i in range(len(patterns)):
+        pattern = patterns[i]
+        string = strings[i]
+
+        if pattern not in pattern_map:
+            pattern_map[pattern] = string
+        else:
+            if pattern_map[pattern] != string:
+                return False
+
+        if string not in string_map:
+            string_map[string] = pattern
+        else:
+            if string_map[string] != pattern:
+                return False
+
+    return True
+
+# Test cases
+assert is_samepatterns(["red", "green", "green"], ["a", "b", "b"]) == True
+assert is_samepatterns(["red", "green", "blue"], ["a", "b", "a"]) == False
+assert is_samepatterns(["x", "y", "x"], ["a", "b", "a"]) == True
+assert is_samepatterns(["x", "y", "z"], ["a", "b", "c"]) == True
+print("All test cases passed!")</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(words, patterns):
+    word_to_pattern = {}
+    pattern_to_word = {}
+    for word, pattern in zip(words, patterns):
+        if word in word_to_pattern and word_to_pattern[word] != pattern:
+            return False
+        if pattern in pattern_to_word and pattern_to_word[pattern] != word:
+            return False
+        word_to_pattern[word] = pattern
+        pattern_to_word[pattern] = word
+    return True
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+def is_samepatterns(patterns, sequence):
+    # Write your code here
+    if len(patterns) != len(sequence):
+        return False
+    for i in range(len(patterns)):
+        if patterns[i] != sequence[i]:
+            return False
+    return True
+
+print(is_samepatterns(["red","green","green"], ["a", "b", "b"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "c"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i", "j"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"]))
+print(is_samepatterns(["red","green","green"], ["a", "b", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"]))
+print(is_samepatterns(["red","green","</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_samepatterns(colors, patterns):
+    if len(colors) != len(patterns):
+        return False
+    for i in range(len(colors)):
+        if colors[i] == "red" and patterns[i] != "a":
+            return False
+        elif colors[i] == "green" and patterns[i] != "b":
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to check whether it follows the sequence given in the patterns array.
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+"""
+
+
+def is_samepatterns(patterns, string):
+    if len(patterns) != len(string):
+        return False
+    for i in range(len(string)):
+        if patterns[i] != string[i]:
+            return False
+    return True
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def is_samepatterns(arr1, arr2):
+    if len(arr1) != len(arr2):
+        return False
+    for i in range(len(arr1)):
+        if arr1[i] != arr2[i]:
+            return False
+    return True
+
+assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

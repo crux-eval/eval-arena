@@ -1,0 +1,1203 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/158 </h1>
+<pre><code> 
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    mx_ch_cnt, ans = 0, ""
+    for word in words:
+        ch_cnt = len(set(word)) 
+        if ch_cnt > mx_ch_cnt or (ch_cnt == mx_ch_cnt and word < ans):
+            mx_ch_cnt, ans = ch_cnt, word
+    return ans
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[['name', 'of', 'string']], [['name', 'enam', 'game']], [['aaaaaaa', 'bb', 'cc']], [['abc', 'cba']], [['play', 'this', 'game', 'of', 'footbott']], [['we', 'are', 'gonna', 'rock']], [['we', 'are', 'a', 'mad', 'nation']], [['this', 'is', 'a', 'prrk']], [['b']], [['play', 'play', 'play']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[['abcdefg', 'hijklmnop', 'qrstuvwxyz']], [['abacbdce', 'edcbacba', 'dbcaebda']], [['aabbcc', 'dddeee', 'fff']], [['abc', 'bcd', 'def', 'efg']], [['abcd', 'bcde', 'cdef', 'defg']], [['aaaa', 'bbbb', 'cccc']], [['hello']], [['xyz', 'pqr']], [['abc', 'defg']], [['aaa', 'bbb', 'ccc', 'aaa']], [['hellfffo']], [['aabbcc', 'aabbdbabcdcaebdacc', 'dddeee', 'fff']], [['aabbdbabcdcaebdacc', 'dddeee', 'fff']], [['helloyxyz', 'helloxyz']], [['pqr', 'pqr', 'pqr']], [['abcdefg', 'qrstuvwxyz', 'qrstuvwxyz']], [['xyyyz', 'xyyz', 'pqr']], [['rpqr', 'xyz', 'pqr']], [['hello', 'hello']], [['abc', 'aabbcc', 'defg']], [['helloxyz']], [['helloxyz', 'aaaa', 'helloxyz']], [['helloyxyz', 'aaaa', 'helloxyz']], [['hellfff', 'hellfffo', 'hellffbbbfo']], [['llo']], [['abc', 'aaaaa', 'aaaa']], [['helloxyabcdefgz', 'helloxyz']], [['abc', 'bcd', 'def', 'bbcd', 'efg']], [['rpqr', 'xyz', 'pqr', 'pqr']], [['abc', 'bcd', 'bbcd', 'efg']], [['helloyxyz', 'haaaaaello', 'helloxyz', 'helloyxyz']], [['abc', 'aabbcc', 'bcd', 'def', 'xyyyzbcd', 'bbcd', 'efg']], [['abcdefg', 'qrstuvwxyz', 'qrstuedcbacbavwxyz']], [['abc', 'baabbcccd', 'def', 'efg']], [['aaa', 'haaaaaello', 'bbb', 'ccc', 'aaa']], [['abcdefg', 'qrstuvwxbbbyz', 'qrstuvwxyz']], [['xyyyz', 'abcdefg', 'qrstuyz', 'qrstuvwxyz']], [['xyyyzbchelloyxyzd', 'abc', 'aabbcc', 'bcd', 'def', 'xyyyzbcd', 'bbcd', 'efqrstuvwxbbbyzg']], [['abacdbdce', 'edcbacba', 'dbcaebda']], [['helloxyabcdefgz', 'helaabbccloxyabcdefgz', 'helloxyz']], [['xyyyz', 'xyyz', 'efgxyyz', 'pqr']], [['zxyz', 'xyz', 'pqr']], [['aabbcc', 'aabbdbabcdcaebdacc', 'dddeee', 'fff', 'fff', 'dddeee', 'aabbdbabcdcaebdacc']], [['abcrpqrdefg', 'qrstuvwxyz']], [['helloyxyz', 'hellffbbbfohelloxyz', 'aaaa', 'helloxyz']], [['xyz', 'pqr', 'pqr']], [['qpqr', 'pqr', 'pqr', 'pqr']], [['abc', 'bcd', 'bbcd', '']], [['aabbdbabcdcaebdacc', 'abc', 'fff']], [['pqr', 'pqr', 'qr', 'pqr']], [['helloyxyz', 'haaaaaello', 'helloxyz', 'helloyxyz', 'haaaaaello']], [['aaaa', 'bbbb', 'cc']], [['aaa', 'haaaaaello', 'bbb', 'aa', 'aaa']], [['aabbcc', 'aabbdbabcdcaebdacc', 'dddeee', 'fff', 'fff', 'dddeee', 'aabbdbabcdcaebdaccabcdefg', 'dddeee']], [['helloxyabcdefgz', 'abacdbdce', 'helloxyz']], [['aabbdbabcdcaebdacc', 'abc', 'ff', 'fff']], [['bbbb', 'cc']], [['aaaa', 'bbbb', 'cc', 'bbbb']], [['aaaa', 'ccccc', 'cccc']], [['abacdbdce', 'edcbeacba']], [['aabbcc', 'aabbdbabcdcaebdacc', 'dddeee', 'aabbdbabcdcaebdaccdabcdefg', 'fff', 'fff', 'dddeee', 'aabbdbabcdcaebdaccabcdefg', 'dddeee']], [['zhelloxyz', 'helloxyabcdefgz', 'helaabbccloxyabcdefgz', 'helloxyz']], [['abcc', 'abc', 'fff']], [['xyxz', 'pqr', 'pqr']], [['abcd', 'bcde', 'cdef', 'defg', 'abcd']], [['abc', 'bcd', 'dbcaebda', 'bbcd', 'efg', 'bbcd']], [['aaaa', 'cccc', 'cccc']], [['bcde', 'cdef', 'defg']], [['zhelloxyz', 'helloxyz', 'aaaa', 'helloxyz']], [['zhelloxyz', 'helloxyz', 'aaaa', 'helloxyz', 'helloxyz']], [['helloyxyz', 'haaaaaello', 'aa', 'helloxyz', 'helloyxyz']], [['abc', 'baabbcccd', 'def']], [['qpqr', 'pqr', 'pqqr', 'pqr']], [['dddeee', 'aacdcaebdacc', 'fff']], [['abcdefg', 'qrstuvwxyz', 'abcdefg']], [['pqr', 'qr', 'pqr']], [['defg']], [['zxyz', 'xyz', 'pqr', 'pqr']], [['abcc', 'qrstuedcbacbavwxyz', 'abc', 'fff']], [['hijklmnop', 'qrstuvwxyz', 'hijklmnop']], [['aabbdbabcdcaebdacc', 'ff', 'fff']], [['ef', 'abc', 'abc', 'baabbcccd', 'def', 'efg']], [['aaa', 'helaabbccloxyabcdefgz', 'bbbb', 'ccc', 'aaa', 'aaa']], [['helloyxyz', 'haaaaaello', 'helloxyz', 'helloyxyz', 'bbcd', 'bbcd']], [['abbbcdc', 'aabbcbbbbc', 'defdg']], [['abcd', 'cdef']], [['aabbcbbbbc', 'defdg']], [['aabbdbabcdcaeb', 'dddeee', 'fff']], [['helloxyz', 'aaaa', 'helloxydbcaebdaz', 'helloxyz', 'helloxyz']], [['abc', 'abbbcdc', 'ff', 'fff']], [['dddeee', 'aacdcaebdac', 'fff']], [['abc', 'aaaaa']], [['zxyz', 'xyz', 'pqr', 'pqr', 'pqr']], [['qr', 'pqr']], [['ac', 'abc', 'bcd', 'def', 'efg', 'abc']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'HSSbsh']], [['aaddzz', 'qrstuv', 'ijklmn', 'efghip', 'cba']], [['xy', 'yx', 'wyx', 'zyx']], [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['apple', 'orange', 'grape', 'banana', 'kiwi', 'pear']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone']], [['cat', 'tac', 'act']], [['Eagle', 'eAgLe', 'iHaTethis']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz']], [['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape']], [['xy', 'xyx', 'wyx', 'zyx']], [['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'date']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z']], [['wwyx', 'xy', 'yx', 'wyx', 'zyx']], [['wwyx', 'xy', 'yx', 'wyx', 'zyx', 'yx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['o', 'eAgLe', 'iHaTethis']], [['xky', 'xyx', 'wyx', 'xky']], [['abcdefg', 'abckiwidefg', 'hijklmnop', 'qrstuv', 'wxyz']], [['Eagle', 'iHaTethis', 'eAgLe']], [['xy', 'xyx', 'zyx']], [['wwyx', 'm', 'yx', 'wyx', 'zyx']], [['abcdefg', 'grape', 'hwmnop', 'qrstuv']], [['apple', 'orange', 'abanana', 'grape', 'ana', 'banana', 'kiwi', 'pear']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'ape', 'xylophone']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'wxyz']], [['r', 'tac', 'act']], [['xyx', 'wyx', 'zyx', 'zyx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'j', 'v']], [['xy', 'xyx', 'wyx', 'zyx', 'xyx']], [['wwyx', 'm', 'wyx', 'zyx']], [['xky', 'xyx', 'wyx', 'xky', 'xky']], [['xy', 'grape', 'xyx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['wwyx', 'm', 'wyx']], [['supersonic', 'apple', 'orange', 'banana', 'kiwi', 'pear', 'ape', 'xylophone']], [['abcdefg', 'yx', 'hijklmnop', 'qrstuv', 'wxyz']], [['xy', 'xyx', 'wyx']], [['r', 'tac', 'act', 'r', 'tac']], [['hxy', 'xyx', 'zyx', 'xyx']], [['xnyx', 'hxy', 'xyx', 'zyx', 'xyx']], [['abcdefg', 'hijklmnop', 'qrsturv', 'qrstuv', 'wxyz']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['b', 'cabcdefg', 'iHaTethis', 'aaappleddzz', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'mhwmnop', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['b', 'cabcdefg', 'd', 'e', 'f', 'gg', 'h', 'i', 'j', 'zyxk', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'haaappleddzz', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'u', 'z']], [['abcdefg', 'cat', 'qrstuv', 'wxyz']], [['orange', 'grape', 'banana', '', 'pear']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 'aaappleddzz', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['Eagle', 'eAgLe', 'tit']], [['xy', 'xyx', 'zyx', 'xyx']], [['wwyx', 'yx', 'wyx', 'zyx', 'yx']], [['Eagle', 'j', 'eAgLe', 'iHaTethis']], [['abcdefg', 'abckiwidefg', 'hijklmnop', 'qrstuv', 'wxyz', 'abcdefg']], [['apple', 'orange', 'abanana', 'grape', 'ana', 'banana', 'riwi', 'pear', 'ana']], [['xnyx', 'hxfigy', 'xyx', 'zyx']], [['hiijklmnop', 'abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'wxyz']], [['hiijklmnop', 'abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'qrstuv']], [['yx', 'xy', 'yx', 'wyx', 'zyx']], [['Eaglce', 'eAgLe', 'iHaTethis', 'Eagle']], [['b', 'cabcdefg', '', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['xnyx', 'hxfigy', 'xyx', 'zyx', 'zyx']], [['eAgLe', 'iHaTethis']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'supersonic']], [['apple', 'banana', 'cherry', 'elderberry', 'fig', 'o', 'date']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'ana', 'banana', 'riwi', 'pear', 'ana']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '', 'm', 'n', 'o', 'p', 'q', 'r', 'aaappleddzz', 's', 't', 'u', 'v', 'w', 'x', 'y', 'ana', 'cabcdefg']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'ana', 'banana', 'pear', 'ana']], [['abcdefg', 'cat', 'qrstuv', 'wxyz', 'abcdefg']], [['xy', 'yx', 'actyx', 'zyx']], [['wxyz', 'iHaTethis', 'eAgLe']], [['xy', 'yx', 'zyx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '', 'm', 'n', 'o', 'p', 'q', 'r', 'aaappleddzz', 's', 't', 'u', 'v', 'w', 'x', 'y', 'ana', 'cabcdeapefg']], [['b', 'cabcdefg', 'cbad', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['Eagle', 'j', 'eAgLe', 'iHaTethis', 'Eagle']], [['xy', 'xiHaTethisyx', 'wyx']], [['Eagle', 'iHaTethiss', 'eAgLe']], [['xyx', 'xy', 'xyx', 'wyx', 'xyx']], [['Eagle', 'iHaTethi', 'eAgLe']], [['wwyx', 'tac', 'wyx', 'zyx', 'yx']], [['wwyx', 'xy', 'yx', 'wyx', 'yx']], [['Eagle', 'iHaTethis']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'ana', 'banana', 'date', 'pear', 'ana']], [['abcdefg', 'abckiwidefg', 'hijklmnop', 'qrstuv', 'abcxkydefg', 'wxyz', 'abcdefg', 'abcdefg']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'cabcdefg', 'pear', 'ape', 'xylophone']], [['tac', 'wyx', 'zyx', 'yx']], [['xyx', 'wyx']], [['apple', 'orange', 'abanabna', 'grape', 'ana', 'banana', 'kiwi', 'pear']], [['apple', 'banana', '', 'cherry', 'elderberry', 'fig', 'o', 'date']], [['b', 'cabcdHXs9s1Qg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg', 'i']], [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'qcabcdHXs9s1Qg', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['xy', 'xyx', 'zyx', 'xy', 'xy']], [['ta', 'wyx', 'yzyx', 'yxiHaTethisyxx']], [['xy', 'grape', 'xyxx']], [['apple', 'banana', 'cherry', 'date', 'datze', 'elderberry', 'fig', 'grape']], [['xy', 'xyx', 'wyx', 'zyx', 'xy']], [['abcdefg', 'yx', 'hijklmnop', 'qrstuv', 'abcgdefg', 'wxyz']], [['apple', 'orange', 'abanabna', 'grape', 'ana', 'banana', 'bb', 'pear']], [['eAgLe', 'iHaTethis', 'eAgLe', 'iHaTethis']], [['titd', 'yx', 'wyx', 'zyx', 'yx']], [['abckiwidefg', 'hijklmnop', 'qrstuv', 'wxyz']], [['Eagle', 'iHaTethi', 'eAgLee']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z']], [['d', 'wxy75XPBFq19', 'iHaTethis', 'eAgLe']], [['apple', 'orange', 'abanabna', 'grape', 'aana', 'banana', 'kiwi', 'pear']], [['cat', 'act']], [['Eadategle', 'iHaTethis', 'iHaTethis']], [['abcdefg', 'hijklmnop', 'qrstuv', 'abcgdefg', 'wxyz']], [['apple', 'orange', 'abanabna', 'abcgdefg', 'ana', 'banana', 'pear']], [['xy', 'supersonic', 'xyx']], [['yx', 'yxhwmnop', 'xy', 'yx', 'wyx', 'yx']], [['Eadategle', 'xy', 'supersonic', 'xyx']], [['abcdefg', 'hijklmnop', 'qrsturv', 'quv', 'wxyz']], [['Eadategle', 'iHaTethis']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'apeAgLee', 'xylophone']], [['abcdefg', 'hijklmnop', 'qrstuv', 'abcgdefg', 'wxxyz']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'cabcdefg', 'pear', 'ape', 'xylophone', 'ape']], [['ha', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'haaappleddzz', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'u', 'z']], [['Eadategle', 'wxxyz', 'iHaTethis', 'iHaTethis', 'iHaTethis']], [['mhwmnop', 'hijklmnop', 'qrsturv', 'quv', 'wxyz', 'b']], [['cat']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'ha']], [['wwyx', 'wy75XPBFq19', 'txy', 'wyx', 'zyx', 'yx']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'ana', 'banana', 'riwi', 'pear', 'ana', 'orange']], [['eAgLe', 'iHaTethis', 'pear', 'eAgLe', 'iHaTethis']], [['b', 'cabcdefg', 'd', 'e', 'f', 'gefghip', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'xx', 'q', 'r', 'aaappleddzz', 's', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['mhwmnop', 'hijklmnop', 'qrsturv', 'quv', 'wxyz', 'b', 'wxyz']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'actyxv', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['Eadategle', 'iHaTethiselderberry', 'iHaTethis']], [['xnyx', 'hxfigy', 'zyx', 'xyx', 'zyx']], [['xnyx', 'hxfigy', 'xyx', 'zyx', 'xnyx', 'xnyx']], [['o', 'xyx']], [['orange', 'grape', 'banana', '', 'pear', 'pear', 'pear']], [['', 'apple', 'orange', 'abanana', 'grape', 'ana', 'banana', 'kiwi', 'pear']], [['hijklmnop', 'qrsturv', 'wxyz', 'b']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'wu', 'v', 'w', 'x', 'y', 'z']], [['Eagle', 'eAgLe', 'tit', 'eAgLe']], [['b', 'cabcdefg', 'cbad', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'x']], [['yx', 'yxhwmnop', 'xy', 'yx', 'wyx', 'yx', 'yx']], [['wwyx', 's', 'wy75XPBFq19', 'txy', 'wyx', 'zyx', 'yx']], [['arbcdefg', 'qrstuv', 'wxyz', 'wxyz', 'arbcdefg']], [['cba']], [['kiwi', 'tac', 'act', 'r', 'tac']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'b']], [['xy', 'wyx', 'zyx', 'xyx', 'xyx', 'zyx']], [['Eadategle', 'xy', 'abcxkydefg', 'xyx']], [['a', 'b', 'c', 'd', 'e', 'f', 'gg', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'qcabcdHXs9s1Qg', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['o', 'eAgLe', 'iHaTethis', 'o']], [['apple', 'Eadategle', 'iHaTethis', 'iHaTethis']], [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'z']], [['Eagle', 'iHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee', 'eAgLee']], [['r', 'tac', 'act', 'tac']], [['eAgLe', 'xy', 'sutpersonic', 'xyx']], [['b', 'cabcdefg', 'cbad', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'x', 'z']], [['b', 'cabcdefg', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'wu', 'v', 'w', 'x', 'y', 'z']], [['abcdefg', 'qrstuv', 'wxyz']], [['hiijklmnop', 'supersonic', 'apple', 'orange', 'grape', 'kiwi', 'pear', 'xylophone']], [['Eagle', 'Egle', 'iHaTeth', 'eAgLe', 'eAgLe']], [['apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'supersonic']], [['abcdefg', 'cat', 'qrstuv', 'abcdef', 'wxyz', 'abcdefg']], [['b', 'cabcdefg', 'cbad', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', '', 'v', 'w', 'x', 'y', 'z', 'x', 'z']], [['xky', 'xyx', 'xky']], [['lmcnop', 'abcdefg', 'lmnop', 'qrstuv', 'wxyz']], [['hxy', 'xyx', 'xyx']], [['b', 'cabcdefg', 'cbad', 'e', 'f', 'g', 'h', 'titd', 'zyxkz', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'k', 'k']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '', 'm', 'n', 'o', 'p', 'q', 'r', 'aaappleddzz', 's', 't', 'u', 'ee', 'v', 'w', 'x', 'y', 'ana', 'cabcdeapefg']], [['a', 'b', 'c', 'abcxkydefg', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'o', 'p', 'q', 'r', 's', 't', 'tit', 'v', 'w', 'x', 'z']], [['Eadategle', 'xy', 'xy', 'supersonic', 'xyx']], [['apple', 'orange', 'grape', 'bbanana', 'kiwi', 'pear']], [['supersonic', 'appe', 'orange', 'banana', 'kiwi', 'pear', 'ape', 'xylophone', 'banana']], [['eAgLe', 'iHaTethis', 'eAgLe', 'iqHaTethis']], [['Eaglexyx', 'iHaTethiss', 'eAgLe']], [['apple', 'orange', 'abanana', 'grape', 'banana', 'riwi', 'pear', 'ana', 'riwi']], [['xyx', 'xy', 'xyx', 'wyx', 'xyx', 'wyx']], [['o', 'eAgLe', 'iHaTethis', 'y', 'o']], [['abcdefg', 'grape', 'hwmnop', 'qcabcdHXs9s1Qg', 'qrstuv']], [['osupersonic', 'o', 'yzyxo', 'eAgLe', 'iHaTethis', 'y', 'o']], [['a', 'b', 'c', 'titd', 'd', 'e', 'f', 'g', 'h', 'haaappleddzz', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'u', 'z']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'ape', 'xylophone', 'grape']], [['xy', 'xyx', 'x', 'wyx', 'zyx', 'xyx', 'zyx']], [['Eagle', 'eAgLe', 'Eagle']], [['xky', 'xcbaky', 'xyx', 'wyx', 'xky', 'xky']], [['Eadategle', 'actyxv', 'xy', 'abcxkydefg', 'xyx']], [['abcdefg', 'qrstuv', 'wxyz', 'abcdefg']], [['supersonic', 'appe', 'orange', 'banana', 'iHaTeth', 'kiwi', 'pear', 'ape', 'xylophone', 'kiwi']], [['supersonic', 'apple', 'orange', 'xyx', 'grape', 'banana', 'kiwi', 'rpear', 'xylophone', 'datze', 'supersonic']], [['b', 'cbad', 'e', 'f', 'g', 'h', 'titd', 'i', 'j', 'k', 'lsupersonic', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['supersonic', 'appe', 'orange', 'banana', 'xylophoneiHaTethi', 'iHaTeth', 'kiwi', 'pear', 'ape', 'xylophone', 'kiwi']], [['xky', 'wy75XPBFq19', 'xky']], [['supersonic', 'appe', 'orange', 'banana', 'iHaTeth', 'kiwi', 'pear', 'ape', 'xylophone', 'supersoniec', 'kiwi']], [['a', 'b', 'c', 'd', 'e', 'actyxf', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'qcabcdHXs9s1Qg', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['apple', 'orange', 'ee', 'banana', 'kiwi', 'pear', 'xylophone', 'supersonic']], [['xy', 'yx', 'e']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'wxyz', 'wxyz']], [['abcdefg', 'wxyz', 'abckiwidefg', 'hijklmnop', 'qrstuactyxfv', 'wxyz', 'abcdefg']], [['apple', 'orange', 'abanabna', 'abcgdefg', 'ana', 'banana', 'pear', 'abcgdefg']], [['supersonic']], [['a', 'b', 'c', 'd', 'e', 'actyxf', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'qcabcdHXs9s1Qg', 'r', 's', 't', 'u', 'w', 'x', 'y', 'z']], [['xky', 'xcbaky', 'xyx', 'xky', 'xky']], [['orange', 'grape', 'banana', 'date', 'pear']], [['yx', 'wyx', 'zyx', 'yx']], [['o', 'iHaTaethis', 'eAgLe', 'o', 'o']], [['grape', 'xyxx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'gg', 'h', 'i', 'j', 'zyxk', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg', 'w']], [['apple', 'orange', 'abanana', 'grape', 'banana', 'it', 'riwi', 'pear', 'ana', 'riwi']], [['appe', 'orange', 'banana', 'kiwi', 'pear', 'ape', 'xylophone', 'banana', 'appe']], [['osupersonic', 'o', 'quv', 'eAgLe', 'iHaTethis', 'y', 'o']], [['Eaglce', 'eAgLe', 'abanana', 'Eagle', 'eAgLe']], [['abcdefg', 'date', 'qrstuv', 'abcgdefg', 'wxxyz', 'date']], [['supersonic', 'appe', 'orange', 'banana', 'xiHaTethisyx', 'kiwi', 'pear', 'ape', 'xylophone', 'banana', 'kiwi', 'kiwi']], [['eAgLLe', 'iHaTethis', 'eAgLe', 'iHaTethis']], [['apple', 'orange', 'abanabna', 'grape', 'ana', 'banana', 'bb', 'pear', 'bb', 'banana']], [['xnyx', 'hxfigy', 'zyx', 'xyx', 'xyx', 'zyx']], [['yx', 'yxhwmnop', 'xy', 'yx', 'wyfwyxx', 'yx']], [['abcdefg', 'wxyz', 'wxyyz', 'abckiwigdefg', 'hijklmnop', 'qrstuactyxfv', 'wxz', 'abcdefg']], [['iHaTethiss', 'eAgLe']], [['b', 'cabcdefg', 'd', 'f', 'g', 'h', 'i', 'ana', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'wu', 'v', 'w', 'x', 'y', 'z']], [['babckiwidefg', 'abckiwidefg', 'qrstuv', 'wxyz']], [['abcdefg', 'grape']], [['a', 'b', 'c', 'd', 'e', 'actyxf', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'qcabcdHXs9s1Qg', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'i']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'rr', 'k', 'l', 'm', 'actyxv', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'v']], [['xky', 'cbadana', 'xyx', 'xky', 'ana', 'xky']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'h', 'banana', 'riwi', 'pear', 'ana']], [['Eaglexyx', 'hwmnop', 'iHaTethiss', 'eAgLe']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'cabcdefg', 'peiHaTethissar', 'ape']], [['o', 'eAgLe', 'iHaTethis', 'eAgLe']], [['mhwmnop', 'hijklmnop', 'quv', 'wxyz', 'b']], [['apple', 'orange', 'abanabna', 'abcgdefg', 'ana', 'Eagle', 'banana', 'pear', 'abcgdefg', 'Eagle']], [['apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'supersonic']], [['hxy', 'xyx', 'xyx', 'xyx']], [['Eadategle', 'iHaTethis', 'Eaadategle', 'iHaTethis']], [['wxyz', 'wxyyz', 'abckiwigdefg', 'hijklmnop', 'qrstuactyxfv', 'wxz', 'abcdefg']], [['eAgLe', 'TiHaTethis']], [['wy75XPBFq19', 'abckiwidefg', 'qrstuv', 'abcgdefg', 'qrstuuv', 'wxyz']], [['a', 'b', 'c', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'z', 'b']], [['abcdefg', 'grape', 'abcdefg', 'abcdefg']], [['Eadategle', 'iHaiTethis', 'iHaTethiselderberry', 'iHaTethis']], [['abcdefg', 'hijklmnop', 'qrstuv', 'abcgdefg', 'wxyz', 'wxyz']], [['eAgLe', 'xy', 'sutpersonicyxgrape', 'xyx', 'xyx']], [['supersonic', 'ale', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'xylophone']], [['Eagle', 'iHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee']], [['yx', 'wyx', 'zyx', 'yzyx', 'yx']], [['abcdefg', 'abckiwidefg', 'hijklmnop', 'qrstuv', 'abcxkydefg', 'wxyz', 'abcdefg', 'qrstuv']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'o']], [['iHaTethiss', 'eAgLe', 'eAgLe']], [['apple', 'zyx', 'z', 'orange', 'grape', 'banana', 'kiwi', 'pear']], [['b', 'cabcdHXs9s1Qg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'efghip', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg', 'i']], [['apple', 'orange', 'abanana', 'grape', 'banana', 'pear', 'ana', 'riwi']], [['yx', 'wyx', 'zyx', 'yzyx']], [['dabcxkydefg', 'Eadategle', 'actyxv', 'abcxkydefg', 'xyx', 'dabcxkydefg']], [['Eacabcdefggle', 'Eagle', 'eAgLe', 'tit', 'eAgLe']], [['Eagle', 'grape', 'banana', '', 'pear', 'pear', 'pear']], [['supersonic', 'appe', 'orange', 'banana', 'ale', 'iHaTeth', 'kiwi', 'pear', 'apee', 'xylophone', 'supersoniec', 'kiwi']], [['supersonic', 'apple', 'grape', 'banana', 'cabcdefg', 'pear', 'ape', 'xylophone', 'ape']], [['xy', 'xyx', 'wyx', 'zyx', 'xyx', 'xy']], [['arbcdefg', 'qrstuv', 'iHaiTethis', 'wxyz', 'wyfwyxx', 'arbcdefg']], [['datze', 'xky', 'xcbaky', 'xyx', 'xky', 'xky']], [['Eaglce', 'eAgLe', 'Eagle']], [['xnyx', 'hxfigy', 'xyx', 'zyx', 'zyx', 'xnyx']], [['abcdefg', 'qqrstuv', 'wxyz']], [['Eaagle', 'iHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee']], [['b', 'yx', 'cabcdefg', 'd', 'e', 'f', 'gefghip', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'xx', 'q', 'r', 'aaappleddzz', 's', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['b', 'cabcdefg', 'd', 'e', 'f', 'gg', 'h', 'i', 'j', 'zyxk', 'l', 'm', 'n', 'ziHaTethis', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['hijklmnactyxvp', 'abcdefg', 'hijklmnop', 'qrstuv', 'wxyz']], [['Eadategle', 'x', 'actyxv', 'xy', 'abcxkydefg', 'xyx']], [['Eaagle', 'ixteAgLee', 'iHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee', 'eAgLee', 'eAgLee']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'ana', 'peaac', 'banana', 'riwi', 'pear', 'ana', 'orange']], [['hxEacabcdefggley', 'xyx', 'zyx', 'xyx']], [['apple', 'Eadategle', 'iHaTethis', 'iHaTethis', 'apple']], [['supersonic', 'apple', 'orange', 'xyx', 'grape', 'banana', 'kiwi', 'rpear', 'supersconic', 'xylophone', 'datze', 'supersonic']], [['supersonic', 'apple', 'orange', 'banana', 'pear', 'ape', 'xylophone']], [['abckiwidefg', 'hijklmnop', 'qrstuv']], [['mhwmnop', 'hijklmnop', 'qrsturv', 'quv', 'wxyz', 'bhijklmnop', 'wxyz', 'wxyz']], [['applEaglexyxe', 'banana', 'cherry', 'ee', 'datze', 'elderberry', 'fig', 'grape']], [['supersonic', 'abanabna', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'apeAgLee', 'xylophone']], [['Eagle', 'eAgLe']], [['wwyx', 'x', 'wyx', 'yxwy75XPBFq19', 'zyx', 'yx', 'x']], [['abcdefg', 'grape', 'hwmnop', 'qrstuv', 'abcdefg']], [['abcdefg', 'abcdefgcba', 'abckiwidefg', 'hijklmnop', 'qrstuv', 'wxyz']], [['Eagle', 'peiHaTethissariHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee', 'eAgLee']], [['e', 'yx', 'xy', 'sutpersonic', 'wyx', 'zyx']], [['r', 'tac', 'act', 'tac', 'tac']], [['Eaagle', 'iHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee', 'eAgLee', 'eAgLee']], [['eAgLLe', 'iHaTethis', 'eAgLe']], [['superbanana', 'ale', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'xylophone']], [['f', 'xyx', 'zx', 'xyx']], [['supersonic', 'apple', 'grape', 'banana', 'cabcdefg', 'pear', 'ape', 'xylophone']], [['abckiwidefg', 'hijklmno', 'qrstuv', 'wxyz']], [['wwyx', 's', 'wy75XPBFq19', 'txy', 'yabcdef', 'wyx', 'zyx', 'yx']], [['wwyx', 'xy', 'yxx', 'wyx', 'yx']], [['apple', 'orange', 'abanabna', 'HhRQ35', 'ana', 'banana', 'pear', 'ana', 'ana', 'orange']], [['eAgLcbadee', 'Eagle', 'eAgLe']], [['abcdefg', 'grape', 'iHaTeth', 'abcdefg', 'abcdefg']], [['yx', 'wyx', 'zyx', 'yx', 'wyx']], [['Eagle', 'peiHaTethissariHaTethi', 'eAgLcbadee', 'geAggrapeLee', 'eAgLee', 'eAgLee']], [['wwyx', 'yx', 'wyx', 'zyx', 'yx', 'yxx', 'wyx', 'yx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'b']], [['abcdefg', 'cat', 'qrstuv', 'wxyz', 'cat']], [['supersonic', 'ale', 'orange', 'h', 'banana', 'kiwi', 'pear', 'xylophone', 'xylophone']], [['b', 'cabcdefg', 'd', 'e', 'f', 'gg', 'h', 'i', 'zyxk', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'cabcdefg']], [['yx', 'wyx', 'zyx', 'yx', 'wyx', 'yx']], [['Eagle', 'Eagl', 'eAgLe']], [['abcdefg', 'hijklmnop', 'qrstuv', 'abcgdefg', 'wxyz', 'wxyz', 'abcgdefg']], [['q', 'iHaTethiselderberry', 'iHaTethis']], [['dabcxkydefg', 'Eadagle', 'actyxv', 'xyx', 'dabcxkydefg']], [['cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['hxEacabcdefggleyzx', 'f', 'zx', 'xyx']], [['ixteAgLee', 'fig', 'hxfigy', 'xyx', 'zyx', 'zyx']], [['iHasTethiss', 'eAgLeqrstuuv', 'eAgLe']], [['apple', 'orange', 'grape', 'a', 'ana', 'banana', 'kiwi', 'pear', 'ana']], [['yx', 'yxhwmnop', 'xy', 'yx', 'wyx']], [['rr', 'tac', 'act', 'r', 'iHaiTethis']], [['apple', 'grape', 'bbanana', 'kiwi', 'pear', 'bbanana']], [['d', 'wxy75XPBFq19', 'iHaTethis', 'iHaTethiis', 'eAgLe']], [['xky', 'wy75XPBFq19', 'xEaglexyx', 'wy75XPBFq19']], [['wyx', 'zyx', 'zyx']], [['supersonic', 'appe', 'orange', 'banana', 'xylophoneiHaTethi', 'iHaTeth', 'kiwi', 'pear', 'ape', 'xylophone', 'p', 'kiwi']], [['Eeagle', 'Eagle', 'Eagl', 'eAgLe']], [['Eagle', 'eAgLe', 'titv', 'eAgLe']], [['wwyx', 'hxy', 'wyx', 'yxwy75XPBFq19', 'zyx', 'yx', 'x', 'x']], [['eAgLLe', 'eAgLe']], [['tac', 'act']], [['xy', 'cabcdefg', 'zyx']], [['d', 'wxy75XPBFq19', 'iHaTethis', 'iHaTethiis', 'eAgLe', 'iHaTethis']], [['xnyx', 'hxfigy', 'xyx', 'xyx', 'zyx']], [['titv', 'actyxv', 'xy', 'abcxkydefg', 'xyx', 'titv']], [['eAgLe', 'iHaTethis', 'eAgLe', 'iqHaTethis', 'eAgLe']], [['apple', 'orange', 'abanana', 'grape', 'ana', 'banana', 'riwi', 'pear', 'ana', 'pear']], [['Eagle', 'iHaTethi', 'eAgLee', 'iHaTethi']], [['xyx', 'xy', 'xyx', 'wyx', 'xyx', 'wyx', 'xyx']], [['oarbcdefg', 'o', 'eAgLe', 'iHaTethis', 'o', 'eAgLe', 'o']], [['abckiwidefg', 'hijklmnop', 'qrstuv', 'hijklmnop']], [['hijklmnactyxvp', 'abcdefg', 'hijklEaaglemnop', 'qrstuv', 'wxyz']], [['appe', 'orange', 'nana', 'kiwi', 'pear', 'ape', 'xylophone', 'banana', 'appe']], [['aana', 'cat']], [['yx', 'xy', 'ywyx', 'wyx', 'zyx']], [['applEaglexyxe', 'banana', 'fig', 'cherry', 'ee', 'datze', 'elderberry', 't', 'grape']], [['yx', 'wyx', 'xzyx', 'yzyx', 'yzyx']], [['wwyx', 'xy', 'yxx', 'wyx', 'yx', 'wyx']], [['supersonic', 'appe', 'orange', 'banana', 'iHaTeth', 'kiwi', 'pear', 'appe', 'xylophone', 'kiwi']], [['apple', 'orange', 'abanabna', 'abcgdefg', 'ana', 'wxy75XPBFq19', 'banana', 'pear']], [['applEaglexyxe', 'ac', 'banana', 'fig', 'a', 'cherry', 'ee', 'datze', 'elderberry', 't', 'grape']], [['hxy', 'xyx', 'xyx', 'abcgdefg', 'xyx']], [['', 'mEagle', 'apple', 'orange', 'abanana', 'grape', 'ana', 'banana', 'kiwi', 'pear']], [['abcdefg', 'cat', 'qrstuv', 'abcdef', 'wxyz']], [['apple', 'orange', 'abanabna', 'grape', 'ana', 'banana', 'bb', 'iHaTethis']], [['xy', 'xyx', 'x', 'Eeagle', 'wyx', 'zyx', 'xyx', 'zyx']], [['eLAgLe', 'TiHaTethis']], [['r', 'tac', 'acefghipt', 'tac', 'tac']], [['rsonic', 'abanabna', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'apeAgLee', 'xylophone']], [['apple', 'cherry', 'elderberry', 'fig', 'o', 'date']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'i', 'j', 'k', 'l', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'b']], [['apple', 'gdrape', 'bbanana', 'kiwi', 'pear', 'hxfigytt', 'bbanana']], [['hxfigy', 'zyx', 'xyx', 'xyx', 'zyx']], [['abcdefg', 'wxyz', 'wxyyz', 'abckiwigdefg', 'hijklmnop', 'qrstuactyxfv', 'wxz', 'abcdefg', 'abcdefg']], [['abcdefg', 'qrstuv', 'abcgdefg', 'wxyz']], [['Eadategle', 'ta', 'supersonic', 'xyx']], [['mhwmnop', 'hijklmnop', 'qrsturv', 'quv', 'wxyz', 'qrsturv']], [['titd', 'yx', 'wyx', 'zyx', 'yx', 'yx']], [['abcdefg', 'cat', 'qrstuv', 'wxyz', 'abcdefg', 'cat']], [['abcdefg', 'hxy', 'xyx', 'xyx', 'abcgdefg', 'xyx', 'abcdefg']], [['supersonic', 'apple', 'grapeapplEaglexyxe', 'apear', 'banana', 'cabcdefg', 'pear', 'ape', 'xylophone']], [['supersonic', 'apple', 'grapeapplEaglexyxe', 'apear', 'banana', 'cabcdefg', 'per', 'ape', 'xylophone', 'supersonic']], [['yx', 'wyx', 'yzyx']], [['b', 'cabcdefg', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'l', 'm', 'n', 'e', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'o']], [['abmEaecdefg', 'hijklmnop', 'abcgdefg', 'wxxyz']], [['wy75XPBFq19', 'xEaglexyx', 'wy75XPBFq19']], [['osupersonic', 'o', 'yzyxo', 'eAgLe', 'iHaTethis', 'y', 'o', 'o']], [['bqrstuvb', 'xyx', 'wyx', 'zyx', 'xyx']], [['apple', 'orange', 'ee', 'banana', 'kiwi', 'pear', 'xylophone', 'supersonic', 'ear']], [['titd', 'yx', 'wyx', 'zyx', 'yx', 'ititd', 'wyefghipx', 'zyx']], [['xy', 'yx', 'hxyyxhwmnop', 'actyx', 'zyx']], [['Eagle', 'epeiHaTethissariHaTethi', 'eAgLcbadee', 'geAggrapeLee', 'eAgLee', 'eAgLee', 'eAgLee']], [['supersonic', 'appe', 'orange', 'banana', 'xiHaTethisyx', 'kiwi', 'pear', 'ape', 'xylophone', 'haaaappleddzzeaappleddezz', 'banana', 'kiwi', 'kiwi']], [['abcdefg', 'abEadaglecdefg', 'grape']], [['apple', 'orange', 'abanabna', 'abcgdefg', 'ana', 'banana', 'pear', 'abanabna']], [['yxiHaTethisyx', 'wyx', 'zyx', 'yx', 'wyx']], [['xnyx', 'hxy', 'xyx', 'zyx', 'xpxyx', 'xpyx']], [['xnyx', 'zyxx', 'hxy', 'xyx', 'zyx', 'xyx', 'xeefghiitnyx', 'xyx']], [['apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'supersonic', 'grape']], [['apple', 'orange', 'abanana', 'grape', 'it', 'riwi', 'pear', 'ana', 'riwi']], [['xy', 'xcbakyxyx', 'xyx', 'zyx', 'xyx']], [['Eagle', 'eAgLe', 'iHaTethis', 'iHaTethis']], [['abcdefg', 'wxyz', 'wxyyz', 'abckiwigdefg', 'hijklmnop', 'wxz', 'abcdefg', 'abcdefg', 'abcdefg']], [['apple', 'banana', '', 'cherry', 'elderberry', 'fig', 'wxxyz', 'date']], [['abcdefg', 'cat', 'qrstuv', 'wxyz', 'gdrape', 'cat']], [['apple', 'orange', 'grawxyzpe', 'bbanana', 'kiwi', 'pear']], [['eAgLe', 'xy', 'sutpersonicyxgrape', 'xyx', 'xyx', 'eAgLe']], [['bbanaa', 'apple', 'orange', 'grpape', 'bbanana', 'kiwi', 'pear']], [['abcdefg', 'qrstuv', 'wxyz', 'abcdefg', 'qrstuv']], [['yEaaglex', 'wwyx', 'xy', 'yxx', 'wyx', 'yx']], [['Eadategle', 'xy', 'supersonic', 'xyx', 'xyx']], [['Eaglexyx', 'iHaTethiss', 'eAgLe', 'eAgLe']], [['yx', 'wyx', 'zyx', 'yzyx', 'yx', 'zyx']], [['wwyx', 'tac', 'aana', 'zyx', 'yx']], [['xnyx', 'hxfigy', 'zyx', 'xyx', 'xyx', 'yxyx', 'zyx']], [['tacc', 'r', 'o', 'act', 'tac', 'tac', 'tac']], [['xy', 'xyx', 'appe', 'zyx', 'xyx']], [['yxyzyx', 'tialetd', 'yx', 'wyx', 'zyx', 'yx', 'hxyyxhwmnop', 'ititd', 'wyefghipx', 'zyx']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'ha', 'abcdefg']], [['Eagle', 'iHaTethi', 'eAgLcbadee', 'geAgLee', 'eAgLee', 'Eagle']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'xylophone', 'wxyz', 'wxyz']], [['abmEaecdefg', 'abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'wxyz']], [['lmcnop', 'abcdefg', 'bbanaa', 'wxyz']], [['cat', 'acat']], [['qvuv', 'mhwmnop', 'hijklmnop', 'qrsturv', 'quv', 'wxyz', 'qrsturv']], [['yx', 'wxz', 'wyx', 'zyx', 'yzyx', 'yx']], [['aana', 'ccat', 'aana', 'aana']], [['b', 'cabcdefg', 'd', 'cacdefg', 'e', 'f', 'g', 'h', 'i', 'j', 'l', 'm', 'n', 'e', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'o']], [['eAgLe', 'iqHaititTethis', 'iHaTethis', 'eAgLe', 'iqHaTethis']], [['ppear', 'wwyx', 'xy', 'yx', 'wyx', 'zyx']], [['xy', 'xyx', 'x', 'Eeagle', 'wyx', 'zyx', 'zyx']], [['xy', 'xxxyxiHaTethisyx', 'wyx']], [['titv', 'actyxv', 'xy', 'abcxkydefg', 'xyx', 'titv', 'titv']], [['supersonic', 'abanabna', 'orange', 'kiqHaititTethisiwi', 'grape', 'banana', 'kiwi', 'pear', 'apeAgLee', 'xylophone']], [['xky', 'cbabana', 'xyx', 'xky', 'ana', 'xky']], [['yxiHaTethisyx', 'wyx', 'yx', 'wyx']], [['apple', 'orange', 'abanabna', 'abcgdefg', 'ana', 'wxy75XPBFq19', 'baxyxnana', 'pear']], [['wwyx', 'xwyx', 'wyx']], [['xy', 'cabcdefg', 'zyx', 'zyx']], [['apple', 'oarange', 'abanabna', 'ana', 'banana', 'bb', 'pear']], [['xyx', 'xy', 'xyx', 'wyx', 'xyx', 'wyx', 'wyx']], [['a', 'b', 'c', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'abcdef', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'z', 'b']], [['yx', 'zyx', 'yzyx', 'yx']], [['xnyx', 'xyx', 'xyx', 'zyx']], [['xy', 'xyx', 'wyx', 'xyx']], [['supersonic', 'appe', 'orange', 'banana', 'xiHaTethisyx', 'kiwi', 'pear', 'rr', 'ape', 'xylophone', 'haaaappleddzzeaappleddezz', 'banana', 'kiwi', 'kiwi']], [['ppear', 'wwyx', 'xy', 'yx', 'eAgLee', 'wjyx', 'zyx']], [['hiijklm', 'apee', 'apple', 'orange', 'grape', 'kiwi', 'pear', 'xylophone']], [['lmcnpop', 'abcdefg', 'qrmeAgLLeuv', 'lmnop', 'qrstuv']], [['abcdef', 'ghijkl', 'mnopqr', 'stuvwx']], [['aaa', 'bbb', 'ccc', 'ddd']], [['a', 'b', 'c', 'd']], [['aaaa', 'aaaaaa', 'aaaaaaaa', 'aaaaaaaaaa']], [['apple', 'banana', 'cherry', 'dates']], [['abcdefghijklmnopqrstuvwxyz', 'a']], [['word', 'word', 'word']], [['cat', 'dog', 'pig']], [['a', 'b', 'c']], [['supersonic', 'apple', 'orange', 'grape', 'kiwi', 'pear', 'xylophone', 'grape']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone']], [['aaddzz', 'f', 'ijklmn', 'efghip', 'cba']], [['f', 'ijklmn']], [['apple', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape']], [['']], [['saaddzzupersonic', 'apple', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone']], [['aaddzz', 'f', 'd', 'efghip', 'cba']], [['ijklmn', 'efghwxyzip', 'cbca']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone']], [['iHaTethis', 'apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'dwate', 'iHaTethis']], [['HhRQ35', 'gBFWztts67', '75X1PBFq19', '75XPBFq19', 'HXs9s1Q', 'HSSbsh', 'HSSbsh']], [['applle', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear']], [['dwate', 'saaddzzupersonic', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone']], [['f', 'ff', '']], [['aaddzz', 'qrstuv', 'ijklmn', 'cb', 'efghip', 'cba']], [['saaaddzzupersonic', 'xylophonee', 'apple', 'xylopthone', 'm', 'pear', 'xylophone', 'saaaddzzupersonic']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'kiwi']], [['abcdefg', 'hijklmnop', 'qrstuvwxyz', 'wxyz', 'abcdefg']], [['applle', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape']], [['aaddzz', 'qrstuv', 'ijklmn', 'efghip', 'cba', 'qrstuv']], [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['supersonic', 'kiw', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'HSSbzyxsh', 'HXs9s1Q']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'HSSbzyxsh', 'HXs9s1Q', 'gBFWztts67']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wcbcaxyz']], [['applle', 'banana', 'cherry', 'l', 'banaapplena', 'yelderberry', 'fig', 'grape']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'HSSbzyxsh', 'HXs9s1Q', 'gBFWztts67', 'HXs9s1Q']], [['applle', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape', 'cherry']], [['ijklmn']], [['EEaglcbe', 'EE', 'EEagle', 'eAgLe', 'iHaTethis']], [['applle', 'y', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape']], [['Eagle', 'eAgLe', 'iHaTethis', 'Eagle']], [['ff', '']], [['supersonic', 'ae', 'orange', 'grape', 'banana', 'kiwi', 'pear']], [['Eagle', 'eAgLe', 'u', 'iHaTethis', 'Eagle']], [['appHSSbzyxshle', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape']], [['apple', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone']], [['supersonic', 'apple', 'xylopthone', 'epear', 'grape', 'm', 'kiwi', 'pear', 'grape']], [['aaddzz', '', 'HXs9s1Q', 'efghip', 'cba', 'aaddzz']], [['cat', 'act', 'tac', 'cat']], [['ijklmn', 'efghwxyzip']], [['ijklmn', 'efghwxyezip', 'efghwxyzip']], [['hijklmnop', 'wcbcaxyz', 'wcbcaxyz']], [['cat', 'act', 'tac', 'cat', 'cat']], [['f']], [['v', 'hijklmnop', 'qrstuv', 'wxyz']], [['apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'banana']], [['banana', 'l', 'elderberry', 'fig', 'grape', 'cherry']], [['ijklnmn', 'efghwxyzip', 'cbca']], [['kiw', 'abcdefg', 'wcbcawxyz', 'hijklmnop', 'qrstuv', 'wcbcaxyz']], [['kiw']], [['HXs9s1', 'HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'HSSbsh']], [['dwate', 'saaddzzupersonic', 'xylopthone', 'm', 'kiwi', 'perar', 'ae']], [['applle', 'y', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape']], [['supersonic', 'apple', 'orange', 'grape', 'kiwi', 'pear', 'xylophone']], [['abcdefg', 'hijklmnop', 'qrstuv', 'wxyz', 'qrstuv']], [['aaddzz', 'qrstuv', 'ijklmn', 'efghip', 'qrstuv']], [['icbajklmn', 'efghwzip']], [['b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']], [['EwEaglcbe', 'EE', 'EEagle', 'eAgLe', 'iHaTethis']], [['', 'ijklmn', 'ikjklmn', 'efghwxyzip']], [['EEaglcbe', 'EE', 'eAgLe', 'iHaTethis']], [['wcbcaxyz', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'fg', 'grape']], [['abcdefg', 'hijklmnop', 'qrstuvwxyz', 'wxyz', 'abcdefg', 'hijklmnop']], [['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'z', 'xylophone', 'supersonic']], [['Eagle', 'eAgLe', 'iHaTethis', 'Eagle', 'Eagle']], [['apple', 'banana', 'cherry', 'date', 'elderberry', 'chery', 'efghwxyezip', 'grape', 'apple']], [['applle', 'y', 'banana', 'cherry', 'l', 'banaapplena', 'fig', 'grape']], [['xy', 'ijklmn', 'ikjklmn', 'efghwxyzip', 'ijklmn']], [['abcdefg', 'hijklmnop', 'qrstuvwxyz', 'wxyz', 'abcdefg', 'abcdefg']], [['supersonic', 'apple', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone']], [['supersonic', 'kiw', 'apple', 'orange', 'grape', 'banana', 'pear', 'xylophone']], [['supersonic', 'apple', 'grape', 'banana', 'kiwi', 'pear']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'tac', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67', 'HXs9s1Q']], [['c', '']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'xylophoone', 'pear', 'xylophone', 'grape', 'z', 'xylophone', 'supersonic']], [['abcdgefg', 'x', 'hijklmnop', 'qrstuv', 'wxyz']], [['apple', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape', 'cherry']], [['xy', 'yx', 'wyx', 'zyx', 'yx']], [['dwate', 'saaddzzupersonic', 'm', 'kiwi', 't', 'xylophone']], [['aaddzz', 'qrstuv', 'ijklmn', 'cb', 'efgphip', 'cba']], [['banana', 'elderberry', 'fig', 'grape', 'chehrry']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'dwate', 'pear', 'xylophone', 'kiwi']], [['saaddzzupersonic', 'apple', 'xylopthone', 'm', 'kiwi', 'pear']], [['ijklmn', 'ijklmn']], [['qrstuv', 'ijklmn', 'efghip', 'qrstuv', 'ijklmn']], [['qrstuv', 'ijklmn', 'efghip', 'qrstuv', 'ijklmn', 'ijklmn']], [['applle', 'y', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape', 'cherry', 'banana']], [['hijklmnop', 'qrstuv', 'wxyzs', 'wxyz']], [['banana', 'l', 'elderberry', 'fig', 'grape', 'cherry', 'cherry', 'banana']], [['abcdefg', 'hijklmnop', 'abcdefg', 'wxyz', 'qrstuv']], [['EEaglcbe', 'EE', 'eAgLe', 'EEaglcbe']], [['aaddzz', 'ijklmn', 'qrstuv']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'kiwi', 'supersonic']], [['datev', 'v', 'hijklmnop', 'qrstuv', 'wxyz']], [['apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'banana', 'banana']], [['jijklmn', 'ijklmn']], [['ijklnmn', 'efghwxyzip', 'cbbcca', 'cbcca']], [['EEaglcbe', 'EE', 'EEagle', 'eAgLe']], [['Eagle', 'eAgL', 'iHaaTethis']], [['cc', 'c', '']], [['qrsutuv', 'aaddzz', 'qrstuv', 'ijklmn', 'efghip', 'cba', 'qrstuv']], [['applle', 'y', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape', 'elderberry']], [['HhRQ35', '75XPBFq19', 'HXs9s1Q', 'HSSbzyxsh', 'HXs9s1Q', 'gBFWztts67', 'HhRQ35']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'epear', 'grape', 'm', 'kiwi', 'pear', 'grape']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'pear']], [['HhRQ35', 'gBFWztts67', '75X1PBFq19', '75XPBFq19', 'HXs9s1Q', 'gBFWzFtts67', 'HSSbsh', 'HSSbsh']], [['xy', 'yx', 'zyx', 'xy']], [['abcdefg', 'hijklmnop', 'qrtuv']], [['aaddzz', '', 'HXs9s1Q', 'efghip', 'f', 'cba', 'aaddzz']], [['jijlklmn']], [['abcdefg', 'hijklmnop', 'wcbz', 'qrstuv', 'wcbcaxyz']], [['hijklmnop', 'a', 'wcbcaxyz', 'wcbcaxyz', 'wcbcaxyz', 'hijklmnop']], [['supersonic', 'orange', 'grape', 'banana', 'kiwi', 'apear']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'epear', 'grape', 'dwate', 'm', 'kiwi', 'pear', 'grape']], [['abcdefg', 'hijklmnop', 'hijklkmnop', 'wxyzz', 'qrstuvwxyz', 'wxyz', 'abcdefg']], [['applle', 'y', 'banana', 'cherry', 'l', 'banaapplena', 'fig', 'rgrape']], [['supersonic', 'kiw', 'apple', 'orange', 'grape', 'banana', 'peqrstuvar', 'xylophone']], [['ijklmmn', 'efghwxyezip', 'efghwxyzip']], [['supersonic', 'kiw', 'apple', 'orange', 'banana', 'kiwi', 'pear', 'xylophone']], [['supersonic', 'apple', 'xylopthone', 'm', 'kiwi', 'pear', 'Eagle', 'xylophone']], [['efghwezip']], [['applle']], [['HXs9s1', 'HhRQ35', 'HhRQ35h', 'gcbbccaBFWztts67', '75XPBFq19', 'HSSbsh']], [['supersonic', 'apple', 'xylopthone', 'epear', 'grape', 'm', 'kiwi', 'pear', 'gxylophoneerape']], [['cat', 'act', 'tac', 'catcb', 'cat']], [['chery', 'efghwxyzip', 'cbca']], [['ijklnmn', 'efghwxyzip', 'cbca', 'efghwxyzip']], [['l', 'elderberry', 'fig', 'grape', 'cherry', 'cherry', 'banana']], [['xy', 'ikjklmn', 'efghwxyzip', 'ijklmn']], [['jimjlk', 'jimjlklmn']], [['fg', 'ikjklmn', 'efghwxyzip', 'ijklmn']], [['banana', 'l', 'elderberry', 'fig', 'grape', 'cherry', 'elderberry']], [['HXs9s1', 'HhRQ35', 'gcbbccaBFWztts67', '75XPBFq19', 'HSSbsh']], [['applle', 'y', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'pgrape']], [['supefgphipersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'kiwi']], [['elderberryEEaglcbe', 'Echehrry', 'EEagle', 'eAgLe', 'elderberryEEaglcbe']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'z', 'xylophone', 'ccff']], [['supersonic', 'apple', 'xylopthone', 'grape', 'peear', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone', 'grape']], [['supersonic', 'ae', 'orange', 'grape', 'kiwi', 'orangchehrrye', 'pear']], [['apple', 'banana', 'cherry', 'l', 'fig', 'grape', 'cherry']], [['hijklmnop', 'wcbca', 'wcbcaxyz', 'wcbcaxyz', 'wcbca']], [['apple', 'banana', 'cherry', 'l', 'elderberry', 'fifg', 'grape', 'l']], [['ff', '', '']], [['dwate', 'saaddzzupersonic', 'mm', 'kiwi', 't', 'xylophone']], [['supersonic', 'apple', 'xylopthone', 'grape', 'peHXs9s1ear', 'kiwi', 'pear', 'xylophone', 'grape', 'xylopthone', 'xylophone', 'qrsutuv']], [['applle', 'banana', 'cherry', 'l', 'elderberry', 'l', 'grape', 'cherry']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone', 'apple', 'xylophone']], [['supersonic', 'apple', 'orange', 'qrsutuv', 'ap', 'banana', 'kiwi', 'pear', 'orange']], [['supersonic', 'apple', 'xylopthone', 'epear', 'grape', 'm', 'kiwi', 'wyx', 'pear', 'grape']], [['appllle', 'y', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'elderberry']], [['iHaTethis', 'apple', 'banana', 'cherry', 'elderberry', 'fig', 'grape', 'dwate', 'iHaTethis']], [['datev', 'v', 'hijklmnop', 'qrstuv', 'wxyz', 'hijklmnop']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'kiwi', 'supersonic', 'kiwi']], [['abcdgefg', 'x', '', 'hijklmnop', 'qrstuv', 'wxyz']], [['l', 'elderberry', 'fig', 'grape', 'nbanana', 'cherry', 'cherry', 'banana']], [['abcdefg', 'banaapplena', 'qrstuv', 'wcbcaxyz']], [['elderberryfigEEaglcbe', 'Echehrry', 'EEagle', 'eAgLe', 'elderberryEEaglcbe']], [['EEaglcbe', 'ueAgL', 'EE', 'EEagle', 'eAgLe']], [['hijklmnop', 'a', 'wcbcaxyz', 'wcbcaxyz', 'hijklmjnop', 'wcbcaxyz', 'hijklmnop']], [['appllle', 'y', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'elderberry', 'banana']], [['EEaglcbe', 'EE', 'eAgLe']], [['appll', 'banana', 'cherry', 'l', 'banaapplena', 'yelderberry', 'fig', 'grape']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'grape', 'rgrape', 'kiwi', 'grape']], [['EEaglcbe', 'EE', 'eAgLe', 'iHaTethis', 'EEaglcbe']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'cherry', 'HSSbsh', 'cherry']], [['applle', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grrape', 'cherry', 'b']], [['qrstuv', 'ijklmn', 'efghip', 'qrstuv', 'ijklmn', 'HXs9s1', 'ijklmn']], [['datev', 'v', 'hijklmnop', 'qrstuv', 'gBFWztts67wxyz']], [['dwate', 'saaddzzupersonic', 'mm', 'kiwi', 't', 'h']], [['Eagle', 'eAgLe', 'Eagele', 'iHaTethis']], [['v', 'hijklmnop', 'qrstuv', 'hijklmnnop', 'wxyz']], [['dwate', 'saaddzzupersonic', 'xylopthone', 'm', 'pear', 'xylophone']], [['EEaglcbe', 'EE', 'grape', 'iHaTethis', 'EEaglcbe']], [['f', 'ff']], [['abcdefg', 'wcbcaxyz', 'qrtuv']], [['chehrry']], [['qrstuv', 'hijklmnop', 'qrstuv', 'wxyz', 'qrstuv']], [['q']], [['aaddzz', 'injklmn', 'qrstuv']], [['cc', 'c', '', '', '']], [['iHaTethis', 'apple', 'banana', 'cherry', 'date', 'ae', 'fig', 'grape', 'dwate', 'iHaTethis', 'grape']], [['applle', 'y', 'banana', 'chey', 'l', 'elderberry', 'fig', 'grape', 'elderberry']], [['abcdefg', 'hijklmnop', 'ijklmn', 'wcbcaxyz']], [['l', 'grape', 'cherry', 'cherry', 'banana']], [['elderberryEEaglcbe', 'Echehrry', 'EEagle', 'eAgLe']], [['EE', 'eAgLee', 'EEaglcbe']], [['applle', '', 'banana', 'cherry', 'l', 'banaapplena', 'fig', 'grape', 'banaapplena', 'grape']], [['qrstuvwxyz', '']], [['dwate', 'cc', 'c', '']], [['supersonic', 'apple', 'kiwefghipi', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone', 'kiwi', 'supersonic', 'kiwi', 'pear']], [['supersonic', 'apple', 'orange', 'grape', 'a', 'banana', 'kiwi', 'dwate', 'ange', 'pear', 'xylophone', 'kiwi']], [['ijklmn', 'ijklmn', 'ijklmn']], [['dwate', 'saaddzzupersonic', 'xylopthone', 'm', 'pear']], [['hijklmnop', 'wcbca', 'i', 'wcbcaxyz']], [['supersonic', 'apple', 'orange', 'grape', 'banana', 'kiwi', 'r', 'xylophone', 'kiwi', 'supersonic', 'supersonic']], [['gcbbccaBFWztts67', 'act', 'tac', 'catcb', 'cat', 'act', 'tac']], [['q', 'q']], [['apple', 'xylopthone', 'm', 'gBFWztts67', 'xylophone']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HSSbzyxsh', 'HXs9s1Q', 'gBFWztts67']], [['gBFWztts67wxyz', 'saaddzzupersonic', 'xylopthone', 'm', 'pear']], [['abcdefg', 'hijklmnop', 'qrstuvwxyz', 'wxyz', 'abcdefg', 'jimjllklmn']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'xylophoone', 'pear', 'xylophone', 'grape', 'zz', 'xylophone', 'supersonic']], [['y', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape']], [['supersonic', 'ae', 'orange', 'grape', 'kiwi', 'pear']], [['hijklmnop', 'wcbcaxyz', 'hijklmjnop', 'wcbcaxyz', 'hijklmnop']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67']], [['appllle', 'banana', 'cherry', 'l', 'elderberry', 'elderberry', 'banana']], [['qrstuv', 'ijkl', 'efghip', 'ijklmn']], [['hijklmnop', 'a', 'wcbcaxyz', 'wcbcaxyz', 'hijklmjnop', 'wcbcaxyz', 'hijklmnop', 'hijklmjnop']], [['dwate', 'saaddzzupersonic', 'mmjijlklmn', 'kiwi', 't', 'h']], [['jijlklmln', 'jijlklmn']], [['cat', 'act', 'tac', 'catcb', 'cat', 'cat']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'tac', 'HXs9s1Q', 'qrtuv', 'HXs9s1Q', 'gBFWztts67', 'HXs9s1Q']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone', 'grape']], [['supersonic', 'EEaglcbee', 'xylopthone', 'grape', 'm', 'kiwi', 'xylophoone', 'pear', 'xylophone', 'grape', 'z', 'xylophone', 'supersonic']], [['EEaglcbe', 'hijklkmnop', 'grape', 'iHaTethis', 'EEaglcherrycbe']], [['wcbcaxyz', 'banana', 'HhRQ35fg', 'cherry', 'l', 'elderberry', 'kiwefghipifig', 'fg', 'grape']], [['dasaaddzzupersonictev', 'v', 'hijklmnop', 'qrstuv', 'HSSbzyxsh', 'wxyz']], [['jimjlk', 'elderberryEEaglcbe']], [['appllle', 'y', 'banana', 'rry', 'l', 'elderberry', 'fig', 'elderberry', 'banana']], [['ff', 'y', '', '', '']], [['ijklmmn', 'efghwxyezip', 'immn', 'efghwxyzip']], [['applle', 'y', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grape', 'elderberry', 'elderberry']], [['EEaglcbe', 'EE', 'EEagl', 'eAgLe', 'iHaTethis']], [['xy', 'icbajklmn', 'yx', 'zyx', 'xy']], [['applle', 'y', 'qrstuvl', 'banana', 'cherry', 'l', 'banaapplena', 'fig', 'rgrape']], [['supersonic', 'apple', 'kiwefghipi', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'kiwi', 'supersonic', 'kiwi', 'pear']], [['chery', 'efghwxyzip', 'cherhy', 'cbca']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'HXs9s1Q', 'gBFWztts67']], [['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'elderberry']], [['grrape', 'xylopthone', 'm', 'pear', 'xylophone', 'm']], [['supersonic', 'apple', 'grhijklmjnope', 'orange', 'grape', 'kiwi', 'pear', 'xylophone', 'grape']], [['ijklnmn', 'cbca']], [['hchehr']], [['EEaglcbe', 'EErgrape', 'EE', 'eAgLe']], [['hijklmnop', 'qrstuvwxyz', 'wxyz', 'nbanana', 'hiEEagljklmnop', 'hijklmnop']], [['lijklmn', 'abcdefg', 'hijklmnop', 'ijklmn', 'wcbcaxyz']], [['appllgcbbccaBFWztts67e', 'y', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape']], [['gcbbccaBFWztts67', 'tac', 'catcb', 'cat', 'act', 'tac']], [['grrape', 'xylopthone', 'm', 'pear', 'xylophone', 'm', 'm']], [['hijklmnop', 'qrstuvwxyz', 'wxyz', 'ywxyz', 'nbanana', 'hiEEagljklmnop', 'hijklmnop']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'grape', 'rgrape', 'kiwi', 'mm', 'grape']], [['supersonic', 'apple', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone', 'm']], [['dwate', 'saaddzzupersonic', 'xylopthone', 'pea', 'm', 'pear', 'm']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'epear', 'm', 'kiwi', 'pear', 'grape']], [['ff', 'y', '', 'banana', '']], [['dwate', 'ccc', 'c', '']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'grape', 'rgrape', 'kiwi', 'grape', 'grape', 'supersonic']], [['iHaTethis', 'iHaTethiis', 'apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'dwate', 'iHaTethis']], [['ijklmmn', 'efghwxyezip', 'immn', 'efghwxyzip', 'ijklmmn']], [['dwaxylophoneete', 'saaddzzupersonic', 'xylopthone', 'm', 'pear', 'xylophone', 'xylopthone']], [['qrsutuv', 'aaddzz', 'qrstuv', 'ijklmn', 'efghip', 'cba', 'qrstuv', 'cba']], [['abcdgefg', 'eAgLe', 'hijklmnop', 'qrstuv', 'wxyz', 'eAgLe']], [['supersonic', 'apple', 'grhijklmjnope', 'orange', 'grape', 'pear', 'xylophone', 'grape']], [['hchehr', 'hchehr']], [['qrstuv', 'ijklmn', 'efghip', 'qrstuv', 'HXs9s1', 'ijklmn']], [['wcbcaxyz', 'banana', 'cherry', 'grappe', 'l', 'fig', 'fg', 'grape', 'grappe']], [['abcdefg', 'ijklmn', 'wcbcaxyz']], [['aaddzz', 'qrstuv', 'ijklmn', 'cb', 'efghip', 'cba', 'cb']], [['dwaefghwxyezipte', 'dwate', 'datev', 'c', '']], [['apple', 'n', 'cherry', 'date', 'elderberry', 'fig', 'grape']], [['abcdefg', 'hijklmnop', 'qrstuv', 'akiwibcdefg', 'wcbcaxyz']], [['supersonic', 'apple', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone', 'm', 'kiwi']], [['iHaTethis', 'apple', 'banana', 'cherry', 'date', 'ae', 'fig', 'grape', 'dwate', 'iHaTethefghwxyezipis', 'grape']], [['abcdefg', 'hijklmnop', 'abcdem', 'wxyz', 'qrstuv']], [['supersonic', 'apple', 'orange', 'grape', 'a', 'banana', 'kiwi', 'dwate', 'ange', 'pear', 'xylophone']], [['hijklmnop', 'qrstuvwxyz', 'wxyz', 'nbanana', 'hiEEagljklmnop', 'hijklmnop', 'wxyz']], [['HhRQ35', '75XPBFq19', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'wcbcawxyz', 'HXs9s1Q', 'gBFWztts67']], [['mhijklmnop', 'wcbbcaxyz', 'jijlklmn', 'wcbcaxyz']], [['dasaaddzzupersonictev', 'v', 'hijklmnop', 'qrstuv', 'HSSbzyxsh']], [['dwate', 'c', 'Eagle']], [['applle', 'y', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grapse', 'elderberry', 'elderberry']], [['apple', 'xylopthone', 'm', 'gBFgcbbccaBFWztts67Wztts67', 'xylophone']], [['cc', 'c', '75XPBFq19', '']], [['injklmn', 'qrstuv', 'injklmn']], [['supersonic', 'apple', 'xylopthone', 'grape', 'peHXs9s1ear', 'kiwi', 'pear', 'bananaar', 'xylophone', 'grape', 'xylopthone', 'xylophone', 'qrsutuv']], [['supersonic', 'iHaTethiis', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone']], [['applle', 'y', 'chey', 'l', 'elderberry', 'fig', 'grape', 'elderberry']], [['applle', 'y', 'nbanana', 'cherry', 'l', 'elderberry', 'fig', 'grape', 'elderberry', 'elderberry']], [['HhRQ35', 'gBFWztts67', '7P5XPBFq19', '75X1PBFq19', '75XPBFq19', 'HXs9s1Q', 'HSSbsh', 'HSSbsh', '75X1PBFq19']], [['supersonic', 'iHaTethiis', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xlylophone']], [['supersonic', 'apple', 'orange', 'qrsutuv', 'ap', 'banana', 'kiwi', 'pear', 'orange', 'qrsutuv']], [['', 'act', 'tac', 'cat', 'cat']], [['iHaTethis', 'apple', 'banana', 'cherry', 'elderberry', 'fig', 'grape', 'dwate', 'bananaar']], [['supersonic', 'apple', 'gerape', 'HhRQ35', 'iHaTethis', 'm', 'kiwi', 'pear', 'grape']], [['aaddzz', 'hijklkmnop', 'qrstuv', 'ijklmn', 'cb', 'efghip', 'cba', 'cbakiwibcdefg']], [['abcdgefg', 'eAgLe', 'hijklmnop', 'qrstuv', 'wcbcaxyzyz', 'eAgLe']], [['iHaTethis', 'apple', 'banana', 'cherry', 'elderberry', 'fig', 'grape', 'dbwate', 'dwate', 'bananaar']], [['HhRQ35', 'zz', 'gBFWztts67', '75XPBFq19', 'wcbcawxyz', 'HXs9s1Q', 'gBFWztts67']], [['aaddzz', 'ijklmn']], [['y', 'banana', 'cherry', 'rry', 'yelderberry', 'banaapplena', 'elderberry', 'fig', 'grjHIjpape', 'banaapplena']], [['abcdefg', 'd', 'hijklmnop', 'abcdem', 'wxyz', 'qrstuv']], [['catcb', 'supersonic', 'apple', 'aaddzz', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone', 'apple', 'xylophone']], [['supersonic', 'apple', 'xylopthone', 'grape', 'm', 'kiwi', 'xylophoone', 'pear', 'xylophone', 'grape', 'z', 'xylophone']], [['abcdefg', 'd', 'hijklmnop', 'abcdem', 'wxyz', 'qrstuv', 'abcdem']], [['mhijklmnop', 'wcbbcaxyz', 'jijlklmn', 'wcbcaxyz', 'jijlklmn']], [['supersonic', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone']], [['catcb', 'supersonic', 'apple', 'aaddzz', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'appapearle', 'grape', 'xylophone', 'appple', 'xylophone', 'appple']], [['aaddzz', 'f', 'd']], [['apear', 'c', '75XPBFq19', '', '', '']], [['ikjklmn', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape']], [['apple', 'kiwefghipi', 'orange', 'grape', 'banana', 'kiwi', 'kiwefghipi', 'pear', 'orcheyange', 'kiwi', 'supersonic', 'kiwi', 'pear']], [['c']], [['abcdefg', 'hijklmnop', 'hijklkmnop', 'qrstuvwxyz', 'wxyz', 'abcdefg', 'wxyz']], [['elderberryEEaglcbe', 'Echehrry', 'EEagle', 'eAgLe', 'elderberryEEaglcbe', 'elderberryEEaglcbe']], [['applle', 'banana', 'cherry', 'l', 'banaapplena', 'elderberry', 'fig', 'grape', 'l']], [['saaaddzzupersonic', 'xylophonee', 'apple', 'xylopthone', 'm', 'pear', 'saaaddzzupersonic']], [['supersonic', 'kiw', 'apple', 'orange', 'grape', 'peqrstuvar', 'banana', 'pear', 'xylophone']], [['hijklmnop', 'HhRQ35h', 'hijklmjnop', 'wcbcaxyz', 'hijklmnop', 'wcbcaxyz']], [['apple', 'gerape', 'xylopthone', 'epear', 'grape', 'm', 'kiwi', 'actm', 'pear', 'grape', 'pear']], [['supersonic', 'apple', 'gerape', 'xylopthone', 'peacheyrr', 'pearr', 'grape', 'm', 'pgrhijklmjnopeear', 'kiwi', 'pear', 'grape']], [['HhRQ35', 'gBFWztts67', '75XPBFq19', 'tac', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67']], [['dwate', 'c', 'Egagle', 'Eagle']], [['applle', '', 'banana', 'cherry', 'l', 'banaapplena', 'fiig', 'grape', 'banaapplena', 'grape', 'banana']], [['iHaTethis', 'apple', 'banana', 'cherry', 'elderberry', 'fig', 'grape', 'w', 'iHaTethis']], [['gcbbccaBFWztts67', 'act', 'tac', 'catcb', 'cat', 'act', 'tac', 'gcbbccaBFWztts67']], [['HhRQ35', '75XPBFq19', 'HXs9s1Q', 'HXs9s1Q', 'gBFWztts67', 'HXs9ss1Q', 'HXs9s1Q', 'gBFWztts67']], [['saaddzzupersonic', 'oxylopthone', 'm', 'kwi', 'p', 'xylophone']], [['applle', 'y', 'banana', 'cherry', 'l', 'dwate', 'elderberry', 'fig', 'grape']], [['saaddzzupersonic', 'apple', 'x', 'xylopthone', 'm', 'kiwi', 'pear', 'xylophone', 'xylophone']], [['apple', 'xylopthone', 'm', 'xe', 'gBFWztts67', 'xylophone', 'xe', 'm', 'm']], [['supersonic', 'apple', 'kiwefghipi', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'kiwi', 'supersonic', 'kiwi', 'pear', 'grape']], [['supersonic', 'ae', 'orange', 'grape', 'kiwi', 'orangchehrrye', 'c']], [['applle', 'y', 'chey', 'l', 'elderberry', 'fig', 'grape', 'elderberry', 'l']], [['applle', 'banana', 'cherry', 'll', 'fig', 'grape']], [['ijklnmn', 'efghwxyzip', 'cbbcca', 'cbccca']], [['gBFkiwtts67', 'apple', 'm', 'gBFWztts67', 'appple']], [['supersonic', 'apple', 'xylophonechehrry', 'xylopthone', 'grape', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone']], [['dwatwe', 'ccc', 'c', '', 'ccc']], [['applleEEagl', 'banana', 'cherry', 'l', 'elderberry', 'fig', 'grrape', 'cherry', 'b']], [['ijklnmn', 'efghwxyzip', 'ijklnmn']], [['wcbcaxyzyz', 'applle', 'chey', 'l', 'elderberry', 'fig', 'grape', 'elderberry', 'l']], [['Eagle', 'jijlklmlneAgLe', 'eAgLe', 'u', 'iHaTethis', 'Eagle']], [['supersonic', 'apple', 'xylopthone', 'epear', 'grape', 'm', 'kiwi', 'wyx', 'pear', 'grape', 'pear', 'supersonic']], [['ijklmmn', 'ijklmn', 'ijklmn']], [['', 'ijklmn']], [['v', 'hijklmnop', 'qrstuv', 'grhijklmjnope']], [['dwatell', 'saaddzzupersonic', 'mm', 'b', 't', 'h']], [['qrtuv', 'orange', 'grape', 'banana', 'kiwi', 'pear', 'xylophone']], [['wcbcaxyz', 'banana', 'mhijklmnop', 'cherry', 'l', 'elderberry', 'kiwefghipifig', 'fg', 'grape', 'cherry', 'fg']], [['catcb', 'supersonic', 'apple', 'xylopthone', 'y', 'm', 'kiwi', 'pear', 'xylophone', 'grape', 'xylophone', 'apple', 'xylophone']], [['qrstuv', 'ijklmn', 'efghip', 'qrstuv', 'ijklmn', 'eghip', 'HXs9s1', 'ijklmn']], [['abcdefg', 'abcdem', 'hijklmnop', 'qrstuv', 'wcbcaxyz']], [['wcbcaxyz', 'banana', 'cherry', 'l', 'elderberry', 'fg', 'grape']], [['abcdefg', 'hijklmnop', 'abcdefg', 'wxangez', 'qrstuv', 'abcdefg']], [['supersonic', 'apple', 'orange', 'grape', 'kiwi', 'r', 'kiwi', 'supersonic', 'supersonic', 'supersonic', 'supersonic', 'apple']], [['EE', 'eAgLEageleee', 'eAgLee', 'EEaglcbe']], [['EEaglcbe', 'ueAgL', 'EEagle', 'eAgLe']], [['hijklmnop', 'a', 'wcbcaxyz', 'wcbcaxyz', 'wcbcaxyz', 'hijklmnop', 'hijklmnop']], [['oxylopthone', 'hijklmnop', 'abcdem', 'wxyz', 'qrstuv']], [['apple', 'xylopthone', 'm', 'xe', 'gBFWztts67', 'xylophone', 'xe', 'm', 'm', 'xe']], [['ijklmmn', 'efghwxyezip', 'efghwxzyezip', 'efghwxyzip']], [['qrstuvwxyz', 'yx']], [['supersonic', 'apple', 'xylopthone', 'grape', 'peHXs9s1ear', 'kiwi', 'pear', 'grape', 'xylopthone', 'xylophone', 'qrsutuv']], [['hijklmnnop']], [['oxylopthone', 'hijklmnop', 'abcdem', 'hmijklmnop', 'wxyz', 'qrstuv']], [['hijklmnnop', 'c', 'Egagle', 'Eagle']]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    if not words:
+        return ""
+
+    max_unique = 0
+    max_word = ""
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique or (unique_chars == max_unique and word < max_word):
+            max_unique = unique_chars
+            max_word = word
+
+    return max_word</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_word = words[0]
+    for word in words[1:]:
+        if len(set(word)) > len(set(max_word)):
+            max_word = word
+        elif len(set(word)) == len(set(max_word)):
+            max_word = min(word, max_word)
+    return max_word</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_unique_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_unique_word = word
+        elif unique_chars == max_unique_chars:
+            max_unique_word = min(max_unique_word, word)
+
+    return max_unique_word</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a Python markdown block:
+
+```python
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_words = []
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_words = [word]
+        elif unique_chars == max_unique_chars:
+            max_words.append(word)
+
+    if len(max_words) == 1:
+        return max_words[0]
+    else:
+        return sorted(max_words)[0]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    max_word = max(words, key=lambda word: (len(set(word)), word))
+    return max_word</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars or (unique_chars == max_unique_chars and word < max_word):
+            max_unique_chars = unique_chars
+            max_word = word
+
+    return max_word
+
+# Test cases</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_word = ""
+    max_count = 0
+    for word in words:
+        if len(set(word)) > max_count:
+            max_count = len(set(word))
+            max_word = word
+        elif len(set(word)) == max_count:
+            if word < max_word:
+                max_word = word
+    return max_word
+
+
+if __name__ == "__main__":
+    print(find_max(["name", "of", "string"]))
+    print(find_max(["name", "enam", "game"]))
+    print(find_max(["aaaaaaa", "bb" ,"cc"]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    def count_unique_chars(word):
+        return len(set(word))
+
+    max_unique_chars = 0
+    max_word = ""
+    
+    for word in words:
+        unique_chars = count_unique_chars(word)
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+
+    return max_word
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that solves the problem:
+
+```python
+def find_max(words):
+    """
+    Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique = 0
+    max_word = ""
+    for word in words:
+        if len(set(word)) > max_unique or (len(set(word)) == max_unique and word < max_word):
+            max_unique = len(set(word))
+            max_word = word
+    return max_word
+```
+
+This function iterates over each word in the list. For each word, it calculates the number of unique characters by converting the word to a set (since a set only allows unique elements) and then getting the length of the set. If the number of unique characters in the current word is greater than the maximum number of unique characters found so far, or if it's equal but the current word is lexicographically smaller, it updates the maximum number of unique characters and the maximum word. Finally, it returns the maximum word.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_unique_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_unique_word = word
+        elif unique_chars == max_unique_chars:
+            max_unique_word = min(max_unique_word, word)
+
+    return max_unique_word
+
+# Test cases
+assert find_max(["name", "of", "string"]) == "string"
+assert find_max(["name", "enam", "game"]) == "enam"
+assert find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    max_unique_count = -1
+    max_word = None
+    
+    for word in words:
+        unique_count = len(set(word))
+        if unique_count > max_unique_count:
+            max_unique_count = unique_count
+            max_word = word
+            
+    return max_word
+
+print(find_max(["name", "of", "string"])) # "string"
+print(find_max(["name", "enam", "game"])) # "enam"
+print(find_max(["aaaaaaa", "bb" ,"cc"])) # "aaaaaaa"</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    # Your code here
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = 0
+        for char in word:
+            if char not in word[:count]:
+                count += 1
+        if count > max_count:
+            max_count = count
+            max_word = word
+    return max_word
+
+
+def find_max_2(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    # Your code here
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = 0
+        for char in word:
+            if char not in word[:count]:
+                count += 1
+        if count > max_count:
+            max_count = count
+            max_word = word
+    return max_word
+
+
+def find_max_3(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    # Your code here
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = 0
+        for char in word:
+            if char not in word[:count]:
+                count += 1
+        if count > max_count:
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def find_max(words):
+    """
+    Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            max_word = min(max_word, word)
+
+    return max_word
+```
+
+This function works by iterating over each word in the input list. For each word, it calculates the number of unique characters by converting the word to a set (which automatically removes duplicates) and taking the length of the set. If the number of unique characters is greater than the current maximum, it updates the maximum and the corresponding word. If the number of unique characters is equal to the current maximum, it chooses the word that comes first in lexicographical order. Finally, it returns the word with the maximum number of unique characters.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+
+    return max_word
+
+print(find_max(["name", "of", "string"]))
+print(find_max(["name", "enam", "game"]))
+print(find_max(["aaaaaaa", "bb", "cc"]))</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            max_word = min(max_word, word)
+    return max_word</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_unique = 0
+    max_word = ""
+    for word in words:
+        unique_count = len(set(word))
+        if unique_count > max_unique or (unique_count == max_unique and word < max_word):
+            max_unique = unique_count
+            max_word = word
+    return max_word</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_word = ""
+    for word in words:
+        if len(set(word)) > len(set(max_word)):
+            max_word = word
+        elif len(set(word)) == len(set(max_word)):
+            if word < max_word:
+                max_word = word
+    return max_word
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+def find_max(words):
+    max_word = ""
+    max_unique_chars = 0
+    
+    for word in words:
+        unique_chars = len(set(list(word)))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+    
+    return max_word
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars or (unique_chars == max_unique_chars and word < max_word):
+            max_unique_chars = unique_chars
+            max_word = word
+
+    return max_word
+
+# Test cases
+print(find_max(["name", "of", "string"]))  # Output: "string"
+print(find_max(["name", "enam", "game"]))  # Output: "enam"
+print(find_max(["aaaaaaa", "bb", "cc"]))  # Output: "aaaaaaa"
+</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    max_word = ""
+    max_unique_chars = 0
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+    return max_word
+
+# Test cases
+print(find_max(["name", "of", "string"])) # "string"
+print(find_max(["name", "enam", "game"])) # "enam"
+print(find_max(["aaaaaaa", "bb", "cc"])) # "aaaaaaa"</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def find_max(words):
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = len(set(word))
+        if count > max_count or (count == max_count and word < max_word):
+            max_word = word
+            max_count = count
+    return max_word
+```
+
+The function `find_max` accepts a list of strings as input. It initializes two variables `max_word` and `max_count` to keep track of the word with maximum number of unique characters and its count respectively. It then iterates over each word in the list and calculates the number of unique characters in it using the `set` function. If the count is greater than `max_count` or if the count is equal to `max_count` but the word comes before `max_word` in lexicographical order, then `max_word` and `max_count` are updated. Finally, the function returns `max_word`.
+
+Here are some test cases:
+
+```python
+assert find_max(["name", "of", "string"]) == "string"
+assert find_max(["name", "enam", "game"]) == "enam"
+assert find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+```
+
+The first test case checks that the function returns "string" as the word with maximum number of unique characters. The second test case checks that the function returns "enam" as the word with maximum number of unique characters. The third test case checks that the function returns "aaaaaaa" as the word with maximum number of unique characters.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+
+    # Initialize maximum unique character count and lowest lexicographical word
+    max_unique_count = 0
+    max_word = ""
+
+    for word in words:
+        unique_char_count = len(set(word))
+        if unique_char_count > max_unique_count:
+            max_unique_count = unique_char_count
+            max_word = word
+
+    return max_word
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            if word < max_word:
+                max_word = word
+    return max_word
+```
+
+This function works by iterating over each word in the input list. For each word, it calculates the number of unique characters by converting the word to a set (which automatically removes duplicates) and then getting the length of the set. If this number is greater than the current maximum number of unique characters, it updates the maximum number and the word with the maximum number of unique characters. If the number of unique characters is equal to the current maximum, it compares the words lexicographically and updates the word if it comes first.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = len(set(word))
+        if count > max_count:
+            max_word = word
+            max_count = count
+        elif count == max_count:
+            if word < max_word:
+                max_word = word
+    return max_word
+
+def find_max_v2(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max_v2(["name", "of", "string"]) == "string"
+    find_max_v2(["name", "enam", "game"]) == "enam"
+    find_max_v2(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = len(set(word))
+        if count > max_count:
+            max_word = word
+            max_count = count
+        elif count == max_count:
+            if word < max_word:
+                max_word = word
+    return max_word
+
+def find_max_v3(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max_v3(["name", "of", "string"]) == "string"
+    find_max_v3(["name", "enam", "game"]) == "enam"
+    find_max_v3(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = len(set(word))
+        if count > max_count:
+            max_word = word
+            </code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = set(word)
+        if len(unique_chars) > max_unique_chars:
+            max_unique_chars = len(unique_chars)
+            max_word = word
+        elif len(unique_chars) == max_unique_chars and word < max_word:
+            max_word = word
+
+    return max_word</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars or (unique_chars == max_unique_chars and word < max_word):
+            max_unique_chars = unique_chars
+            max_word = word
+    return max_word
+
+# Test cases
+print(find_max(["name", "of", "string"]))  # Output: "string"
+print(find_max(["name", "enam", "game"]))   # Output: "enam"
+print(find_max(["aaaaaaa", "bb", "cc"]))    # Output: "aaaaaaa"</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb", "cc"]) == ""aaaaaaa"
+    """
+
+    # Initialize variables
+    max_unique_chars = 0
+    max_unique_word = ""
+
+    # Iterate over the list of words
+    for word in words:
+        # Count unique characters in the current word
+        unique_chars = len(set(word))
+
+        # Update max_unique_chars and max_unique_word if necessary
+        if unique_chars > max_unique_chars or (unique_chars == max_unique_chars and word < max_unique_word):
+            max_unique_chars = unique_chars
+            max_unique_word = word
+
+    return max_unique_word
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = set(word)
+        if len(unique_chars) > max_unique_chars:
+            max_unique_chars = len(unique_chars)
+            max_word = word
+        elif len(unique_chars) == max_unique_chars:
+            if word < max_word:
+                max_word = word
+    return max_word
+```
+
+Explanation:
+The function `find_max` takes a list of strings as input. It initializes two variables `max_unique_chars` and `max_word` to keep track of the word with the maximum number of unique characters and the lexicographically smallest word with the maximum number of unique characters.
+
+The function then iterates over each word in the input list. For each word, it creates a set of unique characters using the `set` function. It then checks if the length of the set is greater than `max_unique_chars`. If it is, it updates `max_unique_chars` and `max_word` with the current word. If the length of the set is equal to `max_unique_chars`, it checks if the current word is lexicographically smaller than `max_word`. If it is, it updates `max_word` with the current word.
+
+Finally, the function returns `max_word`, which is the word with the maximum number of unique characters and the lexicographically smallest word with the maximum number of unique characters.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    def count_unique_chars(word):
+        return len(set(word))
+
+    max_unique_chars = max(count_unique_chars(word) for word in words)
+    max_words = [word for word in words if count_unique_chars(word) == max_unique_chars]
+    return min(max_words, key=lambda x: (x.lower(), x))
+
+print(find_max(["name", "of", "string"]))  # "string"
+print(find_max(["name", "enam", "game"]))  # "enam"
+print(find_max(["aaaaaaa", "bb" ,"cc"]))  # "aaaaaaa"</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars or (unique_chars == max_unique_chars and word < max_word):
+            max_unique_chars = unique_chars
+            max_word = word
+    return max_word
+
+print(find_max(["name", "of", "string"]))
+print(find_max(["name", "enam", "game"]))
+print(find_max(["aaaaaaa", "bb", "cc"]))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            max_word = min(max_word, word)
+
+    return max_word</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_word = ""
+    max_unique_chars = 0
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            if word < max_word:
+                max_word = word
+
+    return max_word
+
+# Test cases
+print(find_max(["name", "of", "string"]))  # Output: "string"
+print(find_max(["name", "enam", "game"]))  # Output: "enam"
+print(find_max(["aaaaaaa", "bb", "cc"]))   # Output: "aaaaaaa"</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    """
+    Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            if word < max_word:
+                max_word = word
+
+    return max_word</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_word = ""
+    max_unique_chars = 0
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            if word < max_word:
+                max_word = word
+    return max_word</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def find_max(words):
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = len(set(word))
+        if count > max_count:
+            max_count = count
+            max_word = word
+        elif count == max_count and word < max_word:
+            max_word = word
+    return max_word
+```
+
+Explanation:
+
+We iterate through each word in the list and count the number of unique characters in it using the `set()` function. We keep track of the maximum count and the corresponding word. If we encounter a word with a higher count than the current maximum count, we update the maximum count and the corresponding word. If the count is the same, we compare the current word with the previous maximum word and return the one that comes first in lexicographical order. Finally, we return the maximum word. If all the words have the same count, we return the first one in the list. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+
+    max_word = ""
+    max_count = 0
+    for word in words:
+        count = len(set(word))
+        if count > max_count:
+            max_count = count
+            max_word = word
+    return max_word
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+    """
+    if not words:
+        return ""
+
+    max_count = 0
+    max_word = None
+
+    for word in words:
+        unique_chars = set(word)
+        if len(unique_chars) > max_count:
+            max_count = len(unique_chars)
+            max_word = word
+
+    if max_count == 0:
+        return ""
+
+    for word in words:
+        if len(set(word)) == max_count and word < max_word:
+            max_word = word
+
+    return max_word</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to solve the problem:
+
+```python
+def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            max_word = min(max_word, word)
+
+    return max_word
+```
+
+This code iterates through each word in the list and keeps track of the word with the maximum number of unique characters. If a word has more unique characters than the current maximum, it becomes the new maximum. If a word has the same number of unique characters as the current maximum, the code compares the words lexicographically and keeps the one that comes first. Finally, the code returns the word with the maximum number of unique characters.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_word = ""
+    max_unique_chars = 0
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            max_word = min(max_word, word)
+    return max_word
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def find_max(words):
+    max_unique_chars = 0
+    max_word = ""
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+    return max_word
+```
+
+This function iterates over each word in the input list. For each word, it creates a set of unique characters, which is a set in Python that only contains unique elements. The length of this set is the number of unique characters in the word. If this number is greater than the current maximum number of unique characters, it updates the maximum number of unique characters and the word with the maximum number of unique characters.
+
+The function then returns the word with the maximum number of unique characters. If multiple words have the maximum number of unique characters, it returns the one which comes first in lexicographical order.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    max_word = ""
+    max_len = 0
+    for word in words:
+        if len(set(word)) > max_len:
+            max_len = len(set(word))
+            max_word = word
+    return max_word
+
+print(find_max(["name", "of", "string"]))  # Output: "string"
+print(find_max(["name", "enam", "game"]))  # Output: "enam"
+print(find_max(["aaaaaaa", "bb", "cc"]))  # Output: "aaaaaaa"
+```
+
+This Python script defines a function `find_max` that accepts a list of strings. It iterates over each word in the list and checks if the number of unique characters in the word is greater than the current maximum. If it is, it updates the maximum length and the maximum word. Finally, it returns the maximum word.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    max_word = ""
+    max_unique_chars = 0
+
+    for word in words:
+        unique_chars = set(word)
+        if len(unique_chars) > max_unique_chars:
+            max_unique_chars = len(unique_chars)
+            max_word = word
+
+    return max_word
+
+# Test cases
+print(find_max(["name", "of", "string"]))  # Output: "string"
+print(find_max(["name", "enam", "game"]))  # Output: "enam"
+print(find_max(["aaaaaaa", "bb", "cc"]))  # Output: "aaaaaaa"</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+def find_max(words):
+    max_length = 0
+    max_word = ""
+    max_index = -1
+
+    for i, word in enumerate(words):
+        word_length = len(set(word))
+        if word_length > max_length:
+            max_length = word_length
+            max_word = word
+            max_index = i
+        elif word_length == max_length:
+            if word < max_word:
+                max_word = word
+                max_index = i
+
+    return words[max_index]</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    max_unique_chars = 0
+    max_word = ""
+    
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars:
+            if word < max_word:
+                max_word = word
+    
+    return max_word</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    # Initialize max_word to be the first word in the list.
+    max_word = words[0]
+    # Initialize max_unique_chars to be the number of unique characters in the first word.
+    max_unique_chars = len(set(max_word))
+
+    # Iterate over each word in the list.
+    for word in words:
+        # If the current word has more unique characters than max_unique_chars,
+        # update max_word to be the current word and max_unique_chars to be the number of unique characters in the current word.
+        if len(set(word)) > max_unique_chars:
+            max_word = word
+            max_unique_chars = len(set(word))
+
+    # Return the word with the maximum number of unique characters.
+    return max_word</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+
+    # Your code here
+    pass
+
+# Test your function
+assert find_max(["name", "of", "string"]) == "string"
+assert find_max(["name", "enam", "game"]) == "enam"
+assert find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+```
+
+This code defines a function `find_max` that accepts a list of strings. It returns the word with the maximum number of unique characters. If multiple strings have the maximum number of unique characters, it returns the one that comes first in lexicographical order.
+
+To test the function, I assert that it returns the expected output for the given inputs.
+
+Please let me know if you need any further assistance!
+```python
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["name", "of", "string"]) == "string"
+    find_max(["name", "enam", "game"]) == "enam"
+    find_max(["aaaaaaa", "bb" ,"cc"]) == ""aaaaaaa"
+    """
+    # Your code here
+    pass
+
+# Test your function
+assert find_max(["name", "of", "string"]) == "string"
+assert find_max(["name", "enam", "game"]) == "enam"
+assert find_max(["aaaaaaa", "bb" ,"cc"]) == "aaaaaaa"
+```
+
+This code defines a function `find_max` that accepts a list of strings. It returns the word with the maximum number of unique characters. If multiple strings have the maximum number of unique characters, it returns the one that comes first in lexicographical order.
+
+To test the function, I assert that it returns the expected output for the given inputs.
+
+Please let me know if you need any further assistance!
+```python
+def find_max(words):
+    """Write a function that accepts a list of strings.
+    The list contains different words. Return the word with maximum number
+    of unique characters. If multiple strings have maximum number of unique
+    characters, return the one which comes first in lexicographical order.
+
+    find_max(["</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def find_max(words):
+    max_unique_chars = 0
+    max_word = ''
+    for word in words:
+        unique_chars = len(set(word))
+        if unique_chars > max_unique_chars:
+            max_unique_chars = unique_chars
+            max_word = word
+        elif unique_chars == max_unique_chars and word < max_word:
+            max_word = word
+    return max_word</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_max(words):
+    max_words = []
+    for word in words:
+        unique_chars = set(word)
+        if len(unique_chars) > len(max_words[0]):
+            max_words = [word]
+        elif len(unique_chars) == len(max_words[0]):
+            max_words.append(word)
+    max_words.sort()
+    return max_words[0]
+
+# Test the function
+print(find_max(["name", "of", "string"])) # "string"
+print(find_max(["name", "enam", "game"])) # "enam"
+print(find_max(["aaaaaaa", "bb" ,"cc"])) # "aaaaaaa"</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def find_max(words):
+    max_word = max(words, key=lambda word: len(set(word)), default='')
+    return max_word</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

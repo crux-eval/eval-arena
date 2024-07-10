@@ -1,0 +1,2218 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/635 </h1>
+<pre><code> """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import heapq as hq
+def heap_sort(iterable):
+    hq.heapify(iterable)
+    return [hq.heappop(iterable) for _ in range(len(iterable))]
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 3, 5, 7, 9, 2, 4, 6, 8, 0]], [[25, 35, 22, 85, 14, 65, 75, 25, 58]], [[7, 1, 9, 5]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]], [[]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    """
+    :param arr: list
+    :return: list
+    """
+    heapify(arr)
+    for i in range(len(arr) - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr[:i])
+    return arr
+
+
+def heapify(arr):
+    """
+    :param arr: list
+    :return: list
+    """
+    for i in range(len(arr) // 2 - 1, -1, -1):
+        sift_down(arr, i, len(arr))
+
+
+def sift_down(arr, i, n):
+    """
+    :param arr: list
+    :param i: int
+    :param n: int
+    :return: list
+    """
+    while 2 * i + 1 < n:
+        j = 2 * i + 1
+        if j + 1 < n and arr[j] < arr[j + 1]:
+            j += 1
+        if arr[i] < arr[j]:
+            arr[i], arr[j] = arr[j], arr[i]
+            i = j
+        else:
+            break
+
+
+if __name__ == '__main__':
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+    print(heap_sort([1,</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr: list[int]) -> list[int]:
+    def heapify(n, i):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+
+        if l < n and arr[i] < arr[l]:
+            largest = l
+
+        if r < n and arr[largest] < arr[r]:
+            largest = r
+
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            heapify(n, largest)
+
+    n = len(arr)
+
+    # Build a max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(n, i)
+
+    # Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # Swap
+        heapify(i, 0)
+
+    return arr
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to the problem wrapped in a Python markdown block:
+
+```python
+def heap_sort(arr):
+    n = len(arr)
+
+    # Build a max-heap from the input array
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # Extract elements from the heap one by one
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # Swap the root (maximum element) with the last element
+        heapify(arr, i, 0)
+
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    # Find the largest among the root, left child, and right child
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    # Swap the largest element with the root
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+# Example usage
+arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+assert heap_sort(arr) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def heap_sort(lst):
+    # Convert the list to a heap
+    heapify(lst)
+
+    # Get the length of the list
+    n = len(lst)
+
+    # Sort the list
+    for i in range(n, 0, -1):
+        # Swap the root element with the last element
+        lst[0], lst[i-1] = lst[i-1], lst[0]
+
+        # Heapify the root element
+        heapify(lst, i-1)
+
+    return lst
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+def heap_sort(arr):
+    # Build a max heap
+    for i in range(len(arr) // 2 - 1, -1, -1):
+        heapify(arr, i, len(arr))
+
+    # One by one extract elements
+    for i in range(len(arr) - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, 0, i)
+
+    return arr
+
+
+def heapify(arr, i, size):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    # Check if left child of node i is greater than i
+    if left < size and arr[i] < arr[left]:
+        largest = left
+
+    # Check if right child of node i is greater than i or left
+    if right < size and arr[largest] < arr[right]:
+        largest = right
+
+    # Change root, if needed
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+        heapify(arr, largest, size)</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: False </p>
+      <pre><code>  Here's the code to implement the heap sort algorithm in Python:
+
+```python
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+
+    return arr
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr):
+    """
+    This function sorts the given list using heap sort algorithm.
+    
+    :param arr: list, the list to be sorted
+    :return: list, sorted list
+    """
+    # Implement heap sort algorithm here
+    def heapify(arr, n, i):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+
+        if l < n and arr[i] < arr[l]:
+            largest = l
+
+        if r < n and arr[largest] < arr[r]:
+            largest = r
+
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            heapify(arr, n, largest)
+
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, -1, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+
+    return arr
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code for the heap_sort function:
+
+
+def heap_sort(arr):
+    def heapify(arr, n, i):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+        if l < n and arr[l] > arr[largest]:
+            largest = l
+        if r < n and arr[r] > arr[largest]:
+            largest = r
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            heapify(arr, n, largest)
+
+    n = len(arr)
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+    return arr
+
+# Testing the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Output:
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and arr[i] < arr[l]:
+        largest = l
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+if __name__ == "__main__":
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+# Test case
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that implements heap sort:
+
+```python
+def heap_sort(arr):
+    n = len(arr)
+
+    # Build max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # Heap sort
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, i, 0)
+
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1  # left = 2*i + 1
+    r = 2 * i + 2  # right = 2*i + 2
+
+    # If left child is larger than root
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+
+    # If right child is larger than largest so far
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    # If largest is not root
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+        heapify(arr, n, largest)
+
+# Test the function
+arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+heap_sort(arr)
+assert arr == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+This code first builds a max heap from the input list, then it swaps the first and last elements and heapifies the rest of the list. It repeats this process until the list is sorted. The `heapify` function is used to maintain the heap property.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def heap_sort(arr):
+    """
+    :type arr: List[int]
+    :rtype: List[int]
+    """
+    def swap(i, j):
+        arr[i], arr[j] = arr[j], arr[i]
+
+    def sift_down(i):
+        while i * 2 + 1 < len(arr):
+            max_idx = i
+            if arr[i * 2 + 1] > arr[max_idx]:
+                max_idx = i * 2 + 1
+            if i * 2 + 2 < len(arr) and arr[i * 2 + 2] > arr[max_idx]:
+                max_idx = i * 2 + 2
+            if max_idx == i:
+                break
+            swap(i, max_idx)
+            i = max_idx
+
+    def sift_up(i):
+        while i > 0:
+            parent = (i - 1) // 2
+            if arr[i] < arr[parent]:
+                swap(i, parent)
+                i = parent
+            else:
+                break
+
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        sift_down(i)
+    for i in range(n - 1, -1, -1):
+        swap(i, 0)
+        sift_up(0)
+    return arr
+
+"""
+Write a function to find the kth largest element in an unsorted array.
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Example 1:
+
+Input: [3,2,1,5,6,4] and k = 2
+Output: 5
+Example 2:
+
+Input: [3,2,3,1,2,4,5,5,6] and k = 4
+Output: 4
+Note:
+You may assume k is always valid, 1 ≤ k ≤ array's length.
+"""
+
+def find_kth_largest(nums, k):
+    """
+    :type nums: List[int]
+    :type k: int
+    :rtype: int
+    """
+    </code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: False </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[i] < arr[left]:
+        largest = left
+
+    if right < n and arr[largest] < arr[right]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+import heapq
+import random
+
+
+def heap_sort(list):
+    """
+    :param list: list
+    :return: list
+    """
+    heap = []
+    for i in list:
+        heapq.heappush(heap, i)
+    return [heapq.heappop(heap) for i in range(len(list))]
+
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    """
+    :param arr:
+    :return:
+    """
+    n = len(arr)
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+if __name__ == '__main__':
+    arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+    print(heap_sort(arr))
+
+    arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+    print(heap_sort(arr))
+
+    arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+    print(heap_sort(arr))
+
+    arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+    print(heap_sort(arr))
+
+    arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+    print(heap_sort(arr))
+
+    arr = [1, 3, 5, 7, 9, 2, 4, 6, </code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function for heap sort:
+
+```python
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+This function first builds a max heap from the given list. Then it swaps the first element with the last element, reduces the size of the heap by one, and heapifies the root of the tree. This process is repeated until all the elements are sorted.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def heap_sort(lst):
+    n = len(lst)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(lst, n, i)
+    for i in range(n - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+    return lst
+
+def heapify(lst, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    if left < n and lst[left] > lst[largest]:
+        largest = left
+    if right < n and lst[right] > lst[largest]:
+        largest = right
+    if largest != i:
+        lst[i], lst[largest] = lst[largest], lst[i]
+        heapify(lst, n, largest)
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(lst):
+    heap = []
+    for i in lst:
+        heap.append(i)
+        heapify(heap)
+    return heap
+
+def heapify(lst):
+    for i in range(len(lst)//2, -1, -1):
+        heapify_down(lst, i)
+
+def heapify_down(lst, i):
+    while i*2+1 < len(lst):
+        child = i*2+1
+        if child+1 < len(lst) and lst[child] < lst[child+1]:
+            child += 1
+        if lst[i] < lst[child]:
+            lst[i], lst[child] = lst[child], lst[i]
+            i = child
+        else:
+            break
+
+if __name__ == "__main__":
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    </code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr):
+    def heapify(arr, n, i):
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n and arr[largest] < arr[left]:
+            largest = left
+        if right < n and arr[largest] < arr[right]:
+            largest = right
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            heapify(arr, n, largest)
+
+    def build_heap(arr, n):
+        for i in range(n // 2, -1, -1):
+            heapify(arr, n, i)
+
+    n = len(arr)
+    build_heap(arr, n)
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+import unittest
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+
+class TestHeapSort(unittest.TestCase):
+    def test_heap_sort(self):
+        self.assertEqual(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: False </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[i] < arr[left]:
+        largest = left
+
+    if right < n and arr[largest] < arr[right]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def heap_sort(arr):
+    n = len(arr)
+
+    # Build max heap
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # Extract elements from heap one by one
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, i, 0)
+
+    return arr
+
+
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+
+    # If left child is larger than root
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+
+    # If right child is larger than largest so far
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    # If largest is not root
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+
+        # Recursively heapify the affected sub-tree
+        heapify(arr, n, largest)
+```
+
+The `heap_sort` function takes an array `arr` as input and returns the sorted array using heap sort algorithm. The function first builds a max heap from the input array and then extracts the elements from the heap one by one, which are in sorted order.
+
+The `heapify` function is a helper function that takes an array `arr`, the size of the heap `n`, and the index of the root `i` as input. The function first sets the largest element as the root and then compares it with its left and right children. If the left or right child is larger than the root, then the largest element is updated. If the largest element is not the root, then the root and the largest element are swapped and the function is called recursively on the affected sub-tree.
+
+The time complexity of heap sort is O(nlogn) in the average and worst case. The space complexity is O(1) as it uses a constant amount of extra space.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and arr[i] < arr[l]:
+        largest = l
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+assert heap_sort(arr) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to sort the given list using the heap sort algorithm:
+
+```python
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+```
+
+This function first builds a max heap from the input list, then swaps the root of the heap with the last element of the heap, reducing the size of the heap by one. The heapify function is then called to maintain the heap property. This process is repeated until the entire list is sorted.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and arr[i] < arr[l]:
+        largest = l
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([9, 8,</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    def heapify(arr, n, i):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+        if l < n and arr[i] < arr[l]:
+            largest = l
+        if r < n and arr[largest] < arr[r]:
+            largest = r
+        if largest!= i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            heapify(arr, n, largest)
+    n = len(arr)
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+print(heap_sort([</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(lst):
+    def heapify(lst, n, i):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+
+        if l < n and lst[i] < lst[l]:
+            largest = l
+
+        if r < n and lst[largest] < lst[r]:
+            largest = r
+
+        if largest != i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+
+    n = len(lst)
+
+    for i in range(n, -1, -1):
+        heapify(lst, n, i)
+
+    for i in range(n - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+
+    return lst
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def heap_sort(list):
+    for i in range(len(list), -1, -1):
+        heapify(list, i)
+    for i in range(len(list)-1, 0, -1):
+        list[i], list[0] = list[0], list[i]
+        heapify(list, i)
+    return list
+def heapify(list, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    if left < len(list) and list[left] > list[largest]:
+        largest = left
+    if right < len(list) and list[right] > list[largest]:
+        largest = right
+    if largest != i:
+        list[i], list[largest] = list[largest], list[i]
+        heapify(list, largest)
+list = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: False </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[i] < arr[left]:
+        largest = left
+
+    if right < n and arr[largest] < arr[right]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr):
+    def heapify(n, i):
+        largest = i  # Initialize largest as root
+        left = 2 * i + 1     # left = 2*i + 1
+        right = 2 * i + 2     # right = 2*i + 2
+
+        # See if left child of root exists and is greater than root
+        if left < n and arr[i] < arr[left]:
+            largest = left
+
+        # See if right child of root exists and is greater than the largest so far
+        if right < n and arr[largest] < arr[right]:
+            largest = right
+
+        # Change root, if needed
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]  # swap
+
+            # Heapify the root.
+            heapify(n, largest)
+
+    n = len(arr)
+
+    # Build a maxheap.
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(n, i)
+
+    # One by one extract elements
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]   # swap
+        heapify(i, 0)
+
+    return arr
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(lst):
+    n = len(lst)
+    for i in range(n, -1, -1):
+        heapify(lst, n, i)
+    for i in range(n-1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+    return lst
+
+def heapify(lst, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    if left < n and lst[i] < lst[left]:
+        largest = left
+    if right < n and lst[largest] < lst[right]:
+        largest = right
+    if largest != i:
+        lst[i], lst[largest] = lst[largest], lst[i]
+        heapify(lst, n, largest)
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(lst):
+    def heapify(lst, n, i):
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n and lst[i] < lst[left]:
+            largest = left
+        if right < n and lst[largest] < lst[right]:
+            largest = right
+        if largest != i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+    n = len(lst)
+    for i in range(n, -1, -1):
+        heapify(lst, n, i)
+    for i in range(n-1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+    return lst
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def heap_sort(arr):
+    heapify(arr)
+    for i in range(len(arr)-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr[:i])
+    return arr
+
+def heapify(arr):
+    for i in range(len(arr)//2, -1, -1):
+        sift_down(arr, i)
+
+def sift_down(arr, i):
+    while i*2+1 < len(arr):
+        j = i*2+1
+        if j+1 < len(arr) and arr[j+1] > arr[j]:
+            j += 1
+        if arr[i] >= arr[j]:
+            break
+        arr[i], arr[j] = arr[j], arr[i]
+        i = j
+
+def test_heap_sort():
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0, -1, -3, -5, -7, -9])==[-9, -7, -5, -3, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0, -1, -3, -5, -7, -9, -11, -13, -15, -17])==[-17, -15, -13, -11, -9, -7, -5, -3, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0, -1, -3, -5, -7, -9, -11, -13, -15, -17, -19])==[-19, -17, -15, -13</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def heap_sort(lst):
+    """
+    >>> heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    """
+    def heapify(lst, n, i):
+        """
+        >>> heapify([1, 3, 5, 7, 9, 2, 4, 6, 8, 0], 9, 3)
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        """
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n and lst[left] > lst[largest]:
+            largest = left
+        if right < n and lst[right] > lst[largest]:
+            largest = right
+        if largest!= i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+    n = len(lst)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(lst, n, i)
+    for i in range(n - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+    return lst
+
+def heap_sort_2(lst):
+    """
+    >>> heap_sort_2([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    """
+    def heapify(lst, n, i):
+        """
+        >>> heapify([1, 3, 5, 7, 9, 2, 4, 6, 8, 0], 9, 3)
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        """
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+import heapq
+
+def heap_sort(lst):
+    heapq.heapify(lst)
+    return [heapq.heappop(lst) for _ in range(len(lst))]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  import heapq
+
+def heap_sort(arr):
+    """Sorts a list in ascending order using a binary heap."""
+    heapq.heapify(arr)
+    return sorted(arr)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def heap_sort(lst):
+    # Convert the list into a heap
+    for i in range(len(lst) // 2 - 1, -1, -1):
+        heapify(lst, len(lst), i)
+
+    # Extract elements from the heap one by one
+    for i in range(len(lst) - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]  # Swap
+        heapify(lst, i, 0)
+
+    return lst
+
+
+def heapify(lst, n, i):
+    largest = i  # Initialize largest as root
+    left = 2 * i + 1  # Left child
+    right = 2 * i + 2  # Right child
+
+    # Check if left child exists and is greater than root
+    if left < n and lst[i] < lst[left]:
+        largest = left
+
+    # Check if right child exists and is greater than root
+    if right < n and lst[largest] < lst[right]:
+        largest = right
+
+    # Change root if needed
+    if largest != i:
+        lst[i], lst[largest] = lst[largest], lst[i]  # Swap
+
+        # Heapify the root
+        heapify(lst, n, largest)</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[i] < arr[left]:
+        largest = left
+
+    if right < n and arr[largest] < arr[right]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+
+        heapify(arr, n, largest)
+
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr):
+    n = len(arr)
+
+    # Build a maxheap.
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    # One by one extract elements
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, i, 0)
+
+    return arr
+
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+
+    # See if left child of root exists and is greater than root
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    # See if right child of root exists and is greater than root
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    # Change root, if needed
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+
+        # Heapify the root.
+        heapify(arr, n, largest)
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that sorts a list using the Heap Sort algorithm:
+
+```python
+def heap_sort(lst):
+    def heapify(lst, n, i):
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+        if left < n and lst[i] < lst[left]:
+            largest = left
+
+        if right < n and lst[largest] < lst[right]:
+            largest = right
+
+        if largest != i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+
+    n = len(lst)
+
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(lst, n, i)
+
+    for i in range(n - 1, 0, -1):
+        lst[0], lst[i] = lst[i], lst[0]
+        heapify(lst, i, 0)
+
+    return lst
+
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+The `heapify` function is a helper function that maintains the heap property of the list. It takes the list `lst`, the length of the list `n`, and the index of the current node `i`. It swaps the current node with the largest of its children if necessary, and then calls itself recursively on the new largest node. The outer function `heap_sort` first builds a max heap from the list, and then swaps the root node with the last node and calls `heapify` on the remaining list. This process is repeated until the list is sorted. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    n = len(arr)
+    # Build max heap
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+    # Extract elements one by one
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and arr[i] < arr[l]:
+        largest = l
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr):
+    for i in range(len(arr)-1, -1, -1):
+        parent = i
+        while parent > 0:
+            child = 2*parent + 1
+            if child < len(arr) and arr[child] < arr[parent]:
+                arr[parent], arr[child] = arr[child], arr[parent]
+                parent = child
+    return arr</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(lst):
+    """
+    :param lst: list
+    :return: sorted list
+    """
+    heapify(lst)
+    end = len(lst) - 1
+    while end > 0:
+        lst[end], lst[0] = lst[0], lst[end]
+        end -= 1
+        sift_down(lst, 0, end)
+    return lst
+
+
+def heapify(lst):
+    """
+    :param lst: list
+    :return: None
+    """
+    start = (len(lst) - 2) // 2
+    while start >= 0:
+        sift_down(lst, start, len(lst) - 1)
+        start -= 1
+
+
+def sift_down(lst, start, end):
+    """
+    :param lst: list
+    :param start: int
+    :param end: int
+    :return: None
+    """
+    root = start
+    while root * 2 + 1 <= end:
+        child = root * 2 + 1
+        swap = root
+        if lst[swap] < lst[child]:
+            swap = child
+        if child + 1 <= end and lst[swap] < lst[child + 1]:
+            swap = child + 1
+        if swap == root:
+            return
+        else:
+            lst[root], lst[swap] = lst[swap], lst[root]
+            root = swap
+
+
+if __name__ == '__main__':
+    print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+import heapq
+
+def heap_sort(lst):
+    heapq.heapify(lst)
+    return [heapq.heappop(lst) for _ in range(len(lst))]
+
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+
+"""
+Write a function to sort the given list.
+assert bubble_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def bubble_sort(lst):
+    for i in range(len(lst)):
+        for j in range(len(lst)-i-1):
+            if lst[j] > lst[j+1]:
+                lst[j], lst[j+1] = lst[j+1], lst[j]
+    return lst
+
+print(bubble_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+
+"""
+Write a function to sort the given list.
+assert selection_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def selection_sort(lst):
+    for i in range(len(lst)):
+        min_index = i
+        for j in range(i+1, len(lst)):
+            if lst[j] < lst[min_index]:
+                min_index = j
+        lst[i], lst[min_index] = lst[min_index], lst[i]
+    return lst
+
+print(selection_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+
+"""
+Write a function to sort the given list.
+assert insertion_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6,</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    """
+    :param arr: list
+    :return: sorted list
+    """
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+
+def heapify(arr, n, i):
+    """
+    :param arr: list
+    :param n: length of list
+    :param i: index of list
+    :return: None
+    """
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+if __name__ == '__main__':
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(lst):
+    n = len(lst)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(lst, n, i)
+    for i in range(n - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+    return lst
+
+def heapify(lst, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    if left < n and lst[i] < lst[left]:
+        largest = left
+    if right < n and lst[largest] < lst[right]:
+        largest = right
+    if largest != i:
+        lst[i], lst[largest] = lst[largest], lst[i]
+        heapify(lst, n, largest)
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(lst):
+    def heapify(lst, n, i):
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n and lst[left] > lst[largest]:
+            largest = left
+        if right < n and lst[right] > lst[largest]:
+            largest = right
+        if largest!= i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+    n = len(lst)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(lst, n, i)
+    for i in range(n - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+    return lst
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([])==[]
+assert heap_sort([1])==[1]
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+assert heap_sort([1, 3, 5, 7, 9, 2,</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    heapify(arr)
+    for i in range(len(arr) - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        shift_down(arr, 0, i - 1)
+    return arr
+
+
+def heapify(arr):
+    for i in range(len(arr) // 2, -1, -1):
+        shift_down(arr, i, len(arr) - 1)
+
+
+def shift_down(arr, start, end):
+    root = start
+    while True:
+        child = root * 2 + 1
+        if child > end:
+            break
+        if child + 1 <= end and arr[child] < arr[child + 1]:
+            child += 1
+        if arr[root] < arr[child]:
+            arr[root], arr[child] = arr[child], arr[root]
+            root = child
+        else:
+            break
+
+
+if __name__ == "__main__":
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heap_sort(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        max_heapify(arr, i, n)
+
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        max_heapify(arr, 0, i)
+
+    return arr
+
+
+def max_heapify(arr, i, n):
+    left = 2 * i + 1
+    right = 2 * i + 2
+    largest = i
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        max_heapify(arr, largest, n)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+from heapq import heapify, nlargest
+
+def heap_sort(lst):
+    n = len(lst)
+    heapify(lst)
+    result = []
+    for i in range(n):
+        result.append(heappop(lst))
+    return result
+
+def test_heap_sort():
+    assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]) == list(nlargest(len(lst), lst)[::-1])
+
+test_heap_sort()</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n//2, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2*i + 1
+    r = 2*i + 2
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def heap_sort(lst):
+    """
+    Heap Sort Algorithm
+    Time Complexity: O(n log n)
+    Space Complexity: O(1)
+    """
+    def heapify(lst, n, i):
+        """
+        Heapify the list by maintaining the max-heap property
+        """
+        largest = i  # Initialize largest as root
+        left = 2 * i + 1  # left child
+        right = 2 * i + 2  # right child
+
+        # See if left child of root exists and is greater than root
+        if left < n and lst[left] > lst[largest]:
+            largest = left
+
+        # See if right child of root exists and is greater than root
+        if right < n and lst[right] > lst[largest]:
+            largest = right
+
+        # If root is not largest, swap with largest and continue heapifying
+        if largest != i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+
+    n = len(lst)
+
+    # Build max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(lst, n, i)
+
+    # Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]  # Swap
+        heapify(lst, i, 0)
+
+    return lst
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+
+def heap_sort(lst):
+    def heapify(lst, n, i):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+
+        if l < n and lst[i] < lst[l]:
+            largest = l
+
+        if r < n and lst[largest] < lst[r]:
+            largest = r
+
+        if largest != i:
+            lst[i], lst[largest] = lst[largest], lst[i]
+            heapify(lst, n, largest)
+
+    n = len(lst)
+
+    for i in range(n, -1, -1):
+        heapify(lst, n, i)
+
+    for i in range(n-1, 0, -1):
+        lst[i], lst[0] = lst[0], lst[i]
+        heapify(lst, i, 0)
+
+    return lst
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: False </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+def heap_sort(arr):
+    # Write your code here
+    for i in range(len(arr)):
+        heapify(arr, len(arr), i)
+    for i in range(len(arr)-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and arr[i] < arr[l]:
+        largest = l
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+print(heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+/Arrays/2D_Array_DS.py
+"""
+Given a 6x6 2D Array, arr:
+1 1 1 0 0 0
+0 1 0 0 0 0
+1 1 1 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+
+We define an hourglass in A to be a subset of values with indices falling in this pattern in arr's graphical representation:
+a b c
+  d
+e f g
+
+There are 16 hourglasses in arr, and an hourglass sum is the sum of an hourglass' values.
+
+Calculate the hourglass sum for every hourglass in arr, then print the maximum hourglass sum.
+
+For example, given the 2D array:
+-9 -9 -9  1 1 1 
+ 0 -9  0  4 3 2
+-9 -9 -9  1 2 3
+ 0  0  8  6 6 0
+ 0  0  0 -2 0 0
+ 0  0  1  2 4 0
+
+We calculate the following </code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def heapify(arr, n, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    n = len(arr)
+
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to sort the given list.
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"""
+
+import random
+import time
+import math
+import sys
+import heapq
+import bisect
+import bisect
+import heapq
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import sys
+import time
+import math
+import random
+import</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def heap_sort(arr):
+    # Build a max heap
+    for i in range(len(arr) // 2 - 1, -1, -1):
+        heapify(arr, len(arr), i)
+
+    # Extract elements from heap
+    for i in range(len(arr) - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # Swap
+        heapify(arr, i, 0)
+
+    return arr
+
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+
+    # Check if left child exists and is greater than root
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    # Check if right child exists and is greater than root
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    # Change root if needed
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # Swap
+
+        # Heapify the root again
+        heapify(arr, n, largest)
+
+# Test the function
+assert heap_sort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

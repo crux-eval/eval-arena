@@ -1,0 +1,1516 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/75 </h1>
+<pre><code> 
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    if a <= 1: return False
+    isprime = [True] * (a + 1)
+    for i in range(2, a + 1):
+        if isprime[i]:
+            for j in range(i + i, a + 1, i):
+                isprime[j] = False
+    cnt, tmp = 0, a
+    for i in range(2, a + 1):
+        while isprime[i] and tmp % i == 0:
+            tmp //= i
+            cnt += 1
+    return cnt == 3
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[5], [30], [8], [10]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[33], [49], [77], [91], [99], [6], [90], [98], [25], [21], [48], [20], [22], [32], [26], [78], [19], [47], [31], [5], [29], [-98], [-37], [-38], [28], [18], [23], [-92], [-2], [57], [-99], [58], [56], [-1], [92], [1], [-80], [34], [-75], [-100], [-95], [16], [-94], [17], [59], [-7], [93], [-82], [-15], [-81], [-96], [-74], [2], [3], [7], [97], [42], [-101], [43], [44], [45], [-56], [60], [-55], [46], [62], [55], [61], [41], [40], [-57], [63], [-102], [52], [-72], [-97], [94], [12], [89], [53], [0], [8], [64], [-58], [65], [-71], [95], [35], [-70], [96], [-59], [15], [-33]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 2:
+        return False
+    
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    
+    for i in range(len(primes)):
+        for j in range(i, len(primes)):
+            for k in range(j, len(primes)):
+                if primes[i] * primes[j] * primes[k] == a:
+                    return True
+    
+    return False</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    factors = []
+    for i in range(2, a):
+        if a % i == 0 and is_prime(i):
+            factors.append(i)
+            a /= i
+            if len(factors) > 3:
+                return False
+    return len(factors) == 3</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Check if a number is the multiplication of 3 prime numbers."""
+    if a < 100:
+        factors = []
+        for i in range(2, int(a**0.5) + 1):
+            if a % i == 0:
+                factors.append(i)
+                if len(factors) == 3:
+                    return all(is_prime(factor) for factor in factors)
+        return False
+    return False</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 2:
+        return False
+    
+    prime_factors = []
+    for i in range(2, a + 1):
+        while a % i == 0:
+            if is_prime(i):
+                prime_factors.append(i)
+            a //= i
+    
+    return len(prime_factors) == 3</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    for i in range(2, 100):
+        if is_prime(i) and a % i == 0:
+            a //= i
+            if a == 1:
+                return True
+    return False</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def is_multiply_prime(a):
+    """Check if a number is the multiplication of 3 prime numbers."""
+    if a < 2:
+        return False
+    count = 0
+    for i in range(2, a):
+        if a % i == 0 and is_prime(i):
+            count += 1
+            if count > 3:
+                return False
+    return count == 3
+
+# Test cases</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 100:
+        for i in range(2, a):
+            if a % i == 0:
+                if is_prime(i) and is_prime(a / i):
+                    return True
+    return False
+
+
+def is_prime(n):
+    """Write a function that returns true if the given number is prime and false otherwise.
+    Knowing that n is a positive number.
+    Example:
+    is_prime(11) == True
+    """
+    if n <= 1:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+def is_palindrome(s):
+    """Write a function that returns true if the given string is a palindrome and false otherwise.
+    Example:
+    is_palindrome("abba") == True
+    is_palindrome("abab") == False
+    """
+    return s == s[::-1]
+
+
+def is_anagram(s1, s2):
+    """Write a function that returns true if the given strings are anagrams and false otherwise.
+    Example:
+    is_anagram("abba", "abab") == True
+    is_anagram("abba", "abba") == False
+    """
+    return sorted(s1) == sorted(s2)
+
+
+def is_pangram(s):
+    """Write a function that returns true if the given string is pangram and false otherwise.
+    A pangram is a sentence that contains every single letter of the alphabet at least once.
+    Example:
+    is_pangram("The quick brown fox jumps over the lazy dog") == True
+    is_pangram("The quick brown fox jumps over the dog") == False
+    """
+    return set(s.lower()) == set(string.ascii_lowercase)
+
+
+def is_isogram(s):
+    """Write a function that returns true if the given string is isogram and false otherwise.
+    An isogram is a word that has no repeating letters, consecutive or non-consecutive.
+    Example:
+    is_isogram("D</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    factors = []
+    for prime in primes:
+        while a % prime == 0:
+            factors.append(prime)
+            a = a // prime
+    return len(factors) == 3 and all(factors)
+
+# Test cases
+assert is_multiply_prime(30) == True, "Test case 1 failed"
+assert is_multiply_prime(50) == False, "Test case 2 failed"
+assert is_multiply_prime(110) == False, "Test case 3 failed"
+assert is_multiply_prime(120) == True, "Test case 4 failed"
+assert is_multiply_prime(91) == False, "Test case 5 failed"</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def is_multiply_prime(a):
+    for i in range(2, a):
+        if is_prime(i) and is_prime(a // i) and is_prime(a // (a // i)):
+            return True
+    return False
+```
+
+This code first defines a helper function `is_prime(n)` that checks if a number `n` is prime. Then, the main function `is_multiply_prime(a)` iterates over all numbers from 2 to `a`, and checks if `a` can be expressed as the product of three prime numbers. If it can, the function returns `True`; otherwise, it returns `False`.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    primes = [i for i in range(2, a) if is_prime(i)]
+    for i in range(len(primes)):
+        for j in range(i, len(primes)):
+            for k in range(j, len(primes)):
+                if primes[i] * primes[j] * primes[k] == a:
+                    return True
+    return False
+
+# Test cases
+assert is_multiply_prime(30) == True
+assert is_multiply_prime(100) == False
+assert is_multiply_prime(101) == False
+assert is_multiply_prime(210) == True
+assert is_multiply_prime(1) == False</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is a Python solution using the sympy library to generate primes and factorize the input number.
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    # your code here
+    if a < 100:
+        for i in range(2, a):
+            if a % i == 0:
+                return False
+        return True
+    else:
+        return False
+
+
+def is_multiply_prime_v2(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    # your code here
+    if a < 100:
+        for i in range(2, a):
+            if a % i == 0:
+                return False
+        return True
+    else:
+        return False
+
+
+def is_multiply_prime_v3(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    # your code here
+    if a < 100:
+        for i in range(2, a):
+            if a % i == 0:
+                return False
+        return True
+    else:
+        return False
+
+
+def is_multiply_prime_v4(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    # your code here
+    if a < 100:
+        for i in range(2, a):
+            if a % i == 0:
+                return False
+        return True
+    else:
+        return False
+
+
+def is_multiply_prime_v5(a):
+    """</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python function in a markdown style code block:
+
+```python
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, a):
+        if a % i == 0 and is_prime(i):
+            factors.append(i)
+            a //= i
+            if len(factors) > 3:
+                return False
+    return len(factors) == 3 and is_prime(a)
+```
+
+This function first checks if a number is prime by iterating from 2 to the square root of the number and checking if the number is divisible by any of these values. If it is, the function returns False, otherwise it returns True.
+
+The main function `is_multiply_prime` checks if a number is a product of exactly 3 prime numbers. It does this by iterating from 2 to the number and checking if the number is divisible by the current value and if the current value is prime. If it is, it adds the value to a list of factors and divides the number by the value. If the number of factors is more than 3 or if the last factor is not prime, the function returns False. If the number of factors is 3 and the last factor is prime, the function returns True.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, a):
+        if a % i == 0 and is_prime(i):
+            factors.append(i)
+
+    if len(factors) == 3 and all(is_prime(f) for f in factors):
+        return True
+    return False
+
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(12))  # False</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_multiply_prime(a):
+    def is_prime(n):
+        if n <= 1:
+            return False
+        if n == 2:
+            return True
+        if n % 2 == 0:
+            return False
+        i = 3
+        while i * i <= n:
+            if n % i == 0:
+                return False
+            i += 2
+        return True
+
+    if a < 100:
+        primes = [i for i in range(2, a) if is_prime(i)]
+        for p1 in primes:
+            for p2 in primes:
+                for p3 in primes:
+                    if p1 * p2 * p3 == a:
+                        return True
+    return False</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 2:
+        return False
+    if a % 2 == 0:
+        return True
+    if a % 3 == 0:
+        return True
+    if a % 5 == 0:
+        return True
+    if a % 7 == 0:
+        return True
+    if a % 11 == 0:
+        return True
+    if a % 13 == 0:
+        return True
+    if a % 17 == 0:
+        return True
+    if a % 19 == 0:
+        return True
+    if a % 23 == 0:
+        return True
+    if a % 29 == 0:
+        return True
+    if a % 31 == 0:
+        return True
+    if a % 37 == 0:
+        return True
+    if a % 41 == 0:
+        return True
+    if a % 43 == 0:
+        return True
+    if a % 47 == 0:
+        return True
+    if a % 53 == 0:
+        return True
+    if a % 59 == 0:
+        return True
+    if a % 61 == 0:
+        return True
+    if a % 67 == 0:
+        return True
+    if a % 71 == 0:
+        return True
+    if a % 73 == 0:
+        return True
+    if a % 79 == 0:
+        return True
+    if a % 83 == 0:
+        return True
+    if a % 89 == 0:
+        return True
+    if a % 97 == 0:
+        return True
+    return False</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    pass
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+def is_prime(n):
+    """Helper function to check if a number is prime."""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    """
+    if a < 10 or a % 2 == 0:
+        return False
+
+    primes = []
+    i = 3
+    while len(primes) < 3:
+        if is_prime(i) and a % i:
+            primes.append(i)
+            a //= i
+        else:
+            i += 2
+
+    return len(primes) == 3 and a == 1
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    for i in range(2, a):
+        if is_prime(i):
+            for j in range(i, a):
+                if is_prime(j):
+                    for k in range(j, a):
+                        if is_prime(k):
+                            if i * j * k == a:
+                                return True
+    return False
+
+# Test the function
+print(is_multiply_prime(30))  # Should return True</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    primes = [i for i in range(2, a) if is_prime(i)]
+    length = len(primes)
+    if length < 3:
+        return False
+    factors = [primes[i] for i in range(length) if a % primes[i] == 0]
+    if len(factors) != length:
+        return False
+    for f in factors:
+        if f * f != a:
+            return False
+    return True
+
+print(is_multiply_prime(30))  # True</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 100:
+        primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+        for i in range(len(primes)):
+            for j in range(i+1, len(primes)):
+                for k in range(j+1, len(primes)):
+                    if primes[i] * primes[j] * primes[k] == a:
+                        return True
+        return False
+    else:
+        return "Number is greater than 100"
+```
+
+The function takes an integer `a` as input and returns `True` if `a` is the multiplication of 3 prime numbers and `False` otherwise. The function first checks if `a` is less than 100, and if it is, it creates a list of prime numbers up to 29. It then loops through all possible combinations of 3 prime numbers and checks if their product equals `a`. If it finds a match, it returns `True`. If it loops through all possible combinations and doesn't find a match, it returns `False`. If `a` is greater than 100, the function returns the string "Number is greater than 100".</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    primes = [i for i in range(2, a) if is_prime(i)]
+    for i in range(len(primes) - 2):
+        for j in range(i + 1, len(primes) - 1):
+            for k in range(j + 1, len(primes)):
+                if primes[i] * primes[j] * primes[k] == a:
+                    return True
+    return False
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function `is_multiply_prime(a)` implemented in a markdown style code block:
+
+```python
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    primes = [i for i in range(2, a) if is_prime(i)]
+    for i in range(len(primes)):
+        for j in range(i, len(primes)):
+            for k in range(j, len(primes)):
+                if primes[i] * primes[j] * primes[k] == a:
+                    return True
+    return False
+```
+
+This function first checks if a number is prime. Then it generates a list of all prime numbers less than the given number. It then checks all possible combinations of three prime numbers to see if their product equals the given number. If it finds such a combination, it returns True. If it doesn't find any combination, it returns False.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a == 1:
+        return False
+    for i in range(2, a):
+        if a % i == 0:
+            for j in range(2, i):
+                if i % j == 0:
+                    return False
+            return True
+    return False
+
+def is_prime(a):
+    """Write a function that returns true if the given number is prime and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_prime(30) == False
+    30 = 2 * 3 * 5
+    """
+    if a == 1:
+        return False
+    for i in range(2, a):
+        if a % i == 0:
+            return False
+    return True
+
+def is_divisible(a, b):
+    """Write a function that returns true if the given number is divisible by the given number and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_divisible(30, 3) == True
+    is_divisible(30, 4) == False
+    """
+    if a % b == 0:
+        return True
+    return False
+
+def is_even(a):
+    """Write a function that returns true if the given number is even and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_even(30) == True
+    is_even(31) == False
+    """
+    if a % 2 == 0:
+        return True
+    return False
+
+def is_odd(a):
+    """Write a function that returns true if the given number is odd and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_odd(30) == False
+    is_odd(31) == True
+    """
+    if a % 2 == 1:
+        return True
+    return False
+
+def is_palindrome(a):
+    """Write a function that returns true if the given number is a palindrome and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_palindrome(121) == True
+    is_palindrome(123) == False
+</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime"""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Check if a number is the multiplication of 3 prime numbers"""
+    if a < 6:
+        return False
+    for i in range(2, a // 3 + 1):
+        if is_prime(i) and is_prime(a // i) and is_prime(a // i // i):
+            return True
+    return False</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 100:
+        for i in range(2, a):
+            if is_prime(i) and a % i == 0:
+                for j in range(i, a):
+                    if is_prime(j) and a % j == 0:
+                        for k in range(j, a):
+                            if is_prime(k) and a % k == 0 and i * j * k == a:
+                                return True
+    return False
+
+# Test the function
+print(is_multiply_prime(30))  # Should return True
+print(is_multiply_prime(100)) # Should return False</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def get_prime_factors(n):
+    """Return a list of prime factors of a number."""
+    factors = []
+    divisor = 2
+    while n > 1:
+        while n % divisor == 0:
+            factors.append(divisor)
+            n //= divisor
+        divisor += 1
+    return factors
+
+def is_multiply_prime(a):
+    """Return True if the given number is the multiplication of 3 prime numbers, False otherwise."""
+    prime_factors = get_prime_factors(a)
+    if len(prime_factors) < 3:
+        return False
+    return all(is_prime(factor) for factor in set(prime_factors))
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    """Returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    """
+    def is_prime(n):
+        """Returns true if the given number is prime, false otherwise."""
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, a+1):
+        if a % i == 0 and is_prime(i):
+            factors.append(i)
+            a //= i
+            if len(factors) == 3:
+                break
+    return len(factors) == 3 and all(is_prime(f) for f in factors)
+```
+
+The `is_multiply_prime` function takes an integer `a` as input and returns `True` if it is the multiplication of 3 prime numbers and `False` otherwise. The function first defines a helper function `is_prime` that checks if a given number is prime. It then iterates through all numbers from 2 to `a` and checks if they are prime factors of `a`. If a prime factor is found, it is added to a list of factors and `a` is divided by the factor. The loop stops once 3 factors have been found or `a` becomes 1. Finally, the function checks if the length of the factor list is 3 and all factors are prime, and returns the result.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    """Check if a number is prime"""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Check if a number is the multiplication of 3 prime numbers"""
+    if a < 2:
+        return False
+    for i in range(2, a):
+        if a % i == 0 and is_prime(i):
+            for j in range(i, a // i):
+                if a % j == 0 and is_prime(j):
+                    k = a // (i * j)
+                    if k > 1 and is_prime(k):
+                        return True
+    return False
+
+# Test cases
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(42))  # True
+print(is_multiply_prime(100))  # False
+print(is_multiply_prime(12))  # False</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    def is_prime(n):
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i += 6
+        return True
+
+    factors = []
+    for i in range(2, a + 1):
+        if a % i == 0 and is_prime(i):
+            factors.append(i)
+    return len(factors) == 3
+
+print(is_multiply_prime(30))  # Output: True</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, a + 1):
+        while a % i == 0 and is_prime(i):
+            factors.append(i)
+            a //= i
+
+    if len(factors) == 3 and all(is_prime(f) for f in factors):
+        return True
+    else:
+        return False</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    prime_factors = []
+    for i in range(2, a + 1):
+        if a % i == 0 and is_prime(i):
+            prime_factors.append(i)
+            a //= i
+            if len(prime_factors) > 3:
+                return False
+    return len(prime_factors) == 3
+
+# Example usage:
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(20))  # False
+print(is_multiply_prime(100)) # False</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    """
+    Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    def is_prime(n):
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i += 6
+        return True
+
+    prime_factors = []
+    for i in range(2, int(a**0.5) + 1):
+        while a % i == 0 and is_prime(i):
+            prime_factors.append(i)
+            a //= i
+    if a > 1 and is_prime(a):
+        prime_factors.append(a)
+
+    return len(prime_factors) == 3
+
+# Test cases
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(42))  # True
+print(is_multiply_prime(100)) # False
+print(is_multiply_prime(15))  # True
+print(is_multiply_prime(21))  # True
+print(is_multiply_prime(18))  # False</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def is_multiply_prime(a):
+    if a <= 1:
+        return False
+    for i in range(2, a):
+        if is_prime(i) and is_prime(a // i) and is_prime(a % i):
+            return True
+    return False
+</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+def is_prime(n):
+    """Function to check if a number is prime or not"""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """Function to check if a number is the multiplication of 3 prime numbers"""
+    count = 0
+    for i in range(2, a):
+        if is_prime(i) and a % i == 0:
+            count += 1
+            if count == 3:
+                return True
+    return False
+
+# Testing the function
+print(is_multiply_prime(30)) # Output: True
+print(is_multiply_prime(25)) # Output: False
+print(is_multiply_prime(45)) # Output: True
+print(is_multiply_prime(60)) # Output: False
+print(is_multiply_prime(75)) # Output: True
+print(is_multiply_prime(90)) # Output: False </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+
+    if a < 100:
+        for i in range(2, a):
+            if a % i == 0:
+                return False
+        return True
+    else:
+        return False
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    if a < 2 or a % 2 == 0:
+        return False
+    if a < 3 or a % 3 == 0:
+        return False
+    if a < 5 or a % 5 == 0:
+        return False
+    return True</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+def is_multiply_prime(a):
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    factors = []
+    for prime in primes:
+        if a % prime == 0:
+            factors.append(prime)
+            if len(factors) == 3:
+                return True
+    return False
+
+# Test cases
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(15))  # False
+print(is_multiply_prime(60))  # False
+```
+
+This code defines a function `is_multiply_prime` that takes a number `a` as input. It initializes a list `primes` with the prime numbers less than 100. It then iterates over each prime number and checks if `a` is divisible by that prime number. If it is, the prime number is added to the `factors` list. If the length of the `factors` list reaches 3, it means that `a` is the multiplication of 3 prime numbers, so the function returns `True`. If the loop completes without finding 3 prime factors, the function returns `False`. The code also includes some test cases to verify the correctness of the function.</code></pre>
+
+      <p> codebooga-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    for i in range(len(primes)):
+        for j in range(i+1, len(primes)):
+            for k in range(j+1, len(primes)):
+                if primes[i] * primes[j] * primes[k] == a:
+                    return True
+    return False
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the implementation of the function `is_multiply_prime` in Python:
+
+```python
+def is_multiply_prime(a):
+    """
+    Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, a + 1):
+        if a % i == 0 and is_prime(i):
+            factors.append(i)
+            a //= i
+            if len(factors) > 3:
+                return False
+    return len(factors) == 3 and a == 1
+```
+
+This function first checks if the number is a prime number. Then it finds all the prime factors of the number and adds them to a list. If the number of prime factors is more than 3, it returns False. If the number of prime factors is exactly 3 and the remaining number is 1, it returns True. Otherwise, it returns False.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, int(a**0.5) + 1):
+        while a % i == 0:
+            factors.append(i)
+            a //= i
+
+    return len(factors) == 3 and all(is_prime(f) for f in factors)
+
+
+print(is_multiply_prime(30))  # Output: True
+```
+
+This script first defines a helper function `is_prime` to check if a number is prime. Then it finds the factors of the given number `a` and checks if there are exactly 3 factors and all of them are prime. If so, it returns `True`, otherwise `False`.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    if a < 3:
+        return False
+    if a % 2 == 0 or a % 3 == 0:
+        return False
+    x = int(a**0.5)
+    for i in range(5, x+1, 6):
+        if a % i == 0 or a % (i+2) == 0:
+            return False
+    return True
+
+# Test cases
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(24))  # False
+print(is_multiply_prime(120))  # False
+print(is_multiply_prime(91))  # True</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+
+def is_multiply_prime(a):
+    if a <= 1 or a > 100:
+        return False  # Return false for invalid inputs (less than or equal to 1 or greater than 100)
+
+    for num in range(2, int(a ** 0.5) + 1):  # Iterate through potential prime factors
+        if a % num == 0:
+            # Check if the number is divisible by the current potential prime factor
+            prime_factors = []
+            while a % num == 0:
+                # If divisible, keep track of the prime factor and update the number by dividing
+                prime_factors.append(num)
+                a //= num
+            if len(prime_factors) == 3:
+                # If we found exactly 3 prime factors, return true
+                return all(map(lambda x: x > 1, prime_factors))
+            # If we found less than 3 prime factors, return false
+            else:
+                return False
+    # If we couldn't find any prime factors, return false
+    return False
+
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(20))  # False</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def is_prime(n):
+    """
+    Helper function to check if a number is prime.
+    """
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_multiply_prime(a):
+    """
+    Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less than 100.
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    prime_factors = []
+    for i in range(2, a + 1):
+        if a % i == 0 and is_prime(i):
+            prime_factors.append(i)
+            a //= i
+            if a == 1:
+                break
+
+    return len(prime_factors) == 3</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    factors = []
+    for i in range(2, a//2 + 1):
+        while a % i == 0:
+            factors.append(i)
+            a //= i
+            if a == 1 or len(factors) > 3:
+                return False
+    if a > 1 and is_prime(a):
+        factors.append(a)
+    return len(factors) == 3 and all(is_prime(f) for f in factors)
+
+
+print(is_multiply_prime(30))  # True
+print(is_multiply_prime(60))  # False
+print(is_multiply_prime(100))  # False</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+
+    # Your code here
+    return False
+
+# Test your function
+assert is_multiply_prime(30) == True
+assert is_multiply_prime(100) == False
+assert is_multiply_prime(101) == False
+assert is_multiply_prime(102) == True
+assert is_multiply_prime(103) == False
+assert is_multiply_prime(104) == True
+assert is_multiply_prime(105) == True
+assert is_multiply_prime(106) == False
+assert is_multiply_prime(107) == False
+assert is_multiply_prime(108) == True
+assert is_multiply_prime(109) == False
+assert is_multiply_prime(110) == False
+assert is_multiply_prime(111) == False
+assert is_multiply_prime(112) == False
+assert is_multiply_prime(113) == False
+assert is_multiply_prime(114) == False
+assert is_multiply_prime(115) == False
+assert is_multiply_prime(116) == False
+assert is_multiply_prime(117) == False
+assert is_multiply_prime(118) == False
+assert is_multiply_prime(119) == False
+assert is_multiply_prime(120) == True
+assert is_multiply_prime(121) == False
+assert is_multiply_prime(122) == False
+assert is_multiply_prime(123) == False
+assert is_multiply_prime(124) == False
+assert is_multiply_prime(125) == False
+assert is_multiply_prime(126) == True
+assert is_multiply_prime(127) == False
+assert is_multiply_prime(128) == False
+assert is_multiply_prime(129) == False
+assert is_multiply_prime(130) == False
+assert is_multiply_prime(131) == False
+assert is_multiply_prime(132) == False
+assert is_multiply_prime(133) == False
+assert is_multiply_prime(1</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def is_multiply_prime(a):
+    count = 0
+    for i in range(2, a):
+        if is_prime(i) and a % i == 0:
+            count += 1
+            a //= i
+            if count > 3:
+                return False
+    return count == 3</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def is_multiply_prime(a):
+    """Write a function that returns true if the given number is the multiplication of 3 prime numbers
+    and false otherwise.
+    Knowing that (a) is less then 100. 
+    Example:
+    is_multiply_prime(30) == True
+    30 = 2 * 3 * 5
+    """
+    
+    # Check if a is less than 100
+    if a > 100:
+        return False
+    
+    # Check if a is divisible by 2
+    if a % 2 == 0:
+        return False
+    
+    # Check if a is divisible by 3
+    if a % 3 == 0:
+        return False
+    
+    # Check if a is divisible by 5
+    if a % 5 == 0:
+        return False
+    
+    # If a is not divisible by any number, it is a prime number
+    return True</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def is_multiply_prime(a):
+    def is_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    primes = [i for i in range(2, a) if is_prime(i)]
+    for p in primes:
+        if a % p == 0:
+            q = a // p
+            if q in primes:
+                return True
+    return False
+
+# Testing the function
+print(is_multiply_prime(30))  # Expected output: True</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

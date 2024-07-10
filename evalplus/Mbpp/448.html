@@ -1,0 +1,1649 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/448 </h1>
+<pre><code> """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def cal_sum(n): 
+	a = 3
+	b = 0
+	c = 2
+	if (n == 0): 
+		return 3
+	if (n == 1): 
+		return 3
+	if (n == 2): 
+		return 5
+	sum = 5
+	while (n > 2): 
+		d = a + b 
+		sum = sum + d 
+		a = b 
+		b = c 
+		c = d 
+		n = n - 1
+	return sum
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[9], [10], [11]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[-5], [-4], [-6], [-7], [True], [False], [-8], [-3], [-9], [-10], [-11], [-12], [75], [74], [73], [72], [76], [71], [-13], [57], [-14], [77], [56], [-2], [-46], [-16], [-15], [70], [-17], [-1], [0], [-47], [-60], [55], [78], [-48], [54], [-61], [-49], [58], [59], [-18], [-19], [53], [-62], [-20], [-21], [-63], [79], [-45], [-87], [-88], [-89], [-22], [-44], [-59], [1], [-86], [-50], [-51], [-90], [2], [95], [-23], [60], [-85], [96], [-91], [-93], [-94], [-84], [-92], [-24], [52], [97], [94], [-52], [93], [92], [-83], [9], [61], [62], [50], [-53], [8], [49], [-25], [69], [-66], [3], [4], [99], [-33], [51], [-32], [63], [100], [-82], [-95], [-54]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n - 1)
+
+
+if __name__ == '__main__':
+    print(cal_sum(9))
+</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    """
+    Calculate the sum of Perrin numbers up to the n-th number.
+    """
+    if n < 3:
+        return 0
+    perrin = [3, 0, 2]
+    while len(perrin) < n:
+        perrin.append(perrin[-3] + perrin[-2] - perrin[-5])
+    return sum(perrin)
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    def perrin(n):
+        if n == 0:
+            return 3
+        elif n == 1:
+            return 0
+        elif n == 2:
+            return 2
+        else:
+            return 2 * perrin(n - 2) + perrin(n -3)
+
+    sum = 0
+    for i in range(n + 1):
+        sum += perrin(i)
+    return sum
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def cal_sum(n):
+    """
+    Calculates the sum of Perrin numbers up to the given index.
+    
+    Args:
+        n (int): The index up to which the Perrin numbers should be summed.
+    
+    Returns:
+        int: The sum of Perrin numbers up to the given index.
+    """
+    if n <= 0:
+        return 0
+    
+    perrin = [0, 0, 1]
+    for i in range(3, n+1):
+        perrin.append(perrin[i-2] + perrin[i-3])
+    
+    return sum(perrin[:n+1])
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    perrin_numbers = [0, 1]
+    for i in range(2, n+1):
+        perrin_numbers.append(perrin_numbers[i-1] + perrin_numbers[i-2])
+    return sum(perrin_numbers[:n+1])
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+def cal_sum(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        a, b, c = 1, 2, 3
+        for _ in range(n - 2):
+            a, b, c = b, c, a + b + c
+        return c
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to calculate the sum of Perrin numbers wrapped in a Python markdown block:
+
+```python
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n < 3:
+        return 0
+    
+    perrin = [3, 0, 2]  # Initialize the first three Perrin numbers
+    
+    for i in range(3, n):
+        perrin.append(perrin[i-2] + perrin[i-3])
+    
+    return sum(perrin)</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    # Initialize the Perrin sequence up to n
+    perrin = [0, 2, 3]
+    while len(perrin) < n:
+        perrin.append(perrin[len(perrin) - 2] + perrin[len(perrin) - 1])
+
+    # Calculate the sum of the first n Perrin numbers
+    return sum(perrin[:n])
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that calculates the sum of Perrin numbers up to a given number n:
+
+
+```python
+def cal_sum(n):
+    """
+    Calculates the sum of Perrin numbers up to n.
+    """
+    # Initialize the first two Perrin numbers
+    p = [3, 0]
+    # Initialize the sum variable
+    total = 0
+    # Loop through the range of numbers from 2 to n
+    for i in range(2, n+1):
+        # Calculate the next Perrin number
+        p.append(p[i-1] + p[i-2])
+        # If the number is even, add it to the sum
+        if p[i] % 2 == 0:
+            total += p[i]
+    # Return the sum of even Perrin numbers
+    return total
+```
+
+The Perrin sequence is a sequence of integers defined recursively as follows:
+
+- p(0) = 3
+- p(1) = 0
+- p(n) = p(n-1) + p(n-2) for n > 1
+
+The first few numbers in the sequence are: 3, 0, 2, 3, 2, 5, 7, 10, 16, 27, 44, 81, 160, 281, 482, 832, 1445, 2712, 4985, 9468, 18009, 33627, 61710, 113503, 19847, 366206, 669041, 1269228, 2322085, 4090080, 7043301, 12029071, 20686663, 35306901, 58523204, 101699702, 170390761, 289012037, 475042415, 784955682, 1306272230, 2174970907, 3543721145, 5778425577, 980702687, 1673673149, 2810047536, 4631599405, 7550435077, 12371407213, 20483734029, 33184030000, 5419354709, 8875113045, 14706925774, 24236291213, 3936843021, 6502085187, 11251105129, 18118097049, 2887850926, 4750424153, 7741289375, 12611247727, 2091090729, 3418204303, 5562527197, 8990285704, 15007421529, 24075000731, 39368430212, 6475219097, 10588533067, 17039076106, 27644445742, 44889361237, 7244381493, </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    # Initialize the first three Perrin numbers
+    a, b, c = 0, 0, 1
+
+    # Initialize the sum
+    total = 0
+
+    # Calculate the sum of the first n Perrin numbers
+    for _ in range(n):
+        total += c
+        a, b, c = b, c, a + b
+
+    return total
+
+# Test the function
+assert cal_sum(9) == 49
+print("All tests passed.")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 0
+    elif n == 2:
+        return 1
+    elif n == 3:
+        return 2
+    else:
+        return cal_sum(n - 3) + cal_sum(n - 2) + cal_sum(n - 1)
+
+
+if __name__ == '__main__':
+    print(cal_sum(9))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def perrin(n):
+    if n == 0:
+        return 3
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 2
+    else:
+        return perrin(n-1) + perrin(n-3)
+
+def cal_sum(n):
+    return sum(perrin(i) for i in range(n))
+
+# Test case
+assert cal_sum(9) == 49</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, I'd be happy to help with that. The Perrin sequence is a sequence of integers that starts with 3, 0, 2, and each subsequent term is the sum of the previous three terms. Here's a Python function that calculates the sum of the first `n` Perrin numbers:
+
+```python
+def cal_sum(n):
+    # Initialize the first three Perrin numbers
+    perrin = [3, 0, 2]
+
+    # Calculate the next Perrin numbers up to n
+    for i in range(3, n):
+        perrin.append(sum(perrin[-3:]))
+
+    # Return the sum of the first n Perrin numbers
+    return sum(perrin[:n])
+
+# Test the function
+assert cal_sum(9) == 49
+```
+
+This function first initializes a list with the first three Perrin numbers. It then calculates the next Perrin numbers up to the `n`th number by appending the sum of the last three numbers in the list to the end of the list. Finally, it returns the sum of the first `n` numbers in the list. The assert statement at the end is used to verify that the function is working correctly.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def perrin(n):
+    """
+    Function to calculate the nth Perrin number.
+    """
+    if n == 0:
+        return 3
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 2
+    else:
+        return perrin(n-1) + perrin(n-2) + perrin(n-3)
+
+def cal_sum(n):
+    """
+    Function to calculate the sum of first n Perrin numbers.
+    """
+    return sum(perrin(i) for i in range(n))
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+
+def cal_sum(n):
+    """
+    Write your code here
+    """
+    pass
+
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    """
+    :param n:
+    :return:
+    """
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n - 1)
+
+
+if __name__ == '__main__':
+    print(cal_sum(9))
+    print(cal_sum(10))
+    print(cal_sum(11))
+    print(cal_sum(12))
+    print(cal_sum(13))
+    print(cal_sum(14))
+    print(cal_sum(15))
+    print(cal_sum(16))
+    print(cal_sum(17))
+    print(cal_sum(18))
+    print(cal_sum(19))
+    print(cal_sum(20))
+    print(cal_sum(21))
+    print(cal_sum(22))
+    print(cal_sum(23))
+    print(cal_sum(24))
+    print(cal_sum(25))
+    print(cal_sum(26))
+    print(cal_sum(27))
+    print(cal_sum(28))
+    print(cal_sum(29))
+    print(cal_sum(30))
+    print(cal_sum(31))
+    print(cal_sum(32))
+    print(cal_sum(33))
+    print(cal_sum(34))
+    print(cal_sum(35))
+    print(cal_sum(36))
+    print(cal_sum(37))
+    print(cal_sum(38))
+    print(cal_sum(39))
+    print(cal_sum(40))
+    print(cal_sum(41))
+    print(cal_sum(42))
+    print(cal_sum(43))
+    print(cal_sum(44))
+    print(cal_sum(45))
+    print(cal_sum(46))
+    print(cal_sum(47))
+    print(cal_sum(48))
+    print</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python function to calculate the sum of Perrin numbers:
+
+```python
+def cal_sum(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    elif n == 2:
+        return 1
+    else:
+        perrin = [0, 1, 1]
+        for i in range(3, n+1):
+            perrin.append(perrin[i-2] + perrin[i-3])
+        return sum(perrin)
+
+# Test the function
+assert cal_sum(9) == 49
+```
+
+This function uses a list to store the Perrin numbers, and then calculates the sum of these numbers. The Perrin numbers are a sequence of numbers in which each number is the sum of the three previous ones, starting with 0, 1, and 1.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def cal_sum(n):
+    if n < 1:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return cal_sum(n - 1) + cal_sum(n - 2)
+
+def perrin_sum(n):
+    return cal_sum(n)
+
+assert perrin_sum(9) == 49</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + n
+
+print(cal_</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    """
+    Write a function to calculate the sum of perrin numbers.
+    assert cal_sum(9) == 49
+    """
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return cal_sum(n - 1) + cal_sum(n - 2)
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+def is_perrin(n):
+    """
+    Check if a number is Perrin number.
+    """
+    a, b, c = 0, 1, 1
+    while c < n:
+        a, b, c = b, c, a + b
+    return c == n
+
+def cal_sum(n):
+    """
+    Calculate the sum of Perrin numbers up to n.
+    """
+    count, sum = 0, 0
+    while True:
+        if is_perrin(sum):
+            count += 1
+            if count > n:
+                break
+            sum += is_perrin(sum) * (sum + 1)
+    return sum
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    def perrin_number(n):
+        if n == 0:
+            return 3
+        elif n == 1:
+            return 0
+        elif n == 2:
+            return 2
+        else:
+            return perrin_number(n - 1) + perrin_number(n - 2) - perrin_number(n - 3)
+
+    total = 0
+    for i in range(n + 1):
+        total += perrin_number(i)
+    return total
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def cal_sum(n):
+    """
+    This function calculates the sum of perrin numbers.
+    """
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+# Testing the function
+assert cal_sum(9) == 49
+```
+
+The function `cal_sum` takes an integer `n` as input and returns the sum of perrin numbers up to `n`. The function uses recursion to calculate the sum. If `n` is 0, the function returns 0. If `n` is 1, the function returns 1. Otherwise, the function returns `n` added to the sum of perrin numbers up to `n-1`.
+
+The function is tested using the `assert` statement. The `assert` statement checks if the function returns the expected output for a given input. If the function returns the expected output, the `assert` statement does nothing. If the function returns an unexpected output, the `assert` statement raises an `AssertionError` exception.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 3
+    else:
+        return 3 * cal_sum(n - 1) ** 2 - cal_sum(n - 2)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to calculate the sum of Perrin numbers:
+
+```python
+def cal_sum(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 1
+    else:
+        a, b, c = 0, 1, 1
+        for _ in range(n - 2):
+            a, b, c = b, c, a + b
+        return c
+
+print(cal_sum(9))  # Output: 49
+```
+
+This function uses a loop to calculate the sum of the first `n` Perrin numbers. The Perrin numbers are a sequence of numbers in which each number is the sum of the two preceding ones, with starting values 0, 1, 1. The function returns the sum of the first `n` Perrin numbers.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    Calculate the sum of perrin numbers.
+    """
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n - 1)
+
+assert cal_sum(9) == 49
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+
+assert cal_sum(9) == 49
+
+print(cal_sum(9))
+
+def cal_sum(n):
+    return n*(n+1)/2
+</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    perrin_numbers = [3, 0, 2]
+    for i in range(3, n + 1):
+        perrin_numbers.append(perrin_numbers[i - 3] + perrin_numbers[i - 2])
+    return sum(perrin_numbers)
+assert cal_sum(9) == 49
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i**2
+    return sum
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    if n == 0:
+        return 3
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 2
+    else:
+        return cal_sum(n - 2) + cal_sum(n - 3)
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def perrin(n):
+    """
+    Calculate the nth Perrin number.
+    """
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 3
+    elif n == 2:
+        return 0
+    else:
+        return perrin(n-2) + perrin(n-3)
+
+def cal_sum(n):
+    """
+    Calculate the sum of the first n Perrin numbers.
+    """
+    return sum(perrin(i) for i in range(n+1))
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    perrin_numbers = [0, 1, 2, 3, 4, 3, 2, 1, 0]
+    if n < 9:
+        return sum(perrin_numbers[:n+1])
+    else:
+        for i in range(9, n+1):
+            perrin_numbers.append(perrin_numbers[i-2] + perrin_numbers[i-3])
+        return sum(perrin_numbers)
+
+assert cal_sum(9) == 49
+```
+
+Explanation:
+The function `cal_sum` takes an integer `n` as input and returns the sum of the first `n` Perrin numbers. The Perrin numbers are a sequence of integers defined by the recurrence relation `P(n) = P(n-2) + P(n-3)` with initial values `P(0) = 0`, `P(1) = 1`, and `P(2) = 2`.
+
+In the function, we first define a list `perrin_numbers` containing the first 9 Perrin numbers. If `n` is less than 9, we simply return the sum of the first `n+1` elements of `perrin_numbers`. Otherwise, we use a loop to generate the remaining Perrin numbers and append them to `perrin_numbers`. Finally, we return the sum of all the Perrin numbers in `perrin_numbers`.
+
+The `assert` statement checks that the function works correctly by asserting that `cal_sum(9)` returns the expected value of 49.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    perrin_sequence = [3, 0, 2]
+    for i in range(3, n):
+        perrin_sequence.append(perrin_sequence[i-2] + perrin_sequence[i-3])
+    return sum(perrin_sequence[:n])
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    return cal_sum(n-1) + (2**(n-1)) * (n+1)
+
+print(cal_sum(9))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n-1)
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+
+def perrin_number(n):
+    if n == 0:
+        return 3
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 2
+    else:
+        return perrin_number(n - 2) + perrin_number(n - 3)
+
+
+def cal_sum(n):
+    sum_perrin = 0
+    for i in range(n):
+        sum_perrin += perrin_number(i)
+    return sum_perrin
+
+# Example usage
+# print(cal_sum(9))  # Should output 49
+
+assert cal_sum(9) == 49
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    """
+    Write a function to calculate the sum of perrin numbers.
+
+    assert cal_sum(9) == 49
+    """
+
+    # Calculate the perrin number for the given number.
+    perrin_numbers = [int(((-1)**i * (i + 1) / i) for i in range(1, n + 1)]
+
+    # Sum the perrin numbers.
+    return sum(perrin_numbers)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def cal_sum(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 2
+    elif n == 2:
+        return 5
+    else:
+        return cal_sum(n-2) + cal_sum(n-3)
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    perrin_numbers = [0, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16657, 56082, 190249, 658738, 2300005, 8130022, 29130069, 108000204, 400000613, 1590002040, 6300006013, 25200020402, 101000060137, 420000204062, 1760000601389, 7400002040682, 32000006013885, 140000006013885, 6000000060138850, 27000000060138850, 120000000060138850, 560000000060138850, 2800000000060138850, 14000000000060138850, 70000000000060138850, 350000000000060138850, 1750000000000060138850, 900000000000000000000, 4500000000000000000000, 22500000000000000000000, 112500000000000000000000, 562500000000000000000000, 2812500000000000000000000, 14062500000000000000000000, 70312500000000000000000000, 351562500000000000000000000, 1757812500000000000000000000, 9039062500000000000000000000, 45195312500000000000000000000, 225976562500000000000000000000, 1129882812500000000000000000000, 5649414062500000000000000000000, 28247070312500000000000000000000, 141235351562500000000000000000000, 706176757812500000000000000000000, 3530883789062500000000000000000000, 1765</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    # Initialize the first three Perrin numbers
+    perrin = [0, 0, 2]
+
+    # Calculate the rest of the Perrin numbers
+    for i in range(3, n+1):
+        perrin.append(perrin[i-3] + perrin[i-2] + perrin[i-1])
+
+    # Calculate the sum of the Perrin numbers
+    sum_perrin = sum(perrin)
+
+    return sum_perrin
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that calculates the sum of Perrin numbers:
+
+```python
+def cal_sum(n):
+    """
+    This function calculates the sum of Perrin numbers up to n.
+    """
+    perrin_sum = 0
+    for i in range(1, n+1):
+        perrin_sum += i * i * i * i * i
+    return perrin_sum
+```
+
+To test the function, we can call it with the value 9 and check if it returns 49:
+
+```python
+assert cal_sum(9) == 49
+```
+
+This should return True, indicating that the function is working correctly. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+
+def cal_sum(n):
+    """
+    :param n:
+    :return:
+    """
+    if n == 1:
+        return 1
+    else:
+        return n + cal_sum(n - 1)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    if n < 1:
+        return 0
+    else:
+        return cal_sum(n-1) + 1/pow(2, n-1)
+
+"""
+assert cal_sum(9) == 49</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    if n == 0:
+        return 3
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 2
+    else:
+        return cal_sum(n - 2) + cal_sum(n - 3)
+
+
+if __name__ == '__main__':
+    print(cal_sum(9))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        return cal_sum(n-1) + cal_sum(n-2)
+
+def cal_sum_iter(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        a, b = 1, 2
+        for i in range(3, n+1):
+            a, b = b, a+b
+        return b
+
+def cal_sum_iter_2(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        a, b = 1, 2
+        for i in range(3, n+1):
+            a, b = b, a+b
+        return b
+
+def cal_sum_iter_3(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        a, b = 1, 2
+        for i in range(3, n+1):
+            a, b = b, a+b
+        return b
+
+def cal_sum_iter_4(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        a, b = 1, 2
+        for i in range(3, n+1):
+            a, b = b, a+b
+        return b
+
+def cal_sum_iter_5(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    sum = 0
+    for i in range(1, n + 1):
+        sum += i * (i + 1) // 2
+    return sum
+
+
+if __name__ == '__main__':
+    print(cal_sum(9))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    sum = 0
+    for i in range(1, n+1):
+        if i % 2 == 0:
+            sum += i
+    return sum
+
+assert cal_sum(9) == 49
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    """
+    Calculate the sum of perrin numbers.
+    """
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + 2*cal_sum(n-2)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    Calculate the sum of perrin numbers.
+    """
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + 2*cal_sum(n-2)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    Calculate the sum of perrin numbers.
+    """
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + 2*cal_sum(n-2)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    Calculate the sum of perrin numbers.
+    """
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + 2*cal_sum(n-2)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    Calculate the sum of perrin numbers.
+    """
+    if n == 1:
+        return 1
+    else:
+        return cal_sum(n-1) + 2*cal_sum(n-2)
+
+assert cal_sum(9) == 49
+
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    return n + cal_sum(n - 1) + cal_sum(n - 2)
+
+
+if __name__ == '__main__':
+    print(cal_sum(9))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    """
+    Calculate the sum of Perrin numbers up to n.
+    """
+    sum_perrin = 0
+    for i in range(1, n+1):
+        perrin_num = sum(int(digit) * (10**(k-1)) for k, digit in enumerate(str(i), start=1) if k % 2 == 0)
+        sum_perrin += perrin_num
+    return sum_perrin
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+def cal_sum(n: int) -> int:
+    sum_perrin_numbers = 0
+    for i in range(1, n + 1):
+        is_perrin = True
+        number_digits = len(str(i))
+        for j in range(1, number_digits + 1):
+            digit_sum = sum([int(digit) for digit in str(i)][-j:])
+            if digit_sum > i:
+                is_perrin = False
+                break
+        if is_perrin:
+            sum_perrin_numbers += i
+    return sum_perrin_numbers
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+
+def cal_sum(n):
+    sum = 0
+    for i in range(1, n + 1):
+        sum += i * i
+    return sum
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+"""
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    """
+    Calculate the sum of the first n Perrin numbers.
+    
+    Args:
+        n (int): The number of Perrin numbers to sum.
+        
+    Returns:
+        int: The sum of the first n Perrin numbers.
+    """
+    if n < 1:
+        return 0
+    
+    # Initialize the first three Perrin numbers
+    p0, p1, p2 = 3, 0, 2
+    perrin_sum = p2
+    
+    # Calculate the remaining Perrin numbers and update the sum
+    for i in range(3, n):
+        p_next = p0 + p1
+        perrin_sum += p_next
+        p0, p1, p2 = p1, p2, p_next
+    
+    return perrin_sum
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+
+def cal_sum(n):
+    if n == 0:
+        return 3
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 2
+    else:
+        return cal_sum(n-2) + cal_sum(n-3)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    a, b, c = 1, 1, 1
+    for i in range(n):
+        a, b, c = b, c, a + b + c
+    return a
+
+print(cal_sum(9))
+/python/leetcode/1001-1100/1001.py
+"""
+Given an array of integers A and let n to be its length.
+
+Assume Bk to be an array obtained by rotating the array A k positions clock-wise, we define a "rotation function" F on A as follow:
+
+F(k) = 0 * Bk[0] + 1 * Bk[1] + ... + (n-1) * Bk[n-1].
+
+Calculate the maximum value of F(0), F(1), ..., F(n-1).
+
+Note:
+n is guaranteed to be less than 105.
+
+Example:
+
+A = [4, 3, 2, 6]
+
+F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 0 + 3 + 4 + 18 = 25
+F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 0 + 4 + 6 + 6 = 16
+F(2) = (0 * 2) + (1 * 6) + (2 * 4) + (3 * 3) = 0 + 6 + 8 + 9 = 23
+F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
+
+So the maximum value of F(0), F(1), F(2), F(3) is F(3) = 26.
+"""
+
+class Solution:
+    def maxRotateFunction(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        n = len(A)
+        if</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def cal_sum(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        perrin_numbers = [0, 1, 2]
+        for i in range(3, n+1):
+            perrin_numbers.append(perrin_numbers[i-2] + perrin_numbers[i-3])
+        return sum(perrin_numbers)
+
+assert cal_sum(9) == 49</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the sum of perrin numbers.
+assert cal_sum(9) == 49
+"""
+
+def cal_sum(n):
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 1
+    else:
+        return cal_sum(n-1) + cal_sum(n-2)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def cal_sum(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 3
+    elif n == 2:
+        return 0
+    elif n == 3:
+        return 2
+    else:
+        perrin = [0, 3, 0, 2]
+        for i in range(4, n+1):
+            perrin.append(perrin[i-2] + perrin[i-3])
+        return sum(perrin)
+
+# Test the function
+assert cal_sum(9) == 49</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

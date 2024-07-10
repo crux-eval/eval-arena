@@ -1,0 +1,1343 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/38 </h1>
+<pre><code> 
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[2] + group[:2]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['uzfplzjfzcltmdly'], ['nzyegaghrzqwrdzxckn'], ['zxolecqvzyausohgzdod'], ['cjhzuelsabstpbq'], ['lfgmjpqnvzwvbusr'], ['cvxcvhmtgbeweum'], ['jgjvebqagrtwheytsyff'], ['swbkfgqnvuahcnqgpcu'], ['ssjgajmprs'], ['enrrdusnffcnkotf'], ['cpfgdusjrzf'], ['gconqokfgb'], ['effmnsvrgsdbhffn'], ['zwsrgynxlmh'], ['nqdjadvhlu'], ['fpkocdqllglypkj'], ['aosjbowaac'], ['fvdumeezuebnlkqnvwfc'], ['tzfoanbvufs'], ['mnzbtfatwfxpqstecjm'], ['nkxxaitehrj'], ['nwxwbyaavoevbjbig'], ['gmamklorekv'], ['rihdqvrbxaycb'], ['gwvexchafqe'], ['pymjpgzjnva'], ['aobgbpwjritkq'], ['nuccsadagbriq'], ['gdktamtzhdmj'], ['dcprihgimgnjx'], ['kljtwssfqty'], ['frbqiejenuvxwoy'], ['tjfuyuhxly'], ['fimmmlfohx'], ['xwtgrxfyytcyyjdjoni'], ['bzekhcvbldsd'], ['ghzgwvsorsye'], ['xkaxuitdibnplwpucw'], ['qcszxfbaocdzseekb'], ['ueaztzzgmex'], ['jsjyrkasqpujtnvrbmtr'], ['fyiurdclyxoalovncksg'], ['erxobpjrpkxbsgobas'], ['lizudkhwdzwjzziyex'], ['vpuzbwgjyicrh'], ['sajlxmochmknulkxecik'], ['klzoujwdjfwqzk'], ['kiccixaihigbhftw'], ['hyrkynsmkvndymdepsu'], ['dplbtwiqweagdz'], ['kjrblffzlakwpz'], ['hzdeezpqcoxwcwsyyl'], ['wcxtvtdgeymblafldwgq'], ['ujgibazfslkfyfu'], ['oqrngzmyfxddlwpbv'], ['vtmdwyiilv'], ['vghazccwxyibefx'], ['jzyhtisowtzheniomrvr'], ['eksylebplf'], ['jxevtanxqvhwb'], ['joqwqljwckpb'], ['dkghzktgig'], ['ajbtmlaqsegfktujz'], ['xeggrighqjvgjpt'], ['fgkpcfreaypwkstc'], ['ucfyampthmhoh'], ['pcyzbxlzmud'], ['hualgpgmtpv'], ['dofgkmknkdhimryg'], ['btvvhktzpvkuekialfq'], ['hbvgnvmuxckcqjvx'], ['qhwrawfsmuevokszgfqy'], ['uakqzvnihhfcwz'], ['rlnvwwhoxlwkyibhnjg'], ['cmprarjwtqovlcizhgpu'], ['rbfrlfpxzfm'], ['lutbkxocedmbfctzmuy'], ['oajodvoerl'], ['bvmxponldendphf'], ['jdliznkftyvzwdqty'], ['hkbaihpjquf'], ['hhneeogusm'], ['qvnehikoshpzahmfkep'], ['urrclsjxeosc'], ['ghfmyzjawzulrop'], ['ycqtsqaatceckf'], ['ipybztxdkypoxjuhf'], ['ozjthdoukvrqjb'], ['ipfbolvlrwwtznrdbta'], ['xzhjnclgnihoinfs'], ['pfkwcebjnkoudgosogtj'], ['aqbojzzuehqwirlx'], ['mulyzumnbuzr'], ['nzdtnhuxogdzdguy'], ['juvowhyjstne'], ['ybzdvuvvwyeyxepv'], ['dyunpcsjbdozu'], ['hfbhubqoykkyrwjx'], ['bkkjxpyfzrtcqpqna'], ['hpncxsmjpus']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['abcdefghijk'], ['abcdefghijklmnopqrstuvwxyz'], ['1234567890'], ['The quick brown fox jumps over the lazy dog.'], ['Testing 123, testing 123.'], ['abc'], ['ab'], ['a'], [''], ['foo bar'], ['5670'], ['Testing 123, testi3ng 123.'], ['aaTesting 123, testi3ng 123.b'], ['Testing5670 123, testingabc 123.'], ['DQVw'], ['bc'], ['aTesting 123, testi3ng 123.ab'], ['Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.'], ['Testing 123, testi3ng 123..'], ['aTesting 123, tTesting 123, testi3ng 123..esti3ng 123.ab'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abcdefghijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.'], ['aTesteing 123, tTesting 123, testi3ng 123..esti3ng 123.ab'], ['Testing 123, tessting 123.'], ['Testing 123, testi3ng 12a3..'], ['Testing 123t, testi3ng 123..'], ['Testing 123, tsessting 123.'], ['Tabcdefghijklmnopqrstuvwxyzesting 123t, testi3ng 123..'], ['aabc'], ['aaTesbting 123, testi3ng 123.b'], ['Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.'], ['Testing 123, tes1ting 123..'], ['Testin,g5670 123, testingabc 123.'], ['cEEXtcV'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abcdefghijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.1234567890'], ['bbc'], ['Testing,g5670 123, testing3abc 123.'], ['acaabc'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.0 123,Testing 123, testing 123. testingabc 123.'], ['Testing 123Testing 123, tsessting 123., testi3ng 12a3..'], ['Testing567The quick Testing567The quick brown fox jumps over tn fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.1234567890'], ['abcdefgghijk'], ['The quicox jumps over the lazy dog.'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abcdefghijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the l1234567890azy dog.0 123,Testing 123, testing 123. testingabc 123.'], ['Testing 123, tesstinng 123.'], ['Testing Tabcdefghijklmnopqrstuvwxyzesting 123t, testi3ng 123..123, tes1ting 123..'], ['Testing567Tohe quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.'], ['aTesting 123, tTesti3ng 123..estii3ng 123.ab'], ['aing 123, testi3ng 123.b'], ['TestiTesting567The quick Testing567The quick browThe quick brown fox jumps over the lazy dog.n fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.ng 123t, testi3ng 123..'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123,  123,Testing 123, testing 123. testingabc 123.'], ['Testing 123, ttetsti3ng 123.'], ['Testing567The quick Testing567The quick brown fox jumps over tn fox jumps ovrer the lazy dog.0 123,Testing 123, testing 123. testingabc 123.1234567890'], ['aaTesbting 123, testi3ng 123.babc'], ['The quick brown fox jumps over the la'], ['aaTesbting a123, testi3ng 123.bTesting 123, tessting 123.abc'], ['Testing567Tohe quick brown fock brown fox jumps over the lazy dog.0 123,Testing 123, teaing 123, testi3ng 123.bsting 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.'], ['Te1sting 123, tes1ting 123..'], ['The quick brows over the lazy dog.'], ['The quick brown fTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abqcdefghijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.ox jumps over the la'], ['The quick brown fox jumTesting567The quick Testing567The quick brown fox jumps over tn fox jumps ovrer the lazy dog.0 123,Testing 123, testing 123. testingabc 123.1234567890 lazy dog.'], ['Testing 123, ttetst123.'], ['Testing 123Testing 123, tsessting 123., testi3nTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.2a3..'], ['Testing 123, ti3ng 123.'], ['Testing 123, testi3ng 12'], ['Testing5670 123, testingbabc 123.'], ['aTesting 123, tTesting 123, testi3ng 1Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.0 123,Testing 123, testing 123. testingabc 123.23.ab'], ['Testing 123, ttetst123.V'], ['aTesting 123, tTesti3ng 123.Te1sting 123, tes1ting 123..'], ['The quick brown fox jumTesting567The quick Testing567The quick brown fox jumps over tn fox jumps ovrer the lazy dog.0 123,Testing 1Testing 123,aTesting 123, tTesti3ng 123..estii3ng 123.ab ti3ng 123.23, testing 123. testingabc 123.1234567890 lazy dog.'], ['Te1stingTesting 123, testi3ng 12a3.. 123, tes1ting 123..'], ['aTesting 123, testi3ng 123..caabc'], ['c'], ['Te2sting 123, ttetstTesting 123, ttetst123.V123.V'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abcdefgTesting,g5670 123, testing3abc 123.hijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.1234567890'], ['cc'], ['The quick brown fTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abqzcdefghijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.ox jumps over the la'], ['The quick brown fTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123abqzcdefghijklmnopqrstuvwxyz,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.ox jumps over the laabcdefgghijk'], ['TeaTesting 123, tTesti3ng 123..estii3ng 123.absting567The quick brownn fox jump'], ['Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.TestingaTesteing 123, tTesting 123, testi3ng 123..esti3ng 123.ab567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.0 123,Testing 123, testing 123. testingabc 123.'], ['Testing 1Testing567The quick Testing567The quick brown fox jumps over tn fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.123456789023, tsessting 123.'], ['Testing,g56123456789070 123, testing3abc 123.'], ['2Testing567Tohe quick brown fock brown fox jumps over the lazy dog.0 123,Testing 123, teaing 123, testi3ng 123.bsting 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.bc'], ['aTesting 1Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.esti3ng 123..caabc'], ['Testisng 123, tes1ting 123..'], ['Tabcdefghijklmnopqrstyzesting 123t, testi3ng 123..'], ['Te1stingTesting 123, testTesting567The quick Testing567The quick bro1wn fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.i3ng 12a3.. 123, tes1ting 123..'], ['Te1sting 123, tesng 123..'], ['abcdefghfijk'], ['aing 123, 2gtesti3ng 123.b'], ['aTesteinbg 123, tTesting 123, testi3ng 123..esti3ng 123.ab'], ['Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 12cc3, testing 123. testingabc 123.'], ['Testing 123, aaTesbting 123, testi3ng 123.babctesti3ng 12a3..'], ['aTesting 123,aTesting 123, tTesting 123, testi3ng 1Testing567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testinTesting567The quick Testing567The quick brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.g 123. testingabc 123.0 123,Testing 123, testing 123. testingabc 123.23.ab3..'], ['Testing567The quick brownz fox jumps over the lazy dog.0 123,Testing 123, testing 1203. testingabc 123.'], ['Testing567The quick Testing567The qujick brown fox jumps over tn fox jumps ovrer the lazy dog.0 123,Testing 123, testing 123. testingabc 123.1234567890'], ['Tesbting 123, aaTesbtin3g 123, testi3ng 123.babctesti3ng 12a3..'], ['aTeststi3ng g123.ab'], ['aTesting 123, tTesti3ng 123..estii3ng 123.Te2sting 123, ttetstTesting 123, ttetst123.V123.V'], ['Te1stingTesting 123, testTesting567The quick Testing567The quick bro1wn fox jumps over the lazy dog.0 123,Testing 123, testing 123. testingabc 123.brown fox jumps over the lazy dog.0 123,Testing 123, testincg 123. testingabc 123.i3ng 12a3.. 123, tes1ting 123..'], ['thisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectly'], ['hjghgicuegtfbawqwemumeuifsunakjqskjpskabdh'], ['4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abcd'], ['abcdefghijklmno'], ['abcdefghijklmnop'], ['123456'], ['ababccdd'], ['ababccdababccdd'], ['abcdefghijklmnopqrstuvwxyzabc'], ['abcdefghjijklmnopqrstuvwxyzabc'], ['aabcdefghijklmnopqrstuvwxyzbcd'], ['abcdefghijklmnopqrstuvwxy'], ['abcdefghijklmnopqrstuvwxyzbabc'], ['ababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccdd'], ['abcdefghjijklnopqrstuvwxyzabc'], ['thisisaverylongstringbutitshouldstillbabcdefghijklmnopeencodedanddecodedcorrecly'], ['abcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabc'], ['ababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccdd'], ['abcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddcdefghijklmnopzbabc'], ['abcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmnopqrstuvbc'], ['hjghgicuegtfbawqwemeuifsunakjqskjpskabdh'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabc'], ['abcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmno'], ['abcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugc'], ['abcdefghijklmnopqrstuvwxyabcdefghjklmnopzbabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugc'], ['abcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddf%*^&yttcccbnjukfugc'], ['hhjghabcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgicuegtfbawqwemumeuifsunakjqskjpskabdh'], ['4%^&*876tylrmlskoukfug'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abccdd'], ['abcdefghijklmunopqrstuvbc'], ['abcdefghijklmnopmqrstuvwxyzbabc'], ['abcc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghijklmunopqrstnuvbc'], ['abcdefghijklaabcdefghjijklnohpqrsmtuvwxyzabcmno'], ['abcdefghjijklnopqlsbnjukfuguvwxyzabc'], ['abcdefghijklmnopqrstabccdduvwxyabcdefghjklmnopzbalbc'], ['thisisaverylongstringbutitshouldstillbeencodedanddelcodedcorrectly'], ['SVmyrpYEn'], ['abcdefghuijklmthisisaveryloklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['thisisaverylongstringbueencodedanddecodedcorrecly'], ['abcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabc'], ['aabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabc'], ['thisisaverylongstringbllbeencodedanddecodedcorrectly'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['aabcdefghijdklmnopqrzbd'], ['SVmyrSpYEn'], ['abcdefghjdijklnopqrstuvwxyzabc'], ['abcdefghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabc'], ['adabcdefghijklmnopqrstuvwxyzbcd'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefgheijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['4%^&*8%*^&yttcccbnj123456kfug'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfugc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfugcugc'], ['ababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabc'], ['aabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabc'], ['thisisaverylongstringbllbieencodedanddecodedcorrectly'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxabcdefghjijklnopqrstuvwxyzabcyzabc'], ['aabcdefghijklmnopqrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcabcdefghijklmnopdefghijklmunopqrstuvbc'], ['abcdefghijklmunopqrstuvbcaabcdefghijklmnopqrstuvwxyzbcd'], ['ababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecod4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabc'], ['acbcc'], ['abcdefghijklmnopxqrstuvwxyabcdefghijklmnopzbabc'], ['abkcdefghijklmno'], ['abcddefghijklmnop'], ['abcdefghjdijklnopqrstuvwxyzeabc'], ['abcdefghlrmtlskooifnmwdddf%*^&yttcccbnjukfugc'], ['abcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabc'], ['aabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklm123456nopqrstuvwxyzabc'], ['xabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abkcdefghjklmnoabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzabcmno'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['4%^&*876tyylrmtlskooifnmwddabcdefghijklmnopqrstuvwxyzbabcdffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefgheijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqwxyzabc'], ['abababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['aabcdabcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcefghijklmnopqrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abfcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddf%*^^&yttcccbnjukfugc'], ['awxyabcdefghijklmnopzbazbc'], ['hhjghabcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdh'], ['aabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababcmnobc'], ['thisisaverylongstringbutitshouldstillbeencodedanddelcodedcoaabcdefghijdklmnopqrzbdrrectly'], ['abcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopgeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcabcdefghijklmnopmqrstuvwxyzbabccdd'], ['thisisaverylcongstringbutitshouldstillbeencodedanddelcodedcorrectly'], ['thisisaverylongstrinababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbijklmnopzbabclmnvwxyzabccddbabcdanddelcod4%^&*876tyylrmtlskooifnmwddabcdefghijklmnopqrstuvwxyzbabcdffrrehfyj^%*^&yttcccbnjukfugrectly'], ['abcdefghjijklmncopqrstuvwxyzabc'], ['thiedanddecodedcorrectly'], ['thisisaverylongstringbllbeencodeabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZdanddecodedcorrectly'], ['abcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcopzbabclmnvwxyzabccddbabc'], ['abcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabcabkcdefghjklmnoabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzabcmno'], ['cabcdefghijklmnopqrstuvwxyabcdefghjklmnopzbabc'], ['thisisaverylongstringbllbeencodedanddecyodedcorrectly'], ['abcdefghijklmnhhjghabcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgicuegtfbawqwemumeuifsunakjqskjpskabdhbcdefghijklmopzbabc'], ['abcdefghjdiabcdefghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjkln'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclabccddbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnoplmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^fghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfugcugc'], ['abcdefghijklmnopqrstabccdduvwxyabcdefighjklmnopzbalbc'], ['aabcdefghiujklmnopqhrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['aabcdefghiujklmnopqhrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefmnopzbabc'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabc'], ['abcdefghuijklmthisisaverylongstringbutitshouabcdefghjdijklnopqrstuvwxyzabcldstillbaabcdefghijbcdefghijklmn'], ['abfcdefghjijklmnopqrstuvwxythisisaverylongstringbllbeencodedanddecyodedcorrectlyzab4%^&*876tyylrmtlskooifnmwdddf%*^^&yttcccbnjukfugc'], ['aabcdabcdefghijpklmnopqrstuvwxyabcdefghijklmnopzbabcefghijklmnopqrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcdefghijkabcdefghjdiabcdefghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjklnlmunopqrstuvbc'], ['hhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdh'], ['adabcdefghijklmnopqrstuvwxyzbcSVmyrSpYEnd'], ['bcdefghijklmnopzbazc'], ['abcdefghijklmnopqrsctuvwxyabcdefghjklmnopzbabc'], ['abababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['abcdnopqvrstuvwxyzabc'], ['JFkV'], ['abcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopstuvwxyzabc'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodedcorrectlybcSVmyrSpYEnd'], ['12341556'], ['abcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabc'], ['xXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abcdef4%^&*876tyylrmtlskooifnmwddabcdefghijklmnopqrstuvwxyzbabcdffrrehfyj^%*^&yttcccbnjukfugghjijklnopqrstuvwxyzaxbc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubc'], ['abcdefghijklmnopqrstuvwxyabcdefghibc'], ['abcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabcifnmwdddf%*^&yttcccabcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcbnjukfugc'], ['abfcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwddtdf%*^^&yttcccbnjukabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcfugc'], ['thisisaverylongstringbutitdshouldstillbabcdefghijklmnopeencodedanddecodedcorrecly'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['4%^&*876tylrmlskothisisaverylongstringbllbeencodedanddecyodedcorrectlykug'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodedcorrectlybSVmyrpYEncSVmyrSpYEnd'], ['abcdefhhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdhghijklmnopqrstuvwxyzabc'], ['abcdefghuijklmthisisaveryloklmnopbcdefghijklmnopeencodedanddecodedcorrecl'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbalbc'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabc'], ['aabcdefghijdklomnopqrzbd'], ['bpcdefghijklmnopzbazc'], ['xXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorrectly23456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['acbccabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttcccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['abcdefghijkabcdefghijkzabccddbabc'], ['4%^&*876tyylrmtlskifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmunopqabcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcrstnuevbc'], ['thisisaverylongstringbutitshouldabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcstillbeencodedanddelcodedcoaabcdefghijdklmnopqrzbdrrectly'], ['abcdefghuijklmtxyzabc'], ['ababccdabcdefghijkabcdefghijklmnopqrstuvwxyababaobccdthisisaverylongstringbutitshouldstillbeencodedanddecod4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabc'], ['abababcdefghuijklmthisisaveryelongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['SVmyrSpYEnhhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdh'], ['abcdefghijkabcdefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZreclynopqrstuvyzabcjklnlmunopqrstuvbc'], ['abcdelmno'], ['SVmyabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencdecodedcorreclynopqrstuvwxyzabcYEn'], ['abccabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcdd'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdmefghijklmnopabccabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopawxyabcdefghijklmnopzbazbcencodedanddecodedcorreclynopqrstuvwxyzaubcddeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['4%^&*876tylrmlskooifnmwddffrrehfyj^%*^&yttcccbnjukfug'], ['adabcdefghijklmabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqrstuvwxyzbcSVmyrSpYEnd'], ['xXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZ'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbc'], ['ahbcdefghlrmtlskooifnmwdddf%*^&yttcccbnjukfugc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefabcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabcghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['abcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabc'], ['ababdccdababccdd'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbc'], ['abcdefghiabcdjklmnopqrstuvwxybc'], ['bcdefghijklmnopzbaabcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabcreclynopqrstuvawxyzabcc'], ['123414556'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbal123414556'], ['1243456'], ['abcdefghuijklmthisisaveryloklmnopbcdefghijklmnopeencodeddanddecodedcorreclynopqrstuvwxyzabc'], ['abkcdefghijeklmno'], ['thisisaverylcongstringbutitshouldstillbeencodedadelcodedcorrectly'], ['thisisaverylongstringblglbeencodedanddecodedcorrectly'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabc'], ['abcdefghijklmnopqrstuvxwxyabcdefghibc'], ['aabcdefababccdthisisaverylongstringbutitshouldstillbabccddghijklm123456nopqrstuvwxyzabc'], ['abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&ytqtcccbnjukfugc'], ['abcdefghjijklmnopjqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugc'], ['ababdccdaabccdd'], ['abcdefghuijklmthisisavewrylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubc'], ['abcabcdefghuijklmthisisavewrylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcdefghjijklmncopqrstuvwxyzabc'], ['abcdefghijklaabcdefghjijklnohpqrsmtuvwxyzababcdefghijklmnopqrscabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcghjklmnopzbabccmno'], ['abcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['gabcdefghijklmnopqrstuvwxy'], ['abcdefghijklmnopmqrrstuvwxyzbabcadabcdefghijklmnopqrstuvwxyzbcSVmyrSpYEnd'], ['4%^&*876tyylrmtlskifnmwdddffrrehfyj^%*^xXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZ&yttcccbnjukfug'], ['abccc'], ['thissisaverylongstringbllbieencodedanddecodedcorrectly'], ['abcdefghjdijklnyopqrstuvwxyzabc'], ['abcdefghuijklmthisisaverylongsxXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZtringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopgeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvtwxyzabc'], ['12556'], ['abcdefghijkabcdefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxabfcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwddtdf%*^^&yttcccbnjukabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcfugcyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZreclynopqrstuvyzabcjklnlmunopqrstuvbc'], ['abcdefghjijklmnopqrtsthisisaverylongstringbutitshouldabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcstillbeencodedanddelcodedcoaabcdefghijdklmnopqrzbdrrectlyuvwxyzabc'], ['thiedandabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcdecodedcorrectly'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylonglstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['abaxabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZbccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccdd'], ['aoabcdefghijklmnopqrstuvwxyzbcd'], ['abcdefghuijklmthisisaverylongstringbutitshiouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstcuvwxyzabc'], ['abkcdefghijeknlmnabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbco'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttccabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylonglstringbutitshouldstillbaabcdefghijddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['ivGgx'], ['thisisavlerylongstringbutitdshouldstillbabcdefghijklmnopeencodedanddecodedcorrecly'], ['ababccdabcdefghijkabcdefghijklmnopqrstuvwxyababaobccdthisisaverylongstringbutitshouldstillbeencodedanddecod4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbadbc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcadefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['ababccdababcthisisaverylongstringbllbeencodedanddecyodedcorrectlycdd'], ['thiedandorrectly'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbal123414556'], ['abcdefghijkabcdefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZreclynopqrstuvyzabYcjklnlmunopqrstuvbc'], ['abcdefghijklmumnopqrstnuvbc'], ['bcdefgabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefabcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabcghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabchijklmnopzbazc'], ['4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%abc*^&yttcccbnjukfug'], ['abcdefghijklmnopqrstuvwxyababcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabccdefghibc'], ['4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjbpcdefghijklmnopzbazcukfug'], ['ahbcdefghlrmtlskooifnmbwdddf%*^&ytabcdefghijklmnopmqrstuvwxyzbabctcccbnjukfugc'], ['abcdefghuijklmthisisaverylongstringbutitshouabcdefghjdiabcdefghijklmnopqrstabccdduvwxyabcdefghjklmnopzbalbcjklnopqrstuvwxyzabcldstillbaabcdefghijbcdefghijklmn'], ['ahbcdefghlrmtlskooifnmbwdddf%*^&ytabcdefghijklmnopmqrstctcccbnjukfugc'], ['abcabcdefghijklmnopddefghijklmunopqrstuvbc'], ['abcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzthisisaverylcongstringbutitshouldstillbeencodedanddelcodedcorrectlystuvwxyabcdefghijklmopzbabc'], ['abcdefghijklmnorabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttgc'], ['xXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabcyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abcdefghjijkdlnopqrstuvwxyzabc'], ['abcdefghjdiabcdefabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjkln'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclba4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjbpcdefghijklmnopzbazcukfuglmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghijkabcdefghabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabc'], ['abcdecfababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabc'], ['thisisaverylongstringbutitshouldabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklm123456nopqrstuvwxyzabcedcorreclynopqrstuvwxyzabcstillbeencodedanddelcodedcoaabcdefghijdklmnopqrzbdrrectly'], ['abcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzthisisaverylcongstringbutitshouldstillbeencodedabcabcdefghijklmnopddefghijklmunopqrstuvbcanddelcodedcorrectlystuvwxyabcdefghijklmopzbabc'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrmstuvwxabcdefghjdijklnopqrstuvwxyzabcyzabc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdeabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbcfghijklmnopbcdefghijklmnopgeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abocdefijklmnop'], ['almno'], ['abababcdefghuijklmthisisaveryelongstringbutitshouldstillbaabcdefghijklmnopbabababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylonglstringbutitshouldstillbaabcdefghijddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['X'], ['abcdefghijklmnopqababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabc'], ['abcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcouvwxyzabcyzabc'], ['abcdefghjijklmnopqrtsthisisaverylongstringbutitshouldabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcstillbeencodedanddelcodedcoaabcdefghijdklmnopqrzbdrrectlyuvwxyzabc'], ['ababdccdaabcdefghjijklmncopqrstuvwxyzabcbabcdd'], ['aobcabcdefghijklmnopddefghijklmunopqrstuvbc'], ['awxyabcdefabcdefghijklmnopqrstabccdduvwxyabcdefighjklmnopzbalbcghijklmnopzbazbc'], ['aboacdefijklmno'], ['abcdefababccdthisisaverylongstringbutitshouldstillebeencodedarabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabc'], ['abcdefghijklmnopqrstabccdduvwxyabcdefighjklmnopSVmyrSpYEnzbalbc'], ['abcdefghijklmnopqrabcdefghijklmnofpqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcccdd'], ['aabcdefghijdkaabcdabcdefghijpklmnopqrstuvwxyabcdefghijklmnopzbabcefghijklmnopqrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcpqrzbd'], ['abccddabcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyj^%*^&ytqtcccbnjukfugc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclba4%^&*876tylrmlskooifnmwdddffrrehfyjabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabc^%*^&yttcccbnjbpcdefghijklmnopzbazcukfuglmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopfeencodedanddecodedcorreclynopqrstuvtwxyzabc'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaveryaobcabcdefghijklmnopddefghijklmunopqrstuvbclongstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['4%^&*8%*^&yttcccbnj123456kfugg'], ['abcdefghijklmunopqrstuvbthisisaverylongstringbueencodedanddecodedcorreclycaabcdefghijklmnopqrstuvwxyzbcd'], ['aabcabcdefghijklmnopddeadabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttccabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabccbnjukfugcedcorrectlybcSVmyrSpYEndfghijklmunopqrsuvbc'], ['abcdefghjijklmnopqrtsthisisaverylongstringbutitshouldabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUnVWXYZabcstillbeencodedanddelcodedcoaabcdefghijdklmnopqrzbdrrectlyuvwxyzabc'], ['acbccabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzqbabc'], ['acbccabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzqbc'], ['abcabcdefijklmnopddefghijklmunopqrstuvbc'], ['thisisaverylongstringbutitshouldstillbeencodedanddelcodedcorrectlabcdefghijklmnopabcdefghuijklmthiabcbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabcy'], ['4%^&*8%*^&y&ttcccbnj123456kfug'], ['abkcdefghijeeklmn'], ['abababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongstringbutitshouldstillbaaabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbalbcbcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaabababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongstringbutitshouldstillbdcorreclynopqrstuvwxyzabcccddbc'], ['thisisaverylongstringbutitshoabcdefghijklmnopqrstuvwxyababcdefghuiabcdjklmthisdisaverylongstringbutitshouldstiaabcdefghijdklmnopqrzbdlabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabccdefghibceencodedanddecodedcorrectly'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorrebc'], ['124345abcdefghuijklmthisisaveryloklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc6'], ['abcdefhhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdhghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIKLMNOPQRSTUVWXYZopqrstuvwxyzabc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmabcdefghjijklmnopjqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugct^%*^&yttcccbnjukfugc'], ['bPRUlgbabkcdefghjklmnoabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzabcmnoluX'], ['abfcdefghjijklmnopqrstuvwxythisisaverylodcorrectlyzabb4%^&*876tyylrmtlskooifnmwdddf%*^^&yttcccbnjukfugc'], ['abcdefghjdiabcdefghuijklmthisisaeveSVmyabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencdecodedcorreclynopqrstuvwxyzabcYEneclynopqrstuvyzabcjkln'], ['xXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorrectly23456789ABCcDEFGHIJKLNOPQRSTUVWXYZ'], ['abababcdefghuijklmthisisaveryelongstringbutitshouldstilthisisaverylongstringbllbeencodedanddecodedcorrectlylbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['aabcmnopqrzbd'], ['SVmyrrpYEn'], ['ivxGgx'], ['1lmnopeencodedanddecodedcoorreclynopqrstuvwxyzabc6'], ['abcdefghuijklmthisisaverylongstringbutitshouabcdefghjdiabcdeefghijklmnopqrstabccdduvwxyabcdefghjklmnopzbalbcjklnopqrstuvwxyzabcldstillbaabcdefghijbcdefghijklmn'], ['abcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyabaabcdefghijkabcdefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZreclynopqrstuvyzabYcjklnlmunopqrstuvbcijklmnopzbabc'], ['aabthisisaverylongstringbllbeencodeabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZdanddecodedcorrectlycdefghijklmnopqrstuvwxyzbcd'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstab123456ccdduvwxyabcdefighjklmnopzbalbc'], ['abcdefgxXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorresctly23456789ABCcDEFGHIJKLNOPQRSTUVWXYZhijklmnopxqrstuvwxyabcdefghijklmnopzbabc'], ['abcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodedcoabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabcrreclynopqrstuvwxyzabcyzbabc'], ['abcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijaklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvabcdefghuijklmthisisaverylongstringbutitshouabcdefghjdijklnopqrstuvwxyzabcldstillbaabcdefghijbcdefghijklmnyzabc'], ['abcdefghjijklnonpqrstuvwxyzabc'], ['abcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefgihjijklmnopqrsabc'], ['abcdefghijklmnopmqrstuvabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijaklmnopbcdefghijklmnopeenynopqrstuvwxyzabcwxyzbabc'], ['abcdefgkhjijklnopqrstuvwxyzabc'], ['hjghhgicuegtfbawqwemeuifsunakjqskjpskh'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghimnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghijkabababcdefghuijklmthisisaverylongsabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabctringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstab123456ccdduvwxyabcdefighjklmnopzbalbc'], ['4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttccabcdefghijklmnopqababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabccbnjukfug'], ['abcdefghuijklmtxabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzababcdefghijklmnopqrscabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcghjklmnopzbabccmnobc'], ['ababccdabcdefghijkabcdefgabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&yttcccbnjukfugcugchijklmnopqrstuvwxyababaobccdthisisaverylongstringbutitshouldstillbeencodedanddecod4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabc'], ['abcdefghijklmnopqrabcdefghijklmbnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['xXabcdefghijklmaabcdthisisaverylongstringbllbieencabcccdecodedcorrectly23456789ABCcDEFGHIJKLNOPQRSTUVWXYZ'], ['abcdefghijklmnopqrstuvwxyzabcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclabccddbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcdefghijklmnopeenynopqrstuvwxyzabcbabc'], ['ababdccdaabcdefghjijklmncopqrstuvwxyzabcdbabcdd'], ['thissisaverylongstringbllbieencodedanddecoddcorrectly'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopyeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbc'], ['4%^&*8%*^&y&ttcccbnjabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddklmopzbabc123456kfug'], ['abcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijyklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcabcdefghuijklmthisisavewrylongstringbutitshouldstillbaasbcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcdefghjijklmncopqrstuvwxyzabc'], ['nalmno'], ['abcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvywxyabcdefghijklmnopzbabc'], ['ivabcdefghijklmnopqrabcdefghijklmnofpqrstuvwxyzstuvwxyabcdefghijklmnopzbabcGgx'], ['abcdefghjijkabcdefghijklmnopqrabcdefghijklmbnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabclnonpqrstuvwxyzabc'], ['abcabcdecfababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabcd'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylonglstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopstuvwxyzabcecodedcorreclynopqrstuvwxyzabcccdd'], ['adabcdefghijklmabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqrstuvwxyzbcSVabcdefghjdiabcdefabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjklnmyrSpYEnd'], ['abcdefghijklmnopqrabcdefghiaabcdabcdefghijpklmnopqrstuvwxyabcdefghijklmnopzbabcefghijklmnopqrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcjklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabc'], ['abcdefghijkabcdefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz01abcdefghuijklmthisisaveryloklmnopbcdefghijklmnopeencodedanddecodedcorrecl23456789ABCDEFGHIJKLMNOPQRSTUVWXYZreclynopqrstuvyzabYcjklnlmunopqrstuvbc'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqvrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttccabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghifjklmnopqrstuvwxyzabccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['xXabcdefghijklmaabcdthisisaverylongstringbllbieencodabcdefghijklmnopqrstuvwxyabcdefghibcrrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZ'], ['4%^&*8%*^&y&ttcccabcdefghijklmnopqrstuvwxyabcdefghjklmnopzbabcbnj123456kfug'], ['4%^&*876tyylrmtlskifnmwdabcccddffrrehfyj^%*^xXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZ&yttcccbnjukfug'], ['abcdefcghijklmnopqrstuvwxy'], ['1labfcdefghjijklmnopqrstuvwxythisisaverylongstringbllbeencodedanddecyodedcorrectlyzab4%^&*876tyylrmtlskooifnmwdddf%*^^&yttcccbnjukfugcmnopeencodedanddecodedcoorreclynopqrstuvwxyzabc6'], ['abcdefghijklmunopqrstuvbthisisaverylongstringbueencodedajnddecodedcorreclycaabcdefghijklmnopqrstuvwxyzbcd'], ['abkcdefghijklabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopyeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbcmno'], ['bPRUlgbabkcabcdefghuijklmthisisavewrylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcdefghjklmnoabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzabcmnoluX'], ['aijklmnopddefghijklmuvbc'], ['XX'], ['xXabcdefghijklmaabcdthisisaverylongstringbllbieencodOPQRSTUVWXYZ'], ['abcabcdefghijklmnopdefghijklmmunopqrstuvbc'], ['abcdefghijklaabcdefabcdefnghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcghjijklnohpqrsmtuvwxyzabcmno'], ['abcdefghijkabababcdefghuijklmthisisaverylongstrinabcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcdefghijklmnopeenynopqrstuvwxyzabcgbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstab123456ccdduvwxyabcdefighjklmnopzbalbc'], ['SVmabababcdefghuijklmthisisaveryelongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddyrSpYEn'], ['abcdefghijklmnopqrstuvwxyabababccdthisisaverylongstrinqrstuvyzabYcjklnlmunopqrstuvbcijklmnopzbabc'], ['abababcdefghuijklmthisisaveryelongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklodedcorreclynopqrstuvwxyzabcccdd'], ['ababdccdaabcdefghjijklmnbcopqrstuvwxyzabcdbabcdd'], ['ababcabcdefghijklmnopdefghijklmmunopqrstuvbcababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['abcdefghuijklmtxabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzababcdefghijklmnopqrscabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&ytabcdefghijklmnotcccbnjukfugcghjklmnopzbabccmnobc'], ['thisisaverylongstringbutitdshoiuldstillbabcdefgly'], ['bcdefgabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefabcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcabccabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcddorreclynopqrstuvwxyzabcyzbabcghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabchijklmnopzbazc'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmabkcdefghjklmnoabcdefghijklaabcdefghjijklnohpqrsmtuvwxyzabcmnowdddffrrehfyj^%*^&yttcccbnjukfugc'], ['abcdefghijklmnopqrstabccdefghjklmnopzbalbc'], ['abcdefghuijklmthisisaverylongstringbutitsbhouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyabaabcdefghijkabcddefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZreclynopqrstuvyzabYcjklnlmunopqrstuvbcijklmnopzbabc'], ['abcabcdefghijklmnopdekfghijklmunopqrstuvbc'], ['1labfcdefghjijklmnopqrstuvwxythisisaverylongstringbllbeencodedanddecyodedcorrectlyzab4%^&*876tyylrmtlskooifnmwdddf%*^^&yttcccbnjukfugcmnopeencodedbabababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylonglstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopstuvwxyzabcecodedcorreclynopqrstuvwxyzabcccddqrstuvwxyzabc6'], ['abcdefghuijklmthisisaverylongsxXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZtringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopgeencodedanddecodedcorreclynopqrstuvwxyahbcdefghlrmtlskooifnmwdddf%*^&yttcccbnjukfugczabc'], ['4%^&*8d%*^&y&ttcccbnjabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddklmopzbabc123456kfug'], ['4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugabcd'], ['1lmnopeencodedanddecodeudcoorreclynopqrstuvwxyzabc6'], ['bcdefgabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefathisisaverylongstringbutitshoabcdefghijklmnopqrstuvwxyababcdefghuiabcdjklmthisdisaverylongstringbutitshouldstiaabcdefghijdklmnopqrzbdlabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabccdefghibceencodedanddecodedcorrectlybcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabcghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabchijklmnopzbazc'], ['hhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&abcdefghijklmnopjpskabdh'], ['abcdefghijklmnopqrstuvwxyabcdefabccabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcddghijklmnopzbabc'], ['hjghgicuegtfbawqwemeuifsunakjqskjabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmabcdefghjijklmnopjqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugct^%*^&yttcccbnjukfugcpskabdh'], ['dabkcdefghijeeklmn'], ['ieencodedanddecoddcorrectly'], ['abcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopyeencodedanddecodedcorreclynopqrstuvwxyzabcccdabcdefghlrmtlskooifnmwdddf%*^&yttcccbnjukfugcdlmnopqcrstabccdduvabcdefghijkabababcdefghuijklmthisisaverylongsabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabctringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstab123456ccdduvwxyabcdefighjklmnopzbalbcwxyabcdefighjklmnopzbalbc'], ['1456'], ['abkcdefghijeklmhjghgicuegtfbawqwemeuifsunakjqskjabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmabcdefghjijklmnopjqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugct^%*^&yttcccbnjukfugcpskabdhno'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqrstuvwxhyabcdefghijklmnopqrstuvwxyzzab4%^&*876tyylrmt^%*^&ydttcccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['abcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddcdefghijklomnopzbabc'], ['abcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreb'], ['anbcdefghjijklnonxpqrstuvwxyzabc'], ['abccabcdefghuijklmthisefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcdd'], ['abcdefghuijklmthisisaverylongstringbutitsbhouldstillbaabcdefghijklmnopbcdefghijklmnopeencocorreclynopqrstuvwxyzabc'], ['abcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutiytshouldstillbeencodedanabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcopzbabclmnvwxyzabccddbabc'], ['abcabcdefghijklmnopddefghijklmunopqrabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorrebcstuvbc'], ['abacbccdababdccdd'], ['babcdefghijklmnop'], ['uabcdefghjijklnonpqrstuvwxjyzabc'], ['thietyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcdecodedcorrectly'], ['ababdccdaabaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabccdefghjijklmncopqrstuvwxyzabcbabcdd'], ['abcdefghjijklnonpqrstuvwxyzabcabocdp'], ['abaxabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZbccdthisisaabccdd'], ['babababcdefghijklmahbcdefghlrmtlskooifnmbwdddf%*^&ytabcdefghijklmnopmqrstuvwxyzbabctcccbnjukfugcfghijklmnopeeancodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['abcdefghabcdefgkhjijklnopqrstuvwxyzabcjijkdlnopqrstuvwxyzabc'], ['abcdefghijkabcdefghjdiabcdefghuijklmthisgisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjklnlmunopqrstuvbc'], ['thisisaverylongstringbutitdshoiuldstillbabcdgly'], ['4%^&*8%*^&ytcbnj123456kfug'], ['ivabcdefghijklmnopqrabcdeabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvtwxyzabcfghijklmnofpqrstuvwxyzstuvwxyabcdefghijklmnopzbabcGgx'], ['abcdefghijklmnopqrstabccdduvwxyabcdefighjklmnoabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijyklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcpzbalbc'], ['abcdefghjijklmnopqrstuvwxhyzghijklaabcdefghjijklnohpqrsmtuvwxyzabcmnowdddffrrehfyj^%*^adabcdefghijklmabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqrstuvwxyzbcSVmyrSpYEnd&yttcccbnjukfugc'], ['abcdefghijkabababcdefghadabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqvrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttccabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghifjklmnopqrstuvwxyzabccbnjukfugcedcorrectlybcSVmyrSpYEndopzbalbc'], ['rthiedabcdefhhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdhghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIKLMNOPQRSTUVWXYZopqrstuvwxyzabcandorrectlyababccdd'], ['awxyabcdefghijklmnopzbazc'], ['abkcdefghijeknlmnabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmahbcdefghlrmtlskooifnmbwdddf%*^&ytabcdefghijklmnopmqrstctcccbnjukfugcnopzbalbco'], ['abcdefghijkabababcdefghuijklmthisisavnerylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbal123414556'], ['thisisaverylongstringbutbitdshoiuldstillbabcdefgly'], ['xXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarabcdefghijklmnopqraabcdefghijklmnobcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabcyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['thisisaverylongstringbutitshouldstillbeencodedanddelcodbabababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylonglstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopstuvwxyzabcecodedcorreclynopqrstuvwxyzabcccddedcoaabcdefghijdklmnopqrzbdrrectly'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongnlstringbutitshouldstillbaabcdefghijddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdd'], ['thisisasverylongstringbutitdshoiuldstillbabcdgly'], ['abcdefghijklmnopqrstuvwxyabcdefghijkabcdefghuijklmthisisaverylongsxXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZtringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopgeencodedanddecodedcorreclynopqrstuvwxyzabclmnopzbabc'], ['abkcdefghjklmnoabcdefghijklaabcdefghjijklnohpqrsmtuvwxthisisaveabcdefghijkabcdefghjdiabcdefghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjklnlmunopqrstuvbcyyzabcmnabcdo'], ['abcdefghjijklmnopqrtsthisisaverylongstringbutitshouldabcdefghuijabcdefgkhjijklnopqrstuvwxyzabcwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcstillbeababdccdababccddrrectlyuvwxyzabc'], ['abcdefghijkabababcitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbal123414556'], ['abcdefgefghibc'], ['abkcabcdefghijklmnodefghijeeklmn'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcadefghjijklmnopqrstuvwxyzabclbaabcdefghijklmrreclynopqrstuvwxyzabc'], ['abcdefghuiabcdjklmthisiesaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['ababdccdaabcabcabcdefghijklmnopdefghijklmunopqrstuvbccdd'], ['abcdefghjijklmnopqrstuvwx%^&*876tyylrmt^%*^&yttcccbnjukfugc'], ['abcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddabcyzbabc'], ['4%^&*876tyylrmtlskooifnmwddabcdefghijacbccklmnopqrstuvwxyzbabcdffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijkldmnthiedandabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcdecodedcorrectlyopqrabcdefghijklmnofpqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnoabcdefghijklmunopqrstuvbcaabxXabcdefghijklmaabcdthisisaverylongstringbllbieencodabcdefghijklmnopqrstuvwxyabcdefghibcrrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZcdefghijklmnopqrstuvwxyzbcd'], ['babababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabddefghijklmunopqrstuvbclongstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwadabcdefghijklmabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqrstuvwxyzbcSVabcdefghjdiabcdefabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjklnmyrSpYEndxyzabcccdd'], ['thisisaverylongstringbutitshouldstillbeencodedanddelcodbabababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijkbabababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongnlstringbutitshouldstillbaabcdefghijddpbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmthisisaverylonglstringbutitshouldstillbaabcdefghijklmnoabcabcdefghijklmnopmqrstuvwxyzbabccddpbcdefghijklmnopeencodedanddabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopstuvwxyzabcecodedcorreclynopqrstuvwxyzabcccddedcoaabcdefghijdklmnopqrzbdrrectjly'], ['abcdefghjdiabcdefghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnabcdefghjijkdlnopqrstuvwxyzabcostillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvyzabcjkln'], ['ababdccdaabcabcabcdefghijklmnopdefghijklmunopqrstuvbccddabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdefghuijklmthisisavewrylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrsabcdefghijklmunopqabcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcrstnuevbctuvwxyzaubc'], ['XabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabcX'], ['abcdefghijklmnopqrstuvwxyzbaabcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodedcoabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabcrreclynopqrstuvwxyzabcyzbabcbc'], ['ababdccdaabaabcdefababccdthisisaverylongostringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrstuvwxyzabccdefghjijklmncopqrstuvwxyzabcbabcdd'], ['VPchkSpKkj'], ['abcdefghijklaaabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnoabcdefghijklmunopqrstuvbcaabxXabcdefghijklmaabcdthisisaverylongstringbllbieencodabcdefghijklmnopqrstuvwxyabcdefghibcrrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZcdefghijklmnopqrstuvwxyzbcdbcdefghjijklnohpqrstuvwxyzabcmno'], ['abcdefghijkabcdefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZrecabaabcdefghiujklmnopqhrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefmnopzbabccdefghijklmnopqrstuvwxyzabcpqrstuvbc'], ['abcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodawxyabcdefghijklmnopzbazcedcoabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabcrreclynopqrstuvwxyzabcyzbabc'], ['4%^&*8%*^&yttcccbnj123456kfababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecod4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabcug'], ['abcdefghijklmnopqrstabccdduvwxyabcdefighjklmnoabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdeqfghjijyklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcpzbalbc'], ['abcdefpqrstuvwxyabcdefghibc'], ['abfcdefghjijklmnopqrababccdababccddstuvwxyzab4%^&*876tyylrmtlskooifnmwdddf%*^^&yttcccbnjukfugc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcadefghjynopqrstuvwxyzabc'], ['abcdefghuiagbcdjklmthisdisaverylongstrinbcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['thisisaverylongstringbutitshouldstillbeencodedanddelcodedcorrabcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcadefghjijklmnopqrstuvwxyzabclbaabcdefghijklmrreclynopqrstuvwxyzabcopabcdefghuijklmthiabcbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabcy'], ['4%^&*876tyylrmtlskifnmw4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugdddffrrehfyj^%*^&yttcccbnjukfug'], ['thisisaverylongstringbllbieencodedanddecodrrectl'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedagabcdefghijklmnopqrstuvwxynddecodabcdefghjijklmnopqrstuvwxhyabcdefghijklmnopqrstuvwxyzzab4%^&*876tyylrmt^%*^&ydttcccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['abcdefghuijklmthisisaveryloklmnopbcdefghijklmnopeencodedanddecodedcorrabcdefgefghibceclynopqrstuvwxyzabc'], ['aabcdefghijklmnopqrstuvwxyabcdefghjklmnopzbuabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcdefababccdthisisavertringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghijklmnopqrmstuvwxabcdefghjdijklnopqrstuthissisaverylongstringbllbieencodedanddecoddcorrectlyvwxyzabcyzabc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdmefghijklmnopaabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzthisisaverylcongstringbutitshouldstillbeencodedanddelcodedcorrectlystuvwxyabcdefghijklmopzbabcbccabcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijbcdefghijklmnopawxyabcdefghijklmnopzbazbcencodedanddecodedcorreclynopqrstuvwxyz4%^&*8%*^&yttcccbnj123456kfuggdedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghjiaboacdefijklmnojklmnopqrsbtuvwx%^&*876tyylrmthisisaverylongstringbueencodedanddecodedcorreclyt^%*^&yttcccbnjukfugc'], ['abcdefghijklmnopqrstuvwxyabcdefghijklmnabcdefghjijklnopqrstuvwxyzabcopzbabc'], ['abcdefghjdijklnyopqrstuvfwxyzabc'], ['4%^&*8%*^&yttcccbnjxXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarabcdefghijklmnopqraabcdefghijklmnobcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjijklnopqrstuvwxyzabcyzabcyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abababcdefghijklmnopqrstuvwxyabcdefghijklmnopzbabcabcdefghuijklmthisisaverylongstringbutitshouldstillbaaabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabmcdefighjklmnopzbalbabkcdefghijklabcdefghijkabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbc123456defghijklmnopyeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqcrstabccdduvwxyabcdefighjklmnopzbalbcmnoabcccdd'], ['abcdefghuiabcdjklmthisiesaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijyklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcuvwxyzabc'], ['adabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttccabcdefababccdthisisaverylongstringbutitshouldstillbeencodqrstuvwxyzabccbnjukfugcedcorrectlybcSVmyrSpYEnd'], ['abfcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooiabcdef4%^&*876tyylrmtlskooifnmwddabcdefghijklmnopqrstuvwxyzbabcdffrrehfyj^%*^&yttcccbnjukfugghjijklnopqrstuvwxyzaxbcfnmwddtdf%*^^&yttcccbnjukabcdpqrstuvwxyzabcfugc'], ['abcabcdefghijklmnSVmyabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencdecodedcorreclynopqrstuvwxyzabcYEn'], ['abcdefabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmopzbabchjijklmncopqrstuvwxyzabc'], ['abacbccdababdccdabcdefghjdijklnopqrstuvwxyzeabcd'], ['abcdefghuijklmthisisaverylongstringbutiabcdefghijkabcdefghijkzabccddbabctshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutiytshouldstillbeencodedanabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcopzbabclmnvwxyzabccddbabcjijklnopqrstuvwxyzabc'], ['abcdefghijklmunopqrstuvbthisisaverylongstringbueababccddencodedanddecodedcorreclycaabcdefghijklmnopqrstuvwxyzbcd'], ['thisisaverylongstrinababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthiseisaverylongstringbutitshouldstillbijklmnopzbabclmnvwxyzabccddbabcdanddelcod4%^&*876tyylrmtlskooifnmwddabcdefghijklmnopqrstuvwxyzbabcdffrrehfyj^%*^&yttcccbnjukfugrectly'], ['hhjghabcdefghjiijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&abcdefghijklmnopjpskabdh'], ['abcdefghjijklrmtlskooifnmwdddf%*^&yttcccbnjukfugc'], ['abcdefghijklmnopqababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyababccddrabcdefghijklmnopqrstuvwxyzstutvwxyabcdefghijklmopzbabc'], ['aabc4%^&*8%*^&y&ttcccbnjabcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddklmopzbabc123456kfugklmnopqrstuvwxyabcdefghjklmnopzbuabcbcdefghijklmnopqrabcdefgpqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcdefghuijklmthisisaverylongstringbutitsabcdefghijklmnohouldstillbaabdcdefgheijklmnopbcdefghijklmnopeencodedanddecodedcorrecrthiedabcdefhhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdhghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIKLMNOPQRSTUVWXYZopqrstuvwxyzabcandorrectlyababccddlynopqrstuvwxyzabc'], ['thisisavlerylongstringbutitdshouldstillbabcdefghijklmnopeencoahbcdefghlrmtlskooifnmwdddf%*^&yttcccbnjukfugcdednanddecodedcorrecly'], ['abcdefghijklmnopqrstabccdduvwxyabcdefighabcdefghijkabababcdefghadabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodabcdefghjijklmnopqvrstuvwxhyzab4%^&*876tyylrmt^%*^&ydttccabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddghifjklmnopqrstuvwxyzabccbnjukfugcedcorrectlybcSVmyrSpYEndopzbalbcjklmnopSVmyrSpYEnzbalbc'], ['acbcabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&ytqtcccbnjukfugc'], ['abcdabcdefghuiabcdjklmthisiesaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijyklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcuvwxyzabcefghijklmnopqrstuvwxy'], ['abcdefghuiabcdjklmthisilsaverylongstringbutitshouldstilabcadefghjijklmnopqrstuvwxyzabclbaabcdefghijklmrreclynopqrstuvwxyzabc'], ['abcdefghjijkabcdefghijklmnopqrabcdefghijklmbnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodawxyabcdefghijklmnopzbazcedcoabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabcrreclynopqrstuvwxyzabcyzbabcabclnonpqrstuvwxyzabc'], ['thiedandabcdefghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttncccbnjukfugcdecodedcorrectly'], ['abcdefghijkabababcdefghuijklmthisadabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodedcorrectlybSVmyrpYEncSVmyrSpYEndnopbcdefghijklmmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbal123414556'], ['abcdefghijklmualmnonopqrstnuvbc'], ['aabcdefababccdthisisaverylolngstringbutitshouldstillbabccddghijklm123456nopqrstuvwxyzabc'], ['abcdefghijklmnopqrstuvwxyababcdefghuiabcdjklmthisdisaverylongstringabcdefghuijklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccdefghibc'], ['abcdefghijklmnopqrstabccdduvwxyabcabababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopzbalbc'], ['tarbAuy'], ['abcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnoabcdefghijklmunopqrstuvbcaabxXabcdefghijklmaabcdthisisaverylongstriIngbllbieencodabcdefghijklmnopqrstuvwxyabcdefghibcrrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZcdefghijklmnopqrstuvwxyzbcd'], ['abcdefghijklmnopqrstuvwxyababcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefgihjijklmnopqrstuvwxyzabclbaabcdefghijklmadabcdefghijklmnopqthisisaverylongstringbllbieencodedanddecodedcorrectlybSVmyrpYEncSVmyrSpYEndnopbcdefghijklmnopeenynopqrstuvwxyzabccdefghibc'], ['abcdefghuijklmthisisaveryylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopfeencodedanddecodedcorreclynopqrstuvtwxyzabc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshouldstilabcdefghjijnklmnoplmnopbcdefghijklmnopeenynopqrstuvwxyzabc'], ['abcdabcdefghuiabcdjklmthisiesaverylongstringbutitshouldstilabawxyabcdefghijklmnopzbazccdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijyklmnopqrstuvwxyzaabcdefghijklmnopabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodedcoabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabcrreclynopqrstuvwxyzabcyzbabcbclbaabcdefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcuvwxyzabcefghijklmnopqrstuvwxy'], ['abababcdefghuijklmthisisaverylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxhhjghabcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdhyzabcccdd'], ['4%^&*8%*^&yttcccbnjxXabcdefghijklmaabcdefababccdthisisaverylongstringbutitshouldstillbeencodedardnddecodedcorrectlabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarabcdefghijklmnopqraabcdefghijklmnobcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcnddecodedcorrectlyababccddmnopqrmstuvwxabcdefghjiivGgxjklnopqrstuvwxyzabcyzabcyababccddghijklmnopqrstuvwxyzabcxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['abcdefghuijklmthisisaverylongstringbutitshouabcdefghjdijklnopqrstuvwxyzabclghijbcdefghijklmn'], ['abcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutiytshouldstillbeencodedanabcdefghuijklmthisisaverylongstringbutitshouldstilabcderfghjijklmnopqrstuvwxyzabclbaabcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcopzbabclmnvwxyzabccddbabc'], ['abcdefghijklaaabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnoabcdefghijklmunopqrstuvbcaabxXabcdefghijklmaabcdthWXYZcdefghijklmnopqrstuvwxyzbcdbcdefghjijklnohpqrstuvwxyzabcmno'], ['abcdefghuiabcdjklmthisiesaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghijkabcdefghijklaabcdefghjijklnohpqrstuvwxyzabcmnolmnopbcabcdefghuiabcdjklmthisdisaverylongstringbutitshouldstilabcdefghjijyklmnopqrstuvwxyzabclbaabgcdahbcdefghlrmtlskooifnmbwdddf%*^&ytabcdefghijklmnopmqrstctcccbnjukfugcefghijklmnopbcdefghijklmnopeenynopqrstuvwxyzabcuvwxyzabc'], ['abcdefghuiabcdjklmthisisaverylongstringbutitshoculdstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghimnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcdefghijklmunopqrgsabcdefghuijklmthisisaverylongstringbutitshouabcdefghjdiabcdeefghijklmnopqrstabccdduvwxyabcdefghjklmnopzbalbcjklnopqrstuvwxvyzabcldstillbaabcdefghijbcdefghijklmntnuvbc'], ['abcdefghijklmnopqrstuvwxyabcdefghijklmnabcdefghjijklnopqrstuvwxyzabcopzjbabc'], ['aabcdefabab4%^&*8%*^&yttcccbnj123456kfababccdabcdefghijkabcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecod4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugedcorrectlyababccddcdefghijklmnopzbabclmnvwxyzabccddbabcugccdthisisaverylolngstringbutitshouldstillbabccddghijklm123456nopqrstuvwxyzabc'], ['abfcdefghjijklmnopqrstuvwxyzab4%^&*876tyylrmtlskooifnmwddtdf%*^^&yttcccbnjbukabcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcfugc'], ['abcdryylongstringbutitshouldstillbaabdcdefghijklmnopbcdefghijklmnopfeencoalmnodedanddecolynopqrstuvtwxyzabc'], ['abcdefghjijklmnopqrstuvwxhyzghijklaabcdefghjijklnohpqrsmtuvwgxyzabcmnowdddffrrehfyj^%*^adabcdefghijklmabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqrstuvwxyzbcSVmyrSpYEnd&yttcccbnjukfugc'], ['abcdefghijklaabcdefabcdefnghjijklmnopqrstuvwxhyzab4%^&*876tyylrmtlskooifnmwdddffrrehfyj^%*gcghjijklnohpqrsmtuvwxyzabcmno'], ['abcdefghijklmnthisisaverylongstringbutitshouldstillbeencodedanddelcodedcorrectlybcdefghuijklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabcyzbabc'], ['4%^&*876tyylrmtlskifnmwdabcccddffrrehfyj^%*^xXabcdefghijklmaabcdthisisaverylongstringbllbieencodedanddecodedcorrectly23456789ABCDEFGHIJKLNOPQRSTUVWXYZ&Vyttcccbnjukkfug'], ['abcdefghjijkabcdefghijklmnopqrabcdefghijklmbnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabcdefghijklmnopabcdefghuijahbcdefghlrmtlskooifnmbwdddf%*^&ytabcdefghijklmnopmqrstctcccbnjukfugcklmthisisaverylongstringbutitshouldstillbaabdcdefghijklmnopabcdefghijklmnopqrstuvwxyzbabcbcdefghijklmnopeencodedanddecodawxyabcdefghijklmnopzbazcedcoabcdefghuiabcdjklmthisisaverylongstringbutitshoul12341556wxyzabcrreclynopqrstuvwxyzabcyzbabcabclnonpqrstuvwxyzabc'], ['abcdefghuiatbcdjklmthisisaverylongstringbutitshouldstilabcdefghjijklmnopqrstuvwxyzabclbaabcdefghimnopbcdmefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzabc'], ['abcabcdefghuijklmthisisavewrylongstringbwutitshouldstillbaabcdefghijbcdefghijklmnopeencodedanddecodedcorreclynopqrstuvwxyzaubcdefghjijklmncopqrstquvwxyzabc'], ['abcdefghijkabababcdefghuijklmthisisavnerylongstringbutitshouldstillbaabcdefghijklmnopbcdefghijklabcdefghjijklmnopqrstuvwxhyzghijklaabcdefghjijklnohpqrsmtuvwgxyzabcmnowdddffrrehfyj^%*^adabcdefghijklmabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZqrstuvwxyzbcSVmyrSpYEnd&yttcccbnjukfugcmmnopeencodedanddecodedcorreclynopqrstuvwxyzabcccddlmnopqrstabccdduvwxyabcdefighjklmnopzbal123414556'], ['abcdefghjijklmnopqrstuvwxhyzab4%^&**876tyj^%*^&ytqtcccbnjukfugc'], ['abcdefghijkabcdefghjdiabcdefghuijklmthisisaeverylongstringbutitshouldabcdefghijklmnostillbaabcdefghijbcdefghijklmnopeencoababdccdaabcdefghjijklmnbcopqrstuvwxyzabcdbabcddqrstuvbc'], ['aabcdabcdefghijpklmnopqrstuvwxyabcdefghijklmnopzbabcefahbcdefghlrmtlskooifnmwdddf%*^&yttcccbnjukfugcghijklmnopqrstuvwxyabcdefghjklmnopzbabcbcdefghijklmnopqrabcdefghijklmnopqrstuvwxyzstuvwxyabcdefghijklmnopzbabc'], ['abcdefghijklmnopqrstuvwxyabababccdthisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyabaabcdefghijkabcddefghjdiabcdefghuijkabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWSVmyrrpYEnXYZreclynopqrstuvyzabYcjklnlmunopqrstuvbcijklmnopzbabc'], ['thisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlyabcdefghijklmnopqrstabccdduvwxyabcdefghjklmnopzbalbc'], ['XabcdefababccdthisisaverylongstringbutitshouldstillbeencodedarnddecodedcorrectlyababccddmnxopqrmstuvwxabcdefghjiuvwxyzabcyzabcX'], ['abcdefhhjghabcdefghjijklmnopqrstuvwzxyzab4%^&*8uabcdefghjijklnonpqrstuvwxjyzabc76tyylrmtlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcgabcdefghijklmnopqrstuvwxyzicuegtfbawqwemumeuifsunakjqskjpskabdhghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIKLMNOPQRSTUVWXYZopqrstuvwxyzabc'], ['abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['4%^&*876tylrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['hjghgicuegtfbawqwemumeuifsunaikjqskjpskabdh'], ['abcdefghijklmnoabcd'], ['4%^&*876tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmgnopqrstuvwxyz'], ['habcdefghijklmgnopqrstuvwxyzbawqwemumeuifsunaikjqskjpskabdh'], ['ad'], ['abcdefghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['121234563456'], ['abbcd'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcd'], ['abccd'], ['athisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['habcdefghijklmgnopqrstuvwxyzbsawqwemumeuifsunaikjqskjpskabdh'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abcdefghijkabccdpqrstuvwxyz'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz01OPQRSTUVZklmnoabcd'], ['adabcdefghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNQOPQRSTUVZ'], ['abcdefghijklmnopqrstuvwxyzs0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['addhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdh'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['acbcd'], ['1211234563456'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['abcdefabcdghijklmnabcdefghijklmnop7qrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abLcdefghijklmnopqrstuvwxyz0123456789ABvCDEFGHIJKLMNOPQRSTUVZ'], ['1212314563456'], ['abLcdefghijklmnopqrstuvwxyz012b3456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['abcbcd'], ['4%^&r*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ'], ['abLcdefghijklmnopqrstuvwxabcdefghijklmnoyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['athisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['13233456'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['acbcdhabcdefghijklmgnopqrstuvwxyzbathisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcd'], ['abcdefghijklmnopqrstuvwxyzs0123456789ABCDEUVZ'], ['abcdefghijklmn123456o'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZcoabcd'], ['abLcdefghijklmnopqrstuvwxabcdefghijklmnoyz0123abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ456789ABCDEFGHIJKLMNOPQRSTUV'], ['abcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abLcd3efghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['abLcdefghijklmnopqrsz0123abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ456789ABCDEFGHIJKLMNOPQRSTUV'], ['abcabcdefghijklmgnopqrstuvwxyzbcd'], ['athisisaverylongstabcdringbutitshouldstillbeencodedecodedcorrectlybcdefghijklmnohabcd'], ['dabccd'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnop7qrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcd'], ['addhjghgicuegtfbawqwemumeuifsunaikjqskjpskabedh'], ['1234656'], ['1212313456'], ['abbacbcdcd'], ['hjgathisisaverylongstabcdringbutitshouldstillbeencodedecodedcorrectlybcdefghijklmnohabcdhgicuegtfbawqwemumeuifsunaikjqskjpskabdh'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['4%^&u*876t*ylfrmlskyooifnmwdadabcdefghijabcdefghijklmnopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['addhjghgicuegtfbawqwemumeuinaikjqskjpskabedh'], ['abcdefghijklmn12athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd6o'], ['thisisaverylongstringbutitshabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwemumeuifsunaiskjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['4%^&*876tylfrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfug'], ['abbbcd'], ['51212313456'], ['addhjghgicuegtfbawqwemumeuinaikjqskjpaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhskabedh'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZodabcd'], ['abcdefg23456o'], ['abcbdefghbijklmnop'], ['51habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwemumeuifsunaiskjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh212313456'], ['4%^&*876ehfyj^%*^&yttcccbnjukfug'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodeditshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['abcdefabcdghijklmnabcdefBghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['4%^&&*876tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['4%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZHrpX'], ['abcdefghadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcdijklmn123456o'], ['athisisaverylongstrinathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['512313456'], ['athisisaverylongstabcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodeditshouldstillbeencodedeanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnju*kfug'], ['121231456abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZodabcd'], ['Mveen'], ['abLcdefghijklmnopqrstuvwxyz012b3456789ABVZ'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCabcdefghijklmn12athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd6oDEFGHIJKLMNOPQRSTUVZodabcd'], ['addhjghgicuegtabcdefghijklmnopqrstuvwxyzifsunaikjqskjpskabdh'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZcoabcd'], ['abcdefghijklmno1212313456p'], ['addhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedh'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeeqncodedanddecodedcorrectly'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodeditsheouldstillbeencodedeanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['abbc'], ['athisisaverylongstabcdrdingbutitshouldstillboeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['athisisaverylongstrinathisisaverylongstabcdrddefghijklmnoabcd'], ['YcX'], ['abcdefabcdghijklmnabcdefBghijklmnopqrstuvwxyz012m3456789ABCFGHIJKLMNOPQRSTUVZoabcd'], ['habcdefghijklmgnopqrstuvwxyzbsawqwemumeathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdskjpskabdh'], ['4%ttcccbnjukfug'], ['121231345'], ['athisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz01OPQRSTUVZklmnoabc1212314563456'], ['121231abbacbcdcd4563456'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o2345678athisisaverylongstrinathisisaverylongstabcdrddefghijklmnoabcd9ABCDEFGHIJKLMNOPQRSTUVZ'], ['4%^&*876tyrlrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abbacabLcdefghijklmnopqrstuvwxabcdefghijklmnoyz0123456789ABCDEFGHIJKLMNOPQRSTUVZbcdcd'], ['13233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ456'], ['abcdefabcdghijklmnabcdefghijklmhjghgicuegtfbawqweabccdmumeuifsunakjqskjpskabdhdabcd'], ['adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcd'], ['thisisaverylongstringbutitsehabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['abcdefghijklmnopqrstuvwxyzs0123456789AkBCDEUVZ'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeeqncodedanddecodedcor4%^&*876tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugrectly'], ['4%^&*876tylrmlskooifabcbdefghbijklmnopnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['4%^&*876tylfrmlskyooifn13233456mwdddffrre3hfy^j^%*^&yttcccbnjukfug'], ['adabcdefghijabcdefghijklmnopc1212314563456'], ['abcbdefghbiaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhjklmnop'], ['112346356'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz012345678B9ABCDEFGHNOPQRSTUVZklmnoabcd'], ['abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMabcdefghijklmgnopqrstuvwxyzNOPQRSTUVZ'], ['4%ttcabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfug'], ['YcYX'], ['9abLcd3efghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['athisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmncoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['4%^&*876tyrlrmlskooifnmwdddffrrehfyj^%*^&yabcdefabcdghijklmnabcdefghijklmnop7qrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUUVZoabcdukfug'], ['abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQcRSTUVZ'], ['habcdefghijklmgnopqrstuvwxyzbsawqwemumeathisisaverylongstabcdrdingbutitshouldstillbectlybcdefghijklmnoabcdskjpskabdh'], ['abLcdefghijklmnopqrstuvwxyz01abckdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['abbcabcdefabcdghijklmnabcdefBghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abcdeathisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdfghijklmno'], ['YcXabbacbcdcd'], ['Ycabcdefg23456oX'], ['HbLl'], ['123athisisaverylongstrinathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd456'], ['abcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789AhBCDEFGHIJKLMNOPQRSTUVZoabcd'], ['4112346356%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^&yttcccbnjukfug'], ['123athisisaverylongstrinathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdgefghijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd456'], ['4%^&&*87r6tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugabcbc'], ['abcdefghijklmgnpopqrstuvwxyz'], ['ddabccd'], ['abcdefghij'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldsathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtillbeeqncodedanddecodedcorrectly'], ['abcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijklmnopqrstuvkwxyz0123456789AhBCDEFGHIJKLMNOPQRSTUVZoabcd'], ['13233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUathisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdVZ456'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGzHIJKLMNOPQRSTbUVZklmnoabcd'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZkplmnoabcd'], ['abLcdefghijklmnopsqrstuvwxyz0123456789ABCDEFQGHIJKLMNOPQcRSTUVZ'], ['athisiisaverylongstrinathisisaverylongstabcdrddefghijklmnoabcd'], ['4%^&*&yttcccbnjukfug'], ['13233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUathisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodcorrectlybcdefghijklmnoabcdVZ456'], ['abLcdefghijklmnopsqrstuvwxyz0123addhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedh456789ABCDEFQGHIJKLMNOPQcRSTUVZ'], ['addhjghgicuegtfbawqwemumeuifsunaiiikjqskjpskabedh'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectl51212313456ybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcd'], ['acbcdhabcadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZkplmnoabcddefghijklmgnopqrstuvwxyzbathisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['adabcdefghijabcd123145663456'], ['4%^&*876tylrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfthisisaverylongstringbutitsehabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyug'], ['abcdefghijklmnabLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ123456o'], ['addhjghgicuegtfbawqwemumeuifsunaiiikjqskjpshjghgicuegtfbawqwemumeuifsunakjqskjpskabdhabedh'], ['4%^&*&ytttcccbnjukfug'], ['4%^&*876adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdtylfrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfug'], ['adabcdefghijabcdefghijklmnopqrstuvwx'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpsikabdh'], ['abcdefghijkabccdpqkrstuvxyz'], ['abcdefghijklmnabLcdefghijklmnopqrstuvwxyz0124%^&&*87r6tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugabcbc3456789ABCDEFGHIJKLMNOPQRSTUVZ123456o'], ['habcdefghijklmgnopqrstuvwxyzbsawqwemumenaikjqskjpskabdh'], ['16'], ['thisisaverylongabbcdstringbutitshabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['Hbl'], ['12123145634'], ['abcdefg234c56o'], ['abcdefghijklmnaebcdefabcdghijklmnabcdefghijklmhjghgicuegtfbawqweabccdmumeuifsunakjqskjpskabdhdabcd12athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd6o'], ['47r6tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugabcbc'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoaabcd'], ['adthisisaverylongstringbutitsehabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstilylbeeqncodedanddecodedcorrectly'], ['12313456'], ['abbacbcdc'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybabcdefghijklmnabcdefghijklmnopqrstuvwxyz0123456789Aoabcdjklmnoabcbd'], ['acbcdhabcdefghijklmgnongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['athisislaverylongstabcdmnoabcdjklmnoabcbd'], ['habcdefgaddhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedhhijklmgnopqrstuvwxyzbsawqwemumenaikjqskjpskabdh'], ['abbacbcdbcd'], ['123athisisaverylongstrinathisisaverabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZcoabcdylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdgefghijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd456'], ['4%^&&*876tylfrmlskyooifnmwdabLcdefghijklmnopsqrstuvwxyz0123addhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedh456789ABCDEFQGHIJKLMNOPQcRSTUVZdodffrrehfyj^%*^&yttcccbnjukfthisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyug'], ['abbaddhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedhacbcdc'], ['AfhJawayHw'], ['abLcdefghiHjklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQcRSTUVZ'], ['thisisaverylongabbcdstringbutitshabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorhrectly'], ['abLcdefadabcdefghijabcdefghijklmnopqrstuvwxyz012345678B9ABCDEFGHNOPQRSTUVZklmnoabcdghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['abcdefghijklmnop4%^&*&ytttcccbnjukfugqrstuvwxyz'], ['abcd6efg234c56o'], ['habcdefghijklmgnopqrstuvwxyzbawqwemumeuh'], ['abcdefabcdghijklmnabcdefBghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMoabcd'], ['abcdefghijklmnabLcdefghijklmnopqrstuvwxyz0124%^&&*87r6tylfrmlskyooifnmw5dddffrrehfyj^%*^&yttcccbnjukfugabcbc3456789ABCDEFGHIJKLMNOPQRSTUVZ123456o'], ['51214%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^&yt3456'], ['abcdefghijklmnabLcdefghijklmnopqrstuvwxyzabLcdefghijklmnopqrstuavwxyz01abcdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZcoabcd6o'], ['adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZkathisislaverylongstabcdmnoabcdjklmnoabcbdlmnoabcd'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456a789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['abcdefghijklmn12athisisav112346356erylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd6o'], ['121123456313233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUathisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdVZ456456'], ['addhjghgicuegtfbawqwemumeuiabcdefghijklmno1212313456pfsunaikjqskjpskabedh'], ['4%ttcccbnjabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdukfug'], ['abLcdefghiHjklmnopqrstuvwxyz0123456789ABCDEFadabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdGHIJKLMNOPQcRSTUVZ'], ['abLcdefghijklmnopqrsz0I123abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ456789ABCDEFGHIJKLMNOPQRSTUV'], ['athisisaverylongstabcdreingbutitshouldstillbeencodedanddecodeditsheouldstillbeencodedeanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['adabcdefjghijabc'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['4%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^g'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodeadcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789abLcdefghijklmnopqrsz0I123abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ456789ABCDEFGHIJKLMNOPQRSTUVABCDEFGHIJKLMNOPQRSTUVZabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZcoabcd'], ['abbaddhjghgicuegtf1212313456bawqwemujmeuinaikjqskjpskqabedhacbcdc'], ['athisisaverylongstabcdringbutitshouldstillbeencabcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijkdlabccdnddecodeditshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtjklmnoabcbd'], ['abcdefghijklmnopqrstabcdefghijklmgnuvwxyzZ'], ['121231456ababcdefghijklmnabLcdefghijklmnopqrstuvwxyz0124%^&&*87r6tylfrmlskyooifnmw5dddffrrehfyj^%*^&yttcccbnjukfugabcbc3456789ABCDEFGHIJKLMNOPQRSTUVZ123456oDEFGHIJKLMNOPQRSTUVZodabcd'], ['habcdefghijklmgnopqrstuvwxyzbsabdh'], ['abcdefghthisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyijklmnopqrstuvwxyzs012356789AkBCDEUVZ'], ['athisiisaverylongstrinathisisaverylongstabcaddhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedhdrddefghijklmnoabcd'], ['4%^&*876tylrmlskyooifnmwdddffrrehfyjj^%*^&yttcccbnjukfug'], ['H'], ['adabcdefghijabcdefghijklmnopqrstuvwxyz01OPQRSTUVZklmnoHbLld'], ['abcdefghijklmnopqrstabcdefgh4%^&&*87r6tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugabcbcijklmgnuvwxyzZ'], ['4%^&u*876t*ylfrmlskyooifnmwdadabcdefghijabcdefghijklmopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug'], ['abLcdefghijklmnopqrstuvwxyz0123456789ABCDAEFGHIJKLMNOPQRSTUVZ'], ['4%ttcabLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfugad'], ['5kyooifnmwddodffrrehfyj^%*^&yt3456'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtf4%^&*876tylrmlskooifabcbdefghbijklmnopnmwdddffrrehfyj^%*^&yttcccbnjukfugbawqhabcdefghijklmgnopqrstuvwxyzbsawqwemumenaikjqskjpskabdhwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456a789ABCDEFGHIJKLMNOPQRSTUVZoadwdhjghgicuegtfbawqwemumeuifsunaiiikjqskjpshjghgicuegtfbawqwemumeuifsunakjqskjpskabdhabedhabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['thisisaverylongstringbutitshabtcdefghijkabccdpqrstuvwxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['4%^&*&ytttcccbnadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectl51212313456ybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcdjukfug'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldsathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtillbeeqncoabbacbcdbcddcorrectly'], ['4%ttcccbnug'], ['adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOcd'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGwHIJKLMNOPQRSTUVZcoabcd'], ['abLcdefghijklmnopqrshabcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhKLMNOPQRSTUVZ'], ['adabcdefghijabcdefghijkadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcdlkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcd'], ['abcdefa3bcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZodabcd'], ['121123456313233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUathisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnoprqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillbeenicodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdVZ456456'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstjuvwxyz0123456789ABCthisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldsathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtillbeeqncoabbacbcdbcddcorrectlyDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskdjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['4%ttcabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEiFGHIJKLMNOPQRSTUVZoabcdccbnjukfug'], ['abcdefghijklmnopqrstuvwxyzs0123456789ABCDEFGHIJKLMNOPQRSTUHbLlVZ'], ['dLK'], ['4u%^&*876tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['abcdefghijklmnabLcdefghijklmnopqrstuvwxyzabLcdefghijklmnopqrstuavwxyz01abcdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIxJKLMNOPQRSTUVZcoabcd6o'], ['adabcdefghijabcdefgddabccdhijkadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcdlkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcd'], ['adabcdefghijabcdefghwijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcd'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789ABCDEFGHI51214%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^&yt3456JKLMNOPQRSTUVZ'], ['abcdefghijkabcabcdefghijklmnop4%^&*&ytttcccbnjukfugqrstuvwxyzcdpqkrstuvxyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZodabcdz'], ['addhjghgicuegtfbawqwemumeuifs4%^&*876adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdtylfrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfugunaiiikjqskjpskabedh'], ['abbacabLcdefUghijklmnopqrstuvwxabcdefghijklmnoyz0123456789ABCDEFGHIJKLMNOPQRSTUVZbcdcd'], ['abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVaddhjghgicuegtfbawqwemumeuinaikjqskjpskabedhZ'], ['121231abbacbdcd4563456'], ['athisislaveryabbaddhjghgicuegtf1212313456bawqwemujmeuinaikjqskjpskqabedhacbcdclongstabcdmnoabcdjklmnoabcbd'], ['abcdefghijklmgstuvwxyz'], ['thisisaverythisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeeqncodedanddecodedcor4%^&*876tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugrectlylongstringbutababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['123456thisisaverylongstringbutitshabtcdefghijkabccdpqrstuvwxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghiwjklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['hjghgicuegtfbawqwemumeuif4%ttcabLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfugadabdh'], ['abbacbcdhabcadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZkplmnoabcddefghijklmgnopqrstuvwxyzbathisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhdcd'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtf4%^&*876tylrmlskooifabcbdefghbijklmnopnmwdddffrrehfyj^%*^&yttcccbnjukfugbawqhabcdefghijklmgnopqrstuvwxyzbsawqwemumenaikjqskjpskabdhwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456a789ABCDEFGHIJKLMNOPQRSTUVZoadwdhjghgicuegtfbawqwemumeuifsunaiiikjqskjpshjghgicuegtfbawqwemumeuifsunakjqskjpskabdhabedhabcdemumeuifsunaikjqsabcdefghijklmnabLcdefghijklmnopqrstuvwxyz0124%^&&*87r6tylfrmlskyooifnmw5dddffrrehfyj^%*^&yttcccbnjukfugabcbc3456789ABCDEFGHIJKLMNOPQRSTUVZ123456odh'], ['4%^&u*876t*ylfrmlskyooifnmwdadabdcdefghijabcdefghijklmnopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug'], ['adabzcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOcd'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldsathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtillbeeqncoabbacbcdbcddcoradrectly'], ['abLcdefghijklmnoMpsqrstuvwxyzA0123456789ABCDEFQGHIJKLMNOPQcRSTUVZ'], ['adabcdefghijabcdefgddabccdhijkadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZklmnoabcdlkmnopqrstuvwxyz0123456789Zklmnoabcd'], ['121231abba4%^&*876tylrmlskooifnmwdddffrrehfyj^%*^&yttcccbnjukfugcbcdcd4563456'], ['4%ttcabLcdefghijklmacbcdhabcdefghijklmgnongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh56789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfugad'], ['121123456313233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUathisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnoprqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitshouldstillhbeenicodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdVZ456456'], ['abbbacbcdcd'], ['abcdefghijklmnopqrstuvwxyzs012345678i9AkBCDEUVZ'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyzw0123456789ABCDEFGHIJKLMNOPQRSTUVZodabcd'], ['thisisaverythisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeeqnc4%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^gbbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['abLcdefghijklmnopsqrstuvwxyz0123456789ABCDEFQGHIJKLMNOPQcRSTUVZabbacabLcdefUghijklmnopqrstuvwxabcdefghijklmnoyz0abcdefghijklmnoabcd123456789ABCDEFGHIJKLMNOPQRSTUVZbcdcd'], ['athiathisisaverylongstabcdringbutitshouldstillbeencodedanddecodeditshouldstillbeencodedeanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbdsisaverylongstabcdringbutitshouldstillbeencodedanddecodeditshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['athisisaverylongstababcbdefghbijklmnopcdringbutitshoadabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylonlgstringbutitwshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcduldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd'], ['adabc'], ['HHH'], ['abcdefghijklmnopqrstuvAwxyzs012345678i9AkBCDEUVZ'], ['pa'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789abLcdefghijklmnopqrsz0I123abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ456789ABCDEFGHIJKLMNOPQRSTUVABCDEFGHIJKLMNOPQRSTUVZabtcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDjEFGHIJKLMNOPQRSTUVZcoabcd'], ['4abbacbcdcbcbdefghbijklmnopnmwdHbLlddffrrehfyj^%*^&yttcccbnjukfug'], ['abbacbcdhabcadabcdefghijabrcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZkplmnoabcddefghijklmgnopqrstuvwxyzbathisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhdcd'], ['thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnop7qrstuvwxyz0123456789ABCDEFGHIJathisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdKLMNOPQRSTUVZoabcd'], ['athisisaverylongstabcdringbutitshouldstillbexencabcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijkdlabccdnddecodeditshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtjklmnoabcbd'], ['4%ttcabLcdefghijklmacbcdhabcdefghijklmgnongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeadabcdefghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcduifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh56789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfugad'], ['hjghgicuegtfbawqwemumeuif4%ttcabLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGIHIJKLMNOPQRSTUVZoabcdccbnjukfugadabdh'], ['abcdefghijklmn123a456o'], ['1215kyooifnmwddodffrrehfyj^%*^&yt34562313456'], ['abcdefghijklmniopqrstabcdefghijklmgnuvwxyzZ'], ['abcdefabcdghijklmnab7cdefBghijklmnopqrstuvwxyz012m3456789ABCFGHIJKLMNOPQRSTUVZoabcd'], ['4%^&*876tylfrmlskyooifn13233456mwdddf4%ttcccbnuge3hfy^j^%*^&yttcccbnjukfug'], ['abcdefghijkllmnopqrstuvwxyzs012345678i9AkBCDEUVZ'], ['addhjghgicuegtfbawqwemumeuifs4%^&*876adabcdefghijabcdefghijklkmnopqrabbbacbcdcdstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdtylfrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfugunaiiikjqskjpskabedh'], ['abcdefghijklmnopqrstuvwxyzs0123456789ABCoDEFGHIJKLMNOPQRSTUVZ'], ['412345'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789abLcdefghijklmnopqrsz0I123abcdefghijklmnopqrstabcdefghijklmgnopqrstuvwxyzZ456789ABCDEFGHIJKLMNOPQRSTUVABCDEFGHIJKLMNOPQRSTUVZabtcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDIjEFGHIJKLMNOPQRSTUVZcoabcd'], ['athisisaverylongstabcdringbutitshouldstillbexencabcdefghijklmnabcdefghijklmnopqrstabcdefgh4%^&&*87r6tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugabcbcijklmgnuvwxyzZopqrstuvwxyabcdefabcdghijklmnabcdefghijkdlabccdnddecodeditshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtjklmnoabcbd'], ['adabcdefghijabcdefgh4%^&*876adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdtylfrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfugijklmnopqrstuvwx'], ['4%^&*876tylabcdefghijklmnop4%^&*&ytttcccbnjukfugqrstuvwxyzrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukftabcdefghijklmnabLcdefghijklmnopqrstuvwxyz0124%^&&*87r6tylfrmlskyooifnmw5dddffrrehfyj^%*^&yttcccbnjukfugabcbc3456789ABCDEFGHIJKLMNOPQRSTUVZ123456ohisisaverylongstringbutitsehabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyug'], ['admabcdefghijabcdefghwijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcd'], ['abcdefghthisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyijklmnopqrstDEUVZ'], ['4%^&*876ehfyj^%*addhjghgicuegtabcdefghijkabcdefghijklmnopqrstuvwxyzs0123456789ABCDEFGHIJKLMNOPQRSTUVZlmnopqrstuvwxyzifsunaikjqskjpskabdh^&yttcccbnjukfug'], ['habcdefghijklmgnopqrstuvwx'], ['adabcdefghijabcdefghijklmnopqrstuvwxyaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabedhz01OPQRSTUVZklmnoabc1212314563456'], ['XuDTtLIY'], ['abcdefghijklmn12athisisaathisisaverylongstrinathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdv112346356erylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd6o'], ['hjghgicuegtfbawqwemumeuifsunadhabcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijklmnopqrstuvkwxyz0123456789AhBCDEFGHIJKLMNOPQRSTUVZoabcd'], ['athisisaverylongstabcdringbuteanddecodedcorrectlybcdefghijklmnoabcdjklmnoabcbd'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstjuvwxyz0123456789ABCthisisaverylongstringbutitshabcdefghijkabccdpqrstuvwadabcdefghijabcdefgh4%^&*876adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdtylfrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfugijklmnopqrstuvwxxyzouldsathisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtillbeeqncoabbacbcdbcddcorrectlyDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskdjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['15abLcdefadabcdefghijabcdefghijklmnopqrstuvwxyz012345678B9ABCDEFGHNOPQRSTUVZklmnoabcdghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789ABCDEFGHIJKLMNOPQRSTUVZ3233456'], ['thisisaverylongstringabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZodabcdedanddecodedcorrectly'], ['Ycabcdefg23456o'], ['12124%^&u*876t*adabdcdefghijabcdefghijklmnopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug34563456'], ['abbacabLcdefUghijklmnopqrstuvwxabcdefghijklmnoyz0123456789ABCDEFGHIJKLMCNOPQRSTUVZbcdcd'], ['addhjghgicuegtfbawqwemumeuif12123145634sunaikjqskjpskabdh'], ['addhjghgicuegtfbawqwemumeuin4%^&*876tylrmlskyooifnmwdddffrrehfyjj^%*^&yttcccbnjukfugqskjpskabedh'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoaVbcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh'], ['Mvee'], ['abcdefghijklmnopqrstuvwxyz0123456789AB4%ttcccbnjabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdukfugCDEFGHIJKLMNOPQRSTUVaddhjghgicuegtfbawqwemumeuinaikjqskjpskabedhZ'], ['adabcdefghijabcdefghijklkmnopqrstuvwxyz012345678adabcdefghijabcdefghijklmnopqrstuvwxVZkathisislaverylongstabcdmnoabcdjklmnoabcbdlmnoabcd'], ['adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZkathisislaverytlongstabcdmnoabcdjklmnoabcbdlmn'], ['abcdefabcdghijklmna6789ABCFGHIJKLMNOPQRSTUVZoabcd'], ['athisisaverylongstrinabbacbcdbcdathisisaverylongstabcdrddefghijklmnoabcd'], ['9abLcd3efghijklmnopqrstuvwxyz0123456789ABMCDEFGHIJKLMNOPQRSTUVZ'], ['4%^&u*876t*ylfrmlskyoabcdefg23456ojklmopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug'], ['adbbacbcdc'], ['4%^&&*876tylfrmlskyooifnmwdabLcdefghijklmnopsqrstuvwxyz0123addhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedh456789ABCDEFQGHIJKLMNOPQcRSTUVZdodffrrehfyj^%*^&yttcccjbnjukfthisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectlyug'], ['thisisaverylongstringbutitshabtcdefpqrstuvwxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['HbLadabcdefghijabcdefghijklmnopqrstuvwxl'], ['habcdefghijklmgnopqrstuvwxyzbsawqwemumeathisisaverylongstabcdrdingbuabcdefghijklmn123a456otitsho13233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ456uldstillbectlybcdefghijklmnoabcdskjpskabdh'], ['habcdefghijklmgnopqrstuvwuxyzbawqwemumeuh'], ['1212314563'], ['adabcdefj51214%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^&yt3456ghijabc'], ['athisisaverylongstababcbdefghbijkldcorrectlybcdefghijklmnoabcd'], ['a4u%^&*876tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfugbcdefghijklmgnopqrstuvwxyz'], ['ANHbWTTWvF'], ['4%^&&*876tylfrmlskyooifnmwddodffrrelhfyj^%*^&yttcccbnjukfug'], ['4%^&&*8y76tylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['athisiisaverylongstrinathisisaverylongstabcaddhjghgibcuegtf1212313456bawqwemumeuinaikjqskjpskqabedhdrddefghijklmnoabcd'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789thisisaverylongstringbutitshabcdefghijkabccdpqrstuvwxyzouldstillbeencod1212314563edanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnop7qrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdABCDEFGHIJKLMNOPQRSTUVZodabcd'], ['athisisaverylongstabcdringbutitshouldstillbeencabcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijkdlabccdnddecodeditshouldstillbeencodedanddecodedcorrectlybcdefgabcdefghijklmnopqrstabcdefghijklmgnuvwxyzZhijklmnoabcdtjklmnoabcbd'], ['4%^&&*876t8ylfrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['12512314563'], ['habcdefgaddhjghgicuegtf1212313456bawqwemumeu12123145634inaikjqskjpskqabedhhijklmgnopqrstuvwpxyzbsawqwemumenaikjqskjpskabdh'], ['abLcdefghijklmnopqrstuvABCDEFGHIJKLMNOPQRSTUV'], ['abbacbcdhabcadabcdefghijabrcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZkplmnoabcddefghijklmgnopqrstuvwxyzbathisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdsaddhjghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhdcd1212314563'], ['YGsOGZacb'], ['thisisaverylongstringbutitshabcdefghijkabccdpqitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtillbeeqncodedanddecodedcorrectly'], ['thisisaverylongstringbutitsehabcjkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcorrectly'], ['4%^&*876tyrlrmlskooitcccbnjukfug'], ['addhjghgicuegtf1212313456bawq1wemumeuinaikjqsk4%^&*876tylrmlskyooifnmwdddffrrehfyj^%*^&yttcccbnjukfthisisaverylongstringbutitsehabcdefghijkababbacbcdcdccdpqrstuvwxyzouldstillbeencodedanddecodedcororectlyugjpskqabedh'], ['123athisisaverylongstrinathisisaverabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZcoabcdylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdgefghiijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd456'], ['4u%^&*876tylfrmlsky^ooifnmwdddffrrehfyj^%*^&yttcccbnjukfug'], ['14%^&u*876t*ylfrmlskyoabcdefg23456ojklmopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug211234563456'], ['habcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskHbLadabcdefghijabcdefghijklmnopqrstuvwxldh'], ['thisisaverylongstringbutitshabtcdefpqrxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['abLcdefghijklmnopqr4%ttcabLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfugadstuvwxabcdefghijklmnoyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ'], ['abcdehabcdefghijklmgnopqrstuvwxyzbawqwemumeuhhijklmn123456o'], ['athisiisaveryladabcdefghijabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectl51212313456ybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcdongstrinathisisaverylongstabcdrddefghijklmnoabcd'], ['abLcdefghiHjklmnopqrstuvwxyz0123456789ABCDEFadabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnotabcdGHIJKLMNOPQcRSTUVZ'], ['abLcdefghijklmnopqrstuvwxyz01abcdefghijklmn123456o23456789ABCDEFGHI51214%^&&123456thisisaverylongstringbutitshabtcdefghijkabccdpqrstuvwxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcd*876tylfrmlskyooifnmwddodffrrehfyj^%*^&yt3456JKLMNOPQRSTUVZ'], ['4%^&*876adabcdefghijabcdefghijklkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRhjghgicuegtfbawqwemumeuifsunakjqskjpskabdhSTUVZklmnoabcdtylfthisisaverylongstringbutitshabtcdefpqrxyzouldstilylbeeqncodedanddecodedcorrectlyabcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m3456789ABCDEFGHIJKLMNOPQRSTUVZoabcdrmlskyooifnmwdddffrrehfy^j^%*^&yttcccbnjukfug'], ['abcdhabcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456a789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhefghijYcYXklmno'], ['habcdefghijklmgnopqrstuvwxyzbsawqwemumeath4abbacbcdcbcbdefghbijklmnopnmwdHbLlddffrrehfyj^%*^&yttcccbnjukfugisisaverylongstabcdrdingbutitshouldstillbectlybcdefghijklmnoabcdskjpskabdh'], ['abLcdefghiaddhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedhjkl'], ['addhjqghgicuegtfbawqwemumeuifsunaiakjqskjpskabedh'], ['abcdefghijklmgnpopqrstuvwx4%^&*876tylrmlskooifabcbdefghbijklmnopnmwdddffrrehfyj^%*^&yttcccbnjukfugyz'], ['abcdefghi4%^&u*876t*ylfrmlskyoabcdefg23456ojklmopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfugj'], ['abLcdefghijklmvnopsqrstuvwxyz0123456789ABCDEFQGHIJKLMNOPQcRSTUVZ'], ['abLcdefghijklmnopqrstuvwxyz012b3456789ABCDEFGHIJKLMNOP3QRSTUVZ'], ['abcdhabcdefghijklmgnopqrstuvwxyzbsaddhjghgicuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456a789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhefghijYcYXklgmno'], ['athisisaverylongstabcdringbutitshouldstillbeencodedanddecodedcorrectlybcdefghiathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrecabLcdefghijklmnopqrstuvwxyz012b3456789ABVZtlybcdefghijklmnoabcdjklmnoabcbd'], ['sO'], ['habcdefghijdklmgnopqrstu'], ['4%^lmnopqrstuvwxyz01OPQRSTUVZklmnoabcdcbnjukfug'], ['athisisaverylongstabcdringbutitshoulpdstillbeencodedanddecodedcorrectlybabcdefghijklmnabcdefghijklmnopqrstuvwxyz0123456789Aoabcdjklmnoabcbd'], ['athisisaverylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlabcdefabcdghijklmnabcdefghijklmhjghgicuegtfbawqweabccdmumeuifsunakjqskjpskabdhdabcdoabcd'], ['abcgdefghijklimnop'], ['abLcdefghijklmnoTUVZ'], ['habathisislaverylongstabcdmnoabcdjklmnoabcbdcdefghijklmgnopqnrstuvwxyzabcdefghijklmnojghgicuegtfbawqwemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpsikabdh'], ['1231456'], ['123athisisaverylongstrinathisisa13233456verylongstabcdrdingbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdgbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcd456'], ['1HbLadabcdefghijabcdefghijklmnopqrstuvwxl2512314563'], ['abLcdefabLcdefghiHjklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQcRSTUVZyz0123456789ABCDEFQGHIJKLMNOPQcRSTUVZ'], ['thisisaverylongstringbutitshouldadmabcdefghijabcdefghwijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcdddecodedcorrectly'], ['athisisaverylongstabcdringbabbacabLcdefUghijklmnopqrstuvwxabcdefghijklmnoyz0123456789ABCDEFGHIJKLMCNOPQRSTUVZbcdcdodeditshouldstillbeencodedanddecodedcorrectlybcdefghijklmnoabcdtjklmnoabcbd'], ['abcdhabcdefghijklmgnopqrstuvwxyzbsaddhjghgicyuegtfbawqwabcdefatbcdghijklmnabcdefghijklmnopqrstuvwxyz0123456a789ABCDEFGHIJKLMNOPQRSTUVZoabcdemumeuifsunaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdhefghijYcYXklmno'], ['4%4%^&&*876tylfrmlskyooifnmwddodffrrehfyj^%*^g^&*&ytttcccbnjukfug'], ['athisisaverylongstabcdringbutitshouldstillbeencabcdefghijklmnopqrstuvwxyabcdefabcdghijklmnabcdefghijkdlabccdnddecodeditshouldstillbeencodedanddecodedcorrectlybcdefgabcdefghijklmnopqrstabcdefghijkllmgnuvwxyzZhijklmnoabcdtjklmnoabcbd'], ['abcdefabcdghijklmnabcdefghijklmnopqrstuvwxyz012m34567habcdefgaddhjghgicuegtf1212313456bawqwemumeuinaikjqskjpskqabedhhijklmgnopqrstuvwxyzbsawqwemumenaikjqskjpskabdh89ABCDEFGHIJKLMNOPQRSTUVZoabcd'], ['adabcdefghijabcdefghwijklmnopqrstuvwxyz0123456789ABCDEFGHathisisaverylongstringbutitshouldstillbeencodedaqnddecodedcorrectlybcdefghijklmnoabcdIJKLMNOPQRSTUVZklmnoabcd'], ['4%ttcabLcdefghijklmacbcdhabcdefghijklmgnongstabcdringaikjqskjpskabdhawqwemumeuifsunaikjqskjpskabdh56789ABCDEFGHIJKLMNQOPQRSTUVZqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZoabcdccbnjukfugad'], ['addhjghgicuegtfbawqwemumeuifsunaikjqskjpskabhabcdefghijklmgnopqrstuvwxyzbsawqwemumeathisisaverylongstabcdrdingbuabcdefghijklmn123a456otitsho13233abLcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVZ456uldstillbectlybcdefghijklmnoabcdskjpskabdhdh']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the problem:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # uncycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the `decode_cyclic` function, wrapped in a markdown block:
+
+```python
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group backwards. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[i:i+3] for i in range(0, len(s), 3)]
+    # if group has only two elements, move last element to the beginning
+    groups = [group[-1:] + group[:-1] if len(group) == 2 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+# Test the functions
+s = "abcdefghijklmnopqrstuvwxyz"
+encoded = encode_cyclic(s)
+decoded = decode_cyclic(encoded)
+
+print("Original string:", s)
+print("Encoded string:", encoded)
+print("Decoded string:", decoded)</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[2:] + group[:2]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def encode_reverse(s: str):
+    """
+    returns encoded string by reversing each group of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse each group. Unless group has fewer elements than 3.
+    groups = [group[::-1] if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_reverse(s: str):
+    """
+    takes as input string encoded with encode_reverse function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse each group. Unless group has fewer elements than 3.
+    groups = [group[::-1] if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def encode_caesar(s: str, shift: int):
+    """
+    returns encoded string by shifting each character by shift.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # shift each group. Unless group has fewer elements than 3.
+    groups = [(group[shift:] + group[:shift]) if</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # decode by reversing the cycle operation
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[-1:] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+# Test cases
+test_string = "Hello, World!"
+encoded = encode_cyclic(test_string)
+decoded = decode_cyclic(encoded)
+</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I can help you with that. Here's the Python code for the `decode_cyclic` function. This function will reverse the operation performed by the `encode_cyclic` function.
+
+```python
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+
+This function works by first splitting the input string into groups of three characters, just like the `encode_cyclic` function. Then, for each group, it moves the last character to the front of the group. If a group has fewer than three characters, it is left unchanged. Finally, the function joins all the groups back together into a single string and returns this string.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    Returns encoded string by cycling groups of three characters.
+    """
+    # Split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # Cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    Takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # Split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # De-cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+# Test cases
+assert encode_cyclic("abc") == "bca"
+assert encode_cyclic("abcdef") == "bcaefd"
+assert encode_cyclic("abcdefg") == "bcaefdg"
+assert decode_cyclic("bca") == "abc"
+assert decode_cyclic("bcaefd") == "abcdef"
+assert decode_cyclic("bcaefdg") == "abcdefg"</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group in the opposite direction.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def encode_cyclic_with_key(s: str, key: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic_with_key(s: str, key: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def encode_cyclic_with_key_and_iv(s: str, key: str, iv: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+```
+
+This code defines two functions: `encode_cyclic` and `decode_cyclic`. The `encode_cyclic` function takes a string as input and returns an encoded string by cycling groups of three characters. The `decode_cyclic` function takes an encoded string as input and returns the decoded string.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # reverse the cycling process by shifting each character one position to the left
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+# Example usage
+encoded_string = encode_cyclic("Hello, World!")
+print(encoded_string)  # Output: "Helo, Wrold!"
+
+decoded_string = decode_cyclic(encoded_string)
+print(decoded_string)  # Output: "Hello, World!"</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # decycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    if len(s) % 3 != 0:
+        raise ValueError("Input string must have no remainder when divided by 3")
+
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    encoded = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(encoded)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    if len(s) % 3 != 0:
+        raise ValueError("Input string must have no remainder when divided by 3")
+
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    decoded = ["".join(group[::-1].split()[::-1]) for group in groups]
+    return "".join(decoded)
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+# Test the functions
+encoded = encode_cyclic("Hello, World!")
+print("Encoded:", encoded)
+
+decoded = decode_cyclic(encoded)
+print("Decoded:", decoded)
+</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+# Testing
+s = "Hello, World!"
+encoded = encode_cyclic(s)
+print(f"Encoded string: {encoded}")
+decoded = decode_cyclic(encoded)
+print(f"Decoded string: {decoded}")</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+
+The `encode_cyclic` function takes a string `s` as input and returns the encoded string by cycling groups of three characters. The function first splits the string into groups of three characters. It then cycles the elements in each group, unless the group has fewer than three elements. Finally, it joins the groups back together into a single string and returns it.
+
+The `decode_cyclic` function takes a string `s` as input and returns the decoded string. The function first splits the string into groups of three characters. It then cycles the elements in each group, unless the group has fewer than three elements. Finally, it joins the groups back together into a single string and returns it.
+
+Note that the `decode_cyclic` function is very similar to the `encode_cyclic` function, except that it cycles the elements in each group in reverse order. This is because when the `encode_cyclic` function cycles the elements in each group, it shifts the first element to the end of the group, the second element to the second-to-last position, and the third element to the last position. When the `decode_cyclic` function cycles the elements in each group, it shifts the last element to the beginning of the group, the second-to-last element to the second position, and the third-to-last element to the third position.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse elements in each group. Unless group has fewer elements than 3.
+    groups = [group[-1:] + group[:-1] if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+
+The `encode_cyclic` function takes a string as input and splits it into groups of three characters. It then cycles the elements in each group, moving the first character to the end. If a group has fewer than three elements, it leaves the group unchanged. The function then joins the groups back together into a single string and returns it.
+
+The `decode_cyclic` function is the inverse of `encode_cyclic`. It takes a string as input, splits it into groups of three characters, and then reverses the cycle of elements in each group. If a group has fewer than three elements, it leaves the group unchanged. The function then joins the groups back together into a single string and returns it.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def encode_rot13(s: str):
+    """
+    returns encoded string by rotating each character 13 places.
+    """
+    return s.encode("rot13")
+
+
+def decode_rot13(s: str):
+    """
+    takes as input string encoded with encode_rot13 function. Returns decoded string.
+    """
+    return s.encode("rot13").decode()
+
+
+def encode_caesar(s: str, shift: int):
+    """
+    returns encoded string by shifting each character by shift places.
+    """
+    return s.encode("rot13")
+
+
+def decode_caesar(s: str, shift: int):
+    """
+    takes as input string encoded with encode_caesar function. Returns decoded string.
+    """
+    return s.encode("rot13").decode()
+
+
+def encode_vigenere(s: str, key: str):
+    """
+    returns encoded string by applying Vigenere cipher with key.
+    """
+    return s.encode("rot13")
+
+
+def decode_vigenere(s: str, key: str):
+    """
+    takes as input string encoded with encode_vigenere function. Returns decoded string.
+    """
+    return s.encode("rot13").decode()
+
+
+def encode_transposition(s: str, key: str):
+    """
+    returns encoded string by applying transposition cipher with key.
+    """
+    return s.encode("rot13")
+
+
+def decode_transposition(s: str, key: str):
+    """
+    takes as input string encoded with encode_transposition function. Returns decoded string.
+    """
+    return s.encode("rot13").</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[-1:] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # decycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+# Example usage:
+original_string = "abcdefghijklmnopqrstuvwxyz"
+encoded_string = encode_cyclic(original_string)
+print(f"Encoded string: {encoded_string}")
+
+decoded_string = decode_cyclic(encoded_string)
+print(f"Decoded string: {decoded_string}")</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[i:i+3] for i in range(0, len(s), 3)]
+    # cycle elements in each group.
+    groups = [(group[-1] + group[:-1]) for group in groups]
+    return "".join(groups)
+
+
+# Test cases
+s = "abcdef"
+encoded = encode_cyclic(s)
+assert encoded == "abcfed"
+
+decoded = decode_cyclic(encoded)
+assert decoded == s
+
+s = "abcdefgh"
+encoded = encode_cyclic(s)
+assert encoded == "abcefghd"
+
+decoded = decode_cyclic(encoded)
+assert decoded == s
+
+s = "abcdefghij"
+encoded = encode_cyclic(s)
+assert encoded == "abcefghidj"
+
+decoded = decode_cyclic(encoded)
+assert decoded == s
+
+s = "abcdefghijk"
+encoded = encode_cyclic(s)
+assert encoded == "abcefghidjk"
+
+decoded = decode_cyclic(encoded)
+assert decoded == s
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # uncycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+# Test the functions
+original_string = "Hello, World!"
+encoded_string = encode_cyclic(original_string)
+print("Encoded string:", encoded_string)
+decoded_string = decode_cyclic(encoded_string)
+print("Decoded string:", decoded_string)</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # uncycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+if __name__ == "__main__":
+    # Test the functions
+    s = "This is a test string"
+    encoded_s = encode_cyclic(s)
+    decoded_s = decode_cyclic(encoded_s)
+    print(f"Original string: {s}")
+    print(f"Encoded string: {encoded_s}")
+    print(f"Decoded string: {decoded_s}")</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # decycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>      # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # uncycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+
+The `encode_cyclic` function takes a string `s` as input and splits it into groups of three characters. It then cycles the elements in each group by shifting the first character to the end and concatenates them back together. The resulting string is the encoded version of the original string.
+
+The `decode_cyclic` function takes a string `s` as input and splits it into groups of three characters. It then reverses the cycling process by shifting the last character to the front and concatenates them back together. The resulting string is the decoded version of the encoded string. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1:] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups of three characters.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group in reverse order.
+    groups = [(group[-1] + group[-2:]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the completed code:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group in reverse order. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+
+The `decode_cyclic` function takes an encoded string and returns the decoded string by reversing the cyclic shift applied in the `encode_cyclic` function.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group back to original order. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the `encode_cyclic` and `decode_cyclic` functions in Python:
+
+```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # reverse the cycling operation in each group.
+    groups = [group[-1] + group[:-1] if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+
+In the `encode_cyclic` function, we first split the input string into groups of three characters. Then, we cycle the characters in each group. If a group has fewer than three characters, we leave it as is. Finally, we join the groups back into a string.
+
+In the `decode_cyclic` function, we first split the input string into groups of three characters. Then, we reverse the cycling operation in each group. If a group has fewer than three characters, we leave it as is. Finally, we join the groups back into a string.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    Takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # Split the input string into groups of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    
+    # Uncycle elements in each group.
+    decoded_groups = [group[1:] + group[0][-1] for group in groups]
+    
+    return "".join(decoded_groups)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+
+def decode_cyclic(s: str):
+    """
+    Takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # Split the encoded string into groups of three characters.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+
+    # Reverse the cycled elements in each group.
+    groups = [group[2:] + group[0:2] if len(group) == 3 else group for group in groups]
+
+    # Join the reversed groups back to a single string.
+    return "".join(groups)</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to complete the `decode_cyclic` function:
+
+```python
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [group[-1] + group[:-1] if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # reverse the cyclic encoding by splitting and reversing the groups
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Reverse the cycling by using group[-1] + group[:-1]
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+# test the functions
+print(encode_cyclic("hello"))
+print(decode_cyclic(encode_cyclic("hello")))</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1:] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+# Test the functions
+encoded_string = encode_cyclic("Hello World")</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group in reverse order. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # reverse the string to start decoding from the end
+    s = s[::-1]
+    # decode by cycling groups of three characters
+    groups = [s[i:i+3] for i in range(0, len(s), 3)]
+    # reverse the groups to get the original order
+    groups = [group[::-1] for group in groups]
+    # join the groups to get the decoded string
+    return "".join(groups)
+
+
+# Example usage
+s = "hello"
+encoded = encode_cyclic(s)
+decoded = decode_cyclic(encoded)
+print(encoded)  # output: "holoje"
+print(decoded)  # output: "hello"</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def encode_cyclic(s: str):
+    """
+    returns encoded string by cycling groups of three characters.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)
+
+
+def decode_cyclic(s: str):
+    """
+    takes as input string encoded with encode_cyclic function. Returns decoded string.
+    """
+    # split string to groups. Each of length 3.
+    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]
+    # cycle elements in each group. Unless group has fewer elements than 3.
+    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]
+    return "".join(groups)</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

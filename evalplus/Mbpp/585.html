@@ -1,0 +1,1078 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/585 </h1>
+<pre><code> """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import heapq
+def expensive_items(items,n):
+  expensive_items = heapq.nlargest(n, items, key=lambda s: s['price'])
+  return expensive_items
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 45.09}, {'name': 'Item-4', 'price': 22.75}], 1]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[], 5], [[], 3], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 2], [[], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 5], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 5], [[{'name': 'Item-2', 'price': 555.22}], 5], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 5], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'It-em-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}], 6], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[], 4], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'IItem-2', 'price': 555.22}, {'name': 'IItem-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-4', 'price': 22.75}], 4], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75, 'Item-2name': 'IItem-2'}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-3', 'price': 555.22, 'Item-4': 'ItemIteem-4-3'}, {'name': 'Item-4', 'price': 22.75, 'Item-2name': 'IItem-2'}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 6], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22, 'pricename': 'Ittem-3'}, {'name': 'Item-3', 'price': 555.22, 'pricename': 'Ittem-3'}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}], 6], [[{'name': 'Item-2', 'price': 555.22}], 4], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'It-em-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'Item-1': 'Ittem-4'}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-1', 'price': 101.1}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}], 5], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-2', 'price': 22.75}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-2', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}], 5], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'It-em-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'Item-1': 'Ittem-4'}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 101.22951736172081}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 6], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}], 3], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}, {'name': 'Item-4', 'price': 22.75}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22, 'Item--2': 101.22951736172081}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}], 4], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'It-em-4', 'price': 22.75}, {'name': 'Item-2', 'price': 555.22}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-4', 'price': 25.17252440958781}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 25.17252440958781}], 3], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}], 6], [[{'name': 'namme', 'price': 100.13437547119709}, {'name': 'namme', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'namme', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 5], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 4], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 1], [[{'name': 'Item', 'price': 100.13437547119709}, {'name': 'Item', 'price': 100.13437547119709}, {'name': 'Item', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item', 'price': 100.13437547119709}], 6], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'Item-1': 'Ittem-4'}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 5], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709, 'nme': 'Item-Iteem-41'}, {'name': 'Item-1', 'price': 100.13437547119709, 'nme': 'Item-Iteem-41'}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 6], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}], 7], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 11.86233182296112}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 11.86233182296112}, {'name': 'Item-1', 'price': 100.13437547119709}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 101.1}, {'name': 'Item-4', 'price': 22.75}], 7], [[{'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}], 5], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'It-em-4', 'price': 22.75}], 1], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22}], 6], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'IItem-2', 'price': 555.22, 'nItem--2ame': 'IIteprice-2'}, {'name': 'IItem-2', 'price': 555.22, 'nItem--2ame': 'IIteprice-2'}, {'name': 'Item-3', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 100.13437547119709, 'nname': 'name'}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Ittem-3', 'price': 100.13437547119709}, {'name': 'Ittem-3', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}, {'name': 'Ittem-3', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75, 'pnnamerice': 555.22}], 4], [[{'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'pricename': 'nname'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 3], [[{'name': 'Item-1', 'price': 25.17252440958781}, {'name': 'Item-1', 'price': 25.17252440958781}, {'name': 'Item-1', 'price': 25.17252440958781}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22}, {'name': 'Item-1', 'price': 25.17252440958781}, {'name': 'Item-1', 'price': 25.17252440958781}], 2], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-2', 'price': 555.22, 'Item--2': 101.22951736172081}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}], 3], [[{'name': 'Ittem-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709, 'namme': 'Item--2'}, {'name': 'Ittem-4', 'price': 22.75}, {'name': 'Item-1', 'price': 101.1}], 2], [[{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 100.13437547119709}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'namee': 101.1}], 3], [[{'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-4', 'price': 555.22, 'pricpricee': 'Iteem-4'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-1', 'price': 100.13437547119709, 'Item-4': 'Itempricpricee-1'}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 22.75}], 8], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 555.22, 'Item-1': 'Ittem-4'}, {'name': 'Item-4', 'price': 22.75}], 1], [[{'name': 'Item-3', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-3', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-3', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 100.13437547119709, 'namee': 101.1}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-3', 'price': 100.13437547119709, 'namee': 101.1}], 1], [[{'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-1', 'price': 100.13437547119709}, {'name': 'Item-4', 'price': 22.75}, {'name': 'Item-4', 'price': 555.22, 'pricre': 'eItem-4'}, {'name': 'Item-1', 'price': 100.13437547119709}], 2]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(dataset, n):
+    """
+    :param dataset: list of dictionaries
+    :param n: number of items to return
+    :return: list of n most expensive items
+    """
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+
+if __name__ == '__main__':
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 2))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 3))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 4))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 5))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 6))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 7))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 8))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1},</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    """
+    Find the n most expensive items in a given dataset.
+
+    Parameters:
+    items (list): List of dictionaries containing item details.
+    n (int): Number of most expensive items to return.
+
+    Returns:
+    list: List of n most expensive items.
+    """
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    return sorted_items[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset: list[dict[str, str | float]], n: int) -> list[dict[str, str | float]]:
+    """
+    Finds the n most expensive items in a given dataset.
+
+    Parameters:
+    - dataset (list of dict): A list of dictionaries representing items with 'name' and 'price' keys.
+    - n (int): The number of most expensive items to retrieve.
+
+    Returns:
+    - list of dict: A list of n most expensive items from the dataset.
+    """
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+
+    # Return the top n items
+    return sorted_dataset[:n]
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def expensive_items(dataset, n):
+    """
+    Find the n most expensive items in a given dataset.
+    
+    Args:
+        dataset (list): A list of dictionaries, where each dictionary represents an item with 'name' and 'price' keys.
+        n (int): The number of most expensive items to return.
+    
+    Returns:
+        list: A list of the n most expensive items.
+    """
+    dataset.sort(key=lambda x: x['price'], reverse=True)
+    return dataset[:n]
+
+# Example usage
+assert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1) == [{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    # Sort the items in descending order based on their prices
+    sorted_items = sorted(items, key=lambda item: item['price'], reverse=True)
+    # Return the first n items from the sorted list
+    return sorted_items[:n]
+
+# Test the function
+items = [{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+print(expensive_items(items, 1)) # Output: [{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+def expensive_items(dataset, n):
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+
+    # Return the first n items
+    return sorted_dataset[:n]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to find the n most expensive items in a given dataset, wrapped in a Python markdown block:
+
+```python
+def expensive_items(items, n):
+    # Sort the items by price in descending order
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    
+    # Return the first n items from the sorted list
+    return sorted_items[:n]
+
+# Test the function
+dataset = [
+    {'name': 'Item-1', 'price': 101.1},
+    {'name': 'Item-2', 'price': 555.22},
+    {'name': 'Item-3', 'price': 10.99},
+    {'name': 'Item-4', 'price': 999.99},
+    {'name': 'Item-5', 'price': 250.0}
+]
+
+assert expensive_items(dataset, 1) == [{'name': 'Item-4', 'price': 999.99}]
+assert expensive_items(dataset, 2) == [{'name': 'Item-4', 'price': 999.99}, {'name': 'Item-2', 'price': 555.22}]
+assert expensive_items(dataset, 3) == [{'name': 'Item-4', 'price': 999.99}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-5', 'price': 250.0}]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    # Sort the items by price in descending order
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    # Return the first n items
+    return sorted_items[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+```python
+def expensive_items(items, n):
+    """
+    Returns the n most expensive items in the given dataset.
+    """
+    # Sort the items by price in descending order
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    # Return the first n items
+    return sorted_items[:n]
+```
+
+We can test the function with the given example:
+
+```python
+items = [{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]
+print(expensive_items(items, 1)) # Output: [{'name': 'Item-2', 'price': 555.22}]
+```
+
+The function takes two arguments: `items` is a list of dictionaries with keys `name` and `price`, and `n` is the number of most expensive items to return. We use the `sorted()` function to sort the items by price in descending order, and then return the first `n` items using slicing. The `key` argument is a lambda function that tells `sorted()` to sort the items by the `'price'` value. The `reverse` argument is set to `True` to sort in descending order. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    # Sort the items in descending order based on their prices
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+
+    # Return the n most expensive items
+    return sorted_items[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}], 1) == [{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+
+if __name__ == '__main__':
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1))</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    sorted_items = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    return sorted_items[:n]
+
+# Test case provided
+test_dataset = [{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]
+test_n = 1
+assert expensive_items(test_dataset, test_n) == [{'name': 'Item-2', 'price': 555.22}]
+
+# Additional test cases
+dataset1 = [{'name': 'Item-1', 'price': 100}, {'name': 'Item-2', 'price': 200}, {'name': 'Item-3', 'price': 300}]
+assert expensive_items(dataset1, 2) == [{'name': 'Item-3', 'price': 300}, {'name': 'Item-2', 'price': 200}]
+
+dataset2 = [{'name': 'Expensive', 'price': 999}, {'name': 'Cheap', 'price': 1}]
+assert expensive_items(dataset2, 1) == [{'name': 'Expensive', 'price': 999}]
+</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that solves the problem:
+
+```python
+def expensive_items(items, n):
+    """
+    This function takes a list of dictionaries where each dictionary represents an item with a name and price.
+    It returns a list of the n most expensive items.
+    """
+    # Sort the items in descending order of price
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+
+    # Return the first n items
+    return sorted_items[:n]
+```
+
+You can call this function with your test case like this:
+
+```python
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+```
+
+This function works by sorting the list of items in descending order of price using the `sorted` function. The `key` argument of `sorted` is a function that takes an item and returns the value to sort by, in this case the price. The `reverse` argument is set to `True` to sort in descending order. The sorted list is then sliced to get the first n items.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-1', 'price': 101.1}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-1', 'price': 101.1}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-1', 'price': 101.1}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-1', 'price': 101.1}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    """
+    Write a function to find the n most expensive items in a given dataset.
+    """
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    
+    # Return the first n items from the sorted dataset
+    return sorted_dataset[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}], 1) == [{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 300.5}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 300.5}]</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+import heapq
+import random
+import time
+import sys
+import os
+import json
+import math
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import scipy
+import scipy.stats
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import statsmodels.stats.api as sms
+import statsmodels.graphics.api as smg
+import statsmodels.stats.multicomp as multi
+import statsmodels.stats.outliers_influence as smio
+import statsmodels.stats.contingency_tables as smct
+import statsmodels.stats.multitest as smm
+import statsmodels.stats.power as smp
+import statsmodels.stats.weightstats as ssw
+import statsmodels.stats.proportion as ssp
+import statsmodels.stats.descriptivestats as ssd
+import statsmodels.stats.multicomp as smm
+import statsmodels.stats.multitest as smm
+import statsmodels.stats.power as smp
+import statsmodels.stats.weightstats as ssw
+import statsmodels.stats.proportion as ssp
+import statsmodels.stats.descriptivestats as ssd
+import statsmodels.stats.multicomp as smm
+import statsmodels.stats.multitest as smm
+import statsmodels.stats.power as smp
+import statsmodels.stats.weightstats as ssw
+import statsmodels.stats.proportion as ssp
+import statsmodels.stats.descriptivestats as ssd
+import statsmodels.stats.multicomp as smm
+import statsmodels.stats.multitest as smm
+import statsmodels.stats.power as smp
+import statsmodels.stats.weightstats as ssw
+import statsmodels.stats.proportion as ssp
+import statsmodels.stats.descriptivestats as ssd
+import statsmodels.stats.multicomp as smm
+import statsmodels.stats.multitest as smm
+import statsmodels.stats.power as smp
+import statsmodels.stats.weightstats as ssw
+import statsmodels.stats.proportion as ssp
+import statsmodels.stats.descriptivestats as ssd
+import statsmodels.stats.multicomp as smm
+import statsmodels.stats.multitest as smm
+import statsmodels.stats.power as smp
+import statsmodels.stats.weightstats</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(items, n):
+    """
+    :param items: list of dictionaries
+    :param n: number of items to return
+    :return: list of n most expensive items
+    """
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+
+if __name__ == '__main__':
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 2))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 3))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 4))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 5))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 6))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 7))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 8))
+    print(expensive_items([{'name': 'Item-1', 'price': 101.1},</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def expensive_items(dataset, n):
+    """
+    This function takes a list of dictionaries as input, where each dictionary represents an item with a 'name' and 'price'.
+    It returns a list of the n most expensive items.
+    """
+    # Sort the dataset in descending order by price
+    dataset.sort(key=lambda x: x['price'], reverse=True)
+    
+    # Return the first n items from the sorted dataset
+    return dataset[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+```
+
+This function first sorts the input dataset in descending order by price using the built-in `sort` function with a custom key function that returns the 'price' of each dictionary. Then it returns the first `n` items from the sorted dataset.
+
+The test case at the end of the function verifies that the function works correctly by asserting that the most expensive item in the dataset is the item with the name 'Item-2' and price 555.22.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def expensive_items(data, n):
+    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True)
+    return sorted_data[:n]
+
+data = [{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]
+n = 1
+
+result = expensive_items(data, n)
+print(result)</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],4)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],5)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],6)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+  """
+  Write a function to find the n most expensive items in a given dataset.
+  assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+  """
+  return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+def expensive_items(items, n):
+    """
+    Returns a list of n most expensive items in the given dataset.
+    """
+    items.sort(key=lambda x: x['price'], reverse=True)
+    return items[:n]
+# Testing the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    return sorted_items[:n]
+
+# Test the function
+items = [{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]
+n = 1
+result = expensive_items(items, n)</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that finds the n most expensive items in a given dataset:
+
+```python
+def expensive_items(dataset, n):
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    # Return the first n items in the sorted dataset
+    return sorted_dataset[:n]
+```
+
+This function takes two arguments: `dataset`, which is the list of items to search through, and `n`, which is the number of items to return. It first sorts the dataset by price in descending order using the `sorted()` function and a lambda function as the key. The `reverse=True` argument specifies that the sorting should be done in descending order.
+
+Once the dataset is sorted, the function returns the first `n` items using slicing notation.
+
+Here's an example usage of the function:
+
+```python
+dataset = [{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}]
+print(expensive_items(dataset, 1))  # Output: [{'name': 'Item-2', 'price': 555.22}]
+```
+
+This will print the most expensive item in the dataset, which is Item-2 with a price of $555.22.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(data, n):
+    """
+    :param - data - list of dictionaries
+    :param - n - number of records to return.
+    :return - list of dictionaries with n most expensive records.
+    """
+    return sorted(data, key=lambda x: x['price'], reverse=True)[:n]
+
+
+if __name__ == '__main__':
+    data = [
+        {'name': 'Item-1', 'price': 101.1},
+        {'name': 'Item-2', 'price': 555.22},
+        {'name': 'Item-3', 'price': 250.11},
+        {'name': 'Item-4', 'price': 122.33},
+        {'name': 'Item-5', 'price': 12.33},
+        {'name': 'Item-6', 'price': 21.23}
+    ]
+
+    print expensive_items(data, 3)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the n most expensive items in a given dataset:
+
+```python
+def expensive_items(items, n):
+    # Sort the items by price in descending order
+    items.sort(key=lambda x: x['price'], reverse=True)
+    # Return the first n items
+    return items[:n]
+```
+
+You can test the function with the provided test case:
+
+```python
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1))
+```
+
+This should output:
+
+```python
+[{'name': 'Item-2', 'price': 555.22}]
+```
+
+This function works by first sorting the items by price in descending order. The `sort` function uses a lambda function as the key to sort the items. The `reverse=True` argument tells `sort` to sort in descending order. Finally, the function returns the first `n` items from the sorted list.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],4)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],5)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],6)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+
+def expensive_items(dataset, n):</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    return sorted_items[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    # Sort the items by price in descending order
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+    # Return the top n items
+    return sorted_items[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    """
+    Find the n most expensive items in a given dataset.
+
+    :param items: List of dictionaries containing 'name' and 'price' keys
+    :param n: Number of most expensive items to return
+    :return: List of dictionaries containing 'name' and 'price' keys of the n most expensive items
+    """
+    # Sort the items by price in descending order
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+
+    # Return the first n items
+    return sorted_items[:n]
+
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1) == [{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 300.0}], 2) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 300.0}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 300.0}, {'name': 'Item-4', 'price': 200.0}], 3) == [{'name': 'Item-2', 'price': 555.22}, {'name': 'Item-3', 'price': 300.0}, {'name': 'Item-4', 'price': 200.0}]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    return sorted_dataset[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+```
+
+This script defines a function `expensive_items` that takes in a dataset and an integer `n`, and returns the `n` most expensive items in the dataset. The function first sorts the dataset in descending order based on the price, and then returns the first `n` items in the sorted dataset.
+
+The test case provided in the instruction is used to test the function and verify that it works as expected.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+# Test</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],4)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],5)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],6)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+import heapq
+
+def expensive_items(items, n):
+    # Use nlargest to find the n most expensive items
+    return heapq.nlargest(n, items, key=lambda x: x['price'])
+
+# Example usage
+# expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}], 1)
+# Output: [{'name': 'Item-2', 'price': 555.22}]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    """
+    Finds the n most expensive items in a given dataset.
+
+    Args:
+        items: A list of dictionaries, each containing a 'name' and 'price' key-value pair.
+        n: The number of most expensive items to find.
+
+    Returns:
+        A list of dictionaries containing the n most expensive items.
+    """
+
+    # Sort items by price in descending order
+    items.sort(key=lambda item: item['price'], reverse=True)
+
+    # Return the top n items
+    return items[:n]</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def expensive_items(dataset, n):
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    return sorted_dataset[:n]</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    # Return the first n items from the sorted dataset
+    return sorted_dataset[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    # Return the first n items
+    return sorted_dataset[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+```python
+def expensive_items(data, n):
+    sorted_data = sorted(data, key=lambda x: x['price'], reverse=True) # sort the data by price in descending order
+    return sorted_data[:n] # return the first n items
+```
+
+This function takes a list of dictionaries `data` and an integer `n` as input, and returns the `n` most expensive items in the list. It first sorts the data by price using the `sorted` function with a lambda function as the key, and then returns the first `n` items using slicing. The `reverse=True` argument in the `sorted` function ensures that the sorting is done in descending order. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(item_list, n):
+    return sorted(item_list, key=lambda x: x['price'], reverse=True)[:n]
+
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1))
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(item_list, n):
+    return sorted(item_list, key=lambda x: x['price'], reverse=True)[:n]
+
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2))
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(item_list, n):
+    return sorted(item_list, key=lambda x: x['price'], reverse=True)[:n]
+
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3))
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],4)==[{'name': 'Item-1', 'price</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 101.1},{'name': 'Item-3', 'price': 101.1},{'name': 'Item-4', 'price': 101.1}],2)==[{'name': 'Item-4', 'price': 101.1},{'name': 'Item-3', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 101.1},{'name': 'Item-3', 'price': 101.1},{'name': 'Item-4', 'price': 101.1}],3)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 101.1},{'name': 'Item-3', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 101.1},{'name': 'Item-3', 'price': 101.1},{'name': 'Item-4', 'price': 101.1}],4)==[{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 101.1},{'name': 'Item-3', 'price': 101.1},{'name': 'Item-4', 'price': 101.1}]
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 101.1},{'name</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(data, n):
+    # Sort the data by price in descending order
+    data.sort(key=lambda x: x['price'], reverse=True)
+
+    # Return the first n items
+    return data[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1}, {'name': 'Item-2', 'price': 555.22}], 1) == [{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+def expensive_items(items: list, n: int) -> list:
+    # Sort the items list based on price in descending order
+    items_sorted = sorted(items, key=lambda x: x['price'], reverse=True)
+
+    # Return the first `n` items from the sorted list
+    return items_sorted[:n]</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def expensive_items(items, n):
+    """
+    Find the n most expensive items in a given dataset.
+
+    Args:
+        items (list): A list of dictionaries, where each dictionary represents an item with 'name' and 'price' keys.
+        n (int): The number of most expensive items to return.
+
+    Returns:
+        list: A list of the n most expensive item dictionaries.
+    """
+    # Sort the items by price in descending order
+    sorted_items = sorted(items, key=lambda x: x['price'], reverse=True)
+
+    # Return the first n items from the sorted list
+    return sorted_items[:n]
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(dataset, n):
+    return sorted(dataset, key=lambda x: x['price'], reverse=True)[:n]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1))
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],2))
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3)==[{'name': 'Item-2', 'price': 555.22},{'name': 'Item-1', 'price': 101.1}]
+"""
+
+def expensive_items(items, n):
+    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]
+
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],3))
+
+"""
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def expensive_items(dataset, n):
+    # Sort the dataset by price in descending order
+    sorted_dataset = sorted(dataset, key=lambda item: item['price'], reverse=True)
+    
+    # Return the n most expensive items
+    return sorted_dataset[:n]
+
+# Test the function
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the n most expensive items in a given dataset.
+assert expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1)==[{'name': 'Item-2', 'price': 555.22}]
+"""
+
+
+def expensive_items(data, n):
+    return sorted(data, key=lambda x: x['price'], reverse=True)[:n]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def expensive_items(dataset, n):
+    # Sort the dataset in descending order based on price
+    sorted_dataset = sorted(dataset, key=lambda x: x['price'], reverse=True)
+    
+    # Return the first n items from the sorted dataset
+    return sorted_dataset[:n]
+
+# Test the function
+print(expensive_items([{'name': 'Item-1', 'price': 101.1},{'name': 'Item-2', 'price': 555.22}],1))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

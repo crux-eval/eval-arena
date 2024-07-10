@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/147 </h1>
+<pre><code> 
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    if n <= 2: return False
+    one_cnt = 1 + (n - 2) // 3 * 2 + (n - 2) % 3
+    zero_cnt = n - one_cnt
+    return one_cnt * (one_cnt - 1) * (one_cnt - 2) // 6 + zero_cnt * (zero_cnt - 1) * (zero_cnt - 2) // 6
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[5], [6], [10], [100]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[1], [2], [3], [4], [7], [12], [15], [20], [25], [30], [29], [16], [19], [18], [17], [21], [26], [31], [11], [22], [8], [6], [27], [24], [32], [28], [33], [5], [10], [23], [9], [14], [13], [34], [35], [36], [49], [37], [73], [77], [50], [74], [75], [76], [38], [78], [48], [51], [52], [98], [79], [53], [72], [42], [41], [99], [80], [54], [100], [40], [68], [39], [81], [67], [69], [43], [61], [70], [65], [71], [102], [101], [82], [47], [46], [66], [45], [57], [60], [58], [59], [103], [97], [56], [104], [96], [44], [105], [83], [95], [94], [64], [84], [85], [63], [86], [55], [87], [62], [200], [199], [201], [198], [202], [90], [91], [92], [203], [93], [197], [196], [195], [194], [204], [88]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to the problem:
+
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    remainders = [0]*3
+    for i in range(n):
+        remainders[a[i]%3] += 1
+    count += (remainders[0]*(remainders[0]-1)*(remainders[0]-2))//6
+    count += (remainders[1]*(remainders[1]-1)//2)*remainders[2]
+    count += (remainders[2]*(remainders[2]-1)//2)*remainders[1]
+    return count
+
+# Test the implementation
+print(get_max_triples(5), "Expected: 1")
+print(get_max_triples(2), "Expected: 0")
+print(get_max_triples(1), "Expected: 0")
+print(get_max_triples(6), "Expected: 4")</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a Python markdown block:
+
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    # Create the array a based on the given formula
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    
+    count = 0
+    # Iterate through all possible triples
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                # Check if the sum of the triple is divisible by 3
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    
+    return count</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test the function</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    def is_multiple_of_3(a, b, c):
+        return (a + b + c) % 3 == 0
+
+    def is_valid_triple(a, b, c):
+        return a < b < c
+
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if is_valid_triple(a[i], a[j], a[k]) and is_multiple_of_3(a[i], a[j], a[k]):
+                    count += 1
+    return count
+
+
+if __name__ == "__main__":
+    print(get_max_triples(5))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Example test case
+n = 5</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that solves the problem:
+
+```python
+def get_max_triples(n):
+    a = [i*i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+This function first creates the array `a` as described in the problem. Then it iterates over all possible triples `(a[i], a[j], a[k])` where `i < j < k`, and checks if the sum of the triple is a multiple of 3. If it is, it increments a counter. Finally, it returns the counter.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    # Create the array a
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    
+    # Initialize the count of valid triples
+    count = 0
+    
+    # Iterate over the array to find valid triples
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                # Check if the sum of the triple is a multiple of 3
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    
+    return count
+
+# Test the function
+assert get_max_triples(5) == 1
+assert get_max_triples(10) == 10
+assert get_max_triples(15) == 40
+assert get_max_triples(20) == 86</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+print(get_max_triples(5))</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+
+if __name__ == "__main__":
+    n = 5
+    print(get_max_triples(n))
+
+
+"""
+SPECS:
+
+TIME COMPLEXITY: O(n^3)
+SPACE COMPLEXITY: O(1)
+"""
+
+
+"""
+TEST CASES:
+
+1.
+    Input: n = 5
+    Output: 1
+    Explanation: 
+    a = [1, 3, 7, 13, 21]
+    The only valid triple is (1, 7, 13).
+
+2.
+    Input: n = 10
+    Output: 3
+    Explanation: 
+    a = [1, 3, 7, 13, 21, 31, 43, 57, 73, 91]
+    The valid triples are (1, 7, 21), (1, 31, 91), and (1, 7, 91).
+
+3.
+    Input: n = 1000
+    Output: 150
+
+4.
+    Input: n = 1000000
+    Output: 150000
+
+5.
+    Input: n = 1000000000
+    Output: 150000000
+"""
+
+
+"""
+Approach 2:
+
+We can use the formula to calculate the value of a[i] for each i.
+
+a[i] = i * i - i + 1
+
+We can use this formula to calculate the sum of a[i], a[j],</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+    For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+    Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+This function first calculates the values of `a` based on the formula given in the problem statement. Then, it iterates over all possible triples of indices `i`, `j`, and `k`, and checks if the sum of `a[i]`, `a[j]`, and `a[k]` is a multiple of 3. If it is, it increments the count. Finally, it returns the count.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if a[i] + a[j] + a[k] % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+    # Write your code here
+   </code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    triples = 0
+    for i in range(len(a)):
+        for j in range(i+1, len(a)):
+            for k in range(j+1, len(a)):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    triples += 1
+                    break
+    return triples</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    # Create the array a
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+
+    # Initialize the count of valid triples
+    count = 0
+
+    # Iterate through all possible i, j, k
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                # Check if the sum of a[i], a[j], and a[k] is a multiple of 3
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+
+    return count
+
+# Test the function with the example input
+print(get_max_triples(5))  # Output: 1</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n-1):
+        for j in range(i+1, n-1):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test the function
+print(get_max_triples(5)) # Expected output: 1</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n-2):
+        for j in range(i+1, n-1):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+Explanation:
+
+- We first create the integer array `a` of length `n` using a list comprehension.
+- We then initialize a counter variable `count` to 0.
+- We use three nested loops to iterate over all possible triples of `a`.
+- For each triple, we check if the sum of its elements is a multiple of 3 using the modulo operator `%`.
+- If the sum is a multiple of 3, we increment the counter variable `count`.
+- Finally, we return the value of `count`.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    def solve(n):
+        a = [(i * i - i + 1) for i in range(1, n + 1)]
+        triplets = [(a[i], a[j], a[k]) for i in range(n) for j in range(i + 1, n) for k in range(j + 1, n)]
+        return sum(1 for triplet in triplets if (triplet[0] + triplet[1] + triplet[2]) % 3 == 0)
+
+    return solve(n)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+    For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+    Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i*i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+This function first generates the array `a` using list comprehension. Then it iterates over all possible triples `(a[i], a[j], a[k])` where `i < j < k` and increments a counter if the sum of the elements is a multiple of 3. Finally, it returns the counter.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+
+def get_max_triples_2(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+
+def get_max_triples_3(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(len(a) - 2):
+        for j in range(i + 1, len(a) - 1):
+            for k in range(j + 1, len(a)):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+        and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example:
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i*i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+Explanation:
+The function `get_max_triples` takes a positive integer `n` as input and returns the number of triples `(a[i], a[j], a[k])` of `a` where `i < j < k`, and `a[i] + a[j] + a[k]` is a multiple of 3.
+
+First, we create an integer array `a` of length `n` using a list comprehension. For each `i` from 1 to `n`, we calculate `i * i - i + 1` and store it in `a[i]`.
+
+Next, we initialize a variable `count` to 0, which will keep track of the number of valid triples.
+
+We then use three nested loops to iterate over all possible triples `(a[i], a[j], a[k])` where `i < j < k`. For each triple, we check if the sum `a[i] + a[j] + a[k]` is a multiple of 3 using the modulo operator `%`. If it is, we increment the `count` variable.
+
+Finally, we return the `count` variable, which represents the number of valid triples.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test the function
+n = 5
+print(get_max_triples(n))  # Output: 1</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test the function
+n = 5
+print(get_max_triples(n))  # Output: 1</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Example usage:
+print(get_max_triples(5))  # Output: 1</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script to solve the problem:
+
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test the function with n = 5
+print(get_max_triples(5)) # Output: 1 </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(len(a)):
+        for j in range(i + 1, len(a)):
+            for k in range(j + 1, len(a)):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to solve the problem:
+
+```python
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n-2):
+        for j in range(i+1, n-1):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+This code creates an array `a` of length `n` where each element is calculated using the formula `i * i - i + 1`. Then, it iterates over all possible triples `(i, j, k)` where `i < j < k` and checks if the sum of the corresponding elements in `a` is divisible by 3. If it is, the count is incremented. Finally, the count is returned as the result.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i*i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function `get_max_triples`:
+
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+This function first creates the array `a` with the given formula. Then it iterates over all possible triples (i, j, k) and checks if the sum of the three numbers is a multiple of 3. If it is, it increments the count. Finally, it returns the count.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+```
+
+This Python script creates an array `a` of length `n` where each element is calculated as `i * i - i + 1`. It then iterates through the array to find all possible triples where the sum of the elements is a multiple of 3. The count of these triples is returned.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+
+    for i in range(1, n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+
+    return count</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+
+def get_max_triples(n):
+    a = [(i * i) - i + 1 for i in range(1, n + 1)]
+    count = 0
+
+    for i in range(len(a) - 2):
+        for j in range(i + 1, len(a) - 1):
+            for k in range(j + 1, len(a)):
+                if a[i] + a[j] + a[k] % 3 == 0:
+                    count += 1
+
+    return count</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the given problem:
+
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    
+    return count</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if a[i] + a[j] + a[k] % 3 == 0:
+                    count += 1
+    return count
+
+print(get_max_triples(5))</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+
+    # Your code here
+    # Time Complexity: O(n)
+    # Space Complexity: O(n)
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count
+
+# Test the function
+n = 5
+get_max_triples(n)
+```
+
+This code will return the number of triples (a[i], a[j], a[k]) of a where i < j < k, and a[i] + a[j] + a[k] is a multiple of 3. The time complexity is O(n^3) and the space complexity is O(n).
+
+Please let me know if you need any further assistance!
+```python
+def get_max_triples(n):
+    """
+    You are given a positive integer n. You have to create an integer array a of length n.
+        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.
+        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, 
+    and a[i] + a[j] + a[k] is a multiple of 3.
+
+    Example :
+        Input: n = 5
+        Output: 1
+        Explanation: 
+        a = [1, 3, 7, 13, 21]
+        The only valid triple is (1, 7, 13).
+    """
+    # Your code here
+    # Time Complexity: O(n)
+    # Space Complexity: O(n)
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if (a[i] +</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def get_max_triples(n):
+    count = 0
+    for i in range(1, n-1):
+        for j in range(i+1, n):
+            for k in range(j+1, n+1):
+                if (i*i - i + 1 + j*j - j + 1 + k*k - k + 1) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n+1)]
+    count = 0
+    for i in range(n-2):
+        for j in range(i+1, n-1):
+            for k in range(j+1, n):
+                if a[i] + a[j] + a[k] % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def get_max_triples(n):
+    a = [i * i - i + 1 for i in range(1, n + 1)]
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if (a[i] + a[j] + a[k]) % 3 == 0:
+                    count += 1
+    return count</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

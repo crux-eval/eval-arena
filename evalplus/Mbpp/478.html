@@ -1,0 +1,1207 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/478 </h1>
+<pre><code> """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import re
+def remove_lowercase(str1):
+    return re.sub('[a-z]', '', str1)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['PYTHon'], ['FInD'], ['STRinG']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[''], ['AbCdEfGhIjKlMnOpQrStUvWxYz'], ['aBCDefghIJKLMNOpQRSTUVWXYz'], ['aBcDeFgHiJkLmNoPqRsTuVwXyZ'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpQRSTUVWXYz'], ['AbQCdEfKGhIjKlMnOpQrStUvWxYz'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYz'], ['aBcDeFgHiJkLmNoPqRsTuVwZ'], ['AbCdEfGhIhjKlMnOpQrStUvWxYz'], ['AbCdEfGhIjKlMnOpQrStUUvWxYz'], ['aAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZ'], ['AbCdEfGhIhjKlMnOpQrStUaBcDeFgHiJkLmNoPqRsTuVwXyZvWxYz'], ['aBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYz'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzRSTUVWXYz'], ['aBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFgHiJkLmNoPqRsTuVwXyZ'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTeUVWXYzRSTUVWXYz'], ['AbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYz'], ['aBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzyZ'], ['aBCDefgaaAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['AbCdEfEGhIhjKlMnOpQrStUvWxYz'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYz'], ['aBcDAbQCdEfKGhIjKlMnOpQrStUvWxYzeFgHiJkLmNoPqRsTuVwZ'], ['aBcDAbQCdEfKGhIjKlMnOpQrStUvWxYzeFgHiJkLmNoPqRsTuVZ'], ['AbCdEfEGhIhjKlMnOpQAbCdEfGhIjKlMnOpQrStUvWxYzvWxYz'], ['aBcDeaBCNDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVAbQCdEfKGhIjKlMnOpQrStUvWxYzwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzyZ'], ['AbCdEfGhIjKlMnOpQrStUvWxYKz'], ['q'], ['AbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzz'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYezRSTUVWXYz'], ['AbCdEfGhIhhjKlMnOpQrStUaBcDeFgHiiJkLmNoPqRsTuVwXyZvWxYz'], ['aBCDefghIJKLMNAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzOpQRSTUVWXYz'], ['aAbCdEfGhIjKlMnOpQrStUUvWxbYzBcDeFgHiJkLmNoPqRsTuVwXyZ'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYzAbQCdEfKGhIjKlMnOpQaBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFCgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzyZStUvWxYz'], ['AbCdEfGhIjKlMnOpQrStUvWxYzH'], ['aAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYezRSTUVWXYztUUvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['qq'], ['AbCdEfGhIjKlMnOpQrStUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzWxYz'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNogPqRsTuVwXRyZhIJKLMNOpAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['aBCDefgaBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYLz'], ['aBcDeFgHiJkLmNoPqRsBTuVwXyZ'], ['AbCdEfGhIjKlMnOpQrStUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYz'], ['aBcDAbQCdAbCdEfGhIhhjKlMnOpQrStUaBcDeFgHiiJkLmNoPqRsTuVwXyZvWxYzEfKGhIjKlMnOpQrStUvWxYzeFgHiJkLmNoPqRsTuVwZ'], ['AbQCdEfKtGhIjKlMnOpQrStUvWxYz'], ['aAbCdEfGAbCdEfGhIjKlMnOpQrStUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVAbCdEfEGhIhjKlMnOpQrStUvWxYzWXYzWxYzhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZ'], ['aAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzUVWXYezRSTUVWXYztUUvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ'], ['aBcDAbQCdEfKGhIjKlMnOpQAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzrStUvWxYzeFgHiJkLmNoPqRsTuVZ'], ['AbQCdEfKtGhIjKlMnOpQrStUvAbCdEfGhIhjKlMnOpQrStUvWxYzWxYz'], ['aBCDefgaBcDeFgHiJkLmVwXRyAbCaBcDeaBCNDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVAbQCdEfKGhIjKlMnOpQrStUvWxYzwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzyZdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYz'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYzAbQCdEfKGhIjKlMnOpQaBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFCgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzYzZhIJKLMNOpaQRSTUVWXYzyZStUvWxYz'], ['AbCStUvWxYz'], ['AbCdEfGhIjKlMnOpQrSttUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYz'], ['AbkCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxeYz'], ['AbQCdEfKGhIjKlMnOIpQrStUvWxYz'], ['AbCdEfGhIhjKlMnOpQrStUvWxYlz'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStAbCdEfGhIjKlMnOpQrSttUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYzUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYzAbQCdEfKGhIjKlMnOpQaBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFCgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYYzyZStUvWxYz'], ['aBCDefaghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYz'], ['aBcDeFgHiJkLmNoPqRsBTuVwXysZ'], ['AbCvWxYz'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxUVWXYz'], ['aAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTu'], ['AbCdEfGhIhjKlMnOpQrStUaBaAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZLmNoPqRsTuVwXyZvWxY'], ['aBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaaQRSTUVWXYz'], ['AbCdEfGhIjKlMnOpQrStEUvWxYzH'], ['AbCdEfGhIjKlMnOaBcDAbQCdEfKGhIjKlMnOpQAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzrStUvWxYzeFgHiJkLmNoPqRsTuVZpQrStUvWxYKz'], ['AbCdEfGhIjKlMnOUVWXYzWxYz'], ['aBcDAbQCdEfKGhIjKlMnOpQrStUvWxYzeFgHiJkLmNoPqRsTuDVZ'], ['aBCDefgaBcDeFgHiJkLmNoPqRsAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzTuVwXyZhIJKLMNOpQRSTUVWXYz'], ['aBCDefgaBcDeFgHiJkLmVwXRyAbCaBcDeaBCNDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVAbQCdEfKGhIjKlMnOpQrStUvWxYzwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzKLMNOpaQRSTUVWXYzyZdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYz'], ['aBCDefghIJAbQCdEfKtGhIjKlMnOpQrStUvWxYzKLMNAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzOpQRSTUVWXYz'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYzaBcDeFgHiJkLmNoPqRsBTXysZ'], ['aBCDefgJhIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxUVWXYz'], ['aBcDAbQCdEfKGhIjKlMnOpQAbCdEaBcDeFgHiJukLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzrStUvWxYzeFgHiJkLmNoPqRsTuVZ'], ['aBeFgHiJkLmNoPqRsBTuVwXyZ'], ['aBcDeaBCDefgaBcDeFgHiJkLmoPqRsTuVwXyZ'], ['aAAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIaBCDefgaBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNogPqRsTuVwXRyZhIJKLMNOpAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNogPqRsTuVwXRyZhIJKLMNOpAbCdEaAbCdEfGhIjKlMnOpQrSttUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYzBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['aAbCdEfGAbCdEfGhIjKlMnOpQrStUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVAbCdEfEGhIhjKlMnOpQrStUvWxYzWXYaBCDefgaBcDeFgHiJkLmNoPqRsAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzTuVwXyZhIJKLMNOpQRSTUVWXYzzWxYzhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZ'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJaAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuzaBcDeFgHiJkLmNoPqRsBTXysZ'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNogPqRsTuVwXRyZhIJKLMNOpAbCdEaAbCdEfGhIjKlMnOpQrSttUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYzBcDeFgHiJkLmNoPqRsTuVwXyZfaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYezRSTUVWXYzGhIhjKlMnOpQrStUvWxYzaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['AAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzbCvWxYz'], ['AbCdEfGhIhjKlMnAbCdEfGhIjKlMnOpQrStUvWxYzOpQrStUvWxYz'], ['AbCdEfGhIaBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzyZjKlAbCdEfGhIjKlMnOpQrStEUvWxYzHQrStUUvWxYz'], ['aAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIaBCDefgaBcDeFgHiJkLmNoPqRsTuVSTUVWXYzUVWXYezRSTUVWXYztUUvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ'], ['aBcDAbQCdEfKGhIjhKlMnOpQrStUvWxYzeFgHiJkLmNoPqRsTuVwZ'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNogPqRsTuVwXRyZhIJKLMNOpAbCdEaAbCdEfGhIjKlMnOpQrSttUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYzBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzaQRSTUVWXYzaBCDefaghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYz'], ['x'], ['IXEPuE'], ['AbCdEbfGhIjKlMnOpQrStUvWxYzH'], ['AbCdEfGhIbjKlMnOpQrStUUvWxYz'], ['aAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEAbCdEfGhIhjKlMnAbCdEfGhIjKlMnOpQrStUvWxYzOpQrStUvWxYzfGhIaBCDefgaBcDeFgHiJkLmNoPqRsTuVSTUVWXYzUVWXYezRSTUVWXYztUUvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ'], ['AbCdEfGhIbjKlMnOpQrStUUvWxAbCdEfGhIhjKlMnOpQrStUaBcDeFgHiJkLmNoPqRsTuVwXyZvWxYzYz'], ['aAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEAbCdEfGhIhjKlMnAbCdEfGhIjKaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzlMnOpQrStUvWxYzOpQrStUvWxYzfGhIaBCDefgaBcDeFgHiJkLmNoPqRsTuVSTUVWXYzUVWXYezRSTUVWXYztUUvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYzAbQCdEfKGhaBCDefghIJKLMNAbCdEfGhIhjKlMnOpQrStUvWxYAbQCdEfKGhIjKlMnOpQrStUvWxYzzOpQRSTUVWXYzIjKlMnOpQaBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFCgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzYzZhIJKLMNOpaQRSTUVWXYzyZStUvWxYz'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStAbCdEfGhIjKlMnOpQrSttUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVWXYzWxYzUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYzAbQCdEfKGhIjKlMnOpQaBcDeaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzFCgHiJkLmNoPqRsTuVwXaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQStUvWxYz'], ['AbCdEfGhIhjKlMnAbCdEfGhIjKlMnOpQrSAbCStUvWxYztUvWxYzOpQrStUvWxYz'], ['aAbCdEaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYzZhIJKLMNOpaQRSTUVWXYzfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIaBCDefgaBcDeFgHiJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzUVWXYezRSTUVWXYztUUvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ'], ['AaAbCdEfGAbCdEfGhIjKlMnOpQrStUvaBCDefgaBcDeFgHiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVAbCdEfEGhIhjKlMnOpQrStUvWxYzWXYzWxYzhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZbCdEfGhIhjKlMnOpQrStUvWxYlz'], ['AaAbCdEfGAbCdEfGiJkLmVwXRyAbCdEfGhIhjKlMnOpQrStUvWxYOzZhIJKLMNOpaQRSTUVAbCdEfEGhIhjKlMnOpQrStUvWxYzWXYzWxYzhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZbCdEfGhIhjKlMnOpQrStUvWxYlz'], ['AbCdEfGhIhjKlMnOpQrStUaBaAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuVwXyZLimNoPqRsTuVwXyZvWxY'], ['aBCDefghIJKLMNOpQRSTAbCdEfGhIhjKlMnOpQrStbUaBCDefghIJKLMNOpQRSTUVWXYzvWxYzUVWXYz'], ['aBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHisJkLmNoPqRsTuVwXRyZhIJKLMNOpaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJaAbCdEfGhIjKlMnOpQrStUUvWxYzBcDeFgHiJkLmNoPqRsTuzaBcDeFgHiJkLmNoPqRsBTXysZ'], ['aAbCdEfGhIjKlMnOpQrSaBCDefgaBcDeFgHiJkLmNoPqRsTuaBCDefgaBcDeFgHiJkaBCDefgaaAbCdEfGhIjKlMnOpQAbQCdEfKGhIjKlMnOpQrStUvWxYzrStUUvWxYzBcDeFWgHiJkLmNoPqRsTuVwXyZaBCDefgaBcDeFgHiJkLmNogPqRsTuVwXRyZhIJKLMNOpAbCdEaBcDeFgHiJkLmNoPqRsTuVwXyZfGhIhjKlMnOpQrStUvWxYzaQRSTUVWXYzBcDeFgHiJkLmNoPqRsTuVwXyZhIJKLMNOpaQRSTUVWXYzLmVwXRyAbCdEfGhIaBCDefgaBcDeFgHiJkLmNoPqRsTuVSTUVWXYzUVWXYezRSTUVWXYztUUWvWxbYzBcDeFgHiJkLwmNoPqRsTuVwXyZ']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    """
+    :param string: string to remove lowercase substrings from
+    :return: string without lowercase substrings
+    """
+    result = ""
+    for i in range(len(string)):
+        if string[i].isupper():
+            result += string[i]
+        elif i == 0:
+            result += string[i]
+        elif string[i - 1].isupper():
+            result += string[i]
+    return result
+
+
+if __name__ == '__main__':
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_lowercase("PYTHon"))
+    print(remove_</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(input_string: str) -> str:
+    """
+    Remove lowercase substrings from a given string.
+
+    :param input_string: str - The input string to remove lowercase substrings from.
+    :return: str - The string with lowercase substrings removed.
+    """
+    return ''.join(char for char in input_string if char.isupper())
+
+# Test the function
+assert remove_lowercase("PYTHon") == ('PYTH'), "The function does not work as expected."</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s: str) -> str:
+    return "".join(c for c in s if c.isupper())
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def remove_lowercase(string):
+    """
+    Removes lowercase substrings from a given string.
+    
+    Args:
+        string (str): The input string.
+    
+    Returns:
+        str: The input string with all lowercase substrings removed.
+    """
+    result = ""
+    for char in string:
+        if char.isupper():
+            result += char
+    return result
+
+# Test the function
+assert remove_lowercase("PYTHon") == "PYTH"</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(c for c in s if not c.islower())
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+def remove_lowercase(s):
+    return ''.join([c for c in s if c.isupper()])
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to remove lowercase substrings from a given string, wrapped in a Python markdown block:
+
+```python
+def remove_lowercase(string):
+    result = ""
+    for char in string:
+        if char.isupper():
+            result += char
+    return result
+
+assert remove_lowercase("PYTHon") == "PYTH"</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(input_string):
+    # Use the join() and filter() built-in functions to remove lowercase characters
+    return ''.join(filter(str.isupper, input_string))
+
+# Test the function
+assert remove_lowercase("PYTHon") == 'PYTH'</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def remove_lowercase(s):
+    """
+    Removes all lowercase substrings from a given string.
+    """
+    result = ""
+    for c in s:
+        if c.isupper():
+            result += c
+    return result
+
+# Test the function
+assert remove_lowercase("PYTHon") == "PYTH" </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    """
+    This function removes lowercase substrings from a given string.
+    """
+    return ''.join(c for c in s if not c.islower())
+
+# Test the function
+assert remove_lowercase("PYTHon") == 'PYTH'
+print("All test cases pass")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return "".join(c for c in string if c.isupper())
+
+
+if __name__ == "__main__":
+    print(remove_lowercase("PYTHon"))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    result = ''
+    for char in s:
+        if not char.islower():
+            result += char
+    return result
+
+# Test the function
+assert remove_lowercase("PYTHon") == 'PYTH'</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def remove_lowercase(string):
+    return ''.join(char for char in string if not char.islower())
+
+assert remove_lowercase("PYTHon") == 'PYTH'
+```
+
+This function works by using a generator expression to iterate over each character in the string. If the character is not lowercase (as determined by the `islower()` method), it's included in the result. The `join()` method is then used to combine all the included characters into a single string.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return ''.join(c for c in string if c.isupper())
+
+print(remove_lowercase("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+
+def remove_all(string):
+    return string[0] + string[1:]
+
+print(remove_all("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+
+def remove_all(string):
+    return string[0] + string[1:]
+
+print(remove_all("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+
+def remove_all(string):
+    return string[0] + string[1:]
+
+print(remove_all("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+
+def remove_all(string):
+    return string[0] + string[1:]
+
+print(remove_all("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+
+def remove_all(string):
+    return string[0] + string[1:]
+
+print(remove_all("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+
+def remove_all(string):
+    return string[0] + string[1:]
+
+print(remove_all("PYTHON"))
+
+"""
+Write a function to remove all the substrings of a given string.
+assert remove_all("PYTHON")==('PYTHON')
+"""
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_lowercase(s):
+    """
+    Write a function to remove lowercase substrings from a given string.
+    assert remove_lowercase("PYTHon")==('PYTH')
+    """
+    result = ''
+    temp = ''
+    for char in s:
+        if char.isupper():
+            result += temp + char
+            temp = ''
+        else:
+            temp += char
+    return result
+
+# Test the function
+assert remove_lowercase("PYTHon")==('PYTH')
+assert remove_lowercase("HeLLo WoRLd")==('HeLLo WoRLd')
+assert remove_lowercase("aBcD")==('')
+assert remove_lowercase("AbCdEf")==('AbCdEf')
+assert remove_lowercase("aBcDeF")==('DeF')</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(str):
+    res = ""
+    for i in str:
+        if i.isupper():
+            res += i
+    return res
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    """
+    :param string:
+    :return:
+    """
+    result = ""
+    for i in range(len(string)):
+        if string[i].isupper():
+            result += string[i]
+    return result
+
+
+if __name__ == '__main__':
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PYTHon") == "PYTH"
+    assert remove_lowercase("PY</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def remove_lowercase(s):
+    return ''.join([c for c in s if c.isupper()])
+
+# Test the function
+assert remove_lowercase("PYTHon") == 'PYTH'
+```
+
+This function uses a list comprehension to iterate over each character in the string `s`. The `isupper()` method checks if a character is uppercase. If it is, the character is included in the new string. If it's not, it's skipped. The `join()` method is used to combine the characters into a single string.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def remove_lowercase(s):
+    return ''.join(c for c in s if c.isupper())
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return ''.join(c for c in string if c.isupper())
+
+print(remove_lowercase("PYTHon"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+print(remove_lowercase("Python"))
+</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(text):
+  """
+  Write a function to remove lowercase substrings from a given string.
+  assert remove_lowercase("PYTHon")==('PYTH')
+  """
+  return ''.join([ch for ch in text if not ch.islower()])
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+def remove_lowercase(string):
+    """
+    Function to remove lowercase substrings from a given string.
+    """
+    return ''.join(filter(lambda char: char.isupper(), string))
+
+# Test case
+assert remove_lowercase("PYTHon") == "PYTH"</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    result = ""
+    for char in s:
+        if not char.islower():
+            result += char
+    return result
+
+assert remove_lowercase("PYTHon") == ('PYTH')</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def remove_lowercase(string):
+    """
+    This function removes lowercase substrings from a given string.
+    """
+    result = ""
+    for i in range(len(string)):
+        if string[i].isupper():
+            result += string[i]
+    return result
+```
+
+The function takes a string as input and returns a new string with all lowercase substrings removed. It works by iterating over each character in the input string and checking if it is uppercase. If it is uppercase, it is added to the result string. If it is lowercase, it is skipped. Finally, the result string is returned.
+
+The function uses the `isupper()` method to check if a character is uppercase. This method returns `True` if the character is uppercase and `False` otherwise.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return ''.join([x for x in string if x.isupper()])
+
+
+s = "PYTHon"
+print(remove_lowercase(s))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to remove lowercase substrings from a given string:
+
+```python
+def remove_lowercase(s):
+    return ''.join(c for c in s if c.isupper())
+
+print(remove_lowercase("PYTHon"))  # Output: PYTH
+```
+
+This function works by iterating over each character in the string `s`. If the character is uppercase (as determined by the `isupper()` method), it is included in the output string. The `join()` method is used to concatenate all the uppercase characters into a single string.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return ''.join([char for char in string if char.isupper()])
+
+assert remove_lowercase("PYTHon")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase("PyThOn")==('PYTH')
+assert remove_lowercase</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return ''.join([c for c in string if c.isalpha()])
+
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('P</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    result = ""
+    for c in s:
+        if not c.islower():
+            result += c
+    return result
+
+assert remove_lowercase("PYTHon") == "PYTH"
+assert remove_lowercase("Python") == "Pyth"
+assert remove_lowercase("pYTHon") == "PYTH"
+assert remove_lowercase("pythOn") == "pyth"
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(str):
+    return "".join([i for i in str if i.isupper()])</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(filter(str.isupper, s))
+
+# Test the function
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_lowercase(s):
+    """
+    Remove lowercase substrings from a given string.
+
+    :param s: Input string
+    :return: String with lowercase substrings removed
+    """
+    result = []
+    current_word = ""
+
+    for char in s:
+        if char.isupper():
+            if current_word:
+                result.append(current_word)
+                current_word = ""
+            result.append(char)
+        else:
+            current_word += char
+
+    if current_word:
+        result.append(current_word)
+
+    return "".join(result)
+
+
+# Test the function
+assert remove_lowercase("PYTHon") == "PYTH"</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    result = ""
+    for c in s:
+        if not c.islower():
+            result += c
+    return result
+
+assert remove_lowercase("PYTHon") == "PYTH"
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    result = ""
+    i = 0
+    while i < len(s):
+        if s[i].islower():
+            while i < len(s) and s[i].islower():
+                i += 1
+        else:
+            result += s[i]
+            i += 1
+    return result
+</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(s):
+    return ''.join(c for c in s if c.isupper())
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all consecutive duplicates from a given string.
+assert remove_consecutive_duplicates("aaabbbbccccc")==('abc')
+"""
+
+def remove_consecutive_duplicates(s):
+    return ''.join(c for i, c in enumerate(s) if not (i > 0 and c == s[i - 1]))
+
+print(remove_consecutive_duplicates("aaabbbbccccc"))
+
+"""
+Write a function to remove all consecutive duplicates from a given string.
+assert remove_consecutive_duplicates("aaabbbbccccc")==('abc')
+"""
+
+def remove_consecutive_duplicates(s):
+    return ''.join(c for i, c in enumerate(s) if not (i > 0 and c == s[i - 1]))
+
+print(remove_consecutive_duplicates("aaabbbbccccc"))
+
+"""
+Write a function to remove all consecutive duplicates from a given string.
+assert remove_consecutive_duplicates("aaabbbbccccc")==('abc')
+"""
+
+def remove_consecutive_duplicates(s):
+    return ''.join(c for i, c in enumerate(s) if not (i > 0 and c == s[i - 1]))
+
+print(remove_consecutive_duplicates("aaabbbbccccc"))
+
+"""
+Write a function to remove all consecutive duplicates from a given string.
+assert remove_consecutive_duplicates("aaabbbbccccc")==('abc')
+"""
+
+def remove_consecutive_duplicates(s):
+    return ''.join(c for i, c in enumerate(s) if not (i > 0 and c == s[i - 1]))
+
+print(remove_consecutive_duplicates("aaabbbbccccc"))
+
+"""
+Write a function to remove all consecutive duplicates from a given string.
+assert remove_consecutive_duplicates("aaabbb</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    """
+    Remove lowercase substrings from a given string.
+    """
+    return ''.join(c for c in string if c.isupper())
+
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("Python")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+assert remove_lowercase("PYTHON")==('PYTH')
+</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+
+def remove_lowercase(input_string):
+    return ''.join(filter(str.isupper, input_string))
+
+# Example usage
+assert remove_lowercase("PYTHon") == 'PYTH'
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_lowercase(text):
+    return ''.join([ch.upper() if ch.islower() else ch for ch in text])
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def remove_lowercase(s):
+    return ''.join([char for char in s if char.isupper()])
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(c for c in s if c.isupper())
+
+assert remove_lowercase("PYTHon") == 'PYTH'</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(c for c in s if c.isupper())
+
+assert remove_lowercase("PYTHon") == 'PYTH'</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution to the problem:
+
+```python
+def remove_lowercase(string):
+    result = ""
+    for i in range(len(string)):
+        if string[i].isupper():
+            result += string[i]
+    return result
+```
+
+This function takes a string as input and iterates over each character in the string. If the character is uppercase, it is added to the result string. If it is lowercase, it is skipped. Finally, the result string is returned. This function assumes that the input string only contains alphabetic characters, so it may not work for all cases. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return ''.join(c for c in string if c.isupper())
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(str1):
+    return ''.join([ch for ch in str1 if ch.isupper()])
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return ''.join([i for i in string if i.isupper()])
+
+print(remove_lowercase("PYTHon"))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(s):
+    return s.translate(str.maketrans('', '', 'abcdefghijklmnopqrstuvwxyz'))
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase("PYTHon")==('Hn')
+"""
+
+def remove_uppercase(s):
+    return s.translate(str.maketrans('', '', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+
+print(remove_uppercase("PYTHon"))
+
+"""
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase("PYTHon")==('Hn')
+"""
+
+def remove_uppercase(s):
+    return s.translate(str.maketrans('', '', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+
+print(remove_uppercase("PYTHon"))
+
+"""
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase("PYTHon")==('Hn')
+"""
+
+def remove_uppercase(s):
+    return s.translate(str.maketrans('', '', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+
+print(remove_uppercase("PYTHon"))
+
+"""
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase("PYTHon")==('Hn')
+"""
+
+def remove_uppercase(s):
+    return s.translate(str.maketrans('', '', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+
+print(remove_uppercase("PYTHon"))
+
+"""
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase("PYTHon")==('Hn')
+"""
+
+def remove_uppercase(s):</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return ''.join(c for c in string if c.isupper())
+
+
+print(remove_lowercase("PYTHon"))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(c for c in s if c.isupper())
+
+assert remove_lowercase("PYTHon")==('PYTH')
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return "".join([i for i in string if i.isupper()])
+
+assert remove_lowercase("PYTHon")==('PYTH')
+assert remove_lowercase("Python")==('PYTH')
+assert remove_lowercase("PyTHon")==('PYTH')
+assert remove_lowercase("PyTH")==('PYTH')
+assert remove_lowercase("Pyth")==('PYTH')
+assert remove_lowercase("Pytho")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase("PythoN")==('PYTH')
+assert remove_lowercase</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return "".join([i for i in string if i.isupper()])
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(c.isupper() and c or '' for c in s)
+
+assert remove_lowercase("PYTHon") == 'PYTH'</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+def remove_lowercase(input_string: str) -> str:
+    result = ""
+    for char in input_string:
+        if not char.islower():
+            result += char
+    return result
+
+assert remove_lowercase("PYTHon") == 'PYTH'</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return string.replace("a","")
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+"""
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    result = ""
+    for char in string:
+        if char.isupper():
+            result += char
+    return result
+
+# Test case
+print(remove_lowercase("PYTHon"))  # Output: PYTH</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(string):
+    return ''.join(char for char in string if not char.islower())
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTHon"))
+
+"""
+Write a function to remove all lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+def remove_lowercase(string):
+    return string.upper()
+
+print(remove_lowercase("PYTH</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_lowercase(s):
+    return ''.join(c for c in s if not c.islower())
+
+assert remove_lowercase("PYTHon")==('PYTH')</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove lowercase substrings from a given string.
+assert remove_lowercase("PYTHon")==('PYTH')
+"""
+
+
+def remove_lowercase(str):
+    return ''.join([char for char in str if char.isupper()])
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def remove_lowercase(s):
+    result = ""
+    for c in s:
+        if c.isupper():
+            result += c
+    return result
+
+# Test the function
+print(remove_lowercase("PYTHon"))
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

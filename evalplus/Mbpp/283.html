@@ -1,0 +1,1616 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/283 </h1>
+<pre><code> """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def validate(n): 
+    digits = [int(digit) for digit in str(n)]
+    return all(digit >= digits.count(digit) for digit in digits)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[1234], [51241], [321]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[9], [9876543210], [112233445566], [111111], [112233445565], [111110], [112233445567], [10], [9876543211], [111112], [111109], [112233445568], [8], [9876543209], [11], [111113], [9876543208], [111108], [7], [6], [9876543206], [111114], [9876543207], [12], [111107], [5], [4], [3], [2], [112233445564], [9876543212], [1], [9876543213], [9876543205], [74], [9876543214], [0], [75], [111115], [76], [9876543204], [112233445569], [111106], [112233445570], [77], [111105], [72], [13], [9876543215], [112233445563], [112233445571], [73], [78], [112233445562], [9876543217], [79], [71], [111104], [111103], [70], [14], [9876543203], [69], [29], [30], [111102], [28], [68], [65], [111101], [52], [112233445572], [9876543216], [27], [15], [26], [91], [16], [31], [112233445573], [67], [32], [80], [17], [25], [111100], [53], [112233445574], [111099], [112233445561], [33], [92], [81], [9876543219], [112233445575], [112233445560], [66], [9876543218], [64], [54], [51], [111117], [63], [9876543202]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(n):
+    """
+    :param n: int
+    :return: bool
+    """
+    if n < 0:
+        return False
+    else:
+        digits = [int(i) for i in str(n)]
+        for i in range(len(digits)):
+            if digits.count(i) > i:
+                return False
+        return True
+
+
+if __name__ == '__main__':
+    print(validate(1234))
+    print(validate(12345))
+    print(validate(123456))
+    print(validate(1234567))
+    print(validate(12345678))
+    print(validate(123456789))
+    print(validate(1234567890))
+    print(validate(12345678901))
+    print(validate(123456789012))
+    print(validate(1234567890123))
+    print(validate(12345678901234))
+    print(validate(123456789012345))
+    print(validate(1234567890123456))
+    print(validate(12345678901234567))
+    print(validate(123456789012345678))
+    print(validate(1234567890123456789))
+    print(validate(12345678901234567890))
+    print(validate(123456789012345678901))
+    print(validate(1234567890123456789012))
+    print(validate(12345678901234567890123</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n: int) -> bool:
+    """
+    Check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+    """
+    # Convert the integer to a string to easily iterate over each digit
+    n_str = str(n)
+
+    # Keep track of the frequency of each digit
+    digit_count = {}
+
+    # Iterate over each digit in the integer
+    for digit in n_str:
+        # If the digit is not in the dictionary, add it with a count of 1
+        if digit not in digit_count:
+            digit_count[digit] = 1
+        # If the digit is already in the dictionary, increment its count
+        else:
+            digit_count[digit] += 1
+
+    # Check if the count of any digit is greater than the digit itself
+    for digit, count in digit_count.items():
+        if int(digit) < count:
+            return False
+
+    # If no digit's count is greater than the digit itself, return True
+    return True
+
+# Test the function
+assert validate(1234) == True
+assert validate(1223) == False
+assert validate(1000) == True
+assert validate(1111) == False</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    str_n = str(n)
+    digit_frequency = {}
+    for digit in str_n:
+        if digit in digit_frequency:
+            digit_frequency[digit] += 1
+        else:
+            digit_frequency[digit] = 1
+    for digit, frequency in digit_frequency.items():
+        if int(digit) < frequency:
+            return False
+    return True
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def validate(n):
+    """
+    Checks whether the frequency of each digit in the integer is less than or equal to the digit itself.
+    
+    Args:
+        n (int): The integer to be checked.
+        
+    Returns:
+        bool: True if the frequency of each digit is less than or equal to the digit itself, False otherwise.
+    """
+    # Convert the integer to a string
+    num_str = str(n)
+    
+    # Create a dictionary to store the frequency of each digit
+    freq = {}
+    for digit in num_str:
+        if digit in freq:
+            freq[digit] += 1
+        else:
+            freq[digit] = 1
+    
+    # Check if the frequency of each digit is less than or equal to the digit itself
+    for digit, count in freq.items():
+        if count > int(digit):
+            return False
+    
+    return True</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(num):
+    num_str = str(num)
+    for digit in num_str:
+        if num_str.count(digit) > int(digit):
+            return False
+    return True
+
+assert validate(1234) == True</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+def validate(n):
+    # Convert the integer to a string
+    str_n = str(n)
+
+    # Initialize a dictionary to store the frequency of each digit
+    freq = {}
+
+    # Iterate through each digit in the string
+    for digit in str_n:
+        # If the digit is already in the dictionary, increment its frequency
+        if digit in freq:
+            freq[digit] += 1
+        # Otherwise, add the digit to the dictionary with a frequency of 1
+        else:
+            freq[digit] = 1
+
+    # Iterate through each digit in the dictionary
+    for digit in freq:
+        # If the frequency of the digit is greater than the digit itself, return False
+        if freq[digit] > int(digit):
+            return False
+
+    # If all digits pass the validation, return True
+    return True</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def validate(num):
+    # Convert the integer to a string
+    num_str = str(num)
+    
+    # Create a dictionary to store the frequency of each digit
+    freq_dict = {}
+    
+    # Iterate over each digit in the string
+    for digit in num_str:
+        # If the digit is already in the dictionary, increment its frequency
+        if digit in freq_dict:
+            freq_dict[digit] += 1
+        # Otherwise, add the digit to the dictionary with a frequency of 1
+        else:
+            freq_dict[digit] = 1
+    
+    # Iterate over each digit in the string again
+    for digit in num_str:
+        # Check if the frequency of the digit is greater than the digit itself
+        if freq_dict[digit] > int(digit):
+            return False
+    
+    # If all digits pass the frequency check, return True
+    return True
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from collections import Counter
+
+def validate(n):
+    # Convert the integer to a string
+    num_str = str(n)
+    # Create a counter for the digits in the string
+    digit_count = Counter(num_str)
+    # Iterate over the digits 0-9
+    for digit in range(10):
+        # If the count of the digit is greater than the digit itself, return False
+        if digit_count[str(digit)] > digit:
+            return False
+    # If the count of each digit is less than or equal to the digit itself, return True
+</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function that takes in an integer and checks whether the frequency of each digit in the integer is less than or equal to the digit itself:
+
+
+```python
+def validate(num):
+    # convert the integer to a string
+    num_str = str(num)
+    # create a dictionary to store the frequency of each digit
+    freq_dict = {}
+    # iterate through each digit in the string
+    for digit in num_str:
+        # if the digit is already in the dictionary, increment its count by 1
+        if digit in freq_dict:
+            freq_dict[digit] += 1
+        # otherwise, add the digit to the dictionary with a count of 1
+        else:
+            freq_dict[digit] = 1
+    # iterate through each digit in the string and check if its frequency is less than or equal to its value
+    for digit in num_str:
+        if freq_dict[digit] > int(digit):
+            return False
+    # if all frequencies are less than or equal to their corresponding digit values, return True
+    return True
+```
+
+We can test the function with the given example:
+
+```python
+assert validate(1234) == True
+```
+
+This will return True since the frequency of each digit in 1234 is less than or equal to its value. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    # Convert the integer to a string to easily access each digit
+    n = str(n)
+
+    # Create a dictionary to store the frequency of each digit
+    freq = {}
+
+    # Iterate over each digit in the integer
+    for digit in n:
+        # If the digit is already in the dictionary, increment its frequency
+        if digit in freq:
+            freq[digit] += 1
+        # Otherwise, add the digit to the dictionary with a frequency of 1
+        else:
+            freq[digit] = 1
+
+    # Iterate over each digit in the integer
+    for digit in n:
+        # If the frequency of the digit is greater than the digit itself, return False
+        if freq[digit] > int(digit):
+            return False
+
+    # If no digit has a frequency greater than itself, return True
+    return True
+
+# Test the function
+assert validate(1234) == True</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(n):
+    # your code here
+    n = str(n)
+    for i in n:
+        if n.count(i) > int(i):
+            return False
+    return True
+
+
+if __name__ == '__main__':
+    print(validate(1234))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(num):
+    digit_counts = {str(digit): 0 for digit in range(10)}
+    num_str = str(num)
+    for digit in num_str:
+        digit_counts[digit] += 1
+        if digit_counts[digit] > int(digit):
+            return False
+    return True
+
+# Test cases
+assert validate(1234) == True
+assert validate(1112) == False  # Fails because digit 1 appears more times than itself
+assert validate(54321) == True
+assert validate(9999) == False  # Fails because digit 9 appears more times than itself</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def validate(n):
+    # Convert the integer to a string to easily count the digits
+    n_str = str(n)
+
+    # Initialize a dictionary to count the frequency of each digit
+    freq = {}
+
+    # Count the frequency of each digit
+    for digit in n_str:
+        if digit in freq:
+            freq[digit] += 1
+        else:
+            freq[digit] = 1
+
+    # Check if the frequency of each digit is less than or equal to the digit itself
+    for digit in n_str:
+        if freq[digit] > int(digit):
+            return False
+
+    # If all digits pass the check, return True
+    return True
+```
+
+This function works by first converting the integer to a string, which allows us to easily iterate over each digit. We then count the frequency of each digit using a dictionary. Finally, we check if the frequency of each digit is less than or equal to the digit itself. If any digit fails this check, we immediately return `False`. If all digits pass the check, we return `True`.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(number):
+    if number < 0:
+        return False
+    
+    if number == 0:
+        return True
+    
+    digits = []
+    while number > 0:
+        digits.append(number % 10)
+        number = number // 10
+    
+    for i in range(len(digits)):
+        if digits[i] > digits[i-1]:
+            return False
+    
+    return True
+
+"""
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(number):
+    if number < 0:
+        return False
+    
+    if number == 0:
+        return True
+    
+    digits = []
+    while number > 0:
+        digits.append(number % 10)
+        number = number // 10
+    
+    for i in range(len(digits)):
+        if digits[i] > digits[i-1]:
+            return False
+    
+    return True
+
+"""
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(number):
+    if number < 0:
+        return False
+    
+    if number == 0:
+        return True
+    
+    digits = []
+    while number > 0:
+        digits.append(number % 10)
+        number = number // 10
+    
+    for i in range(len(digits)):
+        if digits[i] > digits[i-1]:
+            return False
+    
+    return True
+
+"""
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(number):
+    if number < 0:
+        return False
+    
+    if number == 0:
+        return True
+    
+    digits = []
+    while number > 0:
+        digits.append(number % 10)
+        number = number // 10
+    
+    for i in range</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    # Convert the integer to a string for easy iteration
+    n_str = str(n)
+
+    # Iterate over each digit in the string
+    for digit in n_str:
+        # Count the frequency of the digit in the string
+        freq = n_str.count(digit)
+
+        # If the frequency is greater than the digit, return False
+        if freq > int(digit):
+            return False
+
+    # If all checks pass, return True
+    return True
+
+# Test the function
+assert validate(1234) == True
+assert validate(2234) == False
+assert validate(1111) == True
+assert validate(12345) == False
+assert validate(12234) == False</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    num = str(num)
+    for i in range(len(num)):
+        if int(num[i]) > num.count(num[i]):
+            return False
+    return True
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    num_str = str(num)
+    for i in num_str:
+        if num_str.count(i) > int(i):
+            return False
+    return True
+
+
+if __name__ == '__main__':
+    print(validate(1234))
+    print(validate(12345))
+    print(validate(123456))
+    print(validate(1234567))
+    print(validate(12345678))
+    print(validate(123456789))
+    print(validate(1234567890))
+    print(validate(12345678901))
+    print(validate(123456789012))
+    print(validate(1234567890123))
+    print(validate(12345678901234))
+    print(validate(123456789012345))
+    print(validate(1234567890123456))
+    print(validate(12345678901234567))
+    print(validate(123456789012345678))
+    print(validate(1234567890123456789))
+    print(validate(12345678901234567890))
+    print(validate(123456789012345678901))
+    print(validate(1234567890123456789012))
+    print(validate(12345678901234567890123))
+    print(validate(123456789012345678901234))
+    print(validate(123</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def validate(n):
+    # Convert the integer to a string to easily access each digit
+    str_n = str(n)
+
+    # Iterate over each digit in the string representation of the integer
+    for digit in str_n:
+        # Count the number of times the digit appears in the string representation of the integer
+        count = str_n.count(digit)
+
+        # If the count is greater than the digit itself, return False
+        if count > int(digit):
+            return False
+
+    # If we've made it this far, all digits satisfy the condition, so return True
+    return True
+
+# Test the function
+print(validate(1234))  # Should print: True
+```
+
+This function works by first converting the input integer to a string. It then iterates over each character in the string, which are the digits of the integer. For each digit, it counts how many times it appears in the string. If the count is greater than the digit itself, the function immediately returns `False`. If the function manages to iterate over all the digits without returning `False`, it returns `True`, indicating that all digits satisfy the condition.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+def validate(n):
+    digit_counts = [0] * 10
+    for digit in str(n):
+        digit_counts[int(digit)] += 1
+    for count in digit_counts:
+        if count > int(digit):
+            return False
+    return True
+
+assert validate(1234) == True</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(num):
+    num_str = str(num)
+    for i in range(10):
+        if num_str.count(str(i)) > i:
+            return False
+    return True
+
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(1234)) # True
+print(validate(12345)) # False</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def validate(num):
+  str_num = str(num)
+  for digit in str_num:
+    if int(digit) > int(str_num.count(digit)):
+      return False
+  return True</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+def validate(n):
+    # Create a dictionary to store digit frequencies
+    digit_freq = {i: 0 for i in range(10)}
+
+    # Count digit frequencies while parsing the integer
+    while n > 0:
+        digit = n % 10
+        digit_freq[digit] += 1
+        n //= 10
+
+    # Check if all digit frequencies are less than or equal to the digit itself
+    for digit, freq in digit_freq.items():
+        if digit > freq:
+            return False
+
+    return True
+
+# Test the function
+assert validate(1234) == True</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def validate(n):
+    digits = [int(d) for d in str(n)]
+    for i, d in enumerate(digits):
+        if i < d and digits.count(d) > d:
+            return False
+    return True
+
+assert validate(1234) == True</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function that takes in an integer and checks whether the frequency of each digit in the integer is less than or equal to the digit itself:
+
+```python
+def validate(num):
+    digits = [int(digit) for digit in str(num)]
+    for digit in digits:
+        if digits.count(digit) > digit:
+            return False
+    return True
+```
+
+The function first converts the integer to a list of digits using a list comprehension. It then iterates through the list of digits and checks whether the frequency of each digit is less than or equal to the digit itself. If any digit has a frequency greater than the digit itself, the function returns False. If all digits have a frequency less than or equal to the digit itself, the function returns True.
+
+The function uses the `count()` method to count the frequency of each digit in the list. The `count()` method returns the number of times the specified element appears in the list.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    str_num = str(num)
+    for i in str_num:
+        if str_num.count(i) > int(i):
+            return False
+    return True
+
+assert validate(1234) == True
+assert validate(1224) == False
+assert validate(1233) == False
+assert validate(1111) == True
+assert validate(11111) == True
+assert validate(123455) == False
+assert validate(123789) == True
+assert validate(122233) == False
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def validate(n):
+    n_str = str(n)
+    for i in range(10):
+        if n_str.count(str(i)) > i:
+            return False
+    return True
+```
+
+This function works by converting the integer to a string, then iterating over the digits 0-9. For each digit, it checks if the count of that digit in the string is greater than the digit itself. If it is, the function immediately returns `False`. If no such digit is found after checking all digits, the function returns `True`.
+
+You can test the function with the provided test case:
+
+```python
+print(validate(1234))  # Output: True
+```
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    freq = {}
+    for digit in str(num):
+        if digit in freq:
+            freq[digit] += 1
+        else:
+            freq[digit] = 1
+    for key in freq:
+        if freq[key] > int(key):
+            return False
+    return True
+
+assert validate(1234) == True
+assert validate(1233) == False
+assert validate(12341234) == False
+assert validate(123412341234) == False
+assert validate(1234123412341234) == False
+assert validate(12341234123412341234) == False
+assert validate(123412341234123412341234) == False
+assert validate(1234123412341234123412341234) == False
+assert validate(12341234123412341234123412341234) == False
+assert validate(123412341234123412341234123412341234) == False
+assert validate(1234123412341234123412341234123412341234) == False
+assert validate(12341234123412341234123412341234123412341234) == False
+assert validate(123412341234123412341234123412341234123412341234) == False
+assert validate(1234123412341234123412341234123412341234123412341234) == False
+assert validate(12341234123412341234123412341234123412341234123412341234) == False
+assert validate(123412341234123412341234123412341234123412341234123412341234) == False
+assert validate(1234123412341234123412341234123412341234123412341234123412341234) == False
+assert validate(12341234123412341234123412341234123412341234123412341234123412341234</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(num):
+    if num < 0:
+        return False
+    
+    count = 0
+    while num > 0:
+        count += 1
+        num = num // 10
+    
+    for i in str(num):
+        if int(i) > count:
+            return False
+    
+    return True
+
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate(1234))
+print(validate</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def validate(num: int) -> bool:
+    """
+    Checks whether the frequency of each digit in `num` is less than or equal to the digit itself.
+    """
+    digit_freq = [0] * 10
+    while num > 0:
+        digit = num % 10
+        digit_freq[digit] += 1
+        num //= 10
+    for i, freq in enumerate(digit_freq):
+        if freq > i:
+            return False
+    return True</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(n):
+    n = str(n)
+    for i in range(len(n)):
+        if n.count(n[i]) > int(n[i]):
+            return False
+    return True
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(number):
+    # Convert the number to a string to iterate over each digit
+    number_str = str(number)
+    # Create a dictionary to store the frequency of each digit
+    digit_freq = {}
+    # Iterate over each digit in the number string
+    for digit in number_str:
+        # Convert the digit to an integer
+        digit_int = int(digit)
+        # Increment the frequency of the digit in the dictionary
+        digit_freq[digit_int] = digit_freq.get(digit_int, 0) + 1
+    # Check if the frequency of each digit is less than or equal to the digit itself
+    for digit, freq in digit_freq.items():
+        if freq > digit:
+            return False
+    return True
+
+# Test the function
+assert validate(1234) == True
+assert validate(12345) == False
+assert validate(123456789) == True
+assert validate(1234567890) == False</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(num):
+    """
+    Checks if the frequency of each digit in the integer is less than or equal to the digit itself.
+
+    :param num: Integer to be checked
+    :return: Boolean indicating if the condition is met
+    """
+    # Convert the integer to a string to iterate over each digit
+    num_str = str(num)
+    
+    # Iterate over each digit in the string
+    for digit in num_str:
+        # Count the frequency of the digit
+        digit_freq = num_str.count(digit)
+        
+        # Check if the frequency is greater than the digit itself
+        if digit_freq > int(digit):
+            return False
+    
+    # If all digits pass the condition, return True
+    return True
+
+# Test the function
+assert validate(1234) == True
+assert validate(1122) == False
+assert validate(1111) == True
+assert validate(22) == True</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(num):
+    digit_freq = {}
+    for digit in str(num):
+        if digit in digit_freq:
+            digit_freq[digit] += 1
+        else:
+            digit_freq[digit] = 1
+    for digit, freq in digit_freq.items():
+        if freq > int(digit):
+            return False
+    return True
+
+assert validate(1234) == True
+```
+
+Explanation:
+The function `validate` takes an integer `num` as input. It first creates an empty dictionary `digit_freq` to store the frequency of each digit in the integer. It then iterates over each digit in the integer, and updates the frequency count in the `digit_freq` dictionary.
+
+After that, it iterates over the `digit_freq` dictionary and checks if the frequency of each digit is less than or equal to the digit itself. If any digit has a frequency greater than itself, it returns `False`. If all digits have a frequency less than or equal to themselves, it returns `True`.
+
+The `assert` statement at the end of the code checks that the function works as expected by calling `validate(1234)` and asserting that it returns `True`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    str_n = str(n)
+    for digit in str_n:
+        if str_n.count(digit) > int(digit):
+            return False
+    return True
+
+assert validate(1234) == True</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    if num < 10:
+        return True
+    else:
+        digit_count = [0] * 10
+        while num > 0:
+            digit = num % 10
+            digit_count[digit] += 1
+            num = num // 10
+        for i in range(10):
+            if digit_count[i] > i:
+                return False
+        return True
+
+print(validate(1234))
+print(validate(123456))
+print(validate(1234567))
+print(validate(12345678))
+print(validate(123456789))
+print(validate(1234567890))
+print(validate(12345678901))
+print(validate(123456789012))
+print(validate(1234567890123))
+print(validate(12345678901234))
+print(validate(123456789012345))
+print(validate(1234567890123456))
+print(validate(12345678901234567))
+print(validate(123456789012345678))
+print(validate(1234567890123456789))
+print(validate(12345678901234567890))
+print(validate(123456789012345678901))
+print(validate(1234567890123456789012))
+print(validate(12345678901234567890123))
+print(validate(123456789012345678901234))
+print(validate(1234567890123456789012345))
+print(validate(12345678901234567890123456))
+print(validate(123456789012345678901234567))
+print(validate(1234567890123456789012345678))
+print(validate(12345678901234567890123456789))
+print(validate(123456789012345678901234567890))
+print(validate(1234567890123456789012345678901))
+print(validate(12345678901234567890123456789012))
+print(validate(123456789012345678901234567890123))
+print(validate(1234567890123456789012345678901234))
+print(validate(12345678901234567890123456789012345))
+print(validate(123456789012345678901234567890123456))
+print(validate(1234567890123456789012345678901234567))
+print(validate(12345678901234567890123456789012345678))
+print(validate(1234567890123456789</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    """
+    :type num: int
+    :rtype: bool
+    """
+    num_str = str(num)
+    for i in range(10):
+        if num_str.count(str(i)) > i:
+            return False
+    return True
+
+assert validate(1234) == True
+assert validate(123) == False
+assert validate(12) == True
+assert validate(0) == True
+assert validate(1) == False
+assert validate(2) == True
+assert validate(3) == False
+assert validate(4) == True
+assert validate(5) == False
+assert validate(6) == True
+assert validate(7) == False
+assert validate(8) == True
+assert validate(9) == False
+assert validate(10) == True
+assert validate(11) == False
+assert validate(12) == True
+assert validate(13) == False
+assert validate(14) == True
+assert validate(15) == False
+assert validate(16) == True
+assert validate(17) == False
+assert validate(18) == True
+assert validate(19) == False
+assert validate(20) == True
+assert validate(21) == False
+assert validate(22) == True
+assert validate(23) == False
+assert validate(24) == True
+assert validate(25) == False
+assert validate(26) == True
+assert validate(27) == False
+assert validate(28) == True
+assert validate(29) == False
+assert validate(30) == True
+assert validate(31) == False
+assert validate(32) == True
+assert validate(33) == False
+assert validate(34) == True
+assert validate(35) == False
+assert validate(36) == True
+assert validate(37) == False
+assert validate(38) == True
+assert validate(39) == False
+assert validate(40) == True
+assert validate(41) == False
+assert validate(42) == True
+assert validate(43) == False
+assert validate(44) == True
+assert validate(45) == False
+assert validate(46) == True
+assert validate(47) == False
+assert validate(48) == True
+assert validate(49) == False
+assert validate(50) == True
+assert validate(51) == False
+</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+import collections
+
+def validate(number):
+    # Convert the number to a string to iterate over each digit
+    number_str = str(number)
+    # Create a counter for all digits in the number
+    digit_count = collections.Counter(number_str)
+
+    # Iterate over each digit and its frequency
+    for digit, freq in digit_count.items():
+        # Check if the frequency is greater than the digit itself
+        if freq > int(digit):
+            return False
+    return True
+
+# Example usage
+# assert validate(1234) == True
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    # Convert the integer to a string
+    n_str = str(n)
+
+    # Create a dictionary to store the digit frequencies
+    digit_frequencies = {}
+
+    # Iterate over the digits in the number
+    for digit in n_str:
+        # If the digit is not in the dictionary, add it with a frequency of 0
+        if digit not in digit_frequencies:
+            digit_frequencies[digit] = 0
+
+        # Increment the frequency of the digit
+        digit_frequencies[digit] += 1
+
+    # Iterate over the digits in the number and check if the frequency is less than or equal to the digit
+    for digit, frequency in digit_frequencies.items():
+        if frequency > int(digit):
+            return False
+
+    # Return True if all the digit frequencies are less than or equal to the digit
+    return True</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def validate(n):
+    n = str(n)
+    for i in range(10):
+        if n.count(str(i)) > i:
+            return False
+    return True
+
+assert validate(1234) == True</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    # Convert the integer to a string to easily access each digit
+    n_str = str(n)
+    # Create a dictionary to store the frequency of each digit
+    freq_dict = {}
+    for digit in n_str:
+        if digit in freq_dict:
+            freq_dict[digit] += 1
+        else:
+            freq_dict[digit] = 1
+    # Check if the frequency of each digit is less than or equal to the digit itself
+    for digit in freq_dict:
+        if freq_dict[digit] > int(digit):
+            return False
+    return True
+
+# Test case
+assert validate(1234) == True</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    digits = [int(d) for d in str(n)]
+    return all(digits.count(i) <= i for i in digits)
+
+assert validate(1234) == True</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def validate(n):
+    digits = [int(d) for d in str(n)]
+    for digit in digits:
+        if digit > len(digits) or digits.count(digit) > digit:
+            return False
+    return True
+
+# Test the function
+print(validate(1234)) # True
+print(validate(12345)) # False
+print(validate(12123)) # False
+print(validate(123456)) # True
+
+# Explanation:
+# We first convert the integer to a list of digits using a list comprehension. Then, we iterate over each digit in the list and check if the frequency of that digit is less than or equal to the digit itself. If any digit has a frequency greater than its value, we return False. If we make it through the loop without returning False, we return True. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(num):
+    num_str = str(num)
+    for i in num_str:
+        if int(i) > int(num_str.count(i)):
+            return False
+    return True
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def validate(n):
+    while n > 0:
+        digit = n % 10
+        if digit > 0 and digit <= (n % 10) // digit:
+            return False
+        n //= 10
+    return True</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    num = str(num)
+    for i in num:
+        if num.count(i) > int(i):
+            return False
+    return True
+
+print(validate(1234))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    """
+    :type num: int
+    :rtype: bool
+    """
+    num_str = str(num)
+    for i in range(10):
+        if num_str.count(str(i)) > i:
+            return False
+    return True
+
+assert validate(1234) == True
+assert validate(123) == False
+assert validate(12) == True
+assert validate(0) == True
+assert validate(1) == True
+assert validate(2) == True
+assert validate(3) == True
+assert validate(4) == True
+assert validate(5) == True
+assert validate(6) == True
+assert validate(7) == True
+assert validate(8) == True
+assert validate(9) == True
+assert validate(10) == True
+assert validate(11) == True
+assert validate(12) == True
+assert validate(13) == True
+assert validate(14) == True
+assert validate(15) == True
+assert validate(16) == True
+assert validate(17) == True
+assert validate(18) == True
+assert validate(19) == True
+assert validate(20) == True
+assert validate(21) == True
+assert validate(22) == True
+assert validate(23) == True
+assert validate(24) == True
+assert validate(25) == True
+assert validate(26) == True
+assert validate(27) == True
+assert validate(28) == True
+assert validate(29) == True
+assert validate(30) == True
+assert validate(31) == True
+assert validate(32) == True
+assert validate(33) == True
+assert validate(34) == True
+assert validate(35) == True
+assert validate(36) == True
+assert validate(37) == True
+assert validate(38) == True
+assert validate(39) == True
+assert validate(40) == True
+assert validate(41) == True
+assert validate(42) == True
+assert validate(43) == True
+assert validate(44) == True
+assert validate(45) == True
+assert validate(46) == True
+assert validate(47) == True
+assert validate(48) == True
+assert validate(49) == True
+assert validate(50) == True
+assert validate(51) == True
+</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(num):
+    num_list = list(str(num))
+    for i in range(len(num_list)):
+        if num_list.count(num_list[i]) > int(num_list[i]):
+            return False
+    return True
+
+
+print(validate(1234))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    count = [0]*10
+    for i in str(n):
+        count[int(i)] += 1
+    for i in range(10):
+        if count[i] > i:
+            return False
+    return True
+
+assert validate(1234) == True
+```
+
+This Python function `validate` takes an integer `n` as input and checks whether the frequency of each digit in the integer is less than or equal to the digit itself. It first converts the integer to a string and then iterates over each digit. For each digit, it increments the corresponding count in the `count` list. After that, it checks whether the count of each digit is less than or equal to the digit itself. If any count is greater than the corresponding digit, it returns `False`. If all counts are less than or equal to the corresponding digits, it returns `True`.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(n):
+    n = str(n)
+    for i in n:
+        if int(i) > int(n[n.index(i)]):
+            return False
+    return True
+
+assert validate(1234) == True
+assert validate(1235) == False
+assert validate(1236) == False
+assert validate(1237) == True
+assert validate(1238) == False
+assert validate(1239) == True
+assert validate(1240) == False
+assert validate(1241) == True
+assert validate(1242) == False
+assert validate(1243) == True
+assert validate(1244) == False
+assert validate(1245) == True
+assert validate(1246) == False
+assert validate(1247) == True
+assert validate(1248) == False
+assert validate(1249) == True
+assert validate(1250) == False
+assert validate(1251) == True
+assert validate(1252) == False
+assert validate(1253) == True
+assert validate(1254) == False
+assert validate(1255) == True
+assert validate(1256) == False
+assert validate(1257) == True
+assert validate(1258) == False
+assert validate(1259) == True
+assert validate(1260) == False
+assert validate(1261) == True
+assert validate(1262) == False
+assert validate(1263) == True
+assert validate(1264) == False
+assert validate(1265) == True
+assert validate(1266) == False
+assert validate(1267) == True
+assert validate(1268) == False
+assert validate(1269) == True
+assert validate(1270) == False
+assert validate(1271) == True
+assert validate(1272) == False
+assert validate(1273) == True
+assert validate(1274) == False
+assert validate(1275) == True
+assert validate(1276) == False
+assert validate(1277) == True
+assert validate(1278) == False
+assert validate(1279) == True
+assert validate(1280) == False
+assert validate(1281) == True
+assert validate(1282) == False
+assert validate(1283) == True
+assert validate(1284) == False
+assert validate(</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(n):
+    for i in str(n):
+        if int(i) > str(n).count(i):
+            return False
+    return True
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    n_str = str(n)
+    digit_freq = {}
+
+    for digit in n_str:
+        if digit in digit_freq:
+            digit_freq[digit] += 1
+        else:
+            digit_freq[digit] = 1
+
+    for digit, freq in digit_freq.items():
+        if freq > int(digit):
+            return False
+
+    return True
+
+# Test the function
+assert validate(1234) == True
+assert validate(1230) == False</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+def validate(num: int) -> bool:
+    digit_freq = {}
+    for digit in str(num):
+        if digit in digit_freq:
+            digit_freq[digit] += 1
+        else:
+            digit_freq[digit] = 1
+
+    for digit, count in digit_freq.items():
+        if int(digit) > count:
+            return False
+
+    return True
+
+assert validate(1234) is True</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(n):
+    n = str(n)
+    for i in n:
+        if n.count(i) > int(i):
+            return False
+    return True
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to solve the given problem, wrapped in a markdown block:
+
+```python
+def validate(num):
+    """
+    Checks if the frequency of each digit in the integer is less than or equal to the digit itself.
+
+    Args:
+        num (int): The integer to be validated.
+
+    Returns:
+        bool: True if the frequency of each digit is less than or equal to the digit itself, False otherwise.
+    """
+    num_str = str(num)
+    digit_counts = {}
+
+    # Count the frequency of each digit
+    for digit in num_str:
+        digit_counts[digit] = digit_counts.get(digit, 0) + 1
+
+    # Check if the frequency of each digit is less than or equal to the digit itself
+    for digit, count in digit_counts.items():
+        if count > int(digit):
+            return False
+
+    return True
+
+# Test cases
+assert validate(1234) == True
+assert validate(1000) == True
+assert validate(3333) == True
+assert validate(5555) == False
+assert validate(9876543210) == False</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+
+def validate(num):
+    num_str = str(num)
+    for digit in num_str:
+        if num_str.count(digit) > int(digit):
+            return False
+    return True
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    num = str(num)
+    for i in num:
+        if num.count(i) > int(i):
+            return False
+    return True
+
+print(validate(1234))
+print(validate(12345))
+print(validate(123456))
+print(validate(1234567))
+print(validate(12345678))
+print(validate(123456789))
+print(validate(1234567890))
+print(validate(12345678901))
+print(validate(123456789012))
+print(validate(1234567890123))
+print(validate(12345678901234))
+print(validate(123456789012345))
+print(validate(1234567890123456))
+print(validate(12345678901234567))
+print(validate(123456789012345678))
+print(validate(1234567890123456789))
+print(validate(12345678901234567890))
+print(validate(123456789012345678901))
+print(validate(1234567890123456789012))
+print(validate(12345678901234567890123))
+print(validate(123456789012345678901234))
+print(validate(1234567890123456789012345))
+print(validate(12345678901234567</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def validate(n):
+    n = str(n)
+    for digit in n:
+        if n.count(digit) > int(digit):
+            return False
+    return True
+
+assert validate(1234) == True</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.
+assert validate(1234) == True
+"""
+
+def validate(num):
+    num = str(num)
+    for i in num:
+        if int(i) > num.count(i):
+            return False
+    return True
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def validate(n):
+    # convert the integer to string
+    str_n = str(n)
+    # iterate over each digit in the string
+    for digit in str_n:
+        # count the frequency of the digit in the string
+        freq = str_n.count(digit)
+        # if the frequency is greater than the digit, return False
+        if freq > int(digit):
+            return False
+    # if all digits pass the check, return True
+    return True
+
+# test the function
+print(validate(1234))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

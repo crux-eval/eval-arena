@@ -1,0 +1,1342 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/299 </h1>
+<pre><code> """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+from collections import defaultdict
+def max_aggregate(stdata):
+    temp = defaultdict(int)
+    for name, marks in stdata:
+        temp[name] += marks
+    return max(temp.items(), key=lambda x: x[1])
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[('Juan Whelan', 90), ('Sabah Colley', 88), ('Peter Nichols', 7), ('Juan Whelan', 122), ('Sabah Colley', 84)]], [[('Juan Whelan', 50), ('Sabah Colley', 48), ('Peter Nichols', 37), ('Juan Whelan', 22), ('Sabah Colley', 14)]], [[('Juan Whelan', 10), ('Sabah Colley', 20), ('Peter Nichols', 30), ('Juan Whelan', 40), ('Sabah Colley', 50)]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[('Alice', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Charlie', 40)]], [[('Alice', -50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40)]], [[('Alice', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 80), ('Bob', 70), ('Charlie', 70)]], [[('Alice', 50), ('Bob', 60), ('Charlie', 70), ('David', 80), ('Alice', 90), ('Bob', 100), ('Charlie', 110), ('David', 120), ('Alice', 130), ('Bob', 140), ('Charlie', 150), ('David', 160)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40)]], [[('Alice', -50), ('Alice', -50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bob', 50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40), ('Bob', -90)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bob', 50), ('Charlie', 70), ('Charlie', 70)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Charlie', 40), ('Bob', 50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bobb', 50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Bob', 50)]], [[('Alice', -50), ('AlDavidice', -50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bobb', 50), ('Charlie', 40)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40), ('Alice', 80), ('Charlie', 40)]], [[('AlDavidice', -50), ('Alice', -50), ('Alice', -50)]], [[('Bob', 110), ('Alice', 80), ('Bob', -90)]], [[('Alice', 80), ('Bob', -90), ('Bob', -89), ('Charlie', 70), ('Alice', -60), ('Bob', 50)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), (41, 40), ('Charlie', 40), ('Bob', 50)]], [[('Alice', -50), ('AlDavidice', -50), ('Alice', -50)]], [[('Bob', -90), ('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 70)]], [[('Alice', -50), ('Alice', -50), ('Alice', -50)]], [[('AlDavidice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50)]], [[('Alice', 80), ('Bob', 90), ('Alice', 80), ('Bob', 70), ('Charlie', 70), ('Bob', 70)]], [[('Alice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50)]], [[('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bo', -90), ('Bobb', 50), ('Charlie', 40)]], [[('AlDavidice', -50)]], [[('Alice', 80), ('Bob', 41), ('Charlie', 70), ('Alice', -60)]], [[('AlDavidice', 70)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Charlie', 40), ('Bob', 50), ('Charlie', 70)]], [[('AlDavidice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50)]], [[('Alice', 80), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40), ('Bob', -90)]], [[('Alice', 80), ('Charlie', 70), ('Alice', -60), ('Bobb', 50)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Bob', 50), ('Charlie', 70)]], [[('Alice', 80), ('Bob', 40), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40)]], [[('Alice', 80), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Bobb', 50), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bobb', 50)]], [[('Alice', 50), ('Bob', 60), ('Charlie', 70), ('David', 80), ('Alice', 90), ('Bob', 100), ('Charlie', 110), ('David', 120), ('Bob', 140), ('Charlie', 150), ('David', 160), ('David', 80)]], [[('Alice', 80), ('Bob', 90), ('Alice', 80), ('Bob', 70), ('Charlie', 70), ('Bob', 70), ('Bob', 70)]], [[('Bob', 90), ('Charlie', 70), ('Alice', 80), ('Bob', 70), ('Charlie', 70)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 100), ('Alice', 60), ('Bob', 50), ('Charlie', 40), ('Bob', 50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bo', -90), ('Bobb', 50), ('Charlie', 40)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Charlie', 40), ('Bob', 50), ('Alice', 60)]], [[('Alice', 80), ('Charlie', 70), ('Bob', 50), ('Charlie', 70), ('Charlie', 70)]], [[('Alice', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 80), ('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Alice', -60), ('Bob', 50), ('Charlie', 70)]], [[('BoBob', 110), ('Alice', 80), ('Bob', -90), ('Bob', -90)]], [[('Alice', -51), ('Alice', -50)]], [[('Alice', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 80), ('Bob', 70)]], [[('Alice', 80), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40), ('Bob', -90), ('Bob', 50)]], [[('Alice', -50), ('AlDavidice', -49), ('Alice', -50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Alice', 80)]], [[('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bobb', 50), ('Charlie', 40)]], [[('Chare', 70), ('Alice', 80), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40), ('Bob', -90)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Bob', -90)]], [[('BoBob', 110), ('Alice', 80), ('Bob', -90), ('Bob', -90), ('Alice', 80), ('Alice', 80)]], [[('Alice', 50), ('Bob', 60), ('Charlie', 70), ('David', 80), ('Alice', 90), ('Bob', 100), ('Charlie', 110), ('David', 120), ('Bob', 140), ('Charlie', 150), ('David', 160), ('David', 80), ('Bob', 60)]], [[('Ali', 80), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Charlie', 40), ('Bob', 50), ('Alice', 60)]], [[('Alice', 80), ('Bob', 41), ('Charlie', 70), ('Alice', -60), ('Alice', -60)]], [[('Alice', 80), ('Bob', 90), ('Alice', 81), ('Charlie', 70), ('Alice', 80), ('Bob', 70)]], [[('Alice', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 100), ('Alice', 80), ('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Alice', -60)]], [[('Bob', 41), ('Charlie', 70), ('Alice', -60)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bob', 50), ('Charlie', 70)]], [[('AlDavidice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50), ('Alice', -50)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), ('Bob', 50), ('Charlie', 40), ('Bob', 50), ('Charlie', 70), ('Charlie', 70)]], [[('Alice', 80), ('Charlie', 70), ('Bob', 50), ('Charlie', 40)]], [[('Alice', -50), ('AlDavidice', -49), ('Alice', -50), ('Alice', -50)]], [[('Alice', 80), ('Charlie', 69), ('Bob', -90), ('Charlie', 70), ('Charlie', 70), ('Charlie', 70)]], [[('Alice', 50), ('Bob', 60), ('Charlie', 70), ('David', 80), ('Alice', 90), ('Bob', 100), ('Charlie', 110), ('Bob', 140), ('Charlie', 150), ('David', 160), ('David', 80)]], [[('Alice', -50), ('AlDavidice', -49), ('Alice', -50), ('Alice', -50), ('AlDavidice', -49), ('Alice', -50)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('BoDavid', 50)]], [[('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 70)]], [[('Charli', 70)]], [[('Alice', 80), ('Bob', 40), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bob', 40)]], [[('Alice', 80), ('Bob', 40), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bob', -90)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bobb', 50), ('Bob', -90), ('Bob', -90)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('BoDavid', 50), ('Bob', 50), ('Bob', -90)]], [[('Alice', 80), ('Charlie', 70), ('Bob', 50), ('Charlie', 70), ('BoDavid', 70)]], [[('Alice', 80), ('Charlie', 70), ('Bob', 50), ('Charlie', 70), ('Charlie', 70), ('Charlie', 70)]], [[('Alice', 80), ('Alice', 81), ('Charlie', 70), ('Alice', 80), ('Bob', 70), ('Alice', 80), ('Alice', 80), ('Alice', 80)]], [[('Alice', 80), ('Bob', -90), ('Alice', -60), ('Bob', 50), ('Charlie', 70), ('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Charlie', 40), ('Bob', -90), ('Alice', 80)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bob', 50), ('Bob', 50)]], [[('Bob', 110), ('Alice', 80), ('Bob', -90), ('Bob', -90), ('Bob', 110)]], [[('Ali', 80), ('Bob', 90), ('Charlie', 70), ('Alice', 60), (41, 40), ('Charlie', 40), ('Bob', 50), ('Bob', 50)]], [[('Alice', 80), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Bob', -90), ('Bob', 50)]], [[('Bob', -90), ('Charlie', 70), ('Bo', -90), ('Bobb', 50), ('Charlie', 40)]], [[('Alice', 50), ('Bob', 60), ('David', 80), ('Alice', 90), ('Bob', 100), ('Charlie', 110), ('Bob', 140), ('Charlie', 150), ('David', 160), ('David', 80)]], [[('Alice', 80), ('Bob', -90), ('Alice', -60), ('Bob', 50), ('BoDavid', 50), ('Bob', 50), ('Bob', -90)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Bobb', 50), ('Bob', -90), ('BoBob', -90)]], [[('Alice', 80), ('Bob', 90), ('Alice', 80), ('Bob', 70), ('Charlie', 70), ('Bob', 70), ('Bob', 70), ('Bob', 70)]], [[('Alice', 80), ('Bob', -90), ('Bob', -89), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('Alice', 80)]], [[('Alice', 80), ('Bob', 40), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Charlie', 40), ('Bob', 40), ('Charlie', 40)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bobb', 50), ('Alice', 80), ('Charlie', 70)]], [[('AlDavidice', 70), ('AlDavidice', 70)]], [[('Charlie', 70), ('Alice', -60)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Charlie', 70)]], [[('Alice', 80), ('Bob', -90), ('Charlie', 70), ('Alice', -60), ('Bob', 50), ('BoDavid', 50), ('Charlie', 70)]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(tuples):
+    """
+    tuples: a list of tuples
+    returns: a tuple (name, score)
+    """
+    # Your code here
+    max_score = 0
+    max_name = ''
+    for name, score in tuples:
+        if score > max_score:
+            max_score = score
+            max_name = name
+    return (max_name, max_score)
+
+
+def test_max_aggregate():
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122)])==('Juan Whelan', 244)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 244)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122)])==('Juan Whelan', 366)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',8</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_aggregate(data):
+    """
+    Calculate the maximum aggregate from the list of tuples.
+
+    :param data: List of tuples containing names and corresponding scores
+    :return: Tuple with the name and the maximum aggregate score
+    """
+    aggregate_scores = {}
+
+    for name, score in data:
+        if name not in aggregate_scores:
+            aggregate_scores[name] = score
+        else:
+            aggregate_scores[name] += score
+
+    max_score = max(aggregate_scores.values())
+    max_name = [name for name in aggregate_scores if aggregate_scores[name] == max_score]
+
+    return (max_name[0], max_score) if len(max_name) == 1 else max_name, max_score
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == (('Juan Whelan', 212),)</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst: list[tuple[str, int]]) -> tuple[str, int]:
+    """
+    Calculate the maximum aggregate from the list of tuples.
+
+    Args:
+        lst (list of tuples): Each tuple contains a name and a score.
+
+    Returns:
+        tuple: The name and maximum aggregate score.
+    """
+    aggregates = {}
+    for name, score in lst:
+        if name in aggregates:
+            aggregates[name] += score
+        else:
+            aggregates[name] = score
+    max_name = max(aggregates, key=aggregates.get)
+    return (max_name, aggregates[max_name])
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def max_aggregate(data):
+    """
+    Calculates the maximum aggregate from the list of tuples.
+    
+    Args:
+        data (list): A list of tuples, where each tuple contains a name and a score.
+    
+    Returns:
+        tuple: A tuple containing the name and the maximum aggregate score.
+    """
+    aggregates = {}
+    for name, score in data:
+        if name in aggregates:
+            aggregates[name] += score
+        else:
+            aggregates[name] = score
+    
+    return max(aggregates.items(), key=lambda x: x[1])</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(data):
+    # Create a dictionary to store names and aggregate scores
+    scores = {}
+    for name, score in data:
+        if name in scores:
+            scores[name] += score
+        else:
+            scores[name] = score
+
+    # Find the name with the maximum score
+    max_name = max(scores, key=scores.get)
+
+    # Return the name and its aggregate score
+    return (max_name, scores[max_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+def max_aggregate(tuples):
+    # Initialize a dictionary to store the aggregate score for each name
+    aggregate_scores = {}
+
+    # Iterate through the list of tuples
+    for name, score in tuples:
+        # If the name is already in the dictionary, add the score to the existing aggregate score
+        if name in aggregate_scores:
+            aggregate_scores[name] += score
+        # Otherwise, add the name and score to the dictionary
+        else:
+            aggregate_scores[name] = score
+
+    # Find the maximum aggregate score and its corresponding name
+    max_aggregate_score = max(aggregate_scores.values())
+    max_aggregate_name = [name for name, score in aggregate_scores.items() if score == max_aggregate_score]
+
+    # Return the name and maximum aggregate score as a tuple
+    return max_aggregate_name[0], max_aggregate_score</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def max_aggregate(scores):
+    aggregates = {}
+    for name, score in scores:
+        if name not in aggregates:
+            aggregates[name] = 0
+        aggregates[name] += score
+    return max(aggregates.items(), key=lambda x: x[1])
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from collections import defaultdict
+
+def max_aggregate(tuples):
+    # Use defaultdict to create a dictionary that maps names to lists of scores
+    agg_dict = defaultdict(list)
+    for name, score in tuples:
+        agg_dict[name].append(score)
+
+    # Calculate the maximum aggregate score for each name
+    max_aggregates = []
+    for name, scores in agg_dict.items():
+        max_aggregates.append((name, sum(scores)))
+
+    # Find the name with the maximum aggregate score
+    max_name, max_score = max(max_aggregates, key=lambda x: x[1])
+
+    return (max_name, max_score)
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script to calculate the maximum aggregate from the list of tuples:
+
+```python
+def max_aggregate(lst):
+    """
+    This function takes a list of tuples as input and returns the tuple with the maximum aggregate score.
+    """
+    # Create a dictionary to store the sum of scores for each name
+    scores = {}
+    for name, score in lst:
+        if name in scores:
+            scores[name] += score
+        else:
+            scores[name] = score
+    
+    # Find the maximum aggregate score and the corresponding name
+    max_score = 0
+    max_name = ''
+    for name, score in scores.items():
+        if score > max_score:
+            max_score = score
+            max_name = name
+    
+    return (max_name, max_score)
+
+# Test the function with the given example
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+```
+
+The function first creates a dictionary to store the sum of scores for each name. It then iterates through the list of tuples and adds the score to the corresponding name in the dictionary. If the name is not in the dictionary, it adds a new key-value pair with the name as the key and the score as the value. Finally, it finds the maximum score and the corresponding name in the dictionary and returns the tuple with the name and the maximum aggregate score. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    # Create an empty dictionary to store the aggregates
+    aggregates = {}
+
+    # Iterate over the list of tuples
+    for name, score in lst:
+        # If the name is already in the dictionary, add the score to the existing aggregate
+        if name in aggregates:
+            aggregates[name] += score
+        # If the name is not in the dictionary, add it with the current score as the aggregate
+        else:
+            aggregates[name] = score
+
+    # Find the name with the maximum aggregate
+    max_name = max(aggregates, key=aggregates.get)
+
+    # Return the name and the maximum aggregate as a tuple
+    return (max_name, aggregates[max_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    # your code here
+    max_name = list_of_tuples[0][0]
+    max_score = list_of_tuples[0][1]
+    for i in range(len(list_of_tuples)):
+        if list_of_tuples[i][1] > max_score:
+            max_name = list_of_tuples[i][0]
+            max_score = list_of_tuples[i][1]
+    return (max_name, max_score)
+
+
+if __name__ == '__main__':
+    print("Example:")
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+    # These "asserts" are used for self-checking and not for an auto-testing
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Peter Nichols',100)])==('Peter Nichols', 107)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Peter Nichols',100),('Peter Nichols',100)])==('Peter Nichols', 207)
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',1</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_aggregate(tuples_list):
+    aggregate_dict = {}
+    for name, score in tuples_list:
+        if name in aggregate_dict:
+            aggregate_dict[name] += score
+        else:
+            aggregate_dict[name] = score
+    return max(aggregate_dict, key=aggregate_dict.get)
+
+# Test case
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that calculates the maximum aggregate from the list of tuples:
+
+```python
+def max_aggregate(lst):
+    # Create an empty dictionary to store the aggregate of each name
+    aggregate_dict = {}
+
+    # Iterate over the list of tuples
+    for name, score in lst:
+        # If the name is not in the dictionary, add it with the first score
+        if name not in aggregate_dict:
+            aggregate_dict[name] = score
+        # If the name is in the dictionary, add the score to the existing aggregate
+        else:
+            aggregate_dict[name] += score
+
+    # Find the name with the maximum aggregate score
+    max_name = max(aggregate_dict, key=aggregate_dict.get)
+
+    # Return the name and the maximum aggregate score as a tuple
+    return (max_name, aggregate_dict[max_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+```
+This function works by first creating a dictionary to store the aggregate score for each name. It then iterates over the list of tuples, adding the score to the appropriate name in the dictionary. Finally, it finds the name with the maximum aggregate score and returns it as a tuple with the score.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(lst):
+    max_value = 0
+    for i in lst:
+        if i[1] > max_value:
+            max_value = i[1]
+    return max_value
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the minimum aggregate from the list of tuples.
+assert min_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 7)
+"""
+
+def min_aggregate(lst):
+    min_value = 100
+    for i in lst:
+        if i[1] < min_value:
+            min_value = i[1]
+    return min_value
+
+print(min_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the average aggregate from the list of tuples.
+assert average_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==(7.5)
+"""
+
+def average_aggregate(lst):
+    sum = 0
+    for i in lst:
+        sum += i[1]
+    return sum/len(lst)
+
+print(average_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the median aggregate from the list of tuples.
+assert median_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(tuples_list):
+    """
+    Write a function to calculate the maximum aggregate from the list of tuples.
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+    """
+    # Initialize a dictionary to store the sum of scores for each name
+    name_scores = {}
+
+    # Iterate over the tuples in the list
+    for name, score in tuples_list:
+        # If the name is already in the dictionary, add the score to its current total
+        if name in name_scores:
+            name_scores[name] += score
+        # If the name is not in the dictionary, add it with its score as the total
+        else:
+            name_scores[name] = score
+
+    # Find the name with the maximum total score
+    max_name = max(name_scores, key=name_scores.get)
+
+    # Return the name and the maximum total score as a tuple
+    return max_name, name_scores[max_name]
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list):
+    max_aggregate = 0
+    for i in list:
+        if i[1] > max_aggregate:
+            max_aggregate = i[1]
+    for i in list:
+        if i[1] == max_aggregate:
+            return i
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(tuples):
+    max_aggregate = 0
+    max_aggregate_name = ''
+    for name, score in tuples:
+        if score > max_aggregate:
+            max_aggregate = score
+            max_aggregate_name = name
+    return (max_aggregate_name, max_aggregate)
+
+
+if __name__ == '__main__':
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+    print(max_aggregate([('</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def max_aggregate(lst):
+    # Create an empty dictionary
+    d = {}
+    # Iterate over the list
+    for name, value in lst:
+        # If the name is not in the dictionary, add it with the value
+        if name not in d:
+            d[name] = value
+        # If the name is already in the dictionary, add the value to the existing value
+        else:
+            d[name] += value
+    # Find the name with the maximum value
+    max_name = max(d, key=d.get)
+    # Return the name and its maximum value
+    return (max_name, d[max_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+```
+
+This function works by creating a dictionary where the keys are the names and the values are the aggregates. It then finds the key with the maximum value in the dictionary and returns it along with its value.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def max_aggregate(students):
+    max_score = 0
+    max_student = None
+    for student, score in students:
+        if score > max_score:
+            max_score = score
+            max_student = student
+    return max_student, max_score
+
+students = [('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]
+print(max_aggregate(students))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(lst):
+    max_aggregate = lst[0]
+    for i in lst:
+        if i[1] > max_aggregate[1]:
+            max_aggregate = i
+    return max_aggregate
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('J</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_aggregate(list_of_tuples):
+  """
+  Write a function to calculate the maximum aggregate from the list of tuples.
+  assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+  """
+  max_aggregate = (list_of_tuples[0][0], list_of_tuples[0][1])
+  for name, score in list_of_tuples:
+    if max_aggregate[1] < score:
+      max_aggregate = (name, score)
+  return max_aggregate</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+def max_aggregate(tuples):
+    """
+    Calculate the maximum aggregate (sum of second elements) from the list of tuples.
+    """
+    return max(tuples, key=lambda x: x[1])[0], sum(x[1] for x in tuples)
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(data):
+    aggregate = {}
+    for name, score in data:
+        if name in aggregate:
+            aggregate[name] += score
+        else:
+            aggregate[name] = score
+
+    max_name = max(aggregate, key=aggregate.get)
+    max_score = aggregate[max_name]
+
+    return max_name, max_score
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def max_aggregate(lst):
+    max_agg = lst[0]
+    for i in range(1, len(lst)):
+        if lst[i][1] + max_agg[1] > max_agg[1]:
+            max_agg = lst[i]
+    return max_agg
+```
+
+The function takes a list of tuples as input and returns the tuple with the maximum aggregate. The function initializes the maximum aggregate to be the first tuple in the list. It then iterates through the list starting from the second tuple and checks if the sum of the current tuple's score and the maximum aggregate's score is greater than the maximum aggregate's score. If it is, then the current tuple becomes the new maximum aggregate. Finally, the function returns the maximum aggregate.
+
+The assertion in the problem checks if the function correctly identifies the tuple with the maximum aggregate as ('Juan Whelan', 212).</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(tuples):
+    """
+    Calculates the maximum aggregate from the list of tuples.
+    """
+    tuples_dict = {}
+    for tup in tuples:
+        if tup[0] in tuples_dict:
+            tuples_dict[tup[0]] += tup[1]
+        else:
+            tuples_dict[tup[0]] = tup[1]
+    return max(tuples_dict, key=tuples_dict.get)
+
+
+def test_max_aggregate():
+    """
+    Test max_aggregate function.
+    """
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+
+
+if __name__ == '__main__':
+    test_max_aggregate()
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def max_aggregate(lst):
+    """
+    Write a function to calculate the maximum aggregate from the list of tuples.
+    """
+    # Create a dictionary to store the aggregate scores
+    aggregate_scores = {}
+
+    # Iterate over the list of tuples
+    for name, score in lst:
+        # If the name is already in the dictionary, add the score to the existing aggregate
+        if name in aggregate_scores:
+            aggregate_scores[name] += score
+        # If the name is not in the dictionary, add it with the score as the aggregate
+        else:
+            aggregate_scores[name] = score
+
+    # Find the name with the maximum aggregate score
+    max_name = max(aggregate_scores, key=aggregate_scores.get)
+    max_score = aggregate_scores[max_name]
+
+    # Return the name and score as a tuple
+    return (max_name, max_score)
+```
+
+You can test the function with the provided assertion:
+
+```python
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+```
+
+This function works by first creating a dictionary to store the aggregate scores for each name. It then iterates over the list of tuples, adding the score to the aggregate for each name. Finally, it finds the name with the maximum aggregate score and returns it as a tuple.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(tuples):
+    max_aggregate = 0
+    max_name = ''
+    for name, score in tuples:
+        if score > max_aggregate:
+            max_aggregate = score
+            max_name = name
+    return max_name, max_aggregate
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122)])==('Juan Whelan', 312)
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 312)
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 312)
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 312)
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(list_of_tuples):
+    max_value = 0
+    for i in list_of_tuples:
+        if i[1] > max_value:
+            max_value = i[1]
+    return max_value
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_value = 0
+    for i in list_of_tuples:
+        if i[1] > max_value:
+            max_value = i[1]
+    return max_value
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_value = 0
+    for i in list_of_tuples:
+        if i[1] > max_value:
+            max_value = i[1]
+    return max_value
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the maximum aggregate from the list of tuples.</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    """
+    Write a function to calculate the maximum aggregate from the list of tuples.
+    """
+    d = {}
+    for name, score in lst:
+        d[name] = d.get(name, 0) + score
+    return max(d, key=d.get), d[max(d, key=d.get)]</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list):
+    max_aggregate = 0
+    for i in list:
+        if i[1] > max_aggregate:
+            max_aggregate = i[1]
+    return max_aggregate
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(tuples_list):
+    aggregate_dict = {}
+    for name, score in tuples_list:
+        if name in aggregate_dict:
+            aggregate_dict[name] += score
+        else:
+            aggregate_dict[name] = score
+    max_name = max(aggregate_dict, key=aggregate_dict.get)
+    return (max_name, aggregate_dict[max_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    """
+    Calculate the maximum aggregate from the list of tuples.
+
+    :param lst: List of tuples containing a name and a score
+    :return: Tuple with the name and the maximum aggregate score
+    """
+    # Create a dictionary to store the name and the sum of scores
+    name_scores = {}
+
+    # Iterate over the list of tuples
+    for name, score in lst:
+        # If the name is already in the dictionary, add the score
+        if name in name_scores:
+            name_scores[name] += score
+        # Otherwise, add the name and score to the dictionary
+        else:
+            name_scores[name] = score
+
+    # Find the name with the maximum aggregate score
+    max_name = max(name_scores, key=name_scores.get)
+    max_score = name_scores[max_name]
+
+    return (max_name, max_score)
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    aggregate = {}
+    for name, score in lst:
+        if name in aggregate:
+            aggregate[name] += score
+        else:
+            aggregate[name] = score
+    return max(aggregate.items(), key=lambda x: x[1])
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+```
+
+Explanation:
+The function `max_aggregate` takes a list of tuples as input, where each tuple contains a name and a score. The function first creates an empty dictionary `aggregate` to store the aggregate scores of each name. It then iterates through the list of tuples and updates the aggregate score for each name in the dictionary. If the name is not already in the dictionary, it adds a new key-value pair with the name as the key and the score as the value. Finally, the function returns the name and aggregate score of the maximum aggregate using the `max` function with a key argument that specifies to compare the values (scores) of the dictionary items.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(students):
+    student_scores = {}
+    for student, score in students:
+        if student in student_scores:
+            student_scores[student] += score
+        else:
+            student_scores[student] = score
+    max_student = max(student_scores, key=student_scores.get)
+    return max_student, student_scores[max_student]
+
+# Test the function
+students = [('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(tuples):
+    max_aggregate = 0
+    for i in tuples:
+        if i[1] > max_aggregate:
+            max_aggregate = i[1]
+    return max_aggregate
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(lst):
+    """
+    >>> max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    ('Juan Whelan', 212)
+    """
+    return max(lst, key=lambda x: x[1])
+
+def max_aggregate2(lst):
+    """
+    >>> max_aggregate2([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    ('Juan Whelan', 212)
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate3(lst):
+    """
+    >>> max_aggregate3([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    'Juan Whelan'
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate4(lst):
+    """
+    >>> max_aggregate4([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    'Juan Whelan'
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate5(lst):
+    """
+    >>> max_aggregate5([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    'Juan Whelan'
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate6(lst):
+    """
+    >>> max_aggregate6([('Juan Whel</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+
+def max_aggregate(scores):
+    from collections import defaultdict
+    aggregate_scores = defaultdict(int)
+    for name, score in scores:
+        aggregate_scores[name] += score
+    return max(aggregate_scores.items(), key=lambda item: item[1])
+
+# Example usage:
+# assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_aggregate(lst):
+    """
+    Write a function to calculate the maximum aggregate from the list of tuples.
+
+    Args:
+        lst: A list of tuples, where each tuple contains a name and a number.
+
+    Returns:
+        A tuple containing the name and the maximum aggregate.
+    """
+
+    # Calculate the maximum aggregate for each name.
+    max_aggregate_dict = {name: sum(group[1] for group in lst if group[0] == name) for name, group in lst.items()}
+
+    # Return the name and maximum aggregate.
+    return max(max_aggregate_dict.items(), key=lambda item: item[1])</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def max_aggregate(lst):
+    aggregate_dict = {}
+    for name, score in lst:
+        if name in aggregate_dict:
+            aggregate_dict[name] += score
+        else:
+            aggregate_dict[name] = score
+    max_name = max(aggregate_dict, key=aggregate_dict.get)
+    return (max_name, aggregate_dict[max_name])
+
+# Test the function
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    # Create a dictionary to store the aggregate of each person
+    aggregate_dict = {}
+    # Iterate through the list of tuples
+    for name, score in lst:
+        # If the person is already in the dictionary, add the score to their aggregate
+        if name in aggregate_dict:
+            aggregate_dict[name] += score
+        # If the person is not in the dictionary, add them with the score as their aggregate
+        else:
+            aggregate_dict[name] = score
+    # Find the person with the highest aggregate
+    max_aggregate_name = max(aggregate_dict, key=aggregate_dict.get)
+    # Return the person's name and their aggregate
+    return (max_aggregate_name, aggregate_dict[max_aggregate_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    # Create a dictionary to store the sum of each name
+    name_sum = {}
+    for name, score in lst:
+        if name in name_sum:
+            name_sum[name] += score
+        else:
+            name_sum[name] = score
+
+    # Find the name with the maximum sum
+    max_name = max(name_sum, key=name_sum.get)
+
+    return (max_name, name_sum[max_name])
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def max_aggregate(lst):
+    # Create a dictionary to store the scores for each student
+    scores = {}
+    for name, score in lst:
+        if name in scores:
+            scores[name] += score
+        else:
+            scores[name] = score
+    
+    # Find the maximum score
+    max_score = max(scores.values())
+    
+    # Find the student(s) with the maximum score
+    max_students = [name for name, score in scores.items() if score == max_score]
+    
+    # Return the name of the student(s) with the maximum score and their total score
+    return max_students, max_score
+
+# Test the function with the given example
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212) </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(list_of_tuples):
+    max_aggregate = 0
+    max_tuple = None
+    for tuple in list_of_tuples:
+        if tuple[1] > max_aggregate:
+            max_aggregate = tuple[1]
+            max_tuple = tuple
+    return max_tuple
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_aggregate(list_of_tuples):
+    max_aggregate = max(list_of_tuples, key=lambda x: sum([int(y) for y in x[1]]))
+    return max_aggregate
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(lst):
+    d = {}
+    for i in lst:
+        if i[0] in d:
+            d[i[0]] += i[1]
+        else:
+            d[i[0]] = i[1]
+    return max(d.items(), key=lambda x: x[1])
+
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(lst):
+    """
+    >>> max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    ('Juan Whelan', 212)
+    """
+    return max(lst, key=lambda x: x[1])
+
+def max_aggregate2(lst):
+    """
+    >>> max_aggregate2([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    ('Juan Whelan', 212)
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate3(lst):
+    """
+    >>> max_aggregate3([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    'Juan Whelan'
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate4(lst):
+    """
+    >>> max_aggregate4([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    'Juan Whelan'
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate5(lst):
+    """
+    >>> max_aggregate5([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])
+    'Juan Whelan'
+    """
+    return max(lst, key=lambda x: x[1])[0]
+
+def max_aggregate6(lst):
+    """
+    >>> max_aggregate6([('Juan Whel</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_aggregate = 0
+    for i in list_of_tuples:
+        if i[1] > max_aggregate:
+            max_aggregate = i[1]
+    return max_aggregate
+
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_aggregate(tuples):
+    max_score = 0
+    max_name = ''
+    for name, score in tuples:
+        if score > max_score:
+            max_score = score
+            max_name = name
+    return (max_name, max_score)
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(lst):
+    return max(lst, key=lambda x: x[1])
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_score = 0
+    max_name = ''
+    for name, score in list_of_tuples:
+        if score > max_score:
+            max_score = score
+            max_name = name
+    return max_name, max_score
+
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(tuples):
+    aggregate = {}
+    for t in tuples:
+        if t[0] in aggregate:
+            aggregate[t[0]] += t[1]
+        else:
+            aggregate[t[0]] = t[1]
+    return max(aggregate.items(), key=lambda x: x[1])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]) == ('Juan Whelan', 212)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+def max_aggregate(students_list: list) -> tuple:
+    max_aggregate_student = None
+    max_aggregate_score = 0
+
+    for student_tuple in students_list:
+        student_name, student_score = student_tuple
+        if max_aggregate_student is None or max_aggregate_score < student_score:
+            max_aggregate_student = student_name
+            max_aggregate_score = student_score
+        elif max_aggregate_student == student_name:
+            max_aggregate_score += student_score
+
+    return (max_aggregate_student, max_aggregate_score)
+
+
+students = [('Juan Whelan', 90), ('Sabah Colley', 88), ('Peter Nichols', 7), ('Juan Whelan', 122), ('Sabah Colley', 84)]
+assert max_aggregate(students) == ('Juan Whelan', 212)</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(tuples):
+    max_value = 0
+    for i in range(len(tuples)):
+        for j in range(i+1,len(tuples)):
+            if tuples[i][1] + tuples[j][1] > max_value:
+                max_value = tuples[i][1] + tuples[j][1]
+                max_tuple = tuples[i]
+                max_tuple.append(tuples[j])
+    return max_tuple
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+"""
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(tuples):
+    # Create a dictionary to store the aggregates
+    aggregates = {}
+    
+    # Iterate through the list of tuples
+    for name, score in tuples:
+        # If the name is already in the dictionary, add the score to the existing aggregate
+        if name in aggregates:
+            aggregates[name] += score
+        # Otherwise, initialize the aggregate with the current score
+        else:
+            aggregates[name] = score
+    
+    # Find the name with the maximum aggregate
+    max_name = max(aggregates, key=aggregates.get)
+    
+    # Return the name and the maximum aggregate
+    return max_name, aggregates[max_name]
+
+# Test the function
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(scores):
+    scores_dict = {}
+    for name, score in scores:
+        if name not in scores_dict:
+            scores_dict[name] = score
+        else:
+            scores_dict[name] += score
+    max_score = max(scores_dict.values())
+    max_name = [name for name, score in scores_dict.items() if score == max_score][0]
+    return (max_name, max_score)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_value = 0
+    max_name = ''
+    for name, value in list_of_tuples:
+        if value > max_value:
+            max_value = value
+            max_name = name
+    return max_name, max_value
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_value = 0
+    max_name = ''
+    for name, value in list_of_tuples:
+        if value > max_value:
+            max_value = value
+            max_name = name
+    return max_name, max_value
+
+print(max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)]))
+
+"""
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+def max_aggregate(list_of_tuples):
+    max_value = 0
+    max_name = ''
+    for name, value in list_of_tuples:
+        if value > max_value:
+            max_value = value
+            max_name = name
+    return max_name, max_value
+
+print(max_aggregate([('Juan Whelan',90),</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_aggregate(lst):
+    # Create a dictionary to store the sum of the scores for each name
+    score_dict = {}
+    for name, score in lst:
+        if name in score_dict:
+            score_dict[name] += score
+        else:
+            score_dict[name] = score
+
+    # Find the maximum score and the corresponding name
+    max_score = max(score_dict.values())
+    max_name = [name for name, score in score_dict.items() if score == max_score][0]
+
+    return max_name, max_score
+
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to calculate the maximum aggregate from the list of tuples.
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+"""
+
+
+def max_aggregate(list):
+    max_value = 0
+    for i in list:
+        if i[1] > max_value:
+            max_value = i[1]
+    return max_value
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def max_aggregate(lst):
+    # Create a dictionary to store the sum of values for each name
+    name_dict = {}
+    for name, value in lst:
+        if name in name_dict:
+            name_dict[name] += value
+        else:
+            name_dict[name] = value
+    
+    # Find the name with the maximum aggregate
+    max_name = max(name_dict, key=name_dict.get)
+    return (max_name, name_dict[max_name])
+
+# Test the function
+assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

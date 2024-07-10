@@ -1,0 +1,1316 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/153 </h1>
+<pre><code> 
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    def strength(s: str) -> int:
+        CAP, SM = 0, 0
+        for ch in s:
+            if ch.isupper(): CAP += 1
+            if ch.islower(): SM += 1
+        return CAP - SM
+    max_strength = max(map(strength, extensions))
+    for e in extensions:
+        if strength(e) == max_strength:
+            return class_name + "." + e
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['Watashi', ['tEN', 'niNE', 'eIGHt8OKe']], ['Boku123', ['nani', 'NazeDa', 'YEs.WeCaNe', '32145tggg']], ['__YESIMHERE', ['t', 'eMptY', 'nothing', 'zeR00', 'NuLl__', '123NoooneB321']], ['K', ['Ta', 'TAR', 't234An', 'cosSo']], ['__HAHA', ['Tab', '123', '781345', '-_-']], ['YameRore', ['HhAas', 'okIWILL123', 'WorkOut', 'Fails', '-_-']], ['finNNalLLly', ['Die', 'NowW', 'Wow', 'WoW']], ['_', ['Bb', '91245']], ['Sp', ['671235', 'Bb']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['Test1', ['UPPERCASE', 'uppercase', '1111']], ['Test2', ['capitalLETTERS', 'lowercaseletters', 'mIxEdcAsE']], ['Test3', ['oneUPPERcaseletter', 'TWoUPPERcaseletTErs', 'threeUppercaseletters', 'fourlowercaseletters']], ['Test4', ['ALLUPPERcaseletters', 'ALLlowercaseletters', 'Nolettersatall123', '12345']], ['Test5', ['ZERO', 'one', 'Two', 'THREE', 'four', 'FIVE', 'six', 'seven', 'eight', 'nine', '10']], ['Person', ['TEst', 'Name', 'naMe', 'AGE']], ['Animal', ['CAMel', 'hOrSE', 'DoG']], ['Vehicle', ['Automobile', 'CAR', 'SuPerbIkE', 'Z']], ['Computer', ['Laptop', 'DEsktop', 'TABLET', 'MONITOR', 'MOUSE', 'KEYboard']], ['Book', ['NOVEL', 'picturebook', 'COOkbook', 'Dictionary', 'Encyclopedia']], ['Computer', ['Laptop', 'DEsktop', 'TABLET', 'MONITOR', 'MOUSE', 'KEYboard', 'KEYeightboard']], ['Compter', ['Laptop', 'DEsktop', 'TABLET', 'MONITOR', 'MOUSE', 'KEYboard', 'KEYeightboard']], ['Computer', ['Laptop', 'DEsktop', 'TABLET', 'MONITOR', 'MOUSE', 'KEYeightboard']], ['Vehcice', ['Automobile', 'CAR', 'Vehicle', 'SuPerbIkE', '']], ['VehciceBook', ['Automobile', 'CAR', 'Vehicle', 'SuPerbIkE', '']], ['Animaal', ['CAMel', 'hOrSE', 'DoG']], ['Animal', ['capitalLETTERS', 'lowercaseletters', 'mIxEdcAsE']], ['Test1', ['UPPERCASE', 'uppercase', 'uppercasse', '1111']], ['Test1', ['UPPERCASE', 'uppercase', 'Animal']], ['Vehcice', ['Automobile', 'CAR', 'Vehicele', 'SuPerbIkE', '']], ['T1e1st1', ['UPPERCASE', 'uppercase', '1111']], ['Test3', ['oneUPPERcaseletter', 'threeUppercaseletters', 'fourlowercaseletters', 'threeUppercaseletters']], ['Vehcice', ['bIkE', 'Automobile', 'CAR', 'Vehicle', 'SuPerbIkE', '']], ['eightTeste3', ['UPPERCASE', 'uppercase', 'Animal']], ['AniVehcicemal', ['CAMel', 'hOrSE', 'DoG']], ['Test5', ['ZERO', 'one', 'Two', 'THREE', 'four', 'FIVE', 'six', 'FVIVE', 'seven', 'eight', 'nine', '10']], ['VehciceBo', ['Automobile', 'CAR', 'Vehicle', 'SuPerbIkE', '']], ['Test1', ['UPPERSCASE', 'uppercase', 'Animal']], ['Test1', ['UPPERCASE', 'uppercase', 'uppercasse', '1Test5111']], ['Animal', ['Do', 'CAMel', 'hOrSE', 'ZERO']], ['eightTeste3', ['aAnimal', 'UPPERCASE', 'uppercase', 'Animal']], ['TeTst3CTest3omputer', ['oneUPPERcaseletter', 'TWoUPPERcaseletTErs', 'fourlowercaseletteNamers', 'threeUppercaseletters', 'fourlowercaseletters']], ['Vehcpicturebccookoobk', ['Automobile', 'CAR', 'Vehicle', 'SuPerbIkE', '']], ['Test5', ['ZERO', 'one', 'Two', 'THREE', 'fur', 'four', 'FIVE', 'six', 'FVIVE', 'seven', 'eight', 'nine', '10']], ['AnimAnimaonelal', ['CAMel', 'hOrSE', 'DoG']], ['_', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['ClassName', ['XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLMN']], ['My_class', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH']], ['Another_class', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z']], ['MYCLASS', ['qwerty', 'asdfgh', 'zxcvbn', 'QWERTY', 'ASDFGHJKL', 'ZXCVBNM']], ['testing1', ['TESTING2', 'TEST', 'test', 'tEstin3g']], ['AnotherClass', ['hello', 'WORLD', 'Python321', 'TEST', 'Extend']], ['MyClass', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ']], ['YetAnotherClass', ['1', 'BBB', 'ccc', 'DDDDDD', 'EEEeeeE', 'ffffff']], ['OneMoreClass', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop']], ['s3cr3tK3y', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z']], ['MyCslass', ['hIjKlmn', 'OPqrst', 'UVWxYZ']], ['AnotherClass_', ['hello', 'WORLD', 'Python321', 'TEST', 'Python3yolo21', 'Extend']], ['MExtendy_class', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH']], ['MYCLASS', ['qwerty', 'asdfgh', 'zxcvbn', 'QWERTY', 'ASDFGHJKL', 'qweqrty', 'ZXCVBNM']], ['My_classMYCLASS', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['ClassaName', ['XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLMN']], ['ClassaName', ['XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLN']], ['otherClahellorss', ['hello', 'WORLD', 'Python321', 'TEST', 'Extend']], ['s3cr3tK3y', ['Hijklmno', 'pqrstuvwxy', 'Z']], ['s3cr3tK3y', ['Hijklmno', '12345', 'pqrstuvwxy', 'Z', 'Hijklmno']], ['ClassaName', ['GHIHJKLN', 'XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLN']], ['otherClahellorss', ['hello', 'WORLD', 'ExtAbCdEfGend', 'TEST', 'Extend']], ['My_classMYCLASS', ['Aaa', 'ZZZZ', 'dddd', 'E', 'HHHHHH', 'ZZZZ']], ['Python321_', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['My_classLMYCLASS', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['s3cr3tK3y', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy']], ['YetAnotherClass', ['1', 'BBB', 'GIMMETH3L00TZ!', 'ccc', 'DDDDDD', 'EEEeeeE', 'ffffff']], ['Another_class', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345']], ['MExtendy_class', ['Aaa', 'ddd', 'E', 'HHHHHH']], ['My_class', ['qwerty', 'asdfgh', 'zxcvbn', 'ASDFGHJKL', 'qwewrty', 'ZXCVBNM']], ['Another_class', ['AbCdEfG', 'Hijklmno', '12345', 'AbCdEfASDFGHJKLG', 'pqrstuvwxy', 'Z', '12345']], ['dddd', ['Hijklmno', 'pqrstuvwxy', 'Hijklmno']], ['ClassaNamse', ['XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLMN', 'XXXXXXx']], ['MyClass', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVotherClahellorssWxYZ']], ['_', ['yolo', '900000000', 's3cr3tKK3y', 'GIMMETH3L00TZ!']], ['My_classLMYCLASS_', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['s3cr3tK3y', ['AbCdEfG', 'Hijklmno', 'My__classMYCLASS', 'pqrstuvwxy', 'Hijklmno']], ['_', ['yolo', '900000000', 's3cr3tK3y']], ['s3cr3tK3y', ['Hijklmno', 'pqrstuvwxy', 'Z', 'pqrstuvwxy']], ['ClassaName', ['XXXXXX', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLN']], ['MYCLASS', ['qwerty', 'zxcvbn', 'QWERTY', 'ASDFGHJKL', 'ZXCVBNM']], ['MyClasss', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ']], ['s3cr3tK3y', ['AbCdEfG', 'My__classMYCLASS', 'pqrstuvwxy', 'Hijklmno']], ['otherClahellorss', ['ClassaNamse', 'WORLD', 'ExtAbCdEfGend', 'TEST', 'Extend']], ['My_classMYCLASS', ['Aaa', 'ZZZZ', 'dddd', 'E', 'HHHHHH', 'ZZZZ', 'ZZZZ']], ['MYCLASMyClasssS', ['qwerty', 'asdfgh', 'zxcvbn', 'QWERTY', 'ASDFGHJKL', 'qweqrty', 'ZXCVBNM']], ['Another_class', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345', 'AbCdEfG']], ['AnotherClas_', ['hello', 'WORLD', 'Python321', 'TEST', 'Python3nyolo21', 'Extend', 'Python3yolo21']], ['ClassaNamse', ['XXXXXXx', 'AAA', 'bbBbB', 'Bbcde', 'MyClasss', 'XXXXXXx']], ['ddGHIHJKLNdd', ['Hijklmno', 'pqrstuvwxy', 'Hijklmno']], ['qwewrty', ['ylo', 'yolo', '900000000', 's3cr3tK3y']], ['OPqrst', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy']], ['MExtendy_class', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['AnotAbCdEfASDFGHJKLGher_class', ['AbCdEfG', 'Hijklmno', '12345', 'AbCdEfASDFGHJKLG', 'pqrstuvwxy', 'Z', '12345']], ['My_class', ['Aaa', 'ZZZzxcvbnZ', 'ddd', 'E', 'HHHHHH']], ['otherClahellorss', ['ClassaNamsse', 'WORLD', 'ExtAbCdEfGend', 'TEST', 'Extend']], ['ys3cr3tK3y', ['Hijklmno', 'pqrstuvwxy', 'Z']], ['YetAnotherClasUVWxYZs', ['1', 'BBB', 'ccc', 'DDDDDD', 'EEEeeeE', 'ffffff', 'EEEeeeE']], ['MnYetAnSlaassYCLASS', ['qwerty', 'zxcvbn', 'QWERTY', 'ASDFGHJKL', 'ZXCVBNM']], ['My_class', ['ddddDDD', 'asdfgh', 'zxcvbn', 'ASDFGHJKL', 'qwewrty', 'ZXCVBNM', 'asdfgh']], ['nYetAnotherCMYCLASSlassnothGIM!METYoetAnoEEErClassH3L00TZ!yoloerClass', ['qwerty', 'zxcvbn', 'QWERTY', 'ASDFGHJKL', 'ZXCVBNM']], ['ClassaName', ['XXXXXX', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLN', 'GHIJKLN']], ['Python321_', ['yolo', 'nYetAnotherCMYCLASSlaass', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['test', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345', 'AbCdEfG']], ['MMy_classMYCLASS', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['x1UXXXXXXxVWxYZ', ['1', 'BBB', 'ccc', 'DDDDDD', 'EEEeeeE', 'ffffff', 'EEEeeeE']], ['Another_css', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345']], ['test', ['Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345', 'AbCdEfG']], ['My_class', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'E']], ['MMy_classMYCLASS', ['Aaa', 'ZZZZ', 'ddd', 'HHHHHH', 'ZZZZ']], ['My_class', ['ddddDDD', 'asdfgh', 'Aaa', 'zxcvbn', 'ASDFGHJKL', 'qwewrty', 'ZXCVBNM', 'asdfgh']], ['MYCLASS', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['My_classMYCLASS', ['Aa', 'ZZZZ', 'HHHHHH', 'ZZZZ']], ['Another_class', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', 'AbCdEfG']], ['ClassNaMqwertyy_classLMYCLA_e', ['XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLMN']], ['My__classMYCLASS', ['ZZZZ', 'dddd', 'E', 'HHHHHH', 'ZZZZ', 'ZZZZ', 'ZZZZ']], ['My_class', ['Aaa', 'ZZZZ', 'HHHMeyOneMoreClassClass', 'ddd', 'E', 'HHHHHH', 'E', 'ZZZZ']], ['My_class', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHH', 'HHHHHH']], ['ddGHIHJKLNdd', ['hello', 'WORLD', 'Python321', 'TEST', 'Python3yolo21', 'Extend']], ['OPqrst', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', '12345']], ['ClassaNamse', ['XXXXXX', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLN', 'GHIJKLN']], ['otherClahellorss', ['ClassaNamsse', 'WORLD', 'ExtAbCdEfGend', 'Extend']], ['ClassaNamse', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['MExty_class', ['Aaa', 'ddd', 'E', 'HHYetAnotherClassHHHH']], ['MMExtendy_classy_classMYCLASS', ['Aaa', 'ZZZZ', 'dddd', 'AAaa', 'HHHHHH', 'ZZZZ']], ['s3cr3tKK3y', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345']], ['MExtendy_clasAnotherClasss', ['Aaa', 'ZZZZ', 'ddd', 'E', 'HHHHHH', 'ZZZZ']], ['My_class', ['qwerty', 'asdfgh', 'zxcvbHHHMeyOneMoreClassClassn', 'ASDFGHJKL', 'qwewrty', 'ZXCVBNM']], ['JDLRFD', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVotherClahellorssWxYZ', 'hIjKlmn']], ['test', ['AbCdEfG', 'Hijklmno', '12345', 'pqrstuvwxy', 'Z', '12345', 'AbCdEfG', 'pqrstuvwxy']], ['My_classLMYCLASS_nnYetAnotherCMYsCLASSUVWxYZlass', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['YoetAnoEEErClasslassaName', ['XXXXXXx', 'AAA', 'ffffff', 'Bbcde', 'GHIJKLMN']], ['MExtendyc_class', ['Aaa', 'ZZZZ', 'E', 'HHHHHH']], ['MyClasssnYetAnotherCMYsCLASMqwertyy_classLMYCLASS_', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ', 'OPqrst']], ['My_class', ['qwerty', 'asdfgCcCcC', 'zxcvbHHHMeyOneMoreClassClassn', 'ASDFGHJKL', 'qwewrty', 'ZXCVBNM']], ['MMy_clasMEAAAaAxtendy_classsMYCLASS', ['Aaa', 'ZZZZ', 'HHHHHH', 'ZZZZ']], ['', ['HhAas', 'okIWILL123']], ['$pecial_&_Cl@ss_name', ['YoUReXt']], ['123ThisIsTheClassName456', ['Ex1', 'ex2', 'ex3', 'EX4']], ['ThisIsTheClassName', ['ThisIsTheExtension']], ['NoExtensionHasUpperCaseOrLowerCase', ['1234', '5678', '9987', 'hello']], ['', ['abc', 'DEF', 'gHi']], ['SampleClass', ['Abc', 'ddD', 'eFG']], ['SampleClass', ['AAA', 'BBB', 'CCC']], ['SampleClass', ['aBc', 'dEf', 'Ghi']], ['SampleClass', ['AbC', 'DeF', 'gHI']], ['UVWxYZ', ['hello', 'WORLD', 'Python321', 'Exteasdfghnd', 'TEST', 'Extend']], ['AAA', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ']], ['testing1', ['TESTING2', 'TOPqrstEST', 'test', 'tEstin3g']], ['MyClass', ['AbcDEFg', 'hIjKlmn', 'OPqrst']], ['AbCdEfG', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop']], ['UVWxYZ', ['WORLD', 'Python321', 'Exteasdfghnd', 'TEST', 'Extend']], ['YetAnotherClass', ['1', 'BBB', 'ccc', 'DDDDDD', 'ffffff']], ['MyClass', ['AbcDEFg', 'hIjKlmn', 'Bbcde', 'UVWxYZ']], ['My_class', ['Aaa', 'ZZZZ', 'ddd', 'E']], ['AbCdETESTING2fG', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop']], ['AbCdEfG', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop', 'ddddDDD']], ['MYCLASS', ['hello', 'WORLD', 'Python321', 'TEST', 'Extend']], ['Tg1', ['TESTING2', 'TOPqrstEST', 'TOPqrsttEST', 'test', 'tEstin3g']], ['fffffBbcdeAaaff', ['AAAaA', 'bbBbB', 'CcCcC', 'ass', 'EEE', 'FgHiJ', 'kLMNop', 'ddddDDD']], ['Another_class', ['AbCdEfG', '1235', 'Hijklmno', '12345', 'vpqrstuvwxy', 'Z']], ['Tg', ['TESTING2', 'TOPqrstEST', 'TOPqrsttEST', 'test', 'tEstin3g']], ['TESTING2', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop']], ['M1235yClass', ['AbcDEFg', 'hIjKlmn', 'Bbcde', 'UVWxYZ']], ['T1', ['TESTING2', 'TOPqrstESST', 'TOPqrsttEST', 'test', 'tEstin3g']], ['MYCLASS', ['qwerty', 'asdfgh', 'zxcvbn', 'QWERTY', 'MYCLASS', 'ASDFGHJKL', 'ZXCVBNM']], ['1', ['TESTING2', 'TOPqrstEST', 'TOPqrsttEST', 'test', 'tEstin3g']], ['TESTING2', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'hello', 'kLMNop']], ['T1', ['hello', 'WORLD', 'Python321', 'Exteasdfghnd', 'TEST', 'Extend']], ['TESTING2', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'kLMNop']], ['OneMorCassNaame', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop']], ['testing1', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['M1235yClas', ['AbcDEFg', 'hIjKlmn', 'Bbcde', 'UVWxYZ']], ['T1', ['TESTING2', 'TOPqrstEST', 'TOPqrsttEST', 'test', 'tEstin3g']], ['T1', ['hello', 'WORLD', 'Python321', 'Exteasdfghnd', 'TEST', 'Extend', 'WORLD']], ['MCyClass', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ']], ['_', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!', 'GIMMETH3L00TZ!']], ['1234GHIJKLMN5', ['TESTING2', 'TOPqrstEST', 'TOPqrsttEST', 'test', 'tEstin3g']], ['YetAtEstin3gnotherClass', ['1', 'BBB', 'ccc', 'DDDDDD', 'EEEeeeE', 'ffffff']], ['Ye1234GHIJKLMN5tAnotherClass', ['1', 'BBB', 'ccc', 'DDDDDD', 'ffffff']], ['M1235yClass', ['AbcDEFg', 'hIjKlmn', 'Bbcde', 'UVWxYZ', 'AbcDEFg']], ['Tg', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ', 'UVWxYZ']], ['Ye1234GHIJKLMN5tAnotherClass', ['HHHHHM1235yClassHExteand1', 'BBB', 'ccc', 'DDDDDD', 'ffffff']], ['TESTINT2G2', ['AAAaA', 'bbBbB', 'CcCcC', 'testiffffffngg1', 'EEE', 'kLMNop', 'bbBbB']], ['_Exteasdfghnd', ['yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['T11', ['hello', 'WORLD', 'Python321', 'Exteasdfghnd', 'TEST', 'Extend']], ['AbCEdEfG', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'EEE', 'FgHiJ', 'kLMNop']], ['YetAtEstin3gnotherClass', ['1', 'BBB', 'ccc', 'DDDDDD', 'bbBbBeeE', 'ffffff']], ['AbCdEfG', ['AAAaA', 'bbBbB', 'CcCcC', 'ddddDDD', 'xcvbnAAAaA', 'EEE', 'FgHiJ', 'kLMNop', 'ddddDDD']], ['MyClMasss', ['1', 'BBB', 'ccc', 'DDDDDD', 'bbBbBeeE', 'ffffff']], ['TgTg1', ['AbcDEFg', 'hIjKlmn', 'OPqrst', 'UVWxYZ', 'UVWxYZ']], ['Another_class', ['AbCdEfG', '1235', 'Hijklmno', '12345', 'vpqrstuvwxy', 'Z', 'Hijklmno']], ['YCBBBLASS', ['1', 'BBB', 'ccc', 'DDDDDD', 'ffffff']], ['T1', ['hello', 'Python321', 'Exteasdfghnd', 'TEST', 'Extend']], ['M12ss', ['AbcDEFg', 'hIjKlmn', 'Bbcde', 'UVWxYZ', 'AbcDEFg']], ['BBBB', ['AAAaA', 'bbBbB', 'CcCcC', 'testiffffffngg1', 'EEE', 'kLMNop', 'bbBbB']], ['_Exteasdfghnd', ['yMCyClassolo', 'yolo', '900000000', 's3cr3tK3y', 'GIMMETH3L00TZ!']], ['T1', ['hello', 'WORLD', 'Python321', 'Exteasdfghnd', 'helHHHHHHEHxteasdkLMNopfBBBghndo', 'TEST', 'Extend']]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    strongest_extension = None
+    strongest_strength = float('-inf')
+
+    for extension in extensions:
+        uppercase_count = sum(1 for char in extension if char.isupper())
+        lowercase_count = sum(1 for char in extension if char.islower())
+        strength = uppercase_count - lowercase_count
+
+        if strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+        elif strength == strongest_strength and extensions.index(extension) < extensions.index(strongest_extension):
+            strongest_extension = extension
+            strongest_strength = strength
+
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    strongest_strength = 0
+    for extension in extensions:
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+        if strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+    return f'{class_name}.{strongest_extension}'</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    # Initialize the strongest extension and its strength
+    strongest_extension = ""
+    max_strength = -1
+
+    # Iterate over the extensions
+    for extension in extensions:
+        # Calculate the strength of the extension
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+
+        # If the strength is greater than the current max strength, update the strongest extension
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    # Return the class name and the strongest extension
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a Python markdown block:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strongest_extension = extensions[0]
+    max_strength = float('-inf')
+
+    for extension in extensions:
+        uppercase_count = sum(1 for char in extension if char.isupper())
+        lowercase_count = sum(1 for char in extension if char.islower())
+        strength = uppercase_count - lowercase_count
+
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    class_name = class_name.lower()
+    strengths = {ext: (sum(1 for c in ext if c.isupper()) - sum(1 for c in ext if c.islower())) for ext in extensions}
+    strongest_ext = max(strengths, key=strengths.get)
+    return f"{class_name}.{strongest_ext}"</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    max_strength = get_strength(strongest_extension)
+
+    for extension in extensions:
+        strength = get_strength(extension)
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    return f"{class_name}.{strongest_extension}"
+
+def get_strength(extension):
+    cap = sum(1 for char in extension if char.isupper())
+    sm = sum(1 for char in extension if char.islower())
+    return cap - sm</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strongest_extension = None
+    strongest_strength = 0
+    for extension in extensions:
+        strength = sum(1 for c in extension if c.isupper()) - sum(1 for c in extension if c.islower())
+        if strength > strongest_strength:
+            strongest_strength = strength
+            strongest_extension = extension
+    return class_name + '.' + strongest_extension
+
+
+if __name__ == '__main__':
+    print("Example:")
+    print(Strongest_Extension('my_class', ['AA', 'Be', 'CC']))
+
+    # These "asserts" are used for self-checking and not for an auto-testing
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ']) == 'my_class.ZZ'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ', 'aA']) == 'my_class.AA'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ', 'aA', 'zz']) == 'my_class.ZZ'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ', 'aA', 'zz', 'bB']) == 'my_class.bB'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ', 'aA', 'zz', 'bB', 'cc']) == 'my_class.cc'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ', 'aA', 'zz', 'bB', 'cc', 'ee']) == 'my_class.ee'
+    assert Strongest_Extension('my_class', ['AA', 'Be', 'CC', 'ZZ', 'aA', 'zz', 'bB', 'cc', 'ee', 'FF']) == 'my_class.FF'
+    assert Strong</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    def strength(extension):
+        CAP = sum(1 for c in extension if c.isupper())
+        SM = sum(1 for c in extension if c.islower())
+        return CAP - SM
+
+    strongest_ext = max(extensions, key=strength)
+    return f"{class_name}.{strongest_ext}"
+
+
+# Test cases
+assert Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+assert Strongest_Extension('Slices', ['SErviNGSliCes', 'Cheese', 'StuFfed']) == 'Slices.SErviNGSliCes'
+assert Strongest_Extension('Example', ['AbC', 'dEf', 'gHi']) == 'Example.AbC'</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    strongest_strength = strength(extensions[0])
+
+    for extension in extensions:
+        extension_strength = strength(extension)
+        if extension_strength > strongest_strength:
+            strongest_strength = extension_strength
+            strongest_extension = extension
+
+    return f'{class_name}.{strongest_extension}'
+
+def strength(extension):
+    return sum(1 for c in extension if c.isupper()) - sum(1 for c in extension if c.islower())
+```
+
+This code first defines a helper function `strength` that calculates the strength of an extension by counting the number of uppercase letters and subtracting the number of lowercase letters.
+
+Then, in the `Strongest_Extension` function, it initializes the strongest extension to be the first one in the list, and its strength to be the strength of the first extension. It then iterates over the rest of the extensions, and if it finds one with a greater strength, it updates the strongest extension and its strength. Finally, it returns the class name concatenated with the strongest extension.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    def strength(ext):
+        cap = sum(1 for c in ext if c.isupper())
+        sm = sum(1 for c in ext if c.islower())
+        return cap - sm
+
+    strongest_ext = max(extensions, key=strength)
+    return f"{class_name}.{strongest_ext}"
+
+# Test cases
+assert Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+assert Strongest_Extension('Slices', ['SErviNGSliCes', 'Cheese', 'StuFfed']) == 'Slices.SErviNGSliCes'
+assert Strongest_Extension('MyClass', ['UPPERCASE', 'lowercase', 'MixedCase']) == 'MyClass.UPPERCASE'
+assert Strongest_Extension('Empty', []) == 'Empty.'</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is a Python solution for the problem:
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    # your code here
+    strongest_extension = None
+    strongest_extension_strength = 0
+    for extension in extensions:
+        cap = 0
+        sm = 0
+        for char in extension:
+            if char.isupper():
+                cap += 1
+            elif char.islower():
+                sm += 1
+        strength = cap - sm
+        if strength > strongest_extension_strength:
+            strongest_extension = extension
+            strongest_extension_strength = strength
+        elif strength == strongest_extension_strength:
+            if extension < strongest_extension:
+                strongest_extension = extension
+                strongest_extension_strength = strength
+    return class_name + '.' + strongest_extension
+
+
+def Strongest_Extension_2(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    # your code here
+    strongest_extension = None
+    strongest_extension_strength = 0
+    for extension in extensions:</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    """
+    You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+
+    # Initialize the strongest extension and its strength
+    strongest_extension = None
+    strongest_strength = None
+
+    # Iterate over the extensions
+    for extension in extensions:
+        # Calculate the strength of the extension
+        strength = sum(1 for c in extension if c.isupper()) - sum(1 for c in extension if c.islower())
+
+        # If this extension is stronger than the current strongest extension, update the strongest extension and its strength
+        if strongest_strength is None or strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+
+    # Return the class name and the strongest extension
+    return f"{class_name}.{strongest_extension}"
+```
+
+This function first initializes the strongest extension and its strength to None. It then iterates over the extensions, calculates the strength</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    strongest_extension = ""
+    max_strength = -1
+
+    for extension in extensions:
+        strength = sum(1 for c in extension if c.isupper()) - sum(1 for c in extension if c.islower())
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    return class_name + "." + strongest_extension
+
+# Test cases
+print(Strongest_Extension('my_class', ['AA', 'Be', 'CC']))  # should return 'my_class.AA'
+print(Strongest_Extension('Slices', ['SErviNGSliCes', 'Cheese', 'StuFfed']))  # should return 'Slices.SErviNGSliCes'</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = None
+    strongest_strength = float('-inf')
+
+    for extension in extensions:
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+
+        if strength > strongest_strength:
+            strongest_strength = strength
+            strongest_extension = extension
+
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    max_strength = -float('inf')
+    strongest_extension = None
+    for extension in extensions:
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+    if strongest_extension is not None:
+        return f"{class_name}.{strongest_extension}"
+    else:
+        return None</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    ### YOUR CODE HERE
+    pass
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+def StrongestExtension(class_name, extensions):
+    extensions_scores = [(ext, sum(1 for c in ext if c.isupper()) - sum(1 for c in ext if c.islower())) for ext in extensions]
+    strongest_extension = max(extensions_scores, key=lambda x: x[0])[0]
+    return f"{class_name}.{strongest_extension}"
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+
+    def calculate_strength(extension):
+        upper_count = sum(1 for c in extension if c.isupper())
+        lower_count = sum(1 for c in extension if c.islower())
+        return upper_count - lower_count
+
+    strongest_extension = max(extensions, key=calculate_strength)
+    return f"{class_name}.{strongest_extension}"
+
+# Test the function
+print(Strongest_Extension('my_class', ['AA', 'Be', 'CC']))  # Output: 'my_class.AA'</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = None
+    strongest_strength = -1
+
+    for extension in extensions:
+        strength = len(extension.upper()) - len(extension.lower())
+        if strength > strongest_strength:
+            strongest_strength = strength
+            strongest_extension = extension
+
+    return f'{class_name}.{strongest_extension}'
+
+# Test the function
+print(Strongest_Extension('my_class', ['AA', 'Be', 'CC'])) # should return 'my_class.AA'</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    strengths = {}
+    for extension in extensions:
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+        if strength not in strengths:
+            strengths[strength] = []
+        strengths[strength].append(extension)
+    max_strength = max(strengths.keys())
+    strongest_extensions = strengths[max_strength]
+    return f"{class_name}.{strongest_extensions[0]}"
+```
+
+The function takes two arguments: `class_name` and `extensions`. `class_name` is a string representing the name of the class, and `extensions` is a list of strings representing the names of the extensions.
+
+The function first creates an empty dictionary called `strengths`. It then loops through each extension in the list and calculates its strength using the formula `strength = cap - sm`, where `cap` is the number of uppercase letters in the extension's name and `sm` is the number of lowercase letters in the extension's name.
+
+The function then checks if the strength of the current extension is already in the `strengths` dictionary. If it is not, it creates a new key in the dictionary with the strength as the key and an empty list as the value. If the strength is already in the dictionary, the function appends the current extension to the list of extensions with that strength.
+
+After all extensions have been processed, the function finds the maximum strength among all extensions by using the `max` function on the keys of the `strengths` dictionary. It then retrieves the list of extensions with the maximum strength by using the maximum strength as the key in the `strengths` dictionary.
+
+Finally, the function returns a string in the format `ClassName.StrongestExtensionName` by concatenating the `class_name` and the first element of the `strongest_extensions` list.
+
+Here's an example usage of the function:
+
+```python
+print(Strongest_Extension('Slices', ['SErviNGSliCes', 'Cheese', 'StuFfed']))
+```
+
+Output:
+
+```
+Slices.SErviNGSliCes
+```</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    class_name = class_name.lower()
+    extensions = sorted(extensions, key=lambda ext: (ext.count('UPPERCASE'), -ext.count('lowercase')))
+    strongest = extensions[0]
+    return f'{class_name}.{strongest}'
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    def strength(extension):
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        return cap - sm
+
+    strongest_extension = max(extensions, key=strength)
+    return f'{class_name}.{strongest_extension}'
+```
+
+This function first defines a helper function `strength` that calculates the strength of an extension. It then uses the `max` function with the `key` parameter set to the `strength` function to find the extension with the highest strength. Finally, it returns a string in the required format.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    class_name = class_name.lower()
+    extensions = [ext.lower() for ext in extensions]
+    strongest_extension = ''
+    strongest_strength = -1
+    for ext in extensions:
+        strength = ext.count('A') - ext.count('a')
+        if strength > strongest_strength:
+            strongest_extension = class_name + '.' + ext
+            strongest_strength = strength
+    return strongest_extension
+
+def Strongest_Extension_2(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension_2('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    class_name = class_name.lower()
+    extensions = [ext.lower() for ext in extensions]
+    strongest_extension = ''
+    strongest_strength = -1
+    for ext in extensions:
+        strength = ext.count('A') - ext.count('a')
+        if strength > strongest_strength:
+            strongest_extension = class_name + '.' + ext
+            strongest_</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strongest_extension = None
+    max_strength = float('-inf')
+    for extension in extensions:
+        cap_count = sum(1 for c in extension if c.isupper())
+        sm_count = sum(1 for c in extension if c.islower())
+        strength = cap_count - sm_count
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+    return f'{class_name}.{strongest_extension}'</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    # Initialize variables to keep track of the strongest extension and its strength
+    strongest_extension = None
+    strongest_strength = None
+
+    # Iterate over each extension
+    for ext in extensions:
+        # Calculate the strength of the extension
+        cap_count = sum(1 for c in ext if c.isupper())
+        sm_count = sum(1 for c in ext if c.islower())
+        strength = cap_count - sm_count
+
+        # If this is the first extension or it has a stronger strength, update the strongest extension
+        if strongest_strength is None or strength > strongest_strength:
+            strongest_strength = strength
+            strongest_extension = ext
+
+    # Return the strongest extension with the class name
+    return f"{class_name}.{strongest_extension}"
+
+# Example usage:
+print(Strongest_Extension('Slices', ['SErviNGSliCes', 'Cheese', 'StuFfed']))  # Output: Slices.SErviNGSliCes</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def strongest_extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    strongest_extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    def extension_strength(extension):
+        CAP = sum(1 for c in extension if c.isupper())
+        SM = sum(1 for c in extension if c.islower())
+        return CAP - SM
+
+    strongest_extension_name = max(extensions, key=lambda x: (extension_strength(x), extensions.index(x)))
+    return f"{class_name}.{strongest_extension_name}"
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    strongest_strength = (sum(1 for c in strongest_extension if c.isupper()) -
+                          sum(1 for c in strongest_extension if c.islower()))
+    
+    for extension in extensions[1:]:
+        strength = (sum(1 for c in extension if c.isupper()) -
+                    sum(1 for c in extension if c.islower()))
+        if strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+            
+    return f"{class_name}.{strongest_extension}"
+```
+
+This function takes in a class name and a list of extensions. It initializes the strongest extension to be the first extension in the list and calculates its strength. It then iterates through the remaining extensions in the list and calculates their strength. If an extension has a greater strength than the current strongest extension, it becomes the new strongest extension. Finally, it returns the class name concatenated with the strongest extension name in the desired format.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    def extension_strength(ext):
+        cap = sum(1 for c in ext if c.isupper())
+        sm = sum(1 for c in ext if c.islower())
+        return cap - sm
+
+    strongest_ext = max(extensions, key=extension_strength)
+    return f"{class_name}.{strongest_ext}"
+
+# Test cases</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    # Initialize the strongest extension and its strength
+    strongest_extension = extensions[0]
+    strongest_extension_strength = count_uppercase(strongest_extension) - count_lowercase(strongest_extension)
+
+    # Iterate through the extensions
+    for extension in extensions:
+        # Calculate the strength of the current extension
+        extension_strength = count_uppercase(extension) - count_lowercase(extension)
+
+        # If the current extension is stronger than the strongest extension, update the strongest extension and its strength
+        if extension_strength > strongest_extension_strength:
+            strongest_extension = extension
+            strongest_extension_strength = extension_strength
+
+    # Return the class name and the strongest extension separated by a dot
+    return class_name + "." + strongest_extension
+
+# Function to count the number of uppercase letters in a string
+def count_uppercase(string):
+    return sum(1 for char in string if char.isupper())
+
+# Function to count the number of lowercase letters in a string
+def count_lowercase(string):
+    return sum(1 for char in string if char.islower())
+
+# Test the function
+print(Strongest_Extension('my_class', ['AA', 'Be', 'CC']))  # Output: my_class.AA
+print(Strongest_Extension('Slices', ['SErviNGSliCes', 'Cheese', 'StuFfed']))  # Output: Slices.SErviNGSliCes</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def Strongest_Extension(class_name, extensions):
+    def strength(extension):
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        return cap - sm
+
+    strongest = max(extensions, key=strength)
+    return f'{class_name}.{strongest}'</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = ""
+    max_strength = -1000
+
+    for extension in extensions:
+        CAP = sum(1 for c in extension if c.isupper())
+        SM = sum(1 for c in extension if c.islower())
+        strength = CAP - SM
+
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    """
+    You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strongest_extension = extensions[0]
+    max_strength = sum(1 for c in strongest_extension if c.isupper()) - sum(1 for c in strongest_extension if c.islower())
+
+    for extension in extensions[1:]:
+        strength = sum(1 for c in extension if c.isupper()) - sum(1 for c in extension if c.islower())
+        if strength > max_strength:
+            strongest_extension = extension
+            max_strength = strength
+
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strengths = [(class_name, ext, (ext.count('A') - ext.count('a'))) for ext in extensions]
+    strengths.sort(key=lambda x: (-x[2], extensions.index(x[1])))
+    return '.'.join(strengths[0][:2])</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions. 
+    The extensions are to be used to load additional classes to the class. The 
+    strength of the extension is as follows: Let CAP be the number of the uppercase 
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. You 
+    should find the strongest extension and return a string in this format: 
+    ClassName.StrongestExtensionName. If there are two or more extensions with the 
+    same strength, you should choose the one that comes first in the list. 
+    For example, if you are given "Slices" as the class and a list of the 
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should return 
+    'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension (its 
+    strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    
+    # Initialize variables to store the strongest extension and its strength
+    strongest_extension = ""
+    strongest_strength = -1
+    
+    # Loop through each extension in the list
+    for extension in extensions:
+        # Initialize variables to store the number of uppercase and lowercase letters
+        num_upper = 0
+        num_lower = 0
+        
+        # Loop through each character in the extension
+        for char in extension:
+            # If the character is uppercase, increment the uppercase count
+            if char.isupper():
+                num_upper += 1
+            # If the character is lowercase, increment the lowercase count
+            elif char.islower():
+                num_lower += 1
+        
+        # Calculate the strength of the extension
+        strength = num_upper - num_lower
+        
+        # If the strength is greater than the current strongest strength, update the strongest extension and strength
+        if strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+    
+    # Return the class name and the strongest extension as a string
+    return class_name + "." + strongest_extension
+```
+
+Here's how you can use the function:
+
+```python
+print(Strongest_Extension("my_class", ["AA", "Be", "CC"])) # Output: "my_class.AA"
+```
+
+In this example, the strongest extension is "AA" with a strength of -1, so the function returns "my_class.AA". </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+
+    strengths = []
+    for extension in extensions:
+        strength = 0
+        for letter in extension:
+            if letter.isupper():
+                strength -= 1
+            elif letter.islower():
+                strength += 1
+        strengths.append(strength)
+    max_strength = max(strengths)
+    max_strength_index = strengths.index(max_strength)
+    return class_name + '.' + extensions[max_strength_index]
+
+
+Answer: def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strengths = []
+    for extension in extensions:
+        strength = 0
+        for letter in extension:
+            if letter.isupper():
+                strength -= 1
+            elif letter.islower():
+                strength += 1
+        strengths.append(strength)
+    max_strength = max(strengths)
+    max_strength_index = strengths.index(max_strength)
+    return class_name + '.' + extensions[max_strength_index]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    if not extensions:
+        return class_name
+
+    strongest_extension = None
+    strongest_strength = float('-inf')
+
+    for extension in extensions:
+        cap = len(extension) - extension.count('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
+        sm = extension.count('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
+        strength = (cap - sm) / len(extension)
+
+        if strength ></code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to solve the problem:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    max_strength = float('-inf')
+    strongest_extension = None
+
+    for extension in extensions:
+        cap_count = sum(1 for c in extension if c.isupper())
+        sm_count = sum(1 for c in extension if c.islower())
+        strength = cap_count - sm_count
+
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    return f"{class_name}.{strongest_extension}"
+```
+
+This code defines a function `Strongest_Extension` that takes a class name and a list of extensions as input. It initializes `max_strength` to negative infinity and `strongest_extension` to `None`. Then, it iterates over each extension in the list and calculates the strength of the extension using the formula `CAP - SM`, where `CAP` is the number of uppercase letters and `SM` is the number of lowercase letters in the extension's name. If the strength of the current extension is greater than the maximum strength seen so far, it updates `max_strength` and `strongest_extension` accordingly. Finally, it returns the class name concatenated with the strongest extension name in the required format.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strongest_extension = ""
+    strongest_strength = float('-inf')
+    for extension in extensions:
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+        if strength > strongest_strength:
+            strongest_strength = strength
+            strongest_extension = extension
+    return f"{class_name}.{strongest_extension}"
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    strongest_strength = calculate_strength(extensions[0])
+
+    for extension in extensions[1:]:
+        strength = calculate_strength(extension)
+        if strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+
+    return f"{class_name}.{strongest_extension}"
+
+def calculate_strength(extension):
+    uppercase_letters = [char for char in extension if char.isupper()]
+    lowercase_letters = [char for char in extension if char.islower()]
+    return len(uppercase_letters) - len(lowercase_letters)
+```
+
+In this code, the function `Strongest_Extension` first initializes the strongest extension and its strength to the first extension in the list. Then it iterates over the remaining extensions, calculates their strengths, and if a stronger extension is found, it updates the strongest extension and its strength. Finally, it returns the class name and the strongest extension in the format `ClassName.StrongestExtensionName`.
+
+The helper function `calculate_strength` calculates the strength of an extension by subtracting the number of lowercase letters from the number of uppercase letters.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    for extension in extensions:
+        if extension > strongest_extension:
+            strongest_extension = extension
+    return class_name + '.' + strongest_extension
+```
+
+This Python script defines a function `Strongest_Extension` that takes two arguments: `class_name` and `extensions`. It then iterates over the `extensions` list and compares each extension to the `strongest_extension` variable. If an extension is stronger than the current `strongest_extension`, it updates `strongest_extension` to the new extension. Finally, it returns the `class_name` concatenated with the `strongest_extension`.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    class_name = class_name + "."
+    extension_strengths = []
+
+    for extension in extensions:
+        strength = ord('A') - ord('a')
+        uppercase_count = sum(c.isupper() for c in extension)
+        lowercase_count = sum(c.islower() for c in extension)
+        extension_strength = strength * uppercase_count - lowercase_count
+        extension_strengths.append((extension, extension_strength))
+
+    strongest_extension = max(extension_strengths, key=lambda x: x[1])
+
+    return class_name + strongest_extension[0]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+
+def strongest_extension(class_name, extensions):
+    # Initialize the strongest_extension_name and its strength
+    strongest_extension_name = None
+    max_strength = -float('inf')
+
+    for extension in extensions:
+        # Calculate the strength of the extension
+        cap_count = extension.count('A') + extension.count('B') + extension.count('C') + extension.count('D') + extension.count('E') + extension.count('F') + extension.count('G') + extension.count('H') + extension.count('I') + extension.count('J') + extension.count('K') + extension.count('L') + extension.count('M') + extension.count('N') + extension.count('O') + extension.count('P') + extension.count('Q') + extension.count('R') + extension.count('S') + extension.count('T') + extension.count('U') + extension.count('V') + extension.count('W') + extension.count('X') + extension.count('Y') + extension.count('Z')
+        small_count = extension.count('a') + extension.count('b') + extension.count('c') + extension.count('d') + extension.count('e') + extension.count('f') + extension.count('g') + extension.count('h') + extension.count('i') + extension.count('j') + extension.count('k') + extension.count('l') + extension.count('m') + extension.count('n') + extension.count('o') + extension.count('p') + extension.count('q') + extension.count('r') + extension.count('s') + extension.count('t') + extension.count('u') + extension.count('v') + extension.count('w') + extension.count('x') + extension.count('y') + extension.count('z')
+        strength = cap_count - small_count
+
+        # Check if the current extension has a higher strength or is equal to the current max strength
+        if strength > max_strength or (strength == max_strength and extension < strongest_extension_name):
+            max_strength = strength
+            strongest_extension_name</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+    strongest_extension = None
+    max_strength = float('-inf')
+
+    for extension in extensions:
+        uppercase_count = sum(1 for char in extension if char.isupper())
+        lowercase_count = sum(1 for char in extension if char.islower())
+        strength = uppercase_count - lowercase_count
+
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+        elif strength == max_strength:
+            # If two extensions have the same strength, choose the one that comes first
+            strongest_extension = extension
+
+    return f"{class_name}.{strongest_extension}"</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = extensions[0]
+    strength = sum([(1 if c.isupper() else -1) for c in strongest_extension])
+    
+    for extension in extensions[1:]:
+        strength_temp = sum([(1 if c.isupper() else -1) for c in extension])
+        if strength_temp > strength:
+            strength = strength_temp
+            strongest_extension = extension
+            
+    return f'{class_name}.{strongest_extension}'</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Strongest_Extension(class_name, extensions):
+    """You will be given the name of a class (a string) and a list of extensions.
+    The extensions are to be used to load additional classes to the class. The
+    strength of the extension is as follows: Let CAP be the number of the uppercase
+    letters in the extension's name, and let SM be the number of lowercase letters 
+    in the extension's name, the strength is given by the fraction CAP - SM. 
+    You should find the strongest extension and return a string in this 
+    format: ClassName.StrongestExtensionName.
+    If there are two or more extensions with the same strength, you should
+    choose the one that comes first in the list.
+    For example, if you are given "Slices" as the class and a list of the
+    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should
+    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension 
+    (its strength is -1).
+    Example:
+    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'
+    """
+
+    # Your code here
+    return f"{class_name}.{max(extensions, key=lambda x: len(x.upper()) - len(x.lower()))}"
+
+# Test your code</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strongest_extension = None
+    max_strength = float('-inf')
+
+    for extension in extensions:
+        strength = sum(1 for c in extension if c.isupper()) - sum(1 for c in extension if c.islower())
+        if strength > max_strength:
+            max_strength = strength
+            strongest_extension = extension
+
+    return f'{class_name}.{strongest_extension}'</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def Strongest_Extension(class_name, extensions):
+    strengths = []
+    for extension in extensions:
+        uppercase = sum(1 for c in extension if c.isupper())
+        lowercase = sum(1 for c in extension if c.islower())
+        strength = (uppercase - lowercase) / len(extension)
+        strengths.append(strength)
+    
+    strongest_index = strengths.index(max(strengths))
+    strongest_extension = extensions[strongest_index]
+    return class_name + '.' + strongest_extension</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def Strongest_Extension(class_name, extensions):
+    strongest_extension = None
+    strongest_strength = float('-inf')
+
+    for extension in extensions:
+        cap = sum(1 for c in extension if c.isupper())
+        sm = sum(1 for c in extension if c.islower())
+        strength = cap - sm
+
+        if strength > strongest_strength:
+            strongest_extension = extension
+            strongest_strength = strength
+
+    return f"{class_name}.{strongest_extension}"
+
+# Test the function
+print(Strongest_Extension('my_class', ['AA', 'Be', 'CC']))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1206 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/61 </h1>
+<pre><code> """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+from collections import defaultdict
+def count_Substrings(s):
+    n, count, sum = len(s), 0, 0
+    mp = defaultdict(lambda : 0)
+    mp[0] += 1
+    for i in range(n):
+        sum += ord(s[i]) - ord('0')
+        count += mp[sum - i - 1]
+        mp[sum - i - 1] += 1
+    return count
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['112112'], ['111'], ['1101112']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['12233445566778899'], ['12345678987654321'], ['122338445566778899'], ['1252338445566778899'], ['122338412233344556677889945566778899'], ['12523384345566778899'], ['1252899122338445566778899'], ['1223384455667718899'], ['122334475566778899'], ['1258233843778899'], ['12781899'], ['122338412233334455667788994123456789876543215566778899'], ['122833445566778899'], ['1223318445566779'], ['1228334475566778899'], ['1223384122333344554667788994123456789876543215566778899'], ['122334455667788919'], ['12523383445566778899'], ['12528991223638445566778899'], ['12283344512233844556677188399566778899'], ['412233445566778899'], ['12233125823384377889984455667718899'], ['1122338445566778899252338445566778899'], ['12345678987'], ['1252899122363848899'], ['1223311223344556677889925823384377889984455667718899'], ['12523384345122338445566778899566778899'], ['122331122334455667788992582338437788998445566771881234567898799'], ['1223384122333344556677889941234567898765432155668778899'], ['1223381223344556677889941223333445566778899412345678987654321556677889122833445122338445566771883995667788999'], ['122122338412233334455667788994123456789876543215566778899338445566778899'], ['1252899122363848899122334475566778899'], ['122338412233344556677889945566778899122334475566778899'], ['1229833445566778841223344556677889999'], ['1223384122333445566677889945566778899'], ['122331122334455667798799'], ['412523384345122338445566778899566778899'], ['12233445566778'], ['125233843445122338445566778899566778899'], ['122233445566778899'], ['12233841223334245566677889945566778899'], ['12233112212523384455667788993344556677889925823384377889984455667718812233812233445566778899412233334455667788994123456789876543215566778891228334451223384455667718839956677889991234567898799'], ['12528991223318445566778899'], ['12233445566771272338412233334455667788994123456789876543215566778899'], ['41252338412233812233445566778899412233334455667788994123456789876543215566778891228334451223384455667718839956677889995122338445566778899566778899'], ['12233841223333445546677889941231456789876543215566778899'], ['812582338437788989'], ['12233841223333445546677889941231456788987654321556123456789876778899'], ['122335184455667125289912236384889912233447556677889979'], ['1228334455664778899'], ['812582312233445566778891938437788989'], ['122983341228334451223384455667718839956677889989999'], ['122983341212233841223334455667788994556677889928334451223384455667718839956677889989999'], ['125233843455667758899'], ['12233841223334122338122334455667788994122333344556677889941234567898765432155667788912283344512233844556677188399566778899966778899'], ['1221223384112233112233445566778899258233843778899844556677188992233334455667788994123456789876543215566778899338445566778899'], ['122338412233334455667788994123456789876543215566877899'], ['125233843455566778899'], ['81258233843177888989'], ['156748912233447556677889987'], ['1229833412122338412233314455667788994556677889928334451223384455667718839956677889989999'], ['12125289912233844556677889'], ['1223311223344556677889925823384377889984455667718821234567898799'], ['1223366778899'], ['122334455667712723384122333344556677889122122338411223311223344556677889925823384377889984455667718899223333445566778899412345678987654321556677889933844556677889994123456789876543215566778899'], ['122331256823384377889984455667718899'], ['122338412233344556677889945566778899125233843455667758899122334475566778899'], ['1212528991223455667788'], ['122334455667878899'], ['12523384344512781899122338445566778899566778899'], ['12582338431223384112233841223333445566778899412345678987654321556687788992233334455667788994123456789876543215566877899778899'], ['1125289912236384889925233843445127818919122338445566778899566778899'], ['1252338344556671252338434512233844556677889956677889978899'], ['12125289912677889'], ['12233841223334455666778899455667781223366778899899'], ['122334455667788299'], ['12298334455667784841223344556677889999'], ['122982334455667784841223344556677889999'], ['1567489122334125289912233844556677889947556677889987'], ['1223344556673788919'], ['41252338434512212345678987338445566778899566778899'], ['412523384345122123456789873384455667799'], ['4125233843451221234567898733844512528991223318445566778899566778899566778899'], ['125233893445566778899'], ['1125289912236384455667788992781899'], ['4125237384345122123456789873384455667799'], ['122338412233344556677889945566712233841223333445566778899412345678987654321556677889999'], ['125289912236384455667788899'], ['12283344512233844556612233445566787889966778899'], ['122667878899'], ['1122338445566778899252338'], ['124455667788919'], ['122983312233841223334122338122334455667788994122333344556677889941234567898765432155667788912283344512233844556677188399566778899966778899445566778841223344556677889999'], ['12528991223638445566778889'], ['125233812212233841122331122334455667788992582338437788998445566771889922333344556677889941234567898765432155667788993384455667788994344512233812781899445566778899566778899'], ['1223344556679788919'], ['1252338125233843455667788998899'], ['12233445556673788919'], ['122983341212233841223334455667788994556677889928334451223384455667718839912233844556677188997889989999'], ['12528991223638445566778125233893445566778899899'], ['12223312233112212523384455667788993344556677889925823384377889984455667718812233812233445566778899412233334455667788994123456789876543215566778891228334451223384455667718839956677889991234567898799445566778899'], ['41252399566778899']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(int(x) for x in s[i:j + 1]) == j - i + 1:
+                count += 1
+    return count
+
+
+if __name__ == '__main__':
+    print(count_Substrings('112112'))
+    print(count_Substrings('123456789'))
+    print(count_Substrings('1234567890'))
+    print(count_Substrings('12345678901'))
+    print(count_Substrings('123456789012'))
+    print(count_Substrings('1234567890123'))
+    print(count_Substrings('12345678901234'))
+    print(count_Substrings('123456789012345'))
+    print(count_Substrings('1234567890123456'))
+    print(count_Substrings('12345678901234567'))
+    print(count_Substrings('123456789012345678'))
+    print(count_Substrings('1234567890123456789'))
+    print(count_Substrings('12345678901234567890'))
+    print(count_Substrings('123456789012345678901'))
+    print(count_Substrings('1234567890123456789012'))
+    print(count_Substrings('12345678901234567890123'))
+    print(count_Substrings('12345</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s: str) -> int:
+    """
+    This function counts the number of substrings with the sum of digits equal to their length.
+    :param s: str
+    :return: int
+    """
+    def digit_sum(n: int) -> int:
+        """
+        This function calculates the sum of digits in a given number.
+        :param n: int
+        :return: int
+        """
+        return sum(int(digit) for digit in str(n))
+
+    return sum(digit_sum(int(sub_s)) == len(sub_s) for sub_s in (s[i:j] for i in range(len(s)) for j in range(i + 1, len(s) + 1)))
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        sum = 0
+        for j in range(i, len(s)):
+            sum += int(s[j])
+            if sum == (j - i + 1):
+                count += 1
+    return count
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(int(x) for x in s[i:j+1]) == len(s[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))  # Output: 6</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def count_substrings(s):
+    count = 0
+    n = len(s)
+    
+    for i in range(n):
+        digit_sum = 0
+        for j in range(i, n):
+            digit_sum += int(s[j])
+            if digit_sum == j - i + 1:
+                count += 1
+    
+    return count
+
+# Test the function
+assert count_substrings('112112') == 6</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def digit_sum_equal_to_length(num):
+    """
+    This function returns the count of substrings in the given string whose sum of digits is equal to their length.
+    
+    :param num: str, a string of numbers
+    :return: int, the count of substrings
+    """
+    def sum_of_digits(num):
+        """
+        This helper function returns the sum of digits in a given number.
+        
+        :param num: int, a number
+        :return: int, the sum of digits
+        """
+        return sum(int(digit) for digit in str(num))
+
+    count = 0
+    for i in range(len(num)):
+        for j in range(i, len(num)):
+            if sum_of_digits(int(num[i:j+1])) == len(num[i:j+1]):
+                count += 1
+    return count
+
+# Test the function
+assert digit_sum_equal_to_length('112112') == 6</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that counts the number of substrings with the sum of digits equal to their length:
+
+```python
+def count_Substrings(num):
+    count = 0
+    n = len(num)
+    for i in range(n):
+        for j in range(i+1, n+1):
+            sub_str = num[i:j]
+            if sum(int(digit) for digit in sub_str) == len(sub_str):
+                count += 1
+    return count
+```
+
+Explanation:
+
+- We start by initializing a count variable to 0.
+- We loop through each possible starting index i of the substring, and then loop through each possible ending index j of the substring (starting from i+1).
+- We extract the substring from i to j using slicing and calculate its sum of digits using a generator expression and the `sum()` function.
+- If the sum of digits is equal to the length of the substring, we increment the count variable.
+- Finally, we return the count of substrings that satisfy the condition.
+
+Example:
+
+```python
+print(count_Substrings('112112')) # Output: 6
+```
+
+Explanation:
+
+- The substrings that satisfy the condition are: '1', '12', '2', '11', '12', '11', '2', '1211'. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    def sum_of_digits(n):
+        return sum(int(digit) for digit in str(n))
+
+    def is_valid_substring(substring):
+        return sum_of_digits(int(substring)) == len(substring)
+
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            substring = s[i:j]
+            if is_valid_substring(substring):
+                count += 1
+
+    return count
+
+# Test the function
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(string):
+    count = 0
+    for i in range(len(string)):
+        for j in range(i, len(string)):
+            if sum(int(k) for k in string[i:j+1]) == len(string[i:j+1]):
+                count += 1
+    return count
+
+
+print(count_Substrings('112112'))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        sum_digits = 0
+        for j in range(i, len(s)):
+            sum_digits += int(s[j])
+            if sum_digits == j - i + 1:
+                count += 1
+    return count
+
+# Test case
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that solves the problem:
+
+```python
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(int(digit) for digit in s[i:j+1]) == j - i + 1:
+                count += 1
+    return count
+
+# Test the function
+assert count_Substrings('112112') == 6
+```
+
+This function works by iterating over all possible substrings of the input string `s`. For each substring, it calculates the sum of its digits and checks if this sum is equal to the length of the substring. If it is, it increments a counter. The function returns the counter at the end.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(s[i:j+1]) == len(s[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+
+"""
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(s[i:j+1]) == len(s[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+
+"""
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(s[i:j+1]) == len(s[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+
+"""
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(s[i:j+1]) == len(s[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+
+"""
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+# Test the function
+assert count_Substrings('112112') == 6
+assert count_Substrings('123456') == 15
+assert count_Substrings('123') == 3
+assert count_Substrings('1') == 1
+assert count_Substrings('') == 0</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            if sum(int(digit) for digit in s[i:j]) == j - i:
+                count += 1
+    return count
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(int(x) for x in s[i:j+1]) == j-i+1:
+                count += 1
+    return count
+
+
+if __name__ == '__main__':
+    print(count_Substrings('112112'))
+    print(count_Substrings('112112112112'))
+    print(count_Substrings('112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112112</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def count_Substrings(s):
+    count = 0
+    for length in range(1, len(s) + 1):
+        for start in range(0, len(s)):
+            if start + length > len(s):
+                break
+            substring = s[start:start + length]
+            if sum(int(digit) for digit in substring) == length:
+                count += 1
+    return count
+
+# Test the function
+assert count_Substrings('112112') == 6
+```
+
+This function works by iterating over all possible substrings of the input string `s`. For each substring, it checks if the sum of the digits in the substring is equal to the length of the substring. If it is, it increments the count. Finally, it returns the count.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(string):
+    count = 0
+    for i in range(len(string)):
+        for j in range(i, len(string)):
+            if sum(map(int, list(string[i:j+1]))) == len(string[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112'))
+print(count_Substrings('112112</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+def count_substrings(string):
+    count = 0
+    for i in range(len(string)):
+        for j in range(i+1, len(string)+1):
+            if sum(map(int, list(string[i:j]))) == j - i:
+                count += 1
+    return count
+
+assert count_substrings('112112') == 6</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to count the number of substrings with the sum of digits equal to their length:
+
+```python
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+```
+
+The function takes a string `s` as input and initializes a counter `count` to 0. It then iterates over all possible substrings of `s` using two nested loops. For each substring, it calculates the sum of its digits using a generator expression and compares it to the length of the substring. If the sum is equal to the length, the counter is incremented. Finally, the function returns the count of substrings with the required property.
+
+The function can be tested using the provided assertion:
+
+```python
+assert count_Substrings('112112') == 6
+```
+
+This should output `True`.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(num):
+    count = 0
+    for i in range(len(num)):
+        for j in range(i, len(num)):
+            if sum(int(i) for i in num[i:j+1]) == j-i+1:
+                count += 1
+    return count
+
+
+print(count_Substrings('112112'))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to count the number of substrings with the sum of digits equal to their length:
+
+```python
+def count_Substrings(s):
+    count = 0
+    n = len(s)
+    for i in range(n):
+        sum_digit = 0
+        for j in range(i, n):
+            sum_digit += int(s[j])
+            if sum_digit == (j - i + 1):
+                count += 1
+    return count
+```
+
+You can test the function with the following code:
+
+```python
+print(count_Substrings('112112'))  # Output: 6
+```
+
+This function works by iterating over each character in the string and then for each character, it iterates over the remaining characters to form substrings. For each substring, it calculates the sum of digits and checks if it is equal to the length of the substring. If it is, it increments the count. The function finally returns the count.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            if sum(int(x) for x in s[i:j]) == j-i:
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(str):
+    count = 0
+    for i in range(len(str)):
+        for j in range(i, len(str)):
+            if sum(map(int, str[i:j+1])) == len(str[i:j+1]):
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+print(count_Substrings('112112112'))
+print(count_Substrings('112112112112'))
+print(count_Substrings('112112112112112'))
+print(count_Substrings('112112112112112112'))
+print(count_Substrings('112112112112112112112'))
+print(count_Substrings('112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112'))
+print(count_Substrings('112112112112112112112112112112112112112112112</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(str):
+    count = 0
+    for i in range(len(str)):
+        for j in range(i, len(str)):
+            if sum(map(int, str[i:j+1])) == len(str[i:j+1]):
+                count += 1
+    return count
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+# Test the function
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_substrings(s):
+    """
+    Count the number of substrings with the sum of digits equal to their length.
+
+    :param s: Input string
+    :return: Number of substrings with the sum of digits equal to their length
+    """
+    count = 0
+    n = len(s)
+
+    for i in range(n):
+        for j in range(i + 1, n + 1):
+            substring = s[i:j]
+            digit_sum = sum(int(c) for c in substring)
+            if digit_sum == len(substring):
+                count += 1
+
+    return count
+
+# Test the function
+assert count_substrings('112112') == 6</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    n = len(s)
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n+1):
+            if sum(int(x) for x in s[i:j]) == j-i:
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6
+```
+
+Explanation:
+The function `count_Substrings` takes a string `s` as input and returns the number of substrings with the sum of digits equal to their length.
+
+The function first calculates the length of the string `n` and initializes a counter `count` to 0.
+
+It then uses two nested loops to iterate over all possible substrings of the string. The outer loop `i` iterates over all possible starting indices of the substring, while the inner loop `j` iterates over all possible ending indices of the substring.
+
+For each substring, the function calculates the sum of its digits using a list comprehension and the built-in `sum` function. If the sum of the digits is equal to the length of the substring, the function increments the counter `count`.
+
+Finally, the function returns the value of `count`.
+
+The `assert` statement is used to test the function with the input `'112112'`, which should return the value `6`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(map(int, s[i:j+1])) == j-i+1:
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(map(int, list(s[i:j+1]))) == len(s[i:j+1]):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6
+assert count_Substrings('1212') == 3
+assert count_Substrings('121212') == 1
+assert count_Substrings('12121212') == 0
+assert count_Substrings('1212121212') == 0
+assert count_Substrings('121212121212') == 0
+assert count_Substrings('1212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+import itertools
+
+def count_Substrings(s):
+    count = 0
+    for length in range(1, len(s) + 1):
+        for i in range(len(s) - length + 1):
+            substring = s[i:i + length]
+            if sum(int(digit) for digit in substring) == length:
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        sub_sum = int(s[i:i+1]) + int(s[i-1:i])
+        if sub_sum == i+1:
+            count += 1
+    return count</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+# Test the function
+print(count_Substrings('112112'))  # Output: 6</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_substrings('112112') == 6</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            sub = s[i:j]
+            if sum(int(digit) for digit in sub) == len(sub):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that counts the number of substrings with the sum of digits equal to their length:
+
+```python
+def count_substrings(s):
+    count = 0
+    n = len(s)
+    for i in range(n):
+        for j in range(i+1, n+1):
+            substring = s[i:j]
+            if sum(int(d) for d in substring) == len(substring):
+                count += 1
+    return count
+```
+
+This function takes a string `s` as input and iterates through all possible substrings of `s`. For each substring, it calculates the sum of its digits and compares it to the length of the substring. If the sum is equal to the length, it increments the count. Finally, it returns the count.
+
+For example, `count_substrings('112112')` would return `6`, because there are six substrings that satisfy the condition: '1', '11', '112', '121', '211', '1121', and '1211'. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(string):
+    count = 0
+    for i in range(len(string)):
+        for j in range(i, len(string)):
+            if sum(int(x) for x in string[i:j+1]) == j-i+1:
+                count += 1
+    return count
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        if int(s[i]) == i + 1:
+            count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(map(int, s[i:j + 1])) == j - i + 1:
+                count += 1
+    return count
+
+
+print(count_Substrings('112112'))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(map(int, list(s[i:j+1]))) == len(s[i:j+1]):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6
+assert count_Substrings('1212') == 3
+assert count_Substrings('121212') == 1
+assert count_Substrings('12121212') == 0
+assert count_Substrings('1212121212') == 0
+assert count_Substrings('121212121212') == 0
+assert count_Substrings('1212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            if sum(map(int, s[i:j])) == j - i:
+                count += 1
+    return count
+
+
+print(count_Substrings('112112'))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            if sum(int(c) for c in s[i:j]) == j - i:
+                count += 1
+    return count
+
+assert count_substrings('112112') == 6
+```
+
+This Python script defines a function `count_substrings` that takes a string `s` as input. It then iterates over all possible substrings of `s` and checks if the sum of the digits in each substring is equal to its length. If it is, it increments the `count` variable. Finally, it returns the `count` variable, which represents the number of substrings with the sum of digits equal to their length. The assert statement at the end checks if the function works correctly for the given input string '112112'.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(map(int, s[i:j+1])) == len(s[i:j+1]):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6
+assert count_Substrings('121212') == 6
+assert count_Substrings('12121212') == 6
+assert count_Substrings('1212121212') == 6
+assert count_Substrings('121212121212') == 6
+assert count_Substrings('12121212121212') == 6
+assert count_Substrings('1212121212121212') == 6
+assert count_Substrings('121212121212121212') == 6
+assert count_Substrings('12121212121212121212') == 6
+assert count_Substrings('1212121212121212121212') == 6
+assert count_Substrings('121212121212121212121212') == 6
+assert count_Substrings('12121212121212121212121212') == 6
+assert count_Substrings('1212121212121212121212121212') == 6
+assert count_Substrings('121212121212121212121212121212') == 6
+assert count_Substrings('12121212121212121212121212121212') == 6
+assert count_Substrings('1212121212121212121212121212121212') == 6
+assert count_Substrings('121212121212121212121212121212121212') == 6
+assert count_Substrings('12121212121212121212121212121212121212') == 6
+assert count_Substrings('1212121212121212121212121212121212121212') == 6
+assert count_Substrings('12121212121212121212121212121212121212121212') == 6
+</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(string):
+    count = 0
+    for i in range(len(string)):
+        for j in range(i, len(string)):
+            if sum(int(k) for k in string[i:j + 1]) == j - i + 1:
+                count += 1
+    return count
+
+
+print(count_Substrings('112112'))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def count_substrings(s: str) -> int:
+    count = 0
+    for i in range(len(s)):
+        for j in range(i + 1, len(s) + 1):
+            sub_sum = sum(int(d) for d in s[i:j])
+            if sub_sum == j - i:
+                count += 1
+    return count
+
+# Test the function
+assert count_substrings('112112') == 6</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+def count_substrings(string: str) -> int:
+    count = 0
+    for i in range(1, len(string) + 1):
+        for j in range(i, len(string) + 1 - i):
+            substring = string[j - i:j + 1]
+            substring_sum = sum([int(char) for char in substring if char.isdigit()])
+            if substring_sum == len(substring):
+                count += 1
+    return count
+
+assert count_substrings('112112') == 6</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+
+def count_Substrings(string):
+    count = 0
+    for i in range(len(string)):
+        for j in range(i, len(string)):
+            if sum(string[i:j+1]) == len(string[i:j+1]):
+                count += 1
+    return count
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to solve the problem, wrapped in a markdown block:
+
+```python
+def count_Substrings(string):
+    """
+    Counts the number of substrings in the given string where the sum of digits is equal to the length of the substring.
+
+    Args:
+        string (str): The input string.
+
+    Returns:
+        int: The count of substrings where the sum of digits is equal to the length.
+    """
+    count = 0
+    for i in range(len(string)):
+        for j in range(i + 1, len(string) + 1):
+            substring = string[i:j]
+            digit_sum = sum(int(char) for char in substring)
+            if digit_sum == len(substring):
+                count += 1
+    return count
+
+# Test case
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(int(c) for c in s[i:j+1]) == len(s[i:j+1]):
+                count += 1
+    return count
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+def count_Substrings(string):
+    count = 0
+    for i in range(len(string)):
+        sum = 0
+        for j in range(i, len(string)):
+            sum += int(string[j])
+            if sum == j - i + 1:
+                count += 1
+    return count
+
+print(count_Substrings('112112'))
+/Python/Python_Basics/02_Lists/02_List_Comprehension.py
+"""
+Write a python program to create a list of numbers from 1 to 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+assert count_Substrings('112112') == 6</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to count the number of substrings with the sum of digits equal to their length.
+assert count_Substrings('112112') == 6
+"""
+
+
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i, len(s)):
+            if sum(int(x) for x in s[i:j+1]) == j-i+1:
+                count += 1
+    return count
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def count_Substrings(s):
+    count = 0
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            substring = s[i:j]
+            if sum(int(digit) for digit in substring) == len(substring):
+                count += 1
+    return count
+
+# Test the function
+assert count_Substrings('112112') == 6</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

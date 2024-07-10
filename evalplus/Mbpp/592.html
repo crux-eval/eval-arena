@@ -1,0 +1,1651 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/592 </h1>
+<pre><code> """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def binomial_Coeff(n, k): 
+    C = [0] * (k + 1); 
+    C[0] = 1; # nC0 is 1 
+    for i in range(1,n + 1):  
+        for j in range(min(i, k),0,-1): 
+            C[j] = C[j] + C[j - 1]; 
+    return C[k]; 
+def sum_Of_product(n): 
+    return binomial_Coeff(2 * n, n - 1); 
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[3], [4], [1]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[10], [100], [1000], [True], [999], [99], [998], [997], [97], [98], [9], [1001], [8], [101], [1002], [7], [102], [11], [103], [996], [995], [12], [83], [84], [96], [95], [82], [994], [993], [13], [94], [93], [6], [81], [5], [991], [992], [80], [1003], [104], [92], [990], [85], [86], [59], [989], [60], [1004], [62], [14], [15], [63], [58], [87], [4], [28], [17], [27], [79], [64], [61], [3], [105], [78], [91], [77], [25], [90], [26], [2], [24], [88], [16], [18], [89], [65], [66], [23], [76], [39], [57], [106], [54], [22], [38], [1], [67], [75], [56], [36], [37], [55], [40], [74], [988], [41], [42], [43], [29], [21], [44], [987], [53]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    """
+    >>> sum_Of_product(3)
+    15
+    >>> sum_Of_product(4)
+    30
+    >>> sum_Of_product(5)
+    45
+    >>> sum_Of_product(6)
+    60
+    >>> sum_Of_product(7)
+    75
+    >>> sum_Of_product(8)
+    90
+    >>> sum_Of_product(9)
+    105
+    >>> sum_Of_product(10)
+    120
+    """
+    if n == 1:
+        return 1
+    else:
+        return (n * (n + 1)) / 2
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_of_product(n):
+    """
+    This function calculates the sum of the product of consecutive binomial coefficients.
+    :param n: integer
+    :return: integer
+    """
+    return sum(combination(n, i) * combination(n, i + 1) for i in range(n - 1))
+
+def combination(n, k):
+    """
+    This function calculates the binomial coefficient.
+    :param n: integer
+    :param k: integer
+    :return: integer
+    """
+    if k == 0 or k == n:
+        return 1
+    elif k < 0 or k > n:
+        return 0
+    else:
+        return combination(n - 1, k - 1) + combination(n - 1, k)
+
+# Test the function
+assert sum_of_product(3) == 15</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: True </p>
+      <pre><code>  def sum_Of_product(n):
+    def factorial(n):
+        if n == 0:
+            return 1
+        else:
+            return n * factorial(n - 1)
+
+    def binomial_coefficient(n, r):
+        return factorial(n) // (factorial(r) * factorial(n - r))
+
+    sum = 0
+    for i in range(n):
+        sum += binomial_coefficient(n, i) * binomial_coefficient(n, i + 1)
+    return sum
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def factorial(n):
+    """
+    Calculates the factorial of a given number.
+    """
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+def binomial_coefficient(n, k):
+    """
+    Calculates the binomial coefficient (n choose k).
+    """
+    return factorial(n) // (factorial(k) * factorial(n-k))
+
+def sum_of_product(n):
+    """
+    Finds the sum of the product of consecutive binomial coefficients.
+    """
+    total = 0
+    for i in range(n):
+        total += binomial_coefficient(n, i) * binomial_coefficient(n, i+1)
+    return total
+
+# Test the function
+assert sum_of_product(3) == 15</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from math import comb
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += comb(n, i) * comb(n, i+1)
+    return sum
+
+# Test the function
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+def binomial_coefficient(n, k):
+    if k > n:
+        return 0
+    if k == 0 or k == n:
+        return 1
+    return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)
+
+def sum_Of_product(n):
+    total = 0
+    for i in range(n):
+        total += binomial_coefficient(n, i) * binomial_coefficient(n, i + 1)
+    return total
+
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a Python markdown block:
+
+```python
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def binomial_coefficient(n, k):
+    if k == 0 or k == n:
+        return 1
+    return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)
+
+def sum_Of_product(n):
+    sum_of_product = 0
+    for i in range(n):
+        sum_of_product += binomial_coefficient(n, i) * binomial_coefficient(n, i + 1)
+    return sum_of_product
+
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    """Calculate the binomial coefficient (n choose k)"""
+    if k > n - k:
+        #</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the sum of the product of consecutive binomial coefficients:
+
+
+```python
+def sum_Of_product(n):
+    """
+    This function takes an integer n as input and returns the sum of the product of consecutive binomial coefficients.
+    """
+    # Initialize the sum variable to 0
+    sum = 0
+    
+    # Loop through the range of n
+    for i in range(n):
+        # Calculate the binomial coefficient using the formula nCi = n! / (i! * (n-i)!)
+        coef = math.factorial(n) // (math.factorial(i) * math.factorial(n-i))
+        
+        # Multiply the sum by the current coefficient
+        sum *= coef
+        
+        # Add the current coefficient to the sum
+        sum += coef
+        
+    # Return the sum
+    return sum
+```
+
+We can test the function using the given assertion:
+
+```python
+assert sum_Of_product(3) == 15
+```
+
+This will return True if the function works correctly, otherwise it will raise an AssertionError. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    """Calculate the binomial coefficient using the formula nCk = n! / (k!(n-k)!)"""
+    if k > n - k:
+        k = n - k
+    result = 1
+    for i in range(k):
+        result = result * (n - i) // (i + 1)
+    return result
+
+def sum_of_product(n):
+    """Calculate the sum of the product of consecutive binomial coefficients"""
+    result = 0
+    for k in range(n + 1):
+        result += binomial_coefficient(n, k) * binomial_coefficient(n, k + 1)
+    return result
+
+# Test the function
+assert sum_of_product(3) == 15
+print("All tests passed.")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    """
+    :param n:
+    :return:
+    """
+    sum = 0
+    for i in range(n + 1):
+        sum += (i * (i + 1))
+    return sum
+
+
+if __name__ == '__main__':
+    print(sum_Of_product(3))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    if k == 0 or k == n:
+        return 1
+    else:
+        return binomial_coefficient(n-1, k-1) + binomial_coefficient(n-1, k)
+
+def sum_of_product(n):
+    total_sum = 0
+    for i in range(1, n+1):
+        total_sum += binomial_coefficient(n, i) * binomial_coefficient(n, i-1)
+    return total_sum
+
+# Test cases
+assert sum_of_product(3) == 15
+assert sum_of_product(4) == 36
+assert sum_of_product(5) == 80</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+from math import comb
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += comb(n, i) * comb(n, i+1)
+    return sum
+
+assert sum_Of_product(3) == 15
+```
+
+This function uses the `comb` function from the `math` module to calculate the binomial coefficients. It then multiplies consecutive binomial coefficients and sums them up. The `assert` statement is used to verify that the function works correctly for the given test case.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 0:
+        return 1
+    else:
+        return n * (n + 1) * sum_Of_product(n - 1)
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 0:
+        return 1
+    else:
+        return n * (n + 1) * sum_Of_product(n - 1)
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 0:
+        return 1
+    else:
+        return n * (n + 1) * sum_Of_product(n - 1)
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 0:
+        return 1
+    else:
+        return n * (n + 1) * sum_Of_product(n - 1)
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 0:
+        return 1
+    else:
+        return n * (n + 1) * sum_Of_product(n - 1)
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 0:
+        return 1
+    else:
+        return n * (n</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    """
+    Function to calculate binomial coefficient using factorials
+    """
+    from math import factorial
+    return factorial(n) // (factorial(k) * factorial(n - k))
+
+def sum_Of_product(n):
+    """
+    Function to find the sum of the product of consecutive binomial coefficients
+    """
+    sum_of_products = 0
+    for i in range(n):
+        sum_of_products += binomial_coefficient(n, i) * binomial_coefficient(n, i + 1)
+    return sum_of_products
+
+# Test the function
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += i * (n - i)
+    return sum
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    """
+    :param n:
+    :return:
+    """
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        return sum_Of_product(n - 1) + n * sum_Of_product(n - 2)
+
+
+if __name__ == '__main__':
+    print(sum_Of_product(3))
+    print(sum_Of_product(4))
+    print(sum_Of_product(5))
+    print(sum_Of_product(6))
+    print(sum_Of_product(7))
+    print(sum_Of_product(8))
+    print(sum_Of_product(9))
+    print(sum_Of_product(10))
+    print(sum_Of_product(11))
+    print(sum_Of_product(12))
+    print(sum_Of_product(13))
+    print(sum_Of_product(14))
+    print(sum_Of_product(15))
+    print(sum_Of_product(16))
+    print(sum_Of_product(17))
+    print(sum_Of_product(18))
+    print(sum_Of_product(19))
+    print(sum_Of_product(20))
+    print(sum_Of_product(21))
+    print(sum_Of_product(22))
+    print(sum_Of_product(23))
+    print(sum_Of_product(24))
+    print(sum_Of_product(25))
+    print(sum_Of_product(26))
+    print(sum_Of_product(27))
+    print(sum_Of_product(28))
+    print(sum_Of_product(29))
+    print(sum_Of_product(30))
+    print(sum_Of_product(31))
+    print(sum_Of_product(32))
+    print(sum_Of_product(33))
+    print(sum_Of_product(34))
+    print(</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def sum_Of_product(n):
+    import math
+    sum = 0
+    for i in range(1, n):
+        sum += math.comb(n, i) * math.comb(n, i+1)
+    return sum
+
+# Test the function
+assert sum_Of_product(3) == 15
+```
+
+This function uses the `math.comb(n, k)` function to calculate the binomial coefficient. It calculates the sum of the product of consecutive binomial co-efficients from 1 to n-1.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def sum_of_product(n):
+    result = 0
+    for i in range(n):
+        result += int(binomial_coefficient(i+1)) * int(binomial_coefficient(i+2))
+    return result
+
+def binomial_coefficient(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return int(n * (n - 1) / 2)
+
+assert sum_of_product(3) == 15</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+print(sum_Of_product(3))
+print(sum_Of_product(4))
+print(sum_Of_product(5))
+print(sum_Of_product(6))
+print(sum_Of_product(7))
+print(sum_Of_product(8))
+print(sum_Of_product(9))
+print(sum_Of_product(10))
+print(sum_Of_product(11))
+print(sum_Of_product(12))
+print(sum_Of_product(13))
+print(sum_Of_product(14))
+print(sum_Of_product(15))
+print(sum_Of_product(16))
+print(sum_Of_product(17))
+print(sum_Of_product(18))
+print(sum_Of_product(19))
+print(sum_Of_product(20))
+print(sum_Of_product(21))
+print(sum_Of_product(22))
+print(sum_Of_product(23))
+print(sum_Of_product(24))
+print(sum_Of_product(25))
+print(sum_Of_product(26))
+print(sum_Of_product(27))
+print(sum_Of_product(28))
+print(sum_Of_product(29))
+print(sum_Of_product(30))
+print(sum_Of_product(31))
+print(sum_Of_product(32))
+print(sum_Of_product(33))
+print(sum_Of_product(34))
+print(sum_Of_product(35))
+print(sum_Of_product(36))
+print(sum_Of_product(37))
+print(sum_Of_product(38))
+print(sum_Of_product(39))
+print(sum_Of_product(40))
+print(sum_Of_product(41))
+print(sum_Of_product(42))
+print(sum_Of_product(43))
+print(sum_Of_product(44))
+print(sum_Of_product(</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  from math import factorial
+
+def sum_Of_product(n):
+  """
+  Write a python function to find the sum of the product of consecutive binomial co-efficients.
+  assert sum_Of_product(3) == 15
+  """
+  sum = 0
+  for i in range(n + 1):
+    sum += factorial(n) / (factorial(i) * factorial(n - i))
+  return sum
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+from math import comb
+
+def binomial_coefficients_product_sum(n):
+    """
+    Calculates the sum of the product of consecutive binomial coefficients up to n.
+    """
+    return sum(comb(n, i) * comb(n, i-1) for i in range(1, n+1))
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    if k == 0 or k == n:
+        return 1
+    return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        for j in range(i + 1, n + 1):
+            sum += binomial_coefficient(i, j)
+    return sum
+
+# Test the function
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the sum of the product of consecutive binomial co-efficients:
+
+```python
+def sum_Of_product(n):
+    """
+    This function takes an integer n as input and returns the sum of the product of consecutive binomial co-efficients.
+    """
+    if n == 0:
+        return 0
+    else:
+        return (2*n+1)*sum_Of_product(n-1)
+```
+
+The function works by recursively computing the sum of the product of consecutive binomial co-efficients. The base case is when n is 0, in which case the function returns 0. For all other values of n, the function computes the sum of the product of consecutive binomial co-efficients by multiplying the sum of the product of consecutive binomial co-efficients for n-1 by 2n+1.
+
+The function is tested using the assert statement as follows:
+
+```python
+assert sum_Of_product(3) == 15
+```
+
+This assert statement checks if the function returns the correct output for n=3. If the function returns 15 for n=3, the assert statement passes and the function works as expected.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += (n * (n-1)) / ((i+1) * (i+2))
+    return sum
+
+
+print(sum_Of_product(3))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the sum of the product of consecutive binomial coefficients:
+
+```python
+import math
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += math.comb(n, i) * math.comb(n, i+1)
+    return sum
+```
+
+This function uses the `math.comb(n, k)` function to calculate the binomial coefficient, which is the number of ways to choose `k` items from `n` items without regard to the order of selection. The function then calculates the product of consecutive binomial coefficients and adds them to the sum.
+
+Please note that the `math.comb(n, k)` function is available from Python 3.8 onwards. If you are using an earlier version of Python, you can use the following function to calculate binomial coefficients:
+
+```python
+def binomial_coefficient(n, k):
+    return math.factorial(n) / (math.factorial(k) * math.factorial(n - k))
+```
+
+And then modify the `sum_Of_product` function to use this function:
+
+```python
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += binomial_coefficient(n, i) * binomial_coefficient(n, i+1)
+    return sum
+```
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    """
+    n: number of terms
+    """
+    sum = 0
+    for i in range(1, n+1):
+        for j in range(1, n+1):
+            sum += binomial_coefficient(i, j)
+    return sum
+
+def binomial_coefficient(n, k):
+    """
+    n: number of terms
+    k: number of terms
+    """
+    if k == 0 or k == n:
+        return 1
+    else:
+        return binomial_coefficient(n-1, k-1) + binomial_coefficient(n-1, k)
+
+assert sum_Of_product(3) == 15
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i * (i+1) * (i+2)
+    return sum
+
+assert sum_Of_product(3) == 15
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i * (i+1) * (i+2)
+    return sum
+
+assert sum_Of_product(3) == 15
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i * (i+1) * (i+2)
+    return sum
+
+assert sum_Of_product(3) == 15
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i * (i+1) * (i+2)
+    return sum
+
+assert sum_Of_product(3) == 15
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i * (i+1) * (i+2)
+    return sum
+
+assert sum_Of_product(3) == 15
+print(sum_Of</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  from math import factorial
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += factorial(n) // (factorial(i) * factorial(n - i)) * factorial(n + i) // (factorial(i) * factorial(n - i + i))
+    return sum</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += (i+1)*(i+2)
+    return sum</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    if k == 0 or k == n:
+        return 1
+    return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)
+
+def sum_Of_product(n):
+    sum_of_products = 0
+    for k in range(n + 1):
+        product = binomial_coefficient(n, k) * binomial_coefficient(n, n - k)
+        sum_of_products += product
+    return sum_of_products
+
+# Test the function
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from math import comb
+
+def sum_of_product(n):
+    """
+    Find the sum of the product of consecutive binomial coefficients.
+
+    Parameters:
+    n (int): The number of consecutive binomial coefficients.
+
+    Returns:
+    int: The sum of the product of consecutive binomial coefficients.
+
+    Example:
+    >>> sum_of_product(3)
+    15
+    """
+    result = 0
+    for k in range(1, n + 1):
+        result += comb(n, k) * comb(n - 1, k - 1)
+    return result
+
+# Test the function
+assert sum_of_product(3) == 15
+assert sum_of_product(4) == 140
+assert sum_of_product(5) == 1490
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_Of_product(n):
+    # Initialize the sum to 0
+    sum = 0
+    # Calculate the binomial coefficients using the formula nCk = n! / (k!(n-k)!)
+    for k in range(1, n+1):
+        # Calculate the product of consecutive binomial coefficients
+        product = 1
+        for i in range(k, n+1):
+            product *= i
+        # Add the product to the sum
+        sum += product
+    return sum
+
+# Test the function
+assert sum_Of_product(3) == 15
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import math
+
+def sum_Of_product(n):
+    total_sum = 0
+    for i in range(1, n+1):
+        total_sum += math.comb(n, i) * math.comb(n, i-1)
+    return total_sum
+
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    """
+    :param n: int
+    :return: int
+    """
+    if n == 0:
+        return 1
+    else:
+        return (n * sum_Of_product(n-1)) + (n * (n-1))
+
+
+print(sum_Of_product(3))
+print(sum_Of_product(4))
+print(sum_Of_product(5))
+print(sum_Of_product(6))
+print(sum_Of_product(7))
+print(sum_Of_product(8))
+print(sum_Of_product(9))
+print(sum_Of_product(10))
+print(sum_Of_product(11))
+print(sum_Of_product(12))
+print(sum_Of_product(13))
+print(sum_Of_product(14))
+print(sum_Of_product(15))
+print(sum_Of_product(16))
+print(sum_Of_product(17))
+print(sum_Of_product(18))
+print(sum_Of_product(19))
+print(sum_Of_product(20))
+print(sum_Of_product(21))
+print(sum_Of_product(22))
+print(sum_Of_product(23))
+print(sum_Of_product(24))
+print(sum_Of_product(25))
+print(sum_Of_product(26))
+print(sum_Of_product(27))
+print(sum_Of_product(28))
+print(sum_Of_product(29))
+print(sum_Of_product(30))
+print(sum_Of_product(31))
+print(sum_Of_product(32))
+print(sum_Of_product(33))
+print(sum_Of_product(34))
+print(sum_Of_product(35))
+print(sum_Of_product(36))
+print(sum_Of_product(37))
+print(sum_Of_product(38))
+print(sum_Of_product(39))
+print(sum_Of_product(40))
+print(sum_Of_product(41))
+print(sum_Of_product(42))
+print</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n-1)
+
+"""
+</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+import math
+
+def binomial_coefficient(n, k):
+    return math.factorial(n) // (math.factorial(k) * math.factorial(n - k))
+
+def sum_Of_product(n):
+    sum_product = 0
+    for i in range(n):
+        sum_product += binomial_coefficient(n, i) * binomial_coefficient(n, i + 1)
+    return sum_product
+
+# Example usage:
+# assert sum_Of_product(3) == 15
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_Of_product(n):
+    """
+    Write a python function to find the sum of the product of consecutive binomial co-efficients.
+
+    assert sum_Of_product(3) == 15
+    """
+
+    # Calculate the binomial coefficients for the first n numbers.
+    coefficients = (n + 1) * np.arange(n + 1) // np.arange(1, n + 1)
+
+    # Find the product of each coefficient and its consecutive value.
+    product = coefficients * np.arange(1, n + 1)
+
+    # Sum the products.
+    sum_of_product = np.sum(product)
+
+    return sum_of_product</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def sum_Of_product(n):
+    def binomial_coefficient(n, k):
+        if k == 0 or k == n:
+            return 1
+        else:
+            return binomial_coefficient(n-1, k-1) + binomial_coefficient(n-1, k)
+
+    sum = 0
+    for i in range(1, n):
+        sum += binomial_coefficient(n, i) * binomial_coefficient(n, i+1)
+    return sum
+
+print(sum_Of_product(3))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_of_product(n):
+    # Initialize the sum
+    sum = 0
+    # Calculate the binomial coefficients and their product
+    for i in range(n):
+        sum += (n choose i) * (n choose (i+1))
+    return sum
+
+# Test the function
+assert sum_of_product(3) == 15</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i * (i-1)
+    return sum
+
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the sum of the product of consecutive binomial co-efficients:
+
+```python
+def sum_of_product(n):
+    """
+    This function takes an integer n as input and returns the sum of the product of consecutive binomial coefficients.
+    """
+    # Initialize the sum variable to 0
+    sum = 0
+    # Loop through the range of n
+    for i in range(1, n+1):
+        # Calculate the binomial coefficient for i and i+1
+        binomial_i = (n*(n-1))/(i*(i-1))
+        binomial_i_plus_1 = (n*(n-1)/(i*(i+1))
+        # Add the product of the binomial coefficients to the sum variable
+        sum += binomial_i * binomial_i_plus_1
+    # Return the sum
+    return sum
+```
+
+We can test the function with the given input of n=3:
+
+```python
+print(sum_of_product(3))
+```
+
+Output:
+```
+15
+```
+
+Explanation:
+
+The binomial coefficients for 3 are:
+
+C(3, 1) = 3
+C(3, 2) = 3
+C(3, 3) = 1
+
+The product of these coefficients is 3*3 = 9 and 3*1 = 3, so the sum of these products is 9 + 3 = 12.
+
+The binomial coefficients for 4 are:
+
+C(4, 1) = 4
+C(4, 2) = 6
+C(4, 3) = 4
+C(4, 4) = 1
+
+The product of these coefficients is 4*6 = 24 and 6*4 = 24, so the sum of these products is 24 + 24 = 48.
+
+The binomial coefficients for 5 are:
+
+C(5, 1) = 5
+C(5, 2) = 10
+C(5, 3) = 10
+C(5, 4) = 5
+C(5, 5) = 1
+
+The product of these coefficients is 5*10 = 50 and 10*5 = 50, so the sum of these products is 50 + 50 = 100.
+
+Therefore, the sum of the product of consecutive binomial coefficients for n=3 is 12, and the sum of the product of consecutive binomial coefficients for n=4 is 48, and the sum of the product of consecutive binomial coefficients for n=5 is 100. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += binomial_coefficient(n, i) * binomial_coefficient(n, i-1)
+    return sum
+
+def binomial_coefficient(n, k):
+    if k == 0 or k == n:
+        return 1
+    else:
+        return binomial_coefficient(n-1, k-1) + binomial_coefficient(n-1, k)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_Of_product(n):
+    if n == 0:
+        return 1
+    result = 1
+    for i in range(1, n + 1):
+        result += (i - 1) * result
+    return result
+
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    """
+    :param n:
+    :return:
+    """
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    if n == 2:
+        return 3
+    if n == 3:
+        return 15
+    if n == 4:
+        return 105
+    if n == 5:
+        return 945
+    if n == 6:
+        return 10395
+    if n == 7:
+        return 135135
+    if n == 8:
+        return 2027025
+    if n == 9:
+        return 34459425
+    if n == 10:
+        return 654729075
+    if n == 11:
+        return 13749310575
+    if n == 12:
+        return 316234143225
+    if n == 13:
+        return 7890594609625
+    if n == 14:
+        return 215381566643025
+    if n == 15:
+        return 6190283353629375
+    if n == 16:
+        return 191898783962510625
+    if n == 17:
+        return 6332659870762850625
+    if n == 18:
+        return 221643095476699726025
+    if n == 19:
+        return 789037155296984032075
+    if n == 20:
+        return 3108105960121345921125
+    if n == 21:
+        return 1269640335365827</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (n+1-i)*(i+1)
+    return sum
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (n+1-i)*(i+1)
+    return sum
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (n+1-i)*(i+1)
+    return sum
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (n+1-i)*(i+1)
+    return sum
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (n+1-i)*(i+1)
+    return sum
+
+print(sum_Of_product(3))
+
+"""
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += (i + 1) * (i + 2)
+    return sum
+
+
+print(sum_Of_product(3))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def sum_of_product(n):
+    sum_product = 0
+    for i in range(n):
+        product = 1
+        for j in range(i+1, n):
+            product *= (j*(j+1))
+        sum_product += product
+    return sum_product
+
+assert sum_of_product(3) == 15
+```
+
+This Python function calculates the sum of the product of consecutive binomial coefficients. It does this by iterating over the range of the input number and for each index, it calculates the product of the binomial coefficients from that index to the end of the range. The product is then added to the sum_product variable. The function returns the sum_product at the end. The assert statement at the end checks if the function is working correctly by comparing the result of the function with the expected output for the input 3.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (n+1-i)*(i+1)
+    return sum
+
+assert sum_Of_product(3) == 15
+assert sum_Of_product(4) == 60
+assert sum_Of_product(5) == 300
+assert sum_Of_product(6) == 1560
+assert sum_Of_product(7) == 2520
+assert sum_Of_product(8) == 40320
+assert sum_Of_product(9) == 362880
+assert sum_Of_product(10) == 3628800
+assert sum_Of_product(11) == 39916800
+assert sum_Of_product(12) == 479001600
+assert sum_Of_product(13) == 6227020800
+assert sum_Of_product(14) == 87178291200
+assert sum_Of_product(15) == 1307674368000
+assert sum_Of_product(16) == 20922789888000
+assert sum_Of_product(17) == 355687428096000
+assert sum_Of_product(18) == 6402373705728000
+assert sum_Of_product(19) == 121645100408832000
+assert sum_Of_product(20) == 2432902008176640000
+assert sum_Of_product(21) == 51090942171709440000
+assert sum_Of_product(22) == 1124000727777607680000
+assert sum_Of_product(23) == 25852016738884976640000
+assert sum_Of_product(24) == 620448401733239439360000
+assert sum_Of_product(25) == 15511210043330985984000000
+assert sum_Of_product(26) == 267914296127148632000000000
+assert sum_Of_product(27) == 81591528324789773434561120000000
+assert sum_Of_product(28) == 265252859812191058636308480000000
+assert sum_Of_product(29) == 8222838654177922817725562880000000
+assert sum_Of</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += (i + 1) * (i + 2)
+    return sum
+
+
+print(sum_Of_product(3))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  import math
+
+def binomial_coefficient(n, k):
+    return math.comb(n, k)
+
+def product_of_consecutive_binomial_coefficients(n):
+    sum_of_products = 0
+    for i in range(n+1):
+        product = 1
+        for j in range(i+1):
+            product *= binomial_coefficient(n, j)
+        sum_of_products += product
+    return sum_of_products
+
+def sum_Of_product(n):
+    return product_of_consecutive_binomial_coefficients(n)
+
+assert sum_Of_product(3) == 15</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+def sum_of_product(n: int) -> int:
+    result = 0
+    for i in range(1, n + 1):
+        a = n - i + 1
+        b = i
+        product = 1
+        for j in range(1, a + 1):
+            product *= j
+            product *= (a - j + 1) / j
+        result += product
+    return result
+
+assert sum_of_product(3) == 15</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+
+def sum_Of_product(n):
+    if n == 1:
+        return 1
+    else:
+        return n * sum_Of_product(n - 1)
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python function to find the sum of the product of consecutive binomial coefficients, along with the solution to the given problem:
+
+```python
+from math import factorial
+
+def binomial_coefficient(n, k):
+    """
+    Calculate the binomial coefficient C(n, k)
+    """
+    return factorial(n) // (factorial(k) * factorial(n - k))
+
+def sum_Of_product(n):
+    """
+    Find the sum of the product of consecutive binomial coefficients
+    """
+    total_sum = 0
+    for i in range(n + 1):
+        for j in range(i + 1, n + 1):
+            total_sum += binomial_coefficient(i, j - 1) * binomial_coefficient(j, i)
+    return total_sum
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += (i+1) * (i+2) * (i+3)
+    return sum
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(1,n+1):
+        sum += (i*(n-i+1))
+    return sum
+
+print(sum_Of_product(3))
+print(sum_Of_product(4))
+print(sum_Of_product(5))
+print(sum_Of_product(6))
+print(sum_Of_product(7))
+print(sum_Of_product(8))
+print(sum_Of_product(9))
+print(sum_Of_product(10))
+print(sum_Of_product(11))
+print(sum_Of_product(12))
+print(sum_Of_product(13))
+print(sum_Of_product(14))
+print(sum_Of_product(15))
+print(sum_Of_product(16))
+print(sum_Of_product(17))
+print(sum_Of_product(18))
+print(sum_Of_product(19))
+print(sum_Of_product(20))
+print(sum_Of_product(21))
+print(sum_Of_product(22))
+print(sum_Of_product(23))
+print(sum_Of_product(24))
+print(sum_Of_product(25))
+print(sum_Of_product(26))
+print(sum_Of_product(27))
+print(sum_Of_product(28))
+print(sum_Of_product(29))
+print(sum_Of_product(30))
+print(sum_Of_product(31))
+print(sum_Of_product(32))
+print(sum_Of_product(33))
+print(sum_Of_product(34))
+print(sum_Of_product(35))
+print(sum_Of_product(36))
+print(sum_Of_product(37))
+print(sum_Of_product(38))
+print(sum_Of_product(39))
+print(sum_Of_product(40))
+print(sum_Of_product(41))
+print(sum_Of_product</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def binomial_coefficient(n, k):
+    if k > n:
+        return 0
+    if k == 0 or k == n:
+        return 1
+    return binomial_coefficient(n-1, k-1) + binomial_coefficient(n-1, k)
+
+def sum_of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += binomial_coefficient(n, i) * binomial_coefficient(n, i+1)
+    return sum
+
+assert sum_of_product(3) == 15</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sum of the product of consecutive binomial co-efficients.
+assert sum_Of_product(3) == 15
+"""
+
+import math
+import unittest
+
+def sum_Of_product(n):
+    if n < 1:
+        return 0
+    else:
+        return int(math.factorial(n) / (math.factorial(n - 1) * math.factorial(n - 1))) + sum_Of_product(n - 1)
+
+class TestSumOfProduct(unittest.TestCase):
+    def test_sum_Of_product(self):
+        self.assertEqual(sum_Of_product(3), 15)
+        self.assertEqual(sum_Of_product(4), 40)
+        self.assertEqual(sum_Of_product(5), 91)
+        self.assertEqual(sum_Of_product(6), 190)
+        self.assertEqual(sum_Of_product(7), 385)
+        self.assertEqual(sum_Of_product(8), 760)
+        self.assertEqual(sum_Of_product(9), 1511)
+        self.assertEqual(sum_Of_product(10), 3010)
+        self.assertEqual(sum_Of_product(11), 5911)
+        self.assertEqual(sum_Of_product(12), 11610)
+        self.assertEqual(sum_Of_product(13), 22811)
+        self.assertEqual(sum_Of_product(14), 45110)
+        self.assertEqual(sum_Of_product(15), 89011)
+        self.assertEqual(sum_Of_product(16), 172110)
+        self.assertEqual(sum_Of_product(17), 335111)
+        self.assertEqual(sum_Of_product(18), 655110)
+        self.assertEqual(sum_Of_product(19), 1291111)
+        self.assertEqual(sum_Of_product(20), 2521110)
+        self.assertEqual(sum_Of_product(21), 4911111)
+        self.assertEqual(sum_Of</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def binomial_coefficient(n, k):
+    if k == 0 or k == n:
+        return 1
+    else:
+        return binomial_coefficient(n-1, k-1) + binomial_coefficient(n-1, k)
+
+def sum_Of_product(n):
+    sum = 0
+    for i in range(n):
+        sum += binomial_coefficient(n, i) * binomial_coefficient(n, i+1)
+    return sum
+
+# Test the function
+print(sum_Of_product(3))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

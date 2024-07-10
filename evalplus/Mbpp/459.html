@@ -1,0 +1,1136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/459 </h1>
+<pre><code> """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def remove_uppercase(str1):
+  return ''.join(c for c in str1 if c.islower())
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['cAstyoUrFavoRitETVshoWs'], ['wAtchTheinTernEtrAdIo'], ['VoicESeaRchAndreComMendaTionS']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[''], ['ABCDEFG'], ['ThiS%^%!s&a(mY)TesTStR%i*ng'], ['ThiS%^%!s&a(mY)TsesTStR%i*ng'], ['ThiS%^%!%s*ng'], ['ABCDABCDEFGEFG'], ['ABFCDABCDEFGEFG'], ['CABCDEFG'], ['CACDEFG'], ['ThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ng'], ['ABFCDABCDCEEFG'], ['ABFCDABCGEFG'], ['AABCDEFGABCGEFG'], ['ThiS%^%ABCABFCDABCDCEEFGDEFG!s&a(mY)TsesTStR%i*ng'], ['ThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngABCDABCDEFGEFG'], ['ABFCDABCGEF'], ['ABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ng'], ['ThiSS%^%ABCDEFG!s&a(mY)TsesTStR%i*ng'], ['ThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(mY)TesTStR%i*ng'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTStR%i*ngABCDABCDEFGEFG'], ['AABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABCGEFG'], ['ThiS%^%ABCDEFG!ABCDEFGsTStR%i*ngABCDABCDEFGEFG'], ['ABFCDAABCCDCEEFG'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngStR%i*ngABCDABCDEFGEFG'], ['ABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(mY)TesTStR%i*ngDCEEFG'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFG'], ['ThiS%^%ABCABFCDABCDCEEFGDThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(mY)TesTStR%i*ngEFG!s&a(mY)TsesTStR%i*ng'], ['ABFCDABCDCFG'], ['CABCDEEFG'], ['AEBCDEFG'], ['ThiS%^%!s&a(mY)TsesTStR%i*nAABCDEFGABCGEFG'], ['ABCDEFGThiS%^%)!s&a(mY)TsesTAEBCDEFGStR%i*ng'], ['ThiSS%^%ABCDEFGT!s&a(mY)TsesTStR%i*ng'], ['ThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCGEFG'], ['CACDEFCG'], ['ABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFG'], ['A)TsesTStR%i*ng'], ['ThiSS%^%ABCDEFGT!s&a(mY)TsesTStR%i*ngABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ng'], ['ABFCDABCThiSS%^%ABCDEFGT!s&a(mY)TsesTStR%i*ngGEFG'], ['AABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFGCGEFG'], ['ThiS%^%!s&a(mY)TsesTStR%i*CnAABCDGABCGEFG'], ['ThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCA)TsesTStR%i*ngGEFG'], ['ThiS%^%!s&a(mY)TsesTStRs%i*nAABCDEFGABCGEFG'], ['ThThiSS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngiS%^%ABThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCGEFG%i*ngABCDABCDEFGEFG'], ['AABCDEGEFG'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)ABFCDAABCCDCEEFGTsesTStABCDEFGEFG'], ['ThiSS%^%ABCDEFG!s&a(mY)TsesTABCDEFGThiS%^%)!s%&a(mY)TsesTStR%i*ngStR%i*ng'], ['ThiSS%^%ABCDEFGAABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABCGEFGT!s&a(mY)TsesTStR%i*ngABCDEFGThiS%^%ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFG%i*ng'], ['ABFCDAABCCDDEEFG'], ['ThiS%^%ABCDEFABAABCDEGEFGDEFGThiS%^%)!s&a(mY)ABFCDAABCCDCEEFGTsesTStABCDEFGEFG'], ['ThisS%^%!s&a(mY)TsesTStRs%i*nAABCDEFGABCGEFG'], ['ThBiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngABCDABCDEFGEFG'], ['CABCDE'], ['ABCDEFGThiS%^%)!s&a(mEFGStR%i*ng'], ['ThiSS%^%ABCDEFGA(ABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABCGEFGT!s&a(mY)TsesTStR%i*ngABCDEFGThiS%^%ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesAABCDEFGABCGEFGTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFG%i*ng'], ['CACDEFCThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngAG'], ['ThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFG'], ['ThiS%^%ABCABFCDABCDCEEFGDThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(ThiS%^%!s&a(mY)TsesTStRs%i*nAABCDEFGABCGEFGmY)TesTStR%i*ngEFG!s&a(mY)TsesTStR%i*ng'], ['CABCABFCDABCThiSS%^%ABCDEFGT!s&a(mY)TsesTStR%i*ngGEFGEFG'], ['ThThiSS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngiS%^A%ABThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCGEFG%i*ngABCDABCDEFGEFG'], ['ABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)Tse%sTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFG'], ['ABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)Tse%sTStThBiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngABCDABCDEFGEFGR%i*n%!s&a(mY)TesTStR%i*ngDCEEFG'], ['ThThiSS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngiS%^%ABThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCGEFG%iS*ngABCDABCDEFGEFG'], ['AABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABABFCDABCThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFGT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFGCGEFG'], ['AAABFCDAABCCDCEEFGCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABABFCDABCThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFGT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFGCGEFG'], ['ThiS%^%!s&a(mY)TemsTStR%i*ng'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiSThiS%^%ABCABFCDABCDCEEFGDThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(ThiS%^%!s&a(mY)TsesTStRs%i*nAABCDEFGABCGEFGmY)TesTStR%i*ngEFG!s&a(mY)TsesTStR%i*ng%^%)!s&a(mY)ABFCDAABCCDCEEFGTsesTStABCDEFGEFG'], ['ThiS%^%ABCABFCDABCDCEEFGDThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(mY)TesTStR%i*ngEFG!ABFCDABCDCFGs&a(mY)TsesTStR%i*ng'], ['ThBiS%^%ABCDThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(mY)TesTStR%i*ngEFG!s&a(mY)TsesTStR%i*ngABCDABCDEFGEFG'], ['ACABCCDE'], ['ABCDFEFG'], ['ThBiS%^%ABCDEFG!s&a(mY)TsesThiS%^%ABCDEFABAABCDEGEFGDEFGThiS%^%)!s&a(mY)ABFCDAABCCDCEEFGTsesTStABCDEFGEFGTStR%i*ngABCDABCDEFGEFG'], ['ThiS%^%!s&a(mY)TemsTStR%i*ngAmCABCCDE'], ['ThiS%^%!s&a(mY)(TemsTStR%i*ngAmCABCCDE'], ['ThiSS%^%ABCDEFGA(ABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABCGEFGT!s&a(ThiSS%^%ABCDEFGAABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABCGEFGT!s&a(mY)TsesTStR%i*ngABCDDEFGThiS%^%ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFG%i*ng%ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesAABCDEFGABCGEFGTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFG%i*ng'], ['AABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABABFCDABCThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFGT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTStRCEEFGCGEFG'], ['AThBiS%^%ABCDEFG!s&a(mY)TsesThiS%^%ABCDEFABAABCDEGEFGDEFGThiS%^%)!s&a(mY)ABFCDAABCCDCEEFGTsesTStABCDEFGEFGTStR%i*ngABCDABCDEFGEFGABCDEGEFG'], ['ThiS%^%!s&a(mY)TemsTStR%i*ngABFCDABCGEFAmCABCCDE'], ['CABCDEF'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(m)Y)TsesTStABCDEFGEFG'], ['AABCDEFGABCDEFGThiS%^%)!s&aC(mY)TsesTStR%i*ngABCGEFG'], ['ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCsDEFGThiS%^%)!s&a(m)Y)TsesTStABCDEFGEFG'], ['ThThR%i*ngiS%^%ABThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCGEFG%iS*ngABCDABCDEFGEFG'], ['AABCDEFGABCDEFGThiS%^%)!s&aC(mY)TsesTStR%i*ngABCGEThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFGFG'], ['AABCDThiS%^%!s&a(mY)TemsTStR%i*ngEFGABCGEFG'], ['ABFCDAABCCDDEEEFG'], ['ABFCDABCDEFGGEFG'], ['ThiSS%^%ABCDEFGT!s&a(mY)TsesTStR%i*ngABCDEFGThiS%^%)!s&a(mY)Tse%sTStR%i*ng'], ['AABThThiSS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngiS%^%ABThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCGEFG%i*ngABCDABCDEFGEFGCDEFGABCDEFGThiS%^%)!s&aC(mY)TsesTStR%i*ngABCGEThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFGFG'], ['AABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTSetR%i*ngDCEEFGCGEFG'], ['ABFCDAABCCEDDEEFG'], ['ThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGABCA)TsesTStR%ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFGi*ngGEFG'], ['ACABCABFCDABCT%hiThiS%^%ABCDEFG!s&a(mY)Tse%sTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFGCDE'], ['AThiS%^%!s&a(mY)TsesTStR%i*nAABCDEFGABCGEFGBCDABCDG'], ['ThiSS%^%ABCDEFGAABCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABCGEFGT!s&a(mY)TsesTStR%i*ngABCDEFGThiS%^%ThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStABCThiS%^%ABCABFCDABCDCEEFGDThiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngS%^%!s&a(mY)TesTStR%i*ngEFG!s&a(mY)TsesTStR%i*ngDEFGEFG%i*ng'], ['ThiSAAABFCDAABCCDCEEFGCDEFGABCDEFGThiS%^%)!s&a(mY)TsesTStR%i*ngABSABFCDABCThiS%^%!s&a(mY)TsesTStR%i**CnAABCDGABCGEFGT%hiThiS%^%ABCDEFG!s&a(mY)TsesTStR%i*n%!s&a(mY)TesTStR%i*ngDCEEFGCGEFG%^%!s&a(mY)TsesTStR%i*ng'], ['ThThiSS%^%ABCDEFG!s&a(mY)TsesTStR%i*ngiS%^A%ABThiS%^%!s&a(mY)TsesTStR%i*CnAABCDEFGACDEFGEFG'], ['ABCDEFGThiS%^%)!s&a(mY)TsesTThiS%^%!s&a(mY)TemsTStR%i*ngABAFCDABCGEFAmCABCCDEAEBCDEFGStR%i*ng'], ['CACDEFCThiS%^%ABCDEFG!s&a(mY)TsesTStR%%i*ngAG'], ['AABFCDABCGEFG'], ['ThABFCDABCDEFGGEFGiS%^%!%sg'], ['CAThiS%^%ABCDEFABCDEFGG!s&a(mY)TsesTABCDEFGThiS%^%)!s&a(mY)TsesTStABCDEFGEFGBCDEEFG'], ['ThisS%^%!s&a(mY)ABFCDABCDEFGEFGTsesTStRs%i*nAABCDEFGABCGEFG']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    """
+    :param string: string to remove uppercase substrings from
+    :return: string with uppercase substrings removed
+    """
+    return ''.join([char for char in string if not char.isupper()])
+
+
+if __name__ == '__main__':
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+    print(remove_uppercase('cAstyoUrFavoRitETV</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(input_string: str) -> str:
+    """
+    Remove uppercase substrings from a given string.
+
+    :param input_string: str - The input string to remove uppercase substrings from.
+    :return: str - The string with uppercase substrings removed.
+    """
+    return ''.join(char for char in input_string if char.islower())
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(s: str) -> str:
+    return "".join([c for c in s if c.islower()])
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def remove_uppercase(string):
+    """
+    Removes uppercase substrings from a given string.
+    
+    Args:
+        string (str): The input string.
+    
+    Returns:
+        str: The input string with uppercase substrings removed.
+    """
+    result = ""
+    current_substring = ""
+    
+    for char in string:
+        if char.isupper():
+            current_substring += char
+        else:
+            if current_substring:
+                result += current_substring.lower()
+                current_substring = ""
+            result += char
+    
+    if current_substring:
+        result += current_substring.lower()
+    
+    return result
+
+# Example usage
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join(c for c in s if not c.isupper())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+def remove_uppercase(s):
+    return ''.join([c for c in s if not c.isupper()])
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a Python markdown block:
+
+```python
+def remove_uppercase(string):
+    result = []
+    for char in string:
+        if not char.isupper():
+            result.append(char)
+    return ''.join(result)
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    """
+    Remove uppercase substrings from a given string.
+    :param s: str, the string to remove uppercase from
+    :return: str, the string with uppercase removed
+    """
+    result = ''
+    current_lowercase = True
+
+    for char in s:
+        if char.islower():
+            current_lowercase = True
+        elif char.isupper():
+            current_lowercase = False
+        else:
+            # char is neither lowercase nor uppercase, so keep it
+            pass
+
+        if current_lowercase:
+            result += char
+
+    return result
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def remove_uppercase(s):
+    """
+    Removes all uppercase substrings from a given string.
+    """
+    result = ''
+    for c in s:
+        if c.islower():
+            result += c
+    return result
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+
+# Test some more cases
+assert remove_uppercase('Python is Awesome') == 'python is awesome'
+assert remove_uppercase('HELLO WORLD') == ''
+assert remove_uppercase('Hello World') == 'hello world'
+assert remove_uppercase('') == ''
+assert remove_uppercase('aBcDeFgHiJkLmNoPqRsTuVwXyZ') == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()') == 'abcde 1234567890 !@#$%^&*()'
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.lower()) == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.upper()) == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.capitalize()) == 'A'
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.title()) == 'A'
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.swapcase()) == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.lower().upper()) == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.upper().lower()) == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.swapcase().swapcase()) == ''
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.title().swapcase()) == 'A'
+assert remove_uppercase('aBcDeFg 1234567890 !@#$%^&*()'.capitalize().swapcase()) == 'A' </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(input_string):
+    result = ''
+    current_substring = ''
+    for char in input_string:
+        if char.islower():
+            current_substring += char
+        else:
+            if current_substring:
+                result += current_substring
+                current_substring = ''
+    if current_substring:
+        result += current_substring
+    return result
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+print("All tests passed.")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join(c for c in string if c.islower())
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(s):
+    result = ''
+    for char in s:
+        if char.islower():
+            result += char
+    return result
+
+# Test case
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that should do the trick:
+
+```python
+def remove_uppercase(s):
+    return ''.join(char for char in s if not char.isupper())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+```
+
+This function uses a generator expression to iterate over each character in the input string `s`. If the character is not an uppercase letter (as determined by the `str.isupper` method), it's included in the output. The `join` method then concatenates all these characters into a single string.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+def remove_uppercase(string):
+    return string.lower()
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+"""
+
+def remove_vowels(string):
+    vowels = 'aeiou'
+    for vowel in vowels:
+        string = string.replace(vowel, '')
+    return string
+
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+"""
+
+def remove_vowels(string):
+    vowels = 'aeiou'
+    for vowel in vowels:
+        string = string.replace(vowel, '')
+    return string
+
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+"""
+
+def remove_vowels(string):
+    vowels = 'aeiou'
+    for vowel in vowels:
+        string = string.replace(vowel, '')
+    return string
+
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrtitshos'
+"""
+
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    """
+    Write a function to remove uppercase substrings from a given string.
+    assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+    """
+    result = []
+    temp = ''
+    for char in s:
+        if char.isupper():
+            if temp:
+                result.append(temp)
+                temp = ''
+        else:
+            temp += char
+    if temp:
+        result.append(temp)
+    return ''.join(result)
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+
+def remove_uppercase(string):
+    return "".join([char for char in string if not char.isupper()])
+
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_2(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_3(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_4(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_5(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_6(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_7(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_8(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_9(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_10(string):
+    """
+    :param string:
+    :return:
+    """
+    return ''.join([char for char in string if char.islower()])
+
+
+def remove_uppercase_11(string):
+    """
+    :param string:
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def remove_uppercase(s):
+    return ''.join([c for c in s if not c.isupper()])
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+```
+
+This function uses a list comprehension to iterate over each character in the string. The `isupper()` method is used to check if the character is uppercase. If it is not uppercase, it is included in the new string. The `join()` method is used to combine the characters into a string.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def remove_uppercase(s):
+    return ''.join(c for c in s if c.islower())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join(c for c in string if c.islower())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(text):
+  """
+  Write a function to remove uppercase substrings from a given string.
+  assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+  """
+  return ''.join([ch for ch in text if not ch.isupper()])</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+def remove_uppercase(string):
+    """
+    Remove all uppercase substrings from given string.
+    """
+    return ''.join(filter(lambda char: char.islower(), string))
+
+# Test case
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(s):
+    result = ''
+    for char in s:
+        if char.islower():
+            result += char
+    return result
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def remove_uppercase(string):
+    """
+    This function removes uppercase substrings from a given string.
+    """
+    new_string = ''
+    for char in string:
+        if char.islower():
+            new_string += char
+    return new_string
+```
+
+The function takes a string as input and initializes an empty string `new_string`. It then iterates through each character in the input string. If the character is lowercase, it is added to the `new_string`. Finally, the function returns the `new_string` with all uppercase substrings removed.
+
+The `islower()` method is used to check if a character is lowercase. If it is, it is added to the `new_string`. If it is not, it is skipped.
+
+The `assert` statement is used to test the function. It checks if the function returns the expected output for the given input. If the output is correct, the test passes.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join([x for x in string if not x.isupper()])
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function to remove uppercase substrings from a given string:
+
+```python
+def remove_uppercase(s):
+    return ''.join([i for i in s if not i.isupper()])
+
+print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+```
+
+This function works by iterating over each character in the string `s` and checking if it is uppercase using the `isupper()` method. If the character is not uppercase, it is added to the result string. The `join()` method is used to concatenate all the characters in the result string into a single string.
+
+When you run this function with the input 'cAstyoUrFavoRitETVshoWs', it will return 'cstyoravoitshos', which is the string with all uppercase characters removed.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+def remove_uppercase(string):
+    return ''.join([char for char in string if char.islower()])
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return string.lower()
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitET</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    result = []
+    for c in s:
+        if not c.isupper():
+            result.append(c)
+    return ''.join(result)
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+```</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return string.lower()
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join(filter(lambda x: not x.isupper(), s))
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    """
+    Remove uppercase substrings from a given string.
+
+    :param s: Input string
+    :return: String with uppercase substrings removed
+    """
+    result = []
+    i = 0
+    while i < len(s):
+        if s[i].isupper():
+            i += 1
+            continue
+        result.append(s[i])
+        i += 1
+    return ''.join(result)
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join([c for c in s if c.islower()])
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+```
+
+This script defines a function `remove_uppercase` that takes a string `s` as input and returns a new string with all uppercase characters removed. The function uses a list comprehension to iterate over each character in the input string and only include it in the output string if it is lowercase. The `islower()` method is used to check if a character is lowercase. Finally, the list of lowercase characters is joined back into a string using the `join()` method.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    result = ''
+    i = 0
+    while i < len(s):
+        if s[i].isupper():
+            while i < len(s) and s[i].isupper():
+                i += 1
+        else:
+            result += s[i]
+            i += 1
+    return result
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+def remove_uppercase(s):
+    return ''.join(c for c in s if c.islower())
+
+def remove_uppercase_2(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_3(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_4(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_5(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_6(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_7(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_8(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_9(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_10(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_11(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_12(s):
+    return ''.join(c for c in s if c.islower() or c.isupper() and c.islower())
+
+def remove_uppercase_13(s):
+    return ''.join(c for c in</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+def remove_uppercase(string):
+    """
+    Remove uppercase substrings from a given string.
+    """
+    return ''.join(c for c in string if c.islower())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfavoitshos'
+"""
+
+def remove_vowels(string):
+    """
+    Remove all the vowels from a given string.
+    """
+    return ''.join(c for c in string if c not in 'aeiouAEIOU')
+
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfavoitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfavoitshos'
+"""
+
+def remove_vowels(string):
+    """
+    Remove all the vowels from a given string.
+    """
+    return ''.join(c for c in string if c not in 'aeiouAEIOU')
+
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfavoitshos'
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfavoitshos'
+"""
+
+def remove_vowels(string):
+    """
+    Remove all the vowels from a given string.
+    """
+    return ''.join(c for c in string if c not in 'aeiouAEIOU')
+
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfavoitsh</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+
+def remove_uppercase(s):
+    return ''.join(c for c in s if not c.isupper())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(text):
+  """Removes all uppercase substrings from a given string.
+
+  Args:
+    text: The string to process.
+
+  Returns:
+    The string with all uppercase substrings removed.
+  """
+
+  return ''.join(word.lower() for word in text.split())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def remove_uppercase(s):
+    return ''.join([c for c in s if c.islower()])
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join(c for c in s if c.islower())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join(c.lower() if c.islower() else c for c in s)
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def remove_uppercase(s):
+    """
+    Removes all uppercase substrings from a given string.
+    
+    Args:
+    s (str): The input string.
+    
+    Returns:
+    str: The modified string with all uppercase substrings removed.
+    """
+    # Initialize an empty string to store the result
+    result = ''
+    # Loop through each character in the input string
+    for char in s:
+        # If the character is lowercase, add it to the result string
+        if char.islower():
+            result += char
+    # Return the result string
+    return result
+
+# Test the function with the example input
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos' </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join(c for c in string if c.islower())
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(text):
+    return ''.join([char.lower() for char in text if not char.isupper()])
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    result = ''
+    for i in string:
+        if i.isupper():
+            continue
+        else:
+            result += i
+    return result
+
+
+print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+def remove_uppercase(s):
+    """
+    >>> remove_uppercase('cAstyoUrFavoRitETVshoWs')
+    'cstyoravoitshos'
+    """
+    return ''.join(c for c in s if c.islower())
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join(filter(lambda x: x.islower(), string))
+
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join(c for c in s if c.islower())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(s):
+    return ''.join(c for c in s if c.islower())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+assert remove_uppercase</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join([i for i in string if not i.isupper()])
+
+
+print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(input_string):
+    return ''.join(c.lower() if c.isupper() else c for c in input_string)
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+def remove_uppercase(input_string: str) -> str:
+    result = ""
+    for char in input_string:
+        if not char.isupper():
+            result += char
+    return result
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+
+def remove_uppercase(string):
+    return ''.join(c for c in string if c.islower())
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+def remove_uppercase(string):
+    """
+    Remove uppercase substrings from a given string.
+
+    Args:
+        string (str): The input string.
+
+    Returns:
+        str: The string with uppercase substrings removed.
+    """
+    result = ""
+    current_substring = ""
+    for char in string:
+        if char.islower():
+            current_substring += char
+        else:
+            result += current_substring
+            current_substring = ""
+    result += current_substring
+    return result
+
+# Test case
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(s):
+    return ''.join(c for c in s if not c.isupper())
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+def remove_uppercase(string):
+    return string.lower()
+
+print(remove_uppercase('cAstyoUrFavoRitETVshoWs'))
+
+"""
+Write a function to remove all the vowels from a given string.
+assert remove_vowels('cAstyoUrFavoRitETVshoWs') == 'cstyrfrtvs'
+"""
+
+def remove_vowels(string):
+    return ''.join([char for char in string if char not in 'aeiou'])
+
+print(remove_vowels('cAstyoUrFavoRitETVshoWs'))
+
+"""
+Write a function to remove all the punctuation from a given string.
+assert remove_punctuation('cAstyoUrFavoRitETVshoWs') == 'castyourfavoritethings'
+"""
+
+def remove_punctuation(string):
+    return ''.join([char for char in string if char not in '.,!?'])
+
+print(remove_punctuation('cAstyoUrFavoRitETVshoWs'))
+
+"""
+Write a function to remove all the spaces from a given string.
+assert remove_spaces('cAstyoUrFavoRitETVshoWs') == 'castyourfavoritethings'
+"""
+
+def remove_spaces(string):
+    return ''.join([char for char in string if char not in ' '])
+
+print(remove_spaces('cAstyoUrFavoRitETVshoWs'))
+
+"""
+Write a function to remove all the special characters from a given string.
+assert remove_special_characters('cAstyoUrFavoRitETVshoWs') == 'castyourfavoritethings'
+"""
+
+def remove_special_characters(string):
+    return ''.join([char for char in string if char not in '.,!? '])
+
+print(remove_special_characters('cAstyoUrFavoRitETVshoWs'))
+
+"""
+Write a function to remove all the special characters from a given string.
+assert remove_special_characters('cAstyoUrFavoRitETVshoWs') == 'castyourfavoritethings'
+"""
+
+def remove_special_characters(string):
+    return ''.join([char for char in string if char not in '</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def remove_uppercase(s):
+    return ''.join(c for c in s if not c.isupper())
+
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove uppercase substrings from a given string.
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'
+"""
+
+
+def remove_uppercase(string):
+    return ''.join([char for char in string if char.islower()])
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def remove_uppercase(s):
+    result = ""
+    for c in s:
+        if not c.isupper():
+            result += c
+    return result
+
+# Test the function
+assert remove_uppercase('cAstyoUrFavoRitETVshoWs') == 'cstyoravoitshos'</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

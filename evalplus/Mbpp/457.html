@@ -1,0 +1,1178 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/457 </h1>
+<pre><code> """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def Find_Min(lst): 
+    return min(lst, key=len) 
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[[1], [1, 2], [1, 2, 3]]], [[[1, 1], [1, 1, 1], [1, 2, 7, 8]]], [[['x'], ['x', 'y'], ['x', 'y', 'z']]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[[], [], []]], [[['x']]], [[['x'], ['x', 'y']]], [[['x'], ['x', 'y'], ['x', 'y', 'z'], ['x', 'y', 'z', 'a']]], [[['x'], ['x', 'y'], ['x', 'y', 'z'], ['x', 'y', 'z', 'a'], ['x', 'y', 'z', 'a', 'b']]], [[[], ['x', 'y'], [], ['x', 'y', 'z']]], [[[[1]], [[1, 2]], [[1, 2, 3]]]], [[[[1]], [[1, 2], [3, 4]], [[1, 2, 3, 4, 5]]]], [[[[1]], [[1, 2], [3, 4]], [[1, 2, 3, 4, 5]], [[0, 1, 2, 3]]]], [[[[1]], [[1, 2], [3, 4]], [[1, 2, 3, 4, 5]], [[0, 1, 2, 3]], []]], [[[], ['a', 'b', 'c'], ['d', 'e', 'f'], [], [], ['g'], [], ['h', 'i']]], [[[[1, 2, 3], [4, 5, 6]], [], [[7, 8, 9, 10], [11, 12], [13]], [[14, 15]], []]], [[['apple', 'banana'], ['carrot', 'potato'], ['orange'], [], ['grapefruit', 'watermelon']]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p']]]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['m', 'n']]]], [[[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[10], [11, 12]], [[13, 14, 15, 16, 17], [18, 19], [20, 21, 22]]]], [[['x', 'y'], ['a', 'b'], ['i', 'j'], ['u', 'v', 'w'], ['m', 'n', 'o', 'p']]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9]], [[10, 11]], [[12, 13, 14], [15, 16, 17], [18, 19, 20]], [[21, 22], [23, 24], [25, 26], [27, 28]]]], [[['apple', 'banana', 'cherry'], ['doughnut'], ['elephant', 'fox'], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango']]], [[['x'], ['y'], ['z', 'a'], ['b', 'c', 'd'], ['e', 'f', 'g', 'h']]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9, 10], [11, 12], [13]], [[1, 2, 3], [4, 5, 6]], [[14, 15]], [[1, 2, 3], [4, 5, 6]]]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']]]], [[['x'], [], [], ['z', 'a'], ['b', 'c', '', 'd'], ['e', 'f', 'g', 'h']]], [[[], []]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm'], ['e', 'f', 'g', 'h']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm'], ['e', 'f', 'g', 'h']]]], [[[['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[['g', 'h'], ['i', 'j', 'k', 'l']], [['g', 'h'], ['i', 'j', 'k', 'l']]]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k'], ['e', 'f', 'g', 'h']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k'], ['e', 'f', 'g', 'h']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k'], ['e', 'f', 'g', 'h']]]], [[[], [], ['l', 'tFbRBOk', 'cfOPt', 'fox', 'grape', 'mango', 'bURovwB', 'lemon', 'ZRkprFsNlc', 'BdjtDHroYE'], []]], [[[['a'], ['b'], ['c']], [['dd']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p']], [['dd']]]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9]], [[12, 13, 14], [15, 16, 17], [18, 19, 20]], [[21, 22], [23, 24], [25, 26], [27, 28]]]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['dd', 'e', 'f']], [['dd', 'e', 'f']], [['m', 'n']]]], [[[], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], []]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['g', 'h'], ['i', 'j', 'k', 'l']]]], [[[['a'], ['b'], ['c']], [], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k'], ['e', 'f', 'g', 'h']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k'], ['e', 'f', 'g', 'h']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k'], ['e', 'f', 'g', 'h']]]], [[[], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], [], [], []]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['m', 'n', 'm'], ['m', 'n', 'm']]]], [[[], [], [], ['eqmZrrw', 'NUksHJFgXB', 'B', 'u', 'j', 'BdjtDHroYE', 'LONOBOhF', '', 'qIZtur', 'grape']]], [[[], [], [], []]], [[['x'], [], [], ['z', 'a'], ['b', 'c', '', 'd']]], [[['apple', 'banana', 'cherry'], [], ['elephant', 'fox'], [], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango']]], [[['apple', 'banana'], [-85.491799009766, -28.429789067892102, -13.346744109726245, -58.44119256953919, 60.7668803444335, 47.68813139253385, -7.5873331040208, 47.72732136154761, -85.491799009766, -28.429789067892102], ['carrot', 'potato'], ['orange'], [], ['grapefruit', 'watermelon']]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9]], [[12, 13, 14], [15, 16, 17], [18, 19, 20]], [[21, 22], [23, 24], [25, 26], [27, 28]], [[1, 2, 3], [4, 5, 6]]]], [[[True, True, True, True], [False, True, False]]], [[['apple', 'banana', 'cherry'], [], ['elephant', 'fox'], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango'], ['ice cream']]], [[[], ['a', 'b', 'c'], ['d', 'e', 'f'], [], [], ['g'], [], ['h', 'i'], []]], [[[True, True, True, True], [True, True, True, True], [True, True, True, True], [False, True, False]]], [[[['cf', 'c'], ['a'], ['b'], ['cf', 'c']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p']], [['dd']], [['dd']]]], [[[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[10], [11, 12]], [[13, 14, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 14, 15, 16, 17], [18, 19], [20, 21, 22]]]], [[[], ['eqtKS'], [['g', 'h'], ['i', 'j', 'k', 'l']]]], [[[], [], ['l', 'tFbRBOk', 'cfOPt', 'fox', 'grape', 'mango', 'bURovwB', 'lemon', 'ZRkprFsNlc', 'BdjtDHroYE'], [], []]], [[[], [], [], ['eqmZrrw', 'NUksHJFgXB', 'B', 'u', 'c', 'j', 'BdjtDHroYE', 'LONOBOhF', '', 'qIZtur', 'grape']]], [[[], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], [], [], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], []]], [[['x', 'x'], ['x', 'x'], ['x', 'y']]], [[[], ['a', 'b', 'c'], ['d', 'e', 'f'], [], [], ['g'], [], ['h', 'i'], [], []]], [[[True, True, False, False, False], [], []]], [[[], ['a', 'b', 'c'], ['d', 'e', 'f'], [], [], ['g'], [], [], ['h', 'i'], [], [], [], []]], [[['x'], [], [], ['zz', 'a'], ['b', 'c', '', 'd'], ['e', 'f', 'g', 'h']]], [[[-70.45849814287817, -79.72463141052742], ['x', 'y'], [], ['x', 'y', 'z']]], [[[-89.56928478588684, 69.15039976127599, -58.61307409762566, -70.45849814287817, 63.11673272639632], [], [], [], []]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['m', 'n', 'm'], ['m', 'n', 'm']], [['x', 'y', 'z'], ['a', 'b', 'c']]]], [[['apple', 'baanana', 'cherry'], [], ['elephant', 'fox'], [], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango'], []]], [[['apple', 'banana', 'cherry'], [False, True], [], ['elephant', 'fox'], [], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango']]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['m', 'n']], [['m', 'n']]]], [[[], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], [], [True, False, True, True, False], [], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], []]], [[[['a', 'b', 'c']], [['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['m', 'n', 'm'], ['m', 'n', 'm']], [['a', 'b', 'c']]]], [[[False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, False]]], [[[[0], [0]], [[0], [0]], [[1, 2], [3, 4]], [[1, 2, 3, 4, 5]]]], [[[['a'], ['b'], ['c']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k']], [['n', 'o', 'p', 'p', 'o'], ['n', 'o', 'p', 'p', 'o']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm', 'k']]]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['i', 'j', 'k', 'l']]]], [[[False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, False, True]]], [[['x'], [], [], ['z', 'a'], ['b', 'c', '', 'd'], ['e', 'f', 'g', 'jh']]], [[[-70.45849814287817, -79.72463141052742], ['x', 'y'], [], ['x', 'y', 'z'], ['x', 'y'], []]], [[[-89.56928478588684, 69.15039976127599, -58.61307409762566, -70.45849814287817, 63.11673272639632], [], [], [], [], []]], [[[True, True], [True, True], [True, True], [True, True], [False, True, False], [True, True]]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9]], [[12, 13, 14], [15, 16, 17], [18, 19, 20]], [[21, 22], [23, 24], [25, 26], [27, 28], [27, 28]]]], [[[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[10], [11, 12]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]]]], [[[['a'], ['by', 'b'], ['c']], [['d']], [['a'], ['by', 'b'], ['c']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p'], ['n', 'o', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[], ['elephant', 'fox'], [], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango'], ['ice cream']]], [[[[1]], [[1, 2], [3, 4]], [[1, 2, 3, 4, 5]], [[0, 1, 2, 3]], [], [[1, 2, 3, 4, 5]]]], [[[[1, 2, 3], [4, 5, 6]], [96, 61], [[7, 8, 9, 10], [11, 12], [13]], [[14, 15]], [], [[7, 8, 9, 10], [11, 12], [13]]]], [[[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[10], [11, 12]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22]]]], [[[], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], [], []]], [[['x'], [], [], ['e', 'f', 'g', 'h', 'f'], ['z', 'a'], ['b', 'c', '', 'd'], ['e', 'f', 'g', 'h', 'f']]], [[[['g', 'h'], ['i', 'j', 'k', 'l']]]], [[[], [], ['l', 'tFbRBOk', 'cfOPt', 'fox', 'grape', 'mango', 'bURovwB', 'lemon', 'ZRkprFsNlc', 'BdjtDHroYE'], [], [], ['l', 'tFbRBOk', 'cfOPt', 'fox', 'grape', 'mango', 'bURovwB', 'lemon', 'ZRkprFsNlc', 'BdjtDHroYE']]], [[[], ['l', 'tFbRBOk', 'cfOPt', 'fox', 'grape', 'mango', 'bURovwB', 'lemon', 'ZRkprFsNlc', 'BdjtDHroYE'], [], [True, False, False, False, True], [], ['l', 'tFbRBOk', 'cfOPt', 'fox', 'grape', 'mango', 'bURovwB', 'lemon', 'ZRkprFsNlc', 'BdjtDHroYE']]], [[[], ['x', 'y', 'x'], [], ['x', 'y', 'z']]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h']], [['e', 'f', 'g', 'h']]]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h']], [['n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h']], [['e', 'f', 'g', 'h']], [['d']]]], [[[], [], ['x', 'y', 'z']]], [[[False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, False], [False, True, True, True]]], [[[], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], [], [True, False, True, True, False], [], [], [-58.44119256953919, -85.491799009766, 69.15039976127599, -28.429789067892102, 22.405065830734472, 63.11673272639632], []]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'll']], [['g', 'h'], ['i', 'j', 'k', 'll']]]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['d', 'e', 'f']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['m', 'n']], [['m', 'n']], [['m', 'n']]]], [[[False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, True, True], [False, True, False], [False, True, True, True], [False, True, True, True]]], [[[['a'], ['by', 'b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['plemon', 'n', 'o', 'p', 'p'], ['plemon', 'n', 'o', 'p', 'p'], ['plemon', 'n', 'o', 'p', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[['x', 'y', 'z'], ['a', 'b', 'c']], [['e', 'f'], ['e', 'f']], [['i', 'j', 'k', 'll']], [['i', 'j', 'k', 'll']], [['i', 'j', 'k', 'll']]]], [[['grape', 'apple', 'baanana', 'cherry', 'grape'], ['grape', 'apple', 'baanana', 'cherry', 'grape'], [], ['elephant', 'fox'], [], ['grape', 'honey'], ['ice cream'], ['juice'], ['kiwi', 'lemon', 'mango'], [], ['ice cream']]], [[[], [], [False, False, False, True, True, True, False, False], [-4, -79, 15, 11, 18, 14, -1, -59, 11], []]], [[[[1, 2, 3], [4, 5, 6]], [96, 61], [[14, 15], [14, 15]], [[7, 8, 9, 10], [11, 12], [13]], [[14, 15], [14, 15]], [], [[7, 8, 9, 10], [11, 12], [13]], [[7, 8, 9, 10], [11, 12], [13]]]], [[['grapefruit'], ['apple', 'banana'], ['carrot', 'potato'], ['orange'], [], ['grapefruit']]], [[[['a'], ['b'], ['c']], [['d'], ['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p']]]], [[[], [], ['Icky', 'g', 'sRzEiFHz', 'kT', 'aoLcOFLFH', 'tFbRBOk', 'RaynjY', 'MCUQiO', 'OgmzNgy'], ['eqmZrrw', 'NUksHJFgXB', 'B', 'u', 'j', 'BdjtDHroYE', 'LONOBOhF', '', 'qIZtur', 'grape']]], [[[[1]], [[1, 2, 3, 4, 5]], [[0, 1, 2, 3]], [[1, 2], [3, 4]]]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9]], [[10, 11]], [[12, 13, 14, 13], [12, 13, 14, 13], [15, 16, 17], [18, 19, 20]], [[12, 13, 14, 13], [12, 13, 14, 13], [15, 16, 17], [18, 19, 20]], [[21, 22], [23, 24], [25, 26], [27, 28]]]], [[[['a'], ['cc', 'c'], ['b'], ['cc', 'c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p', 'p']], [['a'], ['cc', 'c'], ['b'], ['cc', 'c']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[['a'], ['by', 'b'], ['c']], [['d']], [['a'], ['by', 'b'], ['c']], [['n', 'o', 'p'], ['n', 'o', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']]]], [[[['a', 'b', 'c']], [['a', 'b', 'c']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['a', 'b', 'c']], [['m', 'n', 'm'], ['m', 'n', 'm']], [['a', 'b', 'c']], [['a', 'b', 'c']]]], [[[], ['a', 'b', 'c'], ['d', 'e', 'f'], [], [], ['g'], [], ['h', 'i'], [], [-28, 94, 16, -11, 9, -4], []]], [[[], [], ['z', 'a'], ['b', 'c', '', 'd']]], [[['x', 'y', 'z'], ['x'], ['x', 'y'], ['x', 'y', 'z'], ['x', 'y', 'z']]], [[[['a'], ['b'], ['c']], [['d']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['n', 'o', 'p']], [['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l', 'm']], [['a'], ['b'], ['c']]]], [[[], [], [], ['x', 'y', 'z']]], [[[['g', 'h'], ['i', 'j', 'k', 'l']], [['g', 'h'], ['i', 'j', 'k', 'l']], [['g', 'h'], ['i', 'j', 'k', 'l']]]], [[['ejuiceqtKS'], [['g', 'h'], ['i', 'j', 'k', 'l']]]], [[[False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, False], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True]]], [[[[1, 2, 3], [4, 5, 6]], [[7, 8, 9]], [[10, 11]], [[12, 13, 14], [15, 16, 17], [18, 19, 20]], [[21, 22], [23, 24], [25, 26], [27, 28]], [[21, 22], [23, 24], [25, 26], [27, 28]]]], [[[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[10], [11, 12]], [[13, 15, 16, 17], [18, 19], [20, 21, 22], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22], [20, 21, 22]], [[13, 15, 16, 17], [18, 19], [20, 21, 22], [20, 21, 22]]]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(L):
+    """
+    :param L: list of lists
+    :return: list
+    """
+    if not L:
+        return []
+    min_len = len(L[0])
+    min_list = L[0]
+    for i in range(1, len(L)):
+        if len(L[i]) < min_len:
+            min_len = len(L[i])
+            min_list = L[i]
+    return min_list
+
+
+if __name__ == '__main__':
+    print(Find_Min([[1], [1, 2], [1, 2, 3]]))
+    print(Find_Min([[1, 2], [1, 2, 3], [1, 2, 3, 4]]))
+    print(Find_Min([[1, 2, 3], [1, 2, 3, 4], [1, 2, 3, 4, 5]]))
+    print(Find_Min([[1, 2, 3, 4], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6]]))
+    print(Find_Min([[1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6, 7]]))
+    print(Find_Min([[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7, 8]]))
+    print(Find_Min([[1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]]))
+    print(</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min(sublists):
+    """
+    Find the sublist with the minimum length.
+
+    Parameters:
+    sublists (list of lists): A list of sublists.
+
+    Returns:
+    list: The sublist with the minimum length.
+    """
+    return min(sublists, key=len)
+
+# Test the function
+assert find_min([[1], [1, 2], [1, 2, 3]]) == [1]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(test_list):
+    return min(test_list, key=len)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def Find_Min(lst):
+    """
+    Finds the sublist with the minimum length in the given list of lists.
+    
+    Args:
+        lst (list): A list of lists.
+        
+    Returns:
+        list: The sublist with the minimum length.
+    """
+    min_length = float('inf')
+    min_sublist = None
+    
+    for sublst in lst:
+        if len(sublst) < min_length:
+            min_length = len(sublst)
+            min_sublist = sublst
+    
+    return min_sublist
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_len = float('inf')
+    min_list = None
+    for l in lst:
+        if len(l) < min_len:
+            min_len = len(l)
+            min_list = l
+    return min_list
+
+print(Find_Min([[1],[1,2],[1,2,3]]))  # Output: [1]</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_sublist = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to find the sublist having minimum length, wrapped in a Python markdown block:
+
+```python
+def Find_Min(lst):
+    min_sublist = min(lst, key=len)
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(sublists):
+    """
+    This function takes a list of lists as input and returns the sublist
+    with minimum length.
+    """
+    # Initialize the minimum length and corresponding sublist
+    min_length = len(sublists[0])
+    min_sublist = sublists[0]
+
+    # Iterate over each sublist in the input list
+    for sublist in sublists:
+        # If the current sublist has a smaller length, update the minimum length and sublist
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+
+    # Return the minimum sublist
+    return min_sublist
+
+# Test the function
+assert Find_Min([[1], [1, 2], [1, 2, 3]]) == [1]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to find the sublist having minimum length:
+
+```python
+def Find_Min(lst):
+    min_len = float('inf')
+    min_list = []
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_list = sublist
+    return min_list
+```
+
+Explanation:
+
+- We initialize `min_len` to infinity and `min_list` to an empty list.
+- We iterate through each sublist in the input list `lst`.
+- For each sublist, we check if its length is less than `min_len`. If it is, we update `min_len` to the length of the current sublist and `min_list` to the current sublist.
+- Finally, we return `min_list` which will contain the sublist with the minimum length. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    """
+    This function takes a list of lists as input and returns the sublist with the minimum length.
+    If there are multiple sublists with the same minimum length, it returns the first one encountered.
+    """
+    min_len = float('inf')
+    min_sublist = None
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def find_min(list_of_lists):
+    """
+    Find the sublist having minimum length.
+    """
+    return min(list_of_lists, key=len)
+
+
+if __name__ == "__main__":
+    assert find_min([[1], [1, 2], [1, 2, 3]]) == [1]
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(sublists):
+    min_length = float('inf')
+    min_sublist = None
+
+    for sublist in sublists:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+
+    return min_sublist
+
+# Test the function
+assert Find_Min([[1], [1, 2], [1, 2, 3]]) == [1]</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def Find_Min(sublists):
+    """
+    This function finds the sublist with the minimum length from a list of sublists.
+    """
+    if not sublists:  # Check if the input list is empty
+        return "Error: The input list is empty"
+
+    min_sublist = sublists[0]  # Initialize the minimum sublist as the first sublist
+    min_length = len(min_sublist)  # Initialize the minimum length as the length of the first sublist
+
+    for sublist in sublists:  # Iterate over each sublist in the input list
+        if len(sublist) < min_length:  # If the length of the current sublist is less than the minimum length
+            min_length = len(sublist)  # Update the minimum length
+            min_sublist = sublist  # Update the minimum sublist
+
+    return min_sublist  # Return the sublist with the minimum length
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+```
+
+This function works by iterating over each sublist in the input list. If the length of the current sublist is less than the current minimum length, it updates the minimum length and the minimum sublist. After iterating over all sublists, it returns the sublist with the minimum length. If the input list is empty, it returns an error message.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_len_list = []
+    for i in range(len(lst)):
+        if len(lst[i]) < min_len:
+            min_len = len(lst[i])
+            min_len_list = lst[i]
+    return min_len_list
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum length.
+assert Find_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Max(lst):
+    max_len = len(lst[0])
+    max_len_list = []
+    for i in range(len(lst)):
+        if len(lst[i]) > max_len:
+            max_len = len(lst[i])
+            max_len_list = lst[i]
+    return max_len_list
+
+print(Find_Max([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum length.
+assert Find_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Max(lst):
+    max_len = len(lst[0])
+    max_len_list = []
+    for i in range(len(lst)):
+        if len(lst[i]) > max_len:
+            max_len = len(lst[i])
+            max_len_list = lst[i]
+    return max_len_list
+
+print(Find_Max([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum length.
+assert Find_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Max(lst):
+    max_len = len(lst[0])
+</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    """
+    Write a python function to find the sublist having minimum length.
+    assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+    """
+    # Initialize min_length with the length of the first sublist
+    min_length = len(lst[0])
+    # Initialize min_sublist with the first sublist
+    min_sublist = lst[0]
+
+    # Iterate over the rest of the sublists
+    for sublist in lst[1:]:
+        # If the current sublist is shorter than min_sublist
+        if len(sublist) < min_length:
+            # Update min_length and min_sublist
+            min_length = len(sublist)
+            min_sublist = sublist
+
+    # Return the sublist with minimum length
+    return min_sublist
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(list):
+    min_len = len(list[0])
+    for i in list:
+        if len(i) < min_len:
+            min_len = len(i)
+    for i in list:
+        if len(i) == min_len:
+            return i
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(list_of_lists):
+    min_length = len(list_of_lists[0])
+    min_list = list_of_lists[0]
+    for i in range(1, len(list_of_lists)):
+        if len(list_of_lists[i]) < min_length:
+            min_length = len(list_of_lists[i])
+            min_list = list_of_lists[i]
+    return min_list
+
+
+if __name__ == '__main__':
+    print(Find_Min([[1],[1,2],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2],[1]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]))
+    print(Find_Min([[1,2,3],[1,2,3</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python function in a markdown style code block:
+
+```python
+def Find_Min(lst):
+    """
+    This function takes a list of lists as input and returns the sublist with the minimum length.
+    """
+    return min(lst, key=len)
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+```
+
+In this function, the `min` function is used with the `key=len` argument to find the sublist with the minimum length. The `len` function is used as the key to determine the minimum length.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def Find_Min(lst):
+    min_length = len(lst)
+    min_sublist = []
+    for i in range(len(lst)):
+        for j in range(i, len(lst)):
+            sublist = lst[i:j+1]
+            if len(sublist) < min_length:
+                min_length = len(sublist)
+                min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for l in lst:
+        if len(l) < min_len:
+            min_len = len(l)
+            min_lst = l
+    return min_lst
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+print(Find_Min([[1],[1,2],[1,2,3,4]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9,10]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9,10,11]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9,10,11,12]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9,10,11,12,13]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]]))
+print(Find_Min([[1],[1,2],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]]))
+print(</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(list):
+  min_len = len(list[0])
+  min_list = list[0]
+  for i in list:
+    if len(i) < min_len:
+      min_len = len(i)
+      min_list = i
+  return min_list</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+def Find_Min(lst):
+    """
+    Find the sublist with minimum length in the given list.
+    """
+    if not lst:
+        return []
+    min_len = len(lst[0]) if type(lst[0]) is list else len(lst[0])
+    min_sublist = lst[0]
+
+    for sublist in lst:
+        if type(sublist) is list and len(sublist) < min_len:
+            min_len = len(sublist)
+            min_sublist = sublist
+
+    return min_sublist
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_length = float('inf')
+    min_sublist = None
+    for sublist in lst:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1], [1, 2], [1, 2, 3]]) == [1]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to find the sublist having minimum length:
+
+```python
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_lst = sublist
+    return min_lst
+```
+
+The function takes a list of sublists as input and returns the sublist with the minimum length. It initializes the minimum length to be the length of the first sublist and the minimum sublist to be the first sublist. It then iterates through the list of sublists and checks if the length of the current sublist is less than the minimum length. If it is, it updates the minimum length and the minimum sublist. Finally, it returns the minimum sublist.
+
+The function uses a simple loop to iterate through the list of sublists and a conditional statement to check if the length of the current sublist is less than the minimum length. The `min_len` variable is used to keep track of the minimum length and the `min_lst` variable is used to keep track of the minimum sublist.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(List):
+    return min(List, key=len)
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the sublist having minimum length:
+
+```python
+def Find_Min(lst):
+    return min(lst, key=len)
+```
+
+You can test the function with the provided example:
+
+```python
+print(Find_Min([[1],[1,2],[1,2,3]]))  # Output: [1]
+```
+
+This function uses the built-in `min` function in Python, which returns the smallest item in an iterable or the smallest of two or more arguments. The `key` argument specifies a one-argument ordering function like that used for list.sort(). The `len` function is used as the key function to find the sublist with the minimum length.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_sublist = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]]) == [1,2,3]
+assert Find_Min([[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(l):
+    min_len = len(l[0])
+    min_len_list = []
+    for i in l:
+        if len(i) < min_len:
+            min_len = len(i)
+            min_len_list = i
+    return min_len_list
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3,4]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8,9]]))
+print(Find_Min([[1],[1,2],[1,2,3],[1,2,3</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(input_list):
+    min_length = float('inf')
+    min_sublist = None
+    for sublist in input_list:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    return min_sublist</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(list):
+    min_len = len(list[0])
+    for i in list:
+        if len(i) < min_len:
+            min_len = len(i)
+    return [i for i in list if len(i) == min_len]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lists):
+    min_length = float('inf')
+    min_list = None
+    for lst in lists:
+        if len(lst) < min_length:
+            min_length = len(lst)
+            min_list = lst
+    return min_list
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    """
+    Find the sublist with minimum length from a list of lists.
+
+    :param lst: List of lists
+    :return: Sublist with minimum length
+    """
+    # Initialize the minimum length and the result
+    min_length = float('inf')
+    result = []
+
+    # Iterate over each sublist in the list
+    for sublist in lst:
+        # Update the minimum length and result if the current sublist is shorter
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            result = sublist
+
+    return result
+
+# Test the function
+assert Find_Min([[1], [1, 2], [1, 2, 3]]) == [1]</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_lst = sublist
+    return min_lst
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+```
+
+This Python script defines a function `Find_Min` that takes a list of sublists as input and returns the sublist with the minimum length. The function initializes `min_len` to the length of the first sublist and `min_lst` to the first sublist. It then iterates through each sublist in the input list, updating `min_len` and `min_lst` if it finds a sublist with a smaller length. Finally, it returns the sublist with the minimum length.
+
+The `assert` statement at the end of the script tests the function with the example input `[1],[1,2],[1,2,3]`, which should return `[1]`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_len = min(len(sublist) for sublist in lst)
+    return [sublist for sublist in lst if len(sublist) == min_len]
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [[1]]</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(arr):
+    min_len = len(arr[0])
+    min_list = arr[0]
+    for i in range(len(arr)):
+        if len(arr[i]) < min_len:
+            min_len = len(arr[i])
+            min_list = arr[i]
+    return min_list
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for l in lst:
+        if len(l) < min_len:
+            min_len = len(l)
+            min_lst = l
+    return min_lst
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+assert Find_Min([[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7]]) == [1,2,3,4,5]
+assert Find_Min([[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8,9]]) == [1,2,3,4,5,6,7]
+assert Find_Min([[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10,11]]) == [1,2,3,4,5,6,7,8,9]
+assert Find_Min([[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10,11],[1,2,3,4,5,6,7,8,9,10,11,12]]) == [1,2,3,4,5,6,7,8,9]
+assert Find_Min([[1,2,3,4,5,6,7,8,9,10,11,12],[1,2,3,4,5,6,7,8,9,10,11,12,13],[1,2,3,4,5,6,7,8,9,10,11,12,13,14]]) == [1,2,3,4,5,</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+
+def Find_Min(list_of_sublists):
+    if not list_of_sublists:
+        return []
+    min_length = float('inf')
+    min_sublist = []
+    for sublist in list_of_sublists:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    return min(lst, key=len)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def Find_Min(lst):
+    return min(lst, key=len)
+
+# Test the function
+print(Find_Min([[1],[1,2],[1,2,3]]))  # Output: [1]</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_length = len(lst[0])
+    min_sublist = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+# Test case
+print(Find_Min([[1],[1,2],[1,2,3]]))  # Output: [1]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_len = float('inf')
+    min_sublist = None
+    for sublist in lst:
+        if len(sublist) < min_len:
+            min_len = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+```python
+def Find_Min(lst):
+    min_length = len(lst[0])
+    min_sublist = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+```
+
+This function takes a list of lists as input and returns the sublist with the minimum length. It initializes the minimum length to be the length of the first sublist, and then iterates over the rest of the sublists, updating the minimum length and minimum sublist if a shorter sublist is found. Finally, it returns the minimum sublist. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for i in range(1, len(lst)):
+        if len(lst[i]) < min_len:
+            min_len = len(lst[i])
+            min_lst = lst[i]
+    return min_lst
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(list1):
+    if len(list1) == 1:
+        return list1[0]
+    min_length = len(list1[0])
+    res = list1[0]
+    for sub in list1:
+        if len(sub) < min_length:
+            min_length = len(sub)
+            res = sub
+    return res
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for i in lst:
+        if len(i) < min_len:
+            min_len = len(i)
+            min_lst = i
+    return min_lst
+
+print(Find_Min([[1],[1,2],[1,2,3]]))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_list = lst[0]
+    for i in lst:
+        if len(i) < min_len:
+            min_len = len(i)
+            min_list = i
+    return min_list
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum length.
+assert Find_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Max(lst):
+    max_len = len(lst[0])
+    max_list = lst[0]
+    for i in lst:
+        if len(i) > max_len:
+            max_len = len(i)
+            max_list = i
+    return max_list
+
+print(Find_Max([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having minimum length and maximum length.
+assert Find_Min_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Min_Max(lst):
+    min_len = len(lst[0])
+    max_len = len(lst[0])
+    min_list = lst[0]
+    max_list = lst[0]
+    for i in lst:
+        if len(i) < min_len:
+            min_len = len(i)
+            min_list = i
+        if len(i) > max_len:
+            max_len = len(i)
+            max_list = i
+    return min_list, max_list
+
+print(Find_Min_Max([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having minimum length and maximum length.
+assert Find_Min_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(list):
+    min_length = len(list[0])
+    for i in range(len(list)):
+        if len(list[i]) < min_length:
+            min_length = len(list[i])
+    return list[min_length - 1]
+
+
+print(Find_Min([[1], [1, 2], [1, 2, 3]]))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_length = len(lst[0])
+    min_sublist = lst[0]
+    for sublist in lst:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    return min_sublist
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_list = lst[0]
+    for i in lst:
+        if len(i) < min_len:
+            min_len = len(i)
+            min_list = i
+    return min_list
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8,9]]) == [1]
+assert Find_Min([[1],[1,2],[1,2,3],[1,2,3,4],[1,</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(list):
+    min_len = len(list[0])
+    for i in list:
+        if len(i) < min_len:
+            min_len = len(i)
+    return min_len
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def find_min_length_sublist(input_list):
+    if not input_list:
+        return []
+    
+    min_length = len(input_list[0])
+    min_sublist = input_list[0]
+    
+    for sublist in input_list:
+        if len(sublist) < min_length:
+            min_length = len(sublist)
+            min_sublist = sublist
+    
+    return min_sublist
+
+assert find_min_length_sublist([[1], [1, 2], [1, 2, 3]]) == [1]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+def Find_Min(lst):
+    min_len = min([len(sublist) for sublist in lst])
+    return [sublist for sublist in lst if len(sublist) == min_len]
+
+assert Find_Min([[1], [1, 2], [1, 2, 3]]) == [ [1] ]</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(arr):
+    min_len = len(arr[0])
+    for i in range(len(arr)):
+        if len(arr[i]) < min_len:
+            min_len = len(arr[i])
+    return arr[0][:min_len]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function to find the sublist with the minimum length, along with the given test case:
+
+```python
+"""
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    """
+    Function to find the sublist with the minimum length.
+    
+    Args:
+        lst (list): A list of lists.
+        
+    Returns:
+        list: The sublist with the minimum length.
+    """
+    if not lst:
+        return []
+    
+    min_sublist = lst[0]
+    
+    for sublist in lst:
+        if len(sublist) < len(min_sublist):
+            min_sublist = sublist
+    
+    return min_sublist
+
+# Test case
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+
+def Find_Min(lst):
+    min_len = len(min(lst, key=len))
+    return [sub for sub in lst if len(sub) == min_len]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(lst):
+    min_len = len(lst[0])
+    min_lst = lst[0]
+    for i in lst:
+        if len(i) < min_len:
+            min_len = len(i)
+            min_lst = i
+    return min_lst
+
+print(Find_Min([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum length.
+assert Find_Max([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Max(lst):
+    max_len = len(lst[0])
+    max_lst = lst[0]
+    for i in lst:
+        if len(i) > max_len:
+            max_len = len(i)
+            max_lst = i
+    return max_lst
+
+print(Find_Max([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum sum.
+assert Find_Max_Sum([[1],[1,2],[1,2,3]]) == [1,2,3]
+"""
+
+def Find_Max_Sum(lst):
+    max_sum = sum(lst[0])
+    max_lst = lst[0]
+    for i in lst:
+        if sum(i) > max_sum:
+            max_sum = sum(i)
+            max_lst = i
+    return max_lst
+
+print(Find_Max_Sum([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having minimum sum.
+assert Find_Min_Sum([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min_Sum(lst):
+    min_sum = sum(lst[0])
+    min_lst = lst[0]
+    for i in lst:
+        if sum(i) < min_sum:
+            min_sum = sum(i)
+            min_lst = i
+    return min_lst
+
+print(Find_Min_Sum([[1],[1,2],[1,2,3]]))
+
+"""
+Write a python function to find the sublist having maximum product.
+assert Find_Max_Product([[1</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def Find_Min(lst):
+    min_len = min(len(sublist) for sublist in lst)
+    return [sublist for sublist in lst if len(sublist) == min_len][0]
+
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a python function to find the sublist having minimum length.
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]
+"""
+
+def Find_Min(list):
+    min_list = list[0]
+    for i in list:
+        if len(min_list) > len(i):
+            min_list = i
+    return min_list
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def Find_Min(lst):
+    return min(lst, key=len)
+
+# Test the function
+assert Find_Min([[1],[1,2],[1,2,3]]) == [1]</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

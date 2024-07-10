@@ -1,0 +1,1542 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/142 </h1>
+<pre><code> """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def count_samepair(list1,list2,list3):
+    return sum(m == n == o for m, n, o in zip(list1,list2,list3))
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9], [2, 1, 3, 1, 2, 6, 7, 9]], [[1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 8], [2, 1, 3, 1, 2, 6, 7, 8]], [[1, 2, 3, 4, 2, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 8], [2, 1, 3, 1, 2, 6, 7, 8]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[], [], []], [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5, 6]], [[1, 2, 3, 4, 5, 6, 7], [2, 3, 4, 5, 6, 7, 8], [1, 3, 5, 7, 9, 11, 13]], [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7, 8]], [['a', 'b', 'c'], ['x', 'y', 'z'], ['a', 'y', 'c']], [['apple', 'banana', 'cherry'], ['apple', 'banana', 'cherry'], ['apple', 'banana', 'cherry']], [[1.5, 2.5, 3.5], [1.5, 2.5, 3.5], [1.5, 2.5, 3.5]], [[True, False, True], [False, True, False], [False, False, True]], [[], [1, 2, 3], [1, 2, 3]], [[1, 2, 3], [], []], [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7, 8, 7]], [[True, False, True], [False, True, False], [False, True, False]], [[1, 2, 4, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5, 6]], [[1, 2, 4, 4, 5], [5, 1, 4, 3, 2, 1], [1, 2, 3, 1, 5, 6]], [['x', 'y', 'z'], ['a', 'y', 'c'], ['a', 'y', 'c']], [[5, 4, 3, 2], [5, 4, 3, 2], [5, 4, 3, 2]], [[True, True, False, True], [False, True, False], [False, True, False]], [[3, 9, 4, 3, 2], [3, 9, 4, 3, 2], [3, 9, 4, 3, 2]], [[1, 2, 4, 4, 5], [5, 1, 4, 3, 2, 1], [1, 2, 3, 1, 5, 6, 5]], [[3.5, 2.5, 46.747180223209085, -90.30409553049626, 1.5, 2.5, 3.5, 2.5, 1.5, 88.92985695524146], [], []], [[True, False, True], [False, True, False, False], [False, True, False, False]], [[1, 2, 3, 1, 5, 6, 5, 2, 2], [5, 1, 4, 3, 2, 1], [1, 2, 3, 1, 5, 6, 5, 2, 2]], [[], [0, 2, 2, 3], [1, 2, 3]], [[5, 1, 4, 2, 2, 1, 1], [5, 1, 4, 2, 2, 1, 1], [5, 1, 4, 2, 2, 1, 1]], [[1, 13, 3], [], []], [[1, 2, 1, 5, 6, 6, 2, 2], [1, 2, 1, 5, 6, 6, 2, 2], [5, 1, 4, 3, 2, 1]], [[3, 9, 4, 3, 10, 2], [3, 9, 4, 3, 10, 2], [3, 9, 4, 3, 10, 2]], [[1.5, 1.9954510959930523, 3.5], [1.5, 2.5, 3.5], [2.5, 3.5]], [[1, 3, 5, 7, 9, 11, 13], [2, 3, 4, 5, 6, 8, 6], [1, 3, 5, 7, 9, 11, 13]], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951], [], []], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 47.11473580773872, -78.9255438650951], [False, [None, -82, True], 10.63194549113473, False, [10.227858467690481, -80, 91, 79.0496427022359, 'b', 2.5], False, 51.66378356757116, 76.26353952856329], []], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.5423141340579, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951], ['c', -25, ['c', 'Qtee', 'apple', 'dCFuiLg'], [92, 14, -20, -65, -82, -23, 10], {'SXpaqpmSA': -75, 'mxHFSWBXK': 1, 'aeBJw': -82, 'banana': 55, 'cherry': -80, 'tKeVdUEN': False, 'c': False, 'UziQri': False, '': 41}, True], []], [[1, 2, 3, 4, 4, 5], [1, 2, 3, 4, 6, 2], [1, 2, 3, 4, 6, 2]], [[1.5, 1.9954510959930523, 3.5], [1.5, 2.5, 3.5, 2.5], [2.5, 3.5]], [[3.5], [1.5, 1.9954510959930523, 3.5], [3.5]], [[1, 4, 4, 5], [1, 4, 4, 5], [1, 4, 4, 5]], [[1, 3, 5, 7, 9, 11, 13], [1, 3, 5, 7, 9, 11, 13], [2, 3, 4, 5, 6, 8, 6]], [[1, 2, 4, 4, 5, 4], [1, 2, 4, 4, 5, 4], [5, 1, 4, 3, 2, 1]], [[5, 1, 4, 3, 2], [5, 1, 4, 3, 2], [5, 1, 4, 3, 2]], [[1, 2, 3], [False, False, False, False, False, True, True], [1, 2, 3]], [[1.5, 1.5211736525382962, 3.5, 3.5, 1.5], [1.5, 1.5211736525382962, 3.5, 3.5, 1.5], [1.5, 2.5, 3.5]], [[1, 2, 4, 4, 5], [1, 2, 3, 4, 5, 6], [1, 2, 4, 4, 5]], [[], ['banana', 'x', 'yRKDhGyhw', '', 'Vt', 'kejsg'], []], [[False, [None, -82, True], 10.63194549113473, False, [10.227858467690481, -80, 91, 79.0496427022359, 'b', 2.5], False, 51.66378356757116, 76.26353952856329], [-25, 2, -60, -4, False, -99, 41, 4, -66], [11, 'TJhJsrtQz', 'iBhMiUf', False, 94, False]], [[1.5, 1.9954510959930523, 3.5, 3.5], [1.5, 88.92985695524146, 3.5], [1.5, 88.92985695524146, 3.5]], [[3, 5, 7, 9, 11, 13, 3], [3, 5, 7, 9, 11, 13, 3], [2, 3, 4, 5, 6, 8, 6]], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951], [1.9954510959930523, 8.720727078047432, -0.5578301838399966, -48.01840699120381, 51.66378356757116], [25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951]], [[1.5211736525382962, 3.5, 3.5, 1.5], [1.5211736525382962, 3.5, 3.5, 1.5], [1.5, 2.5, 3.5]], [[2, 3, 4, 5, 6, 7, 8], [1, 3, 5, 7, 9, 11, 13], [1, 3, 5, 7, 9, 11, 13]], [[55, 2, 3, 1, 5, 6, 5, 2, 2], [55, 2, 3, 1, 5, 6, 5, 2, 2], [55, 2, 3, 1, 5, 6, 5, 2, 2]], [[True, False, True], [False, False, True, False], [False, False, True, False]], [[5, 4, 3, 2, 1], [1, 2, 3, 4, 5, 6, 3], [1, 2, 3, 4, 5, 6, 3]], [[1.5, 1.5211736525382962, 2.5, 3.5], [1.5, 1.5211736525382962, 2.5, 3.5], [2.5, 3.5]], [['x', 'y', 'z'], ['a', 'y', 'a'], ['a', 'y', 'a']], [[1, 14, 3, 4, 5, 6, 3], [1, 14, 3, 4, 5, 6, 3], [1, 14, 3, 4, 5, 6, 3]], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951, 60.50308501008169], [25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951, 60.50308501008169], []], [[1.5, 1.9954510959930523, 13.324652414249229, 3.5], [1.5, 88.92985695524146, 3.5], [1.5, 88.92985695524146, 3.5]], [['apple', 'banana', 'cherry'], ['ale', 'banana'], ['ale', 'banana']], [[1.5, 1.9954510959930523, 3.5], [1.5, 2.5, 3.5, 2.5, 2.5], [1.5, 2.5, 3.5, 2.5, 2.5]], [[1.140758838768645, 1.5211736525382962, 3.5, 1.5], [1.140758838768645, 1.5211736525382962, 3.5, 1.5], [1.140758838768645, 1.5211736525382962, 3.5, 1.5]], [[1.5, 1.9954510959930523, 13.324652414249229, 3.5], [88.92985695524146, 3.5], [88.92985695524146, 3.5]], [[1.5, 88.92985695524146, 88.92985695524146, 3.5], [1.5, 88.92985695524146, 88.92985695524146, 3.5], [1.5, 88.92985695524146, 88.92985695524146, 3.5]], [['Vt', 'dCFuiLg', 'INvNd', 'z', 'iBhMiUf', 'dCFuiLg', 'xJSJdyoTrG', 'TAvDgL'], [False, [None, -82, True], 10.63194549113473, False, [10.227858467690481, -80, 91, 79.0496427022359, 'b', 2.5], False, 51.66378356757116, 76.26353952856329], ['Vt', 'dCFuiLg', 'INvNd', 'z', 'iBhMiUf', 'dCFuiLg', 'xJSJdyoTrG', 'TAvDgL']], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951], [1.9954510959930523, 8.720727078047432, -0.5578301838399966, 46.5423141340579, -48.01840699120381, 51.66378356757116], [25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951]], [['banana', 'kejsg', 'banana', 'MencsXWpFS', 'yRKDhGyhw', 'c', 'wGAHQEc'], [1, 2, 3, 2], [1, 2, 3]], [[1, 2, 1, 5, 6, 6, 2, 2], [1, 2, 1, 5, 6, 6, 2, 2], [5, 1, 4, 3, -75, 2, 1]], [[1, 2, 4, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5, 6, 6]], [[1, 3, 7, 9, 11, 13], [2, 3, 4, 5, 6, 8, 6], [1, 3, 7, 9, 11, 13]], [[1, 3, 5, 7, 9, 11, 13, 7], [2, 3, 4, 5, 6, 8, 6], [1, 3, 5, 7, 9, 11, 13, 7]], [[1.5, 1.9954510959930523, 3.918769930762264, 1.5], [3.5], [1.5, 1.9954510959930523, 3.918769930762264, 1.5]], [[False, [None, -82, True], 10.63194549113473, False, [10.227858467690481, -80, 91, 79.0496427022359, 'b', 2.5], False, 51.66378356757116, 76.26353952856329, False], [False, [None, -82, True], 10.63194549113473, False, [10.227858467690481, -80, 91, 79.0496427022359, 'b', 2.5], False, 51.66378356757116, 76.26353952856329, False], [-25, 2, -60, -4, False, -99, 41, 4, -66]], [[1, 3, 5, 7, 9, 11, 13], [1, 3, 5, 7, 9, 11, 13], [1, 3, 5, 7, 9, 11, 13]], [[1, 2, 4, 4, 5, 5], [3, 3, -25, 1], [1, 2, 3, 4, 5, 6]], [[47.11473580773872, 1.140758838768645, 8.720727078047432, 47.11473580773872, -0.5578301838399966, 2.5, 76.9475439156866], [1, 2, 3], [1, 2, 3, 1]], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.5423141340579, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951], ['c', -25, ['c', 'Qtee', 'apple', 'dCFuiLg'], [92, 14, -20, -65, -82, -23, 10], {'SXpaqpmSA': -75, 'mxHFSWBXK': 1, 'aeBJw': -82, 'banana': 55, 'cherry': -80, 'tKeVdUEN': False, 'c': False, 'UziQri': False, '': 41}, True], [-61, 9, -80, 'MencsXWpFS']], [['x', 'y', 'z', 'y'], ['a', 'b', 'c'], ['x', 'y', 'z', 'y']], [['', 'bINvNd', 'b', 'c'], ['', 'bINvNd', 'b', 'c'], ['yRKDhGyhw', 'y', 'z']], [['c', -25, ['c', 'Qtee', 'apple', 'dCFuiLg'], [92, 14, -20, -65, -82, -23, 10], {'SXpaqpmSA': -75, 'mxHFSWBXK': 1, 'aeBJw': -82, 'banana': 55, 'cherry': -80, 'tKeVdUEN': False, 'c': False, 'UziQri': False, '': 41}, 'dCFuiLg', True], ['c', -25, ['c', 'Qtee', 'apple', 'dCFuiLg'], [92, 14, -20, -65, -82, -23, 10], {'SXpaqpmSA': -75, 'mxHFSWBXK': 1, 'aeBJw': -82, 'banana': 55, 'cherry': -80, 'tKeVdUEN': False, 'c': False, 'UziQri': False, '': 41}, 'dCFuiLg', True], [-61, 9, -80, 'MencsXWpFS']], [['a', 'b'], ['x', 'y', 'z'], ['a', 'y', 'yRKDhGyhw', 'y']], [[55, 2, 3, 1, 5, 6, 5, 2, 2, 55], [55, 2, 3, 1, 5, 6, 5, 2, 2, 55], [55, 2, 3, 1, 5, 6, 5, 2, 2, 55]], [[3.5, 2.5, 46.747180223209085, -90.30409553049626, 1.5, 2.5, 3.5, 2.5, 1.5, 88.92985695524146], [], [55, -63]], [['banana', 'kejsg', 'banana', 'MencsXWpFS', 'yRKDhGyhw', 'c', 'wGAHQEc'], [1, 2, 3, 2], [1, 2, 3, 1]], [[1, 2, 3, 4, 5, 6, 7, 5], [2, 3, 4, 5, 6, 7, 8], [1, 3, 5, 7, 9, 11, 13]], [[1.5, 1.2295760656866848, -78.9255438650951, 1.5], [1.5, 1.2295760656866848, -78.9255438650951, 1.5], [1.5, 1.2295760656866848, -78.9255438650951, 1.5]], [[1, 3, 5, 7, 9, 11, 13], [2, 3, 4, -75, 6, 8, 6, 2], [1, 3, 5, 7, 9, 11, 13]], [['bb', 'a', 'b', 'c', 'b', 'bb'], ['x', 'y', 'z', 'y'], ['bb', 'a', 'b', 'c', 'b', 'bb']], [[3.5], [1.5, 1.9954510959930523, 3.918769930762264, 1.5], [1.5, 1.9954510959930523, 3.918769930762264, 1.5]], [['x', 'y', 'z', 'y'], ['bb', 'a', 'b', 'c', 'b', 'bb', 'c', 'b'], ['bb', 'a', 'b', 'c', 'b', 'bb', 'c', 'b']], [['bb', 'a', '', 'c', 'b', 'bb'], ['x', 'y', 'z', 'y'], ['bb', 'a', '', 'c', 'b', 'bb']], [[-23, 1, 3, 5, 7, 9, 11, 13, 7], [2, 3, 4, 5, 6, 8, 6], [-23, 1, 3, 5, 7, 9, 11, 13, 7]], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.5423141340579, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085], ['c', -25, ['c', 'Qtee', 'apple', 'dCFuiLg'], [92, 14, -20, -65, -82, -23, 10], {'SXpaqpmSA': -75, 'mxHFSWBXK': 1, 'aeBJw': -82, 'banana': 55, 'cherry': -80, 'tKeVdUEN': False, 'c': False, 'UziQri': False, '': 41}, True], [-61, 'MencsbananaXWpFS', 9, -80, 'MencsXWpFS']], [[1, 2, 4, 4, 5, 4, 3, 2], [1, 2, 4, 4, 5, 4, 3, 2], [5, 1, 4, 3, 2, 1]], [[2, 3, 4, 5, 6], [1, 3, 5, 7, 9, 11, 13, 9], [1, 3, 5, 7, 9, 11, 13, 9]], [[3, 9, 4, 3, -60], [3, 9, 4, 3, -60], [3, 9, 4, 3, -60]], [[1, 2, 4, 4, 2, 5], [5, 1, 3, 2, 1], [1, 2, 4, 4, 2, 5]], [[55, 2, 3, 5, 6, 5, 2, 2], [55, 2, 3, 5, 6, 5, 2, 2], [55, 2, 3, 5, 6, 5, 2, 2]], [[True, False, False], [True, False, False], [True, False, False]], [[13.568069498372651, 1.5, 1.9954510959930523, 3.5], [88.92985695524146, 3.5], [88.92985695524146, 3.5]], [[1, 3, 5, 2, 7, 9, 11, 13, 11], [1, 3, 5, 2, 7, 9, 11, 13, 11], [1, 3, 5, 2, 7, 9, 11, 13, 11]], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951, 60.50308501008169, 46.747180223209085], [25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951, 60.50308501008169, 46.747180223209085], [25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951, 60.50308501008169, 46.747180223209085]], [[3, 9, 4, 3, -60, 4], [3, 9, 4, 3, -60, 4], [3, 9, 4, 3, -60, 4]], [['abINvNd', 'y', 'yRKDhGyhw', 'y'], ['x', 'y', 'z'], ['abINvNd', 'y', 'yRKDhGyhw', 'y']], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.747180223209085, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951, 60.50308501008169], [], []], [[25.292264331717163, 8.720727078047432, 13.324652414249229, 46.5423141340579, 10.63194549113473, 60.50308501008169, 76.26353952856329, 46.747180223209085, -78.9255438650951], ['c', -25, ['c', 'Qtee', 'cherry', 'apple', 'dCFuiLg'], [92, 14, -20, -65, -82, -23, 10], {'SXpaqpmSA': -75, 'mxHFSWBXK': 1, 'aeBJw': -82, 'banana': 55, 'cherry': -80, 'tKeVdUEN': False, 'c': False, 'UziQri': False, '': 41}, True], []], [[1, 5, 5], [1, 5, 5], [1, 5, 5]], [[2, 3, 4, 5, 5, 6, 7, 8], [1, 3, 5, 7, 9, 11, 13], [1, 3, 5, 7, 9, 11, 13]], [[2, 3, 4, 5, False, 6, 8, 6], [3, 5, 7, 9, 6, 11, 13, 3], [2, 3, 4, 5, False, 6, 8, 6]], [[-0.5578301838399966, 3.5], [1.5, 1.5211736525382962, 2.5, 3.5, 1.5], [-0.5578301838399966, 3.5]], [[5, 4, 3, 1], [1, 2, 4, 4, 5, 5, 2], [5, 4, 3, 1]], [[76.9475439156866, 1.5, 2.5, 3.5], [76.9475439156866, 1.5, 2.5, 3.5], [2.5, 3.5]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+
+
+"""
+Write a function to count number of items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+
+
+"""
+Write a function to count number of items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    return sum(x == y == z for x, y, z in zip(list1, list2, list3))
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(l1: list[int], l2: list[int], l3: list[int]) -> int:
+    count = 0
+    for i in range(len(l1)):
+        if l1[i] == l2[i] and l2[i] == l3[i]:
+            count += 1
+    return count
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for a, b, c in zip(list1, list2, list3):
+        if a == b == c:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution to the problem, wrapped in a markdown block:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    # Initialize count to 0
+    count = 0
+    
+    # Iterate over the length of the lists
+    for i in range(len(list1)):
+        # Check if elements in the same position of all three lists are the same
+        if list1[i] == list2[i] == list3[i]:
+            # If so, increment the count
+            count += 1
+            
+    # Return the count
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Testing the function with the given example
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+```
+
+Explanation:
+
+The function `count_samepair` takes three lists as input parameters and initializes a variable `count` to 0. It then iterates through the lists using a for loop and checks if the elements at the same position in all three lists are identical. If they are, it increments the `count` variable. Finally, it returns the `count` variable which represents the number of identical elements in the same position in all three lists. In the given example, the function should return 3 because there are three elements that are identical in the same position in all three lists. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    """
+    This function takes three lists as input and returns the count of items that are identical
+    in the same position of all three lists.
+    """
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1,list2,list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test case provided
+assert count_samepair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9], [2, 1, 3, 1, 2, 6, 7, 9]) == 3
+
+# Additional test cases
+assert count_samepair([1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]) == 0
+assert count_samepair([1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5]) == 5
+assert count_samepair([a, b, c, d], [a, b, c, d], [a, b, c, d]) == 4  # Assuming a, b, c, d are same</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that solves the problem:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3
+```
+This function iterates over the first list and checks if the corresponding elements in the second and third lists are the same. If they are, it increments a counter. At the end, it returns the counter.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    """
+    Write a function to count number items that are identical in the same position of three given lists.
+    assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+    """
+    return sum(i == j == k for i, j, k in zip(list1, list2, list3))
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1,list2,list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+
+def count_samepair_2(list1, list2, list3):
+    return sum([list1[i] == list2[i] == list3[i] for i in range(len(list1))])
+
+
+def count_samepair_3(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_4(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_5(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_6(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_7(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_8(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_9(list1, list2, list3):
+    return sum(map(lambda x: x[0] == x[1] == x[2], zip(list1, list2, list3)))
+
+
+def count_samepair_</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here is the Python function in a markdown style code block:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))  # Output: 3
+```
+
+This function works by iterating over the indices of the first list. For each index, it checks if the corresponding elements in the other two lists are also identical. If they are, it increments a counter. Finally, it returns the counter.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list2[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1,list2,list3):
+  count=0
+  for i in range(len(list1)):
+    if list1[i]==list2[i]==list3[i]:
+      count+=1
+  return count</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1, list2, list3):
+    """
+    Count number of items that are identical in the same position of three given lists.
+    """
+    return sum(x == y == z for x, y, z in zip(list1, list2, itertools.islice(itertools.cycle(list3), len(list1), None)))
+
+import itertools
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9], [2, 1, 3, 1, 2, 6, 7, 9]) == 3</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+```
+
+The function takes three lists as input and returns the count of items that are identical in the same position of all three lists. The function iterates over the indices of the lists using a for loop and checks if the items at the current index are identical in all three lists. If they are, the count variable is incremented. Finally, the function returns the count of identical items.
+
+The assertion in the problem checks if the function correctly counts the number of identical items in the given lists.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list2[i] == list3[i]:
+            count += 1
+    return count
+
+
+print(count_samepair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9], [2, 1, 3, 1, 2, 6, 7, 9]))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function that solves the problem:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+```
+
+You can test the function with the provided example:
+
+```python
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))  # Output: 3
+```
+
+This function works by iterating over the indices of the first list. For each index, it checks if the elements at the same index in the other two lists are identical. If they are, it increments a counter. Finally, it returns the counter, which represents the number of identical elements in the same position in all three lists.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1,list2,list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i] and list2[i]==list3[i]:
+            count+=1
+    return count</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    """
+    Count the number of items that are identical in the same position of three given lists.
+
+    :param list1: List of items
+    :param list2: List of items
+    :param list3: List of items
+    :return: Number of items that are identical in the same position of the three lists
+    """
+    # Initialize a counter for identical items
+    identical_count = 0
+
+    # Iterate over the lists simultaneously
+    for item1, item2, item3 in zip(list1, list2, list3):
+        # Check if all three items are the same
+        if item1 == item2 == item3:
+            identical_count += 1
+
+    return identical_count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(l1,l2,l3):
+    count=0
+    for i in range(len(l1)):
+        if l1[i]==l2[i] and l2[i]==l3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(l1,l2,l3):
+    count=0
+    for i in range(len(l1)):
+        if l1[i]==l2[i] and l2[i]==l3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(l1,l2,l3):
+    count=0
+    for i in range(len(l1)):
+        if l1[i]==l2[i] and l2[i]==l3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(min(len(list1), len(list2), len(list3))):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def count_same_pair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+print(count_same_pair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(lst1, lst2, lst3):
+    count = 0
+    for i in range(len(lst1)):
+        if lst1[i] == lst2[i] == lst3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+```
+
+This function takes three lists as input and iterates over them using a for loop. For each index `i`, it checks if the corresponding elements in all three lists are equal. If they are, it increments the count variable. Finally, it returns the count.
+
+Example usage:
+
+```python
+>>> count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])
+3
+```
+
+This returns 3 because the elements at index 0, 1, and 2 are the same in all three lists. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list2[i] == list3[i]:
+            count += 1
+    return count
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i]==list3[i]:
+            count+=1
+    return count
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))</code></pre>
+
+      <p> codegen-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(l1,l2,l3):
+    count=0
+    for i in range(len(l1)):
+        if l1[i]==l2[i] and l2[i]==l3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(l1,l2,l3):
+    count=0
+    for i in range(len(l1)):
+        if l1[i]==l2[i] and l2[i]==l3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(l1,l2,l3):
+    count=0
+    for i in range(len(l1)):
+        if l1[i]==l2[i] and l2[i]==l3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i]==list3[i]:
+            count+=1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+print("Test passed")
+
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]))
+print(count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+
+print(count_samepair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9], [2, 1, 3, 1, 2, 6, 7, 9]))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1, list2, list3):
+    count = 0
+    for index, item in enumerate(list1):
+        if item == list2[index] and item == list3[index]:
+            count += 1
+    return count
+
+assert count_samepair([1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 3, 1, 2, 6, 7, 9], [2, 1, 3, 1, 2, 6, 7, 9]) == 3</code></pre>
+
+      <p> gemma-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a markdown block:
+
+```python
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test case
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9]) == 3
+print("Test case passed")</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i]==list3[i]:
+            count+=1
+    return count
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i]==list3[i]:
+            count+=1
+    return count
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i]==list3[i]:
+            count+=1
+    return count
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+def count_samepair(list1,list2,list3):
+    count=0
+    for i in range(len(list1)):
+        if list1[i]==list2[i]==list3[i]:
+            count+=1
+    return count
+
+"""
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to count number items that are identical in the same position of three given lists.
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3
+"""
+
+
+def count_samepair(list1,list2,list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] and list1[i] == list3[i]:
+            count += 1
+    return count
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def count_samepair(list1, list2, list3):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] == list2[i] == list3[i]:
+            count += 1
+    return count
+
+# Test the function
+assert count_samepair([1,2,3,4,5,6,7,8],[2,2,3,1,2,6,7,9],[2,1,3,1,2,6,7,9])==3</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1560 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/468 </h1>
+<pre><code> """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def max_product(arr):   
+  # record the correspond ending element to maintain the increasing subsequence
+  ret = max_ending = min_ending = (arr[0], arr[0])
+  for n in arr[1:]:
+    if n > max_ending[1]:
+      max_ending = max((max_ending[0] * n, n), max_ending, key=lambda x: x[0])
+    else:
+      max_ending = (n, n)
+    if n > min_ending[1]:
+      min_ending = min((min_ending[0] * n, n), min_ending, key=lambda x: x[0])
+    else:
+      min_ending = (n, n)
+    ret = max(ret, max_ending, min_ending, key=lambda x: x[0])
+  return ret[0]
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[3, 100, 4, 5, 150, 6]], [[4, 42, 55, 68, 80]], [[10, 22, 9, 33, 21, 50, 41, 60]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[-3, -100, -4, -5, -150, -6]], [[3, -5, 2, 6, -1, 4, -3]], [[2, 3, 3, 4, 5, 3, 6]], [[2, -3, 3, 4, -5, 3, -6]], [[50, 100, 200, 150, 300, 250, 400]], [[-5, -4, -3, -2, -1, 0, 1]], [[10, 9, 8, 7, 6, 5, 4, 3]], [[1, -2, 3, -4, 5, -6, 7]], [[10, 8, 6, 5, 1, 9, 7, 4, 3, 2]], [[-3, -4, 5, -2, 6, -1, 7, -8, 9, -10, 11]], [[50, 100, 200, 100, 150, 300, 250, 400, 100]], [[-3, -4, 5, -2, 5, 6, 200, 10, -1, 7, -8, 9, -10, 11]], [[10, 9, 7, 6, 4]], [[50, 250, 150, 300, 250, 400]], [[50, 250, 6, 150, 300, 250, 400]], [[-2, 3, -5, 2, 6, -1, 4, -3]], [[10, 9, 7, 6, 5, 4, 3]], [[50, 100, -3, 150, 300, 250, 400]], [[10, 9, 8, 8, 5, 4, 3, 4]], [[10, 9, 8, 7, 6, 5, -8, 3]], [[3, -5, 2, 6, 4, -3]], [[50, 250, 150, 300, 250, 1, 400]], [[2, 50, 100, 200, 100, 150, 300, 250, 400, 100]], [[2, 50, 100, 200, 100, 150, 300, 400, 100]], [[10, 9, 8, 7, 6, 5, 5, 4, 3, 9]], [[-6, 249, 6, 150, 250, 400]], [[50, 250, 150, 250, 400]], [[10, 9, 7, 7, 6, 5, 5, 4, 3, 9]], [[50, 100, -3, 150, 300, 250, 400, 100]], [[50, 100, -3, 150, 300, 250, 400, 300]], [[10, 9, 8, 7, 6, 5, 5, 4, 9]], [[3, -5, 2, -1, -6, 4, -3]], [[50, 100, -3, 150, 250, 400]], [[10, 8, 5, 1, 9, 7, 4, 3, 2, 6, 6]], [[10, 9, 8, 7, 6, 5, 4, 10]], [[50, 100, 150, 250, 400]], [[-3, -100, -4, -5, -150, -6, -4]], [[50, 100, 200, 150, 300, 250, 400, 100]], [[10, 9, 8, 7, 6, 5, 5, 4, 9, 9]], [[-2, -2, 3, -4, 5, -6, 7]], [[2, 300, 50, 100, 200, 100, 150, 250, 300, 250, 400, 100]], [[50, 100, 150, 200, 100, 150, 300, 250, 400, 100]], [[2, 50, -8, 200, 100, 150, 300, 250, 400, 100]], [[-2, 3, -4, -6, 7]], [[-4, 2, 3, 3, 4, 5, 3, 6]], [[-3, -101, -4, -5, -150, -6, -150]], [[-6, 249, 150, 250, 400]], [[-2, 4, -5, 2, 6, -1, 4, -3]], [[-3, -101, -4, -5, 6, -6, -150, -4]], [[2, -3, 3, 4, 3, -6]], [[50, 100, 200, 150, 300, 1, 400]], [[-2, -2, 3, -4, 5, 7]], [[2, 3, -5, 2, 300, 6, -1, 4, -3]], [[10, 9, 8, 7, 6, 5, -8, 4]], [[-3, -100, -5, -150, -6]], [[2, 300, 50, 100, 200, 100, 150, 250, 300, 250, 400, 100, 400]], [[-3, -100, -4, -5, 5, -6, -5]], [[3, -5, 2, 4, -3]], [[-2, -2, -6, -8, 5, -6, 7]], [[-2, -2, -4, 5, -6, 7]], [[-5, -4, -3, 9, 8, -1, 0, -1, 1]], [[10, 9, 6, 4]], [[251, 50, 100, 200, 150, 300, 250, 400, 100]], [[1, -2, 3, -4, -6, 7]], [[-3, -100, -4, -6, -150, -6, -4]], [[-2, 3, -5, 2, -1, 4, -3]], [[10, 9, 7, 6, 5, 5, 4, 3, 9]], [[-2, -2, -6, -8, -6, 7]], [[-3, 50, 100, -2, 150, 300, 250, 400]], [[10, 1, 9, 8, 7, 6, 5, 5, 4, 3, 9]], [[1, -1, -2, 3, -4, 5, -6, 7, -2]], [[10, 9, 8, 7, 6, 5, -8]], [[10, 9, -8, 7, 7, 6, 5, 5, 4, 3, 9]], [[10, 7, 9, 7, 6, 4]], [[10, 9, 1, 8, 3, 7, 6, 5, 4, 3]], [[-4, 2, 3, 3, 4, 5, 3]], [[50, 100, 200, 150, 300, 1, 3]], [[2, 2, 50, -8, 299, 200, 100, 151, 300, 250, 400, -150]], [[50, 100, 200, 100, 150, 300, 250, 400, -5, 100, 300]], [[-3, -101, -4, -5, -150, -6, -150, -4]], [[2, 300, 50, 100, 200, 100, 150, 250, 300, 250, 400, 100, 400, 2, 150]], [[-5, -3, -2, -1, 0, 1]], [[50, 250, 6, 150, -8, 300, 250, 400]], [[10, 9, 7, 6, 4, 5, 4, 3, 9]], [[10, 8, 7, 6, 5, 5, 251, 9]], [[-3, -100, -4, -5, -150, -6, -6]], [[100, 200, 150, 300, 1, 3]], [[2, 2, -3, 3, 4, -5, 3]], [[50, 100, 150, 250]], [[-5, 2, 6, 4, 250, -3]], [[2, 249, 3, 4, 3, -6, -6, -6, 3]], [[-4, 2, 3, 3, 4, 5, 5, 3, 6]], [[100, 200, 151, 150, 300, 1, 3, 200]], [[9, 8, 7, 6, 5, 4, 3]], [[2, 300, 50, 100, 200, 100, 150, 250, 300, 250, 400, 100, 400, 250]], [[3, -5, 7, 6, 4, -3]], [[2, -3, 3, 4, -5, 251, 7]], [[4, 50, 250, -4, 150, 300, 250, 400]], [[200, 151, 300, 3, 200]], [[9, 8, 7, 6, 5, 4, 3, 5]], [[2, 2, 50, -8, 299, 200, 100, 151, 300, 250, 400, -150, 2]], [[-101, -101, 10, 9, 7, 6, 4]], [[10, 9, 7, 4, 4]], [[50, 100, 100, 0, 300, 250, 400, 100, 100, 50]], [[2, 300, 50, 100, 200, 100, 150, 250, 300, 250, 100, 400, 250]], [[2, -3, 3, 4, -5, -6]], [[50, -3, 150, 300, 250, 400, 300]], [[-2, -2, -7, 5, -6, 7]], [[10, 9, 8, 7, 6, 5, 4, 2]], [[10, 9, -8, 7, 7, 6, 2, 5, 4, 50, 9]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+
+    max_product = arr[0]
+    min_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] > max_product:
+            max_product = arr[i]
+        if arr[i] < min_product:
+            min_product = arr[i]
+        if max_product < min_product:
+            max_product = min_product * arr[i]
+    return max_product
+
+
+if __name__ == '__main__':
+    print(max_product([3, 100, 4, 5, 150, 6]))
+    print(max_product([1, 2, 3, 4, 5]))
+    print(max_product([1, 2, 3, 4, 5, 6]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7, 8]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7, 8, 9]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]))
+    print(max_product([1, 2, 3, 4, 5, 6, 7,</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if not arr:
+        return None
+
+    # Initialize maximum product and two minimum numbers in the subsequence
+    max_product = float('-inf')
+    num1 = float('-inf')
+    num2 = float('-inf')
+
+    for num in arr:
+        # If current number is greater than both minimum numbers,
+        # update maximum product and minimum numbers
+        if num > num1 and num > num2:
+            max_product = max(max_product, num * num1 * num2)
+            num2 = num1
+            num1 = num
+
+        # If current number is between minimum numbers,
+        # update maximum product and the smaller minimum number
+        elif num > num2 and num < num1:
+            max_product = max(max_product, num * num1 * num2)
+            num2 = num
+
+        # If current number is smaller than both minimum numbers,
+        # update the larger minimum number
+        elif num < num2:
+            num2 = num
+
+    return max_product
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums: list[int]) -> int:
+    """
+    Finds the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+
+    Parameters:
+        nums (list[int]): The input array of integers.
+
+    Returns:
+        int: The maximum product of an increasing subsequence.
+    """
+    if not nums:
+        return 0
+
+    dp = [nums[0]] * len(nums)
+    max_product = nums[0]
+
+    for i in range(1, len(nums)):
+        for j in range(i):
+            if nums[i] > nums[j] and nums[i] * nums[j] > nums[i]:
+                dp[i] = max(dp[i], dp[j] * nums[i])
+            elif nums[i] < nums[j]:
+                dp[i] = max(dp[i], dp[j])
+
+        max_product = max(max_product, dp[i])
+
+    return max_product
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def max_product(arr):
+    """
+    Find the maximum product formed by multiplying numbers of an increasing subsequence of the given array.
+    
+    Args:
+        arr (list): The input array of integers.
+    
+    Returns:
+        int: The maximum product formed by multiplying numbers of an increasing subsequence.
+    """
+    n = len(arr)
+    dp = [1] * n  # Initialize the dynamic programming array
+    
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                dp[i] = max(dp[i], dp[j] * arr[i])
+    
+    return max(dp)
+
+# Example usage
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums):
+    if not nums:
+        return 0
+    max_ending_here = nums[0]
+    min_ending_here = nums[0]
+    max_so_far = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] < 0:
+            max_ending_here, min_ending_here = min_ending_here, max_ending_here
+
+        max_ending_here = max(nums[i], max_ending_here * nums[i])
+        min_ending_here = min(nums[i], min_ending_here * nums[i])
+
+        max_so_far = max(max_so_far, max_ending_here)
+
+    return max_so_far
+
+print(max_product([3, 100, 4, 5, 150, 6]))</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+def max_product(arr):
+    if not arr:
+        return 0
+
+    n = len(arr)
+    dp = [1] * n
+    max_product = arr[0]
+
+    for i in range(1, n):
+        dp[i] = max(arr[i], dp[i-1] * arr[i])
+        max_product = max(max_product, dp[i])
+
+    return max_product</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution to the problem wrapped in a Python markdown block:
+
+```python
+def max_product(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    
+    max_prod = [0] * n
+    max_prod[0] = arr[0]
+    
+    for i in range(1, n):
+        max_prod[i] = arr[i]
+        for j in range(i):
+            if arr[i] > arr[j]:
+                max_prod[i] = max(max_prod[i], max_prod[j] * arr[i])
+    
+    return max(max_prod)
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+def max_product(nums: List[int]) -> int:
+    if not nums:
+        return 0
+
+    n = len(nums)
+    dp_max = [0] * n  # dp_max[i] stores the maximum product ending at index i
+    dp_min = [0] * n  # dp_min[i] stores the minimum product ending at index i
+
+    # Initialize the first element
+    dp_max[0] = nums[0]
+    dp_min[0] = nums[0]
+
+    # Calculate the maximum and minimum products for each subsequence
+    for i in range(1, n):
+        dp_max[i] = max(nums[i], nums[i] * dp_max[i - 1], nums[i] * dp_min[i - 1])
+        dp_min[i] = min(nums[i], nums[i] * dp_max[i - 1], nums[i] * dp_min[i - 1])
+
+    # Find the maximum product among all subsequences
+    max_product = max(dp_max)
+
+    return max_product
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def max_product(arr):
+    if len(arr) < 2:
+        return None
+    max_product = arr[0]
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_ending_here, min_ending_here = min_ending_here, max_ending_here
+        max_ending_here = max(arr[i], max_ending_here * arr[i])
+        min_ending_here = min(arr[i], min_ending_here * arr[i])
+        max_product = max(max_product, max_ending_here)
+    return max_product
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+
+# Test some more cases
+assert max_product([1, 2, 3, 4, 5]) == 20
+assert max_product([-1, 2, 3, 4, -5]) == 24
+assert max_product([-1, -2, 3, 4, -5]) == 6
+assert max_product([-1, -2, -3, -4, -5]) == 5
+assert max_product([1, -2, 3, 4, -5, 6]) == 12
+assert max_product([1, -2, -3, 4, -5, 6]) == 12
+assert max_product([1, -2, -3, -4, -5, 6]) == 6
+assert max_product([1, -2, -3, -4, -5, -6]) == 3
+assert max_product([1, -2, 3, -4, 5, -6]) == 6
+assert max_product([1, -2, 3, -4, 5, 6]) == 18
+assert max_product([1, -2, 3, -4, 5, -6, 7]) == 21
+assert max_product([1, -2, 3, -4, 5, -6, 7, -8]) == 21
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8]) == 84
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9]) == 36
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10]) == 360
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10, -11]) == 360
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10, 11]) == 360
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10, 11, -12]) == 360
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10, 11, -12, 13]) == 420
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10, 11, -12, 13, -14]) == 420
+assert max_product([1, -2, 3, -4, 5, -6, 7, 8, -9, 10, 11, -12, 13, 14]) == 504
+assert max_product([1, -2, 3, -4,</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if not arr:
+        return 0
+
+    min_ending_here = max_ending_here = product = arr[0]
+    for num in arr[1:]:
+        if num < 0:
+            min_ending_here, max_ending_here = max_ending_here, min_ending_here
+
+        min_ending_here = min(num, min_ending_here * num)
+        max_ending_here = max(num, max_ending_here * num)
+
+        product = max(product, max_ending_here)
+
+    return product
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    max_product = 1
+    for i in range(len(arr)):
+        max_product = max(max_product, arr[i])
+        arr[i] = max_product
+    max_product = 1
+    for i in range(len(arr) - 1, -1, -1):
+        max_product = max(max_product, arr[i])
+        arr[i] = max_product
+    return max(arr)
+
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if not arr:
+        return 0
+
+    increasing_subseq = [arr[0]]
+    max_product = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] > increasing_subseq[-1]:
+            increasing_subseq.append(arr[i])
+            max_product *= arr[i]
+        else:
+            max_product = max(max_product, arr[i] * increasing_subseq[0])
+
+    return max_product
+
+# Test case
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that solves the problem:
+
+```python
+def max_product(arr):
+    if not arr:
+        return 0
+
+    n = len(arr)
+    dp = [0]*n
+    dp[0] = arr[0]
+    min_so_far = arr[0]
+    max_product = arr[0]
+
+    for i in range(1, n):
+        dp[i] = max(arr[i], arr[i]*min_so_far, arr[i]*dp[i-1])
+        min_so_far = min(min_so_far, arr[i])
+        max_product = max(max_product, dp[i])
+
+    return max_product
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+```
+
+This function uses dynamic programming to solve the problem. The `dp` array stores the maximum product of an increasing subsequence ending at the current index. The `min_so_far` variable stores the minimum element seen so far, which is used to calculate the maximum product. The `max_product` variable stores the maximum product seen so far.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    
+    max_product_so_far = arr[0]
+    max_product_ending_here = arr[0]
+    
+    for i in range(1, len(arr)):
+        max_product_ending_here = max(max_product_ending_here * arr[i], arr[i])
+        max_product_so_far = max(max_product_so_far, max_product_ending_here)
+    
+    return max_product_so_far
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+
+"""
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    
+    max_product_so_far = arr[0]
+    max_product_ending_here = arr[0]
+    
+    for i in range(1, len(arr)):
+        max_product_ending_here = max(max_product_ending_here * arr[i], arr[i])
+        max_product_so_far = max(max_product_so_far, max_product_ending_here)
+    
+    return max_product_so_far
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+
+"""
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums):
+    """
+    Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    """
+    if not nums:
+        return 0
+
+    n = len(nums)
+    max_product_ending_here = [0] * n
+    max_product_so_far = [0] * n
+
+    max_product_ending_here[0] = max_product_so_far[0] = nums[0]
+
+    for i in range(1, n):
+        max_product_ending_here[i] = max(nums[i], max_product_ending_here[i-1] * nums[i])
+        max_product_so_far[i] = max(max_product_ending_here[i], max_product_so_far[i-1])
+
+    return max_product_so_far[-1]
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+
+def max_product(arr):
+    if not arr:
+        return None
+    if len(arr) == 1:
+        return arr[0]
+    max_product = arr[0]
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            if arr[j] > arr[i]:
+                max_product = max(max_product, arr[i] * arr[j])
+    return max_product
+
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    """
+    :param arr:
+    :return:
+    """
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return arr[0] * arr[1]
+
+    max_product = arr[0] * arr[1]
+    min_product = arr[0] * arr[1]
+    for i in range(2, len(arr)):
+        if arr[i] > arr[i - 1]:
+            max_product = max(max_product, arr[i] * min_product)
+            min_product = min(min_product, arr[i] * min_product)
+        else:
+            max_product = max(max_product, arr[i] * max_product)
+            min_product = min(min_product, arr[i] * max_product)
+
+    return max_product
+
+
+if __name__ == '__main__':
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([3, 100, 4, 5, 150</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def max_product(arr):
+    n = len(arr)
+    dp = [0]*n
+    dp[0] = arr[0]
+
+    for i in range(1, n):
+        dp[i] = arr[i]
+        for j in range(i):
+            if arr[i] > arr[j]:
+                dp[i] = max(dp[i], dp[j]*arr[i])
+
+    return max(dp)
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+```
+
+This function uses dynamic programming to solve the problem. It initializes an array `dp` of the same length as the input array `arr`, and sets `dp[0]` to `arr[0]`. Then it iterates over the array from the second element to the end, and for each element `arr[i]`, it iterates over all previous elements `arr[j]` (where `j < i`). If `arr[i]` is greater than `arr[j]`, it updates `dp[i]` to be the maximum of its current value and the product of `dp[j]` and `arr[i]`. Finally, it returns the maximum value in the `dp` array.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def max_product(arr):
+    if not arr:
+        return 0
+
+    max_product = float('-inf')
+    max_ending_here = 1
+    for i in range(1, len(arr)):
+        if arr[i] > arr[i - 1]:
+            max_ending_here *= arr[i]
+            max_product = max(max_product, max_ending_here)
+        else:
+            max_ending_here = 1
+
+    return max_product
+
+print(max_product([3, 100, 4, 5, 150, 6]))</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        max_product = max(max_product * arr[i], arr[i])
+        min_product = min(min_product * arr[i], arr[i])
+    return max_product
+
+print(max_product([3, 100, 4, 5, 150, 6])) # 3000
+print(max_product([-3, -100, -4, -5, -150, -6])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1, -1])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1, -1, -1])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1, -1, -1, -1])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1, -1, -1, -1, -1])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1, -1, -1, -1, -1, -1])) # -6
+print(max_product([-3, -100, -4, -5, -150, -6, -2, -1, -1, -1, -1, -1, -1, -1])) # -6
+print(max_</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    """
+    Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    """
+    max_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] > arr[i - 1]:
+            max_product *= arr[i]
+    return max_product</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+def max_product(arr):
+    if len(arr) < 2:
+        return arr[0] if arr else 0
+
+    # Initialize current product and maximum product with first element of array
+    current_product, max_product = arr[0], arr[0]
+
+    # Iterate through the array starting from the second element
+    for num in arr[1:]:
+        # If current product is negative, reset it to the current number and update maximum product with current product
+        if current_product < 0:
+            current_product = num
+            max_product = max(max_product, current_product)
+        else:
+            # Multiply current product with the number and update maximum product if the product is greater
+            current_product *= num
+            max_product = max(max_product, current_product)
+
+    return max_product
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if len(arr) < 2:
+        return None
+
+    max_product = arr[0] * arr[1]
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            product = arr[i] * arr[j]
+            if product > max_product:
+                max_product = product
+
+    return max_product
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def max_product(nums):
+    if len(nums) == 0:
+        return 0
+    
+    max_product = nums[0]
+    min_product = nums[0]
+    max_ending_here = nums[0]
+    min_ending_here = nums[0]
+    
+    for i in range(1, len(nums)):
+        if nums[i] > max_ending_here * nums[i]:
+            max_ending_here = nums[i]
+        else:
+            max_ending_here = max_ending_here * nums[i]
+        
+        if nums[i] < min_ending_here * nums[i]:
+            min_ending_here = nums[i]
+        else:
+            min_ending_here = min_ending_here * nums[i]
+        
+        if max_ending_here > max_product:
+            max_product = max_ending_here
+        
+        if min_ending_here < min_product:
+            min_product = min_ending_here
+    
+    return max_product
+```
+
+The function takes an array of integers as input and returns the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+
+The function first checks if the length of the array is zero, in which case it returns zero.
+
+The function initializes two variables, `max_product` and `min_product`, to the first element of the array. It also initializes two variables, `max_ending_here` and `min_ending_here`, to the first element of the array.
+
+The function then iterates through the array from the second element to the last element. For each element, the function checks if the current element is greater than the current `max_ending_here` times the current element. If it is, then the current element becomes the new `max_ending_here`. If it is not, then the current `max_ending_here` is multiplied by the current element to get a new `max_ending_here`.
+
+The function then checks if the current element is less than the current `min_ending_here` times the current element. If it is, then the current element becomes the new `min_ending_here`. If it is not, then the current `min_ending_here` is multiplied by the current element to get a new `min_ending_here`.
+
+The function then checks if the current `max_ending_here` is greater than the current `max_product`. If it is, then the current `max_product` is updated to the current `max_ending_here`.
+
+The function then checks if the current `min_ending_here` is less than the current `min_product`. If it is, then the current `min_product` is updated to the current `min_ending_here`.
+
+Finally, the function returns the `max_product`.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    max_ending = 1
+    max_so_far = 1
+    for i in arr:
+        max_ending = max(i, max_ending * i)
+        max_so_far = max(max_so_far, max_ending)
+    return max_so_far
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to solve the problem:
+
+```python
+def max_product(arr):
+    n = len(arr)
+    max_ending_here = 1
+    min_ending_here = 1
+    max_so_far = 1
+    flag = 0
+
+    for i in range(n):
+        if arr[i] > 0:
+            max_ending_here = max_ending_here * arr[i]
+            min_ending_here = min(min_ending_here * arr[i], 1)
+            flag = 1
+        elif arr[i] == 0:
+            max_ending_here = 1
+            min_ending_here = 1
+        else:
+            temp = max_ending_here
+            max_ending_here = max(min_ending_here * arr[i], 1)
+            min_ending_here = temp * arr[i]
+        if max_so_far < max_ending_here:
+            max_so_far = max_ending_here
+
+    if flag == 0 and max_so_far == 1:
+        return 0
+    return max_so_far
+```
+
+This function uses dynamic programming to find the maximum product of an increasing subsequence. It keeps track of the maximum and minimum product ending at each position in the array, and updates these values as it iterates through the array. The maximum product found so far is updated whenever a larger product is found. If the array contains only positive numbers, the function returns the product of all numbers. If the array contains zero, the function returns 0. If the array contains only negative numbers, the function returns the maximum negative number.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    n = len(arr)
+    dp = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                dp[i] = max(dp[i], dp[j] * arr[i])
+    return max(dp)
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    max_product = 0
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            max_product = max(max_product, arr[i]*arr[j])
+    return max_product
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+print(max_product([3, 4, 5, 150, 6]))
+print(max_product([3, 4, 5, 150, 6, 7]))
+print(max_product([3, 4, 5, 150, 6, 7, 8]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13, 14]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]))
+print(max_product([3, 4, 5, 150, 6, 7, 8, 9, 10, 11, 12, 13,</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums):
+    max_product = 1
+    max_product_so_far = 1
+    for num in nums:
+        max_product *= num
+        if max_product > max_product_so_far:
+            max_product_so_far = max_product
+        if num == 0:
+            max_product = 1
+    return max_product_so_far</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) < 2:
+        return 0
+    max_product = 0
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            product = arr[i] * arr[j]
+            if product > max_product:
+                max_product = product
+    return max_product
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums):
+    if not nums:
+        return 0
+    max_ending_here = min_ending_here = max_so_far = nums[0]
+    for i in range(1, len(nums)):
+        temp_max_ending_here = max(nums[i], max_ending_here * nums[i], min_ending_here * nums[i])
+        min_ending_here = min(nums[i], max_ending_here * nums[i], min_ending_here * nums[i])
+        max_ending_here = temp_max_ending_here
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    """
+    Find the maximum product formed by multiplying numbers of an increasing subsequence of the given array.
+
+    :param arr: List of integers
+    :return: Maximum product of an increasing subsequence
+    """
+    # Initialize variables to store the maximum product and the current product
+    max_product = arr[0]
+    current_product = arr[0]
+
+    # Iterate through the array starting from the second element
+    for num in arr[1:]:
+        # If the current number is greater than the previous one, multiply it with the current product
+        if num > arr[arr.index(num) - 1]:
+            current_product *= num
+        else:
+            # If the current number is not greater than the previous one, reset the current product to the current number
+            current_product = num
+
+        # Update the maximum product if the current product is greater
+        max_product = max(max_product, current_product)
+
+    return max_product
+
+# Test the function
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    max_so_far = arr[0]
+    for i in range(1, n):
+        if arr[i] > max_ending_here * arr[i]:
+            max_ending_here = arr[i]
+        else:
+            max_ending_here = max_ending_here * arr[i]
+        if arr[i] < min_ending_here * arr[i]:
+            min_ending_here = arr[i]
+        else:
+            min_ending_here = min_ending_here * arr[i]
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+```
+
+Explanation:
+The function `max_product` takes an array `arr` as input and returns the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+
+The function first initializes `max_ending_here` and `min_ending_here` to the first element of the array, and `max_so_far` to the first element of the array. It then iterates through the array, updating `max_ending_here` and `min_ending_here` at each step. If the current element is greater than `max_ending_here * arr[i]`, then `max_ending_here` is updated to the current element. Otherwise, `max_ending_here` is updated to `max_ending_here * arr[i]`. Similarly, if the current element is less than `min_ending_here * arr[i]`, then `min_ending_here` is updated to the current element. Otherwise, `min_ending_here` is updated to `min_ending_here * arr[i]`.
+
+After each iteration, the function updates `max_so_far` to the maximum of `max_so_far` and `max_ending_here`. Finally, the function returns `max_so_far`, which is the maximum product formed by multiplying numbers of an increasing subsequence of the array.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums):
+    if not nums:
+        return 0
+
+    max_dp = [num for num in nums]
+    min_dp = [num for num in nums]
+    res = max_dp[0]
+
+    for i in range(1, len(nums)):
+        max_dp[i] = max(nums[i], max_dp[i-1] * nums[i], min_dp[i-1] * nums[i])
+        min_dp[i] = min(nums[i], max_dp[i-1] * nums[i], min_dp[i-1] * nums[i])
+        res = max(res, max_dp[i])
+
+    return res
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    max_prod = arr[0]
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], max_ending_here * arr[i], min_ending_here * arr[i])
+        min_ending_here = min(arr[i], min_ending_here * arr[i], max_ending_here * arr[i])
+        max_prod = max(max_prod, max_ending_here)
+    return max_prod
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    max_so_far = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_ending_here = max(arr[i], max_ending_here * arr[i])
+            min_ending_here = min(arr[i], min_ending_here * arr[i])
+        else:
+            max_ending_here = max(arr[i], max_ending_here * arr[i])
+            min_ending_here = min(arr[i], min_ending_here * arr[i])
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+assert max_product([3, -1, 4, 5, -6, 7]) == -6
+assert max_product([-1, -2, -3, -4, -5]) == -15
+assert max_product([-1, -2, -3, -4, -5, -6]) == -30
+assert max_product([-1, -2, -3, -4, -5, -6, -7]) == -60
+assert max_product([-1, -2, -3, -4, -5, -6, -7, -8]) == -80
+assert max_product([-1, -2, -3, -4, -5, -6, -7, -8, -9]) == -90
+assert max_product([-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == -100
+assert max_product([-1, -2, -3, -4, -5, -6, -7</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+import numpy as np
+
+def max_product(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+
+    # Initialize max_product array to store the maximum product till ith element
+    max_product_array = np.ones(n)
+
+    # Fill max_product_array[] in bottom-up manner
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                max_product_array[i] = max(max_product_array[i], max_product_array[j] * arr[i])
+
+    # Return the maximum value from max_product_array[]
+    return int(max(max_product_array))
+
+# Example usage
+# assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    arr.sort()
+    product = 1
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            if j - i > 0:
+                product = max(product, arr[i] * arr[j])
+    return product</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def max_product(arr):
+    n = len(arr)
+    max_prod = [0]*n
+    max_prod[0] = arr[0]
+    for i in range(1, n):
+        max_prod[i] = arr[i]
+        for j in range(i):
+            if arr[j] < arr[i] and max_prod[j]*arr[i] > max_prod[i]:
+                max_prod[i] = max_prod[j]*arr[i]
+    return max(max_prod)
+
+print(max_product([3, 100, 4, 5, 150, 6]))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if not arr:
+        return 0
+
+    max_product = [1] * len(arr)
+    min_product = [1] * len(arr)
+
+    for i in range(1, len(arr)):
+        max_product[i] = max(max_product[i-1] * arr[i], arr[i])
+        min_product[i] = min(min_product[i-1] * arr[i], arr[i])
+
+    return max(max_product)
+
+# Test case
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if len(arr) < 2:
+        return arr[0] if arr else 0
+
+    arr.sort()
+    return arr[-1] * arr[-2]
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function that finds the maximum product of an increasing subsequence in an array:
+
+```python
+def max_product(arr):
+    n = len(arr)
+    if n == 0:
+        return 0
+    elif n == 1:
+        return arr[0]
+    elif n == 2:
+        return max(arr[0], arr[1])
+    else:
+        max_product = arr[0]
+        min_product = arr[0]
+        result = arr[0]
+        for i in range(1, n):
+            if arr[i] > max_product:
+                max_product = arr[i]
+            elif arr[i] < min_product:
+                min_product = arr[i]
+            result = max(result * max_product, result * min_product)
+            if result < 0:
+                result = max(result * arr[i], max_product * min_product)
+        return result
+```
+
+This function works by iterating through the array and keeping track of the maximum and minimum values seen so far. It also keeps track of the current result, which is the maximum product of the current subsequence. If the current number is greater than the maximum product seen so far, it becomes the new maximum product. If the current number is less than the minimum product seen so far, it becomes the new minimum product. The result is updated to be the maximum of the current result and the maximum product times the minimum product. If the result is negative, it is updated to be the maximum of the current result and the maximum product times the minimum product. This ensures that the result is always positive. Finally, the function returns the maximum of the result and the maximum product seen so far. This approach works because the maximum product of an increasing subsequence is either the current number or the maximum product times the minimum product seen so far. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    max_product = arr[0]
+    min_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] > 0:
+            max_product = max(max_product, arr[i], arr[i] * max_product, arr[i] * min_product)
+            min_product = min(min_product, arr[i], arr[i] * max_product, arr[i] * min_product)
+        else:
+            max_product = max(max_product, arr[i], arr[i] * min_product, arr[i] * max_product)
+            min_product = min(min_product, arr[i], arr[i] * min_product, arr[i] * max_product)
+    return max_product
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if not arr:
+        return 0
+
+    max_product = arr[0]
+    current_product = arr[0]
+
+    for i in range(1, len(arr)):
+        current_product = max(arr[i], current_product * arr[i])
+        max_product = max(max_product, current_product)
+
+    return max_product
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0] * arr[1], arr[0], arr[1])
+
+    max_product_arr = [0] * len(arr)
+    max_product_arr[0] = arr[0]
+    max_product_arr[1] = max(arr[0] * arr[1], arr[0], arr[1])
+
+    for i in range(2, len(arr)):
+        max_product_arr[i] = max(max_product_arr[i - 1] * arr[i], arr[i])
+
+    return max(max_product_arr)
+
+
+if __name__ == "__main__":
+    assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+    assert max_product([10, 22, 9, 33, 21, 50, 41, 60, 80]) == 1860400
+    assert max_product([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 3628800
+    assert max_product([10, 22, 9, 33, 21, 50, 41, 60, 80, 1]) == 2432902008176640000
+    assert max_product([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == 1307674368000
+    assert max_product([1, 2, 3, 4, 5, </code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    if len(nums) == 0:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+    max_so_far = nums[0]
+    min_so_far = nums[0]
+    max_product_so_far = nums[0]
+    for i in range(1, len(nums)):
+        max_so_far = max(max_so_far * nums[i], nums[i], min_so_far * nums[i])
+        min_so_far = min(min_so_far * nums[i], nums[i], max_so_far)
+        max_product_so_far = max(max_product_so_far, max_so_far)
+    return max_product_so_far
+
+
+def max_product_dp(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    if len(nums) == 0:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+    max_so_far = nums[0]
+    min_so_far = nums[0]
+    max_product_so_far = nums[0]
+    dp = [0] * len(nums)
+    dp[0] = nums[0]
+    for i in range(1, len(nums)):
+        dp[i] = max(max_so_far * nums[i], nums[i], min_so_far * nums[i])
+        max_so_far = max(max_so_far, dp[i])
+        min_so_far = min(min_so_far, dp[i])
+        max_product_so_far = max(max_product_so_far, max_so_far)
+    return max_product_so_far
+
+
+def max_product_dp_space_optimized(nums):
+    </code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) == 1:
+        return arr[0]
+    max_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] > max_product:
+            max_product = arr[i]
+        elif arr[i] < max_product:
+            max_product *= arr[i]
+    return max_product
+
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if len(arr) == 0:
+        return 0
+    max_product = arr[0]
+    min_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+    return max(max_product, min_product)
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+```
+
+This Python script defines a function `max_product` that takes an array of integers as input and returns the maximum product that can be formed by multiplying numbers of an increasing subsequence of that array. The function uses two variables `max_product` and `min_product` to keep track of the maximum and minimum products seen so far. It iterates over the array and updates `max_product` and `min_product` accordingly. Finally, it returns the maximum of `max_product` and `min_product`. The assert statement at the end checks if the function works correctly for the given input.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    max_product = 1
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[j] > arr[i]:
+                max_product = max(max_product, arr[j]*arr[i])
+    return max_product
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+assert max_product([3, 100, 4, 5, 150, 6, 100, 6]) == 3000
+assert max_product([3, 100, 4, 5, 150, 6, 100, 6, 100, 6]) == 3000
+assert max_product([3, 100, 4, 5, 150, 6, 100, 6, 100, 6, 100, 6, 100, 6]) == 3000
+assert max_product([3, 100, 4, 5, 150, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6, 100, 6</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if len(arr) == 0:
+        return 0
+
+    max_prod = arr[0]
+    curr_max = arr[0]
+    curr_min = arr[0]
+
+    for i in range(1, len(arr)):
+        curr_num = arr[i]
+        if curr_num > curr_max:
+            curr_max = curr_num
+        elif curr_num < curr_min:
+            curr_min = curr_num
+
+        max_prod = max(max_prod, curr_max * curr_num, curr_min * curr_num)
+
+    return max_prod
+
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(arr):
+    if not arr:
+        return 0
+
+    n = len(arr)
+    max_so_far = arr[0]
+    max_product = arr[0]
+
+    for i in range(1, n):
+        if arr[i] >= max_so_far:
+            max_so_far = arr[i]
+        else:
+            max_product = max(max_product, max_so_far * arr[i])
+            max_so_far = arr[i]
+
+    return max(max_product, max_so_far)
+
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+def max_product(arr):
+    n = len(arr)
+    max_product = 1
+    dp = [arr[0]]
+    for i in range(1, n):
+        max_product = max(max_product, arr[i] * dp[-1])
+        while i > 0 and arr[i] < dp[-1]:
+            dp.pop()
+        dp.append(arr[i])
+    return max_product
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+
+def max_product(arr):
+    max_product = 0
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            product = arr[i] * arr[j]
+            if product > max_product:
+                max_product = product
+    return max_product
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def max_product(arr):
+    """
+    Find the maximum product formed by multiplying numbers of an increasing subsequence of the given array.
+
+    Args:
+        arr (list): A list of integers.
+
+    Returns:
+        int: The maximum product formed by multiplying numbers of an increasing subsequence.
+    """
+    if not arr:
+        return 0
+
+    max_so_far = arr[0]
+    min_val = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < min_val:
+            min_val = arr[i]
+        elif arr[i] > max_so_far:
+            prev_max = max_so_far
+            max_so_far = max(max_so_far * arr[i], min_val * arr[i])
+            min_val = min(min_val, prev_max)
+
+    return max_so_far
+
+# Test case
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(nums):
+    max_product = 1
+    max_product_sequence = []
+    for num in nums:
+        if num > max_product:
+            max_product *= num
+            max_product_sequence.append(num)
+    return max_product, max_product_sequence
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+def max_product(arr):
+    max_product = 1
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            product = 1
+            for k in range(i, j+1):
+                product *= arr[k]
+            max_product = max(max_product, product)
+    return max_product
+
+print(max_product([3, 100, 4, 5, 150, 6]))
+/Arrays/max_sum_subarray.py
+"""
+Given an array of integers, find the maximum sum of a subarray within the array.
+
+Example:
+
+Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+"""
+
+def max_sum_subarray(arr):
+    max_sum = arr[0]
+    current_sum = arr[0]
+    for i in range(1, len(arr)):
+        current_sum = max(arr[i], current_sum + arr[i])
+        max_sum = max(max_sum, current_sum)
+    return max_sum
+
+print(max_sum_subarray([-2,1,-3,4,-1,2,1,-5,4]))
+/Arrays/max_sum_subarray_k.py
+"""
+Given an array of integers and a number k, find the maximum sum of k consecutive elements in the array.
+
+Example:
+
+Input: [2, 1, 5, 1, 3, 2], k=3
+Output: 9
+Explanation: Subarray with maximum sum is [5, 1, 3].
+"""
+
+def max_sum_subarray_k(arr, k):
+    max_sum = 0
+    for i in range(k):
+        max_sum += arr[i]
+    current_sum = max_sum
+    for i in range(k, len(arr)):
+        current_sum = max(arr[i], current_sum + arr[i])
+        max_sum = max(max_sum, current_sum)
+    return max_sum
+
+print(max_sum_subarray_k([</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_product(nums):
+    if not nums:
+        return 0
+    max_product = nums[0]
+    min_product = nums[0]
+    max_result = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(nums[i], max_product * nums[i])
+        min_product = min(nums[i], min_product * nums[i])
+
+        max_result = max(max_result, max_product)
+
+    return max_result
+
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.
+assert max_product([3, 100, 4, 5, 150, 6]) == 3000
+"""
+
+
+def max_product(arr):
+    if not arr:
+        return 0
+    dp = [1] * len(arr)
+    for i in range(1, len(arr)):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                dp[i] = max(dp[i], arr[i] * arr[j] * dp[j])
+    return max(dp)
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def max_product(arr):
+    n = len(arr)
+    if n < 2:
+        return None
+
+    max_ending_here = max_ending_at_i = arr[0]
+    min_ending_here = min_ending_at_i = arr[0]
+    max_product_so_far = arr[0]
+
+    for i in range(1, n):
+        temp = max(arr[i], max_ending_here * arr[i], min_ending_here * arr[i])
+        min_ending_here = min(arr[i], max_ending_here * arr[i], min_ending_here * arr[i])
+        max_ending_here = temp
+        max_product_so_far = max(max_product_so_far, max_ending_at_i)
+
+    return max_product_so_far
+
+# Test the function
+print(max_product([3, 100, 4, 5, 150, 6]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

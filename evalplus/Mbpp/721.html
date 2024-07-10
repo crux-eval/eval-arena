@@ -1,0 +1,1749 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/721 </h1>
+<pre><code> """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def maxAverageOfPath(cost):
+  N = len(cost)
+  dp = [[0 for _ in range(N + 1)] for _ in range(N + 1)]
+  dp[0][0] = cost[0][0]
+  for i in range(1, N):
+    dp[i][0] = dp[i - 1][0] + cost[i][0]
+  for j in range(1, N):
+    dp[0][j] = dp[0][j - 1] + cost[0][j]
+  for i in range(1, N):
+    for j in range(1, N):
+      dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + cost[i][j]
+  # all paths are of length 2 * N - 1, so just divide by that
+  return dp[N - 1][N - 1] / (2 * N - 1)
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[[1, 2, 3], [6, 5, 4], [7, 3, 9]]], [[[2, 3, 4], [7, 6, 5], [8, 4, 10]]], [[[3, 4, 5], [8, 7, 6], [9, 5, 11]]], [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[[0, 0, 0], [0, 0, 0], [0, 0, 0]]], [[[0, 0, 0], [0, 0, 0], [0, 0, -1]]], [[[0, 0, 0], [0, 0, 1], [0, 0, -1]]], [[[0, 0, 0], [0, 0, -1], [0, 0, -1]]], [[[0, 0, -1], [0, 0, -1], [0, 0, -1]]], [[[0, 0], [0, 0]]], [[[-1, 0, 0], [-1, 0, 0], [0, 0, -1]]], [[[0, 1, 0], [0, 0, -1], [0, 0, -1]]], [[[1, 0, 0], [1, 0, 0], [1, 0, 0]]], [[[0, 0, 0], [-1, 0, 0], [0, 0, -1]]], [[[1, 1, -1, 0], [1, 1, -1, 0], [1, 1, -1, 0], [1, 1, -1, 0]]], [[[1, 1, -1, 0, 1], [1, 1, -1, 0, 1], [1, 1, -1, 0, 1], [1, 1, -1, 0, 1], [1, 1, -1, 0, 1]]], [[[1, 0], [1, 0]]], [[[0, 0, 0], [-1, 0, 0], [0, 0, 0]]], [[[0, -1, 0], [0, -1, 0], [0, 0, -1]]], [[[-1, 1, 0], [-1, 1, 0], [-1, 1, 0]]], [[[1, 1, -1, 0, -1], [1, 1, -1, 0, -1], [1, 1, -1, 0, -1], [1, 1, -1, 0, -1], [1, 1, -1, 0, -1]]], [[[0, 0, 0], [1, 0, -1], [1, 0, -1]]], [[[-1, 0, -1], [-1, 0, -1], [0, 0, -1]]], [[[0, 0, -1], [-1, 0, 0], [0, 0, -1]]], [[[1, -1, -1], [1, -1, -1], [1, -1, -1]]], [[[-1, 0, 0], [0, 0, -1], [-1, 0, 0]]], [[[1, 1, -1, -1, 0, 1], [1, 1, -1, -1, 0, 1], [1, 1, -1, -1, 0, 1], [1, 1, -1, -1, 0, 1], [1, 1, -1, -1, 0, 1], [1, 1, -1, -1, 0, 1]]], [[[0, -1, 0], [0, -1, 0], [0, -1, 0]]], [[[1, 1, -1, -1, 0, 0, 1], [1, 1, -1, -1, 0, 0, 1], [1, 1, -1, -1, 0, 0, 1], [1, 1, -1, -1, 0, 0, 1], [1, 1, -1, -1, 0, 0, 1], [1, 1, -1, -1, 0, 0, 1], [1, 1, -1, -1, 0, 0, 1]]], [[[1, 0, -1], [1, 0, -1], [1, 0, -1]]], [[[0, -1, 0, 0], [0, -1, 0, 0], [0, -1, 0, -1], [0, -1, 0, 0]]], [[[0, 1, 0], [0, 1, 0], [0, 1, 0]]], [[[1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1], [1, 1, -1, -1, 0, 0, 1, -1]]], [[[0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1]]], [[[1, 1, 0], [0, 0, -1], [0, 0, -1]]], [[[1, 1, -1, 1, 0], [1, 1, -1, 1, 0], [1, 1, -1, 1, 0], [1, 1, -1, 1, 0], [1, 1, -1, 1, 0]]], [[[0, -1, 1, 0], [0, -1, 1, 0], [0, -1, 1, 0], [0, -1, 1, 0]]], [[[0, 1, 0], [0, 0, -1], [0, 1, 0]]], [[[1, 1, -1, 0, 1, -1], [1, 1, -1, 0, 1, -1], [1, 1, -1, 0, 1, -1], [1, 1, -1, 0, 1, -1], [1, 1, -1, 0, 1, -1], [1, 1, -1, 0, 1, -1]]], [[[1, -1, 0, -1], [1, -1, 0, -1], [1, -1, 0, -1], [1, -1, 0, -1]]], [[[0, -1, 0, 0], [0, -1, 0, 0], [0, -1, 0, 0], [0, -1, 0, 0]]], [[[1, -1, -1, 1], [1, -1, -1, 1], [1, -1, -1, 1], [1, -1, -1, 1]]], [[[1, 0, -1, 1, 0], [1, 0, -1, 1, 0], [1, 0, -1, 1, 0], [1, 0, -1, 1, 0], [1, 0, -1, 1, 0]]], [[[0, 1, -1, 0], [0, 1, -1, 0], [0, 1, -1, 0], [0, 1, -1, 0]]], [[[1, 1, -1, -1, 0, 1, -1], [1, 1, -1, -1, 0, 1, -1], [1, 1, -1, -1, 0, 1, -1], [1, 1, -1, -1, 0, 1, -1], [1, 1, -1, -1, 0, 1, -1], [1, 1, -1, -1, 0, 1, -1], [1, 1, -1, -1, 0, 1, -1]]], [[[1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1], [1, 1, -1, -1, 1, 0, 0, 1, -1]]], [[[1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0], [1, 1, -1, -1, 0, 2, 1, 0]]], [[[1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0], [1, 1, -1, 0, 2, 2, 1, 0]]], [[[1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1], [1, 1, -1, -1, 0, 2, 1, -1]]], [[[1, -1, -1, 1, 1], [1, -1, -1, 1, 1], [1, -1, -1, 1, 1], [1, -1, -1, 1, 1], [1, -1, -1, 1, 1]]], [[[0, 0, 0], [0, 0, 0], [0, 0, -2]]], [[[0, -1, 0, -1], [0, -1, 0, -1], [0, -1, 0, -1], [0, -1, 0, -1]]], [[[1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0]]], [[[1, 1, -1, 1, 0, 1], [1, 1, -1, 1, 0, 1], [1, 1, -1, 1, 0, 1], [1, 1, -1, 1, 0, 1], [1, 1, -1, 1, 0, 1], [1, 1, -1, 1, 0, 1]]], [[[0, -1, -2, 0], [0, -1, -2, 0], [0, -1, -2, 0], [0, -1, -2, 0]]], [[[0, -1, 0, -1, 0], [0, -1, 0, -1, 0], [0, -1, 0, -1, 0], [0, -1, 0, -1, 0], [0, -1, 0, -1, 0]]], [[[1, 1, -1, 0, 1, -1, 0], [1, 1, -1, 0, 1, -1, 0], [1, 1, -1, 0, 1, -1, 0], [1, 1, -1, 0, 1, -1, 0], [1, 1, -1, 0, 1, -1, 0], [1, 1, -1, 0, 1, -1, 0], [1, 1, -1, 0, 1, -1, 0]]], [[[1, 0, -1, 0, -1], [1, 0, -1, 0, -1], [1, 0, -1, 0, -1], [1, 0, -1, 0, -1], [1, 0, -1, 0, -1]]], [[[-1, 0, 0], [0, 0, -1], [0, 0, -1]]], [[[1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0], [1, 1, -1, -1, 0, 0, 2, 1, 0]]], [[[0, 0, 0], [0, 0, -2], [0, 0, 0]]], [[[1, 0, -1, 1, 0, 1], [1, 0, -1, 1, 0, 1], [1, 0, -1, 1, 0, 1], [1, 0, -1, 1, 0, 1], [1, 0, -1, 1, 0, 1], [1, 0, -1, 1, 0, 1]]], [[[0, 1, -1, 1], [0, 1, -1, 1], [0, 1, -1, 1], [0, 1, -1, 1]]], [[[1, 1, 1, 0], [1, 1, 1, 0], [1, 1, 1, 0], [1, 1, 1, 0]]], [[[0, -1, -1, 0], [0, -1, -1, 0], [0, -1, -1, 0], [0, -1, -1, 0]]], [[[1, -1], [1, -1]]], [[[1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1], [1, 1, -1, -1, 0, 0, 2, 1, 0, -1]]], [[[1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0], [1, 1, -1, -1, 0, -1, 2, 1, 0]]], [[[0, -1, -1, 0, 0], [0, -1, -1, 0, 0], [0, -1, -1, 0, 0], [0, -1, -1, 0, 0], [0, -1, -1, 0, 0]]], [[[1, -1, -1, 0, 1, -1], [1, -1, -1, 0, 1, -1], [1, -1, -1, 0, 1, -1], [1, -1, -1, 0, 1, -1], [1, -1, -1, 0, 1, -1], [1, -1, -1, 0, 1, -1]]], [[[1, 1, -2, 0, -1, -1], [1, 1, -2, 0, -1, -1], [1, 1, -2, 0, -1, -1], [1, 1, -2, 0, -1, -1], [1, 1, -2, 0, -1, -1], [1, 1, -2, 0, -1, -1]]], [[[1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1], [1, -1, -1, -1, 0, 1, -1, 1]]], [[[2, 1, -1, 0, -1], [2, 1, -1, 0, -1], [2, 1, -1, 0, -1], [2, 1, -1, 0, -1], [2, 1, -1, 0, -1]]], [[[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]]], [[[1, 1, 1, -2, -1, -1, -1], [1, 1, 1, -2, -1, -1, -1], [1, 1, 1, -2, -1, -1, -1], [1, 1, 1, -2, -1, -1, -1], [1, 1, 1, -2, -1, -1, -1], [1, 1, 1, -2, -1, -1, -1], [1, 1, 1, -2, -1, -1, -1]]], [[[0, -1, 0, 1], [0, -1, 0, 1], [0, -1, 0, 1], [0, -1, 0, 1]]], [[[1, 1, 2], [1, 1, 2], [1, 1, 2]]], [[[1, -2, -2, -1, 0, 1], [1, -2, -2, -1, 0, 1], [1, -2, -2, -1, 0, 1], [1, -2, -2, -1, 0, 1], [1, -2, -2, -1, 0, 1], [1, -2, -2, -1, 0, 1]]], [[[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]]], [[[0, 2, 0], [-1, 0, 0], [0, 0, -1]]], [[[1, 1, 2, 1], [1, 1, 2, 1], [1, 1, 2, 1], [1, 1, 2, 1]]], [[[1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1]]], [[[0, -1, 0, 0, 0], [0, -1, 0, 0, 0], [0, -1, 0, 0, 0], [0, -1, 0, 0, 0], [0, -1, 0, 0, 0]]], [[[2, 0, -1, -1, 0], [2, 0, -1, -1, 0], [2, 0, -1, -1, 0], [2, 0, -1, -1, 0], [2, 0, -1, -1, 0]]], [[[1, 0, 0, 0, 0], [1, 0, 0, 0, 0], [1, 0, 0, 0, 0], [1, 0, 0, 0, 0], [1, 0, 0, 0, 0]]], [[[0, 0, 0], [-1, 0, 0], [-1, 0, 0]]], [[[1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1], [1, 2, 1, 1, -2, -1, -1, -1]]], [[[0, 1, -1, 1, 0], [0, 1, -1, 1, 0], [0, 1, -1, 1, 0], [0, 1, -1, 1, 0], [0, 1, -1, 1, 0]]], [[[0, -1, 0, 1], [0, -1, 0, 1], [0, -1, 0, -1], [0, -1, 0, 1]]], [[[-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1], [-1, 1, -2, -2, -1, 0, -1, 1]]], [[[0, -1, 0, -1, -1, 0], [0, -1, 0, -1, -1, 0], [0, -1, 0, -1, -1, 0], [0, -1, 0, -1, -1, 0], [0, -1, 0, -1, -1, 0], [0, -1, 0, -1, -1, 0]]], [[[2, -1, 0, 0], [2, -1, 0, 0], [0, -1, 0, -1], [2, -1, 0, 0]]], [[[-1, 0, 0], [-1, 0, 0], [2, 0, -1]]], [[[0, -1, 0, 0, 0, 0], [0, -1, 0, 0, 0, 0], [0, -1, 0, 0, 0, 0], [0, -1, 0, 0, 0, 0], [0, -1, 0, 0, 0, 0], [0, -1, 0, 0, 0, 0]]], [[[1, 1, 1, -1, 1, 0], [1, 1, 1, -1, 1, 0], [1, 1, 1, -1, 1, 0], [1, 1, 1, -1, 1, 0], [1, 1, 1, -1, 1, 0], [1, 1, 1, -1, 1, 0]]], [[[1, 1, 1, -1, 0, 1], [1, 1, 1, -1, 0, 1], [1, 1, 1, -1, 0, 1], [1, 1, 1, -1, 0, 1], [1, 1, 1, -1, 0, 1], [1, 1, 1, -1, 0, 1]]], [[[0, -1, 1, -2, 0], [0, -1, 1, -2, 0], [0, -1, 1, -2, 0], [0, -1, 1, -2, 0], [0, -1, 1, -2, 0]]], [[[2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1]]], [[[1, -1, -1, 1, 1, 1], [1, -1, -1, 1, 1, 1], [1, -1, -1, 1, 1, 1], [1, -1, -1, 1, 1, 1], [1, -1, -1, 1, 1, 1], [1, -1, -1, 1, 1, 1]]], [[[1, 1, -2, 0, 2, -1, -1], [1, 1, -2, 0, 2, -1, -1], [1, 1, -2, 0, 2, -1, -1], [1, 1, -2, 0, 2, -1, -1], [1, 1, -2, 0, 2, -1, -1], [1, 1, -2, 0, 2, -1, -1], [1, 1, -2, 0, 2, -1, -1]]], [[[0, -1, 0, -1, 0, 0], [0, -1, 0, -1, 0, 0], [0, -1, 0, -1, 0, 0], [0, -1, 0, -1, 0, 0], [0, -1, 0, -1, 0, 0], [0, -1, 0, -1, 0, 0]]], [[[0, 1, -1, 0, 0], [0, 1, -1, 0, 0], [0, 1, -1, 0, 0], [0, 1, -1, 0, 0], [0, 1, -1, 0, 0]]], [[[0, 2, 0], [-1, 0, 0], [0, 2, 0]]], [[[0, -1, -1, 0, -1], [0, -1, -1, 0, -1], [0, -1, -1, 0, -1], [0, -1, -1, 0, -1], [0, -1, -1, 0, -1]]], [[[0, -1, 0], [0, 0, -1], [0, 0, -1]]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    # Write your code here
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = matrix[i][i]
+    for i in range(n - 1):
+        dp[i][i + 1] = matrix[i][i + 1]
+    for i in range(n - 1):
+        dp[i + 1][i] = matrix[i + 1][i]
+    for i in range(2, n):
+        for j in range(i + 1):
+            dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - 1]) + matrix[i][j]
+    return dp[n - 1][n - 1] / (n * n)
+
+
+if __name__ == "__main__":
+    print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))
+    print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [10, 11, 12]]))
+    print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [10, 11, 12], [13, 14, 15]]))
+    print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [10, 11, 12], [13, 14, 15], [16, 17, 18]]))
+    print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_average_path(matrix):
+    if not matrix or not matrix[0]:
+        return 0
+
+    n = len(matrix)
+
+    # Initialize the dp array with -inf
+    dp = [[-float('inf')] * n for _ in range(n)]
+
+    # Base case: the first cell
+    dp[0][0] = matrix[0][0]
+
+    # Calculate the maximum average for the first row and first column
+    for i in range(1, n):
+        dp[i][0] = dp[i - 1][0] + matrix[i][0]
+    for j in range(1, n):
+        dp[0][j] = dp[0][j - 1] + matrix[0][j]
+
+    # Calculate the maximum average for the rest of the cells
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+
+    # Calculate the maximum average
+    max_average = float('-inf')
+    for i in range(n):
+        for j in range(n):
+            max_average = max(max_average, dp[i][j] / (n - i + j))
+
+    return max_average
+
+assert max_average_path([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def maxAverageOfPath(cost: list[list[int]]) -> float:
+    N = len(cost)
+    dp = [[0] * N for _ in range(N)]
+    dp[0][0] = cost[0][0]
+    for i in range(1, N):
+        dp[i][0] = dp[i - 1][0] + cost[i][0]
+    for j in range(1, N):
+        dp[0][j] = dp[0][j - 1] + cost[0][j]
+    for i in range(1, N):
+        for j in range(1, N):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + cost[i][j]
+    return dp[N - 1][N - 1] / (2 * N - 1)
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem:
+
+```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    return dp[n-1][n-1] / (2*n - 1)</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / (n * n)
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+def maxAverageOfPath(matrix):
+    N = len(matrix)
+    dp = [[0] * N for _ in range(N)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, N):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for j in range(1, N):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+    for i in range(1, N):
+        for j in range(1, N):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[N-1][N-1] / (N * N)</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python code to solve the given problem, wrapped in a markdown block:
+
+```python
+def maxAverageOfPath(grid):
+    m, n = len(grid), len(grid[0])
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Initialize the first cell
+    dp[1][1] = grid[0][0]
+    
+    # Fill the dp table
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if i == 1 and j == 1:
+                continue
+            
+            # Compute the sum and count of cells in the path
+            sum_from_top = dp[i - 1][j] + grid[i - 1][j - 1]
+            count_from_top = (i - 1) * n + j
+            
+            sum_from_left = dp[i][j - 1] + grid[i - 1][j - 1]
+            count_from_left = i * (j - 1) + 1
+            
+            # Choose the path with the maximum average
+            if sum_from_top * count_from_left > sum_from_left * count_from_top:
+                dp[i][j] = sum_from_top
+            else:
+                dp[i][j] = sum_from_left
+    
+    # Return the maximum average
+    return dp[m][n] / (m * n)
+
+# Test the function
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List
+
+def maxAverageOfPath(matrix: List[List[int]]) -> float:
+    if not matrix or not matrix[0]:
+        return 0
+
+    n = len(matrix)
+    # Initialize memo table
+    dp = [[0] * n for _ in range(n)]
+
+    # Initialize base case
+    dp[0][0] = matrix[0][0]
+
+    # Fill in the first row
+    for j in range(1, n):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+
+    # Fill in the first column
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+
+    # Fill in the rest of the table
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    # Calculate the maximum average
+    total_cost, visited_cells = dp[n-1][n-1], n*n
+    return total_cost / visited_cells
+
+# Test case
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution to the problem:
+
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    
+    max_avg = (dp[n-1][n-1]) / (n-1)
+    for i in range(n-2, -1, -1):
+        for j in range(n-2, -1, -1):
+            if i == n-2:
+                avg = dp[i][j] / (n-j-1)
+                max_avg = max(max_avg, avg)
+            elif j == n-2:
+                avg = dp[i][j] / (n-i-1)
+                max_avg = max(max_avg, avg)
+            else:
+                avg = dp[i][j] / min(n-i-1, n-j-1)
+                max_avg = max(max_avg, avg)
+    
+    return max_avg
+
+
+# Test the function
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]])) # Output: 5.2
+
+
+Explanation:
+
+The idea is to use dynamic programming to compute the maximum cost of a path starting from the top-left cell and ending on each cell in the bottom row and each cell in the rightmost column. We can do this by keeping track of the maximum cost of the path ending at each cell using two arrays, one for the leftmost column and one for the top row. We can then iterate through the rest of the cells and compute the maximum cost of the path ending at each cell by taking the maximum of the cost of the path ending at the cell above and the cell to the left. Finally, we iterate through the bottom row and rightmost column and compute the average cost of the paths ending at each cell and update the maximum average as necessary. We take the minimum of the remaining rows and columns to avoid double counting cells. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    N = len(matrix)
+    dp = [[0] * N for _ in range(N)]
+    dp[-1][-1] = matrix[-1][-1]
+
+    for i in range(N - 1, -1, -1):
+        for j in range(N - 1, -1, -1):
+            if i < N - 1:
+                dp[i][j] = max(dp[i][j], (dp[i + 1][j] * (j - i) + matrix[i][j]) / (j - i + 1))
+            if j < N - 1:
+                dp[i][j] = max(dp[i][j], (dp[i][j + 1] * (N - 1 - i - j) + matrix[i][j]) / (N - i - j))
+
+    return dp[0][0]
+
+# Test the function
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / n
+
+
+if __name__ == "__main__":
+    assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    max_avg = (matrix[0][0] + matrix[n-1][n-1]) / 2.0
+    for i in range(n):
+        for j in range(n):
+            if i == 0 or j == 0:
+                avg = (matrix[i][j] + max_avg * (i + j)) / (i + j + 1)
+                max_avg = max(max_avg, avg)
+            elif i > 0 and j > 0:
+                avg = (matrix[i][j] + max_avg * (i + j - 1)) / (i + j)
+                max_avg = max(max_avg, avg)
+    return max_avg
+
+# Test case
+matrix = [[1, 2, 3], [6, 5, 4], [7, 3, 9]]</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python solution using dynamic programming. The idea is to calculate the maximum total cost for each cell, considering the maximum total cost from the cell above and to the left. Then, we calculate the maximum average cost for each cell by dividing the maximum total cost by the number of cells in the path to reach that cell.
+
+```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)] # dp[i][j] is the maximum total cost to reach cell (i, j)
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    max_avg = matrix[0][0]
+    for i in range(n):
+        for j in range(n):
+            avg = dp[i][j] / (i + j + 1)
+            max_avg = max(max_avg, avg)
+    return max_avg
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+```
+This code will return the maximum average cost over all possible paths from the top-left cell to the bottom-right cell in the given square matrix.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / (n * n)
+
+"""
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the minimum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert minAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 3.0
+"""
+
+def minAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = min(</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0.0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+
+    # Fill the first row
+    for j in range(1, n):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+
+    # Fill the first column
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+
+    # Fill the rest of the matrix
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    # Compute the maximum average
+    max_avg = dp[n-1][n-1] / (n * n)
+    return max_avg
+
+# Test the function
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+import math
+import random
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import os
+import time
+import copy
+import random
+import math
+import numpy as np
+import time
+import matplotlib.</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    """
+    :param matrix: list of lists
+    :return: max average
+    """
+    if not matrix:
+        return 0
+
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][0] = matrix[i][0]
+
+    for j in range(n):
+        dp[0][j] = matrix[0][j]
+
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+
+    return dp[-1][-1] / n
+
+
+def maxAverageOfPath_v2(matrix):
+    """
+    :param matrix: list of lists
+    :return: max average
+    """
+    if not matrix:
+        return 0
+
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][0] = matrix[i][0]
+
+    for j in range(n):
+        dp[0][j] = matrix[0][j]
+
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+
+    return dp[-1][-1] / n
+
+
+def maxAverageOfPath_v3(matrix):
+    """
+    :param matrix: list of lists
+    :return: max average
+    """
+    if not matrix:
+        return 0
+
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][0] = matrix[i][0]
+
+    for j in range(n):
+        dp</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    return dp[-1][-1] / (n*n)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+```
+
+This function uses dynamic programming to solve the problem. The `dp` array stores the maximum cost to reach each cell from the top-left cell. The function then returns the average cost of the path from the top-left cell to the bottom-right cell, which is the value in the `dp` array at the bottom-right cell divided by the total number of cells (`n*n`).
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    total_cost = 0
+    num_cells = 0
+
+    # Calculate the total cost and number of cells visited
+    for i in range(n):
+        for j in range(n):
+            total_cost += matrix[i][j]
+            num_cells += 1
+
+    # Calculate the average cost
+    average_cost = total_cost / num_cells
+
+    # Initialize the maximum average and the path
+    max_average = average_cost
+    max_path = []
+
+    # Iterate through all possible paths
+    for i in range(n):
+        for j in range(n):
+            path = []
+            path.append((i, j))
+
+            # Move right or down
+            while (i + 1 < n and matrix[i + 1][j] == matrix[i][j]) or (j + 1 < n and matrix[i][j + 1] == matrix[i][j]):
+                path.append((i + 1, j))
+                i += 1
+                j += 1
+
+            # Add the cost of the path to the total cost
+            total_cost += sum(matrix[i][j] for i, j in path)
+            num_cells += len(path)
+
+            # Update the maximum average if necessary
+            average_cost = total_cost / num_cells
+            if average_cost > max_average:
+                max_average = average_cost
+                max_path = path
+
+    return max_average, max_path
+
+
+# Test the function
+matrix = [[1, 2, 3], [6, 5, 4], [7, 3, 9]]
+max_average, max_path = maxAverageOfPath(matrix)
+print(f"The maximum average over all existing paths is: {max_average}")
+print(f"The path with the maximum average is: {max_path}")</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    m, n = len(matrix), len(matrix[0])
+    dp = [[0 for _ in range(n)] for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[m-1][n-1] / (m*n)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10]]) == 5.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13]]) == 5.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16]]) == 5.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16], [17, 18, 19]]) == 5.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16],</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    """
+    Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+    assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+    """
+    N = len(matrix)
+    max_avg = float('-inf')
+    for i in range(N):
+        for j in range(N):
+            if i == j == 0:
+                continue
+            path_cost = matrix[i][j]
+            path_len = 2
+            for k in range(min(i, j), N):
+                if i == k:
+                    path_cost += matrix[i][j - k + i]
+                    path_len += j - k + i
+                else:
+                    path_cost += matrix[k][j - k + i]
+                    path_len += j - k + i
+            if path_len > max_avg:
+                max_avg = path_len
+    return max_avg</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+def max_average_path(matrix):
+    N = len(matrix)
+    dp = [[0] * N for _ in range(N)]
+    dp[-1][-1] = matrix[-1][-1] / 1
+
+    for i in range(N - 1, -1, -1):
+        for j in range(N - 1, -1, -1):
+            dp[i][j] = matrix[i][j] / 1 + min(dp[i + 1][j], dp[i][j + 1])
+
+    return dp[0][0]
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    def maxAveragePath(matrix, row, col, path_cost, path_length):
+        if row == len(matrix) - 1 and col == len(matrix[0]) - 1:
+            return path_cost / path_length
+
+        right = maxAveragePath(matrix, row, col + 1, path_cost + matrix[row][col + 1], path_length + 1) if col + 1 < len(matrix[0]) else float('-inf')
+        down = maxAveragePath(matrix, row + 1, col, path_cost + matrix[row + 1][col], path_length + 1) if row + 1 < len(matrix) else float('-inf')
+
+        return max(right, down)
+
+    return maxAveragePath(matrix, 0, 0, matrix[0][0], 1)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0 for j in range(n)] for i in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for j in range(1, n):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    max_avg = float('-inf')
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            avg = (dp[i][j] - dp[i-1][j] - dp[i][j-1] + dp[i-1][j-1]) / (n-1)
+            max_avg = max(max_avg, avg)
+    return max_avg
+```
+
+Explanation:
+
+We use dynamic programming to solve this problem. We create a 2D array `dp` of size `n` x `n` to store the maximum cost of reaching the cell `(i, j)` from the top-left cell. We initialize the first row and first column of `dp` with the cost of reaching the cell from the top-left cell. Then, we use the following recurrence relation to fill the rest of the `dp` array:
+
+```
+dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+```
+
+This means that the maximum cost of reaching the cell `(i, j)` from the top-left cell is either the maximum cost of reaching the cell `(i-1, j)` from the top-left cell or the maximum cost of reaching the cell `(i, j-1)` from the top-left cell, plus the cost of reaching the cell `(i, j)` itself.
+
+Finally, we iterate over all cells of the `dp` array and compute the average cost of reaching the cell `(i, j)` from the top-left cell. We take into account that the path must start from the top-left cell and end on the bottom-right cell, so we exclude the cells on the first row and first column of the `dp` array. We return the maximum average cost of any path.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    """
+    O(n)
+    O(n)
+    """
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[-1][-1] / n
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is a Python solution using dynamic programming:
+
+```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0.0]*n for _ in range(n)]
+    dp[0][0] = float(matrix[0][0])
+
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    return dp[-1][-1] / (2*n - 1)
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))
+```
+
+This solution works by initializing a dynamic programming (dp) table with the same dimensions as the input matrix. The dp table is filled in a bottom-up manner, where each cell (i, j) is the maximum average path that can be obtained by reaching cell (i, j) from the top-left cell. The maximum average path to reach cell (i, j) is the maximum of the maximum average path to reach cell (i-1, j) and cell (i, j-1), plus the cost of cell (i, j). The maximum average path to reach the bottom-right cell is then the value in the bottom-right cell of the dp table, divided by the total number of cells in the path (which is 2*n - 1).
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: float
+    """
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i - 1][0] + matrix[i][0]
+    for j in range(1, n):
+        dp[0][j] = dp[0][j - 1] + matrix[0][j]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+    return dp[n - 1][n - 1] / (n * n)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    
+    return dp[n-1][n-1] / (n*n)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    m, n = len(matrix), len(matrix[0])
+    dp = [[0] * n for _ in range(m)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, m):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for j in range(1, n):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[m-1][n-1] / (m + n - 1)</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    
+    max_avg = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if i == 0 and j == 0:
+                max_avg = matrix[i][j]
+            else:
+                if i == 0:
+                    max_avg = max(max_avg, matrix[i][j] + matrix[i][j-1])
+                elif j == 0:
+                    max_avg = max(max_avg, matrix[i][j] + matrix[i-1][j])
+                else:
+                    max_avg = max(max_avg, matrix[i][j] + max(matrix[i][j-1], matrix[i-1][j]))
+    return max_avg / (len(matrix) * len(matrix[0]))
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    m, n = len(matrix), len(matrix[0])
+    dp = [[0] * n for _ in range(m)]
+
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    return dp[m-1][n-1] / (m + n - 1)
+
+# Test the function
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_average_of_path(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+
+    # Initialize first column
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+
+    # Initialize first row
+    for j in range(1, n):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+
+    # Fill the rest of the dp table
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    # Calculate the maximum average
+    total_cost = dp[n-1][n-1]
+    num_cells = n * n
+    max_average = total_cost / num_cells
+
+    return max_average
+
+
+# Test cases
+assert max_average_of_path([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert max_average_of_path([[1, 2], [3, 4]]) == 3.0
+assert max_average_of_path([[1, 1, 1], [1, 1, 1], [1, 1, 1]]) == 1.0
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / n
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+```
+
+Explanation:
+The problem is asking to find the maximum average of a path in a square matrix. The path starts from the top-left cell and ends on the bottom-right cell, and we can only move right or down. We need to find the path with the maximum average over all existing paths.
+
+To solve this problem, we can use dynamic programming. We create a 2D array `dp` of size `n*n`, where `n` is the size of the matrix. `dp[i][j]` represents the maximum sum of the path that starts from the top-left cell and ends at the cell `(i, j)`. We initialize the first row and the first column of `dp` as the sum of the elements in the first row and the first column of the matrix, respectively. Then, we fill the rest of the `dp` array by comparing the maximum sum of the path that ends at `(i, j)` either from the cell above `(i-1, j)` or from the cell to the left of `(i, j-1)`. Finally, we return the maximum sum of the path that ends at the bottom-right cell divided by `n`.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0.0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[-1][-1] / n
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][0] = matrix[i][0]
+    for j in range(n):
+        dp[0][j] = matrix[0][j]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / n ** 2
+
+
+"""
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][0] = matrix[i][0]
+    for j in range(n):
+        dp[0][j] = matrix[0][j]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / n ** 2
+
+
+"""
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    rows, cols = len(matrix), len(matrix[0])
+    dp = [[0 for _ in range(cols)] for _ in range(rows)]
+    for i in range(rows):
+        for j in range(cols):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[rows-1][cols-1] / (rows * cols)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10]]) == 6.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13]]) == 6.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16]]) == 6.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14, 15, 16], [17, 18, 19]]) == 6.5
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9], [8, 9, 10], [11, 12, 13], [14</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+import numpy as np
+
+def maxAverageOfPath(matrix):
+    N = len(matrix)
+    if N == 0:
+        return 0
+
+    # Create a DP table to store the sum of costs and number of cells visited
+    dp = np.zeros((N, N), dtype=[('sum', 'i4'), ('count', 'i4')])
+    dp[0, 0] = (matrix[0][0], 1)
+
+    # Initialize first row and first column
+    for i in range(1, N):
+        dp[i, 0] = (dp[i-1, 0]['sum'] + matrix[i][0], dp[i-1, 0]['count'] + 1)
+        dp[0, i] = (dp[0, i-1]['sum'] + matrix[0][i], dp[0, i-1]['count'] + 1)
+
+    # Fill the DP table
+    for i in range(1, N):
+        for j in range(1, N):
+            if dp[i-1, j]['sum']/dp[i-1, j]['count'] > dp[i, j-1]['sum']/dp[i, j-1]['count']:
+                dp[i, j] = (dp[i-1, j]['sum'] + matrix[i][j], dp[i-1, j]['count'] + 1)
+            else:
+                dp[i, j] = (dp[i, j-1]['sum'] + matrix[i][j], dp[i, j-1]['count'] + 1)
+
+    # The maximum average is in the bottom-right cell
+    max_sum, count = dp[N-1, N-1]
+    return max_sum / count
+
+# Example usage
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(cost):
+    n = len(cost)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = cost[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + cost[0][i]
+    for j in range(1, n):
+        dp[j][0] = dp[j-1][0] + cost[j][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]
+    return dp[n-1][n-1] / n**2
+</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[-1][-1] / (2*n - 1)
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    N = len(matrix)
+    dp = [[0 for _ in range(N)] for _ in range(N)]
+    dp[0][0] = matrix[0][0]
+
+    for i in range(1, N):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+
+    for i in range(1, N):
+        for j in range(1, N):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    return dp[N-1][N-1] / N
+
+# Test case
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))  # Output: 5.2</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / n
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python script that solves the problem:
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / (n-1)
+
+# Test the function
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]])) # Output: 5.2 </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i - 1][0] + matrix[i][0]
+    for j in range(1, n):
+        dp[0][j] = dp[0][j - 1] + matrix[0][j]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+    return dp[-1][-1] / (n * n)
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    if not matrix or not matrix[0]:
+        return 0
+
+    row, col = len(matrix), len(matrix[0])
+    dp = [[0 for _ in range(col)] for _ in range(row)]
+
+    for i in range(row):
+        for j in range(col):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i][j], dp[i][j-1] + dp[i-1][j] - matrix[i][j])
+
+    return dp[row-1][col-1] / (row + col - 1)</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i - 1] + matrix[0][i]
+        dp[i][0] = dp[i - 1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+    return dp[-1][-1] / (n * n)
+
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    if len(matrix) == 0:
+        return 0
+    if len(matrix) == 1:
+        return matrix[0][0]
+    if len(matrix) == 2:
+        return max(matrix[0][0], matrix[1][0], matrix[0][1], matrix[1][1])
+    
+    dp = [[0 for _ in range(len(matrix[0]))] for _ in range(len(matrix))]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, len(matrix)):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for j in range(1, len(matrix[0])):
+        dp[0][j] = dp[0][j-1] + matrix[0][j]
+    
+    for i in range(1, len(matrix)):
+        for j in range(1, len(matrix[0])):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    
+    return max(dp[-1][-1] / (len(matrix) + len(matrix[0]) - 2), dp[-1][-1] / (len(matrix) - 1), dp[-1][-1] / (len(matrix[0]) - 1))
+
+"""
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the minimum total cost.
+assert minTotalCost([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 13
+"""
+
+def minTotalCost(matrix):
+    if len(matrix) == 0:
+        return 0
+    if len(matrix) == 1:
+        return matrix[0][0]
+    if len(</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = matrix[i][i]
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]) + matrix[i][j]
+    return dp[0][n - 1] / n
+
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = matrix[i][i]
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 1, n):
+            dp[i][j] = max(dp[i][j - 1], dp[i + 1][j]) + matrix[i][j]
+    max_avg = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            avg = dp[i][j] / (j - i + 1)
+            max_avg = max(max_avg, avg)
+    return max_avg
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))
+```
+
+This Python script defines a function `maxAverageOfPath` that takes a square matrix as input and returns the maximum average of all possible paths. The function uses dynamic programming to compute the maximum sum of a sub-matrix that ends at a specific cell, and then calculates the average of each sub-matrix. The maximum average is then returned.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / (n*n)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i - 1] + matrix[0][i]
+        dp[i][0] = dp[i - 1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+    return dp[-1][-1] / (n * n)
+
+
+if __name__ == "__main__":
+    print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    max_avg = -1
+    for i in range(n):
+        for j in range(n):
+            total_cost = 0
+            count = 0
+            for k in range(i, n):
+                total_cost += matrix[k][j]
+                count += 1
+                max_avg = max(max_avg, total_cost / count)
+
+    return max_avg
+
+matrix = [[1, 2, 3], [6, 5, 4], [7, 3, 9]]
+print(maxAverageOfPath(matrix))</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+def max_average_of_path(matrix: list[list[int]]) -> float:
+    N = len(matrix)
+    dp = [[float('-inf') for _ in range(N)] for _ in range(N)]
+
+    for i in range(N):
+        dp[i][i] = matrix[i][i]
+
+    for i in range(N - 1, -1, -1):
+        for j in range(i, N):
+            dp_right = dp[i][j - 1] if j > 0 else 0
+            dp_down = dp[i - 1][j] if i > 0 else 0
+            dp[i][j] = max(dp_right, dp_down, key=lambda x: x != 0) + matrix[i][j]
+
+    max_avg = 0
+    for i in range(N):
+        for j in range(N):
+            if dp[i][j] != float('-inf'):
+                avg = dp[i][j] / (i + 1 - 1) * (j + 1 - 1)
+                max_avg = max(max_avg, avg)
+
+    return max_avg
+
+
+if __name__ == "__main__":
+    matrix = [[1, 2, 3], [6, 5, 4], [7, 3, 9]]
+    assert max_average_of_path(matrix) == 5.2</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: float
+    """
+    if not matrix:
+        return 0
+    n = len(matrix)
+    m = len(matrix[0])
+    dp = [[0 for _ in range(m)] for _ in range(n)]
+    for i in range(n):
+        for j in range(m):
+            if i == 0 and j == 0:
+                dp[i][j] = matrix[i][j]
+            elif i == 0:
+                dp[i][j] = dp[i][j-1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i-1][j] + matrix[i][j]
+            else:
+                dp[i][j] = dp[i-1][j] + dp[i][j-1] - dp[i-1][j-1] + matrix[i][j]
+    return dp[n-1][m-1] / (n * m)
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the problem, wrapped in a markdown block:
+
+```python
+def maxAverageOfPath(matrix):
+    """
+    Given a square matrix, find the path from top-left to bottom-right
+    with the maximum average cost.
+
+    Args:
+        matrix (List[List[int]]): The input square matrix.
+
+    Returns:
+        float: The maximum average cost of the path.
+    """
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+
+    # Fill the dp table
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            elif i == 0:
+                dp[i][j] = dp[i][j - 1] + matrix[i][j]
+            elif j == 0:
+                dp[i][j] = dp[i - 1][j] + matrix[i][j]
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j]
+
+    # Find the maximum average cost
+    max_average = dp[n - 1][n - 1] / (n * 2 - 1)
+
+    return max_average
+
+# Test case</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0] * n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / (n*n)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    """
+    :param matrix: list of list of integers
+    :return: float
+    """
+    # Write your code here
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[n-1][n-1] / (n*n)
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))
+/leetcode/1001-1100/1001-1010/1009.py
+"""
+Given a positive integer n, find the number of non-negative integers less than or equal to n, whose binary representations do NOT contain consecutive ones.
+
+Example 1:
+Input: n = 5
+Output: 5
+Explanation:
+Here are the non-negative integers <= 5 with their corresponding binary representations:
+0 : 0
+1 : 1
+2 : 10
+3 : 11
+4 : 100
+5 : 101
+Among them, only integer 3 disobeys the rule (two consecutive ones) and the other 5 satisfy the rule. 
+"""
+
+def findIntegers(n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    dp = [0, 1, 2]
+    for i in range(3, n+1):
+        dp.append(dp[i-1] + dp[i-2])
+    res = 0
+    for i in range(n+1):
+        if i & (i</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+
+    return dp[n-1][n-1] / (2*n-1)
+
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.
+assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2
+"""
+
+def maxAverageOfPath(matrix):
+    if not matrix:
+        return 0
+    n = len(matrix)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    dp[0][0] = matrix[0][0]
+    for i in range(1, n):
+        dp[i][0] = dp[i-1][0] + matrix[i][0]
+    for i in range(1, n):
+        dp[0][i] = dp[0][i-1] + matrix[0][i]
+    for i in range(1, n):
+        for j in range(1, n):
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + matrix[i][j]
+    return dp[-1][-1] / n**2
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is a Python solution for the problem:
+
+```python
+def maxAverageOfPath(matrix):
+    n = len(matrix)
+    dp = [[0]*n for _ in range(n)]
+    dp[-1][-1] = (matrix[-1][-1] + matrix[-1][-2] + matrix[-2][-1]) / 3
+
+    for i in range(n-2, -1, -1):
+        dp[i][-1] = (dp[i+1][-1] + matrix[i][-1] + matrix[i+1][-1]) / 2
+        dp[-1][i] = (dp[-1][i+1] + matrix[-1][i] + matrix[-1][i+1]) / 2
+
+    for i in range(n-2, -1, -1):
+        for j in range(n-2, -1, -1):
+            dp[i][j] = max((dp[i+1][j] + matrix[i+1][j] + matrix[i][j+1] + matrix[i+1][j+1]) / 4, 
+                           (dp[i][j+1] + matrix[i][j+1] + matrix[i+1][j] + matrix[i+1][j+1]) / 4)
+
+    return dp[0][0]
+
+print(maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

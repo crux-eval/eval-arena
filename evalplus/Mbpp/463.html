@@ -1,0 +1,1577 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/463 </h1>
+<pre><code> """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def max_subarray_product(arr):
+	max_so_far = min_ending = max_ending = arr[0]
+	for n in arr[1:]:
+		min_ending, max_ending = min(n, min_ending * n, max_ending * n), max(n, min_ending * n, max_ending * n)
+		max_so_far = max(max_so_far, max_ending)
+	return max_so_far
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, -2, -3, 0, 7, -8, -2]], [[6, -3, -10, 0, 2]], [[-2, -40, 0, -2, -3]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[2, 3, 4, 5, 6]], [[-2, 4, -6, 8, 10, -12, 14, -16]], [[2, 4, 6, 8, 10]], [[-5, -2, -8, -9, -6, -4, -3]], [[-5, -10, -2, -8, -4]], [[-5, -2, -8, -9, -6, -4, -3, -8]], [[2, 4, 6, 8, 10, 6]], [[-10, -2, -8, -4]], [[-5, -10, -2, -8, 5, -4]], [[-2, -2, 4, -6, 8, 10, -12, -16, 8]], [[2, 4, 5, -10]], [[2, 6, 10]], [[-1, -8, -9, -6, -4, -3, -8]], [[-2, -2, 6, -6, 10, -12, -16, 8, 8]], [[-5, -2, -8, -9, -3]], [[-5, -10, -2, -8, 5, -1, -4, -5, -8]], [[-2, -5, -10, -2, -8, 5, -1, -4, -5, -8, -8, -5]], [[-2, -2, -17, 4, -6, 8, 10, -12, -16, 8, -12]], [[-2, -5, -10, -8, 5, -1, -4, -5, -8, -8, -5, -4]], [[-5, -1, -8, -9, -6, -4, -3, -8]], [[-10, -2, -8, 8, -4]], [[-5, -10, -2, -8, 5, -4, 5]], [[-1, -8, -9, -6, -4, -3, -8, -3]], [[-6, -1, -8, -9, -6, -4, -3, -8]], [[-5, -1, -8, -9, -4, -3, -8, -8]], [[-2, -5, -10, -2, -8, 5, -1, -4, -5, -8, -8, -5, -2]], [[2, 3, 4, 5, 6, 4]], [[-5, -10, -2, -8, 5]], [[-2, -1, -2, 4, -6, 8, 10, -12, -16, 8]], [[-10, -2, 8, -4]], [[-2, 4, 8, 10, -12, 6, 14, -16]], [[-2, -2, -6, 8, 10, -12, -16, 8, -6, -2, 10]], [[2, -10, 3, 4, 5, 6, -16]], [[-10, -2, -1, -8, 8, -4]], [[10, -2, 6, -8, 5, -4]], [[-2, -5, -10, -2, -8, 5, -1, -3, -4, -5, -8, -8, -5]], [[2, -10, 2, 4, 5, 6, -16, 5]], [[-5, -2, -8, -9, -6, -8]], [[-10, -2, -2, -8, 8, -4]], [[4, 2, 3, 4, 5, 6]], [[-5, -10, -3, -8, -4]], [[-5, -11, -10, -10, -2, -8, -4]], [[10, -2, 6, -8, 4, -4]], [[-6, -10, -2, 5, -4, 5]], [[-1, -8, -9, -6, -4, -12, 4, -8]], [[-2, -10, -2, -8, 5, -1, -3, -4, -5, -8, -8, -5]], [[-1, -8, -8, -9, -6, -4, -3, -8, -3, -9]], [[2, -8, 5, -10]], [[-2, -5, -10, -8, -1, -4, -5, -8, -8, -5, -4]], [[-11, 2, -8, 5, -10]], [[2, -10, 2, 4, 5, 6, -16, 5, 5]], [[-2, -5, -10, -2, -8, 5, -1, -4, -5, -5, -8]], [[-2, 4, -6, 8, 10, -12, 14, -16, -16]], [[-9, -2, -5, -10, -2, -8, 5, -10, -4, -5, -5, -8, -5]], [[-5, -10, -8, 6]], [[10, 6, -2, 6, -8, 4, -2, -2]], [[2, 7, -10, 2, 6, -16, 5]], [[-5, -2, -8, -9, -6, -4]], [[2, -16, 3, 4, 5, 6, 4, 4]], [[-1, -8, -9, -11, -6, -4, -12, 4, -8]], [[5, 2, 4, 5, 8, 10]], [[-2, -2, -6, 8, 10, -12, -16, -12, 8, -6, -2, 10]], [[2, 5, -10]], [[-5, -10, -3, -8, -10, -4]], [[-5, -11, -10, -2, -8, -4]], [[2, 3, -16, 4, 5, -12]], [[-6, -10, -2, 5, -4, 5, 5]], [[-5, -8, -9, -6]], [[-2, -2, 4, -6, 8, 10, -12, -13, -16, 8, -6]], [[-10, 2, 4, 5, 8, 10, 8]], [[-2, -5, -5, -2, 5, -1, -4, -5, -8, -8, -5, -2]], [[-5, -11, -10, -10, -2, -8, -4, -11]], [[10, 6, -2, 6, -8, 10, 4, -2, -2]], [[-2, -2, -11, 6, -6, 10, -12, -16, 8, 8]], [[-3, -9, -2, -5, -10, -2, -8, 5, -10, -4, -5, -5, -8, -5, -2]], [[-6, -1, -8, -9, -6, -4, -3, -8, -8, -6]], [[-8, 10, -2, 6, -8, 4, -4]], [[-2, 4, -4, -6, 8, 10, -12, 13, -16]], [[-8, 10, -2, 13, -8, 4, -4]], [[-5, -8, -9]], [[-10, -2, -8, -10]], [[-2, -4, -10, -2, -8, 5, -1, -4, -5, -8, -8, -5, -2, -10]], [[-2, -2, -6, 8, 10, -12, 8, -11, 8, -6, -2, 10]], [[-5, -8, -10, -4]], [[-10, -2, -1, -8, 8, -4, -10]], [[-2, 4, -6, 8, 10, -12, 14, -16, 10]], [[-1, -8, -9, -6, -2, -4, -3, -8, -8]], [[-2, -4, -10, -2, -8, 5, -1, -4, -5, -8, -8, -5, -2, -10, -10]], [[-2, -5, -2, 4, -6, 8, 10, -12, -16, 8]], [[2, 4, 5, -10, -10]], [[-6, -1, -8, -9, -6, -4, -3, -13, -8, -6]], [[-2, -5, -5, -2, -1, -4, -5, -8, -8, -5, -6, -2]], [[-2, -5, -10, -2, -8, 5, -1, -4, -5, -8, -8, -5, -10]], [[-5, -11, -10, -10, -17, -2, -8, -4]], [[-10, 8, -4]], [[2, 4, 5, -10, 5]], [[-1, -8, -8, -9, -6, 5, -3, -8, -3, -9]], [[-2, -1, -6, 8, 10, -12, -16, -12, 8, -6, -2, 10]], [[2, 5, -10, 5]], [[2, -10, -8, 3, 4, 5, 6, -16]], [[2, 4, -10]], [[-2, -5, -10, -2, -8, 5, -1, -4, -5, -8, -8, -5, -2, -5]], [[-5, -2, -8, -9, -6, 10, -3, -8]], [[-1, -8, -9, -6, 3, -4, -12, 4]], [[-2, -2, -3, -6, 8, -12, -16, 8, -6, -2, 10, -2]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    """
+    :param arr: list of integers
+    :return: maximum product of subarray
+    """
+    max_product = arr[0]
+    min_product = arr[0]
+    max_product_so_far = arr[0]
+    min_product_so_far = arr[0]
+
+    for i in range(1, len(arr)):
+        max_product = max(arr[i], max_product * arr[i], min_product * arr[i])
+        min_product = min(arr[i], max_product * arr[i], min_product * arr[i])
+        max_product_so_far = max(max_product_so_far, max_product)
+
+    return max_product_so_far
+
+
+if __name__ == '__main__':
+    print(max_subarray_product([1, -2, -3, 0, 7, -8, -2]))
+    print(max_subarray_product([-2, -3, 4, -1, -2, 1, 5, -3]))
+    print(max_subarray_product([-2, -1, -3, -4, -2, -1, 1, 2, 3, 4]))
+    print(max_subarray_product([-2, -1, -3, -4, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    print(max_subarray_product([-2, -1, -3, -4, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]))
+    print(max_subarray_product([-2, -1, -3, -4, -2, -1, 1, 2, 3, 4, </code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return None
+
+    max_product = current_product = arr[0]
+    min_product = temp_max = temp_min = arr[0]
+
+    for num in arr[1:]:
+        temp_max = max(num, temp_max * num, temp_min * num)
+        temp_min = min(num, temp_max * num, temp_min * num)
+
+        max_product = max(max_product, temp_max)
+        min_product = min(min_product, temp_min)
+
+    return max_product if max_product > 0 else max_product * (min_product or 1)
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(nums: list[int]) -> int:
+    if not nums:
+        return 0
+
+    max_product_end = min_product_end = max_product = nums[0]
+    for num in nums[1:]:
+        if num < 0:
+            max_product_end, min_product_end = min_product_end, max_product_end
+
+        max_product_end = max(num, max_product_end * num)
+        min_product_end = min(num, min_product_end * num)
+
+        max_product = max(max_product, max_product_end)
+
+    return max_product
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def max_subarray_product(arr):
+    """
+    Find the maximum product subarray of the given array.
+    
+    Args:
+        arr (list): The input array.
+    
+    Returns:
+        int: The maximum product subarray.
+    """
+    if not arr:
+        return 0
+    
+    max_so_far = arr[0]
+    min_so_far = arr[0]
+    result = max_so_far
+    
+    for i in range(1, len(arr)):
+        curr = arr[i]
+        temp_max = max(curr, max_so_far * curr, min_so_far * curr)
+        min_so_far = min(curr, max_so_far * curr, min_so_far * curr)
+        
+        max_so_far = temp_max
+        result = max(max_so_far, result)
+    
+    return result
+
+# Example usage
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    max_end = min_end = max_so_far = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_end, min_end = min_end, max_end
+        max_end = max(arr[i], max_end * arr[i])
+        min_end = min(arr[i], min_end * arr[i])
+        max_so_far = max(max_so_far, max_end)
+    return max_so_far
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_so_far = arr[0]
+    min_so_far = arr[0]
+    result = arr[0]
+
+    for num in arr[1:]:
+        if num < 0:
+            max_so_far, min_so_far = min_so_far, max_so_far
+
+        max_so_far = max(num, max_so_far * num)
+        min_so_far = min(num, min_so_far * num)
+        result = max(result, max_so_far)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to find the maximum product subarray of a given array, wrapped in a Python markdown block:
+
+```python
+def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_product = arr[0]
+    min_product = arr[0]
+    max_result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+
+        max_result = max(max_result, max_product)
+
+    return max_result</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    min_product = max_product = arr[0]
+    result = arr[0]
+
+    for num in arr[1:]:
+        max_product = max(num, max_product * num, min_product * num)
+        min_product = min(num, min_product * num, max_product * num)
+        result = max(result, max_product)
+
+    return result
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that finds the maximum product subarray of a given array:
+
+
+```python
+def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+    
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+        
+        result = max(result, max_product)
+    
+    return result
+```
+
+Explanation:
+
+We initialize `max_product` and `min_product` to the first element of the array, and `result` to the first element as well. We then iterate through the array starting from the second element. If the current element is negative, we swap the values of `max_product` and `min_product` because the maximum product can be obtained by multiplying all negative numbers together, and the minimum product can be obtained by multiplying all positive numbers together. We then update `max_product` and `min_product` based on the current element, and update `result` if the new `max_product` is greater than the current `result`. Finally, we return `result`.
+
+
+For example, in the array `[1, -2, -3, 0, 7, -8, -2]`, the maximum product subarray is either `-2 * -3 * 0 * -8` or `7 * -8`, which is 112. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_ending_here = min_ending_here = result = arr[0]
+
+    for num in arr[1:]:
+        temp = max_ending_here
+        max_ending_here = max(num, max_ending_here * num, min_ending_here * num)
+        min_ending_here = min(num, temp * num, min_ending_here * num)
+        result = max(result, max_ending_here)
+
+    return result
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    """
+    :param arr: list
+    :return: int
+    """
+    if not arr:
+        return 0
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+    for i in range(1, len(arr)):
+        temp = max_product
+        max_product = max(arr[i], max(temp * arr[i], min_product * arr[i]))
+        min_product = min(arr[i], min(temp * arr[i], min_product * arr[i]))
+        result = max(result, max_product)
+    return result
+
+
+if __name__ == '__main__':
+    print(max_subarray_product([1, -2, -3, 0, 7, -8, -2]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    current_product = arr[0]
+    
+    for num in arr[1:]:
+        if num > 0:
+            current_product *= num
+            max_product = max(max_product, current_product)
+            min_product = min(min_product, current_product)
+        elif num == 0:
+            current_product = 1
+        else:
+            current_product *= num
+            temp = max_product
+            max_product = max(min_product, current_product)
+            min_product = min(temp, current_product)
+    
+    return max_product
+
+# Test case
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is the Python code to solve the problem:
+
+```python
+def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for num in arr[1:]:
+        temp = max_product
+        max_product = max(num, num * max_product, num * min_product)
+        min_product = min(num, num * temp, num * min_product)
+        result = max(result, max_product)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+```
+
+This function works by keeping track of the maximum and minimum product seen so far, and the maximum product subarray seen so far. For each number in the array, it updates the maximum and minimum product seen so far, and the maximum product subarray seen so far.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+def max_subarray_product(arr):
+    """
+    :type arr: List[int]
+    :rtype: int
+    """
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return max_product
+    
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return max_product
+    
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return max_product
+    
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return max_product
+    
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return max_product
+    
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return max_product
+    
+    # max_product = 0
+    # for i in range(len(arr)):
+    #     for j in range(i, len(arr)):
+    #         max_product = max(max_product, arr[i] * arr[j])
+    # return</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(nums):
+    """
+    Write a function to find the maximum product subarray of the given array.
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+    """
+    if not nums:
+        return 0
+
+    max_product = min_product = result = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(nums[i], max_product * nums[i])
+        min_product = min(nums[i], min_product * nums[i])
+
+        result = max(result, max_product)
+
+    return result
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+import sys
+from typing import List
+
+
+def max_subarray_product(nums: List[int]) -> int:
+    if not nums:
+        return 0
+
+    max_product = nums[0]
+    min_product = nums[0]
+    result = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(nums[i], max_product * nums[i])
+        min_product = min(nums[i], min_product * nums[i])
+
+        result = max(result, max_product)
+
+    return result
+
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    """
+    :param arr:
+    :return:
+    """
+    if len(arr) == 0:
+        return 0
+
+    max_product = arr[0]
+    min_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            arr[i], arr[i - 1] = arr[i - 1], arr[i]
+
+    for i in range(1, len(arr)):
+        arr[i] = arr[i] * arr[i - 1]
+
+    for i in range(len(arr)):
+        if arr[i] > max_product:
+            max_product = arr[i]
+
+    return max_product
+
+
+if __name__ == '__main__':
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 10
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == 20
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def max_subarray_product(nums):
+    if not nums:
+        return 0
+
+    max_product = min_product = result = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(nums[i], max_product * nums[i])
+        min_product = min(nums[i], min_product * nums[i])
+
+        result = max(result, max_product)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+```
+
+This function uses dynamic programming to keep track of the maximum and minimum product subarray ending at each position. It then returns the maximum product found.
+
+The function starts by initializing `max_product`, `min_product`, and `result` to the first number in the array. It then iterates over the rest of the array, updating `max_product` and `min_product` based on the current number and the product of the previous maximum and minimum products. If the current number is negative, it swaps `max_product` and `min_product` because a negative number multiplied by a larger positive number becomes a smaller negative number.
+
+Finally, it updates `result` to be the maximum of its current value and the current `max_product`. The function returns `result` after iterating over the entire array.
+
+The assertion at the end checks that the function works correctly for the given example.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def max_subarray_product(arr):
+    max_product = float('-inf')
+    max_product_ending_here = 1
+
+    for i in range(len(arr)):
+        max_product_ending_here *= arr[i]
+        if max_product_ending_here < 0:
+            max_product_ending_here = 1
+
+        if max_product < max_product_ending_here:
+            max_product = max_product_ending_here
+
+    return max_product
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    max_ending_here = max_so_far = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], max_ending_here * arr[i])
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2]) == 0
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, -2, -2, -2,</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+  """
+  Write a function to find the maximum product subarray of the given array.
+  assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+  """
+  max_so_far = arr[0]
+  min_so_far = arr[0]
+  max_ending_here = arr[0]
+  min_ending_here = arr[0]
+  for i in range(1, len(arr)):
+    temp = max_ending_here
+    max_ending_here = max(arr[i], max_ending_here * arr[i], min_ending_here * arr[i])
+    min_ending_here = min(arr[i], temp * arr[i], min_ending_here * arr[i])
+    max_so_far = max(max_so_far, max_ending_here)
+    min_so_far = min(min_so_far, min_ending_here)
+  return max_so_far</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+def max_subarray_product(arr):
+    """
+    Find the maximum product of a subarray in the given array.
+    """
+    if len(arr) == 0:
+        return 0
+
+    # Initialize current product and global maximum product with first element of the array
+    current_product, max_product = arr[0], arr[0]
+
+    # Iterate through the array to find maximum product subarray
+    for num in arr[1:]:
+        current_product = max(num, current_product * num)
+        max_product = max(max_product, current_product)
+
+    return max_product
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+
+        result = max(result, max_product)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def max_subarray_product(arr):
+    max_product = float('-inf')
+    max_ending_here = 1
+    min_ending_here = 1
+    
+    for num in arr:
+        max_ending_here *= num
+        min_ending_here *= num
+        
+        if max_ending_here < 0:
+            max_ending_here = 1
+            min_ending_here = 1
+        
+        if max_ending_here > max_product:
+            max_product = max_ending_here
+        
+        if min_ending_here < 0:
+            min_ending_here = 1
+            
+    return max_product
+```
+
+Explanation:
+
+We initialize two variables `max_product` and `max_ending_here` to negative infinity and 1 respectively. We also initialize `min_ending_here` to 1.
+
+We iterate through the array and for each element, we multiply it with `max_ending_here` and `min_ending_here`. If `max_ending_here` becomes negative, we reset both `max_ending_here` and `min_ending_here` to 1.
+
+If `max_ending_here` becomes greater than `max_product`, we update `max_product` to `max_ending_here`.
+
+If `min_ending_here` becomes negative, we reset it to 1.
+
+Finally, we return `max_product`.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    """
+    Returns the maximum product subarray of the given array
+
+    Args:
+       arr(list): list of integers
+    Returns:
+       int: Maximum product subarray
+    """
+    if not arr:
+        return 0
+
+    max_ending_here = 1
+    min_ending_here = 1
+    max_so_far = 1
+
+    for i in arr:
+        if i > 0:
+            max_ending_here = max_ending_here * i
+            min_ending_here = min(min_ending_here * i, 1)
+        elif i == 0:
+            max_ending_here = 1
+            min_ending_here = 1
+        else:
+            temp = max_ending_here
+            max_ending_here = max(min_ending_here * i, 1)
+            min_ending_here = temp * i
+
+        if max_ending_here > max_so_far:
+            max_so_far = max_ending_here
+
+    return max_so_far
+
+
+def test_function(test_case):
+    arr = test_case[0]
+    solution = test_case[1]
+    output = max_subarray_product(arr)
+    print(output)
+    if output == solution:
+        print("Pass")
+    else:
+        print("Fail")
+
+
+arr = [0, -1, -3, 1, 6, 0, 5]
+solution = 30
+test_case = [arr, solution]
+test_function(test_case)
+
+arr = [-1, -3, -1, -3, -1]
+solution = 3
+test_case = [arr, solution]
+test_function(test_case)
+
+arr = [-1, -3, -1, -3, -1, -3, -1]
+solution = 9
+test_case = [arr, solution]
+test_function(test_case)
+
+arr = [-2, -3, 4, -1, -2, 1, 5, -3]
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the maximum product subarray of the given array:
+
+```python
+def max_subarray_product(arr):
+    max_ending_here = min_ending_here = max_so_far = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_ending_here, min_ending_here = min_ending_here, max_ending_here
+
+        max_ending_here = max(arr[i], max_ending_here * arr[i])
+        min_ending_here = min(arr[i], min_ending_here * arr[i])
+
+        max_so_far = max(max_so_far, max_ending_here)
+
+    return max_so_far
+```
+
+This function uses the Kadane's algorithm approach to solve the problem. It keeps track of the maximum product ending at the current position and the minimum product ending at the current position. If the current number is negative, it swaps the maximum and minimum product ending at the current position. Then it updates the maximum product ending at the current position and the overall maximum product. Finally, it returns the overall maximum product.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+def max_subarray_product(arr):
+    """
+    Time complexity: O(n)
+    Space complexity: O(1)
+    """
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+    for i in range(1, len(arr)):
+        temp = max_product
+        max_product = max(arr[i], max_product * arr[i], min_product * arr[i])
+        min_product = min(arr[i], temp * arr[i], min_product * arr[i])
+        result = max(result, max_product)
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    max_product = arr[0]
+    max_product_index = 0
+    for i in range(1, len(arr)):
+        if arr[i] > 0:
+            max_product = max(max_product, arr[i])
+            max_product_index = i
+    return max_product * max_product_index
+
+print(max_subarray_product([1, -2, -3, 0, 7, -8, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2, -2, -2, -2]))
+print(max_subarray_product([-2, -3, 0, 7, -8, -2, -2, -2, -2, -2, -2</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(nums):
+    max_product = nums[0]
+    min_product = nums[0]
+    max_product_so_far = nums[0]
+
+    for num in nums[1:]:
+        if num == 0:
+            max_product = min_product = 0
+        elif num > 0:
+            max_product, min_product = max_product * num, min_product * num
+        else:
+            max_product, min_product = min_product * num, max_product * num
+        max_product_so_far = max(max_product_so_far, max_product)
+
+    return max_product_so_far</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    max_product = arr[0]
+    current_product = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            current_product, max_product = max_product, current_product
+        current_product = max(arr[i], current_product * arr[i])
+        max_product = max(max_product, current_product)
+    return max_product
+</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        temp_max = max(arr[i], max_product * arr[i], min_product * arr[i])
+        min_product = min(arr[i], max_product * arr[i], min_product * arr[i])
+        max_product = temp_max
+        result = max(result, max_product)
+
+    return result
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(nums):
+    """
+    Find the maximum product subarray of the given array.
+
+    :param nums: List of integers
+    :return: Maximum product of a subarray
+    """
+    max_product = nums[0]
+    min_product = nums[0]
+    result = nums[0]
+
+    for i in range(1, len(nums)):
+        # Store the maximum product up to the current index
+        temp_max = max(nums[i], max_product * nums[i], min_product * nums[i])
+        min_product = min(nums[i], max_product * nums[i], min_product * nums[i])
+        max_product = temp_max
+
+        # Update the result if the current subarray product is greater
+        result = max(result, max_product)
+
+    return result
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    n = len(arr)
+    max_end_here = arr[0]
+    min_end_here = arr[0]
+    max_so_far = arr[0]
+
+    for i in range(1, n):
+        if arr[i] > 0:
+            max_end_here = max(arr[i], max_end_here * arr[i])
+            min_end_here = min(arr[i], min_end_here * arr[i])
+        else:
+            max_end_here = max(arr[i], min_end_here * arr[i])
+            min_end_here = min(arr[i], max_end_here * arr[i])
+
+        max_so_far = max(max_so_far, max_end_here)
+
+    return max_so_far
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+```
+
+Explanation:
+The function `max_subarray_product` takes an array `arr` as input and returns the maximum product subarray of the given array. The function uses dynamic programming to keep track of the maximum and minimum product ending at each index of the array. It initializes `max_end_here` and `min_end_here` to the first element of the array and `max_so_far` to the first element of the array.
+
+The function then iterates through the array from the second element to the last element. If the current element is positive, it updates `max_end_here` and `min_end_here` to the maximum and minimum of the current element and the product of the current element and the previous `max_end_here` and `min_end_here`, respectively. If the current element is negative, it updates `max_end_here` and `min_end_here` to the maximum and minimum of the current element and the product of the current element and the previous `min_end_here` and `max_end_here`, respectively.
+
+Finally, the function updates `max_so_far` to the maximum of `max_so_far` and `max_end_here`. The function returns `max_so_far` as the maximum product subarray of the given array.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+
+        result = max(result, max_product)
+
+    return result
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+def max_subarray_product(arr):
+    max_so_far = arr[0]
+    min_so_far = arr[0]
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], arr[i] * max_ending_here)
+        min_ending_here = min(arr[i], arr[i] * min_ending_here)
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+
+if __name__ == '__main__':
+    print(max_subarray_product([1, -2, -3, 0, 7, -8, -2]))
+
+</code></pre>
+
+      <p> codegen-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+def max_subarray_product(arr):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    if not arr:
+        return 0
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        max_product = max(max_product * arr[i], arr[i])
+        min_product = min(min_product * arr[i], arr[i])
+        result = max(max_product, result)
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5, -4]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5, -4, -3]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5, -4, -3, -2]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5, -4, -3, -2, -1]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5, -4, -3, -2, -1, -2]) == 0
+assert max_subarray_product([-1, -2, -3, 0, 7, -8, -2, -5, -4, -3, -2</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+import numpy as np
+
+def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for num in arr[1:]:
+        if num < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(num, max_product * num)
+        min_product = min(num, min_product * num)
+
+        result = max(result, max_product)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_product = float('-inf')
+    current_product = 1
+
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            product = arr[j] * current_product
+            if product > max_product:
+                max_product = product
+                max_subarray = arr[i:j+1]
+
+    return max_product</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+
+        result = max(result, max_product)
+
+    return result
+
+print(max_subarray_product([1, -2, -3, 0, 7, -8, -2]))</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    max_product = float('-inf')
+    current_product = 0
+    for num in arr:
+        current_product = max(num, current_product * num)
+        max_product = max(max_product, current_product)
+    return max_product
+
+# Test case
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_so_far = min_so_far = max_ending_here = min_ending_here = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_ending_here, min_ending_here = min_ending_here, max_ending_here
+
+        max_ending_here = max(arr[i], max_ending_here * arr[i])
+        min_ending_here = min(arr[i], min_ending_here * arr[i])
+
+        result = max(result, max_ending_here)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that finds the maximum product subarray of a given array:
+
+```python
+def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+    
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+        
+        result = max(result, max_product)
+    
+    return result
+```
+
+Explanation:
+
+We initialize `max_product` and `min_product` to the first element of the array, and `result` to the first element as well. We then iterate through the array starting from the second element. If the current element is negative, we swap `max_product` and `min_product` so that we can find the maximum product of a subarray that starts with a negative element. We update `max_product` and `min_product` accordingly by taking the maximum and minimum of the current element and the previous `max_product` or `min_product` times the current element. Finally, we update `result` with the maximum of the current `max_product` and the previous `result`.
+
+For example, if the array is `[1, -2, -3, 0, 7, -8, -2]`, we start with `max_product = 1`, `min_product = 1`, and `result = 1`. We then iterate through the array:
+
+- `max_product` is updated to `max(1, -2 * 1) = -2`, `min_product` is updated to `min(-2, 1) = -2`, `result` is updated to `max(-2, 1) = -2`
+- `max_product` is updated to `max(-3, -2 * -2) = -6`, `min_product` is updated to `min(-3, -2) = -6`, `result` is updated to `max(-6, -2) = -2`
+- `max_product` is updated to `max(0, -3 * -2) = 0`, `min_product` is updated to `min(0, -6) = 0`, `result` is updated to `max(0, 0) = 0`
+- `max_product` is updated to `max(7, 0 * 7) = 7`, `min_product` is updated to `min(7, 0) = 0`, `result` is updated to `max(7, 7) = 7`
+- `max_product` is updated to `max(-8, 7 * -8) = -8`, `min_product` is updated to `min(-8, 0) = 0`, `result` is updated to `max(-8, 7) = 7`
+- `max_product` is updated to `max(-2, -8 * -2) = -16`, `min_product` is updated to `min(-2, -8) = -16`, `result` is updated to `max(-16, 7) = 7`
+
+At the end of the iteration, `result` is the maximum product subarray, which is 7. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+
+def max_subarray_product(arr):
+    max_product = 0
+    current_product = 1
+    for num in arr:
+        current_product *= num
+        if current_product > max_product:
+            max_product = current_product
+        if current_product < 0:
+            current_product = 1
+    return max_product
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    if not arr:
+        return 0
+
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+        result = max(result, max_product)
+
+    return result</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    """
+    :param arr: list of integers
+    :return: maximum product of subarray
+    """
+    if not arr:
+        return 0
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+        result = max(result, max_product)
+    return result
+
+
+if __name__ == '__main__':
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+import numpy as np
+
+def max_subarray_product(arr):
+    """
+    :param arr: list of integers
+    :return: int
+    """
+    # TODO: Write - Your - Code
+    max_so_far = arr[0]
+    min_so_far = arr[0]
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    max_so_far_product = arr[0]
+    min_so_far_product = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], max_ending_here * arr[i])
+        min_ending_here = min(arr[i], min_ending_here * arr[i])
+        max_so_far = max(max_ending_here, max_so_far)
+        min_so_far = min(min_ending_here, min_so_far)
+        max_so_far_product = max(max_so_far_product, max_so_far)
+        min_so_far_product = min(min_so_far_product, min_so_far)
+    return max(max_so_far_product, min_so_far_product)
+
+
+def max_subarray_product_v2(arr):
+    """
+    :param arr: list of integers
+    :return: int
+    """
+    # TODO: Write - Your - Code
+    max_so_far = arr[0]
+    min_so_far = arr[0]
+    max_ending_here = arr[0]
+    min_ending_here = arr[0]
+    max_so_far_product = arr[0]
+    min_so_far_product = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], max_ending_here * arr[i])
+        min_ending_here = min(arr[i], min_ending_here * arr[i])
+        max_so_far = max(max_ending_here, max_so_far)</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    max_product = 1
+    min_product = 1
+    for i in range(len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+        max_product = max(max_product * arr[i], arr[i])
+        min_product = min(min_product * arr[i], arr[i])
+    return max(max_product, min_product)
+
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+    result = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(arr[i], max_product * arr[i])
+        min_product = min(arr[i], min_product * arr[i])
+
+        result = max(result, max_product)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+```
+
+This Python script defines a function `max_subarray_product` that takes an array as input and returns the maximum product of a subarray. The function uses two variables `max_product` and `min_product` to keep track of the maximum and minimum products seen so far. It also uses a variable `result` to keep track of the maximum product subarray found so far.
+
+The function iterates over the input array and updates `max_product` and `min_product` based on the current element. If the current element is negative, the function swaps `max_product` and `min_product`. Then, it updates `max_product` and `min_product` based on the current element and the previously seen `max_product` and `min_product`. Finally, it updates `result` with the maximum product found so far.
+
+The assert statement at the end checks if the function returns the correct result for the given input array.
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    max_so_far = 1
+    max_ending_here = 1
+    start = 0
+    end = 0
+    s = 0
+
+    for i in range(len(arr)):
+        max_ending_here *= arr[i]
+        if max_so_far < max_ending_here:
+            max_so_far = max_ending_here
+            start = s
+            end = i
+        if max_ending_here < 0:
+            max_ending_here = 1
+            s = i + 1
+    print(arr[start:end+1])
+    return max_so_far
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+assert max_subarray_product([-2, -3, -4]) == 24
+assert max_subarray_product([-2, -3, -4, -5]) == 120
+assert max_subarray_product([-2, -3, -4, -5, -6]) == 720
+assert max_subarray_product([-2, -3, -4, -5, -6, -7]) == 840
+assert max_subarray_product([-2, -3, -4, -5, -6, -7, -8]) == 880
+assert max_subarray_product([-2, -3, -4, -5, -6, -7, -8, -9]) == 720
+assert max_subarray_product([-2, -3, -4, -5, -6, -7, -8, -9, -10]) == 720
+assert max_subarray_product([-2, -3, -4, -5, -6, -7, -8, -9, -10, -11]) == 720
+assert max_subarray_product([-2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12]) == 720
+assert max_subarray_product([-2, -3, -4, -5, -6, -7, -8, -9, -10, -11,</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(arr):
+    max_ending_here = 1
+    min_ending_here = 1
+    max_so_far = 1
+    for num in arr:
+        if num > 0:
+            max_ending_here = max_ending_here * num
+            min_ending_here = min(min_ending_here * num, 1)
+        elif num == 0:
+            max_ending_here = 1
+            min_ending_here = 1
+        else:
+            temp = max_ending_here
+            max_ending_here = max(min_ending_here * num, 1)
+            min_ending_here = temp * num
+        if max_so_far < max_ending_here:
+            max_so_far = max_ending_here
+    return max_so_far
+
+
+if __name__ == "__main__":
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def max_subarray_product(arr):
+    max_product = arr[0]
+    min_product = arr[0]
+
+    for i in range(1, len(arr)):
+        if arr[i] < 0:
+            max_product, min_product = min_product, max(min_product * arr[i], arr[i])
+        else:
+            max_product = max(max_product * arr[i], arr[i])
+
+    return max_product
+
+# Test the function
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+def max_subarray_product(numbers):
+    max_product = -float("inf")
+    curr_product = 1
+    for num in numbers:
+        curr_product *= num if num > 0 else curr_product * num
+        max_product = max(max_product, curr_product)
+        curr_product *= -1 if curr_product < 0 and num < 0 else 1
+    return max_product
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+
+def max_subarray_product(arr):
+    max_product = arr[0]
+    current_product = arr[0]
+    for i in range(1, len(arr)):
+        current_product = max(arr[i], current_product * arr[i])
+        max_product = max(max_product, current_product)
+    return max_product
+
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution to the problem wrapped in a markdown block:
+
+```python
+def max_subarray_product(nums):
+    """
+    Find the maximum product subarray of the given array.
+
+    Args:
+        nums (List[int]): The input array of integers.
+
+    Returns:
+        int: The maximum product of a subarray.
+    """
+    if not nums:
+        return 0
+
+    max_so_far = nums[0]
+    min_so_far = nums[0]
+    result = max_so_far
+
+    for i in range(1, len(nums)):
+        curr = nums[i]
+        temp_max = max(curr, max_so_far * curr, min_so_far * curr)
+        min_so_far = min(curr, max_so_far * curr, min_so_far * curr)
+
+        max_so_far = temp_max
+
+        result = max(max_so_far, result)
+
+    return result
+
+# Test case
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+
+def max_subarray_product(nums):
+    max_product = nums[0]
+    min_product = nums[0]
+    max_so_far = nums[0]
+
+    for num in nums[1:]:
+        temp_max = max(num, num * max_product, num * min_product)
+        min_product = min(num, num * max_product, num * min_product)
+        max_product = temp_max
+        max_so_far = max(max_so_far, max_product)
+
+    return max_so_far
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+def max_subarray_product(arr):
+    """
+    :param arr: list of integers
+    :return: integer
+    """
+    if not arr:
+        return 0
+    max_product = arr[0]
+    min_product = arr[0]
+    max_product_so_far = arr[0]
+    for i in range(1, len(arr)):
+        max_product = max(arr[i], max_product * arr[i], min_product * arr[i])
+        min_product = min(arr[i], max_product * arr[i], min_product * arr[i])
+        max_product_so_far = max(max_product_so_far, max_product)
+    return max_product_so_far
+
+
+def test_max_subarray_product():
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 10]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 10, 11]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 10, 11, 12]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 10, 11, 12, 13]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 10, 11, 12, 13, 14]) == 112
+    assert max_subarray_product([1, -2, -3, 0, 7, -8, -2, 10, 11, 12, 13, 14, 15]) == 112
+    assert max_subarray_product([1, -</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def max_subarray_product(nums):
+    if not nums:
+        return 0
+
+    max_product = min_product = result = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] < 0:
+            max_product, min_product = min_product, max_product
+
+        max_product = max(nums[i], max_product * nums[i])
+        min_product = min(nums[i], min_product * nums[i])
+
+        result = max(result, max_product)
+
+    return result
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the maximum product subarray of the given array.
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112
+"""
+
+import unittest
+
+
+def max_subarray_product(array):
+    """
+    Find the maximum product subarray of the given array.
+    :param array:
+    :return:
+    """
+    if not array:
+        return 0
+    max_product = array[0]
+    current_product = array[0]
+    for i in range(1, len(array)):
+        current_product = max(array[i], current_product * array[i], 1)
+        max_product = max(max_product, current_product)
+    return max_product
+
+
+class TestMaxSubarrayProduct(unittest.TestCase):
+    def test_max_subarray_product(self):
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 1]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 1, 1]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 1, 1, 1]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 1, 1, 1, 1]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0, 7, -8, -2, 1, 1, 1, 1, 1, 1]), 112)
+        self.assertEqual(max_subarray_product([1, -2, -3, 0,</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def max_subarray_product(nums):
+    max_product = float('-inf')
+    current_product = 1
+    for num in nums:
+        current_product *= num
+        if current_product > max_product:
+            max_product = current_product
+        if current_product == 0:
+            current_product = 1
+    return max_product
+
+assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

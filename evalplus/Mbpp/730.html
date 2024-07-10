@@ -1,0 +1,1081 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/730 </h1>
+<pre><code> """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+from itertools import groupby
+def consecutive_duplicates(nums):
+    return [key for key, _ in groupby(nums)] 
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]], [[10, 10, 15, 19, 18, 18, 17, 26, 26, 17, 18, 10]], [['a', 'a', 'b', 'c', 'd', 'd']], [['a', 'a', 'b', 'c', 'd', 'd', 'a', 'a']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange']], [['a', 'a', 'b', 'c', 'd', 'd', 'a', 'a', 'e', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j']], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi']], [['a', 'a', 'b', 'c', 'd', 'd', 'e', 'f', 'g', 'g', 'h', 'i', 'j', 'j', 'k', 'k', 'k', 'l', 'm', 'm']], [[0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [[0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [[]], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8, 9]], [['a', 'a', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 3, 5, 6, 6, 7, 7, 7, 8, 8, 9]], [['a', 'a', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [['a', 'a', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'h', 'i', 'j', 'j', 'f']], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9]], [['banana', 'lm', 'd', 'g', 'k', 'CPAKrs', 'y', 'l']], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi']], [['a', 'a', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [['j', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'h', 'i', 'j', 'j', 'f']], [['bb', 'apple', 'XkdbOWvF', 'wUpBgeXR', 'UKW', 'e', 'f', 'l', 'lm', 'CPAKrs']], [['apple', 'apple', 'banana', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple']], [['a', 'a', 'c', 'd', 'g', 'd', 'a', 'a', 'e', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 4]], [['j', 'bbe', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'h', 'i', 'j', 'j', 'f']], [[True, None]], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 3, 6, 6, 7, 6, 7, 7, 8, 9]], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [['apple', 'apple', 'banana', 'lm', 'orange', 'apple', 'banana', 'banana', 'banana', 'apple', 'kiwi', 'orange']], [['apple', 'apple', 'banana', 'apple', 'bbe', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'bbe']], [['a', 'a', 'bb', 'c', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [[True, False, None]], [['a', 'a', 'beb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'i', 'j', 'j', 'f']], [['banana', 'lm', 'd', 'g', 'k', 'CPAKrs', 'y', 'll', 'CPAKrs']], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi', 'kiwi']], [[1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 7]], [['a', 'a', '', 'bb', 'c', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8, 9, 1]], [['a', 'a', 'bb', 'c', 'd', 'a', 'a', 'e', 'h', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [['a', 'a', 'c', 'd', 'g', 'd', 'a', 'a', 'e', 'f', 'f', 'y', 'g', 'h', 'i', 'j', 'j', 'f']], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 6, 0, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [[0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 0, 0]], [[True, False]], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 3, 5, 6, 6, 7, 7, 7, 8, 8, 9, 3]], [[1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 4, 5, 3, 5, 6, 6, 7, 7, 7, 8, 8, 9]], [['apple', 'apple', 'banana', 'orange', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'banana']], [['a', 'a', 'bb', 'c', 'd', 'b', 'a', 'a', 'e', 'h', 'f', 'f', 'g', 'h', 'i', 'jh', 'j', 'j', 'f']], [[1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 7]], [['apple', 'banana', 'orangbe', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi', 'kiwi']], [['banana', 'lm', 'd', 'g', 'k', 'CPAKrs', 'y']], [['a', 'a', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f', 'j']], [['apple', 'banana', 'orange', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'banana']], [['banana', 'lm', 'd', 'orange', 'g', 'k', 'CPAKrs', 'y', 'll', 'CPAKrs']], [['a', 'a', 'b', 'c', 'd', 'd', 'a', 'a', 'e', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f']], [[1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 3, 7, 7, 8, 6, 8, 9]], [['beb', 'apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange']], [['a', 'orange', 'c', 'd', 'd', 'a', 'a', 'e', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'h']], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi', 'kiwi', 'orange']], [[1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 3, 7, 0, 7, 8, 6, 8, 9, 9]], [[1, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 7]], [['a', 'a', 'b', 'c', 'd', 'd', 'a', 'a', 'e', 'e', 'f', 'f', 'f', 'g', 'h', 'j', 'j']], [['beb', 'apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'kiwi', 'kiwi', 'orange']], [[True, False, True, None]], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiCPAKrswi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi', 'kiwi']], [['apple', 'apple', 'banana', 'apple', 'bbe', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'bbe', 'apple']], [[True, True, False]], [[1, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 7, 8]], [['a', 'a', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j', 'f', 'j', 'a']], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwkiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi', 'kiwi']], [['banana', 'lm', 'd', 'jh', 'g', 'k', 'CPAKrs', 'y', 'll', 'CPAKrs']], [['apple', 'apple', 'banana', 'orange', 'apple', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'apple', 'orange', 'kiwi', 'kiwi', 'kiwi', 'kiwi', 'banana']], [['apple', 'applle', 'banana', 'apple', 'orangbe', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'bbe', 'apple', 'apple']], [['a', 'a', 'a', 'b', 'c', 'd', 'd', 'a', 'a', 'e', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j']], [['banana', 'lm', 'd', '', 'k', 'y', 'l']], [['apple', 'XkdbOWvF', 'wUpBgeXR', 'UKW', 'e', 'f', 'l', 'llm', 'CPAKrs']], [[True, None, None]], [[True, True]], [['beb', 'apple', 'apple', 'banana', 'oapplerange', 'apple', 'banana', 'banana', 'kiwi', 'kiwi', 'orange']], [[False, True, True, False, None, True]], [['banana', 'lm', 'd', 'g', 'k', 'CPAKrs', 'y', 'banana']], [['j', 'bbe', 'bb', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'h', 'i', 'j', 'j', 'f', 'i']], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 6, 2, 0, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [['banana', 'lm', 'baanbana', 'd', 'jh', 'g', 'k', 'banbana', 'CPAKrs', 'y', 'll', 'CPAKrs']], [['e', 'beb', 'i', 'apple', 'apple', 'banana', 'orange', 'apple', 'orangbe', 'banana', 'banana', 'kiwi', 'kiwi', 'orange']], [['a', 'a', '', 'c', 'd', 'd', 'e', 'f', 'g', 'g', 'h', 'i', 'j', 'j', 'k', 'k', 'k', 'l', 'm', 'm']], [['apple', 'banana', 'orange', 'banana', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'kiwi']], [[1, 2, 2, 3, 1, 4, 4, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 7, 8]], [['a', 'a', 'bb', 'c', 'd', 'b', 'a', 'f', 'a', 'e', 'h', 'f', 'f', 'g', 'h', 'i', 'jh', 'j', 'j', 'f']], [['banana', 'lm', 'd', 'jh', 'g', 'k', 'CPAKrs', 'y', 'llm', 'CPAKrs']], [['a', 'a', 'b', 'c', 'd', 'd', 'a', 'a', 'e', 'f', 'f', 'f', 'g', 'h', 'i', 'j', 'j']], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 7, 0, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [[1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 3, 7, 0, 2, 7, 8, 6, 8, 9, 9]], [[0, 0, 1, 2, 4, 4, 5, 6, 6, 7, 0, 0, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 4, 6, 0, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0, 9]], [['banana', 'lm', 'd', 'k', 'CPAKrs', 'y', 'banana']], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0, 4]], [['j', 'bb', 'c', 'd', 'd', 'a', 'a', 'f', 'f', 'h', 'i', 'j', 'j', 'f']], [[0, 0, 1, 2, 4, 4, 4, 5, 1, 6, 6, 7, 8, 9, 4, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]], [[1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8, 3, 9, 7, 9]], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 7, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 0, 3, 2, 2, 1, 0, 0]], [[True, False, False]], [[False, True, False]], [['banana', 'lm', 'd', 'g', 'k', 'y', 'banana']], [['e', 'beb', 'i', 'apple', 'apple', 'banana', 'orange', 'apple', 'ee', 'orangbe', 'banana', 'banana', 'kiwi', 'kiwi', 'orange']], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 7, 0, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0]], [['banana', 'baanbana', 'lm', 'CPAKrs', 'd', 'g', 'k', 'CPAKrs', 'y', 'y']], [['apple', 'banana', 'orange', 'banana', 'banana', 'kiwi', 'kiwi', 'orange', 'banana']], [['banana', 'lm', 'd', 'jh', 'g', 'k', 'CPAKrs', 'y', 'llm', 'CPAKrs', 'CPAKrs']], [['apple', 'bb', 'apple', 'banana', 'lm', 'orange', 'apple', 'banana', 'banana', 'apple', 'kiwi', 'orange']], [['j', 'bb', 'c', 'd', 'd', 'a', 'a', 'f', 'f', 'h', 'i', 'j', 'j', 'f', 'd', 'd', 'd']], [[0, 0, 1, 2, 4, 4, 4, 5, 6, 6, 6, 2, 1, 0, 9, 4, 0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 3, 2, 2, 1, 0, 0]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    """
+    :param lst: list
+    :return: list
+    """
+    if not lst:
+        return []
+    result = []
+    for i in range(len(lst)):
+        if i == 0:
+            result.append(lst[i])
+        elif lst[i] != lst[i - 1]:
+            result.append(lst[i])
+    return result
+
+
+if __name__ == '__main__':
+    print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+    print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+    print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+    print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4,</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(input_list):
+    """
+    This function removes consecutive duplicates of a given list.
+    """
+    if not input_list:
+        return []
+
+    result = [input_list[0]]
+    for item in input_list:
+        if item != result[-1]:
+            result.append(item)
+
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(l: list[int]) -> list[int]:
+    result = []
+    last_item = None
+    for item in l:
+        if item != last_item:
+            result.append(item)
+            last_item = item
+    return result
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def consecutive_duplicates(lst):
+    result = []
+    prev = None
+    for item in lst:
+        if item != prev:
+            result.append(item)
+            prev = item
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(input_list):
+    output_list = []
+    for i in range(len(input_list)):
+        if i == 0 or input_list[i] != input_list[i - 1]:
+            output_list.append(input_list[i])
+    return output_list
+
+# Test the function
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+def consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if result and result[-1] == i:
+            continue
+        result.append(i)
+    return result
+
+# Test the function
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to remove consecutive duplicates from a given list, wrapped in a Python markdown block:
+
+```python
+def consecutive_duplicates(lst):
+    if not lst:
+        return lst
+    
+    result = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] != lst[i-1]:
+            result.append(lst[i])
+    
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def consecutive_duplicates(input_list):
+    # Initialize an empty list to store the unique elements
+    unique_list = []
+    
+    # Iterate over the input list
+    for i in input_list:
+        # If the current element is not in the unique list,
+        # append it
+        if i not in unique_list:
+            unique_list.append(i)
+    
+    # Return the unique list
+    return unique_list
+
+# Example usage
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to remove consecutive duplicates of a given list:
+
+```python
+def consecutive_duplicates(lst):
+    result = []
+    prev = None
+    for i in lst:
+        if i != prev:
+            result.append(i)
+            prev = i
+    return result
+```
+
+Explanation:
+
+We create an empty list called `result` to store the non-duplicate elements of the input list. We also initialize a variable `prev` to `None` to keep track of the previous element. We iterate through the input list `lst` and check if the current element is not equal to the previous element. If it's not, we append it to the `result` list and update `prev` to the current element. If it is, we skip it and move on to the next element. Finally, we return the `result` list. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if not result or result[-1] != i:
+            result.append(i)
+    return result
+
+# Test the function
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+print("All test cases pass")</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    """
+    >>> consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return lst
+    if lst[0] == lst[1]:
+        return consecutive_duplicates(lst[1:])
+    else:
+        return [lst[0]] + consecutive_duplicates(lst[1:])
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] != lst[i - 1]:
+            result.append(lst[i])
+    return result
+
+# Test case
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that removes consecutive duplicates from a given list:
+
+```python
+def consecutive_duplicates(lst):
+    if not lst:
+        return []
+    result = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+
+This function works by iterating over the input list and only appending an element to the result list if it is not the same as the previous element. The result is a list with consecutive duplicates removed.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in range(len(lst)):
+        if lst[i] not in new_lst:
+            new_lst.append(lst[i])
+        else:
+            continue
+    return new_lst
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in range(len(lst)):
+        if lst[i] not in new_lst:
+            new_lst.append(lst[i])
+        else:
+            continue
+    return new_lst
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in range(len(lst)):
+        if lst[i] not in new_lst:
+            new_lst.append(lst[i])
+        else:
+            continue
+    return new_lst
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    """
+    Write a function to remove consecutive duplicates of a given list.
+    assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+    """
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+# Test the function
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(list):
+    res = []
+    for i in list:
+        if i not in res:
+            res.append(i)
+    return res
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    """
+    :param lst: list
+    :return: list
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return lst
+    if len(lst) == 2:
+        if lst[0] == lst[1]:
+            return [lst[0]]
+        else:
+            return lst
+    if lst[0] == lst[1]:
+        return consecutive_duplicates(lst[1:])
+    else:
+        return [lst[0]] + consecutive_duplicates(lst[1:])
+
+
+def consecutive_duplicates_2(lst):
+    """
+    :param lst: list
+    :return: list
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return lst
+    if len(lst) == 2:
+        if lst[0] == lst[1]:
+            return [lst[0]]
+        else:
+            return lst
+    if lst[0] == lst[1]:
+        return consecutive_duplicates_2(lst[2:])
+    else:
+        return [lst[0]] + consecutive_duplicates_2(lst[1:])
+
+
+def consecutive_duplicates_3(lst):
+    """
+    :param lst: list
+    :return: list
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+        return lst
+    if len(lst) == 2:
+        if lst[0] == lst[1]:
+            return [lst[0]]
+        else:
+            return lst
+    if lst[0] == lst[1]:
+        return consecutive_duplicates_3(lst[2:])
+    else:
+        return [lst[0]] + consecutive_duplicates_3(lst[1:])
+
+
+def consecutive_duplicates_4(lst):
+    """
+    :param lst: list
+    :return: list
+    """
+    if len(lst) == 0:
+        return []
+    if len(lst) == 1:
+       </code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to remove consecutive duplicates of a given list:
+
+```python
+def consecutive_duplicates(lst):
+    return [lst[i] for i in range(len(lst)) if i == 0 or lst[i] != lst[i-1]]
+
+# Test the function
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))  # Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+
+This function uses list comprehension to create a new list that includes only the elements from the original list if they are not the same as the previous element. The first element is always included in the new list, regardless of whether it is a duplicate.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    return [lst[0]] + [lst[i] for i in range(1, len(lst)) if lst[i]!= lst[i-1]]
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4]))
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4]))
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(list):
+  new_list = []
+  for i in range(len(list)):
+    if i == 0 or list[i] != list[i - 1]:
+      new_list.append(list[i])
+  return new_list
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+def consecutive_duplicates(input_list):
+    """
+    Function to remove consecutive duplicates from a given list.
+    """
+    if not input_list:
+        return []
+
+    output_list = [input_list[0]]
+    for element in input_list[1:]:
+        if element != output_list[-1]:
+            output_list.append(element)
+
+    return output_list
+
+# Test case
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i - 1]:
+            result.append(lst[i])
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            new_lst.append(lst[i])
+    return new_lst
+```
+
+The function takes a list as input and returns a new list with consecutive duplicates removed. The function works by iterating over the input list and checking if the current element is the same as the previous element. If it is not the same, the current element is added to the new list. If it is the same, the current element is skipped. Finally, the new list is returned.
+
+The function is tested using the given test case:
+
+```python
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+
+The test case passes, indicating that the function is working correctly.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(list_input):
+    list_output = []
+    for i in list_input:
+        if i not in list_output:
+            list_output.append(i)
+    return list_output
+
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to remove consecutive duplicates from a given list:
+
+```python
+def remove_consecutive_duplicates(lst):
+    new_lst = [lst[i] for i in range(len(lst)) if i == 0 or lst[i] != lst[i-1]]
+    return new_lst
+
+# Test the function
+print(remove_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+```
+
+This function works by creating a new list that includes the first element of the original list and then includes any element that is not equal to the previous element in the original list. The `range(len(lst))` generates indices for the list, and `lst[i] != lst[i-1]` checks if the current element is not equal to the previous element. The `or i == 0` part is to include the first element of the list.
+
+When you run this code, it will print:
+
+```python
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+
+which is the list with consecutive duplicates removed.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    if len(lst) == 0:
+        return []
+    
+    new_lst = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] != lst[i-1]:
+            new_lst.append(lst[i])
+    return new_lst
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(list):
+    return list[0:len(list)-1]
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(list):
+    return list[0:len(list)-1]
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(list):
+    return list[0:len(list)-1]
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(list):
+    return list[0:len(list)-1]
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    previous = None
+    for item in lst:
+        if item != previous:
+            result.append(item)
+        previous = item
+    return result</code></pre>
+
+      <p> codegemma-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(list):
+    new_list = []
+    for i in range(len(list)):
+        if i == 0:
+            new_list.append(list[i])
+        elif list[i] != list[i-1]:
+            new_list.append(list[i])
+    return new_list
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if not result or i != result[-1]:
+            result.append(i)
+    return result
+
+# Test the function
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_consecutive_duplicates(lst):
+    """
+    Remove consecutive duplicates from a given list.
+
+    :param lst: List of elements
+    :return: List with consecutive duplicates removed
+    """
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i - 1]:
+            result.append(lst[i])
+    return result
+
+# Test the function
+assert remove_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if not result or i != result[-1]:
+            result.append(i)
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    return list(set(lst))
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(l):
+    """
+    l: a list
+    returns: a copy of l with consecutive duplicates removed
+    """
+    new_l = []
+    for i in l:
+        if i not in new_l:
+            new_l.append(i)
+    return new_l
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    if not lst: return []
+    result = [lst[0]]
+    for item in lst[1:]:
+        if item != result[-1]:
+            result.append(item)
+    return result
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    unique_elements = {}
+    result = []
+    for element in lst:
+        if element not in unique_elements or element not in result:
+            unique_elements[element] = True
+            result.append(element)
+    return result</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if result == [] or i != result[-1]:
+            result.append(i)
+    return result
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script to remove consecutive duplicates from a given list:
+
+```python
+def remove_consecutive_duplicates(lst):
+    result = []
+    for i in lst:
+        if i not in result or i != result[-1]:
+            result.append(i)
+    return result
+
+# Testing the function
+assert remove_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+
+Explanation:
+
+We iterate through the given list `lst` and check if the current element `i` is not already in the `result` list or if it is not equal to the last element of `result`. If it is not, we append it to the `result` list. This way, we remove all consecutive duplicates from the list. Finally, we return the `result` list. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    if len(lst) == 0:
+        return []
+    else:
+        return [lst[0]] + consecutive_duplicates([x for x in lst[1:] if x != lst[0]])
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: True </p>
+      <pre><code>  def consecutive_duplicates(list1):
+    result = []
+    prev = list1[0]
+    count = 1
+    for i in range(1, len(list1)):
+        if list1[i] == prev:
+            count += 1
+        else:
+            result.append(prev)
+            prev = list1[i]
+            count = 1
+    result.append(prev)
+    return result</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    return [lst[i] for i in range(len(lst)) if lst[i] != lst[i-1]]
+
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    """
+    >>> consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+    """
+    new_lst = []
+    for i in lst:
+        if i not in new_lst:
+            new_lst.append(i)
+    return new_lst
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    if len(lst) == 0:
+        return lst
+    else:
+        for i in range(len(lst)):
+            if lst[i] == lst[i + 1]:
+                lst.pop(i)
+                i -= 1
+        return lst
+
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def remove_consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i-1]:
+            result.append(lst[i])
+    return result
+
+assert remove_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    return [lst[0]] + [lst[i] for i in range(1, len(lst)) if lst[i]!= lst[i-1]]
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4, 4, 5, 6, 6</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(arr):
+    if len(arr) == 0:
+        return arr
+    else:
+        new_arr = [arr[0]]
+        for i in range(1, len(arr)):
+            if arr[i] != new_arr[-1]:
+                new_arr.append(arr[i])
+        return new_arr
+
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    result = []
+    for i in range(len(lst)):
+        if i == 0 or lst[i] != lst[i - 1]:
+            result.append(lst[i])
+    return result
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+def remove_consecutive_duplicates(lst):
+    result = []
+    last_element = None
+    for element in lst:
+        if element != last_element:
+            result.append(element)
+            last_element = element
+        elif element == last_element and result and result[-1] == element:
+            # If the current element is a duplicate and it's the last element in `result`, we don't need to add it
+            pass
+        else:
+            result.append(element)
+            last_element = element
+    return result
+
+# Test the function with the given input
+assert remove_consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    return [x for x in lst if lst.count(x) == 1]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def consecutive_duplicates(lst):
+    result = []
+    prev = None
+    for item in lst:
+        if item != prev:
+            result.append(item)
+            prev = item
+    return result
+
+# Test case
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4]))</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+
+def consecutive_duplicates(lst):
+    return [lst[i] for i in range(len(lst)) if i == 0 or lst[i] != lst[i-1]]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in lst:
+        if i not in new_lst:
+            new_lst.append(i)
+    return new_lst
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in lst:
+        if i not in new_lst:
+            new_lst.append(i)
+    return new_lst
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))
+
+"""
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in lst:
+        if i not in new_lst:
+            new_lst.append(i)
+    return new_lst
+
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def consecutive_duplicates(lst):
+    return [lst[i] for i in range(len(lst)) if i == 0 or lst[i] != lst[i-1]]
+
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to remove consecutive duplicates of a given list.
+assert consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ])==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4]
+"""
+
+def consecutive_duplicates(lst):
+    new_lst = []
+    for i in range(len(lst)-1):
+        if lst[i] != lst[i+1]:
+            new_lst.append(lst[i])
+    new_lst.append(lst[-1])
+    return new_lst
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  ```python
+def consecutive_duplicates(lst):
+    new_lst = [lst[0]]
+    for i in range(1, len(lst)):
+        if lst[i] != lst[i-1]:
+            new_lst.append(lst[i])
+    return new_lst
+
+# Test the function
+print(consecutive_duplicates([0, 0, 1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 8, 9, 4, 4 ]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

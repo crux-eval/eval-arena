@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/7 </h1>
+<pre><code> from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    return list(filter(lambda s: substring in s, strings))
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[], 'john'], [['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx'], [['xxx', 'asd', 'aaaxxy', 'john doe', 'xxxAAA', 'xxx'], 'xx'], [['grunt', 'trumpet', 'prune', 'gruesome'], 'run']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[['banana', 'apple', 'kiwi', 'peach'], 'a'], [['hello', 'world', 'python', 'numpy', 'pandas'], 'py'], [[], ''], [['abc', 'bcd', 'cbd', 'dbc', 'cda'], 'bc'], [['a', 'ab', 'abc', 'abcd', 'abcde', 'bcde', 'cde'], 'cd'], [['123', '456', '789', '101112'], '12'], [['cat', 'dog', 'elephant', 'rhinoceros', 'seagull'], 'e'], [['supercalifragilisticexpialidocious', 'antidisestablishmentarianism', 'floccinaucinihilipilification'], 'ili'], [['moon', 'stars', 'sun', 'planets'], 's'], [['earth', 'mars', 'jupiter', 'saturn', 'uranus'], 's'], [['hello', 'world', 'python', 'numpy', 'pandas', 'numpy'], 'py'], [['supercalifragilisticexpialidocious', 'antidisestablishmentarianism', 'floccinaucinihilipilification', 'floccinaucinihilipilificatnion'], 'ili'], [['hello', 'world', 'python', 'numpy', 'pandas'], 'antidisestablishmentarianismpy'], [['supercalifragilisticexpialidocious', 'antidisestablishmentarianism', 'floccinaucinihilipilification', 'floccinaucinihilipilificatnion'], 'ili12'], [['supercalifragilisticexpialidocious', 'antidisesshmentarianism', 'floccinaucinihilipilification', 'floccinaucinihilipilificatnion', 'floccinaucinihilipilificatilinion'], 'ili'], [['supercalifragilisticexpialidocious', 'sun', 'floccinaucinihilipilificatioearthn'], 'ili'], [['123', '456', '789', '101112'], '122'], [['supercalifragilisticexpialidocious', 'antidisestablishementarianism', 'floccinaucinihilipilification'], 'ili'], [['abc', 'bcd', 'cbd', 'dbc', 'cda', 'cfloccinaucinihilipilificatilinionda'], 'bc'], [['earth', 'mars', 'jupiter', 'saturn', 'uranus'], 'numpuranusys'], [['supercalifragilisticexpialidocious', 'antidisestablishementarianism', 'floccinaucinihilipilification', 'supercalifragilisticexpialidocious'], 'ili'], [['hello', 'world', 'python', 'numpy', 'pandas'], 'antidisestablishmentariasaturnnismpy'], [['supercalifragilisticexpialidocious', 'antidisesshmentarianism', 'floccinaucinihilipilification', 'floccinaucinihilipilificatnion', 'floccinaucinihilipilificatilinion', 'floccinaucinihilipilifi101112cation'], 'ili'], [['supercalifragilisticexpialidocious', 'antidisestablishmentarianism', 'floccinaucinihilipilification', 'floccinaucinihilipilificatnion'], 'floccinaucinihilipilificatioearthn'], [['hello', 'world', 'python', 'numpy', 's'], 'antidisestablishmentariasaturnnismpy'], [['hello', 'world', 'python', 'numpy'], 'antidisestablishmentarianismpy'], [['antidisesshmentarianism', 'floccinaucinihilipilification', 'floccinaucinihilipilificatnion', 'floccinaucinihilipilificatilinion'], 'ili'], [['hello', 'world', 'python', 'numpy', 'pandas', 'numpy'], 'antidisestablishmentarianismpy'], [['abc', 'bcd', 'cbd', 'dbc', 'cda', 'cfloccinaucinihilipilificatilinionda', 'dcbd'], 'bbc'], [['abc', 'bcd', 'cbd', 'dbc', 'cda', 'cfloccinaucinihilipilificatilinionda', 'dcbd', 'cfloaccinaucinihilipilificatilinionda'], 'bbc'], [['123', '456', '789', '101112', '456'], '12'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'an'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'ox'], [['The cat in the hat', 'Green eggs and ham', 'One fish two fish', 'Red fish blue fish'], 'fish'], [['The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'Star Wars', 'Inception', 'Forrest Gump'], 'he'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'equal.'], [['abcdefg'], ''], [['abc(d)e', 'ba%cd', 'cde', 'array', '12345'], '(d)'], [['wsrefgtrh', 'zxyvtru', 'asxwaqzx', 'kjbncxz'], 'tr'], [['The Shawshank Redemption', ' The Godfather ', 'The Dark Knight', '  The Lord of the Rings   ', '   Star Wars', ' Inception     ', 'Forrest Gump'], ' '], [['The Shawshank Redemption', ' The Godfather ', 'The Dark Knight', '  The Lord of the Rings   ', '   Star Wars', ' Inception     ', 'Forrest Gump', ' Inception     '], ' '], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'an'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'York'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'oConstitutionx'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'created'], [['Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'creeated'], [['abcdefg'], 'universally'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'creataed'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."'], 'equal.'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'ordain'], [['abcdefg', 'abcdefg'], 'universally'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nan'], [['Washington', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nan'], [['Washington', 'The cat in the hat', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nation,'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nabc(d)e'], [['abcdeits'], 'universally'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'equ'], [['abcdefg', 'abcdefg'], 'upromoteniversally'], [['The cat in the hat', 'Green eggs and ham', 'One fish two fish', 'Red fish blue fish'], 'ffis'], [['Washington', 'New York City', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nabc(d)e'], [['abcdefg', 'abcdefg', 'abcdefg'], 'universally'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'oConstituti'], [['Washington', 'New York Ciity', 'The cat in the hat', 'New York City', 'Boston', 'Los Angeles', 'Miami', 'Washington'], 'nation,'], [['Pack my box with five dozen liqugor jugs', 'The quick brown fox jumps ove  zy dog', 'The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'created'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'want'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Pack my box with five dozen lisevenquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'ox'], [['The q uick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'oConstitutionx'], [['The quick brown fox jumps over the lazy dog', 'San Francisco', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'oConstitutionx'], [[], 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Pack my box with five dozen lisevenquor jugs', 'forth', 'Jackdaws love my big sphinx of quartz'], 'ox'], [['Washington', 'New York City', 'Los Angeles', 'San Francisco', 'zebras', 'Washington'], 'nabc(d)e'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."'], 'eaqual.'], [[], 'universally'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington', 'Miami'], 'want'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'New York Citywant'], [[], 'Star'], [['The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'Star Wars', 'Inception', 'universally'], 'he'], [['Washington', 'cRedemptionread', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nation,'], [['abcgdefg', 'aasxwaqzxbcdefg', 'want', 'abcdefg', 'abcdefg', 'abcdefg'], 'universally'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'New York Citywan'], [['Washington', 'New York City', 'nWashington', 'Los Angeles', 'San Francisco', 'zebras', 'Washington'], 'nabc(d)e'], [['abcdeits'], 'fortune,'], [['B"Weoston', 'Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'York'], [['abcgdefg', 'aasxwaqzxbcdefg', 'want', 'abcdefg', 'abcdefg', 'abcdefg'], 'box'], [['peoplbige', 'abcdefg', 'abcdefg'], 'universally'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'for'], [['Pack my box with five dozen liqugor jugs', 'The quick brown fkjbncxzox jumps ove  zy dog', 'The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz', 'Jackdaws love my big sphinx of quartz'], 'createdd'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'Citywan'], [['The Shawshank Redemption', ' The Godfather ', 'The Dark Knight', '  The Lord of the Rings   ', '   Star Wars', ' Inception     ', 'Forrest Gump'], 'nation'], [['Washington', 'DC', 'New York City', 'ton', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'York'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'tthese'], [['The quick brown fox jumps over the lazy dog', 'San Francisco', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'oConstitStar Warsutionx'], [['Washington', 'New York City', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nab(((The Dark Knightdthese)cc(d)e'], [['Washington', 'New York City', 'San Francisco', 'Miami', 'New York Cicreateddty', 'Washington', 'New York Cicreateddty'], 'nabc(d)e'], [['Washington', 'MMiami', 'New York City', 'San Francisco', 'Miami', 'New York Cicreateddty', 'Washington', 'New York Cicreateddty'], 'nabc(d)e'], [['an', 'abcdeits'], 'universally'], [['The Shawshank Redemption', ' The Godfather ', 'The Dark Knight', '  The Lord of the Rings   ', '   Star Wars', ' Inception     ', 'Forrest Gump'], ' l.'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States oef America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'City'], [['th'], '(((The Dark Knightdtmeaninghese)'], [['abcdefg', 'abcdefg', 'abcdefg'], 'univerhavely'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."'], 'Star Wars'], [['daft', 'UEZ', '(((The Dark Knightdthese)', 'of', 'New York Ciitypcerfefct'], 'RRed fish blue fish'], [['Pack my box with five dozen liqugor jugs', 'The quick brown fkjbncxzox jumps ove  zy dog', 'The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'The quick b over the lazy dog'], [['The quick brown fox jumps ove  zy dog', 'The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz', 'The quick brown fox jumps ove  zy dog'], 'oxx'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.', 'To be or not to be, that is the question.'], 'ordain'], [['Washington', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington', 'Miami'], 'daft'], [['Pack my box with five dozen liqugor jugs', 'The quick brown fox jumps ove  zy dog', 'The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Redemption'], 'created'], [['Washington', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'Washington'], 'nann'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz', 'Pack my box with five dozen liquor jugs'], 'createt'], [['Washington', 'MMiami', 'New York City', 'San Francisco', 'Miami', 'New York Cicreateddty', 'Washington', 'New York Cicreateddty'], 'nabc)e'], [['The Shawshank Redemption', 'The Godfather', 'The Lord of the Rings', 'Star Wars', 'Inception', 'Forrest Gump'], 'he'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Pack my box with five dozen lisevenquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'quiickox'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz'], 'propmtr'], [['The quick brown fox jumps over tPacFour score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are crzyeated equal.he lazy dog', 'San Francisco', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'oConstittutionx'], [['Thee quick brown fox jumps ove  zy dog', 'The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'Jackdaws love my big sphinx of quartz', 'The quick brown fox jumps ove  zy dog'], 'oxxNew York Citywan'], [[], 'abc'], [[], 'substring'], [['', '', ''], 'substring'], [['substring', 'substring', 'substring'], 'substring'], [['string', 'bingo', 'frost', 'parka'], 'substring'], [['', '', ''], ''], [['', 'a', '', 'b'], ''], [[''], ''], [['abc', 'bcd', 'cde', 'def'], 'a'], [['The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'Star Wars', 'posterity,', 'Forrest Gump'], 'he'], [['abcdefg'], 'form'], [[], 'Green'], [['The quick brown fox jumps over the lazy dog', 'Pack my box with five dozen liquor jugs', 'How vexingly quick daft zebras jump', 'Jackdaws love my big sphinx of quartz'], 'tranquility,ox'], [['abcdefg'], 'fom'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'liberty'], [['The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'union,', 'posterity,', 'Forrest Gump', 'union,'], 'h'], [['abcdefg', 'abcdefg'], 'm'], [['fom', 'abcdefg'], 'fom'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'eqal.'], [['abcdbefg'], 'form'], [['abbcdefg', 'fom', 'abcdefg'], 'fom'], [['The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'Star Wars', 'Inception', 'Forrest Gump'], 'he'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'libertequal.y'], [['The Shawshank Redemption', ' The Godfather ', 'The Dark Knight', '  The Lord of the Rings   ', '   Star Wars', ' Inception     ', 'Forrest Gump'], 'Angeles'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'New York City'], 'an'], [['The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'Star Wars', 'posterity,', 'Forrest Gump'], 'h'], [['Washington', 'DC', 'New York City', 'Boston', 'San Francisco', 'Miami'], 'libertequal.y'], [['abcdefg'], 'fofm'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'New York City'], 'aan'], [['The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'Star Wars', 'Inception', 'Forrest Gump'], 'hhe'], [['abbcdefg', 'fom', 'abcdefg', 'abbcdefg'], 'fom'], [['abcdefg', 'abcdefg'], 'To be or not to be, that is the question.'], [['The Godfatosacknowlledged,phinxxher', 'The Dark Knight', 'The Lord of the Rings', 'union,', 'tranquility,oxunion,', 'posterity,', 'Forrest Gump', 'union,'], 'h'], [['osafortune,cknowlledged,p', 'abcdefg', 'abcdefg'], 'fom'], [['The Shawshank Redemption', 'The Godfather', 'justice,The Dark Knight', 'The Lord of the Rings', 'and', 'Inception', 'Forrest Gump'], 'he'], [['abc(d)e', 'ba%cd', 'cde', 'array', '12345'], 'dozen'], [['The Godfather', 'The Dark Knight', 'DCt', 'The Lord of the Rings', 'union,', 'posterity,', 'Forrest Gump', 'union,'], 'h'], [['osafortune,cknowlledged,p', 'abcdefg'], 'fom'], [['wsrefgtrh', 'zxyvtru', 'asxwaqzx', 'zxyvtConstitutionru', 'kjbncxz'], 'tr'], [['kQEHdzw', 'for', 'asxwaqzx', '  The Lord of the Rings   ', 'Mi', 'its', 'kZWuN'], 'Green'], [['abc(d)e', 'ba%cd', 'cde', 'array', '12345', '12345'], 'Saabc(d)en'], [['abc(d)e', 'ba%cd', 'cde', 'array', 'dog'], 'doquartuzzen'], [['The Shawshank Redemption', 'The Godfather', 'justice,The Dark Knight', 'The Lord of the Rings', 'and', 'Inception', 'Forrest Gump'], 'hhate'], [['Washinestablishon', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'New York City'], 'an'], [['abcdefg'], 'rtr'], [['The Dark Knight', 'The Lord of the Rings', 'union,', 'posterity,', 'Forrest Gump', 'union,'], 'h'], [['The Godfatosacknowlledged,phinxxher', 'The Dark Knight', 'The Lord of the Rings', 'union,', 'tranquility,oxunion,', 'posterity,', 'Forrest Gump', 'union,'], 'ourselvesh'], [['Washinestablishon', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'New York City'], 'aan'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'eqal.osacknsowlledged,phinxx'], [['Washinestablishon', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'DCC', 'New York City'], 'an'], [['fI have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."om', 'abcdefg'], 'fom'], [['We the people of the United States of America, in order to form a more perfect union, establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare, and secure the blessings of liberty to ourselves and our posterity, do ordain and establish this Constitution for the United States of America.', 'To be or not to be, that is the question.', 'I have a dream that one day this nation will rise up and live out the true meaning of its creed: "We hold these truths to be self-evident, that all men are created equal."', 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.'], 'eqal.'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'nan'], [['Washinestablishon', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami', 'DCC', 'New York City'], 'Guoxxplibertequal.yan'], [[], 'form'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'tranquility,oxunion,doquartuzzen'], [['Washington', 'DC', 'New York CitYy', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'liberty'], [['abcdefg', 'abcdefg'], 'To be or not to be,  that is the question.'], [['The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'union,', 'pyeathesersrity,', 'Forrest Gump', 'union,'], 'h'], [['The Shawshank Redemption', 'The Godfather', 'justice,The Dark Knight', 'The Lord of the Rings', 'and', 'Inception', 'Forrest Gump'], 'hhatethThe'], [['The Shawshank Redemption', 'To be or not to be, that is the quesetion. Godfather', 'The Godfather', 'justice,The Dark Knight', 'The Lord of the Rings', 'and', 'Inception', 'Forrest Gump'], 'hhatetmyhThe'], [['osafortune,cknowlledged,p', 'abcdefg', 'orm', 'abcdefg'], 'fom'], [['Washington', 'DC', 'New York City', 'Boston', 'Los Angeles', 'San Francisco', 'Miami'], 'tranquility,oxunion,doquartuzLoszen']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the problem:
+
+```python
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    """
+    return [string for string in strings if substring in string]
+
+# Test cases</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+# Test cases
+assert filter_by_substring([], 'a') == []
+assert filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a') == ['abc', 'bacd', 'array']</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]
+
+
+# Test cases
+assert filter_by_substring([], 'a') == []
+assert filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a') == ['abc', 'bacd', 'array']</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's the Python code to solve the problem:
+
+```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]
+```
+
+This function uses list comprehension to iterate over the input list of strings and checks if the given substring is present in each string. If it is, the string is added to the new list that is returned.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+# Test cases
+assert filter_by_substring([], 'a') == []
+assert filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a') == ['abc', 'bacd', 'array']</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+
+def filter_by_length(strings: List[str], length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that have given length
+    >>> filter_by_length([], 1)
+    []
+    >>> filter_by_length(['abc', 'bacd', 'cde', 'array'], 3)
+    ['abc', 'bacd', 'cde']
+    """
+    return [s for s in strings if len(s) == length]
+
+
+def filter_by_length_and_substring(strings: List[str], length: int, substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that have given length and contain given substring
+    >>> filter_by_length_and_substring([], 1, 'a')
+    []
+    >>> filter_by_length_and_substring(['abc', 'bacd', 'cde', 'array'], 3, 'a')
+    ['abc', 'bacd']
+    """
+    return [s for s in strings if len(s) == length and substring in s]
+
+
+def filter_by_length_or_substring(strings: List[str], length: int, substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that have given length or contain given substring
+    >>> filter_by_length_or_substring([], 1, 'a')
+    []
+    >>> filter_by_length_or_substring(['abc', 'bacd', 'cde', 'array'], 3, 'a')
+    ['abc', 'bacd', 'cde', 'array']
+    """
+    return [s for s in strings if len(s) == length or substring in s]
+
+
+def filter_by_length_and_substring_or_substring(strings: List[str], length: int, substring1: str, substring2: str) -> List[str]:
+    """ Filter an input list of strings only for ones that have given length and contain given substring or contain given substring
+    >>> filter_by_length_and_substring_or_substring([], 1, '</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+```
+
+This function uses a list comprehension to filter the input list of strings. It checks if the substring is in each string in the list. If it is, the string is included in the output list. If not, it is not included.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    filtered_strings = [string for string in strings if substring in string]
+    return filtered_strings</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+
+    :param strings: List of strings
+    :param substring: Substring to filter by
+    :return: List of strings that contain the given substring
+    """
+    return [s for s in strings if substring in s]
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+
+# Test cases
+print(filter_by_substring([], 'a'))
+print(filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a'))</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]
+
+# Test cases
+print(filter_by_substring([], 'a'))  # should return []
+print(filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a'))  # should return ['abc', 'bacd', 'array']</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    """
+    return [s for s in strings if substring in s]
+```
+
+The `filter_by_substring` function takes two arguments: `strings` (a list of strings) and `substring` (a string to search for in each string). It returns a new list containing only the strings from the input list that contain the substring.
+
+The function uses a list comprehension to iterate over each string in the input list and check if the substring is present in the string. If it is, the string is added to the new list.
+
+Here are some test cases:
+
+```python
+>>> filter_by_substring([], 'a')
+[]
+>>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+['abc', 'bacd', 'array']
+```
+
+The first test case checks that the function returns an empty list when the input list is empty. The second test case checks that the function returns a list containing the strings 'abc', 'bacd', and 'array' when the substring 'a' is searched for in the input list.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+```
+
+This function uses a list comprehension to iterate over each string in the input list. If the substring is found in the string, it is included in the output list.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+
+def filter_by_substring_case_insensitive(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring_case_insensitive([], 'a')
+    []
+    >>> filter_by_substring_case_insensitive(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring.lower() in s.lower()]
+
+
+def filter_by_substring_regex(strings: List[str], regex: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match given regex
+    >>> filter_by_substring_regex([], 'a')
+    []
+    >>> filter_by_substring_regex(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if re.search(regex, s)]
+
+
+def filter_by_substring_regex_case_insensitive(strings: List[str], regex: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match given regex
+    >>> filter_by_substring_regex_case_insensitive([], 'a')
+    []
+    >>> filter_by_substring_regex_case_insensitive(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if re.search(regex, s, re.IGNORECASE)]
+
+
+def filter_by_substring_regex_case_insensitive_and_length(strings: List[str], regex: str, length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that match given regex
+    >>> filter_by_substring_regex_case_ins</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    
+    Args:
+    strings (List[str]): The list of strings to filter
+    substring (str): The substring to search for in the strings
+    
+    Returns:
+    List[str]: A list of strings that contain the given substring
+    
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    return [s for s in strings if substring in s]
+```
+
+This script defines a function `filter_by_substring` that takes a list of strings and a substring as input arguments. It returns a new list containing only the strings from the input list that contain the given substring. The function uses a list comprehension to filter the input list based on the presence of the substring in each string.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring """
+    return [s for s in strings if substring in s]
+
+# Test cases
+print(filter_by_substring([], 'a'))  # []
+print(filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a'))  # ['abc', 'bacd', 'array']</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]
+```
+
+The `filter_by_substring` function takes two arguments: `strings` and `substring`. The `strings` argument is a list of strings and the `substring` argument is a string that we want to filter the list by. The function returns a new list that contains only the strings from the input list that contain the given substring. We use a list comprehension to iterate over each string in the input list and check if the substring is present in it. If the substring is present, we add it to the new list. If not, we skip it. Finally, we return the new list. If the input list is empty, we return an empty list. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+
+    return [s for s in strings if substring in s]
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+```</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in markdown style:
+
+```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """
+    Filter an input list of strings only for ones that contain given substring.
+
+    :param strings: A list of strings to filter.
+    :param substring: The substring to search for in the strings.
+    :return: A list of strings that contain the given substring.
+
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+```
+
+This function uses a list comprehension to create a new list that only includes strings from the input list that contain the given substring.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    return [s for s in strings if substring in s]
+```
+
+This Python script uses list comprehension to filter the input list of strings only for ones that contain the given substring. The function returns a new list that contains only the strings that contain the substring.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    result = []
+    for string in strings:
+        if substring in string:
+            result.append(string)
+    return result</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+
+if __name__ == "__main__":
+    print(filter_by_substring([], 'a'))
+    print(filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a'))</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [string for string in strings if substring in string]</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+
+    return [string for string in strings if substring in string]
+
+</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> python-code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain given substring
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')
+    ['abc', 'bacd', 'array']
+    """
+    return [s for s in strings if substring in s]</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

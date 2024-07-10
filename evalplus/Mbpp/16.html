@@ -1,0 +1,1227 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/16 </h1>
+<pre><code> """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+import re
+def text_lowercase_underscore(text):
+        return bool(re.match('^[a-z]+(_[a-z]+)*$', text))
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['aab_cbbbc'], ['aab_Abbbc'], ['Aaab_abbbc']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z'], ['abc_def_ghi_jkl_mno_pqr_stu_vwx_yz'], ['_'], ['_abc'], ['abc_'], ['abc_def_ghi_'], ['A__B_ccC_dDd_eE_fFF_g_hhH_iJj'], ['a'], ['abc_DEF_ghi'], ['abc'], ['abc_def_'], ['_abc_def'], ['_abc_def_'], ['a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z_'], ['_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yz'], ['ab_abc_def_c_'], ['_abc_deaf'], ['abc_def_ghi_jkl_mno_pqr_stu_vwxyz'], ['abdc_def_ghi_jkl_mno_pqr_stuu_vwx_yz'], ['A__B_cc_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yzC_dDd_eE_fFF_g_hhH_iJj'], ['abdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['_abcabc_d_ghi_jkl_mno_pqr_stu_vwx_yz'], ['abdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno__pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['abdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno__pqr_stu_vwx_yz_mno_pqrabdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz_stuu_vwx_yzstuu_vwx_yz'], ['_abcabc_def_ghi_jkl_mno_pqr_stu_vwxq_yz'], ['abdc_def_gh_abc_defi_jkl_abcabmno_pqr_stuu_vwx_yz'], ['wJz'], ['abdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yztuu_vwx_yz'], ['abc_def_ghiabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abc_def_ghie_'], ['abc_def_ghi_jkl_mno_pqr_stu_vabc_def_ghie_wxyz'], ['aba_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z_abc_def_ghi_jkl_mno_pqr_stu_vwxyzc_def_'], ['_abcabc_def_ghi_jkl_mno_pqr_stu_vwxq_yabdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yztuu_vwx_yzz'], ['abdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_afbc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yzabc_def_z'], ['PfGhQdq'], ['c'], ['ab_abc_A__B_ccC_dDd_eE_fFF_g_hhH_iJjdef_c_'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEabcF_ghiqr_stabdc_def_gh_abc_defi_jkl_abcabmno_pqr_stuu_vwx_yzu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abdc_def_ghi_jkl_abcabc_def_ghi__jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc__def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabmno_pq_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwabdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno__pqr_stu_vwx_yz_mno_pqrabdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz_stuu_vwx_yzstuu_vwx_yz_yyz_mno_pqr_stuu_vwx_yz'], ['A__B_cc_abcabc_def_ghi_jk_l_mno_pqr_stu_vwx_yzC_dDd_eE_fFF_g_hhH_iJj'], ['ac_'], ['abc_DEF_ghia'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwabdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno__pqr_stu_vwx_yz_mno_pqrabdc_def_xghi_jkl_abcabc_def_ghabc_def_ghi_jkl_mno_pqr_stu_vwxyztuu_vwx_yz_stuu_vwx_yzstuu_vwx_yz_yyz_mno_pqr_stuu_vwx_yz'], ['cc'], ['_abcabc_d_ghi_jkl_mno_pqr_stu_vmwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEaba_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z_abc_def_ghi_jkl_mno_pqr_stu_vwxyzc_def_F_ghiqr_stu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abc_d_abcabc_def_ghi_jkl_mno_pqr_stu_vwxq_yabdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yztuu_vwx_yzzef_ghi_'], ['abdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_abc_defi_jkl_abcbabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yztuu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEabcF_ghiqr_stabdc_def_gh_abc_defi_jkl_abcaxbmno_pqr_stuu_vwx_yzu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['_abcabc_def_ghi_jkl_mnao_pqr_stu_vwx_yz'], ['no_pqr_stuu_vwx_yzz'], ['abc_def_ghi_jkl_mnoc_pqr_stu_vabc_def_ghie_wxyz'], ['_ab_abc_defc_def_'], ['a_b_c_d_e_f_g_hf_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z'], ['abc_DEF_ghDia'], ['L'], ['abdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_afbc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yzabc_def_qz'], ['abc_def_ghi_jkl_mno_pqr_stmu_vwxyz'], ['_abcabc_def_ghi_jkl_mno_pqr_stmu_vwxyz_deaf'], ['A__B_cc_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yzC_dDd_eE_fFF_g_hhH_iJLj'], ['_abcabc_def_ghi_jkl_mno_pqr_stu_vwxq_yabdc_def_gh_abc_defi_jkl_abcabmino_pqr_sabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yztuu_vwx_yzz'], ['no__abc_deafpqr_stuu_vwx_LPfGhQdqyzz'], ['_aabc'], ['abc_defabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEabcF_ghiqr_stabdc_def_gh_abc_defi_jkl_abcabmno_pqr_stuu_vwx_yzu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['A__B_cc_abcabc_def_ghi__jkl_mno_pqr_stu_vwx_yzC_dDd_eE_fFF_g_hhH_iJj'], ['PfGhQQdq'], ['abc_DEF_PfGhQdqghDia'], ['abc_def_ghiabdc_def_gh_abc_defi_ijkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abc_def__ghi_jkl_mnoc_pqr_stu_vabc_def_ghie_wxyz'], ['aabc'], ['ano_pqr_stuu_vwx_yzzbc_def_ghie_'], ['PfGhQQdq_abcabc_d_ghi_jkl_mno_pqr_stu_vmwx_yz'], ['abc_DEF_PfGhQdqghQDia'], ['abc_def_ghai_'], ['abdc_def_ghi_pqr_stuu_vwx_yz'], ['abc_defabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEabcF_ghiqr_stabdc_def_gh_abc_defi_jkl_abcabmno_pqr_stabdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yzuu_vwx_yzu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['abc_def_ghiabdc_def_gh_abc_defi_ijkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_spqr_stuu_vwx_yz'], ['abdc_def_ghi_jkl_abcabc_def_ghi__jkl_mno_pqr_ustu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['_abPfGhQQdqcabc_def_ghi_jkl_mno_pqr_stmu_vwxyz_deaf'], ['_ab_abc_defc_defabdc_def_ghi_jkl_abcabc_def_ghi_jkl_mno__pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['abdbc_def_ghi_jkl_abcabc_def_ghi__jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['abc_def_ghi_jk_l_mno_spqr_stu_vwx_yz'], ['abc_defabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEabcF_ghiqr_stabdc_def_gh_abc__defi_jkl_abcabmno_pqr_stuu_vwx_yzu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['A__B_cc_aghi_jk_l_mno_pqr_stu_vwx_yzC_da_b_tc_d_e_f_g_hf_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_zDd_eE_fFF_g_hhH_iJj'], ['vabc_def_ghi_jkl_mno_pqr_stu_vwx_yz'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mx_yz'], ['abc_def_abdc_def_gh_abc_defi_jkl_abcabmno_pqr_sabdc_def_gh_afbc_defi_jkl_abcabc_def_ghi_jkl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yzabc_def_qzghiabdc_def_gh_abc_defi_ijkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_spqr_stuu_vwx_yz'], ['abdc_def_ghi_jkl_mno_p_abc_def_qr_stuuPfGhQQdq_abcabc_d_ghi_jkl_mno_pqr_stu_vmwx_yz_vwx_yz'], ['_abcabc_d_ghi_jkl_mno_abc_def_ghai_pqr_stu_vwx_yz'], ['yz'], ['abdc_def_ghi_jkl_mno_p_abc_abc_defabdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEabcF_ghiqr_stabdc_def_gh_abc__defi_jkl_abcabmno_pqr_stuu_vwx_yzu_vwx_yyz_mno_pqr_stuu_vwx_yzdef_qr_stuuPfGhQQdq_abcabc_d_ghi_jkl_mno_pqr_stu_vmwx_yz_vwx_yz'], ['abdc_Edef_gh_abc_defi_jkl_abcabc__def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yyz_mno_pqr_stuu_vwx_yz'], ['bc_def_'], ['abc_def_dghi_'], ['abdcc_def_ghi_jkl_abcabc_def_ghi__jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz'], ['_acbc_def_'], ['abdc_Edef_gh_abc_defi_jkl_abcabc__def_ghi_jkl_yz'], ['habcghia'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_jkl_mno_pabc_DEF_ghiqr_stu_vwx_yeyz_mx_yz'], ['_abcabc_d_ghi_jkl_mno_pqr_stu_x_yz'], ['a_b_c_d_e_f_g_h_i_j_aba_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z_abc_def_ghi_jkl_mno_pqr_stu_vwxyzc_def_m_n_o_p_q_r_s_t_u_v_w_x_y_z'], ['abdc_def_gh_abc_bdefi_jkl_abcabmno_pq_yz'], ['an_pqr_stuu_vwx_yzzbc_def_ghie_'], ['PfGhQdqL'], ['_abcabc_d_ghi_jkl_mno_pqr_stu_z'], ['abc_DEF_PhQdqghQDia'], ['abdc_def_gh_abc_defi_jkl_abcabc_def_ghi_abdbc_def_ghi_jkl_abcabc_def_ghi__jkl_mno_pqr_stu_vwx_yz_mno_pqr_stuu_vwx_yzl_mno_pa_abcbc_DEF_ghiqr_stu_vwx_yz_mno_pqr_stuu_vwx_yz']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    """
+    :param text: string
+    :return: boolean
+    """
+    if text.islower() and "_" in text:
+        return True
+    else:
+        return False
+
+
+if __name__ == '__main__':
+    print(text_lowercase_underscore("aab_cbbbc"))
+    print(text_lowercase_underscore("aab_cbbbc_"))
+    print(text_lowercase_underscore("aab_cbbbc_a"))
+    print(text_lowercase_underscore("aab_cbbbc_a_"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_e"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_e_"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_e_f"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_e_f_"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_e_f_g"))
+    print(text_lowercase_underscore("aab_cbbbc_a_b_c_d_e_f_g_"))</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(text):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore and False otherwise.
+    """
+    pattern = re.compile(r'^[a-z_]*$')
+    return bool(pattern.match(text))
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == (True)
+assert text_lowercase_underscore("Aab_cbbbc") == (False)
+assert text_lowercase_underscore("aab-cbbbc") == (False)
+assert text_lowercase_underscore("aab cbbbc") == (False)
+assert text_lowercase_underscore("aabcbbbc") == (True)</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_lowercase_underscore(input_string):
+    import re
+
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, input_string))
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def text_lowercase_underscore(text):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore, False otherwise.
+    """
+    import re
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, text))
+
+# Example usage
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("Aab_cbbbc") == False
+assert text_lowercase_underscore("aab_Cbbbc") == False
+assert text_lowercase_underscore("aab__cbbbc") == False</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(s):
+    return bool(re.fullmatch(r'[a-z]+(_[a-z]+)*', s))
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+```</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+def text_lowercase_underscore(text):
+    # Check if the text contains sequences of lowercase letters joined with an underscore
+    return all(c.islower() for c in text) and "_" in text
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("abc_def") == True
+assert text_lowercase_underscore("Abc_def") == False
+assert text_lowercase_underscore("abc_defg") == False</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem, wrapped in a markdown block:
+
+```python
+def text_lowercase_underscore(text):
+    parts = text.split("_")
+    for part in parts:
+        if not part.islower():
+            return False
+    return True
+
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("aab_cBbbc") == False
+assert text_lowercase_underscore("aab_") == True
+assert text_lowercase_underscore("aab") == True
+assert text_lowercase_underscore("") == True</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_lowercase_underscore(text):
+    # Use regular expression to check if the string contains only lowercase letters, underscores, and starts and ends with a letter
+    import re
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    if re.match(pattern, text):
+        return True
+    else:
+        return False
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+assert text_lowercase_underscore("aab_Cbbbc")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab#cbbbc")==(False)
+assert text_lowercase_underscore("1aab_cbbbc")==(False)</code></pre>
+
+      <p> wizardcoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+```python
+def text_lowercase_underscore(text):
+    # Define a regular expression pattern that matches sequences of lowercase letters joined with an underscore
+    pattern = r'[a-z]+_[a-z]+'
+    # Use the re module to search for the pattern in the input text
+    match = re.search(pattern, text)
+    # Return True if a match is found, False otherwise
+    return bool(match)
+```
+
+We can test the function with the given example:
+
+```python
+assert text_lowercase_underscore("aab_cbbbc") == True
+```
+
+This will return True because the input string contains the sequence "aab_cbbbc" which matches the pattern. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(text):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore and False otherwise.
+    """
+    pattern = r"^[a-z]+(_[a-z]+)*$"
+    return bool(re.match(pattern, text))
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("Aab_cbbbc") == False
+assert text_lowercase_underscore("aab_cbbbc_") == False
+assert text_lowercase_underscore("aab_cbbbc1") == False
+assert text_lowercase_underscore("aab_cbbbc_1") == False
+assert text_lowercase_underscore("aab_cbbbc_1_") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_c") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_c_") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_c_d") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_c_d_") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_c_d_e") == False
+assert text_lowercase_underscore("aab_cbbbc_1_a_b_c_d_e_") == False
+assert text_lowercase_underscore("aab_c</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    # your code here
+    return text.islower() and "_" in text
+
+
+if __name__ == '__main__':
+    print("Example:")
+    print(text_lowercase_underscore('aab_cbbbc'))
+
+    # These "asserts" are used for self-checking and not for an auto-testing
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc_") == False
+    assert text_lowercase_underscore("aab_cbbbc__") == False
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_cbbbc") == True
+    assert text_lowercase_underscore("aab_c</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(string):
+    words = string.split('_')
+    return all(word.islower() for word in words) if '_' in string else False
+
+# Test case provided
+assert text_lowercase_underscore("aab_cbbbc") == True
+# Additional test cases
+assert text_lowercase_underscore("abc_def_gh") == True
+assert text_lowercase_underscore("123abc_def") == False
+assert text_lowercase_underscore("ABC_def_gh") == False
+assert text_lowercase_underscore("abc_def_gh_") == True
+assert text_lowercase_underscore("abc_def") == True
+assert text_lowercase_underscore("abc") == False</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+import re
+
+def text_lowercase_underscore(input_string):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore and False otherwise.
+    """
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    if re.match(pattern, input_string):
+        return True
+    else:
+        return False
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True
+```
+
+This function uses regular expressions to check if the input string matches the pattern of lowercase letters separated by underscores. The pattern `'^[a-z]+(_[a-z]+)*$'` means: start of the string (`^`), followed by one or more lowercase letters (`[a-z]+`), followed by zero or more sequences of an underscore and one or more lowercase letters (`(_[a-z]+)*`), and finally the end of the string (`$`).</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_lowercase_underscore(s):
+    """
+    Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+    assert text_lowercase_underscore("aab_cbbbc")==(True)
+    """
+    import re
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, s))
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("aab_Cbbbc") == False
+assert text_lowercase_underscore("aab_cbbbc1") == False
+assert text_lowercase_underscore("aab_cbbbc_") == False
+assert text_lowercase_underscore("aab_cbbbc_def") == True</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    if text.islower() and "_" in text:
+        return True
+    return False
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    """
+    :param text:
+    :return:
+    """
+    if text.islower():
+        return True
+    else:
+        return False
+
+
+if __name__ == '__main__':
+    print(text_lowercase_underscore("aab_cbbbc"))
+    print(text_lowercase_underscore("aab_cbbbc_"))
+    print(text_lowercase_underscore("aab_cbbbc_d"))
+    print(text_lowercase_underscore("aab_cbbbc_d_"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_h"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_h_"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_h_i"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_h_i_"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_h_i_j"))
+    print(text_lowercase_underscore("aab_cbbbc_d_e_f_g_h_i_j_"))
+    print(text_lowercase</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def text_lowercase_underscore(s):
+    return all(c.islower() or c == '_' for c in s)
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True
+```
+
+This function works by using the `all` function in Python, which returns `True` if all elements in the iterable (in this case, the string `s`) are true. The condition `c.islower() or c == '_'` checks if each character `c` in the string `s` is a lowercase letter or an underscore. If all characters meet this condition, the function returns `True`; otherwise, it returns `False`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def text_lowercase_underscore(text):
+    for i in range(len(text) - 1):
+        if text[i].islower() and text[i + 1].islower() and text[i + 2] == '_':
+            return True
+    return False
+
+assert text_lowercase_underscore("aab_cbbbc") == True</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    return text.lower().replace("_", "").isalpha()
+
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_c</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(text):
+  for i in range(len(text)-1):
+    if text[i].islower() and text[i+1].islower() and text[i+1] == "_":
+      return True
+  return False</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+def text_lowercase_underscore(text):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore, False otherwise.
+    """
+    return any(char.isalpha() and (char in '_' or (char == prev_char and prev_char.isalpha()) for char in text) or char == '_) and text.isalpha() else False
+    prev_char = None
+
+# Test cases
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("abcd") == False
+assert text_lowercase_underscore("a_b_c") == True
+assert text_lowercase_underscore("_a_b_c") == False
+assert text_lowercase_underscore("A1b2c") == False</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(s):
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, s))
+
+assert text_lowercase_underscore("aab_cbbbc") == True</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def text_lowercase_underscore(text):
+    """
+    This function returns True if the input string contains sequences of lowercase letters joined with an underscore and False otherwise.
+    """
+    if "_" in text:
+        words = text.split("_")
+        for word in words:
+            if not word.islower():
+                return False
+        return True
+    else:
+        return False
+```
+
+Explanation:
+
+- The function `text_lowercase_underscore` takes a string `text` as input.
+- The function first checks if the string contains an underscore using the `in` operator.
+- If the string contains an underscore, the function splits the string into words using the `split` method and stores them in a list called `words`.
+- The function then iterates over each word in the `words` list and checks if it contains only lowercase letters using the `islower` method.
+- If any word contains uppercase letters, the function returns `False`.
+- If all words contain only lowercase letters, the function returns `True`.
+- If the string does not contain an underscore, the function returns `False`.</code></pre>
+
+      <p> code-llama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(txt):
+    # txt = txt.split("_")
+    # for i in txt:
+    #     if i.islower() == False:
+    #         return False
+    # return True
+    return all(i.islower() for i in txt.split("_"))
+
+
+print(text_lowercase_underscore("aab_cbbbc"))</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+import re
+
+def text_lowercase_underscore(text):
+    """
+    This function checks if the input string contains sequences of lowercase letters joined with an underscore.
+    """
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, text))
+
+# Test the function
+print(text_lowercase_underscore("aab_cbbbc"))  # Expected output: True
+```
+
+In this function, we use a regular expression to check if the input string matches the pattern of one or more lowercase letters followed by an underscore and another sequence of lowercase letters. The `^` and `$` symbols are used to denote the start and end of the string, respectively. The `*` symbol is used to denote zero or more of the preceding element. The `+` symbol is used to denote one or more of the preceding element. The `bool()` function is used to convert the result of `re.match()` to a boolean value.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    if text.islower() and "_" in text:
+        return True
+    else:
+        return False
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g_h")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g_h_i")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g_h_i_j")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g_h_i_j_k")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g_h_i_j_k_l")==(False)
+assert text_lowercase_underscore("aab_cbbbc_c_d_e_f_g_h_i_j_k_l_m")==(False)
+assert text_lowercase_underscore("aab_cbbbc_</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(text):
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, text))</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    for i in range(len(text)-1):
+        if text[i].islower() and text[i+1].islower() and text[i+1] == "_":
+            return True
+    return False
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_lowercase_underscore(text):
+    # Split the text by underscores
+    parts = text.split('_')
+    # Check if each part contains only lowercase letters
+    for part in parts:
+        if not part.islower():
+            return False
+    return True
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+assert text_lowercase_underscore("aab_Cbbbc")==(False)
+assert text_lowercase_underscore("aab_cbbbc_")==(False)
+assert text_lowercase_underscore("aab_cbbbc_cdd")==(False)</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(input_string):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore,
+    and False otherwise.
+    """
+    # Regular expression to match lowercase letters joined with an underscore
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    
+    # Check if the input string matches the pattern
+    if re.match(pattern, input_string):
+        return True
+    else:
+        return False
+
+# Test cases
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("aab_cbbbc_") == True
+assert text_lowercase_underscore("aab_cbbbc_d") == False
+assert text_lowercase_underscore("Aab_Cbbbc") == False
+assert text_lowercase_underscore("aab_cbbbc_d_e") == False</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(s):
+    return all(c.islower() or c == '_' for c in s)
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+```
+
+This function checks if each character in the input string is either a lowercase letter or an underscore. If all characters in the string meet this condition, the function returns True. Otherwise, it returns False.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(s):
+    pattern = r'^[a-z_]+$'
+    if re.fullmatch(pattern, s):
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+"""
+Write a function that returns true if the input string contains sequences of lowercase</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+import re
+
+def text_lowercase_underscore(s):
+    # Regular expression to match sequences of lowercase letters joined with an underscore
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    # Search for the pattern in the input string
+    return bool(re.match(pattern, s))
+
+# Example usage
+# assert text_lowercase_underscore("aab_cbbbc") == (True)
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(text):
+    return bool((text.lower().match("([a-z_]+)+") is not None) and (text.lower().match("[_a-z_]+$") is not None))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def text_lowercase_underscore(text):
+    import re
+    pattern = r'[a-z]+_[a-z]+'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def text_lowercase_underscore(text):
+    # Split the text by underscores
+    parts = text.split('_')
+    # Check if all parts are lowercase and not empty
+    return all(part.islower() for part in parts)
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("Aab_cbbbc") == False
+assert text_lowercase_underscore("aab_cbbbc_") == False
+assert text_lowercase_underscore("aab_cbbbc_") == False
+assert text_lowercase_underscore("") == False
+assert text_lowercase_underscore("aab_cbbbc_") == False</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(s):
+    return '_' in s and s.islower()
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python function that checks if a string contains sequences of lowercase letters joined with an underscore:
+
+```python
+def text_lowercase_underscore(string):
+    """
+    This function checks if a string contains sequences of lowercase letters joined with an underscore.
+    """
+    # Split the string into words using underscore as the delimiter
+    words = string.split('_')
+    
+    # Check if all words are lowercase
+    for word in words:
+        if not word.islower():
+            return False
+    
+    # If all words are lowercase, return True
+    return True
+```
+
+We first split the input string into words using the underscore as the delimiter. Then, we iterate over each word and check if it is lowercase using the `islower()` method. If any word is not lowercase, we return False. If all words are lowercase, we return True. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    return text.count('_') == text.count('_'.join(text.split('_')))</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(text):
+    return re.match(r"^[a-z]+_(a-z)+$", text, re.IGNORECASE)
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.islower() and "_" in text
+
+print(text_lowercase_underscore("aab_cbbbc"))</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").isalpha()
+
+"""
+Write a function to that returns true if</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    for i in range(len(text)):
+        if text[i].isalpha() and text[i].islower() and text[i] != "_":
+            return False
+    return True
+
+
+print(text_lowercase_underscore("aab_cbbbc"))</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(text):
+    return any(word.islower() and '_' in word for word in text.split())
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    return text.replace("_", "").islower()
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+assert text_lowercase_underscore("aab_cbbbC")==(False)
+assert text_lowercase_underscore("aab_cbbb_c")==(True)
+assert text_lowercase_underscore("aab_cbbb__c")==(True)
+assert text_lowercase_underscore("aab_cbbb__c_")==(True)
+assert text_lowercase_underscore("aab_cbbb__c__")==(True)
+assert text_lowercase_underscore("aab_cbbb__c___")==(True)
+assert text_lowercase_underscore("aab_cbbb__c____")==(True)
+assert text_lowercase_underscore("aab_cbbb__c_____")==(True)
+assert text_lowercase_underscore("aab_cbbb__c______")==(True)
+assert text_lowercase_underscore("aab_cbbb__c_______")==(True)
+assert text_lowercase_underscore("aab_cbbb__c________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c_________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c__________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c___________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c____________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c_____________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c______________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c_______________")==(True)
+assert text_lowercase_underscore("aab_cbbb__c________________")==(True)
+assert text_</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    return bool(re.search(r'[a-z]+_[a-z]+', text))
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def text_lowercase_underscore(input_str):
+    # Check if the input string is not empty
+    if not input_str:
+        return False
+
+    # Iterate through the input string
+    for i in range(len(input_str) - 1):
+        # Check if the current character is lowercase and the next character is an underscore
+        if input_str[i].islower() and input_str[i + 1] == '_':
+            # If so, continue checking the rest of the string
+            continue
+        # If not, return False
+        else:
+            return False
+
+    # If we've made it to the end of the string without returning False, return True
+    return True
+
+# Test the function
+assert text_lowercase_underscore("aab_cbbbc") == True</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+def text_lowercase_underscore(text: str) -> bool:
+    # Check if the string contains only lowercase letters and underscores
+    if not re.match(r'^[a-z_]+$', text):
+        return False
+
+    # Check if there are any sequences of lowercase letters joined with an underscore
+    pattern = r'(?<=[a-z])_(?=[a-z])'
+    if re.search(pattern, text):
+        return True
+    else:
+        return False
+
+assert text_lowercase_underscore("aab_cbbbc") == True</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    if text.count("_") == text.count("a"):
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to solve the given problem, wrapped in a markdown block:
+
+```python
+import re
+
+def text_lowercase_underscore(text):
+    """
+    Returns True if the input string contains sequences of lowercase letters joined with an underscore, False otherwise.
+    
+    Args:
+        text (str): The input string to be checked.
+        
+    Returns:
+        bool: True if the input string contains sequences of lowercase letters joined with an underscore, False otherwise.
+    """
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    return bool(re.match(pattern, text))
+
+# Test cases
+assert text_lowercase_underscore("aab_cbbbc") == True
+assert text_lowercase_underscore("a_b_c") == True
+assert text_lowercase_underscore("abc") == True
+assert text_lowercase_underscore("A_b_c") == False
+assert text_lowercase_underscore("a_b_c_") == False
+assert text_lowercase_underscore("a_b_1") == False</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    return all(c.islower() or c == '_' for c in text)
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+def text_lowercase_underscore(text):
+    if text.islower() and text.count("_") == 1:
+        return True
+    else:
+        return False
+
+print(text_lowercase_underscore("aab_cbbbc"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_cbbbc_"))
+print(text_lowercase_underscore("aab_</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  import re
+
+def text_lowercase_underscore(text):
+    pattern = r'^[a-z]+(_[a-z]+)*$'
+    if re.match(pattern, text):
+        return True
+    else:
+        return False
+
+assert text_lowercase_underscore("aab_cbbbc")==(True)</code></pre>
+
+      <p> gemma-7b. fail_base: False, fail_plus: True </p>
+      <pre><code>  """
+Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.
+assert text_lowercase_underscore("aab_cbbbc")==(True)
+"""
+
+
+def text_lowercase_underscore(text):
+    if text.islower() and text.count("_") == 1:
+        return True
+    else:
+        return False
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def text_lowercase_underscore(s):
+    for i in range(len(s) - 1):
+        if s[i].islower() and s[i+1].islower() and s[i+1] != '_':
+            return True
+    return False
+
+print(text_lowercase_underscore("aab_cbbbc"))
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

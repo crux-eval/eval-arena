@@ -1,0 +1,1183 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/95 </h1>
+<pre><code> 
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    keys = list(dict.keys())
+    if keys == []: return False
+    lower, upper = True, True
+    for k in keys:
+        if type(k) != str:
+            lower = upper = False
+            break
+        if not k.islower(): lower = False
+        if not k.isupper(): upper = False
+    return lower or upper
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[{'p': 'pineapple', 'b': 'banana'}], [{'p': 'pineapple', 'b': 'banana'}], [{'p': 'pineapple', 'A': 'banana', 'B': 'banana'}], [{'p': 'pineapple', 'A': 'banana', 'B': 'banana'}], [{'p': 'pineapple', '5': 'banana', 'a': 'apple'}], [{'p': 'pineapple', '5': 'banana', 'a': 'apple'}], [{'Name': 'John', 'Age': '36', 'City': 'Houston'}], [{'Name': 'John', 'Age': '36', 'City': 'Houston'}], [{'STATE': 'NC', 'ZIP': '12345'}], [{'STATE': 'NC', 'ZIP': '12345'}], [{'fruit': 'Orange', 'taste': 'Sweet'}], [{'fruit': 'Orange', 'taste': 'Sweet'}], [{}], [{}]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'CITY': 'NEW YORK', 'INCOME': '$50,000'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$50,000'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new york', 'Income': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'1': 'apple', '2': 'banana', '3': 'cherry'}], [{'orange': 'fruit'}], [{'8': 'banana'}], [{'yellow': 'color'}], [{'2019': 'year'}], [{'PI': 3.14159}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New York', 'FIRST_NAME': 'cherry'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'2019': 'yeyar'}], [{'1': 'apple', '2': 'banana', '3': 'cherry', 'Income': 'chINCEOMEerry'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'CITY': 'NK', 'INCOME': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new york', 'Income': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'CITY': 'NEW YORK', 'INCOME': '$50,000', 'COME': '$50,0000'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn'}], [{'1': 'apple', '2': 'banana', '3': 'cherry', 'Income': 'New York'}], [{'yellow': 'color', 'yell': 'clor'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorok', 'Income': '$50,000', 'cItIY': 36}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'INCOME': '$50,000'}], [{'2': 'banana', '3': 'cherry', 'Income': 'New York', '$50,000': 'chrerry', 'Inconme': 'bana'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$50,000', 'ageage': 'Dooe'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'CITY': 'NK', 'INCOME': '$50,000', '1': 35}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'LASTNAE': 'new yorAgeIncIomek'}], [{'2': 'banana', '3': 'cherry', 'Income': 'New York'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'IncIome': 'FIRST_NAME'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$50,000', 'ageage': 'Dooe', 'new yorok': '8'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LASTENAME': 'Anew yorAgek'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New YorNk', 'income': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New Yoincomerk', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000'}], [{'firstName': 'John', 'Age': 35, 'Income': '$50,000', 'Incomeyeyar': 'JoDooehn'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', '8': '$0,000'}], [{'firstName': 'Johageage', 'Age': 35, 'cItY': 'new york', 'Income': '$50,000'}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'Johageage': 2.9360614575298136, 'JohaJgeage': 3.14159}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00'}], [{'orange': 'fruuit', 'or$50,00ange': 'fruui'}], [{'first_name': 'oJohn', 'Last_Name': 'Doe', 'city': 'New York'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000'}], [{'firstName': 'John', 'Age': 'bana', 'cItY': 'new yorAgek', 'Income': '$50,000', 'LASTNAE': 'new yorAgeIncIomek'}], [{'first_name': 'John', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'PI': 1.7300435058060522}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'chge': 'New YorkLAST_NAME', 'New York': 'new york'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Age': 'D', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOlast_nameE', 'Age': 35, 'cItY': 'new yorok', 'Income': '$50,000', 'cItIY': 36}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New York'}], [{'2019': 'firstName', 'YorNk': 'firstNam$50,0000e', 'NEW YORK': 'fDOlast_nameEirstName'}], [{'orange': 'JoDooehn', 'Dooe': 'JoDooehhn'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000', 'YORK': '$50,00000'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgekcolor', 'Income': '$50,000'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'oNew YorNk', 'income': '$50,000', 'Newage': '2,000'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'income': '$50,000', 'ageage': 'Dooe', 'new yorok': '8'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'Income': 'YORK'}], [{'yellow': 'orange'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000', 'John': 'year'}], [{'orange': 'JoDooehn', 'Dooe': 'JoDooehhn', 'LAST_NAME': 'NK'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897}], [{'yellow': 'oDDOErange'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlast_nameEirstNameE'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'orange': 'INCOMEJohn'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', '': 35, 'fruuit': 34}], [{'orange': 'ruuit', 'or$50,00ange': 'fruui'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgekcolor', 'Income': '$50,000', 'firstN': 'JohaJgeage', 'cItAGEY': 'JJoDooehhnohaJgeage'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00'}], [{}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'Johageage': 2.9360614575298136, 'JohaJgeage': 3.14159, 'PPI': 2.9360614575298136}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'IP', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 36, 'city': 'New YorNk', 'income': 'bana'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124}], [{'first_name': 'JIncomeyeyarohn', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn'}], [{'FIRST_NAME': 'John', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000', 'John': 'year'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'INCOME': '$50,000', 'Age': 35}], [{'PI': 1.7300435058060522, 'new yorrk': 2.2762868739904514}], [{'first_name': 'John', 'Age': 35, 'FIRST_NAME': 'Jane'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 36, 'income': 'bana'}], [{'Age': 35}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '_FIRST_NAME': 'JNew YorNke', 'new yorAgeIncIomekIncome': '1'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'I': 2.7107068449059466}], [{'firstName': 'Joohn', 'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'orange': 'fruurit', 'or$50,00ange': 'fruui'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LASTENAME': 'Anew yorAgek', 'IncYorkLASTcity_NAMEPIIome': 'Anenew yorAgeIncIomekw yorAgek', 'ageage': 'cItYnew yorAgek'}], [{'orange': 'fruurit', 'or$50,00ange': 'fruui', 'orYoincomerk$50,00ange': 'fruuritt'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'NNew YorkLASTcity_NAMEPIew York', 'tfirst_name': 'JohJIncomeyeyarohnn'}], [{'PI': 1.9949170779000351}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRfirstNam$50,0000eST_NAME'}], [{'firstName': 'John', 'LASTNAME': '1DOE', 'Age': 'D', 'Income': 'YorkLASTcity_NAMEPI'}], [{'first_name': 'John', 'Last_Name': 'DYorNkoe', 'city': 'New York', 'FIRST_NAME': 'cherry'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'New YorkLAST_NALast_NammeMEPI': 0.8622214662877261}], [{'firstName': 'Joohn', 'LASTNAME': 'DOE', 'cItY': '2', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'clor', 'Age': 'D', 'Income': 'YORK'}], [{'2': 'banana', '3': 'cherry', 'Income': 'NewYork'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124, 'NNew YorkLASTcity_NAMEPIew York': 2.2786871475765835}], [{'first_name': 'John', 'last_name': 'Doe', 'income': '$50,000', 'ageage': 'Dooe', 'new yorok': '8'}], [{'2': 'banana', '3': 'cherry', 'Income': 'New Yk', '$50,000': 'chrerry', 'Inconme': 'bana'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'Income': '$50,000', '8': '$0,000'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'I': 2.9360614575298136, '8PI': 2.2268929884240265, 'JohJIncomeyeyarohnn': 1.9949170779000351}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'Jooohn', 'LASTNAME': 'DOE', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'Anew yorAgek': 'FIRSTNAME'}], [{'first_name': 'John', 'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'Income': '$50,000', '8': '$0,000', 'firslast_nametName': 'cherry'}], [{'1': 'apple', '2': 'banana', '3': 'cherry', 'Income': 'chINCEOMEerry', 'CITY3': 'cherr'}], [{'orange': 'oDDOErange', 'or$50,00ange': 'fruui'}], [{'2': 'banana', '3': 'cherry', '$50,000': 'chrerry', 'Inconme': 'bana'}], [{'1': 'apple', '2': 'orange', '3': 'cherry', 'Income': 'chINCEOMEerry'}], [{'1': 'apple', '2': 'orange', '3': 'cherry', 'Income': 'chINCEOMEOerry'}], [{'Dooe': 'fruuritt', 'LAST_NAAME': 'JNew YorNkeJoDooehn'}], [{'PI': 1.7300435058060522, 'cItIY': 2.6443947966293897, 'New YorkLAST_NALast_NammeMEPI': 0.8622214662877261}], [{'first_name': 'John', 'Age': 35, 'FIRST_NAME': 'Jane', 'AAge': 'Jcherrohn'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'Newor$50,00ange York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incoome': 'oJohn'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIomNNew YorkLASTcity_NAMEPIew Yorke': 'CITY3'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'Newor$50,00ange York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incoome': 'oJohn', '': 'oJoh'}], [{'first_name': 'John', 'Last_Name': 'DYorNkoe', 'FIRST_NAME': 'cherry'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.1459305021091426, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124}], [{'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlast_nameEirstNameE'}], [{'first_name': 'John', 'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit', 'fDOlast_nameEirstName': 'NNewYork'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'COME': '$50,0000', 'YORK': 'Anenew', 'Jcherrohn': 'chINCEOMEerryAnenew'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit', 'fDOlast_nameEirstName': 'NNewYork'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LAST_NAME': '$$50,000'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New YorNk', 'income': '$50,000', 'New Yk': '$5fruuritt0,000'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'nenew yorAgeIncIomekw yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'FIRST_NAME': 'John', 'AGE': 35, 'INCOME': '$50,000'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorrk', 'CITY': 'DOfDOlast_nameEirstNameE', 'CITTY': 35}], [{'first_name': 'John', 'last_name': 'yorAgeIncIomek', 'age': 35, 'city': 'New York', 'income': '$50,000', 'New Yk': 34}], [{'PI': 1.7300435058060522, 'new yorrk': 2.2762868739904514, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'firsnew yorAgektName': 'new yogrAgek', 'ccItAGEYItY': 'new yogrAgekk'}], [{'LAST_NAME': 'DOE', 'AGE': 36, 'INCOME': '$50,000', 'Age': 35}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incoome': 'kNew York'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek'}], [{'2019': '', '20new yorrk19': 'Newor$50,00ange'}], [{'2': 'banana', '3': 'cherry', 'Income': 'chINCEOMEerry'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$50,000', 'ageage': 'Inconme'}], [{'first_name': 'John', 'Last_Name': 'DYorNkoe', 'city': 'New York', 'FIRST_NAME': 'cherry', 'Last_Namme': 'yeyar'}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'Johageage': 2.9360614575298136, 'JohaJgeage': 3.14159, 'IIPI': 1.690316164828218}], [{'firstName': 'Joohn', 'LASTNAME': 'DOE', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'Age': 36, 'Income': '$50,000', '8': '$0,000'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Newor$50,00ange': 'NNewYork'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$0,000', 'FIRST_NAME': 'Jane', '1': 37, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek'}], [{'yellow': 'oraNewnge'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$0,000', 'FIRST_NAME': 'Jane', '1': 37, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek', 'IncIncYorkLASJanelowome': 'New'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new york'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'NewNEWor$50,00ange York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incoome': 'oJohn', 'Agee': '$50,0oNew YorNk00'}], [{'firstName': 'hJohn', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', '8': '$0,000'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'INCOME': '$50,000', 'IfDOlast_nameEirstNameNCOME': 35}], [{'LAST_NAME': 'oJoh', 'AGE': 35, 'CITY': 'NK', 'INCOME': '$50,000', '1': 35}], [{'or$50,00ange': 'fruui'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000'}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'Anew yorAgek': 'FIRSTNAME'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'Anenew': 'INCOMEJJohn'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', '1': 36, 'Incyellowome': 'INCOMEJohn'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'firsnew yorAgektName': 'new yorAgeIncIomekIncome'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn'}], [{'PI': 1.7300435058060522, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'INCOME': '$50,000', 'new yorAgek': 'DOYorkLAST_NAMEPI'}], [{'yelelow': 'CyellOME', 'yelew': 'New YorkLAST_NAMEPI'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'IncIome': 'FIRfirstNam$50,0000eST_NAME', 'InceIome': 'Last_Namme'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,,000', 'FIRST_NAME': 'Jane'}], [{'Dooe': 'fruuritt', 'LAST_NAAME': 'JNew YorNkeJoDooehn', 'Age': 'ffruuritt'}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'yorAgeIncIomek', 'Anew yorAgek': 'FIRSTNAME'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$50,000', '_FIRST_NAME': 'JNew YorNke', 'new yorAgeIncIomekIncome': '1'}], [{'PI': 1.7300435058060522, 'new yorrk': 2.2762868739904514, 'new yrk': 1.6108425454874835}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'DDOEIncome': '$50,00'}], [{'yelelow': 'CyellOME', 'yelew': 'NewT_NAMEPI'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'firsnew yorAgektName': 'new yorAgeIncIomekIncome', 'citty': 'Jon'}], [{'first_name': 'John', 'Age': 35, 'city': 'NewY York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incom2019e': 'Joh2,000n'}], [{'3': 'cherry', '$50,000': 'chrerry'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'YorNk00', 'CITY': 'Doe', 'yogrAgekk': 'Do$$50,000e'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'cItY': 'new yorok', 'Income': '$50,000', 'cItIY': 36}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124, 'New YorkLAST_NPAMEPI': 1.3462361524091344}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn', 'first_namme': '$50,0last_name00'}], [{'PI': 1.7300435058060522, 'cItIY': 2.6443947966293897, 'New YorkLAST_NALast_NammeMEPI': 0.17904925194593924}], [{'FIRST_NAME': '2019n', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000'}], [{'last_name': 'Doe', 'income': '$50,000'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'firsnew yorAgektName': 'new yogrAgek', 'ccItAGEYItY': 'new yogrAgekk'}], [{'last_name': 'Doe', 'age': 35, 'city': 'New York', 'ageage': 'Inconme'}], [{'Age': 35, 'cItY': 'new york', 'Income': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yrk'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$500,000', 'IncIome': 'FIRST_NAME'}], [{'LAST_NAME': 'oJoh', 'AGE': 35, 'CITY': 'NK', '1': 35, 'AE': 'new'}], [{'first_name': 'John', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,,000', 'FIRST_NAME': 'Jane'}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'yorAgeIncIomek', 'Anew yorAgek': 'FIRSTNAME', 'year': 'first_name'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'Do': 'EDOE'}], [{'firstName': 'Joohn', 'LASTNAME': 'DOE', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'Jon': 'Joohnn'}], [{'firstName': 'Joohn', 'LASTNAME': 'DOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LANewY YorkSTNAME': 'OE'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Income': '$50,0000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'Income': 'firsnew', 'firstsName': 'YoincomerkD'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlast_nameEirstNameE', 'NEW': '1'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'LASTNAE': 'new yorAgeIncIomek'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgekcolor', 'yorok': 'Jooohn'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$500,000', 'IncIome': 'FIRST_NAME', 'Incomeyeyar': 'AAge'}], [{'firstName': 'John', 'Age': 'bana', 'cItY': 'new yorAgek', 'Income': '$00', 'LASTNAE': 'new yorAgeIncIomek', 'Inc': 'JNew'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 36}], [{'FIRST_NAME': 'John', 'COME': '$50,0000', 'John': 'year', 'yorrk19': 'yellow', 'income': 'yelelow'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'I': 2.7107068449059466, 'CyellOME': 1.6243371737850312}], [{'Dooe': 'JoDooehhn'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LASTENAME': 'Anew yorAgek', 'cItcY': 'DD'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'nenew yorAgeIncIomekw yorAgek', 'Income': '$50,000NNewYork', 'IncIome': 'FIRST_NAME', 'eAge': 'Yoincomerk'}], [{'first_name': 'oJohn', 'Last_Name': 'DLAST_NAJohnMEe', 'city': 'New York'}], [{'LAST_NAME': 'oJoh', 'AGE': 35, 'CITY': 'NK', '1': 34, 'AE': 'new'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50eAge,000', 'IncIome': 'Anenew yorAgeIncIomekw yorAgek', 'Do': 'EDOE'}], [{'PI': 1.8117899160754405}], [{'2019': 'firstName', 'YorNk': 'firstNe', 'NEW YORK': 'fDOlast_nameEirstName'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'I': 2.7107068449059466, 'CyellOME': 1.6243371737850312}], [{'PI': 2.7107068449059466}], [{'first_name': 'John', 'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit', 'citiy': '8PI'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000', 'YORK': '$50,00000', 'FIRFIRSTNAMEAME': '$ryorLast_Namerk50,00000'}], [{'LASTNAME': 'DOcitiyE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn'}], [{'firstName': 'John', 'LASTNAME': 'DODE', 'Age': 'D', 'cItY': 'new york'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'CITY': 'Doe', 'yogrAgekk': 'Do$$50,000e', 'Last_eName': 'JanLast_Namee', 'cItIY': 'JafirstsNamee'}], [{'PI': 2.2762868739904514}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'Johageage': 1.6108425454874835, 'JohaJgeage': 3.14159, 'PPI': 2.9360614575298136}], [{'firstName': 'John', 'Age': 'D', 'Income': 'KYORK'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlasNew Yoincomerkt_nameEirstNameE'}], [{'first_name': 'IncIomNNew', 'Last_Name': 'DYorNkoe', 'city': 'New York', 'FIRST_NAME': 'OE'}], [{'firstName': 'hJoohhn', 'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'IncIomme': 'DOfDOlasNew Yoincomerkt_nameEirstNameE'}], [{'firstName': 'JoDo$$50,000ehageage', 'Age': 35, 'cItY': 'new york', 'Income': '$50,000'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New York', 'Income': '$hJoohhn50,000', 'FIRST_NAME': 'Jane'}], [{'3': 'cherrfirstNy', '$50,000': 'chrerry'}], [{'firstName': 'Johhn', 'LASTNAME': 'DOE', 'Age': 'D'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'IncIomNNew YorkLASTcity_NAMEPIew Yorke': 'CITY3', 'fruuit': '2,000', 'hJoohhn': 'Johhn'}], [{'firstName': 'hJon', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', '8': '$0,000', 'IP': 36}], [{'firstName': 'John', 'Age': 'IPI', 'cItY': '$50,,000', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'firsnew yorAgektName': 'new yogrAgek', 'ccItAGEYItY': 'new yogrAgekk'}], [{'firstName': 'Johhn', 'Age': 'D'}], [{'2': 'banana', '3': 'first_name', '2$0,000': 'chery'}], [{'LASTNAME': 'DOE', 'Age': 36, 'Income': '$50,000', '8': '$0,000', 'firslast_nametName': 'cherry'}], [{'firstName': 'John', 'LASTNAME': 'DOlast_nameE', 'Age': 35, 'cItY': 'new yorok', 'Income': '$50,000', 'cItIY': 37}], [{'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'Joohn': 'DcItYnewOE'}], [{'LASTNAME': 'JNew YorNkeJoDooehn', 'Age': 'IPI', 'cItY': '2', 'Income': '$500,000', 'IncIome': 'FIRST_NAME', 'Incomeyeyar': 'AAge'}], [{'LASTNAME': 'DOE', 'Age': 'I', 'cItY': '2', 'InceIome': 'Last_Namme'}], [{'first_name': 'oJohn', 'Last_Name': 'DLAST_NAJohnMEe'}], [{'first_name': 'IncIomNNew', 'city': 'New York', 'FIRST_NAME': 'OE'}], [{'firstName': 'John', 'Age': 'D', 'Income': 'firsnew'}], [{'firstName': 'John', 'LASTNAME': 'DOlast_nameOE', 'Age': 35, 'cItY': 'new yochrrerryrok', 'Income': '$50,000', 'cItIY': 37}], [{'PI': 2.2762868739904514, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897}], [{'firstName': 'Johon', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek'}], [{'LASTNAME': 'DOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'cItAgee': 'DOEnew yorAgeIncIomekIncome'}], [{'firstName': 'John', 'LASTNAME': 'DODE', 'cItY': 'new york'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'FIRST_NAME': 'Jane', 'CITY': 'Doe', 'yogrAgekk': 'Do$$50,000e', 'Last_eName': 'JanLast_Namee', 'cItIY': 'JafirstsNamee'}], [{'firstName': 'John', 'LASTNAME': '1DOE', 'Age': 'D', 'Income': 'YorkLASTcity_NAMEPI', 'AoraNewngege': 'JNew YorkLAST_NAMEPIohn'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'FIRSTNAME', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'LASTNAME': 'DOE', 'Age': 'DIncIome', 'cItY': 'FIRSTNAME', 'Income': '$5DcItYnewOE0', 'IencIome': 'FINew YorkLAST_NALast_NammeMEPIRSTNAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Income': '$50,000', '8': '$0,000', '$50,,000': '0$50,000'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'LASTNAE': 'new yorAgeInDOfDOlasNew Yoincomerkt_nameEirstNameEcIomek', 'IncomNew YorkLAST_NAMEe': 'new yorA$0,000geIncIomrek'}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'Anew yorAgek': 'FIRSTNNAME'}], [{'Age': 35, 'FIRST_NAME': 'Jane'}], [{'firstName': 'Johnew yorAgekhn', 'Age': 'D'}], [{'firstName': 'John', 'LASTNAME': 'D', 'Age': 'D', 'Income': 'YORK'}], [{'first_name': 'John', 'Last_Name': 'DYorNkoe', 'FIRST_NAME': 'cherry', 'Income': 'cyherry'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'IncIome': 'FIRfirstNam$50,0000eST_NAME'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'nenew yorAgeIncIomekw 2$0,000yorAgek', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 36, 'cItAGEY': 36}], [{'FIRST_NAME': 'John', 'AGE': 35, 'CITY': 'NEW YORK', 'YORK': '$50,00000'}], [{'LASTNAME': 'DOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 36, 'city': 'New YorNk', 'income': 'bana', 'year': 37}], [{'33.803989620075356': 'D', '20.960571956786623': 'I', '-98.15414377148647': 'DOYorkLAST_NAMEPI', '0.8622214662877261': 'Zxdvjbw', '-48.45477875780888': 'yorAgeIncIomek', '2.6189164796316335': 'CqvytR', '2.1459305021091426': 'JafirstsNamee', '-21.558299894752437': 'DOE', '28.79129205112295': 'BEIHSKizc', '1.690316164828218': 'FXwMCxaHo'}], [{'first_name': 'John', 'Last_Name': 'color', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', '': 35, 'fruuit': 34}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', '1chery': '$50,1DOE000'}], [{'LASTNAME': 'DOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'new yorok': '2019n'}], [{'firstName': 'hJon', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', '8': 36, 'IP': 36}], [{'PI': 2.9360614575298136, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897, 'new ryorLast$50,000NNewYork_Namerk': 1.7300435058060522}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'FIRST_NAME': 36, 'cItAGEY': 36, 'ageage': 36}], [{'orange': 'JoDooehn', 'LAST_NAME': 'NK'}], [{'first_name': 'Jonew yorAgekcolorhn', 'Last_Name': 'Doe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'Incoome': 'kNew York'}], [{'LAST_NAME': 'oJoh', 'CITY': 'NK', '1': 35}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'IncI$50,0000ome': '222'}], [{'firstName': 'Jooohn', 'LASTNAME': 'DOE', 'cItY': 'city', 'IncIome': 'FIRST_NAME', 'Anew yorAgek': 'FIRSTNAME'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'IncIome': 'FIRfirstNam$500,0000eST_NAME'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 36, 'city': 'New YorNk', 'income': 'bana', 'year': 38}], [{'first_name': 'John', 'Last_Name': 'Doe'}], [{'first_name': 'John', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,,000'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$50,000', 'ageage': 'Dooe', 'new yorok': '8', 'Last_Name': 'chge'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'I': 'yorAgeIncIomekw'}], [{'LAST_NAME': 'DOE', 'INCOME': '$50,000', 'Age': 37}], [{'city': 'N8ew York', 'FIRST_NAME': 'OE'}], [{'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$5Yoincomerkt_nameEirstNameEcIomek0,000', 'ageage': 'Inconme'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'NewYork', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'first_name': 'John', 'Last_Name': 'color', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', '': 34, 'fruuit': 34}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'nJane', '1': 36, 'Incyellowome': 'INCOMEJohn'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'cItAGEY', 'LASTENAME': 'Anew yorAgek'}], [{'1': 'apple', '2': 'banana', '3': 'cherry', 'Income': 'hJohn', '22': 'Johhn'}], [{'first_name': 'John', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,,000', 'FIRST_NAME': 'Jane', 'Anenew': 'oJohn'}], [{'firstName': 'JohaInconmege', 'Age': 35, 'cItY': 'new york', 'Incom': 'Yoincomerkt_nameEirstNameEcIomek'}], [{'firstName': 'John', 'Age': 'D', 'Income': 'YORK', 'Aege': 'nenew yorAgeIncIomekw yorAgek'}], [{'PI': 2.9360614575298136, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897, 'new ryorLast$50,000NNewYork_Namerk': 1.7300435058060522, 'IPI': 1.9949170779000351}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Dooe': 'firstNam$50,0000e'}], [{'3': 'cherry', 'Income': 'New York', '33': '8PI'}], [{'firstName': 'Jhohn', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgekcolor', 'firstN': 'JohaJgeage', 'cItAGEY': 'JJoDooehhnohaJgeage'}], [{'firstName': 'John', 'LASTNAME': 'clor', 'Age': 'D', 'Income': 'YORK', 'year': 'Johnew yorAgekhn'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlast_nameEirstNameE'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'income': '$50,000', 'new yorok': '8', 'DOcitiyE': 35}], [{'Age': 35, 'FIRST_NAME': 'yorAgeIncIomekw', 'yorok': 'yyorAgeIncIomekw'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'chery', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'chge': 'New YorkLAST_NAME', 'New York': 'new york', 'Incomge': 'citty', 'Last_eName': 'AGE'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$0,000', 'FIRST_NAME': 'Jane', '1': 37, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek', 'IncIncYorkLASJanelowome': 'New', 'first_rname': 'Nehw YoJohageagek', 'FIRS222T_NAME': 'INCOMEJNohn'}], [{'city': 'N8ew York', 'FIRST_NAME': 'OE', 'citty': 'ONKE'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 36, 'cItAGEY': 36, 'firrstName': 'chINCEOMEerryAnenew'}], [{'3': 'cherrfirstNy', '$50,000': 'chrerry', '$50,00NewNEWor$50,00ange0': 'age'}], [{'PI': 2.9360614575298136, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897, 'new ryorLast$50,000NNewYork_Namerk': 1.7300435058060522, 'IPI': 1.9949170779000351, 'firstNe': 3.14159}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Incyelllowome': '$5YorNke0,000'}], [{'2': 'banana', '3': 'cherry', 'Income': 'chINCEOMEerry', 'or$50,00ange': 'bananAGEa'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn', 'FIRSMT_NAME': 'Jan2,000e'}], [{'Dooe': 'fruuritt', 'Age': 'ffruuritt', 'Anew yorrk': '1'}], [{'orange': 'Jon', 'or$50,00ange': 'fruui'}], [{'first_name': 'John', 'Age': 35, 'city': 'YORKNewY York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incom2019e': 'Joh2,000n'}], [{'1': 'apple', '2': 'banana', '3': 'Johhn'}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'Anew yorAgek': 'FIRSTNAME'}], [{'first_name': 'John', 'Age': 35, 'city': 'new chINCEOMEOerryyorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'FIRST_NAME': 'Jane', 'AAge': 'Jcherrohn'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'city': 'NK', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'INCOME', 'Income': '$50,000', 'CITY': 'DOfDOlast_nameEirstNameE', 'NEW': '1'}], [{'first_name': 'John', 'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit', 'citiy': '8PI', 'FIRSTNAME': 38}], [{'Age': 35, 'Income': '$50,000'}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'Johageage': 2.9360614575298136, 'PPI': 2.9360614575298136}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'COME': '$50,0000', 'YORK': 'Anenew', 'Jcherrohn': 'chINCEOMEerryAnenew', 'chrerry': 'Anennew'}], [{'1': 'apple', '2': 'banana', '3': 'Johhn', 'Jonew yorAgekcolorhn': 'JohaInconmege'}], [{'firstName': 'Jhohn', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'YorNk', 'cItAGEY': 'JJoDooehhZxdvjbwnohaJgeage'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yyork', 'fcityirstName': 'nAgeeew york'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'FIRST_NAME': 36, 'LASTE': 'cItY'}], [{'LASTNAME': 'DOE', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'LASTNAMTE': 'Jonohn', 'N8ew York': 'Jocyherrynohn'}], [{'first_name': 'IncIomNNew', 'Last_Name': 'DYorNkoe', 'FIRST_NAME': 'OE'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'nenew yorAgeIncIomekw yorAgek', 'IncIome': 'FIRST_NAME', 'eAge': '$50,000NNewYorkYoincomerk', 'AJan2,000ege': 'DD'}], [{'first_name': 'John', 'Age': 35, 'Income': '$50,,000'}], [{'LASTNAME': 'DOE', 'Age': 'D22', 'cItY': 'nenew yorAgeIncIomekw yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'IncIom': 'FINew YorkLAST_NALast_NammeMEPIRSTNAME'}], [{'LASTNAME': 'DOE', 'Age': 'I2', 'cItY': '2', 'InceIome': 'Last_Namme'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'LASTN': 'DD'}], [{'2': 'banana', '2$0,000': 'chery'}], [{'Age': 35, 'city': 'New York', 'FIRST_NAME': 'nJane', '1': 36, 'Incyellowome': 'INCOMEJohn'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIomNNew YorkLASTcity_NAMEPIew Yorke': 'yorAgek'}], [{'LASTNAME': 'DOE', 'Age': 'D'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'Do': 'EDOE', 'cItYJocyherrynohn': 'Joohn'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'ONKE', 'Income': '$50,000'}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'yorAgeIncIomek', 'Anew yorAgek': 'FIRSTNAME', 'cIttY': 'JooohyorAgeIncIomekn'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2'}], [{'first_name': 'John', 'Age': 36, 'city': 'new chINCEOMEOerryyorAgek', 'FIRST_NAME': 'Jane'}], [{'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'yorAgeIncIomek', 'Anew yorAgek': 'FIRSTNAME', 'cIttY': 'JooohyorAgeIncIomekn'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 37, 'city': 'New YorNk', 'income': 'bana'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'Ag': 'new y'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek', 'Last_e': 'Yoincomerk'}], [{'Last_Name': 'DYorNkoe', 'FIRST_NAME': 'cherry', 'Income': 'cyherry'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124, 'New YorkLAST_NPAMEPI': 1.3462361524091344, '$$50,000': 2.79480680351591}], [{'city': 'New York', 'FIRST_NAME': 'nJane', '1': 38, 'Incyellowome': 'INCOMEJohn'}], [{'LAST_NAME': 'oJoh', 'CITY': 'Anew yorrk', '1': 35}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'cItY': 'new yorrk', 'CITY': 'DOfDOlast_nameEirstNameE'}], [{'LASTNAME': 'DOE', 'IncIome': 'FIRST_NAMIE', 'new yorok': '2019n'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'IncIome': 'Anenew yorAgeIncIomekw yorAgek', 'Do': 'EDOE'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'IncomJohhne': 'DEOE'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorok', 'Income': '$50,000', 'cItIY': 36, '2': 'Yk', 'cItIYY': 35}], [{'FIRST_NAME': '2019n', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'COME': '$50,0000', 'LASTNAECOME': 37}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorok', 'Income': '$50,000', 'cItIY': 36, '2': 'Yk', 'cItIYY': 35, 'cItIYYnew ryorrk': 'Yk2,000'}], [{'LASTNAME': 'DOE', 'Age': 'D22', 'cItY': 'nenew yorAgeIncIomekw yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'CyellOMEcItY': 'chge', 'cIctY': 'DOE33'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New Yrork', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'last_name': 'Doe', 'age': 35, 'city': 'AoraNewngegeNew York', 'income': '$5Yoincomerkt_nameEirstNameEcIomek0,000', 'ageage': 'Inconme', 'LASTENAMEage': '$5Yoincomerkt_nameEirsttNameEcIomek0,000'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', '1chery': '$50,1DOE000', 'DOEnew yorAgeIncIomekIncome': 'ONKE'}], [{'2': 'banana', '3': 'cherry', 'Income': 'chINCEOMEerry', 'Incomge': 'new yorAgeIncIomek'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$50,000', '1': 36, 'Incyellowome': 'INCOMEJohn', 'cityyorA$0,000geIncIomrek': 'JJohn'}], [{'Age': 'IPI', 'IncIome': 'FIRfirstNam$500,0000eST_NAME'}], [{'firstName': 'JohnoNew YorNk', 'LASTNAME': 'DDOE', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'DIncome': 'YorkLASTcity_NAMEPIew'}], [{'LASTNAME': 'DOE', 'IncIome': 'FIRST_NAME', 'cItAgee': 'DOEnew yorAgeIncIomekIncome'}], [{'firstName': 'John', 'LASTNAME': 'DOlast_nameOE', 'Age': 35, 'cItY': 'new yochrrerryrok', 'cItIY': 37}], [{'first_name': 'John', 'Age': 36, 'Income': '$50,,000'}], [{'PI': 3.14159, 'Johageage': 2.9360614575298136, 'JohaJgeage': 3.14159}], [{'firstName': 'Johhn'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'DDOEIncome': '$50,00'}], [{'first_name': 'John', 'Age': 35, 'city': 'new chINCEOMEOerryyorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Jonew': 'new chINCEOMEOeoDDOErangerryyorAgek'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jacityne', 'Incyellowome': 'INCOMEJohn'}], [{'firstName': 'Johnbana', 'Age': 'D', 'Income': 'KYORK'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'DDOEIncome': '$50,00', 'citcy': '$50,00New YorkLAST_NALast_NammeMEPI0'}], [{'first_name': 'Yk2,000', 'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '0$50,00', 'Last_Namme': 'fruit', 'citiy': '8PI'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 1.2679847915686973, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'IncIome': 'FIRST_NAME'}], [{'Last_Name': 'Doe', 'Age': 36, 'city': 'New York', 'Income': '$50,000', 'Incoome': 'kNew York', 'AAge': 'cIttY'}], [{'orange': 'JoDooehn', 'okNewrange': 'INCOMEJJohn', 'orangae': 'YorkLAST_NALast_NammeMEPI0JoDooehn'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,$00', 'Last_Namme': 'fruit'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': '2', 'yogrAgek': 'YorkSTNAME'}], [{'first_name': 'IncIomNNew', 'Last_Name': 'DYorNkoe', 'city': 'NewCyellOME York', 'FIRST_NAME': 'ODOlast_nameOEE'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'New York', 'FIRST_NAME': 'cherry', 'ryorrk': 'Jnohn'}], [{'LASTNAME': 'DOE', 'Age': 'yorAgeIncIomekw', 'Income': '$500,000', 'IncIome': 'FIRST_NAME', 'Incomeyeyar': 'AAge'}], [{'last_name': 'Doe', 'age': 35, 'city': 'New York', 'income': '$5Yoincomerkt_namAneneweEirstNameEcIomek0,000', 'ageage': 'Inconme'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek', 'Last_e': 'Yoincomerk'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'new yorAgek', 'Income': '$5Yoincomerkt_nameEirstNameEcIomek0,000', 'FIRST_NAME': 'Jane', 'Dooe': 'firstNam$50,0000e'}], [{'$50,000': 'chrerry', 'Inconme': 'bana'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'new yorAgek', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'DDOEIncome': '$50,00', 'citty': 38}], [{'2': 'banana', '3': 'cherry'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'IencIome', 'Income': '$50,00FIRSTNNAME0', 'CITY': 'DOfDOlast_nameEirstNambananAGEaeE'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'new yorrk': '8'}], [{'2': 'banana', '2$0,000': 'chery', 'orYoincomerk$50,00ange': 'yochrrerryrok'}], [{'PI': 2.9360614575298136, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': -21.558299894752437, 'new ryorLast$50,000NNewYork_Namerk': 1.7300435058060522, 'IPI': 1.9949170779000351}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'cItY': 'new yorAgek', 'Income': '$50,000'}], [{'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 36, 'cItAGEY': 36, 'firrstName': 'w'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'city': 'NNew YorkLASTcity_NAMEPIew York', 'tfirst_name': '2JohJIncomeyeyarohnn', 'Last_Naeme': 'DoYorke'}], [{'firstName': 'yorAgekcolorhnJohhn'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'Last_eName': 'JanLast_Namee', 'cItIY': 'JafirstsNamee'}], [{'firstName': 'hJon', 'LASTNAME': 'DOE', 'Age': 35, '8': 36, 'IP': 36}], [{'firstName': 'Jooohn', 'LASTNAME': 'YorNke', 'IncIome': 'yorAgeIncIomek', 'Anew yorAgek': 'FIRSTNAME'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'I': 2.496132463875833, 'CyellOME': 1.6243371737850312}], [{'1': 'aple', '2': 'banana', 'Income': 'chINCEOMEerry', 'CITY3': 'cherr'}], [{'orange': 'fruurit', 'or$50,00ange': 'fruui', 'orYoincomerk$50,00ange': 'fruYoincomerkuritt'}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'cItAGEY'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'I': 1.4713856995958976, 'CyellOME': 1.6243371737850312}], [{'PI': 1.7300435058060522, 'cItIY': 2.6443947966293897, 'New YorkLAST_NALast_NammeMEPI': 0.17904925194593924, 'New YorkLALASTENAMEageST_NALast_NammeMEPI': 2.2786871475765835}], [{'FIRST_NAME': 'John', 'AGE': 35, 'YORK': '$50,00000'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'OE', 'AGE': 35, 'CITY': 'NEW YORK', 'YORK': '$50,00000', 'FIRFIRSTNAMEAME': '$ryorLast_Namerk50,00000'}], [{'orange': 'JoDooehn'}], [{'firstName': 'John', 'Age': '0$50,00', 'Income': 'YORK', 'Aege': 'nenew yorAgeIncIomekw yorAgek'}], [{'3': 'cherry', 'Income': 'chINCEOMEerry', 'Inncome': 'chINCffruurittEOMEerry'}], [{'firstName': 'John', 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlasNew Yoincomerkt_nameEirstNameE'}], [{'LASTNAME': 'YorNke', 'cItY': '2', 'IncIome': 'FIRST_NAME', 'IncI$50,0000ome': '222'}], [{'PI': 0.9299554777703931, 'cItIY': 2.6443947966293897, 'New YorkLAST_NALast_NammeMEPI': 0.17904925194593924, 'New YorkLALASTENAMEageST_NALast_NammeMEPI': 2.2786871475765835}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Income': 'color', 'Dooe': 'firstNam$50,0000e'}], [{'first_name': 'John', 'Age': 36, 'Income': '$50,,000', 'Aege': 35}], [{'first_name': 'Johnn', 'Last_Name': 'Doe', 'Income': 'color'}], [{'first_name': 'John', 'Last_Name': 'DYorNkoe', 'FIRST_NAME': 'cherry', 'Last_Namme': 'yeyar', 'LasYorkLAST_NALast_NammeMEPI0t_Namme': 'yer'}], [{'-27.654576852346665': 'uYc', '41.671200125445324': 'orange', '12.66919465416403': 'VNxJOt', '-42.16356333079692': 'new yorAgeInDOfDOlasNew Yoincomerkt_nameEirstNameEcIomek', '46.77667061964502': 'Last_Naeme', '-29.856800477994057': 'DIncIome', '1.9949170779000351': 'QxxTRMjexO'}], [{'FIRST_NAME': 'John', 'AGE': 35, 'CITY': 'NEW YcIctYORK', 'YORK': '$50,00000'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'cItY': 'new yorAgek', 'Income': '$50,000', 'firstNfame': 'new yorAgekcolor'}], [{'first_name': 'Jonew yorAgekcolorhn', 'Last_Name': 'Doe', 'Age': 35, 'city': 'New York', 'Incoome': 'kNew York'}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'oNNew YorNk', 'income': 'DD', 'Newage': '2,000'}], [{'first_name': 'John', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'YorNk00', 'CITY': 'Doe', 'yogrAgekk': 'Do$$50,000e'}], [{'Last_Name': 'Doe'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'IP', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'eAge': 'FIRSJhohnT_NAME'}], [{'last_name': 'Doe', 'age': 35, 'city': 'New YorNk', 'income': '$50,000', 'chINCffruurittEOMEerry': '$5Yoincomerkt_nameEirstNameEcIomek0,000'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 1.4094949772734846, 'I': 2.7107068449059466}], [{'firstName': 'John', 'LASTNAME': 'DDOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LASTENAME': 'Anew yorAgek', 'IncYorkLASTcity_NAMEPIIome': 'Anenew yorAgeIncIomekw yorAgek', 'ageage': 'cItYnew yorAgek', '2019n': 'IPI', '12019n': 'DJohnew yorAgekhn'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': '$0,000', 'FIRST_NAME': 'Jane', '1': 37, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek'}], [{'first_name': 'John', 'Age': 35, 'city': 'new chINCEOMEOerryyorAgek', 'FIRST_NAME': 'Jane'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'Income': '$50,000', '8': 'chINCEOMEOerryyorAgek', 'firslast_nametName': 'cherry', '': 'apple'}], [{'Age': 'D', 'cItY': 'nenew yorAgeIncIomekw 2$0,000yorAgek'}], [{'1': 'apple', '2': 'tfirst_name', 'Income': 'hJohn', '22': 'Johhn'}], [{'LASTNAME': 'DOE', 'Age': 'IPI', 'cItY': 'new yorAgek', 'Income': '$5Yoincomerkt_nameEirstNameEcIomek0,000', 'IncIome': 'FIRST_NAME', 'firsnew yorAgektName': 'new yogrAgek', 'ccItAGEYItY': 'new yogrAgekk'}], [{'PI': 1.7300435058060522, 'New YorkLAST_NAMEPI': 2.6189164796316335, 'cItIY': 2.6443947966293897, 'New YorkLASTcity_NAMEPI': 2.3210819853008124, 'ccItIY': 2.9039294830493683}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'CITY': '33K', 'INCOME': '$50,000', '1': 35, 'INOECOME': '$$50,000'}], [{'first_name': 'John', 'Last_Name': 'INCOMEJNohn', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Newor$50,00ange': 'NNewYork'}], [{'FIRST_NAME': 'John', 'LAST_NAME': 'DOE', 'AGE': 35, 'INCOME': '$50,000', 'LAScItIYYnewT_NAME': 'cyherry'}], [{'Age': 35, 'FIRST_NAME': 'Jane', 'firstNam$50,0000e': 38, 'DOfDOlast_nameEirstNambananAGEaeE': 35}], [{'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00'}], [{'LAST_NAME': 'oJoh', 'AGE': 35, 'CITY': 'NK', '1': 34, 'AE': ''}], [{'first_name': 'John', 'city': 'new yorAgek', 'Income': '$50,,000', 'ncome': 35}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'cItY': 'new york'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'Income': '$50,000', '8': '$0,000', '222': '$york'}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'JohaJgeage': 3.14159, 'PPI': 2.9360614575298136, 'PPDDOEI': 1.8117899160754405}], [{'FIRST_NAME': 'John', 'COME': '$50,0000', 'John': 'year', 'yorrk19': 'yellow', 'income': 'yelelow', 'yorrk1': 'orangae'}], [{'FIRST_NAME': 'Jane', 'AAge': 'Jchenrrohn'}], [{'first_name': 'John', 'Age': 35, 'Income': '$50,000', '1': 36, 'Incyellowome': 'INCOMEJohn', 'cityyorA$0,000geIncIomrek': 'JJohn'}], [{'firstName': '$50,000NNewYorkYoincomerkyorAgekkcolorhnJohhn'}], [{'PI': 3.14159, 'IPI': 2.6443947966293897, 'Johageage': 3.7806371669520606, 'JohaJgeage': 3.14159}], [{'3': 'cheryrfirstNy', '$50,000': 'chrerry', '$50,00NewNEWor$50,00ange0': 'age'}], [{'orange': 'fruurit', 'or$50,00ange': 'fruui', 'orYoincomerk$50,00ange': 'fruuritt', 'or$50,00ang': 'frageuui'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'Newor$50,00ange York', 'Income': 'nenew yorAgeIncIomekw 2$0,000yorAgek', 'FIRST_NAME': 'Jane', 'Incoome': 'oJohn', '': 'oJoh'}], [{'PI': 2.2762868739904514, 'new ryorrk': 1.7300435058060522, 'new ryorLast_Namerk': 2.6443947966293897, 'new ryYrorkorLast_Namerk': -48.45477875780888}], [{'FIRST_NAME': 'Jane', 'AAge': 'Jcherrohn', '$50,000NNewYorkYoincomerk': 'IencIome', 'new yogrAgekk': 'JcherrocItYJocyherrynohnhn'}], [{'first_name': 'John', 'Last_Name': 'Dooee', 'Age': 35, 'Income': 'tfirst_name', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn', 'first_namme': '$50,0last_name00'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 36, 'Income': '$50,000', '8': '$0,000', 'IncoDDOErangeome': '$550,000'}], [{'Agee': 35}], [{'2': 'VNxJOt', 'Income': 'New York'}], [{'firstName': 'hJohn', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', '8': '$0,000', 'LASTNAAME': 'citcy'}], [{'first_name': 'John', 'Age': 35, 'city': 'New York', 'Income': 'Dooe', 'FIRST_NAME': 'Jane', '1': 37, 'Incyellowome': 'INCkNew YorkOMEJohn', 'chINCEOMEerryAge': '$50,00', 'firsnew yorAgektName': 'new yorAgeIncIomekIncome', 'citty': 'Jon'}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek', 'Last_e': 'Yoincomerk', 'Incyellowe': 'Jancherre'}], [{'3': 'cherry'}], [{'LASTNAME': 'DOE', 'Age': 'D', 'IncIome': 'FIRST_NAME', 'IncomJohhne': 'DEOE'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'Income': '$50,000', 'Ag': 'new y', 'firstJohJIncomeyeyarohnnName': 'JYORKNewYohn'}], [{'AGE': 36, 'INCOME': '$50,000', 'Age': 35}], [{'first_name': 'John', 'Age': 36, 'city': 'new yorAgek', 'FIRST_NAME': '33K', 'Anenew': 'oJohn', 'Inme': 'oJoJhn'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'firAEst_name': 'JaJne'}], [{'first_name': 'John', 'Age': 35, 'city': 'new yorAgek', 'FIRST_NAME': 'Jane'}], [{'first_name': 'John', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 'Jane', 'Incyellowome': 'YorNk00', 'CITY': 'Doe', 'yogrAgekk': 'Do$$50,000e', 'AyorAgek': 35}], [{'first_name': 'John', 'Last_Name': 'Dooe', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'IncIncYorkLASTcity_NAMEPIIomelowome': 'New YoJohageagek', 'Last_e': 'Yoincomerk', 'Incyellowe': 'JYORKNewYohn'}], [{'IncIome': 'FIRST_NAMIE', 'new yorok': '2019n'}], [{'Last_Name': 'Do', 'Age': 35, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Anew', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'Last_Namme': 'fruit', 'fDOlast_nameEirstName': 'NNewYork', 'Nehw': 'PPnew chINCEOMEOerryyorAgekI'}], [{'yellow': 'color', 'yell': 'clor', 'yellowAnenew': 'YorNk'}], [{'firstName': 'Jooohn', 'Anew yorAgek': 'FNIRSTNAME'}], [{'last_name': 'Doe', 'age': 35, 'city': 'New York', 'cit': 35}], [{'first_name': 'John', 'Last_Name': 'Dooee', 'Age': 35, 'Income': 'tfirst_name', 'FIRST_NAME': 'Jane', 'Incyellowome': 'INCOMEJohn', 'first_namme': '$50,0last_name00', 'Aclor': 'INCOMEJLANewYohn'}], [{'1': 'apple', '2': 'orange', '3': 'cherry', 'Income': 'chINCEOMEerry', 'banana2': 'chINCEEOMEerry'}], [{'LASTNAME': '8PI', 'cItY': '2', 'IncIome': 'yorAgeIncIomek', 'Anew yorAgek': 'FIRSTNAME', 'cIttY': 'JooohyorAgeIncIomekn', 'IncIocme': 'JoDooehhn'}], [{'first_name': 'IncIomNNew', 'FIRST_NAME': 'OE'}], [{'LAST_NAME': 'oJoh', 'AGE': 35, 'CITY': 'NK', '1': 34, 'AE': 'new', 'QxxTRMjexO': 'oJhoh', 'TCITY': 34}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 'D', 'cItY': 'new yorAgek', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'LASTENAME': 'Anew yorAgek', 'cItcY': 'DD'}], [{'FIRST_NAME': 'John', 'AGE': 35, 'CITY': 'NEW YORK', 'INCOME': '$50,000', 'INCNewT_NAMEPIOME': 'NEW'}], [{'Last_Name': 'Dooe', 'Age': 35, 'city': 'chery', 'Income': '$50,000', 'FIRST_NAME': 'Jane', '1': 36, 'Incyellowome': 'INCOMEJohn', 'chINCEOMEerryAge': '$50,00', 'chge': 'New YorkLAST_NAME', 'New York': 'new york', 'Incomge': 'citty', 'Last_eName': 'AGE'}], [{'firstName': 'yorAgekcoJoDo$$50,000ehageagelorhnJohhn'}], [{'LASTNAME': 'DOE', 'cItY': '2', 'Income': '$50,000', 'IncIome': 'FIRST_NAME', 'Do': 'EDOE'}], [{'Income': '$50,000'}], [{'or$50,00ange': 'fruui', 'orYoincomerk$50,00ange': 'fruuritt'}], [{'firstName': 'JohDOE33', 'LASTNAME': 'DDOE', 'Income': '$50,0000'}], [{'first_name': 'John', 'Last_Name': 'Doe', 'Age': 35, 'city': 'NewNEWor$50,00ange York', 'Income': '$50,000', 'FIRST_NAME': 'eJane', 'Incoome': 'oJohn', 'Agee': '$50,0oNew YorNk00'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'Income': '$50,000', 'FIRST_NAME': 36, 'LASTNASME': 'oJohn'}], [{'first_name': 'John', 'city': 'New York', 'Income': '$50,000', '1': 36, 'Incyellowome': '2$0,000', 'cityyorA$0,000geIncIomrek': 'JJohn'}], [{'firstName': 'NNew', 'LASTNAME': 'DDOE', 'Income': '$50,0000', 'IncIome': 'FIRST_NAME'}], [{'firstName': 'John', 'LASTNAME': 'DOE', 'Age': 35, 'cItY': 'new yorrk', 'Income': '$50,000', 'CITY': 'DOfDOlast_nameEirstNameE', 'NEW': '1', 'ge': 'nNew YorkLAST_NPAMEPIew yorrk'}], [{'last_name': 'new yorrkoe', 'age': 36, 'city': 'New YorNk', 'income': 'bana', 'year': 37}], [{'first_name': 'John', 'city': 'new yorAgek', 'ncome': 35}], [{'first_name': 'John', 'last_name': 'Doe', 'age': 35, 'city': 'oNew YorNk', 'income': '$50,000', 'Newage': '2,000', 'first_nam': 'JohnDOfDOlasNew Yoincomerkt_nameEirstNameE'}], [{'first_name': 'John', 'Age': 36, 'city': 'New York', 'Income': '$50,000', 'FIRST_NAME': 'Jane'}], [{'first_name': 'John', 'Age': 36, 'city': 'new yorAgek', 'FIRST_NAME': '33K', 'Anenew': 'oJohn', 'Inme': 'oJoJhn', 'Yrork': 'oJoJhkNewn'}]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the given problem:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    
+    all_lower = all(isinstance(key, str) and key.islower() for key in dict)
+    all_upper = all(isinstance(key, str) and key.isupper() for key in dict)
+    
+    return all_lower or all_upper</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) and key.islower() for key in keys):
+        return True
+    elif all(isinstance(key, str) and key.isupper() for key in keys):
+        return True
+    else:
+        return False</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dictionary):
+    if not dictionary:
+        return False
+    else:
+        keys = list(dictionary.keys())
+        if all(key.islower() for key in keys):
+            return True
+        elif all(key.isupper() for key in keys):
+            return True
+        else:
+            return False</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    
+    keys = list(dict.keys())
+    
+    is_lower = all(isinstance(key, str) and key.islower() for key in keys)
+    is_upper = all(isinstance(key, str) and key.isupper() for key in keys)
+    
+    return is_lower or is_upper</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dct):
+    if not dct:  # return False if the dictionary is empty
+        return False
+    case = None  # initialize case as None
+    for key in dct.keys():
+        if case is None:  # if case is not determined yet
+            case = isinstance(key, str) and key.islower()  # determine case
+        elif (isinstance(key, str) and case is True and key.islower()) or \
+                (isinstance(key, str) and case is False and key.isupper()):
+            continue  # continue if the case matches
+        else:
+            return False  # return False if case doesn't match
+    return True  # return True if all keys have the same case</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(d):
+    """
+    Given a dictionary, return True if all keys are strings in lower
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not d:
+        return False
+
+    keys = d.keys()
+    first_key = next(iter(keys))
+
+    if isinstance(first_key, str):
+        case = first_key.islower()
+        return all(key.islower() == case for key in keys)
+    else:
+        return False
+
+# Test cases</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if len(dict) == 0:
+        return False
+    if all(isinstance(key, str) for key in dict.keys()):
+        if all(key.islower() for key in dict.keys()):
+            return True
+        elif all(key.isupper() for key in dict.keys()):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def check_dict_case_2(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if len(dict) == 0:
+        return False
+    if all(isinstance(key, str) for key in dict.keys()):
+        if all(key.islower() for key in dict.keys()) or all(key.isupper() for key in dict.keys()):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def check_dict_case_3(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    """
+    if not dict:
+        return False
+
+    key_case = None
+    for key in dict:
+        if not isinstance(key, str):
+            return False
+        if key_case is None:
+            key_case = key.islower()
+        elif key_case != key.islower():
+            return False
+
+    return True
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here is a Python function that should solve the problem:
+
+```python
+def check_dict_case(d):
+    if not d:  # Check if dictionary is empty
+        return False
+
+    first_key = next(iter(d))  # Get the first key of the dictionary
+    first_key_case = first_key.isupper() if type(first_key) == str else None
+
+    for key in d:
+        if type(key) != str:  # Check if key is a string
+            return False
+        elif (key.isupper() and not first_key_case) or (key.islower() and first_key_case):  # Check if case matches the first key
+            return False
+
+    return True
+```
+
+This function works by first checking if the dictionary is empty. If it is, it returns False. Then it gets the first key of the dictionary and checks its case. It then iterates over the rest of the keys in the dictionary, checking if they are strings and if their case matches the first key. If it finds a key that doesn't match these criteria, it returns False. If it gets through the entire dictionary without finding any mismatches, it returns True.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(d):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    """
+    if not d:  # Check if dictionary is empty
+        return False
+
+    lower_case_keys = all(isinstance(k, str) and k.islower() for k in d.keys())
+    upper_case_keys = all(isinstance(k, str) and k.isupper() for k in d.keys())
+
+    return lower_case_keys or upper_case_keys
+
+
+# Test cases
+assert check_dict_case({"a":"apple", "b":"banana"}) == True
+assert check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) == False
+assert check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) == False
+assert check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) == False
+assert check_dict_case({"STATE":"NC", "ZIP":"12345" }) == True
+assert check_dict_case({}) == False</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+    lower = 0
+    upper = 0
+    for key in dict:
+        if key.islower():
+            lower += 1
+        elif key.isupper():
+            upper += 1
+        else:
+            return False
+    if lower == len(dict) or upper == len(dict):
+        return True
+    return False
+
+print(check_dict_case({"a":"apple", "b":"banana"}))
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"}))
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"}))
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}))
+print(check_dict_case({"STATE":"NC", "ZIP":"12345"}))</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if len(dict) == 0:
+        return False
+    else:
+        for key in dict:
+            if type(key) != str:
+                return False
+            elif key.islower() == False and key.isupper() == False:
+                return False
+    return True
+
+
+def check_dict_case_2(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if len(dict) == 0:
+        return False
+    else:
+        for key in dict:
+            if type(key) != str:
+                return False
+            elif key.islower() == False and key.isupper() == False:
+                return False
+    return True
+
+
+def check_dict_case_3(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) for key in keys):
+        if all(key.islower() for key in keys) or all(key.isupper() for key in keys):
+            return True
+    return False
+```
+
+This function works by first checking if the dictionary is empty. If it is, the function returns `False`. Then it gets the keys of the dictionary and checks if all keys are strings. If not, the function returns `False`. If all keys are strings, the function checks if all keys are in lower case or all keys are in upper case. If they are, the function returns `True`. Otherwise, it returns `False`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def check_dict_case(dict):
+    if not dict:
+        return False
+
+    lower_case_keys = all(isinstance(key, str) and key.islower() for key in dict.keys())
+    upper_case_keys = all(isinstance(key, str) and key.isupper() for key in dict.keys())
+
+    return lower_case_keys or upper_case_keys
+
+# Test cases
+print(check_dict_case({"a":"apple", "b":"banana"}))  # True
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"}))  # False
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"}))  # False
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}))  # False
+print(check_dict_case({"STATE":"NC", "ZIP":"12345"}))  # True</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) for key in keys):
+        if all(key.islower() for key in keys) or all(key.isupper() for key in keys):
+            return True
+    return False</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    
+    first_key_case = dict[next(iter(dict))].islower()
+    
+    for key in dict:
+        if (key.islower() and not first_key_case) or (key.isupper() and first_key_case):
+            return False
+    
+    return True</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if len(dict) == 0:
+        return False
+    else:
+        for key in dict:
+            if not isinstance(key, str):
+                return False
+            else:
+                if key.islower():
+                    return True
+                elif key.isupper():
+                    return True
+                else:
+                    return False
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+def check_dict_case(dict_):
+    """
+    Given a dictionary, return True if all keys are strings in lower case or all keys are strings in upper case, else return False.
+    The function should return False if the given dictionary is empty.
+    """
+    if not dict_:
+        return False
+    key_type = type(list(dict_.keys())[0])
+    return all(isinstance(k, str) and (key_type is type(k.lower()) or key_type is type(k.upper())) for k in dict_.keys())
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def check_dict_case(dct):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dct:
+        return False
+
+    lower_case = True
+    upper_case = True
+
+    for key in dct.keys():
+        if not isinstance(key, str):
+            return False
+        if key.islower():
+            upper_case = False
+        elif key.isupper():
+            lower_case = False
+        else:
+            return False
+
+    return lower_case or upper_case
+
+# Test cases
+print(check_dict_case({"a":"apple", "b":"banana"}))  # should return True
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"}))  # should return False
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"}))  # should return False
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}))  # should return False
+print(check_dict_case({"STATE":"NC", "ZIP":"12345"}))  # should return True
+</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dictionary):
+    if len(dictionary) == 0:
+        return False
+    else:
+        keys = list(dictionary.keys())
+        lower_keys = [key for key in keys if key.islower()]
+        upper_keys = [key for key in keys if key.isupper()]
+        if len(lower_keys) == len(keys) or len(upper_keys) == len(keys):
+            return True
+        else:
+            return False</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    """
+    if not dict:
+        return False
+    
+    first_key = next(iter(dict))
+    if isinstance(first_key, str):
+        if first_key.islower():
+            for key in dict:
+                if not isinstance(key, str) or not key.islower():
+                    return False
+        elif first_key.isupper():
+            for key in dict:
+                if not isinstance(key, str) or not key.isupper():
+                    return False
+        else:
+            return False
+    else:
+        return False
+    
+    return True
+```
+
+The function first checks if the dictionary is empty. If it is, it returns False.
+
+Next, it gets the first key in the dictionary using the `next()` function and `iter()` method. It then checks if the first key is a string. If it is, it checks if it is in lower or upper case using the `islower()` and `isupper()` methods. If it is not in either case, it returns False.
+
+If the first key is a string, the function then checks if all keys in the dictionary are either all in lower case or all in upper case. It does this by iterating over each key in the dictionary and checking if it is a string and if it matches the case of the first key. If any key does not match the case of the first key, the function returns False.
+
+If all keys in the dictionary match the case of the first key, the function returns True.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if len(dict) == 0:
+        return False
+    keys = set(k for k in dict.keys())
+    return all(k.islower() or k.isupper() for k in keys)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+
+    lower_case = all(isinstance(key, str) and key.islower() for key in dict.keys())
+    upper_case = all(isinstance(key, str) and key.isupper() for key in dict.keys())
+
+    return lower_case or upper_case
+```
+
+This function first checks if the dictionary is empty. If it is, it returns False. Then it checks if all keys are strings in lower case or all keys are strings in upper case. If either condition is true, it returns True. Otherwise, it returns False.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) and key.islower() for key in keys):
+        return True
+    elif all(isinstance(key, str) and key.isupper() for key in keys):
+        return True
+    else:
+        return False
+
+# Test the function
+print(check_dict_case({"a":"apple", "b":"banana"})) # True
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"})) # False
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"})) # False
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"})) # False
+print(check_dict_case({"STATE":"NC", "ZIP":"12345" })) # True
+```
+
+2. Write a function that takes a list of strings and returns a new list with all strings in lower case.
+
+```python
+# Ideas:
+# - Use list comprehension to iterate over the list and convert each string to lower case.
+# - Use the lower() method to convert each string to lower case.
+
+# Solution:
+def lower_list(lst):
+    """
+    Given a list of strings, return a new list with all strings in lower case.
+    The function should return an empty list if the given list is empty.
+    Examples:
+    lower_list(["Apple", "Banana", "Cherry"]) should return ["apple", "banana", "cherry"].
+    lower_list(["Apple", "Banana", "Cherry", "DATE"]) should return ["apple", "banana", "cherry", "date"].
+    lower_list([]) should return [].
+    """
+    if not lst:
+        return []
+    return [string.lower() for string in lst]
+
+# Test the function
+print(lower_list(["Apple", "Banana", "Cherry"])) # ["apple", "banana", "cherry"]
+print(lower_list(["Apple", "Banana", "Cherry</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    first_key = next(iter(dict))
+    if isinstance(first_key, str):
+        case = first_key.islower()
+        for key in dict:
+            if not isinstance(key, str) or (key.islower() != case):
+                return False
+    else:
+        return False
+    return True</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dictionary):
+    if not dictionary:
+        return False
+    
+    # Check if all keys are strings
+    if not all(isinstance(key, str) for key in dictionary.keys()):
+        return False
+    
+    # Check if all keys are in lower case or upper case
+    lower_case = all(key.islower() for key in dictionary.keys())
+    upper_case = all(key.isupper() for key in dictionary.keys())
+    
+    return lower_case or upper_case</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    """
+    if not dict:
+        return False
+
+    keys = list(dict.keys())
+    first_key_case = keys[0].islower() if keys else False
+
+    for key in keys:
+        if not key.islower() and not key.isupper():
+            return False
+
+    return first_key_case
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dictionary):
+    if not dictionary:
+        return False
+    lower_case = all(isinstance(key, str) and key.islower() for key in dictionary.keys())
+    upper_case = all(isinstance(key, str) and key.isupper() for key in dictionary.keys())
+    return lower_case or upper_case
+```
+
+This function takes a dictionary as input and checks if all keys are strings in lower case or all keys are strings in upper case. If the dictionary is empty, it returns False. If all keys are in lower case or upper case, it returns True. Otherwise, it returns False.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(d):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    """
+    if not d:  # if the dictionary is empty
+        return False
+    
+    key_cases = [isinstance(k, str) and k.islower() for k in d.keys()]
+    all_lower = all(key_cases)
+    key_cases = [isinstance(k, str) and k.isupper() for k in d.keys()]
+    all_upper = all(key_cases)
+    
+    return all_lower or all_upper
+
+# Test cases
+print(check_dict_case({"a":"apple", "b":"banana"}))  # True
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"}))  # False
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"}))  # False
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}))  # False
+print(check_dict_case({"STATE":"NC", "ZIP":"12345" }))  # True</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+    lower_case = all(key.islower() for key in dict.keys())
+    upper_case = all(key.isupper() for key in dict.keys())
+    return lower_case or upper_case
+
+# Test cases
+print(check_dict_case({"a":"apple", "b":"banana"}))
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"}))
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"}))
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}))
+print(check_dict_case({"STATE":"NC", "ZIP":"12345" }))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def check_dict_case(dict):
+    if not dict:
+        return False
+    lower_case = all(isinstance(key, str) and key.islower() for key in dict.keys())
+    upper_case = all(isinstance(key, str) and key.isupper() for key in dict.keys())
+    return lower_case or upper_case</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(d):
+    if not d:
+        return False
+    keys = set(d.keys())
+    return all(key.isupper() for key in keys) or all(key.islower() for key in keys)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    lower_case = all(isinstance(k, str) and k.islower() for k in dict.keys())
+    upper_case = all(isinstance(k, str) and k.isupper() for k in dict.keys())
+    return lower_case or upper_case</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+    lower_keys = [key.lower() for key in dict.keys()]
+    upper_keys = [key.upper() for key in dict.keys()]
+    if lower_keys == list(dict.keys()) or upper_keys == list(dict.keys()):
+        return True
+    else:
+        return False</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False. 
+    The function should return False is the given dictionary is empty.
+    """
+    if not dict:
+        return False
+    
+    for key in dict:
+        if not isinstance(key, str):
+            return False
+        
+        if key.islower():
+            continue
+        elif key.isupper():
+            continue
+        else:
+            return False
+    
+    return True
+```
+
+Explanation:
+
+The function takes a dictionary as input and checks if all the keys are strings. If any key is not a string, it returns False. If all keys are strings, it checks if they are in lower case or upper case. If all keys are in lower case, it returns True, else it returns False. If the dictionary is empty, it returns False. </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+
+    if len(dict) == 0:
+        return False
+    else:
+        for key in dict:
+            if type(key) == str:
+                if key.islower() or key.isupper():
+                    continue
+                else:
+                    return False
+            else:
+                return False
+        return True
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    for key in dict:
+        if not isinstance(key, str) or (key.upper() != key and key.lower() != key):
+            return False
+    return True</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+def check_dict_case(dict):
+    if len(dict) == 0:
+        return False
+
+    keys = list(dict.keys())
+    first_key = keys[0]
+    is_lower = first_key.islower()
+    is_upper = first_key.isupper()
+
+    for key in keys:
+        if (is_lower and not key.islower()) or (is_upper and not key.isupper()):
+            return False
+
+    return True
+```
+
+This code checks if the dictionary is empty and returns False if it is. It then checks the case of the first key and stores the result in the variables `is_lower` and `is_upper`. It then iterates through all the keys in the dictionary and checks if they match the case of the first key. If any key does not match the case, it returns False. If all keys match the case, it returns True.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    lower_case = all(isinstance(key, str) and key.islower() for key in dict.keys())
+    upper_case = all(isinstance(key, str) and key.isupper() for key in dict.keys())
+    return lower_case or upper_case
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function you requested:
+
+```python
+def check_dict_case(dict):
+    if not dict:
+        return False
+
+    keys = dict.keys()
+    all_lower = all(k.islower() for k in keys)
+    all_upper = all(k.isupper() for k in keys)
+
+    return all_lower or all_upper
+```
+
+This function first checks if the dictionary is empty. If it is, it returns False. If it's not, it gets the keys of the dictionary and checks if all of them are lower case or all of them are upper case. If all keys are either lower case or upper case, it returns True, otherwise it returns False.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(d):
+    if not d:
+        return False
+    for key in d:
+        if not isinstance(key, str):
+            return False
+        if key.isupper():
+            if not all(key.isupper() for key in d):
+                return False
+        elif key.islower():
+            if not all(key.islower() for key in d):
+                return False
+    return True
+```
+
+This Python script defines a function `check_dict_case` that takes a dictionary as input. The function first checks if the dictionary is empty. If it is, the function returns `False`. If the dictionary is not empty, the function iterates over each key in the dictionary. If the key is not a string, the function returns `False`. If the key is a string, the function checks if all keys in the dictionary are either all uppercase or all lowercase. If they are not, the function returns `False`. If all keys are either all uppercase or all lowercase, the function returns `True`.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+
+    key_case = set()
+    for key in dict:
+        if not isinstance(key, str):
+            return False
+        key_case.add(key.upper())
+
+    return len(key_case) == 1 or all(key.isupper() for key in dict)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+
+def check_dict_case(dictionary: dict) -> bool:
+    if not dictionary:
+        return False
+
+    # Check if all keys are lowercase or all keys are uppercase
+    key_cases = set(map(str.casefold, dictionary.keys()))
+    return len(key_cases) == 1
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+    if not dict:
+        return False
+    
+    keys = dict.keys()
+    first_key = next(iter(keys))
+    
+    if isinstance(first_key, str):
+        if first_key.isupper():
+            return all(key.isupper() for key in keys)
+        elif first_key.islower():
+            return all(key.islower() for key in keys)
+    
+    return False</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dictionary):
+    if not dictionary:
+        return False
+    all_lower_keys = all(k.islower() for k in dictionary.keys())
+    all_upper_keys = all(k.isupper() for k in dictionary.keys())
+    return all_lower_keys or all_upper_keys
+
+print(check_dict_case({"a":"apple", "b":"banana"})) # should return True
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"})) # should return False
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"})) # should return False
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"})) # should return False
+print(check_dict_case({"STATE":"NC", "ZIP":"12345"})) # should return True</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def check_dict_case(dict):
+    """
+    Given a dictionary, return True if all keys are strings in lower 
+    case or all keys are strings in upper case, else return False.
+    The function should return False is the given dictionary is empty.
+    Examples:
+    check_dict_case({"a":"apple", "b":"banana"}) should return True.
+    check_dict_case({"a":"apple", "A":"banana", "B":"banana"}) should return False.
+    check_dict_case({"a":"apple", 8:"banana", "a":"apple"}) should return False.
+    check_dict_case({"Name":"John", "Age":"36", "City":"Houston"}) should return False.
+    check_dict_case({"STATE":"NC", "ZIP":"12345" }) should return True.
+    """
+
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) for key in keys):
+        if all(key.islower() for key in keys) or all(key.isupper() for key in keys):
+            return True
+    return False
+
+# Test the function</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def check_dict_case(dict):
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) for key in keys):
+        if all(key.islower() for key in keys) or all(key.isupper() for key in keys):
+            return True
+    return False</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def check_dict_case(dict):
+    if len(dict) == 0:
+        return False
+    else:
+        keys = list(dict.keys())
+        lower_keys = [key.lower() for key in keys]
+        upper_keys = [key.upper() for key in keys]
+        if all(key in lower_keys for key in keys):
+            return True
+        elif all(key in upper_keys for key in keys):
+            return True
+        else:
+            return False</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def check_dict_case(dict):
+    if not dict:
+        return False
+    keys = list(dict.keys())
+    if all(isinstance(key, str) for key in keys):
+        if all(key.islower() for key in keys) or all(key.isupper() for key in keys):
+            return True
+    return False
+
+# Test cases
+print(check_dict_case({"a":"apple", "b":"banana"})) # True
+print(check_dict_case({"a":"apple", "A":"banana", "B":"banana"})) # False
+print(check_dict_case({"a":"apple", 8:"banana", "a":"apple"})) # False
+print(check_dict_case({"Name":"John", "Age":"36", "City":"Houston"})) # False
+print(check_dict_case({"STATE":"NC", "ZIP":"12345" })) # True
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

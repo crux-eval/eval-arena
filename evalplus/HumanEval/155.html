@@ -1,0 +1,1237 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/155 </h1>
+<pre><code> 
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    even, odd = 0, 0
+    for ch in str(num):
+        if ch in "02468": even += 1
+        if ch in "13579": odd += 1
+    return even, odd
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[7], [-78], [3452], [346211], [-345821], [-2], [-45347], [0]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[2368], [-111], [-2468031], [1010101], [-123456789], [-590], [125890], [444444444], [-1111111], [-222222222], [-591], [444444443], [444444445], [-222222221], [-1111110], [-592], [-222222224], [-222222223], [-7], [2369], [-2468032], [-112], [125889], [-589], [-588], [-123456790], [-593], [-2468033], [-222222225], [-222222226], [2367], [-110], [-113], [444444442], [1010100], [-114], [-67], [-586], [-1111112], [1010099], [1010098], [-222222227], [-2468034], [-123456791], [2366], [-9], [-123456792], [-587], [-1111113], [-2468035], [444444446], [11], [-222222220], [444444447], [-109], [-6], [-585], [125891], [-93], [-10], [12], [125888], [-115], [125892], [13], [-48], [37], [-97], [-94], [-92], [-98], [-11], [-1], [36], [2370], [14], [-1111109], [15], [-222222228], [-123456793], [34], [-16], [35], [10], [-68], [444444441], [-1111114], [-69], [-222222229], [444444440], [-15], [444444439], [33], [0], [-5], [-2468036], [-1111115], [-53], [-358947934856], [54837398243239], [-78653034582], [-1021021021021021021021021021021021021021021021021], [-923456789], [9876543210], [246813579], [-1234567890987654321], [11111], [-2222], [54837398243240], [-923456790], [11112], [-358947934857], [-1234567890987654320], [-923456792], [-2221], [-1021021021021021021021021021021021021021021021020], [-2219], [54837398243238], [-70], [-71], [11110], [-2223], [-1021021021021021021021021021021021021021021021019], [-18], [-358947934858], [-2220], [-1021021021021021021021021021021021021021021021018], [-923456788], [3], [-1234567890987654322], [-17], [-78653034583], [54837398243241], [246813578], [-1021021021021021021021021021021021021021021021022], [-85], [-923456793], [-78653034584], [11109], [-8], [-59], [-19], [-66], [-923456794], [-923456787], [-58], [-923456785], [-2218], [9876543211], [-80], [46], [-358947934855], [-60], [-81], [4], [-1234567890987654323], [246813577], [-12], [-923456786], [-1021021021021021021021021021021021021021021021017], [-358947934854], [11107], [19], [5], [9876543212], [-1021021021021021021021021021021021021021021021016], [54837398243242], [-61], [-14], [18], [-1021021021021021021021021021021021021021021021015], [11106], [-13], [20], [-56], [-923456795], [11108], [-1021021021021021021021021021021021021021021021023], [17], [2], [-923456784], [-65], [1], [54837398243243], [89], [-64], [-82], [-63], [64], [11105], [90], [-358947934859], [99], [65], [11104], [11113], [-83], [6], [-62], [9876543213], [53], [-84], [-2224], [66], [11103], [-358947934853], [-86], [-2], [67], [-35], [-1021021021021021021021021021021021021021021021013], [-2217], [-2216], [9876543215], [-923456783], [-3], [-57], [-77777777777777777777], [22222222222], [-33], [13579], [-2468], [2147483647], [11111111111111111111], [-11111111111111111111], [-2147483648], [9876543209], [9876543208], [246813580], [246813581], [-1234567890987654319], [16], [78], [77], [76], [-78653034581], [-1234567890987654318], [75], [-2225], [58], [-78653034585], [246813576], [39], [246813583], [-1234567890987654324], [38], [48], [-21], [40]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the completed code for the given problem:
+
+```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)
+    even_count = 0
+    odd_count = 0
+
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+
+    return (even_count, odd_count)</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    even = 0
+    odd = 0
+    for i in str(abs(num)):
+        if int(i) % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    return (even, odd)
+
+print(even_odd_count(-12))  # (1, 1)
+print(even_odd_count(123))  # (1, 2)</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    # Convert the number to string to iterate over each digit
+    num_str = str(num)
+    even_count = 0
+    odd_count = 0
+
+    # Iterate over each digit
+    for digit in num_str:
+        # Convert the digit back to integer
+        digit = int(digit)
+
+        # Check if the digit is even or odd
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    return (even_count, odd_count)
+
+
+# Test the function
+print(even_odd_count(-12))  # Output: (1, 1)
+print(even_odd_count(123))  # Output: (1, 2)</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a Python markdown block:
+
+```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num_str = str(abs(num))  # Convert the absolute value of num to a string
+    even_count = 0
+    odd_count = 0
+
+    for digit in num_str:
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    return (even_count, odd_count)</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+       even_odd_count(-12) ==> (1, 1)
+       even_odd_count(123) ==> (1, 2)
+    """
+    # Check if the number is negative, if yes, convert it to positive
+    if num < 0:
+        num = -num
+
+    # Initialize even_count and odd_count to 0
+    even_count, odd_count = 0, 0
+
+    # Loop through each digit in the number
+    while num > 0:
+        # Get the last digit
+        last_digit = num % 10
+
+        # Check if the last digit is even or odd and increment the respective counter
+        if last_digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+        # Remove the last digit
+        num = num // 10
+
+    # Return the count of even and odd digits as a tuple
+    return (even_count, odd_count)</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer, return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)  # Convert negative numbers to positive
+    even_count = 0
+    odd_count = 0
+
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+
+    return (even_count, odd_count)
+
+# Test cases</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even = 0
+    odd = 0
+    for i in str(num):
+        if int(i) % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    return even, odd
+
+
+def main():
+    print(even_odd_count(-12))
+    print(even_odd_count(123))
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)  # Ignore the sign and count digits
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num = num // 10
+    return (even_count, odd_count)
+
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that solves the problem:
+
+```python
+def even_odd_count(num):
+    """Given an integer, return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+
+    # Convert the number to a string to iterate over each digit
+    for digit in str(abs(num)):
+        # Check if the digit is even
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    return (even_count, odd_count)
+```
+
+This function works by converting the input number to a string, which allows us to iterate over each digit. For each digit, we check if it's even by using the modulus operator. If the digit is even, we increment `even_count`; otherwise, we increment `odd_count`. The function returns a tuple with `even_count` and `odd_count`.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)  # Make sure the number is positive
+    even_count = 0
+    odd_count = 0
+
+    while num > 0:
+        digit = num % 10  # Get the last digit
+        if digit % 2 == 0:  # Check if the digit is even
+            even_count += 1
+        else:  # The digit is odd
+            odd_count += 1
+        num //= 10  # Remove the last digit
+
+    return even_count, odd_count
+
+# Test the function
+assert even_odd_count(-12) == (1, 1)
+assert even_odd_count(123) == (1, 2)
+assert even_odd_count(0) == (0, 0)
+assert even_odd_count(111111) == (3, 3)
+assert even_odd_count(2468) == (4, 0)</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    even = 0
+    odd = 0
+    for i in str(abs(num)):
+        if int(i) % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    return (even, odd)
+
+print(even_odd_count(-12))
+print(even_odd_count(123))</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even = 0
+    odd = 0
+    while num > 0:
+        if num % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+        num = num // 10
+    return even, odd
+
+
+def test_even_odd_count():
+    assert even_odd_count(123) == (1, 2)
+    assert even_odd_count(-12) == (1, 1)
+    assert even_odd_count(1234567890) == (4, 5)
+    assert even_odd_count(12345678901234567890) == (10, 10)
+    assert even_odd_count(123456789012345678901234567890) == (20, 10)
+    assert even_odd_count(1234567890123456789012345678901234567890) == (20, 20)
+    assert even_odd_count(12345678901234567890123456789012345678901234567890) == (30, 20)
+    assert even_odd_count(123456789012345678901234567890123456789012345678901234567890) == (30, 30)
+    assert even_odd_count(123456789012345678901234567890123456789012345678901234567890123456789</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    num = abs(num)  # to handle negative numbers
+    for digit in str(num):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```
+
+This function works by converting the absolute value of the input number to a string, then iterating over each character (digit) in the string. If the character is divisible by 2 (i.e., it's an even number), it increments the `even_count` variable. Otherwise, it increments the `odd_count` variable. Finally, it returns a tuple of the counts.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+
+    # Convert the number to a string
+    num_str = str(num)
+
+    # Iterate through each digit in the string
+    for digit in num_str:
+        # Check if the digit is even or odd
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    # Return the counts as a tuple
+    return (even_count, odd_count)
+
+# Test cases
+print(even_odd_count(-12))  # Output: (1, 1)
+print(even_odd_count(123))  # Output: (1, 2)</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    num = abs(num)
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num = num // 10
+    return (even_count, odd_count)</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even = 0
+    odd = 0
+    num = abs(num)
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+        num //= 10
+    return even, odd</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for i in str(num):
+        if int(i) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    count_even, count_odd = 0, 0
+    if num < 0:
+        num = abs(num)
+    while num > 0:
+        digit = num % 10
+        num = num // 10
+        if digit % 2 == 0:
+            count_even += 1
+        else:
+            count_odd += 1
+    return count_even, count_odd
+
+# Test cases</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    num_str = str(abs(num))
+    
+    for digit in num_str:
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+            
+    return (even_count, odd_count)
+
+# Test cases
+print(even_odd_count(-12))  # (1, 1)
+print(even_odd_count(123))  # (1, 2)
+</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    even = 0
+    odd = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    return (even, odd)
+
+print(even_odd_count(-12)) # should return (1, 1)
+print(even_odd_count(123)) # should return (1, 2)</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for digit in str(num):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```
+
+The function takes an integer as input and returns a tuple containing the number of even and odd digits in the integer. It does this by iterating over each digit in the integer and checking if it's even or odd. If it's even, it increments the even count, and if it's odd, it increments the odd count. Finally, it returns a tuple containing the even and odd counts.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even = 0
+    odd = 0
+    for num in str(abs(num)):
+        if int(num) % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    return (even, odd)
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    num = abs(num)  # make sure the number is positive
+    for digit in str(num):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```
+
+This function works by converting the input number to a string, then iterating over each character in the string. It checks if the integer value of the character is even or odd, and increments the respective count. Finally, it returns a tuple of the counts.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+
+def even_odd_count_v2(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count_v2(-12) ==> (1, 1)
+        even_odd_count_v2(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+
+def even_odd_count_v3(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count_v3(-12) ==> (1, 1)
+        even_odd_count_v3(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+
+def even_odd_count_v4(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count_v4(-12) ==> (1, 1)
+        even_odd_count_v4(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+    return (even_count, odd_count)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively."""
+    even_count = 0
+    odd_count = 0
+    num = abs(num)  # Convert negative numbers to positive
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+    return (even_count, odd_count)</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    # Convert the number to a string to iterate over its digits
+    num_str = str(abs(num))
+    
+    # Initialize counters for even and odd digits
+    even_count = 0
+    odd_count = 0
+    
+    # Iterate over each digit in the number
+    for digit in num_str:
+        # Check if the digit is even or odd
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+            
+    return (even_count, odd_count)
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```
+
+Explanation:
+The function `even_odd_count` takes an integer `num` as input. It initializes two variables `even_count` and `odd_count` to 0. It then iterates over each digit in the absolute value of `num` (to handle negative numbers). For each digit, it checks if it is even or odd by using the modulo operator `%`. If the digit is even, it increments the `even_count` variable. If the digit is odd, it increments the `odd_count` variable. Finally, it returns a tuple containing the `even_count` and `odd_count` variables.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively."""
+    num = abs(num)  # convert to positive to handle negative numbers
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+    return even_count, odd_count
+
+# Test cases
+print(even_odd_count(-12))  # ==> (1, 1)
+print(even_odd_count(123))  # ==> (1, 2)</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    # Convert the number to a string
+    num_str = str(num)
+
+    # Initialize even and odd digit counts
+    even_count = 0
+    odd_count = 0
+
+    # Iterate through each digit in the string
+    for digit in num_str:
+        # Check if the digit is even or odd
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    # Return a tuple with the even and odd digit counts
+    return (even_count, odd_count)
+
+# Test the function
+print(even_odd_count(-12))  # Output: (1, 1)
+print(even_odd_count(123))  # Output: (1, 2)</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+    num_str = str(abs(num))  # Convert the number to a string and remove the negative sign if present
+    for digit in num_str:
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+
+# Test cases
+print(even_odd_count(-12))  # Output: (1, 1)
+print(even_odd_count(123))  # Output: (1, 2)</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)  # make sure the number is positive
+    even_count = 0
+    odd_count = 0
+    for digit in str(num):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    # convert the number to string to get individual digits
+    digits = str(num)
+
+    # initialize counters for even and odd digits
+    even_count = 0
+    odd_count = 0
+
+    # iterate over each digit
+    for digit in digits:
+        # check if digit is even or odd
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    # return the counts as a tuple
+    return (even_count, odd_count)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+def even_odd_count(num):
+    """
+    Given an integer, return a tuple that has the number of even and odd digits respectively.
+    
+    Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    # Convert the number to a string to iterate over each digit
+    num_str = str(abs(num))
+    even_count = 0
+    odd_count = 0
+    
+    # Iterate over each digit in the string
+    for digit in num_str:
+        # Check if the digit is even or odd
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    
+    # Return the tuple of even and odd counts
+    return (even_count, odd_count)
+
+# Test the function with some sample inputs
+print(even_odd_count(-12)) # Output: (1, 1)
+print(even_odd_count(123)) # Output: (1, 2) </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+
+    if num < 0:
+        num = abs(num)
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        if num % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num = num // 10
+    return (even_count, odd_count)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+
+    while num > 0:
+        last_digit = num % 10
+        if last_digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+
+    return even_count, odd_count</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+
+    # Convert the number to a string to iterate over its digits
+    num_str = str(abs(num))
+
+    for digit in num_str:
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    return (even_count, odd_count)
+```
+
+This code defines a function `even_odd_count` that takes an integer `num` as input. It initializes two variables `even_count` and `odd_count` to keep track of the number of even and odd digits, respectively.
+
+The number is converted to a string using `str(abs(num))` to handle negative numbers. Then, each digit in the string is iterated over. If the digit is divisible by 2 (i.e., even), `even_count` is incremented. Otherwise, `odd_count` is incremented.
+
+Finally, the function returns a tuple `(even_count, odd_count)` representing the number of even and odd digits, respectively.</code></pre>
+
+      <p> codebooga-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    num = abs(num)
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+    return (even_count, odd_count)
+
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def even_odd_count(num):
+    """
+    Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    for digit in str(abs(num)):
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return (even_count, odd_count)
+```
+
+This function works by converting the absolute value of the input number to a string, then iterating over each character in the string. If the character is an even digit (i.e., it's divisible by 2), it increments the `even_count`. If it's an odd digit, it increments the `odd_count`. Finally, it returns a tuple containing the `even_count` and `odd_count`.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+    num = abs(num)
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num //= 10
+    return (even_count, odd_count)
+
+print(even_odd_count(-12))  # Output: (1, 1)
+print(even_odd_count(123))  # Output: (1, 2)
+```
+
+This Python script defines a function `even_odd_count` that takes an integer as input and returns a tuple with the number of even and odd digits in the integer. The function first converts the input number to its absolute value to handle negative numbers. Then, it uses a while loop to iterate through each digit of the number from the least significant digit to the most significant digit. For each digit, it checks if it is even or odd and increments the corresponding counter. Finally, it returns the tuple with the counts of even and odd digits.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    count_even = count_odd = 0
+    num_str = str(abs(num))
+
+    for digit in num_str:
+        if int(digit) % 2 == 0:
+            count_even += 1
+        else:
+            count_odd += 1
+
+    return (count_even, count_odd)</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+
+def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+
+    # Handling negative numbers
+    if num < 0:
+        num = abs(num)
+
+    # Converting the integer to a string to access individual digits
+    num_str = str(num)
+
+    # Iterating through each digit in the number
+    for digit in num_str:
+        # Checking if the digit is even or odd
+        if int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    # Returning the tuple with the count of even and odd digits
+    return (even_count, odd_count)
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+    even_count = 0
+    odd_count = 0
+    
+    # Convert the number to a string and iterate over each digit
+    for digit in str(abs(num)):
+        digit_value = int(digit)
+        if digit_value % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    
+    return (even_count, odd_count)</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    num = abs(num)  # convert the number to positive
+    even_count = 0  # count of even digits
+    odd_count = 0   # count of odd digits
+
+    # check each digit
+    while num > 0:
+        digit = num % 10  # get the last digit
+        if digit % 2 == 0:  # if the digit is even
+            even_count += 1
+        else:  # if the digit is odd
+            odd_count += 1
+        num = num // 10  # remove the last digit
+
+    return (even_count, odd_count)
+
+
+# test the function
+print(even_odd_count(-12))  # should return (1, 1)
+print(even_odd_count(123))  # should return (1, 2)</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def even_odd_count(num):
+    """Given an integer. return a tuple that has the number of even and odd digits respectively.
+
+     Example:
+        even_odd_count(-12) ==> (1, 1)
+        even_odd_count(123) ==> (1, 2)
+    """
+
+    pass
+
+def is_palindrome(num):
+    """Given an integer. return True if the number is a palindrome, False otherwise.
+
+     Example:
+        is_palindrome(121) ==> True
+        is_palindrome(123) ==> False
+    """
+    pass
+
+def is_prime(num):
+    """Given an integer. return True if the number is a prime number, False otherwise.
+
+     Example:
+        is_prime(11) ==> True
+        is_prime(12) ==> False
+    """
+    pass
+
+def is_armstrong(num):
+    """Given an integer. return True if the number is an Armstrong number, False otherwise.
+
+     Example:
+        is_armstrong(153) ==> True
+        is_armstrong(123) ==> False
+    """
+    pass
+
+def is_perfect(num):
+    """Given an integer. return True if the number is a perfect number, False otherwise.
+
+     Example:
+        is_perfect(6) ==> True
+        is_perfect(12) ==> False
+    """
+    pass
+
+def is_abundant(num):
+    """Given an integer. return True if the number is an abundant number, False otherwise.
+
+     Example:
+        is_abundant(12) ==> True
+        is_abundant(10) ==> False
+    """
+    pass
+
+def is_deficient(num):
+    """Given an integer. return True if the number is a deficient number, False otherwise.
+
+     Example:
+        is_deficient(12) ==> False
+        is_deficient(10) ==> True
+    """
+    pass
+
+def is_triangular(num):
+    """Given an integer. return True if the number is a triangular number, False otherwise.
+
+     Example:
+        is_triangular(12) ==> True
+        is_triangular(10) ==> False
+    """
+    pass
+
+def is_square(num):
+    """Given an integer. return True if the number is a square number, False otherwise.
+
+     Example:
+        is_square(12) ==> False
+        is_square(16) ==> True
+    """
+    pass
+
+def is_cube(num):
+    """Given an integer. return True if the number is a cube number, False otherwise.
+
+     Example:
+        is_cube(12) ==> False
+        is_cube(27</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def even_odd_count(num):
+    num = abs(num)
+    even_count = sum(1 for digit in str(num) if int(digit) % 2 == 0)
+    odd_count = sum(1 for digit in str(num) if int(digit) % 2 != 0)
+    return (even_count, odd_count)</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def even_odd_count(num):
+    even_count = 0
+    odd_count = 0
+
+    # Convert the number to string
+    num_str = str(num)
+
+    # Iterate through each digit in the string
+    for digit in num_str:
+        # Check if the digit is even or odd
+        if digit.isdigit() and int(digit) % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+
+    # Return a tuple of even and odd counts
+    return even_count, odd_count</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def even_odd_count(num):
+    num = abs(num)
+    even_count = 0
+    odd_count = 0
+    while num > 0:
+        digit = num % 10
+        if digit % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        num = num // 10
+    return (even_count, odd_count)
+
+# Testing the function
+print(even_odd_count(-12))  # Expected output: (1, 1)
+print(even_odd_count(123))  # Expected output: (1, 2)
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

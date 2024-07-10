@@ -1,0 +1,1665 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/111 </h1>
+<pre><code> 
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+
+    if test == "": return {}    
+    count, ans = dict(), dict()
+    for word in test.split(" "):
+        if word != "":
+            if word not in count: count[word] = 0
+            count[word] += 1
+    mx = max(list(count.values()))
+    for ch, c in count.items():
+        if c == mx:
+            ans[ch] = c
+    return ans
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['a b b a'], ['a b c a b'], ['a b c d g'], ['r t g'], ['b b b b a'], ['r t g'], [''], ['a']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['x y z x y z x'], ['c a r s'], ['h e l l o'], ['a b b b b b'], ['p u z z l e'], ['a a a a a a a b b b b b b b'], ['c c c c b b b a a a'], ['p p p r r r'], ['a b c d e f g'], ['h i j j k l m m m n o o o o p'], ['a b b  b b b'], ['h i j j k l m m m p'], ['a a a a a a a b b b b b b'], ['a b h i j j k l m m m n o o o o p'], ['h i j j k l m m m n o o o o  p'], ['a'], ['a b b  b b  b'], ['h i j j  k l m m m n o o o o  p'], ['a b c  d e f g'], ['p  l  e'], ['h i j j   k l  m m m n o o o o  p'], ['p u z l e'], [' p p p r r r'], [' p p p  r r r'], ['a a a a a a a b b  b b b b'], ['p l  e'], ['h i j j   k l  m  o o  p'], [' p r'], ['a b b b b b  b'], [' p '], ['a b c  d  e f g'], ['a b b b b'], ['h i j m m m p'], ['h i j j   k l  m  p'], ['h  i j j   k l  m  o o  '], ['h i j j    k l  m   p'], ['a a a a a a a b b  b'], [''], ['a b b  b b   b'], [' p  '], ['  p p r r r'], ['h  i j j   k l  m  o  '], ['h i j j k l m m m n  o o o o  p'], ['h  i j j k l  m  o  '], ['h i j j   k l  m  o p'], ['x y z x y  z x'], [' p h  i j j k l  m  o  '], ['h  i j j   k l  m  o   '], ['a b c  e f g'], ['c c c c b b b a  a a'], ['p u z z  l e'], ['h i j j k l m m m n o  o o o  p'], ['a b c d e  p  f g'], ['a b h i j j m m m n o o o o p'], ['x y z x y  z x '], ['h i j j k l m m m n o o p'], ['a b  b b b b'], ['h   i j j   k l  m  o   '], ['p  l h i j j k l m m m p e'], ['a b b  b b b  b'], ['h e'], ['h i j j k l m m m n o  o o   p'], ['p  l h i j j k l m  e'], [' p p p r r r p '], ['  p p  r r r'], ['a b c h  i j j k l  m  o  d e  p  f g'], ['p u z z  e'], ['p  u z z  e'], ['p u z z  l  e'], ['  p  '], ['  s'], ['h i j j k  h i j j   k l  m  o o  p p p p r r r m m n o o o o  p'], ['h  i j m m m p'], ['p  l h i j j k  l m  e'], ['  p p r h i j j k l m m m n  o o o o  p r'], [' p'], [' a b b  b b   b'], [' a b b  b b    b'], [' a  b b  b b   b'], ['h  i j  p p r r r j   k l  m'], ['c c c c b b a a'], [' p p p r  r r'], [' r'], ['a b b  b'], ['h  i  j m m m'], ['h  i j j k l   m  o  '], ['h i j j k  h i j j   k l  m  o o  p p p p r r r m m n  o o o o  p'], ['a a a a a a a b b b  b'], ['  p p p  r r r '], ['p  l  h i j j k l m  e'], ['p  p p r h i j j  p p p r r r p k l m m m n  o o o o  p r  u z z  e'], ['a  b c d e f g'], ['  p'], ['   p  '], ['a a p h  i j j k l  m  o   a a a a a b b b b b b'], ['a  a a a a a a b b  b b b b'], ['  p   p '], ['p   l  e'], ['h  i p p r h  i j j   k l  m  o o   r r j   k l  m'], ['c a a a a b b d d d d f f f g h i'], ['p p q q q r r r s s s t t t u u u v v w w x x y y z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z z z z'], ['l m m m m m m m m n n n n n n n n n n n n n n o o p p q q r r s'], ['     a a a a b b d d d d f f f g h i  '], ['x y z x y z x y z x y z x y z x y z x y z x y z x'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w'], ['    x      a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['h'], ['l'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w'], ['d'], ['u'], ['b'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z'], ['p'], ['z'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n o p q r r r s s      a a a a b b d d d d f f f g h i  s s s s s t t t t t t t t u v w'], ['g'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t t u v w'], ['s'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t t u v  w'], ['c'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t  t t u v w'], ['n'], ['v'], ['x y z x y z  x y z x y z x y z x y z x y z x y z x'], ['f'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y     a a a a b b d d d d f f f g h i   y y y y z z z z z'], ['i'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v  w x y z'], ['    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z'], ['    x      a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['t'], ['    a b   k k l l t t t t t t u v w x y z'], ['o'], ['x y a a a b b d d d d f f f g h i i i i i  j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w'], ['m'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z'], ['x y z x y z  x y z x y z x y z x y z x y z x y z  x'], ['     a b   k k l l t t t t t t u v w x y z'], ['w'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t     x      a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['x'], ['r'], ['j'], ['    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v s x x x x y     a a a a b b d d d d f f f g h i   y y y y z z z z z'], ['    a b        c d e f   a g g h  h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['e'], ['x y a a a b b d d d d f f f g h i i i i i  j j j  j k k k k  l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w'], ['l     a a a a b b d d d d f f f g h i  '], ['x y z x y z  x y z x y z x y z z x y z x y z x'], ['    x      a b c d e f   a g   g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['x y a a  a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t     x      a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['  l  a b   k k l l t t t t t t u v w x y z'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['x y z x y z x y z x y z x y  z x y z x y z x  y z x'], ['     a b        c d e f   a g g h  h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z   x      a b c d e f   a g   g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['x y z x y z  x y x y z x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['    x      a b c d e f   a g   g h h h h i j j j k k k k l l l l m n o p q r r r  s s s s s s s t t t t t'], ['l m m m m m m m m n n n n n n n n n n n n n  p p q q r r s'], ['     a b    s s s s s t t t t t t t t u v w x y z'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t   x      a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['x y z x y z x y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x'], ['k'], ['    x      a b c d e f   a g g h h h h i    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['l     a a a a b b d  d d d f f f g h i  '], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x  z z'], ['l     a a a a b b d  d d d f f f g h i'], ['x y a a a o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z s s s s s s s t t t t t t t t u v w'], ['y'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t   a a a a b b d d d d f f f g h i  '], ['x y z x y z  x y z x y z x y z x y z  x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l  l l l m n o p q r r r s s s s s s s t t t t t   a a a a b b d d d d f f f g h i  '], ['l a b b d  d d d f f f g h i'], ['x y z x y z  x y z x y z x y z x y z e y z  x'], ['    x      a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t  t'], ['x y z x y z  x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z z z z y z e y z  x'], ['x x y y z z'], ['     a a a a b b d d d d f f f g  h i  '], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y s s t t t t t'], ['     a a a a b b x y z x y z x y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x'], ['x y z x  z x y z x y z x'], ['l     a a a a  b b d d d d f f f g h i  '], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t   x      a b c d e f  x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t     x      a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t  t t t t u v w x y z'], ['x y a a a b b d d  d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s  s s s t t t   t t t t t u v w'], ['p p q q q r r r s s s t t t  u u u v v w w x x y y z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v z'], ['x y z x y z  x y z x y z x y z z x y z x  y z x'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t   x      a b c d e f   a g  g h    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t     x  j    a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y     a a a a b b d d d d f f f g h i  p y y y y z z z z z'], ['    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t  t t t u v w x y z'], ['x y z x y z  x y z  x y z x y z z x y z x  y z x'], ['    x      a b c d e f   a g   g h h h h  i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z'], ['x y z x y z  x y z x y z x  y z z x y z x y z x'], ['x y a a a b b d d  d d f f f g l m n o p q r r r s s s s  s s s t t t   t t t t t    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z v w'], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['    x      a b c d e f   a g   g h l     a a a a  b b d d d d f f f g h i  h h h i j j j k k k k l l l l m n o p q r r r  s s s s s s s t t t t t'], ['x y a a a b b d d d d f f f g h i i i i  i j j j j k k k k l l l l m t t t u v w'], ['c a a a a i'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['    x      a b c d e f    a g   g h h h h  i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['c a a a  a i'], ['x y z x y z  x y z x y z x  y z x'], ['x y z x y z x y z x y z x y z x  z x y z x y z x z x y z x y z x y z x'], ['l    a b   k k l l t t t t t t u v w x y z'], ['     a b   k k l l t t t t t t u v w    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l  l l l m n o p q r r r s s s s s s s t t t t t   a a a a b b d d d d f f f g h i  x y z'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['     a b    k k l l t t t t t t u v w x y z'], ['x y z x y z x y     a b   k k l l t t t t t t u v w x y z z x y z x y z x y z x y z x y z x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s s s s s t t x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['l     a a a  a b b  f f g h i  '], ['x y z x y z  x y z x y z x y z x y z e y z  '], ['c a a a  a i    a b        c d e f   a g g h  h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['x y z x y z x y z x y z z x y z x y z x y z x'], ['l     f f f g h i  '], ['x y z x y z  x y z x y z x y z z x y z x  y z  x'], ['o o o o o o p p p p p p q q q q q q r r r r r    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s s s s s t t x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z z z z'], ['x y a a a o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z s s s s s t t t t t t t t u v w'], ['     a b   k k l l t t t t l     a a a a  b   b d d d d f f f g h i  t t u v w x y z'], ['x y z x y z x y     a b   k k l l t  t t t t t u v w x y z z x y z x y z x y z x y z x y z x'], ['x y z x y z   x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z z z z y z e y z  x'], ['    o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a a a a b b d d d d f f f g  h i  '], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t    t t t t t u v  w'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t     x  j    a b c d e f   a g  g h h h  j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['x y z x y z  x y z  x y z x y z z x    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g m n o p q r r r s s s s s s s t t t t t t t t u v w x y z y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t     x  j    a b c d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v  w'], ['l      a a a  a b b  f f g h i  '], ['c a a a a b b d f g h i'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t     a b   k k l l t t t t l     a a a a  b   b d d d d f f f g h i  t t u v w x y z t  t t t u v w x y z'], ['l     a a a  a b b  f f g  i  '], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s    x      a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t  t s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['    a b   k k l l  l l m n o p q r r r  s s s s s s s t t t t  t t t t u v w x y z'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t   a a     x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t   a a a a b b d d d d f f f g h i  a a b b d d d d f f f g h i  '], ['l     a a a  a b b d  d d d f f f g h i  '], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g g h h h h  i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['    x      a b c d e f  o o o o o o p p p p p p  q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['l     a a a  a b b  f f g  i '], ['x y z x y z  x y z  x y z x y z z x    a b        c d e f   a g g h h x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t t u v w h h i j j j k k k k l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s s s s s t t x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['      a b   k k l l t t t t t t u v w x y z'], ['x y a a a b b d d d d f f f g h i i i i i  j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t t u v w'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s  s s s t t t t t'], ['    a b   k k l l l l m n o p q r r r  s s s s s s s  t t t t t t t t u v w x y z'], ['l      a a a  a b b d  d d d f f f g h i  '], ['    x      a b c d e f   a g g h h h h  i    a b        s s t t t t t t t t u v w x y z j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s     a a a a b b x y z x y z x y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x s s s s s s t t t   t t t t t u v  w'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z t t t'], ['x y a a a b b d d d d f f f g h i i i i i  j j j  j k s s s s t t t t t t t t u v w'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s  s s s s s t t t t t'], ['x y a a a b b d d d d f f f g h  i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t t u v w'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y  y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z t t t'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s    x      a b c d e f   a g g h h h h i j j j k k k k l l l l     a a a  a b b  f f g  i  l m n o p q r r r s s s s s s s t t t  t s s s t t t t t t u u u u u u v v v l l l m n o p q  r r s s s s s s s t t t t t'], ['x y z x y z x  y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x'], ['x y a a a b b d d d d  f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t t u v  w'], ['x y z x y z  x  y z  x y z x y z z x y z x  y z x'], ['    x      a b c d e f   a g g h h h h i    a b        c  d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['l a b b d  d d d f f    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s  s s t t t t t   a a     x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t   a a a a b b d d d d f f f g h i  a a b b d d d d f f f g h i   f g h i'], ['x y z x y z  x y z x y z x y z x y z x y z x y z u x'], ['l     a a a  a b b      a b   k k l l t t t t t t u v w x y z f f g h i  '], ['t    a b   k k l l  l l m n o p q r r r  s s s s s s s t t t t  t t t t u v w x y z'], ['x y a a a b b d d d d f f f g      a a a a b b x y z x y z x y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x i i i i  i j j j j k k k k l l l l m t t t u v w'], ['x y z x y z   x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s  s s s s s t t t t t z z z z z y z e y z  x'], ['    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t  t t t u v  z'], ['x y z x y z x y     a b   k k l l t t t t t t u v w x y z z x y z x y z x y z x y z x y z     a b   k k l l t t t t t t u v w x y z'], ['    x t t t t t'], ['x y z x y z  x y z x y z  x  y z x'], ['x y z x y z  x y z x y z x y z z x y  z x  y z x'], ['x y z x y z  x y z  x y z x y z z x    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y  z a b c d e f g m n o p q r r r s s s s s s s t t t t t t t t u v w x y z y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['    o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s  t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a a a a b    x t t t t t b d d d d f f f g  h i  '], ['l     f f f g h  i  '], ['x y z x y    x      a b c d e f    a g   g h h h h  i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t z  x y z x y z x y z z x y  z x  y z x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s s  t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s  s s s s s t t t t t'], ['    x      a b c d e f  o o o o o o p p p p p p  q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z v  v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w  z'], ['l     a a a  a b b      a b   k k l l t  t t t t t u v w x y z f f g h i  '], ['   h x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s  s s s t t t t t'], ['x y z x'], ['o o u u u v v v v v v w w w w w w x x x  z z'], ['x y z x y z x y z x y z x y z x  z x y z x y z x z x y z x y z x'], ['    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q s t u v w x y z a b c d e f g m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['x y z x y z   x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z z z z y z e y z  x'], ['x z x'], ['x y z x y z  x y z x y z z e y z  x'], ['x y z x y z   x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t v v v v v w w w w w w x x x x x x y y y y y z z z z z y z e y z  x'], ['s    a b   k k l l  l l m n o p q r r r  s s s s s s s t t t t  t t t t u v w x y z'], ['x y y z x y z  x y z x y z x  y z z x y z x y z x'], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g g h h h h i j j j k k  k k l l l t x  y z x'], ['l      a a a  a   f f g h i  '], ['x y z x y z x y z x y z x y  z x y z     a a a a b b x y z x y z x y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x x y z x  y z x'], ['x y z x y z   x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t v v v v v w w w w w w x x x x x x y y y y y z z z z z y  z e y z  x'], ['     a a a a c a a a  a i    a b        c d e f   a g g h  h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z  h i  '], ['p p q q q r r r s s s  y y z z'], ['x y z x y z  x y z x y z   x  y z x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s s s s s t t x x  y y z z z z z a g g h h h h i j j j k k k k l l  n o p q  r r s s s s s s s t t t t t'], ['c a    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y  y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z t t t a a a b b d f g h i'], ['x y z x  x y z x  y z x'], ['     a b   k k l l t t t t l     a a a a  b   x y z x y z  x y z x y z x y z x y z e y z   u v w x y z'], [' x y z x y z x  y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x   x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o  p q r r r  s s s s s s s t t x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s  s  t t t t t t t t u v w x y z k k  l s t t t t t'], ['     a b   k k l l t t t t l     a a a a  b   x y z x y z   u v w x y z'], ['     a b   k k l l t t t t l     a a a a  b   x y z x y z  x y z x y z x y z x y  y z'], ['x y z x y z x y z x y z x y z x y z x y z x'], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r  s s s s s s s t t t  t x  y z x'], ['x y  z x y z  x y z x y z x y z z x y z x  y z  x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y  y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z t t '], ['l     a a a  a b b      a b   k k l l t  t t t t t u v w     a b   k k l l t t t t l     a a a a  b   x y z x y z  x y z x y z x y z x y z e y z   u v w x y z x y z f f g h i  '], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r s t x  y z x'], ['x l     a a a a  b b d d d d f f f g h i  y z x y z  x y x y z x'], ['c a    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y  y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t    a b   k k l l t t t t t t u v w x y z t u v w x y z t t t a a a b b d f g h i'], ['x y a a a o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z s s s s  u v w'], ['    a b   k    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s  s  t t t t t t t t u v w x y z k k  l s t t t t t k l l t t t t t t u v w x y z'], ['x y z x y z   x y z o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s y z  x'], ['o o u u u v v v v v v w w w w w'], ['p p  s t t t u u u v v w w x x y y z z'], ['x y z x y z  x y z  x y z x y z z x    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r  s t u v w x y z a b c d e f g m n o p q r r r s s s s s s s t t t t t t t t u v w x y z y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['x y z x y z     a b   k k l l  l l m n o p q r r r  s s s s s s s t t t t  t t t t u v w x y z y z x y z x y z x y z x y z x y z u x'], ['    x      a b c d e f  o t u u u u u u v    a b        a b    s s s s  s  t t t t t t t t u v w x y z k k  l s t t t t t'], ['x y z x y z x y     a b   k k l l t  t t t t t u v w x y z z x y z x y z x y z x  y z x y z x'], ['l  f f f g h  i  '], ['    a b   k k l l l l m n o p q r r r  s s s s s    x      a b c d e f   a g g h h h h  i    a b        s s t t t t t t t t u v w x y z j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v  z'], ['c a a a a b b d d d d f f  f g h i'], ['x y a a a b b d d d d f f f g      a a a a b b x y z x y z x y z l     a a a a b b d d d d f f f g h i  x y z x y z x y z x y z x y z x i i i i  i j j j j k k k k l l l l m t t t u v w   a a a  a b b      a b   k k l l t  t t t t t u v w x y z f f g h i  '], ['l     a a a  a b b  f f g x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w i  '], ['x y z x y  z  x y z x y z   x  y z x'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l  m n o p q  r r s s s s s s s t t t t t'], ['    a b   k k l l l l m n o p q r r r  s s s s s s s   v w x y z'], ['    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g m n o    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v    a b        a b    s s s s  s  t t t t t t t t u v w x y z k k  l s t t t t t p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['    o o o  v w w w w w w x x   h i  '], ['     x t t t t t'], ['    a b   k k l l  l l m n o   t t t t u v w x y z'], ['o o o o o o p p p  r r r s s s s s s t t t t t t u u u u u u v v v v v z'], ['    x      a b c d e f   a g g h h h h i    a b        c  d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s t t t t t'], ['    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v  w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t'], ['x y z x y z  x y z  x y z x y z z x    a b        c d e f   a g g h h h i j a b c d e f g h i j k l m n o p  q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y  z a b c d e f g m n o p q r r r s s s s s s s t t t t t t t t u v w x y z y z    x      a b c d e f   a g g h h h h i j j j k k k k l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['l     a a a  a b b  f f g  '], ['x  x'], ['l     a a a  a b b      a b   k k l l t t t t t t u v w x y z f f g h i '], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r u v w'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o     a b    k k l l t t t t t t u v w x y z p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['    x      a b c d e f    a g g h h h h i    a b        c  d e f   a g g h h h i j j j k k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['    x    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v  w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q  r r s s s s s s s t t t t t      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t  t t t t u u u u u u v v v v v v w w w w w w x x x x  y  y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t    a b   k k l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z t t '], ['x y z x y  z  x y z x y z   x  y z '], ['x y a a a b b d d d d f f f g h i i i i i j j j  j k k k k l l l l m n o p q r r r s s s s s s s t t t   t t t t   x      a b c d e f   a  g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w'], ['c a  a a a b b d f g h i'], ['    x t t t t'], ['p p  s t t t u u u v    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t v w w x x y y z z'], ['l     a a a  a  '], ['     a b   k k l l t t t z'], ['p p  s t t t u u u v    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u q r r r s s s s s s s t t t t  t v w w x x y y z z'], ['    a b     a b    s s s s s t t t t t t t t u v w x y z       a b    s s s s s t t t t t t t t u v w x y z k k  l l l l m n o p q r r r  s s s s s s s t t t t t t t t u v w x y z'], ['x y z x y z x x y z x y z x y z x y z  x'], ['l    p p q q q r r r s s s t t t u u u v v w w x x y y z z a a a a  b b d d d d f f f g h i  '], ['t    a b   k k l l  l l m n o p q r r r   s s s s s s s t t t t  t t t t u v w x y z'], ['    x      a b c d e f   a g g h h h h i    a b        c  d e f   a g g h h h i j j j k k      a b   k k l l t t t t t t u v w    x      a b c d e f  o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x  y y z z z z z a g g h h h h i j j j k k k k l  l l l m n o p q r r r s s s s s s s t t t t t   a a a a b b d d d d f f f g h i  x y z o p q r r r  s s s s s t t t t t'], ['x y z x  z x y z x  y  x'], ['x y z x y z  x y z  x y z x y z z x y z    x      a b c d e f   a g  g h h h h  i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t  t x  y z x'], ['x y z x y z  x y z x y z x y  z z x y z x  y z  x'], ['a a b b c c d d'], ['x x x x x'], ['a b c d a b c d a b c d'], [' a'], ['ä å ö'], ['    x      a b c d e f   a g g  t t'], ['    x      a b  c d e f   a g g  t t'], ['l m m m m m m m m n n n n n n n n n n n n n n o o p p q  q r r s'], ['    x      a  b  c d e f   a g g  t t'], ['c a a a a b b d d d d f f f  g h i'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y '], ['      g h i  '], ['o o o o o o p p p p p  p q  q q q q q r r r r r r s s s s s  y y y z z z z z'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t t t t u v w'], ['c       g h i  '], ['  o t x      a b c d e f   a g g  t t'], ['     a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   '], ['    x b     a  b  c d e f   a g g  t t'], ['l m  m m m m m m m n n n n n n n n n n n n n n o o p p q q r r s'], ['o o o o o o p p p p p p q q q q  q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z z z z'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z t t t u v w'], ['    x      a b c  d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['q'], ['  o t x  t    a b c d e f   a g g  t t'], ['     a a a a b b d d d d f f f g h i  e'], ['o o o o o o p p p p p  p q  q q q q q r r r r r r s s s    x      a b c d e f   a g g  t t s s  y y y z z z z z'], ['       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t'], ['l m m m m m m m m n n n n n n n n n n n n  n n o o p p q q r r s'], ['c a a a a b b d d d d  f f f g h i'], ['    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z'], ['a b c d e f z b c d e f g'], ['l m m m m m m m m n n n n n n n n n n n n m n n o o p p q q r r s'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y '], ['    x b     a  b  c d e f   a t t'], ['    x      a  b  c d e  f   a g g  t t'], ['    x      a  b  c d e f e  a g g  t t'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t t u u z z z z z'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p  v w x y '], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t t u  u z z z z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u v v v v v v w w w w w w x x x x x x y y y y y z z'], ['  o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['    a b        c d e f   a g g h h h i  j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u z z z z z'], ['    x      a b  c d e f   a g g  t'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t  t t t u  u z z z z z'], ['  o  t x      a  b c d e f   a g g  t t'], ['    x      a b  c d e f   a g g t'], ['a b c d e f g    x b     a  b  c d e f   a t t h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g'], ['l m m m m  p p q q r r s'], ['    a b        c d e f   a g g h h s s s t t t t t t t t u v w x y z'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n p q r r r s s s s s s s t z t t t u v w'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u  v w x y '], ['    x      a b   c d e f   a g g t'], ['    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z'], ['x y a a a b b d d d d f f f g h i i i i i j j j  j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z t t t u v w'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t  u u z z z z z'], ['l m m m m m m m m n n  n n n n n n n n n n n n o o p p q q r r s'], ['l m  m m  m m m m m n n n n n n n n n n n n n n o o p p q q r r s'], ['  g    g h i  '], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q  q r r r r r r s s s s s s t t t t t t u u z z z z z'], ['o o o o  b     a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z'], ['p p q q q r r r s s s t t t u u u v v  g    g h i   w w x x y y z z'], ['  o o o o       a a a a b b d d d d f f  f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['    a b        c d e  f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z'], ['    x      a b c d e f   a g g    t'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u  v v v v v v w w w w w w x x x x x x y y y y y z z'], ['  o o o o        a a a a b b d d d d f f  f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['d      g h i  '], ['o o o o  b     a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z'], ['o o o o o o p  x x x x y y y y y z z'], ['p p q q r r r s s s t t t u u u v v w w x x y y z z'], ['o o o o o o p p p p p p q q q q q q r r r  z z'], ['a    x      a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['p p q q r r r s s  s t t t u u u v v w w x x y y z z'], ['l m m m m m m m m n n n n n n n n n n n n n n o o p p q o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u z z z z z q r r s'], ['p p q q r r r s s s t t t u x x y y z z'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t    a b        c d e f   a g g h h h i j j j k k k l l l l m n o     a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y p q r r r s s s s s s s t t t t t  t t t u v w x y z t t t u v w'], ['    x b     a  b  c d e f    a g g  t t'], ['l m m m m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u z z z z z q r r s'], ['  o o o o        a a a a b b d d d d f f  f g h i    x      a b c d e f   a z s s t t t t t t u u z z z z z d e f   a t t'], ['    a b        c d e f   a g g h h h i j j j   o o o o       a a a a b b d d d d f f  f     a a a a b b d d d d f f f g h i  w x y z'], ['    x      a  b  c d e f  t'], ['    x      a  b  c d e f   a  g g  t t'], ['    x      a  b c d  e f   a g g  t t'], ['  o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t  t'], ['    x       a  b  c d e  f   a  t t'], ['l m m m m m m m m n n n n n n n n n n n n  n n  o o o o        a a a a b b d d d d f f  f g h i    x      a b c d e f   a z s s t t t t t t u u z z z z z d e f   a t t r r s'], ['d      g h i d '], ['    x      a b  c d e  f   a g g  t t'], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t  t t t t u u z z z z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u  z z z z z'], ['o o o o o o p p  s s s s  y y y z z z z z'], ['    c d e f   a g g t'], ['    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z'], ['    x b     a       a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t'], ['o o o o o o p p p p p p q q q q q q r r r    a b  s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z r r r s s s s s s t t t t t t u u u  z z z z z'], ['l m m m  o t x  t    a b c d e f   a g g  t t m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u z z z z z q r r s'], ['    x      a g g    t'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r  r r s s s t t t t t t t t u v w x y '], ['p p q q q r r r s s s t t t u u u v v w  w x x y y z z'], ['c a  a a a b b d d d d  f f f g h i'], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p  p p p p q q q q q  q r r r r r r s s s s s s t t t t t t u u z z z z z'], ['    a b        c d e f   a g g h h h s t t t t t t t t u v w x y '], ['o o o o o o p p p p p p q q q q q  q r r r r r r s s s s s s t t t t t t u u u u u u  v v v v v v w w w w w w x x x x x x y y y y y z z'], ['      a  b  c d e  f   a g g  t t'], ['     c a  a a a b b d d d d  f f f g h i g h i  '], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t t u u u  z z z z z'], ['    x       a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['l m m m m  p  p q q r r s'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u  v v v v x x x x y y y y y z z'], ['     b c d  e f   a g g  t t'], ['       a  b c d e f   a g g  t t'], ['    a b        f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y '], ['o o o o o o p p p p p p q q q q q  q r r r r r r s s s s s s t t t  z z'], ['    x    a b        c d e f   a g g h h h i j j j   o o o o       a a a a b b d d d d f f  f     a a a a b b d d d d f f f g h i  w x y z      a b c d e f   a g g  t t'], ['d       g h i d '], ['    x      a g g t'], ['x y a a a b b d d d d f f f g h i i i  i i j j j  j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z t t t u v w'], ['     a a a a b b f f g h i  e'], ['    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t  v    a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z'], ['    x  o o o o        a a a a b b d d d d f f  f g h i    x      a b c d e f   a z s s t t t t t t u u z z z z z d e f   a t t      a b c d e f   a g g  t t'], ['   g h i  '], ['   f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['a    x      a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s t t t t t'], ['    x        a  b  c d e  f   a  t t'], ['     a a a a  e'], ['x y a a a b b d d  j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t t t t v w'], [' p p q q r r r s s  s t t t u u u v v w w x x y y z z    a a a a b b d d d d f f f g h i  '], ['     a a a a b b d d d d f f f g h o o o o o o p p p p p p q q q q q q r r r    a b  s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z r r r s s s s s s t t t t t t u u u  z z z z z  '], ['    x      a g g    x      a b c  d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['o o o o o o p p p p p p q r r  z z'], ['    x      a b  c d e f g  a g g  t t'], ['     b c d  e f   a g g  g t t'], ['p p q q r r r s s  s t t t u u u v v w     a a a a b b f f g h i  e w x x y y z z'], ['a    x       a b c d e f   a g g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['x y a a a b b d d  j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t t t t v     a a a a b b d d d d f f f g h o o o o o o p p p p p p q q q q q q r r r    a b  s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z r r r s s s s s s t t t t t t u u u  z z z z z   w'], ['c a a a a b b    x b     a       a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t d d d d f f f g h i'], ['    a b        c d e f   a g g  h h h i j j j k k k l   a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z'], ['o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t  u u z z z z z'], ['    a b        f   a g g h h    x      a g g t h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y '], ['    a b        f   a g g h h    x      a g g t h i j j    x      a  b  c d e f   a g g  t t j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y '], ['c a a  a a b b d d d d f f f  g h i'], ['       a a a a b b d d   t t'], [' p p q q r r r s s  s t t t u u u v v w w x x y y z z     a a a a b b d d d d f f f g h i  '], ['     a a a a b b d  d d d f f f g h i  e'], ['       a     c a  a a a b b d d d d  f f f g h i g h i   f   a g g  t t'], ['a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v d e f g'], ['o o o o o o p  x x     a a a a  e x x y y y y y z z'], ['       a a a a b b d d d d f f a g g  t t'], ['  o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s  s s s s t t t t t t u u z z z z z d e f   a t  t'], ['    x     x      a g g t     a b  c d e f   a g g t'], ['d       g h i  '], ['     a  a a a  e'], ['l m m m  o t x  t    a b c d e f   a g g  t t m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s   s t t t t t t u u z z z z z q r r s'], ['o o o o       a a a a b b d d d d f f f g h    x      a g g    t r r r s s s s s s t t t t t t u u z z z z z'], ['x y a a a b b d d  j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t t t t v w       a  b c d e f   a g g  t t'], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r z z'], ['  g    g h i      x     x      a b  c d e f   a g g  t t  c d e f   a g g  t t'], ['  o o o o        a a a a b b d d d d f f  f g h i    x      a b c d e f    a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['o o o o o o p p p p    x      a  b  c d e f  t p p q q q q q q r r r r r r s s s s s  s t t t t t p p q q r r r s s  s t t t u u u v v w w x x y y z z    a a a a b b d d d d f f f g h i   t u u u  z z z z z'], ['a b c d e f g    x b     a  b  c d e f   a t t h i j k l m n o p q r s t  u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g'], [' p p q   a a a  d d d f f f g h i  '], ['c a a a a b b    x b     a       a a a a b b d d d d f f f g h    a b    r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t d d d d f f f g h i'], ['  o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s  s s s s t t t t t z z z d e  f   a t  t'], ['    x   o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t  t t t u  u z z z z z   a  b  c d e f e  a g g y t t'], ['    a b        c d t t t u v w x y '], ['   a b        c d e f   a g g h h h s t t t t t t t t u v w x y '], ['  o o o o         a a a a b b d d d d f f  f g h i    x      a b c d e f   a z s s t t t t t t u u z z z z z d e f   a t t'], ['    n   a  b c d e f   a g g  t t'], ['     a a a  a b b f f g h i  e'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t t u u z     a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y    z z z z'], ['o o o o o o p p p p p p q q q q q q r    x b     a  b  c d e f   a t t r r r r r s s s s s  s t t t t t t u u u  z z z z z'], ['d      g h  i  '], ['d    x      a b c d e f   a g g  t t      g h  i  '], ['o o o o o o p p p p    x      a  b  c d e f  t p p q q q q q q r r r r r r s s s s s  s t t t t t p p q q  r r r s s  s t t t u u u v v w w x x y y z z    a a a a b b d d d d f f f g h i   t u u u  z z z z z'], ['o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t  u u z z z z'], ['p p q q q  r r r s s s t t t u u u v v  g    g h i   w w x x y y z z'], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f  a a g g  t t o o p p p p p p q q q q q q r r z z'], ['o o o o o o p  x x     a a a a  e x x y  y y y y z z'], ['  o o o o         a a a a b b d d d d f f  f g h i l m m m  o t x  t    a b c d e f   a g g  t t m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s   s t t t t t t u u z z z z z q r r s   x      a b c d e f   a z s s t t t t t t u u z z z z z d e f   a t t'], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c    x b     a       a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t d e f   a g g  t t o o p p p p p p q q q q q q r r z z'], ['    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t      a b        c d t t t u v w x y  v w x y z'], ['   o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t  u u z z z z x      a b   c d e f   a g g t'], ['    x b     a       a a a a b b d d d d f f  t t t t t t t u v w x y   b  c d e f   a g g  t t'], ['    x      a b c j d e f   a g  g h h h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['    x      f   a g g    t'], ['l m m m m  p  p q q r s'], ['p p q q q r r r s s s t t t u u u v v  g    g h i    a b        f   a g g h h    x      a g g t h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y    w w x x y y z z'], ['  o o o o        a a a a b b d d d d f f  f g  h i    x      a b c d e f   z z d e f   a t t'], ['x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n p q r r o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u  v v v v x x x x y y y y y z z z t t t u v w'], ['    x b     a  b  c d e f    a  g g  t t'], ['    x       x b     a  b  c d e f   a t t   a  b  c d e  f   a g g  t t'], ['p p q q q r r r s s s t t t u u u v v  g    g h i    w w x x y y z z'], ['l m m m      a a a a b b d d d d f f f g h o o o o o o p p p p p p q q q q q q r r r    a b  s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z r r r s s s s s s t t t t t t u u u  z z z z z  m  p  p q q r s'], ['    n   a  b c d e f   a g g l'], ['    x      a b c j d e f   a g  g h  h h i j j j k k k k l l l l m n o p q r r r s s s s s s s t t t t t'], ['l m m m m  p  p q q r s    x      a b  c d e f   a g g  t'], ['    x     a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v d e f g a b c d e f   a g g  t t'], ['  a b  c d e f   a g g t'], ['l m m m  o t x  t    a b c d e f   a g g  t t m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u    a b        f   a g g h h    x      a g g t h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y  z z z z z q r r s'], ['d        g h i d '], ['l m n n n o o p p q o o o o o o p p p p q q q r r r r r s s s s s  s t t t t t t u u z z z z z q r r s'], ['    x b     a  b  c d e f    a  g  t t'], ['    a b        c d e f   a g g h h h i  j j j k k  k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y z'], ['    x b     a       a a a a b b d d d d f f f g h    a b        c  d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t'], ['    a b        c d e f   a g g  h h h i j j j k k k l   a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v  w x y   t  t t t u v w x y z'], ['    x      a b   c d e f     o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t  u u z z z z x      a b   c d e f   a g g t a g g t'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f  a a g g  t t o o p p p p p p q q q q q q r r z z s s t t t t t  t t t u v w x y z'], ['p  p q q r r r s s s t t t u u u v v w w x x y y z z'], ['     a a a a b b d d d d f f f g h    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v '], ['    x      a b  c d e f g  a g g   t'], ['l m m m m m m m m n n n n n n n n n  n n n  n n o o p p q q r r s'], ['d      g   '], ['d       g h i  d '], ['x y a a a b  b d d  j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t t t t v w'], ['      g h i  t'], ['p p q q r r r s s s t t t u x x y y  z z'], ['    a b        c d e  f   a g g h h h i j j j k k k l l l l m n  o p q r r r s s s s s s s t t t t t  t t t u v w x y z'], ['    n   a  b c d e f   a g g   t t'], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s     x b     a       a a a a b b d d d d f f f g h    a b        c  d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t t t t t t u u z z z z z'], ['  x y z x y z x y z x y z x y z x y z x y z x y z x  x      a b  c d e f   a g g t'], ['     a a a a b b    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y  f f g h i  e'], ['    x   o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t  t t t u  u z z z z z   a  b  c d e f e  a g g y t '], ['  o o o o        a a a a b b d d d d f f  f g  h i    x      a b c d e f   a z s s t t t t t t u u z z z z z d e f   a t t'], ['a b c d e f z b c d e  f g'], ['    a b        c d e  f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u  v w x y '], ['  o o o o        a a a a b b d d d d f f  d e f    a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['    a b         c d e f   a g g h h h i j j j k k k l l l l m n o p  v w x y '], ['o o o o       a a a a b b d d d d f f f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r z  z'], ['l m m m  o t x  t    a b c d e f   a g g  t t m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u   w x y  z z z z z q r r s'], ['    x      a g g    x      a b c  d e f   a g  g h h h h i j j j k k k k l s s s s  t t'], ['   o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t  u u z z z z x      a b   c d e f   a g  g t'], ['x y a a a b b d d  j j j j k k k k l l l l m q r r r s s s s s s s t t t t t t t t v w       a  b c d e f   a g g  t t'], ['    a b         c d e  f   a g g h h h i j j j k k k l l l l m n  o p q r r r s  t u v w x y z'], ['     b  c d  e f   a g g  g t t'], ['    a b        c d e f   a g g h h h i  j j j k k k l l l l m n o p q r r r  s s s s s s  y z'], [' p p q q r r r s s  s t t t u u u v v w w x x y y z z     a a a a b b d d d d f f f g h i    a b        f   a g g h h    x      a g g t h i j j    x      a  b  c d e f   a g g  t t j k k k l l l l m n o p q r r r s s s t t t t t t t t u v w x y   '], ['      a      a b         c d e f   a g g h h h i j j j k k k l l l l m n o p  v w x y b  c d e  f   a g g  t t'], ['     a a a a b b d d d d f f f g h o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t u u z z z z z   a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v '], ['    x b     a  b  c d e f    a   g g  t t'], ['      g h i   '], ['  a  b c d e f   a g g  t t'], ['a b c d e f g    x b   i j k l m n o p q r s t  u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g'], ['  o o o o       a a a a b b d d d d f f  f g h i    x      a b c d e f   a g g  t t o o p p p p p    x      a g g    x      a b c  d e f   a g  g h h h h i j j j k k k k l s s s s  t t a t t'], ['l m m m m m m m m n n n n n n n n n n n n n n o o p p q p p p q q q q q q r r r r r s s s s s  s t t t t t t u u z z z z z q r r s'], [' d   x       x b     a  b  c d e f    a t t   a  b  c d e  f   a g g  t t'], ['o o o o o o p p p p p p q q q q q q r r r r r s s s s s  s t t t t t t  u u z z z z x y a a a b b d d d d f f f g h i i i i i j j j j k k k k l l l l m n p q r r r s s s s s s s t t t t t    a b        c d e f   a g g h h  j k k k l l l l m n o p q r r r s s s s s s s t t t t t  t t t u v w x y z t t t u v w'], ['c a a a a b b    x b      a       a a a a b b d d d d f f f g h    a b    r s s s s s s s t t t t t t t t u v w x y   b  c d e f   a g g  t t d d d d f f f g h i'], ['l m m m m  p m p q q r s'], ['    x       a  b     t t t t t u  v w x y    a g g    t'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s o o o o o o p p p p p p q q q q q q r r r  z z s t t t t t t u  u z z z z z'], ['d      g h i d l'], ['    a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t    a b        c d e f   a g g  h h h i j j j k k k l   a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z t t t t t u v w x y z'], ['    x      a b   c d e f   a g g  t'], ['    a b        c d e  f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u  v w x y h'], ['   g     a a a a b b d d d d f f f g h i  e h i  '], ['      x   a   a  b  c d e f  t'], ['    t'], ['o o o o o o  p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t t u u  u  z z z z z'], ['   o t x      a  b c d e f  t t'], ['a b c d e f g    x b  d       g h i  d  c d e f   a t t h i j k l m n o p q r s t  u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g'], ['l m m m  o t x  t    a b c d e f   a g g  t t m m m m m n n n n n n n n n n n n n n o o p p q o o o o o p p p p p p q q q q q q r r r r r s s s s s   s t t t t t t u u z z z z z q r  s'], ['  o o o o       a a a a b b d d d d f f  f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t     a a a'], ['s    a b         c d e f   a g g h h h i j j j k k k l l l l m n o p  v w x y '], ['  o o o o        a a a a b b d d d d f f  d e f    a g g  t t  o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['l m m m m  p  p q o o o o o o p p p p p p q q q q q  q r r r r r r s s s s s s t t t  z z r s'], ['x y a a a b  b d d  j j j j k k k k l    x b     a  b  c d e f    a g g  t t l l l m n p q r r r s s s s s s s t t t t t t t t v w'], ['l m m m m m m m m n o q q r r s'], ['    x     x  g    a g g t     a b  c d e f   a g g t'], ['  o o o o   d     a a a a b b d d d d f f  f g h i    x      a b c d e f   a g g  t t o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u z z z z z d e f   a t t'], ['     x      a b  c d e  f   a g g  t t'], ['  x y z x y z x y z x y z x y z x y z x y z x y z x  x      a b  c d e f   a  g g t'], ['o o o o o o p p p p p p q q q q q q r    x b     a  b  c d e f   a t t u  z z z z z'], ['   e c d e f   a g g t    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z'], ['    x      e c d e f   a g g t    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q r r r s s s s s s s t t t t      a a a a b b d d d d f f f g h    a b        c d j j j k k k l l l l m n o p q r r r s s s s s s s t t t t t t t t u v w x y   t  t t t u v w x y z   a b c d e f   a g g    t'], ['  o t x  t    a  b c d e f   a g g  t t'], ['a b c d e  f g h i j k l m n o p q r s t u v w x y z a b c d e f g    x      a b  c d e f   a g g  t h i j k l m n o p q r s t u v w x y z a b c d e f g'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s  s t t t t t  t u u u  z z z z z'], ['o o o o o o p p p p p p q q q q q  q r s s s s t t t  z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s o o o o o o p p p p p p q q q q q q r r r  z z s t t t z z z z'], ['o o o o o o p p p p p p q q q q q q r r r r r r s s s s s s t t t t t t u u u u u u  v v v v v v w w w w w w x x x x x x y y y y  z z'], ['    a b        c d e f   a g g  h h h i j j j k k k l l l l m n o p q  r r r s s s s s s s t t t t t  t t t u v w x y z'], ['d       g h i  d'], ['      g h'], ['    x      a b  c d e f     a b        c d e f   a g g h h h i j j j k k k l l l l m n o p q r r r s s s t t t t t t t t u  v w x y g  a g g   t'], ['x y a a a b  b d d  j j j j k k k k l    x b     a  b  c d e f    a g g o o o o o o p p p p p  p q  q q q q q r r r r r r s s s    x      a b c d e f   a g g  t t s s  y y y z z z z z t t l l l m n p q r r r s s s s s s s t t t t t t t t v w'], [' p p q q r  r r s s  s t t t u u u v v w w x x y y z z    a a a a b b d d d d f f f g h i  ']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the `histogram` function:
+
+```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+
+    letter_counts = {}
+    for letter in test.split():
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        else:
+            letter_counts[letter] = 1
+
+    max_count = max(letter_counts.values())
+    return {k: v for k, v in letter_counts.items() if v == max_count}</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    # Create a dictionary to store the frequency of each letter
+    freq_dict = {}
+    
+    # Split the string into a list of letters
+    letters = test.split()
+    
+    # Iterate over each letter in the list
+    for letter in letters:
+        # If the letter is already in the dictionary, increment its count
+        if letter in freq_dict:
+            freq_dict[letter] += 1
+        # Otherwise, add the letter to the dictionary with a count of 1
+        else:
+            freq_dict[letter] = 1
+
+    # Find the maximum count
+    max_count = max(freq_dict.values()) if freq_dict else 0
+
+    # Create a new dictionary to store the letters with maximum count
+    max_freq_dict = {}
+
+    # Iterate over each letter and its count in the original dictionary
+    for letter, count in freq_dict.items():
+        # If the count equals the maximum count, add the letter to the new dictionary
+        if count == max_count:
+            max_freq_dict[letter] = count
+
+    return max_freq_dict</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Split the string into a list of characters
+    test_list = list(test)
+
+    # Create an empty dictionary to store the results
+    result = {}
+
+    # Iterate over the list of characters
+    for char in test_list:
+        # If the character is already in the dictionary, increment its count
+        if char in result:
+            result[char] += 1
+        # Otherwise, add the character to the dictionary with a count of 1
+        else:
+            result[char] = 1
+
+    # Return the dictionary
+    return result</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Create an empty dictionary to store the letter counts
+    letter_counts = {}
+    
+    # Split the input string into individual letters
+    letters = test.split()
+    
+    # Count the occurrences of each letter
+    for letter in letters:
+        letter_counts[letter] = letter_counts.get(letter, 0) + 1
+    
+    # Find the maximum count
+    max_count = max(letter_counts.values()) if letter_counts else 0
+    
+    # Create a dictionary to store the letters with the maximum count
+    result = {}
+    
+    # Iterate over the letter counts and add the letters with the maximum count to the result
+    for letter, count in letter_counts.items():
+        if count == max_count:
+            result[letter] = count
+    
+    return result</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from collections import Counter
+
+def histogram(test):
+    if not test:
+        return {}
+    
+    count = Counter(test.split())
+    max_count = max(count.values())
+    return {k: v for k, v in count.items() if v == max_count}</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+
+    letter_count = {}
+    max_count = 0
+
+    for letter in test.split():
+        if letter in letter_count:
+            letter_count[letter] += 1
+        else:
+            letter_count[letter] = 1
+
+        if letter_count[letter] > max_count:
+            max_count = letter_count[letter]
+
+    result = {}
+    for letter, count in letter_count.items():
+        if count == max_count:
+            result[letter] = count
+
+    return result
+
+# Test cases</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Your code here
+    # return {}
+    # return {test[0]: 1}
+    # return {test[0]: 1, test[1]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1, test[5]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1, test[5]: 1, test[6]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1, test[5]: 1, test[6]: 1, test[7]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1, test[5]: 1, test[6]: 1, test[7]: 1, test[8]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1, test[5]: 1, test[6]: 1, test[7]: 1, test[8]: 1, test[9]: 1}
+    # return {test[0]: 1, test[1]: 1, test[2]: 1, test[3]: 1, test[4]: 1, test[5]: 1, test[6]: 1, test[7]: 1, test[8]: 1</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    letter_count = {}
+    for letter in test.split():
+        if letter in letter_count:
+            letter_count[letter] += 1
+        else:
+            letter_count[letter] = 1
+    
+    max_count = max(letter_count.values(), default=0)
+    result = {key: value for key, value in letter_count.items() if value == max_count}
+    
+    return result
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: True, fail_plus: True </p>
+      <pre><code>  Sure, here's a Python function that should solve the problem:
+
+```python
+def histogram(test):
+    # Initialize an empty dictionary
+    letter_count = {}
+
+    # Split the input string into a list of words
+    words = test.split(' ')
+
+    # Iterate over each word in the list
+    for word in words:
+        # If the word is already in the dictionary, increment its count
+        if word in letter_count:
+            letter_count[word] += 1
+        # If the word is not in the dictionary, add it with a count of 1
+        else:
+            letter_count[word] = 1
+
+    # Find the maximum count in the dictionary
+    max_count = max(letter_count.values())
+
+    # Create a new dictionary with only the keys that have the maximum count
+    result = {k: v for k, v in letter_count.items() if v == max_count}
+
+    return result
+```
+
+This function works by first splitting the input string into a list of words. It then iterates over each word in the list, adding it to a dictionary if it's not already there, or incrementing its count if it is. After all words have been processed, it finds the maximum count in the dictionary and creates a new dictionary that only includes the keys (words) that have this maximum count. This new dictionary is then returned.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+
+    letter_counts = {}
+    for letter in test.split():
+        letter_counts[letter] = letter_counts.get(letter, 0) + 1
+
+    max_count = max(letter_counts.values())
+    result = {letter: count for letter, count in letter_counts.items() if count == max_count}
+
+    return result
+
+# Tests
+assert histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+assert histogram('a b b a') == {'a': 2, 'b': 2}
+assert histogram('a b c a b') == {'a': 2, 'b': 2}
+assert histogram('b b b b a') == {'b': 4}
+assert histogram('') == {}</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    counts = {}
+    max_count = 0
+    for char in test:
+        if char in counts:
+            counts[char] += 1
+        else:
+            counts[char] = 1
+        if counts[char] > max_count:
+            max_count = counts[char]
+            
+    max_chars = []
+    for char, count in counts.items():
+        if count == max_count:
+            max_chars.append(char)
+    
+    return {char: count for char, count in counts.items() if char in max_chars}
+
+print(histogram('a b c'))           # {'a': 1, 'b': 1, 'c': 1}
+print(histogram('a b b a'))          # {'a': 2, 'b': 2}
+print(histogram('a b c a b'))       # {'a': 2, 'b': 2}
+print(histogram('b b b b a'))       # {'b': 4}
+print(histogram(''))              # {}</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Your code here
+    # return {}
+    # return {'a': 1}
+    # return {'a': 1, 'b': 1}
+    # return {'a': 1, 'b': 1, 'c': 1}
+    # return {'a': 2, 'b': 2}
+    # return {'a': 2, 'b': 2, 'c': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1, 'f': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1, 'f': 1, 'g': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1, 'f': 1, 'g': 1, 'h': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1, 'f': 1, 'g': 1, 'h': 1, 'i': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1, 'f': 1, 'g': 1, 'h': 1, 'i': 1, 'j': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd': 1, 'e': 1, 'f': 1, 'g': 1, 'h': 1, 'i': 1, 'j': 1, 'k': 1}
+    # return {'a': 2, 'b': 2, 'c': 1, 'd</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Split the string into a list of words
+    words = test.split()
+
+    # Create an empty dictionary to store the count of each letter
+    count_dict = {}
+
+    # Iterate over each word in the list
+    for word in words:
+        # If the word is already in the dictionary, increment its count
+        if word in count_dict:
+            count_dict[word] += 1
+        # Otherwise, add the word to the dictionary with a count of 1
+        else:
+            count_dict[word] = 1
+
+    # Find the maximum count
+    max_count = max(count_dict.values()) if count_dict else 0
+
+    # Create a new dictionary to store the letters with the maximum count
+    max_count_dict = {k: v for k, v in count_dict.items() if v == max_count}
+
+    return max_count_dict
+```
+
+This function works by first splitting the input string into a list of words. It then creates a dictionary to count the occurrences of each word. The function then finds the maximum count and creates a new dictionary that only includes the words with that maximum count. Finally, it returns this new dictionary.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    counts = {}
+    words = test.split()
+
+    for word in words:
+        for letter in word:
+            if letter.isalpha():
+                if letter in counts:
+                    counts[letter] += 1
+                else:
+                    counts[letter] = 1
+
+    max_count = max(counts.values())
+    result = {k: v for k, v in counts.items() if v == max_count}
+
+    return result</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Split the string into a list of words
+    words = test.split()
+
+    # Create an empty dictionary to store the count of each letter
+    letter_count = {}
+
+    # Iterate over each word in the list
+    for word in words:
+        # Iterate over each letter in the word
+        for letter in word:
+            # If the letter is already in the dictionary, increment its count
+            if letter in letter_count:
+                letter_count[letter] += 1
+            # If the letter is not in the dictionary, add it with a count of 1
+            else:
+                letter_count[letter] = 1
+
+    # Find the maximum count in the dictionary
+    max_count = max(letter_count.values())
+
+    # Create a new dictionary to store the letters with the maximum count
+    max_count_letters = {}
+
+    # Iterate over each key-value pair in the original dictionary
+    for key, value in letter_count.items():
+        # If the value is equal to the maximum count, add it to the new dictionary
+        if value == max_count:
+            max_count_letters[key] = value
+
+    # Return the new dictionary
+    return max_count_letters</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+    
+    hist = {}
+    for letter in test.split():
+        if letter in hist:
+            hist[letter] += 1
+        else:
+            hist[letter] = 1
+    
+    max_count = max(hist.values())
+    return {key: value for key, value in hist.items() if value == max_count}</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+    else:
+        test = test.split()
+        test_dict = {}
+        for letter in test:
+            if letter in test_dict:
+                test_dict[letter] += 1
+            else:
+                test_dict[letter] = 1
+        max_value = max(test_dict.values())
+        max_dict = {k: v for k, v in test_dict.items() if v == max_value}
+        return max_dict
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+def histogram(test):
+    """Given a string representing space-separated lowercase letters, return a dictionary
+    of the letters with the most repetition and their corresponding count.
+    If several letters have the same occurrence, return all of them.
+
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+
+    # Split the input string into a list of characters
+    char_list = test.split()
+
+    # Create an empty dictionary to store the character count
+    char_count = {}
+
+    # Iterate through each character in the list and update the count in the dictionary
+    for char in char_list:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+
+    # Return the dictionary with the most frequent characters and their counts
+    return {k: v for k, v in char_count.items() if v == max(char_count.values())}</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Split the input string by spaces and create an empty dictionary to store the letter counts
+    letters = test.split()
+    letter_counts = {}
+
+    # Iterate through the letters and update their counts in the dictionary
+    for letter in letters:
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        else:
+            letter_counts[letter] = 1
+
+    # Find the maximum count and create a dictionary with the letters that have the maximum count
+    max_count = max(letter_counts.values())
+    max_count_letters = {letter: count for letter, count in letter_counts.items() if count == max_count}
+
+    return max_count_letters
+
+# Test the function with the provided examples
+print(histogram('a b c'))  # {'a': 1, 'b': 1, 'c': 1}
+print(histogram('a b b a'))  # {'a': 2, 'b': 2}
+print(histogram('a b c a b'))  # {'a': 2, 'b': 2}
+print(histogram('b b b b a'))  # {'b': 4}
+print(histogram(''))  # {}
+</code></pre>
+
+      <p> code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    import re
+    letter_counts = dict()
+    for letter in re.split(' ', test):
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        else:
+            letter_counts[letter] = 1
+    max_count = max(letter_counts.values())
+    return {k: v for k, v in letter_counts.items() if v == max_count}
+
+print(histogram('a b c'))  # {'a': 1, 'b': 1, 'c': 1}
+print(histogram('a b b a'))  # {'a': 2, 'b': 2}
+print(histogram('a b c a b'))  # {'a': 2, 'b': 2}
+print(histogram('b b b b a'))  # {'b': 4}
+print(histogram(''))  # {}</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Split the string into a list of words
+    words = test.split()
+
+    # Create an empty dictionary to store the letter count
+    letter_count = {}
+
+    # Loop through each word in the list
+    for word in words:
+        # Loop through each letter in the word
+        for letter in word:
+            # If the letter is already in the dictionary, increment its count
+            if letter in letter_count:
+                letter_count[letter] += 1
+            # If the letter is not in the dictionary, add it with a count of 1
+            else:
+                letter_count[letter] = 1
+
+    # Create an empty list to store the letters with the highest count
+    max_letters = []
+
+    # Loop through each letter in the dictionary
+    for letter, count in letter_count.items():
+        # If the count is greater than or equal to the maximum count seen so far,
+        # add the letter to the list of max letters
+        if count >= max(letter_count.values()):
+            max_letters.append(letter)
+
+    # Create an empty dictionary to store the final result
+    result = {}
+
+    # Loop through each max letter and add it to the result dictionary with its count
+    for letter in max_letters:
+        result[letter] = letter_count[letter]
+
+    # Return the result dictionary
+    return result
+```
+
+Here's how the script works:
+
+1. The function `histogram` takes a string `test` as input.
+2. The string is split into a list of words using the `split` method.
+3. An empty dictionary `letter_count` is created to store the letter count.
+4. The function loops through each word in the list and loops through each letter in the word.
+5. If the letter is already in the `letter_count` dictionary, its count is incremented.
+6. If the letter is not in the `letter_count` dictionary, it is added with a count of 1.
+7. An empty list `max_letters` is created to store the letters with the highest count.
+8. The function loops through each letter in the `letter_count` dictionary and checks if its count is greater than or equal to the maximum count seen so far.
+9. If the count is greater than or equal to the maximum count, the letter is added to the `max_letters` list.
+10. An empty dictionary `result` is created to store the final result.
+11. The function loops through each max letter in the `max_letters` list and adds it to the `result` dictionary with its count.
+12. The `result` dictionary is returned.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    from collections import Counter
+    if not test:
+        return {}
+    counter = Counter(test)
+    max_val = max(list(counter.values()))
+    return {k: v for k, v in counter.items() if v == max_val}
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Split the string into a list of words
+    words = test.split()
+    
+    # Create a dictionary to store the count of each letter
+    letter_count = {}
+    
+    # Iterate over each word in the list
+    for word in words:
+        # Iterate over each letter in the word
+        for letter in word:
+            # If the letter is already in the dictionary, increment its count
+            if letter in letter_count:
+                letter_count[letter] += 1
+            # If the letter is not in the dictionary, add it with a count of 1
+            else:
+                letter_count[letter] = 1
+    
+    # Find the maximum count
+    max_count = max(letter_count.values()) if letter_count else 0
+    
+    # Create a new dictionary with only the letters that have the maximum count
+    max_count_letters = {letter: count for letter, count in letter_count.items() if count == max_count}
+    
+    return max_count_letters
+```
+
+This function works by first splitting the input string into a list of words. It then iterates over each word and each letter in the word, incrementing the count of each letter in a dictionary. Finally, it finds the maximum count and creates a new dictionary with only the letters that have this maximum count.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+    
+    test = test.lower()
+    counts = {}
+    for letter in test:
+        if letter in counts:
+            counts[letter] += 1
+        else:
+            counts[letter] = 1
+    
+    max_count = max(counts.values())
+    return {letter: count for letter, count in counts.items() if count == max_count}
+
+def histogram_with_max_count(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram_with_max_count('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram_with_max_count('a b b a') == {'a': 2, 'b': 2}
+    histogram_with_max_count('a b c a b') == {'a': 2, 'b': 2}
+    histogram_with_max_count('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+    
+    test = test.lower()
+    counts = {}
+    for letter in test:
+        if letter in counts:
+            counts[letter] += 1
+        else:
+            counts[letter] = 1
+    
+    max_count = max(counts.values())
+    return {letter: count for letter, count in counts.items() if count == max_count}
+
+def histogram_with_max_count_and_min_count(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    If the string is empty, return an empty dictionary.
+    If the string contains only one letter, return a dictionary with that letter as the key and
+    the count as the value.
+    
+    Example:
+    histogram_with_</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+    
+    counts = {}
+    for letter in test.split():
+        counts[letter] = counts.get(letter, 0) + 1
+    
+    max_count = max(counts.values())
+    return {letter: count for letter, count in counts.items() if count == max_count}</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Split the string into a list of words
+    words = test.split()
+    
+    # Create an empty dictionary to store the letter counts
+    letter_counts = {}
+    
+    # Iterate over each word in the list
+    for word in words:
+        # Iterate over each letter in the word
+        for letter in word:
+            # If the letter is not in the dictionary, add it with a count of 1
+            if letter not in letter_counts:
+                letter_counts[letter] = 1
+            # If the letter is already in the dictionary, increment its count
+            else:
+                letter_counts[letter] += 1
+    
+    # Find the maximum count of any letter
+    max_count = max(letter_counts.values(), default=0)
+    
+    # Create a new dictionary with only the letters that have the maximum count
+    result = {letter: count for letter, count in letter_counts.items() if count == max_count}
+    
+    return result
+
+# Test the function
+print(histogram('a b c'))
+print(histogram('a b b a'))
+print(histogram('a b c a b'))
+print(histogram('b b b b a'))
+print(histogram(''))</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    >>> histogram('a b c')
+    {'a': 1, 'b': 1, 'c': 1}
+    >>> histogram('a b b a')
+    {'a': 2, 'b': 2}
+    >>> histogram('a b c a b')
+    {'a': 2, 'b': 2}
+    >>> histogram('b b b b a')
+    {'b': 4}
+    >>> histogram('')
+    {}
+    """
+    if not test:
+        return {}
+
+    letter_counts = {}
+    max_count = 0
+
+    for letter in test.split():
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        else:
+            letter_counts[letter] = 1
+
+        max_count = max(max_count, letter_counts[letter])
+
+    result = {letter: count for letter, count in letter_counts.items() if count == max_count}
+
+    return result
+
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Create an empty dictionary to store the frequency of each letter
+    freq = {}
+    
+    # Split the input string into a list of letters
+    letters = test.split()
+    
+    # Iterate over each letter in the list
+    for letter in letters:
+        # If the letter is already in the frequency dictionary, increment its count
+        if letter in freq:
+            freq[letter] += 1
+        # Otherwise, add the letter to the dictionary with a count of 1
+        else:
+            freq[letter] = 1
+    
+    # Find the maximum frequency
+    max_freq = max(freq.values())
+    
+    # Create an empty dictionary to store the letters with the maximum frequency
+    max_freq_letters = {}
+    
+    # Iterate over each letter in the frequency dictionary
+    for letter, count in freq.items():
+        # If the letter's count is equal to the maximum frequency, add it to the max_freq_letters dictionary
+        if count == max_freq:
+            max_freq_letters[letter] = count
+    
+    # Return the max_freq_letters dictionary
+    return max_freq_letters
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, 
+    return a dictionary of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them."""
+    
+    # Split the input string into a list of letters
+    letters = test.split()
+    
+    # Create a dictionary to store the count of each letter
+    letter_count = {}
+    for letter in letters:
+        if letter in letter_count:
+            letter_count[letter] += 1
+        else:
+            letter_count[letter] = 1
+    
+    # Find the maximum count
+    max_count = max(letter_count.values(), default=0)
+    
+    # Create a dictionary to store the result
+    result = {}
+    for letter, count in letter_count.items():
+        if count == max_count:
+            result[letter] = count
+    
+    return result
+
+# Test cases
+print(histogram('a b c'))  # {'a': 1, 'b': 1, 'c': 1}
+print(histogram('a b b a'))  # {'a': 2, 'b': 2}
+print(histogram('a b c a b'))  # {'a': 2, 'b': 2}
+print(histogram('b b b b a'))  # {'b': 4}
+print(histogram(''))  # {}</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Initialize an empty dictionary to store the letter counts
+    letter_counts = {}
+
+    # Iterate through each letter in the input string
+    for letter in test.split():
+        # If the letter is already in the dictionary, increment its count
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        # If the letter is not in the dictionary, add it with a count of 1
+        else:
+            letter_counts[letter] = 1
+
+    # Find the maximum count among all letters
+    max_count = max(letter_counts.values())
+
+    # Initialize an empty dictionary to store the most frequent letters
+    most_frequent_letters = {}
+
+    # Iterate through each letter in the letter_counts dictionary
+    for letter, count in letter_counts.items():
+        # If the letter's count is equal to the maximum count, add it to the most_frequent_letters dictionary
+        if count == max_count:
+            most_frequent_letters[letter] = count
+
+    # Return the most_frequent_letters dictionary
+    return most_frequent_letters
+
+# Test the function
+test_string = 'a b c a b'
+print(histogram(test_string))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+
+    letter_count = {}
+    for letter in test.split():
+        if letter in letter_count:
+            letter_count[letter] += 1
+        else:
+            letter_count[letter] = 1
+
+    max_count = max(letter_count.values())
+    result = {k: v for k, v in letter_count.items() if v == max_count}
+
+    return result</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Create an empty dictionary to store the letter counts
+    letter_count = {}
+
+    # Split the input string into a list of words
+    words = test.split()
+
+    # Iterate through the list of words
+    for word in words:
+        # If the word is already in the dictionary, increment its count
+        if word in letter_count:
+            letter_count[word] += 1
+        # If the word is not in the dictionary, add it with a count of 1
+        else:
+            letter_count[word] = 1
+
+    # Find the maximum count in the dictionary
+    max_count = max(letter_count.values())
+
+    # Create a new dictionary to store the letters with the maximum count
+    max_count_letters = {}
+
+    # Iterate through the dictionary to find the letters with the maximum count
+    for letter, count in letter_count.items():
+        if count == max_count:
+            max_count_letters[letter] = count
+
+    return max_count_letters</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    if not test:
+        return {}
+
+    letter_counts = {}
+    max_count = 0
+    max_letters = []
+
+    for letter in test.split():
+        if letter not in letter_counts:
+            letter_counts[letter] = 1
+        else:
+            letter_counts[letter] += 1
+
+        if letter_counts[letter] > max_count:
+            max_count = letter_counts[letter]
+            max_letters = [letter]
+        elif letter_counts[letter] == max_count:
+            max_letters.append(letter)
+
+    result = {letter: max_count for letter in max_letters}
+    return result</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Split the string into a list of words
+    words = test.split()
+
+    # Create an empty dictionary to store the count of each word
+    word_count = {}
+
+    # Iterate over each word in the list
+    for word in words:
+        # If the word is already in the dictionary, increment its count
+        if word in word_count:
+            word_count[word] += 1
+        # If the word is not in the dictionary, add it with a count of 1
+        else:
+            word_count[word] = 1
+
+    # Find the maximum count
+    max_count = max(word_count.values())
+
+    # Create a new dictionary to store the words with the maximum count
+    max_count_words = {word: count for word, count in word_count.items() if count == max_count}
+
+    return max_count_words</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution to the problem:
+
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count. If several
+    letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b a') == {'b': 4}
+    histogram('') == {}
+    """
+    
+    # Convert the string to a dictionary of letter counts
+    letter_counts = {}
+    for letter in test.split():
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        else:
+            letter_counts[letter] = 1
+    
+    # Find the maximum count and the corresponding letters
+    max_count = max(letter_counts.values())
+    max_letters = [key for key, value in letter_counts.items() if value == max_count]
+    
+    # Return the dictionary with the maximum count
+    return {letter: max_count for letter in max_letters}
+
+# Test cases
+print(histogram('a b c')) # {'a': 1, 'b': 1, 'c': 1}
+print(histogram('a b b a')) # {'a': 2, 'b': 2}
+print(histogram('a b c a b')) # {'a': 2, 'b': 2}
+print(histogram('b b b a')) # {'b': 4}
+print(histogram('')) # {}
+
+# Test case with multiple occurrences of the maximum count
+print(histogram('a b c a b c')) # {'a': 2, 'b': 2, 'c': 2} </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+
+    # Your code here
+    d = {}
+    for i in test.split():
+        if i in d:
+            d[i] += 1
+        else:
+            d[i] = 1
+    max_value = max(d.values())
+    max_key = [k for k, v in d.items() if v == max_value]
+    return {k: d[k] for k in max_key}
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    res = {}
+    for char in test.split():
+        if char not in res:
+            res[char] = 0
+        res[char] += 1
+    return res</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the given problem:
+
+```python
+def histogram(test):
+    letters = test.split()
+    counts = {}
+    max_count = 0
+    
+    for letter in letters:
+        if letter in counts:
+            counts[letter] += 1
+        else:
+            counts[letter] = 1
+        
+        if counts[letter] > max_count:
+            max_count = counts[letter]
+    
+    result = {}
+    for letter, count in counts.items():
+        if count == max_count:
+            result[letter] = count
+    
+    return result
+```
+
+This code defines a function `histogram` that takes a string `test` as input. It splits the string into individual letters and counts the occurrences of each letter using a dictionary `counts`. It also keeps track of the maximum count encountered so far in the variable `max_count`. After counting the occurrences, it creates a new dictionary `result` to store the letters with the maximum count. Finally, it returns the `result` dictionary.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Create an empty dictionary to store the count of each letter
+    count = {}
+
+    # Split the string into a list of letters
+    letters = test.split()
+
+    # Iterate over each letter in the list
+    for letter in letters:
+        # If the letter is already in the dictionary, increment its count
+        if letter in count:
+            count[letter] += 1
+        # Otherwise, add the letter to the dictionary with a count of 1
+        else:
+            count[letter] = 1
+
+    # Find the maximum count
+    max_count = max(count.values()) if count else 0
+
+    # Create a new dictionary to store the letters with the maximum count
+    max_count_letters = {}
+
+    # Iterate over each letter and its count in the original dictionary
+    for letter, letter_count in count.items():
+        # If the letter's count is equal to the maximum count, add it to the new dictionary
+        if letter_count == max_count:
+            max_count_letters[letter] = max_count
+
+    return max_count_letters
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in Python:
+
+```python
+def histogram(test):
+    hist = {}
+    words = test.split()
+    for word in words:
+        if word in hist:
+            hist[word] += 1
+        else:
+            hist[word] = 1
+    max_count = max(hist.values()) if hist else 0
+    return {k: v for k, v in hist.items() if v == max_count}
+```
+
+This function works by first splitting the input string into a list of words. It then iterates over this list, incrementing the count for each word in the histogram dictionary. If a word is not already in the dictionary, it is added with a count of 1. Finally, it finds the maximum count in the histogram and returns a dictionary of words that have this maximum count. If the input string is empty, the function returns an empty dictionary.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    hist = {}
+    for letter in test.split():
+        if letter in hist:
+            hist[letter] += 1
+        else:
+            hist[letter] = 1
+    return hist
+```
+
+This script creates a histogram by splitting the input string into individual letters and counting the occurrences of each letter. If a letter is already in the histogram, its count is incremented; otherwise, it is added to the histogram with a count of 1. The function returns the histogram as a dictionary.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    if not test:
+        return {}
+
+    letter_count = {}
+
+    for letter in test.lower():
+        if letter in letter_count:
+            letter_count[letter] += 1
+        else:
+            letter_count[letter] = 1
+
+    max_count = max(letter_count.values())
+
+    result = {key: value for key, value in letter_count.items() if value == max_count}
+
+    return result</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+
+def histogram(test):
+    result = {}
+    letters = set(test.lower().strip().split())
+
+    # Initialize a counter for each letter
+    for letter in letters:
+        result[letter] = test.count(letter)
+
+    # Find the most frequent letters
+    max_count = max(result.values())
+    most_frequent_letters = [key for key, value in result.items() if value == max_count]
+
+    # Return the dictionary with the most frequent letters and their counts
+    if len(most_frequent_letters) == 1:
+        return {most_frequent_letters[0]: max_count}
+    else:
+        return {letter: max_count for letter in most_frequent_letters}
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to solve the problem:
+
+```python
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Split the string into a list of letters
+    letters = test.split()
+    
+    # Create a dictionary to store the letter counts
+    letter_counts = {}
+    
+    # Iterate through the list of letters
+    for letter in letters:
+        # If the letter is already in the dictionary, increment its count
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        # Otherwise, add the letter to the dictionary with a count of 1
+        else:
+            letter_counts[letter] = 1
+    
+    # Find the maximum count
+    max_count = max(letter_counts.values()) if letter_counts else 0
+    
+    # Create a new dictionary to store the letters with the maximum count
+    result = {}
+    
+    # Iterate through the letter counts dictionary
+    for letter, count in letter_counts.items():
+        # If the count is equal to the maximum count, add the letter to the result dictionary
+        if count == max_count:
+            result[letter] = count
+    
+    return result</code></pre>
+
+      <p> code-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    from collections import Counter
+    result = {}
+    test = test.lower()
+    counter = Counter(test)
+    max_count = max(counter.values())
+    for letter, count in counter.items():
+        if count == max_count:
+            result[letter] = count
+    return result
+
+# Test cases
+print(histogram('a b c')) # should return {'a': 1, 'b': 1, 'c': 1}
+print(histogram('a b b a')) # should return {'a': 2, 'b': 2}
+print(histogram('a b c a b')) # should return {'a': 2, 'b': 2}
+print(histogram('b b b b a')) # should return {'b': 4}
+print(histogram('')) # should return {}</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+
+    # Your code here
+    pass
+
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Your code here
+    pass
+
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Your code here
+    pass
+
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence, return all of them.
+    
+    Example:
+    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}
+    histogram('a b b a') == {'a': 2, 'b': 2}
+    histogram('a b c a b') == {'a': 2, 'b': 2}
+    histogram('b b b b a') == {'b': 4}
+    histogram('') == {}
+
+    """
+    # Your code here
+    pass
+
+def histogram(test):
+    """Given a string representing a space separated lowercase letters, return a dictionary
+    of the letter with the most repetition and containing the corresponding count.
+    If several letters have the same occurrence,</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def histogram(test):
+    # Split the string into a list of words
+    words = test.split()
+    
+    # Create an empty dictionary to store the letter counts
+    letter_counts = {}
+    
+    # Loop through each word in the list
+    for word in words:
+        # Loop through each letter in the word
+        for letter in word:
+            # If the letter is already in the dictionary, increment its count
+            if letter in letter_counts:
+                letter_counts[letter] += 1
+            # Otherwise, add the letter to the dictionary with a count of 1
+            else:
+                letter_counts[letter] = 1
+    
+    # Create an empty dictionary to store the letter with the most repetition
+    most_repetition = {}
+    
+    # Loop through each letter in the dictionary
+    for letter, count in letter_counts.items():
+        # If the letter has the same count as the most repetition letter, add it to the dictionary
+        if count == max(letter_counts.values()):
+            most_repetition[letter] = count
+    
+    # Return the dictionary of the letter with the most repetition
+    return most_repetition</code></pre>
+
+      <p> python-code-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def histogram(test):
+    # Convert the string to a list of characters
+    chars = list(test.lower())
+    
+    # Create a dictionary to store the letter counts
+    counts = {}
+    
+    # Find the maximum count of any letter
+    max_count = max(chars.count(char) for char in chars)
+    
+    # Iterate over the characters and update the counts dictionary
+    for char in chars:
+        counts[char] = counts.get(char, 0) + 1
+    
+    # Find all letters with the maximum count
+    max_letters = [char for char, count in counts.items() if count == max_count]
+    
+    # Return the dictionary of counts
+    return {char: counts[char] for char in max_letters}</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def histogram(test):
+    # Split the string into a list of words
+    words = test.split()
+    
+    # Create an empty dictionary to store the histogram
+    histogram = {}
+    
+    # Iterate over each word in the list
+    for word in words:
+        # If the word is already in the histogram, increment its count
+        if word in histogram:
+            histogram[word] += 1
+        # If the word is not in the histogram, add it with a count of 1
+        else:
+            histogram[word] = 1
+    
+    # Find the maximum count in the histogram
+    max_count = max(histogram.values())
+    
+    # Create a new dictionary to store the words with the maximum count
+    result = {}
+    
+    # Iterate over each word in the histogram
+    for word, count in histogram.items():
+        # If the count is equal to the maximum count, add it to the result dictionary
+        if count == max_count:
+            result[word] = count
+    
+    # Return the result dictionary
+    return result</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

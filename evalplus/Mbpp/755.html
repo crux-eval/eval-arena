@@ -1,0 +1,1395 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/755 </h1>
+<pre><code> """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def second_smallest(numbers):
+  sorted_set = sorted(set(numbers))
+  if len(sorted_set) < 2:
+    return None
+  return sorted_set[1]
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[1, 2, -8, -2, 0, -2]], [[1, 1, -0.5, 0, 2, -2, -2]], [[2, 2]], [[2, 2, 2]]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]], [[]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[3, 1, 4, 1, 5, 9, 2, 7, 6, 5, 3, 5, 8, 9, 7, 9]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1]], [[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 4, 8, 9, 7, 9]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]], [[2, 1, 2, 1, 1, 7, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[3, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]], [[1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[3, 1, 4, 1, 5, 9, 2, 7, 6, 5, 3, 7, 5, 8, 9, 7, 9]], [[2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 7, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1]], [[2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 4, 8, 9, 7, 9, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[3, 1, 1, 5, 9, 9, 2, 7, 6, 5, 3, 5, 8, 4, 7, 9]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 7, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 0, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 4, 0, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]], [[1, 1, 1, 1, 1, 1, 1, 0, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1]], [[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 4, 2, 8, 9, 7, 9, 1]], [[1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 7, 2, 1]], [[3, 1, 1, 5, 9, 9, 2, 6, 5, 3, 5, 8, 4, 7, 9]], [[1, 7, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 0, 1, 1]], [[1, 4, 0, 5, 9, 2, 5, 3, 5, 8, 9, 7, 9]], [[3, 4, 1, 5, 9, 2, 6, 5, 3, 5, 5, 8, 9, 7, 9]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[3, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 5, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1]], [[1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 7, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1]], [[6, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 1, 0, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1, 1]], [[2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 2]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1]], [[1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 7, 2, 1]], [[3, 1, 4, 1, 5, 9, 2, 7, 6, 5, 3, 5, 6, 8, 9, 7, 9]], [[3, 1, 4, 1, 5, 9, 2, 6, 5, 7, 3, 5, 8, 9, 7, 9]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1]], [[3, 1, 4, 1, 5, 9, 2, 6, 5, 5, 4, 2, 8, 9, 7, 9, 1, 5]], [[3, 1, 1, 5, 9, 9, 2, 7, 3, 5, 3, 5, 8, 4, 7, 9]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1]], [[-83.2558960666197]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2, 1]], [[1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2]], [[1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1]]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(nums):
+    """
+    :param nums: list of numbers
+    :return: second smallest number in the list
+    """
+    if len(nums) < 2:
+        return None
+    if len(nums) == 2:
+        return nums[1]
+    if len(nums) == 3:
+        return min(nums[1], nums[2])
+    if len(nums) == 4:
+        return min(nums[1], nums[2], nums[3])
+    if len(nums) == 5:
+        return min(nums[1], nums[2], nums[3], nums[4])
+    if len(nums) == 6:
+        return min(nums[1], nums[2], nums[3], nums[4], nums[5])
+    if len(nums) == 7:
+        return min(nums[1], nums[2], nums[3], nums[4], nums[5], nums[6])
+    if len(nums) == 8:
+        return min(nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7])
+    if len(nums) == 9:
+        return min(nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8])
+    if len(nums) == 10:
+        return min(nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8], nums[9])
+    if len(nums) == 11:
+        return min(nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8], nums[9], nums[10])
+    if len(nums) == 12</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    """
+    Find the second smallest number in a list.
+
+    :param numbers: list of numbers
+    :return: second smallest number
+    """
+    if len(numbers) < 2:
+        raise ValueError("Input list must have at least two elements")
+
+    min1 = min2 = float('inf')
+    for num in numbers:
+        if num < min1:
+            min2 = min1
+            min1 = num
+        elif num < min2 and num != min1:
+            min2 = num
+
+    if min2 == float('inf'):
+        raise ValueError("Input list must have at least two distinct elements")
+
+    return min2
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers: list[int]) -> int:
+    """
+    Finds the second smallest number in a list.
+
+    Parameters:
+        numbers (list[int]): The list of numbers.
+
+    Returns:
+        int: The second smallest number in the list.
+    """
+    if len(numbers) < 2:
+        raise ValueError("List must contain at least two numbers")
+
+    smallest = float("inf")
+    second_smallest = float("inf")
+
+    for num in numbers:
+        if num < smallest:
+            second_smallest = smallest
+            smallest = num
+        elif num < second_smallest and num != smallest:
+            second_smallest = num
+
+    if second_smallest == float("inf"):
+        raise ValueError("There is no second smallest number in the list")
+
+    return second_smallest
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def second_smallest(numbers):
+    """
+    Find the second smallest number in a list.
+    
+    Args:
+        numbers (list): A list of numbers.
+    
+    Returns:
+        int: The second smallest number in the list.
+    """
+    if len(numbers) < 2:
+        return None
+    
+    smallest = min(numbers[0], numbers[1])
+    second_smallest = max(numbers[0], numbers[1])
+    
+    for num in numbers[2:]:
+        if num < smallest:
+            second_smallest = smallest
+            smallest = num
+        elif num < second_smallest:
+            second_smallest = num
+    
+    return second_smallest
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> code-millenials-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    first, second = float('inf'), float('inf')
+    for n in numbers:
+        if n < first:
+            first, second = n, first
+        elif first < n < second:
+            second = n
+    return second
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2</code></pre>
+
+      <p> dolphin-2.6. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+def second_smallest(numbers):
+    if len(numbers) < 2:
+        return None
+
+    smallest = numbers[0]
+    second_smallest = None
+
+    for num in numbers:
+        if num < smallest:
+            second_smallest = smallest
+            smallest = num
+        elif num < second_smallest or second_smallest is None:
+            second_smallest = num
+
+    return second_smallest
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to find the second smallest number in a list, wrapped in a Python markdown block:
+
+```python
+"""
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(numbers):
+    if len(numbers) < 2:
+        return None
+    
+    smallest = second_smallest = float('inf')
+    
+    for num in numbers:
+        if num < smallest:
+            second_smallest = smallest
+            smallest = num
+        elif num < second_smallest and num != smallest:
+            second_smallest = num
+    
+    return second_smallest if second_smallest != float('inf') else None
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    # Check if the length of the list is less than 2
+    if len(numbers) < 2:
+        raise ValueError("List should have at least two elements")
+
+    # Sort the list in ascending order
+    numbers.sort()
+
+    # Return the second element (index 1)
+    return numbers[1]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a possible solution:
+
+def second_smallest(numbers):
+    """
+    Returns the second smallest number in a list of numbers.
+    """
+    # Remove duplicates and sort the list in ascending order
+    unique_numbers = sorted(set(numbers))
+    # Return the second element of the sorted list if it has at least two elements, otherwise return None
+    return unique_numbers[1] if len(unique_numbers) > 1 else None
+
+# Test the function with the given example
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2
+
+# Test the function with some additional examples
+assert second_smallest([1, 1, 2, 3, 4, 5]) == 2
+assert second_smallest([5, 4, 3, 2, 1]) == 2
+assert second_smallest([1]) == None
+assert second_smallest([]) == None </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    """
+    This function finds the second smallest number in a list.
+    """
+    # Check if the list has at least two elements
+    if len(numbers) < 2:
+        raise ValueError("The list must have at least two elements")
+
+    # Initialize the smallest and second smallest numbers
+    smallest = float('inf')
+    second_smallest = float('inf')
+
+    # Iterate through the list
+    for num in numbers:
+        # If the current number is smaller than the smallest number
+        if num < smallest:
+            # Update the second smallest number
+            second_smallest = smallest
+            # Update the smallest number
+            smallest = num
+        # If the current number is not the smallest number and is smaller than the second smallest number
+        elif num < second_smallest and num != smallest:
+            # Update the second smallest number
+            second_smallest = num
+
+    # Return the second smallest number
+    return second_smallest
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(nums):
+    nums.sort()
+    return nums[1]
+
+
+print(second_smallest([1, 2, -8, -2, 0, -2]))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def second_smallest(numbers):
+    # Remove duplicates and sort the list in ascending order
+    unique_numbers = sorted(set(numbers))
+    
+    # Check if there are at least two unique numbers
+    if len(unique_numbers) < 2:
+        return None  # Return None if there's no second smallest number
+    
+    return unique_numbers[1]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here is a Python function that finds the second smallest number in a list.
+
+```python
+def second_smallest(numbers):
+    # Remove duplicates and sort the list
+    numbers = sorted(list(set(numbers)))
+
+    # Check if the list has less than 2 elements
+    if len(numbers) < 2:
+        return None
+
+    # Return the second smallest number
+    return numbers[1]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2
+```
+
+This function first removes duplicates from the list and sorts it. Then it checks if the list has less than 2 elements, in which case it returns None. If the list has at least 2 elements, it returns the second smallest number.</code></pre>
+
+      <p> codegen-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    nums.sort()
+    return nums[1]
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    nums.sort()
+    return nums[-2]
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    nums.sort()
+    return nums[-2]
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    nums.sort()
+    return nums[-2]
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    nums.sort()
+    return nums[-2]
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    nums.sort()
+    return nums[-</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def second_smallest(numbers):
+    # Initialize first and second smallest numbers
+    first_smallest = second_smallest = float('inf')
+
+    # Iterate over the list
+    for num in numbers:
+        # If current number is smaller than first smallest
+        if num < first_smallest:
+            # Update first smallest and second smallest
+            second_smallest = first_smallest
+            first_smallest = num
+        # If current number is between first and second smallest
+        elif first_smallest < num < second_smallest:
+            # Update second smallest
+            second_smallest = num
+
+    # If second smallest number is still infinity, return None
+    if second_smallest == float('inf'):
+        return None
+    else:
+        return second_smallest
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2
+assert second_smallest([1, 1, 1, 1, 1]) == None
+assert second_smallest([1, 2, 3, 4, 5]) == 2</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+import sys
+def second_smallest(list):
+    smallest = sys.maxint
+    second_smallest = sys.maxint
+    for i in list:
+        if i < smallest:
+            second_smallest = smallest
+            smallest = i
+        elif i < second_smallest and i != smallest:
+            second_smallest = i
+    return second_smallest
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(nums):
+    """
+    :param nums: list of numbers
+    :return: second smallest number
+    """
+    if len(nums) < 2:
+        return None
+    min1 = min(nums)
+    min2 = min(nums)
+    for num in nums:
+        if num < min1:
+            min2 = min1
+            min1 = num
+        elif num < min2 and num != min1:
+            min2 = num
+    return min2
+
+
+def second_smallest_2(nums):
+    """
+    :param nums: list of numbers
+    :return: second smallest number
+    """
+    if len(nums) < 2:
+        return None
+    min1 = min(nums)
+    min2 = min(nums)
+    for num in nums:
+        if num < min1:
+            min2 = min1
+            min1 = num
+        elif num < min2 and num != min1:
+            min2 = num
+    return min2
+
+
+def second_smallest_3(nums):
+    """
+    :param nums: list of numbers
+    :return: second smallest number
+    """
+    if len(nums) < 2:
+        return None
+    min1 = min(nums)
+    min2 = min(nums)
+    for num in nums:
+        if num < min1:
+            min2 = min1
+            min1 = num
+        elif num < min2 and num != min1:
+            min2 = num
+    return min2
+
+
+def second_smallest_4(nums):
+    """
+    :param nums: list of numbers
+    :return: second smallest number
+    """
+    if len(nums) < 2:
+        return None
+    min1 = min(nums)
+    min2 = min(nums)
+    for num in nums:
+        if num < min1:
+            min2 = min1
+            min1 = num
+        elif num < min2 and num != min1:
+            min2 = num
+    return min2
+
+
+def second_small</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+def second_smallest(numbers):
+    m1, m2 = float('inf'), float('inf')
+    for x in numbers:
+        if x <= m1:
+            m1, m2 = x, m1
+        elif x < m2:
+            m2 = x
+    return m2
+
+# Test the function
+print(second_smallest([1, 2, -8, -2, 0, -2]))  # Output: -2
+```
+
+This function works by initializing two variables, `m1` and `m2`, to `inf` (infinity). It then iterates over the list of numbers. If it encounters a number that is smaller than or equal to `m1`, it updates `m1` and `m2`. If it encounters a number that is between `m1` and `m2`, it updates `m2`. The function finally returns `m2`, which is the second smallest number in the list.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  
+def second_smallest(numbers):
+    smallest = float('inf')
+    second_smallest = float('inf')
+
+    for num in numbers:
+        if num < smallest:
+            second_smallest = smallest
+            smallest = num
+        elif num < second_smallest and num != smallest:
+            second_smallest = num
+
+    return second_smallest
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> codet5p-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(numbers):
+    if len(numbers) < 2:
+        return None
+    numbers.sort()
+    return numbers[1]
+
+print(second_smallest([1, 2, -8, -2, 0, -2])) #-2
+print(second_smallest([1, 2, -8, -2, 0])) #None
+print(second_smallest([1, 2, -8, -2, 0, 2])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6, 7])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6, 7, 8])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6, 7, 8, 9])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])) #-2
+print(second_smallest([1, 2, -8, -2, 0, 2, 3, 4,</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  def second_smallest(nums):
+  """
+  Write a function to find the second smallest number in a list.
+  assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+  """
+  if not nums:
+    return None
+  
+  smallest = float('inf')
+  second_smallest = float('inf')
+  
+  for num in nums:
+    if num < smallest:
+      second_smallest = smallest
+      smallest = num
+    elif num < second_smallest and num != smallest:
+      second_smallest = num
+  
+  if second_smallest == float('inf'):
+    return None
+  
+  return second_smallest</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+def second_smallest(numbers):
+    # Check if the list is empty or has less than two elements
+    if len(numbers) < 2:
+        raise ValueError("The list must have at least two elements")
+    
+    # Find the smallest number in the list
+    smallest = min(numbers)
+    
+    # Filter out the smallest number and find the second smallest
+    second_smallest = min(filter(lambda x: x != smallest, numbers))
+    
+    return second_smallest
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> xwincoder-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    unique_numbers = set(numbers)
+    unique_numbers.remove(min(unique_numbers))
+    return min(unique_numbers)
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> wizardcoder-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def second_smallest(lst):
+    """
+    This function takes a list as input and returns the second smallest number in the list.
+    """
+    # Sort the list in ascending order
+    lst.sort()
+    # Return the second smallest number in the list
+    return lst[1]
+```
+
+The function first sorts the input list in ascending order using the `sort()` method. Then, it returns the second element in the sorted list, which is the second smallest number in the original list.
+
+To test the function, we can use the `assert` statement as follows:
+
+```python
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2
+```
+
+This will raise an `AssertionError` if the function returns a different value than `-2`.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(numbers):
+    if len(numbers)<2:
+        return None
+    if len(numbers)==2:
+        return min(numbers)
+    smallest=min(numbers)
+    numbers.remove(smallest)
+    second_smallest=min(numbers)
+    numbers.append(smallest)
+    return second_smallest
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here is the Python function to find the second smallest number in a list:
+
+```python
+def second_smallest(nums):
+    m1, m2 = float('inf'), float('inf')
+    for x in nums:
+        if x <= m1:
+            m1, m2 = x, m1
+        elif x < m2:
+            m2 = x
+    return m2
+```
+
+This function works by initializing two variables, `m1` and `m2`, to infinity. It then iterates over the list of numbers. If a number is less than or equal to `m1`, it updates `m1` and `m2` to that number and the previous `m1`. If a number is greater than `m1` but less than `m2`, it updates `m2` to that number. At the end of the function, `m2` will be the second smallest number in the list.
+</code></pre>
+
+      <p> phi-2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(nums):
+    smallest = min(nums)
+    nums.remove(smallest)
+    second_smallest = min(nums)
+    return second_smallest
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2,</code></pre>
+
+      <p> codet5p-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(list):
+    list.sort()
+    return list[1]
+
+print(second_smallest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(list):
+    list.sort()
+    return list[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(list):
+    list.sort()
+    return list[1]
+
+print(second_smallest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(list):
+    list.sort()
+    return list[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(list):
+    list.sort()
+    return list[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_largest(list):
+    list.sort()
+    return list[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(lst):
+    smallest = second_smallest = float('inf')
+    for x in lst:
+        if x < smallest:
+            smallest, second_smallest = x, smallest
+        elif x < second_smallest:
+            second_smallest = x
+    return second_smallest</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(list):
+    list.sort()
+    return list[1]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    # Sort the list in ascending order
+    numbers.sort()
+    # Find the first non-negative number
+    for i in range(len(numbers)):
+        if numbers[i] >= 0:
+            # The second smallest number is the first non-negative number
+            return numbers[i]
+    # If all numbers are negative, return the smallest number
+    return numbers[0]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(nums):
+    """
+    Find the second smallest number in a list.
+
+    :param nums: List of numbers
+    :return: The second smallest number in the list
+    """
+    # Remove duplicates by converting the list to a set
+    nums = set(nums)
+    
+    # Check if the list has less than 2 unique elements
+    if len(nums) < 2:
+        raise ValueError("List must contain at least two unique elements")
+    
+    # Sort the unique elements and return the second one
+    sorted_nums = sorted(nums)
+    return sorted_nums[1]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    # Remove duplicates from the list
+    numbers = list(set(numbers))
+    # Sort the list in ascending order
+    numbers.sort()
+    # Return the second element in the sorted list
+    return numbers[1]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def second_smallest(lst):
+    unique_nums = list(set(lst))  # remove duplicates
+    unique_nums.sort()  # sort the list
+    if len(unique_nums) < 2:  # if list has less than 2 unique elements
+        return None
+    return unique_nums[1]  # return the second smallest number
+</code></pre>
+
+      <p> stable-code-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(nums):
+    nums.sort()
+    if len(nums) == 2:
+        return nums[1]
+    else:
+        return nums[1] if nums[1] < nums[2] else nums[2]
+
+print(second_smallest([1, 2, -8, -2, 0, -2]))
+</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    if len(nums) < 2:
+        return None
+    if len(nums) == 2:
+        return min(nums)
+    nums.sort()
+    return nums[1]
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7, 8])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7, 8, 9])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7, 8, 9, 10])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7, 8, 9, 10, 11])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+
+def second_smallest(numbers):
+    if len(numbers) < 2:
+        return None
+    unique_numbers = list(set(numbers))
+    unique_numbers.sort()
+    return unique_numbers[1] if len(unique_numbers) >= 2 else None
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(lst):
+    """Finds the second smallest number in a list.
+
+    Args:
+        lst: A list of numbers.
+
+    Returns:
+        The second smallest number in the list, or None if there are no numbers in the list.
+    """
+
+    # Sort the list in ascending order.
+    lst.sort()
+
+    # If there are at least two items in the list, return the second smallest item.
+    if len(lst) >= 2:
+        return lst[1]
+
+    # Otherwise, return None.
+    return None
+
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def second_smallest(numbers):
+    first, second = float('inf'), float('inf')
+    for n in numbers:
+        if n <= first:
+            first, second = n, first
+        elif n < second:
+            second = n
+    return second
+
+# Test the function
+print(second_smallest([1, 2, -8, -2, 0, -2]))  # Output: -2</code></pre>
+
+      <p> openchat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    smallest = float('inf')
+    second_smallest = float('inf')
+    for num in numbers:
+        if num < smallest:
+            second_smallest = smallest
+            smallest = num
+        elif num < second_smallest and num != smallest:
+            second_smallest = num
+    return second_smallest
+
+# Test case
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    unique_numbers = list(set(numbers))
+    unique_numbers.sort()
+    return unique_numbers[1]
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a possible solution:
+
+def second_smallest(lst):
+    """
+    Returns the second smallest number in a list.
+    """
+    # Sort the list in ascending order
+    lst.sort()
+    # Return the second element of the sorted list
+    return lst[1]
+
+# Test the function with the example input
+print(second_smallest([1, 2, -8, -2, 0, -2])) # Output: -2 </code></pre>
+
+      <p> octocoder. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(numbers):
+    numbers.sort()
+    return numbers[1]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(list1):
+    if len(list1) < 2:
+        return None
+    smallest = list1[0]
+    second_smallest = list1[1]
+    for i in list1:
+        if i < smallest:
+            second_smallest = smallest
+            smallest = i
+    return second_smallest
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(lst):
+    lst.sort()
+    return lst[1]
+
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(lst):
+    lst.sort()
+    return lst[1]
+
+print(second_smallest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==0
+"""
+
+def second_largest(lst):
+    lst.sort()
+    return lst[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==0
+"""
+
+def second_largest(lst):
+    lst.sort()
+    return lst[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==0
+"""
+
+def second_largest(lst):
+    lst.sort()
+    return lst[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==0
+"""
+
+def second_largest(lst):
+    lst.sort()
+    return lst[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+"""
+Write a function to find the second largest number in a list.
+assert second_largest([1, 2, -8, -2, 0, -2])==0
+"""
+
+def second_largest(lst):
+    lst.sort()
+    return lst[-2]
+
+print(second_largest([1, 2, -8, -2, 0, -2]))
+
+</code></pre>
+
+      <p> mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(nums):
+    nums.sort()
+    return nums[1]
+
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    numbers.sort()
+    return numbers[1]
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(numbers):
+    numbers.sort()
+    return numbers[1]
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+assert second_smallest([1, 1, 0, 0, 2, -2, -2])==-2
+assert second_smallest([0, 0, 0, 0, 0, 0, 2, -2, -2])==-2
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+assert second_smallest([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</code></pre>
+
+      <p> code-llama-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(numbers):
+    """Returns the second smallest number in a list"""
+    if len(numbers) < 2:
+        return None
+    numbers = sorted(numbers)
+    return numbers[1]
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    numbers.sort()
+    return numbers[1]
+
+# Test the function
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+def second_smallest(numbers_list):
+    # Sort the list in ascending order
+    numbers_list.sort()
+
+    # Return the second element of the sorted list, which is the second smallest number
+    return numbers_list[1]
+
+assert second_smallest([1, 2, -8, -2, 0, -2]) == -2</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(lst):
+    lst.sort()
+    return lst[1]
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to find the second smallest number in a list:
+
+```python
+"""
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(lst):
+    """
+    Returns the second smallest number in a list.
+    
+    Args:
+        lst (list): A list of numbers.
+        
+    Returns:
+        int or float: The second smallest number in the list.
+    """
+    # Remove duplicates and sort the list
+    unique_sorted = sorted(set(lst))
+    
+    # If the list has less than 2 elements, return None
+    if len(unique_sorted) < 2:
+        return None
+    
+    # Return the second smallest number
+    return unique_sorted[1]
+
+# Test case
+print(second_smallest([1, 2, -8, -2, 0, -2]))  # Output: -2</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+
+def second_smallest(lst):
+    # Sort the list in ascending order
+    lst.sort()
+    # Find the second smallest number
+    second_smallest = lst[1]
+    return second_smallest
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(lst):
+    lst.sort()
+    return lst[1]
+
+print(second_smallest([1, 2, -8, -2, 0, -2]))
+/Python/Python_Basics/10_Functions/10_1_Function_with_arguments.py
+"""
+Write a function to find the sum of all the numbers in a list.
+assert sum_of_numbers([1, 2, 3])==6
+"""
+
+def sum_of_numbers(lst):
+    sum = 0
+    for i in lst:
+        sum += i
+    return sum
+
+print(sum_of_numbers([1, 2, 3]))
+/Python/Python_Basics/10_Functions/10_2_Function_with_default_arguments.py
+"""
+Write a function to find the maximum of two numbers.
+assert max_of_two(1, 2)==2
+"""
+
+def max_of_two(a, b=2):
+    if a > b:
+        return a
+    else:
+        return b
+
+print(max_of_two(1, 2))
+/Python/Python_Basics/10_Functions/10_3_Function_with_variable_arguments.py
+"""
+Write a function to find the sum of all the numbers in a list.
+assert sum_of_numbers([1, 2, 3])==6
+"""
+
+def sum_of_numbers(*args):
+    sum = 0
+    for i in args:
+        sum += i
+    return sum
+
+print(sum_of_numbers(1, 2, 3))
+/Python/Python_Basics/10_Functions/10_4_Function_with_keyword_arguments.py
+"""
+Write a function to find the maximum of two numbers.
+assert max_of_two(1, 2)==2
+"""
+
+def max_of_two(a, b):
+    if a > b:
+        return a
+    else:
+        return b
+
+print(max_of_two(1, 2))
+/Python/Python_Basics/10_Functions/10_5_Function_with_variable_keyword_arguments.py
+"""
+Write a function to find</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def second_smallest(numbers):
+    # Remove duplicates
+    unique_numbers = list(set(numbers))
+    # Sort the list
+    unique_numbers.sort()
+    # Return the second smallest number
+    return unique_numbers[1]
+
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the second smallest number in a list.
+assert second_smallest([1, 2, -8, -2, 0, -2])==-2
+"""
+
+def second_smallest(lst):
+    lst.sort()
+    return lst[1]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  ```python
+def second_smallest(numbers):
+    m1, m2 = float('inf'), float('inf')
+    for x in numbers:
+        if x <= m1:
+            m1, m2 = x, m1
+        elif x < m2:
+            m2 = x
+    return m2
+
+# Test the function
+print(second_smallest([1, 2, -8, -2, 0, -2]))</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

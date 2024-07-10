@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/29 </h1>
+<pre><code> from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    return list(filter(lambda x: x.startswith(prefix), strings))
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[], 'john'], [['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[[], ''], [['abc', 'abcd', 'abcde'], 'abc'], [['xyz', 'efg', 'hij'], 'a'], [['cat', 'dog', 'bat'], 'elephant'], [['apple', 'banana', 'orange', 'apricot', 'kiwi'], 'ap'], [['a', 'ab', 'abc', 'ba', 'bb', 'bc'], 'a'], [['zzz', 'zzz', 'zzz'], 'z'], [['hello', 'world', 'house'], 'h'], [['apple', 'orange', 'banana'], 'b'], [['python', 'java', 'javascript', 'c++'], 'java'], [['hello', 'world', 'heworldlo', 'house'], 'h'], [['cat', 'dog'], 'apricot'], [['hello', 'world', 'heworldlo', 'house'], 'hh'], ['hah', 'hah'], [['world', 'heworldlo', 'house'], 'h'], [['apple', 'banana', 'orange', 'apricot', 'kiwi'], 'a'], ['apricot', 'apricot'], ['orange', 'apicapot'], ['aa', 'a'], ['aaa', 'heworldlo'], [['hello', 'world', 'house'], ''], ['kiwi', 'z'], [['hello', 'world'], ''], ['zz', 'z'], ['oapricot', 'apricot'], [['hello', 'world', 'house'], 'hh'], [['apple', 'orange', 'hello'], 'bananab'], ['aaaajavascript', 'aaaa'], ['', ''], ['apriccot', 'apricot'], [['xyz', 'efg', 'hij', 'hij'], 'aaaajavascript'], [['apple', 'orange', 'banana'], 'heworldlo'], ['', 'aa'], ['aaaajavascript', 'aaaajavascript'], ['zzbb', 'zz'], [['a', 'ab', 'abc', 'ba', 'bb', 'bc'], 'banana'], ['aboapricot', 'boapricot'], ['kiwwi', 'z'], ['aboapricot', 'aboapricot'], ['boaprictot', 'boapricot'], ['java', 'java'], [['apple', 'orange', 'baanana'], 'z'], ['zzbbb', 'zjavascriptz'], ['zzz', 'apicapoot'], ['oapricot', 'appricott'], [['world', 'hello', 'world', 'house'], ''], ['jaava', 'java'], [['world', 'hello', 'world'], ''], [['a', 'ab', 'abc', 'ba', 'bb', 'aa', 'bc'], 'banana'], [['hello', 'heworldlo', 'house'], 'h'], ['a', 'a'], [['python', 'java', 'javascript', 'c++'], 'javakiwwi'], [['world', 'house'], 'h'], ['hah', 'bc'], ['aboapricot', 'boaipricot'], ['jjava', 'java'], [['hello', 'worlwd', 'worldwd', 'world'], 'orange'], ['kiwi', 'kiwapriccotibanana'], ['jaava', 'jaava'], ['hahworldwd', 'hahworlhhdwd'], ['elephant', 'hhh'], [['boaprictotbb', 'a', 'ab', 'abc', 'ba', 'bb', 'aa', 'bc'], 'banana'], ['world', 'apric'], [['hello', 'world'], 'apriccot'], [['hello', 'bc', 'world'], ''], ['hhh', ''], [['hello', 'aworlwdbcdworld'], 'apriccot'], ['bkiwirt', 'boaiprt'], [['apple', 'orange', 'aboapricot', 'banana'], ''], ['world', 'java'], ['oapricoelepohantt', 'apricot'], ['b', 'b'], ['zzbb', 'jaava'], ['aboapricot', 'rboapricot'], [['hello', 'wdorld', 'house'], ''], ['hahoerange', 'bc'], ['bopaprictot', 'boaprictot'], ['harboapricothh', 'harboapricothh'], ['hhah', 'bc'], ['orange', 'apicaptot'], ['aboaprpythonicot', 'boaipricot'], ['world', 'wworlwdorld'], ['apriccot', ''], ['house', 'zjavascriptz'], ['zjavascriptz', 'house'], ['kiwapcriccotibanana', 'kiwapriccotibanana'], ['bananna', 'aboaprpythonicot'], ['hahlworldwd', 'hahlworldwd'], ['kiwapcriccotibanana', 'javva'], ['zzz', 'apicaopoot'], [['hello', 'world', 'heworldlo'], 'h'], ['aaa', 'aaaajavascript'], ['h', 'h'], ['apple', 'kiwapriccotibanana'], ['zzbbb', 'hhah'], ['aboapriczzbbbt', 'rboapricot'], ['boaipricot', 'boaipricot'], ['ap', 'aap'], [['amy', 'apple', 'pams', 'alligator', 'maple', 'mops'], 'a'], [['batman'], 'superman'], [['电影', '电子', '电话', '邮件'], '电'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'qwe'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bu'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'favicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forward', 'forgive', 'foliage'], 'fi'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], 'a'], [['', ' ', '\n', '\t', 'a', 'ab', 'abc', 'abcde'], ''], [['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'grape', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'e'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'c'], ['qwe', 'qwe'], ['qe', 'qwe'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock', 'bulldog'], 'buu'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], ''], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'alphabet', 'abc1', '1abc'], 'a'], [['', ' ', '\n', '\t', 'ab', 'abc', 'abcde'], ''], ['facetious', 'facetious'], [['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'applpe', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'e'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', '电'], 'a'], [['电影', '电子', '电话', '邮件', '电影'], '电'], ['bu', '电影'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'cfidelity'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'abc_'], 'a'], ['fgKilometerh', 'fgh'], [['电影', '电子', '电话', 'burdock', '电影'], ''], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], 'a'], [['apple', 'banana', 'durian', 'elderberry', 'fig', 'applpe', 'honeydew', 'jujube', 'kiwi', 'lemon', 'durian'], 'e'], ['Kilometfaulter', 'Kilometer'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bu'], ['Kilometer', 'Kilometer'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'ASDFGH'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampABCersand', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bu'], [['', '\n', '\t', 'a', 'ab', 'abc', 'abcde'], 'ampABCersand'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'fiburgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock', 'butter'], 'bu'], ['电子', 'aa'], ['cfidelity', 'cfidelity'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'apple'], [['A SD FGH', 'qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'ASDFGH'], 'faceless'], ['电子', 'mops'], ['fgKilomkwieterh', 'fgKamputeeilomkiwieterh'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], 'aa'], [['', ' ', '\nelderberry', '\t\t', 'a', 'ab', 'abc', 'abcde'], ''], ['fgKilomkwieterh', 'fgKilomkwieterh'], ['buufaceless', 'buu'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock', 'bulldog', 'burdock'], 'buu'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'as fgh', 'ASD FGH'], 'qwe'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'ABC'], ['qwe', 'qwwe'], ['buamputeeu', 'buamputeeu'], ['qwwe', 'qwe'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'cfacetious'], ['qwe', 'elderberryqwe'], ['qwetea', 'qamiablee'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电', 'abc_'], 'aa'], [['123', 'abc', 'ABC', 'application123', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], 'aa'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'fiburgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock', 'butter'], 'cfidelity'], [['amy', 'apple', 'pams', 'applQWERTYUIOPe', 'alligator', 'maple', 'mops'], 'a'], [['abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'abc_'], 'a'], [['', ' ', '\n', '\t', 'ab', 'abc', 'abcde', ' '], ''], ['f', 'f'], [['', ' ', '\n', '\t', 'ab', 'abc', 'abcde', ' ', '\t'], ''], ['jujitsu', 'bully'], ['f', ' '], ['abc1', 'abc1'], ['foothills', 'jujitsu'], ['fiburgher', 'facetious'], ['电电话', '电电话'], ['电facetious', '电'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电', 'budget', 'abc_'], 'facade'], [['qwerty', 'QwertY', 'qwertyuiop', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'AASDFGH'], [['', '\n', '\t', 'a', 'ab', 'abc', 'abcde'], 'buds'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'abc', 'ab1c'], 'QWERTYUIOP'], ['abc1', 'abfanfare'], [['123', 'aabc1', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], 'a'], ['facade', 'facade'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'teea', '电'], 'a'], ['cfacetious', ''], ['fgKilomkwieterhABC', 'fgKilofmkwieterhABC'], ['qwbulldogetea', 'qwbulldogetea'], [['abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'abc_'], 'aa'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1cabc', 'abc', 'ab1c'], 'QWERTYUIOflabbergastedP'], ['e', 'e'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh'], 'ASDFGH'], [['', '\n', '\t', 'a', 'abbatman', 'ab', 'abc', 'abcde'], 'a电电话mpABCersand'], ['Kilometer', 'pams'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'favicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forward', 'forgive', 'foliage'], 'f'], ['filmbu', 'bu'], ['filmbu', ''], ['alphabet', 'wPwhchT'], ['qwe', 'buamputefaulteu'], ['elderberryqwe', 'burgher'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'favicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forgive', 'foliage', 'foothills'], 'f'], [['amy', 'apple', 'pams', 'applQWERTYUIOPe', 'alligator', 'maple', 'mops'], ''], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'amy'], ['qwertyuiop', ''], ['电电话', '电foliage电话'], ['电子', 'fgKilomkwieterh'], ['QWERTYURIOP', 'QWERTYUIOP'], ['ampoule', 'qwe'], ['abbananac1', 'aabc1'], ['forwaard', 'ambulance'], [['', '\n', '\t', 'a', 'abbatman', 'ab', 'abc', 'abcde', 'abbatman'], 'a电电话mpABCersand'], ['asdfgh', 'abfanfare'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'qwefacetious'], [['123', 'abc', 'ABC', 'application123', 'amaze', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], 'aa'], ['电电话话', '电电话'], ['aa', 'aa'], ['burghber', 'bur'], [['water', 'wine', 'coffee', 'tea', 'beer', 'wwine', 'cocoa', 'cocoa'], 'film'], ['bfilterurghber', 'buambulancer'], ['c', 'c'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1cabc', 'abc', 'ab1c'], 'QWERTYUIOflabberrgastedP'], ['abc1buds', 'buds'], ['buufaceless', 'bu'], [['', ' ', '\nelderberry', 'a', 'ab', 'abc', 'abcde'], 's fgh'], ['alphabet', 'pams'], ['ab1c', 'aa'], ['faceless', 'faceless'], ['amy', 'yamy'], ['子', '子'], ['f', 'faa'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'ABC'], 'amazoamputeen'], ['f', ''], ['foot\t\thiills', 'foothills'], ['qwwe', 'cfidelity'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'b'], ['forwaard', 'banana'], [['123', 'abc', 'ABC', 'application123', 'amaze', 'ab1c', '_amaple_bc', 'filmabc_', 'abc1', 'tea'], 'aabuu'], ['电影', '电'], ['build', 'bluild'], ['abuu1', 'ab1caabc1'], [['qwerty', 'QwertY', 'qwertyuiop', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'qwerty'], 'AASDFGH'], ['qforwardwwe', 'qforwardwwe'], ['dsflabbergasted', 'b'], ['abfanfare', 'abfanfare'], ['abbatmanABC', 'ABC'], [['', ' ', '\n', '\t', 'ab', 'abc', 'abcde'], 'ampoule'], ['bcocoa', 'figb'], ['电电', '电facetious'], [['abc', 'ABC', 'ab1c', '_abc', '1cabc', 'abc_', 'abc1', '1abc', 'abc_'], 'aa'], ['aabccqwertyuiop1', 'alphabet'], ['', 'ab1caabc1'], [['Joyride', 'batman'], 'superman'], ['ampoule', 'qqwe'], ['faapplicationcade', 'facade'], ['1bcabc', '1cabc'], [['water', 'wine', 'coffee', 'tea', 'beer', 'wwine', 'cocoa', 'cocoa'], 'fillm'], [['qwerty', 'QwertY', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'qwe'], ['QWERTYURIPOP', 'QWERTYUIOP'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'ABC', 'ABC'], 'aa'], ['fgKilomkwieterh', 'wwine'], ['alaphabet', 'pams'], ['foolish', 'a电电话mpABCersand'], ['bur', 'fgKilomkwieterhABC'], ['taea', 'tea'], ['Kilometer', '电子'], ['bfirllterurghber', 'bfillterurghber'], ['ampoule', 'wqqwqe'], [['123', 'abc', 'ABC', 'application123', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], 'aaa'], ['电子', 'fgrKilofmkwieterh'], ['fiburgher', 'qwe'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'as fgh', 'asdforwardfgh', 'ASD FGH'], 'qwe'], [['123', 'abc', 'ab1c', '_a_bc', 'abc_', 'abc1', '电'], 'a'], [['amy', 'apple', 'pams', 'alligator', 'foot\t\thiills', 'mops'], 'a'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'jinx'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'favicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forward', 'forgive', 'foliage', 'faceless'], ''], ['yamy', 'burrow'], ['a', 'aa'], ['dsfldabbergasted', 'dsflabbergasted'], ['yamy', 'qwwe'], ['elderberryqwe', 'burgcherryher'], ['qwetea', 'qamiaablee'], ['taea', 'bu'], ['abcfidelityc1', 'abfanfare'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'burgcherryher'], ['burdoforgiveck', 'burdock'], ['burrow', 'yamy'], ['bfirll', 'befillterurgfhber'], [['water', 'tea', 'beer', 'wwine', 'cocoa', 'cocoa', 'wwine'], 'fillm'], ['1bcabc', '1bcabc'], [['', '\n', '\t', 'a', 'abbatman', 'ab', 'foolish', 'abc', 'abcde'], 'a电电话mprABCersand'], [['water', 'wine', 'coffee', 'tea', 'ebeer', 'wwine', 'cocoa', 'cocoa'], 'fillm'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock', 'build'], 'bfootf\t\thiills'], ['电子', '电ASDFGH子'], ['qewee', 'qqwe'], ['Joyride', 'qaabccqwertyuiop1qwe'], [['abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'abc_'], 'foothills'], ['f', 'kiwi'], ['ASDFGH', 'ASDFGH'], ['a电facetiouslaphabet', 'alaphabet'], ['bureaucracy', 'cfacetious'], ['elderberryqwe', 'ab1caabc1'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', '\n', 'ASD FGH', 'ASD FGH'], 'qwefacetious'], ['aabc1', 'bu'], [['batman', 'batman'], 'superman'], ['jujisu', 'bbullby'], ['abfanrfare', 'abfanfare'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'fgh', 'tea', '电', 'abc_'], 'aa'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampABCersand', 'ampersand', 'amputee', 'ambulance', 'amiable', 'buttter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'buforgive'], ['QWERTYURIPOP', 'durian'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'fgh', 'tea', '电', '1cabc'], 'aa'], ['amy', 'yam'], [['qwerty', 'QwertY', 'QWERTYUIOP', 'ASDFGH', 'as fgh', 'ASD FGH'], 'qwwe'], ['电子', '电子'], [['amy', 'apple', 'pams', 'alligator', '1bcabc', 'mops'], ''], ['dsfldabbergasted', '电影'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'businsess', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bu'], ['bbuly', 'jujisu'], ['jujitsu', 'fgh'], ['faapplicationcade', 'facadee'], ['电子', 'favicon'], ['fgh', 'faapplicationcade'], ['forgive', 'dsflabbergasted'], ['1bcabc', '1bcabeerbamazec'], ['cocoa', 'wPwhchT'], ['ococoa', 'wPwhchT'], ['dsfldabbergasted', '\n'], ['jujisu', 'faa'], ['fgKilometerh', 'fabric'], ['fiamaze', 'amaze'], ['ampoumle', 'ampoule'], ['qwefacetious', 'qwefacetious'], ['AASDFGH', 'ab1caabc1'], ['aburrowmaze', 'wwine'], ['aaa', 'aa'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa', 'coffee'], 'cfidelity'], ['blluild', 'bluild'], ['abc1电', '电'], ['e', 'qaabccqwertyuiop1qwe'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', '1cabc', 'abc', 'ab1c'], 'QWERTYUIOflabbergastedP'], [['qwerty', 'QwertY', 'qwertyuiop', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'qwerty', 'ASD FGH'], 'b'], ['ABC', 'ABC'], ['amaze', 'amaze'], ['fantajinxsy', 'fantasy'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'as fgh', 'asdforwardfgh', 'ASD FGH'], 'qwqe'], ['ambulance', 'qqwewe'], ['qwerty', 'cfidelity'], ['cfacetious', 'b'], ['\t\talligator', 'alligator'], ['amwPwhchTle', 'ampoule'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'businsess', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'ffaceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bu'], ['A SD FGH', 'ab1c'], ['qforwardwwe', 'c'], ['fantajinxsyab', 'ab'], ['qwefacetious', 'qampersandwefacetious'], ['fiburgher', 'fiburgher'], [['amy', 'apple', 'pams', '1bcabc', 'mops'], 'ccocoa'], ['QWERTYURIPOP', 'QWERTYURIPOP'], ['fasacA SD FGHade', 'facade'], [['A SD FGH', 'qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'ASDFGH'], 'faceleamazess'], ['FGHade', 'qwwqe'], ['fidelity', 'babc1电u'], [['', '\n', '\t', 'a', 'abbatman', 'ab', 'abc', 'bur', '_a_bca', 'abcde', 'a'], 'a电电话mpABCersand'], ['br', 'br'], ['faapplicactioencade', 'faapplicationcade'], [['', ' ', '\nelderberry', 'a', 'ab', 'abc', 'abcde', 'a'], 's fgh'], ['buforgive', 'buforgive'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock', 'bulldog'], 'amazoamputeen'], ['fiburgher', 'faqaabccqwertyuiop1qwecetious'], ['durian', 'ab1caabc1'], ['a', 'Gigabyte'], ['alligator', 'facade'], ['a电电话mprABCersand', 'a电电话mprABCersand'], ['电facetious', '电facetious'], [['电影', '电子', '电话', 'burdock', '电影'], 'fabric'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'ASDFGebeerH'], ['forwaard', 'dsflabbergasted'], ['1bbullbybcabc', '1c'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'ASDFGH', 'as fgh', 'ASD FGH'], 'qwe'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa'], 'facadee'], ['s电asdforwardfgherman', 'superman'], ['1bcabeerbamazec', '1cabc'], [['', '\n', '\t', 'a', 'ab', 'abc', 'abcde', '\t'], 'ampABCersand'], [['', '\n', '\t', 'a', 'abbatman', 'ab', 'abc', 'abcde', ''], 'a电电话mpABCersand'], ['burghber', 'burghber'], ['forwaard', 'amazon'], ['fgKilometerh', '\nelderberry'], ['ABAC', 'AC'], ['1babc1电bullbybcabc', '1c'], ['ubu', '1bbullbybcabc'], [['', '\n', '\t', 'a', 'ab', 'abc', 'abcde', '\n'], 'ampABCersafaand'], ['bbuu', 'ai'], ['bully', 'bully'], ['ffaapplicationcade', 'ffaapplicationcade'], ['buufaceless', 'wPwhchT'], ['电子', 'wwine'], ['电电', '电电'], ['dsflabberfillmgasted', 'dsflabberfillmgasted'], ['', 'f'], ['Kilometfaulter', '1cabc'], ['fabric', 'alaphabet'], ['qforwardwwe', '1abc'], [['qwerty', 'QwertY', 'qwertyuiop', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'qwerty', 'ASD FGH'], 'bubu'], ['fgrKilofmkwieterh', '电ASDFGH子'], ['fghqwertyuio', 'fgh'], ['filmbu', 'filmbu'], ['applQWERTYUIOPe', 'f'], ['ffaapplicationcade', 'ffaappliocationcade'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock', 'build'], 'bfootf\t\thiills'], ['fig', 'abfanfare'], ['yam', 'qwe'], ['1bc1abc', '1bcabc'], ['abcfidelifacadeetyc1', 'abfanfare'], ['abuilda', 'jujube'], ['ab1cabc1电facetious', 'ab1cabc1电facetious'], ['bfootf', 'wPwhchT'], ['Kilometer', '电电'], ['abfanrfare', 'foliage'], [['amy', 'apple', 'pams', 'applQWERTYUIOPe', 'alligator', 'maple', 'applQWERTUYUIOPe', 'mops', 'maple'], 'a'], ['emon', 'lemon'], ['a电电话mpABCersand', 'a电电话mpABCersand'], [['', ' ', '\n', '\t', 'a', 'ab', 'abc', 'abcde'], 'fgrKilofmkwieterh'], ['fgKilomkwieterh', 'fgrapegKamputeeilomkiwieterh'], ['fgh', 'fgh'], ['forgyamive', 'dsflabbergasted'], [['abc', 'ABC', 'ab1c', '_abc', '1cabc', 'abc_', 'A', 'abc1', '1abc', 'abc_'], 'aa'], ['butter', 'faqaabccqwertyuiop1qwecetious'], ['babc1电bur', 'babc1电u'], ['ffaa', 'fgKilomkwieterh'], ['bu', 'QWERTYUIOP'], [['water', 'wine', 'coffee', 'tea', 'ebeer', 'wwine', 'cocoa', 'cocoa'], 'qwwqe'], ['afgKilofmkwieterhABCi', 'ai'], ['Kilomete', 'Kilometer'], ['ampoule', 'ampoule'], ['yamy', 'yamy'], ['buamputefaulteuive', 'forgive'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'cfacetiousfavicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forward', 'forgive', 'foliage', 'faceless'], ''], ['ddsfldabbergasted', 'dsfldabbergasted'], ['qwertyuiop', 'facadee'], ['abc1', 'bu'], ['buforgive', 'bufgKamputeeilomkiwieterhforfiggive'], ['abc_', 'fantasy'], ['durian', 'babc1电bur'], ['abfanffare', 'bfootf\t\thiills'], ['qwqe', ''], ['ab1caabc1', 'abuu1'], ['wPwhchT', 'wPwhchT'], ['foliage', 'bufgKamputeeilomkiwieterhforfiggive'], ['fi', 'abbananac1'], ['ampAaBCersand', 'a'], ['buuu', 'jujube'], ['bfilterurghber', 'cbuambulancer'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa', 'cocoa'], 'coffee'], ['1bcabACc', '1bcabACc'], ['电子', 'abfanrfare'], ['facade', 'facadefacade'], ['d1abcsfldabbergastedamiable', 'dsabuu1fldabbergastedamiable'], [' ', 'abc1'], ['filmbu', 'QWERTYURIPOP'], ['aa', 'aABC'], ['Kfilometfaulr', 'Kilometfaulr'], ['bfilterurghber', 'bfilterurghber'], ['1bcacbc', '1cabc'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], ''], ['', '电'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'as fgh', 'asdforwardfgh', 'ASD FGH'], 'fiduciary'], ['aoambfirllterurghberputeen', 'aoamputeen'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', 'abc'], 'aa'], [['123', 'abc', 'ABC', 'application123', 'ab1c', '_a_bc', 'abcab', 'abc1', 'tea', '电'], 'aa'], ['buamputeeu', 'fgfh'], ['fantajinxsyab', 'fantajinxsyab'], ['cfacus', ''], ['m', 'qwe'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'fgh', 'm', '电', 'abc_'], 'akiwi'], ['abbanananc1', 'buttteraabc1'], ['amnbulance', 'qqwewe'], ['bampersanduamputeeu', 'buamputeeu'], ['jujitsu', 'build'], [['water', 'wine', 'coffee', 'tea', 'beer', 'cocoa', 'coffee'], 'abcfidelityc1'], ['forgyamfive', 'dsflabbergasteburdoforgiveckd'], ['fgrKilofmkwietKerh', 'fgrKilofmkwieterh'], ['AASDFGH', 'AASDFGH'], ['电电话', 'cfidelity'], ['cocoajujitsu', 'cocoajujitsu'], ['qQWERTYUIOPwe', 'qwe'], ['QWERTYURIOP', 'QWERTYURIOP'], ['', '1abc'], ['bbuu', 'bbuu'], ['facadee', 'facadee'], ['bbu', 'bu'], ['abare', 'abfanfare'], ['', 'qe'], ['qqwe', 'asdforwardfgh'], [['apple', 'banana', 'durian', 'elderberry', 'fig', 'applpe', 'honeydew', 'jujube', 'ABC', 'kiwi', 'lemon', 'durian'], 'fantajinxsy'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'favicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forgive', 'foliage', 'foothills'], 'ff'], ['applpe', 'qwwe'], ['bureaucracy', 'buuu'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc__', '1cabc', 'abc', 'ab1c', 'abc', 'ABC'], 'QWERTYUIOflabbergastedP'], ['ffaa', '电'], ['fidelaABCity', 'babc1电u'], [' alphabet', ' alphabet'], [['qforwardwwe', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'bbullby', '1abc', 'abc_', 'abc_'], 'aa'], ['jujisu', 'ai'], ['bfootf\t\thiills', 'bfootf\t\thiills'], ['abc1', 'afgKilofmkwieterhABCi'], ['Kilometfacadefacader', '电子'], ['电', 'abcab'], [['123', 'abc', 'ABC', 'ab1c', '_a_bc', 'abc_', 'abc1', 'tea', '电'], 'ampAaBCersand'], ['buufaceless', 'a'], ['blluild', '123'], ['pams', 'ab1caabc1'], ['电影', '电电'], ['abare', 'abare'], ['bfillterurghber', 'forgyamfive'], ['jujisu', 'jujisu'], ['abfanfare', 'abcab'], ['QWERTYUIOflabbergastedemon', 'QWERTYUIOflabbergastedP'], ['ab1burgcherryherc', 'aa'], [['qwerty', 'QwertY', 'qwertyuiop', 'asdfgh', 'as fgh', 'asdforwardfgh', 'ASD FGH'], 'qwe'], [['amy', 'pams', 'applQWERTYUIOPe', 'alligator', 'maple', 'applQWERTUYUIOPe', 'mops', 'maple'], 'a'], ['forgive', 'dsffaultlabbergast子ed'], ['aabc1', 'QWERTYURIPOforwaardP'], ['qwefacetious', 'forgive'], ['burgcherryher', 'burgcherryher'], ['电foliage电话', '电foliage电话'], ['qweetea', 'qamiablee'], ['aoampputeen', 'allaigator'], ['AASDFGH', 'ASDFGH'], ['aaa', 'buforgive'], ['wqqewqe', 'wqqwqe'], ['ubu', ''], ['bud电电话s', 'buds'], ['\nelderberryaffaa', '电'], [['123', 'aabc1', 'abc', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'aabc1'], 'qeaabcab'], ['电电话', '电fo话'], ['alligatqQWERTYUIOPweor', 'alligator'], ['buttter', 'batman'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'ffacelessb'], [['apple', 'buforgivecherry', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'grape', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'e'], ['buforgivechherry', 'buforgivecherry'], ['电ffoliage电话', '电ffoliagASDFGebeerHe电话'], ['fabric', 'fabric'], [['fgh', 'Kilometer', 'Gigabyte', 'Kiwi', 'jinx', 'jujitsu', 'Joyride', 'foothills', 'filter', 'fiduciary', 'fidelity', 'film', 'fault', 'fantasy', 'fanfare', 'favicon', 'fabric', 'facetious', 'facade', 'faceless', 'flabbergasted', 'foolish', 'forgive', 'foliage', 'foothills'], 'ABC'], ['faceless', 'facealphabetless'], ['ABC', 'abfanffare'], ['amazon', 'ABAC'], [['', '\n', '\t', 'a', 'abbatman', 'ab', 'abc', 'bur', '_a_bca', 'abcde', 'a'], 'ebeer'], ['apWplQWERTYUbfootfIOPe', 'f'], ['apple', 'apple'], ['jubuforgivecherryjitsu', 'bully'], ['aa', 'aaa'], ['fgrKilotfmkrwieterh', '电ASDFGH子'], ['Kilometer', 'Kilomeer'], ['oocoa', 'wPwhchT'], ['电子batmtan', '电子batmtan'], ['qwQWERTYURIPOPefacetious', 'qwefacetious'], ['1bbullbybcabc', '1bbullbybcabc'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'businsess', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'faceless', 'bulge', 'bulb', 'bulldog', 'burdock'], 'b\nelderberry'], ['bur', 'qwwqe'], ['ABC', 'ABAC'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc', 'abc_'], 'abuuu'], ['Kilometdsffaultlabbergast子eder', '1cabc'], [['water', 'wine', 'coffee', 'tea', 'beer'], 'facadee'], ['ubu', 'qqwqewe'], ['jujitsu', 'bulluy'], ['hiills', 'burdock'], ['sapplication123 fgh', 's fgh'], ['burgcherryher', 'bbbuher'], ['qwwe', 'qwwe'], ['fasacA', 'dsfldabbergasted'], ['m', 'm'], ['elderberryaffaa', 'a电电话mpaABCersand'], ['电子batmmtan', '电子batmtan'], ['bbu', 'buufaceless'], ['_a_bc', 'fgrKilofmkwieterh'], ['bbu', 'bb子u'], ['ampAaBCersand电电话话', '电电话'], [['water', 'wine', 'ccoffee', 'tea', 'beer', 'cocoa'], 'cfidelity'], ['电电话', 'Kfilometfaulr'], ['filmbqwQWERTYURIPOPefacetiousu', 'fiu'], ['1cabc', 'b'], ['1bcacbc', 'bcocoa'], ['ab11caabc1', 'ab1burghber1caabc1'], ['abare', 'aebare'], ['aabccfgfhqwertyuiop1', 'allphfabet'], ['bureaucracy', '电子batmtan'], ['burghber', 'buamputeeu'], ['qwwqe1cabc', '1cabc'], ['abcfidelityc1', 'ab'], ['amazon', 'amazon'], ['oocab1coa', 'oocab1coa'], ['s电asdforwardfgherman', 'spuperman'], ['wqqwqe', 'ai'], ['A SD FGH', 'A SD FGH'], ['afgKilofmkwieterhABCi', 'afgKilofmkwieterhABCi'], ['aallphfabet', 'abfanrfare'], [['water', 'wine', 'coffee', 'tea', 'beer', 'tea'], 'facadee'], ['abqweteacfidelifacadeetyyc1', 'abcfidelifacadeetyyc1'], ['qfdwwe', 'c'], ['fafaa', 'fafaa'], ['foothills', 'foothills'], ['forgive', 'forgive'], ['bbullfasacA SD FGHadeby', 'bbullby'], [['A SD FGH', 'qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'ASDFGH', 'ASDFGH'], 'fmazes'], ['bureaucracy', 'bu'], ['forward', 'f'], ['dsflbbergasted', 'dsfldabbergasted'], ['1bcacbc', '1bcacbc'], ['wqqewqe', 'qwwe'], [['', ' ', '\nelderberry', 'a', 'ab', 'abc', 'abcde', ''], 's fgh'], ['aabet', 'pams'], ['电电', '电face电tious'], ['burgjujisucherryher', 'yher'], [[''], 'a'], [[], 'xyz'], [['a', 'ab', 'abc'], ''], [['', '', ''], ''], [['asdf', 'b', '04', 'as df', 'as-df'], '-'], [['', '21', 'abc', '', '', 'asdf'], ' '], [[], 'a'], [['a', 'aa', 'ab', 'abc', 'aba'], 'a'], [['bcdef', 'efgh', 'hijk'], 'a'], ['fii', 'fi'], [['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'e'], ['fgh', '电'], ['fhgh', '电'], [['电影', '电话', '邮件'], '电superman'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], ''], ['fcoffeeii', 'fi'], ['fghJoyride', 'fgh'], ['honeydew', '电电'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'ab1', '1abc'], 'a'], ['alligator', 'fgh'], ['电', '电'], ['f', 'fgh'], ['fii', 'cocoa'], ['faceless', '电'], ['f电电gh', 'fgh'], ['abc_', 'QWERTYUIO'], ['gh', 'fgh'], ['a', 'application'], ['fampersandghJoyride', 'fgh'], ['\t', 'fgh'], ['honeydew', '电honeydew'], [['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'honeydew', 'jujube', 'kiwi', 'lemon'], ''], ['123', 'fgh'], [['abc', 'ABC', 'ab1c', '_abc', 'abc_', 'ab1', '1abc'], 'a'], ['qwecherry', 'qwe'], ['honeydeww', 'burgher'], ['fii', 'tea'], ['fampegrsandghJoyride', 'fgh'], [['电影', '电子', '电话', '邮件'], 'forward'], ['abelderrberry', 'abelderberry'], ['hfiduciaryew', 'hfiduciaryew'], ['fghh', 'forgive'], ['fii', 'jujube'], ['bulb', '电'], ['banana', 'banana'], ['abc_', 'QWERTYUIUO'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], 'fanfare'], ['fampegrsandghJoyride', 'fampegrsandghJoyride'], [['电影', '电子', '邮kiwi件', '电话', '邮件'], 'forward'], ['hfiduciaryew', 'tea'], ['facelaess', '电'], [['fii', '123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], ''], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'ab1', '1abc'], 'aa'], ['qwecherry', 'we'], [['电影', '电子', '电话', '电电子', '邮件'], '电'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], '电话a'], ['foliage', 'ab'], ['honeydGigabyteew', '电电'], ['honeydew', '1abc'], ['burdocdk', 'fgh'], ['fii', 'jjujube'], ['jjujubeaa', 'a'], ['bbfacelaessu', 'bbu'], [['电影', '电话'], '电superman'], ['forgive', 'a'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'QwertY'], 'qwwe'], ['hqwertyuioponeydew', 'honeydew'], ['a', 'burdocdk'], ['fhghh', 'forgfcoffeeiiive'], ['fii', 'jujubealphabet'], ['fcoffeeii', 'fgh'], ['bulb', 'fighoneydGigabyteew'], ['wine', 'qwwe电'], ['mops', 'qwertyuiop'], [['fii', '123', 'abc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], 'qwwe电'], [['123', 'abc', 'ab1c', '_abc', 'abc_', 'ab1', '1abc'], 'aqwecherry'], ['fii', 'facetious'], ['fiburdocki', 'a'], ['abelderrberry', 'abelderrberry'], ['hfiduciaryew', 'qwe'], [['apple', 'banana', 'cherry', 'durian', 'honeydewburgher', 'elderberry', 'fig', 'grape', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'e'], ['facelaessbatmanh', 'fgh'], ['fii', 'jujubue'], ['fanfare', '电'], ['jjinx', 'jinx'], ['kiwi', '邮kiwi件'], [['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'honeydewburgher'], ['honeydewburgher', 'honeydewburgher'], ['bbfacelaessu', 'ubbu'], ['fhgfhh', 'fhghh'], ['f', 'ABC'], ['facwineeless', 'forgive'], ['QWERTYUIO', 'qwe'], ['jjujubeaa', 'ASD FGH'], ['abeldery', 'abelderrberry'], ['fanfare', 'f电电gh'], ['cocofghh', 'cocoa'], ['we电', '电'], ['邮', 'foliage'], ['abc_', 'abc_'], ['f电电gh', 'f电电gh'], [['123', 'abc', 'ABC', 'ab1c', '_abc', 'durian', 'abc_', '1abc'], 'amorous'], ['burdocd邮件k', 'fgh'], ['pamsfii', 'jjujube'], ['fcoffeeii', '电话a'], ['邮件', 'fiduciary'], ['honeydew', 'oneydew'], ['qwecherwghry', 'qabcwecherwry'], ['cocofghh', 'fi'], [['电影', '电子', '电话', '邮件', '电子'], 'hqwertyuioponeydew'], ['f电电gh', 'f电电ghfavicon'], ['f电电gh', 'f电电ghfaon'], ['f', 'maple'], ['facelaessbatmanh', '电电'], ['amazon', '电superman'], ['fantasy', 'jinx'], ['fii', 'fii'], ['fiif', 'fi'], ['qwecdurianherry', 'we'], [['\n'], 'superman'], ['SffUs', 'BOY'], ['winne', 'winnfoolish'], ['amazon', 'a'], ['ffii', 'fi'], ['amazon', 'fighoneydGigabyteew'], [['amy', 'apple', 'pams', 'amputee', 'maple', 'mops', 'apple'], 'a'], ['cocofghh', 'fijujubealphabet'], ['1abc', 'fhghh'], ['hfiduciaryew', 'foliage'], ['fhghh', 'fhghh'], ['abc_', 'QWERTYUIRO'], ['azmazon', 'amazon'], ['yfampegrsandghJoyride', 'abcfgh'], ['fhgfilterh', '电'], ['fhghh', '电话a'], ['amazolemonn', 'amazoon'], ['foothills', 'fhgfilterh'], ['SffUs', '电'], ['ejjujube', 'jjujube'], [['123', 'abc', 'ABC', 'ab1c', 'abc_', 'abc1', '1abc'], 'fanfare'], ['QwertY', 'fii'], ['fcoffeeifi', 'burgher'], ['ifii', 'jujubfhghe'], ['honeydew', 'ohqwertyuioponeydewew'], ['fi', 'fi'], ['SffUs', 'SfffUs'], ['jiinx邮i件', 'fantasy'], ['ASD FGH', '电电'], ['bbefacelaessu', 'bbuubbu'], ['jjinx', 'jxinx'], ['maplp', 'maplpe'], ['babc_', 'abc_'], ['abac_', 'abc_'], ['azmazon', 'SfffUs'], ['honeydew', 'howneydew'], [['电影', '电话'], '电supesrman'], [['电影', '电子', '邮kiwi件', '电话'], 'forward'], ['batman', '电'], ['facade', 'jjujube'], ['f电电gh', 'application'], [['电影', '电话', '邮件'], '电'], ['honeydew', '电电forward'], ['\t', '\t'], ['wwe', 'we'], ['fi', '电'], ['abc1', 'fighoneydGigabytfhghyeew'], ['mops', 'mops'], ['foliage', 'foliage'], ['fiif', 'ifi'], ['abeldberrberry', 'abelderrberry'], [['qwerty', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH', 'ASDFGH'], 'qwe'], ['burdocddk', 'burdocddk'], ['abac_', 'burGigabytedocodkfgh'], ['foothills', 'qwecdurianherry'], ['fcoffebureaucuracyeiSfffUsi', 'fcoffeeii'], ['amazolemonn', 'bbuubbu'], ['mapl', 'maplpe'], [['bman'], 'superman'], ['f', 'fiduciary'], [['apple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bbu'], [['bman'], 'suhowneydewpefhghrman'], ['\t', 'facelaess'], ['bu', 'qabcwecherwry'], ['fhgh', '1abc'], ['fighoneforwarddGigabytfhghyeew', 'fighoneforwarddGigabytfhghyeew'], ['bbbuubbu', 'bbbuubbu'], ['a', 'cocoa'], [['apple', 'banana', 'cherry', 'durian', 'honeydewburgher', 'elderberry', 'fig', 'grape', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'ambulance'], ['fhgfhh', '电电'], ['qwertyuiop', 'fghazmazon'], ['fiburcki', 'a'], ['f1ab', 'facetious'], ['amperabeldberrberryand', 'foiburdocki'], ['qwecdurjinxry', 'we'], ['fhghhfacelaessbhatmanh', 'afijujubealphabet电话a'], [['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'kiapplicationwi', 'honeydew', 'jujube', 'kiwi', 'lemon'], 'honeydewburgher'], ['fgifiih', 'f'], ['winne', 'abelderberry'], ['ccocofghhocofghh', 'fi'], ['ASD', 'abelderberry'], ['fhjujubfhghegh', 'fhgh'], ['bu', '邮kiwi件'], ['abc_', 'jinx'], ['SffUs', 'SfsfUs'], ['SffUUs', 'SffUUs'], ['电电', '电a话a'], ['fbananaary', 'fbananaary'], ['电电电', '电电'], ['azmazaon', 'qwecdurianherry'], ['ampersand', 'ampersand'], ['amfbananaaryperabeldberrberryand', 'ubbu'], ['\tpamsfii', 'fghh'], ['fhgfhh', '电wqwe电'], [['电影', '电子', '电话', '邮件', '电子'], 'amperabeldberrberryand'], ['bbulb', 'ASDFGH'], ['f电电gh', 'f电电ghfaflabbergastedon'], ['123', '电'], ['电honeydew', 'fii'], ['mapl', 'a'], ['f1ab', '邮kiwi件'], ['banana', 'fampegrsandghJoyride'], [['qwerty', 'asdfgh', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'as fgh', 'ASD FGH'], 'qwe'], ['QwertY', 'QwertY'], ['ifi', 'fi'], ['\n', '\n'], [['123', 'ab', 'abc', 'ABC', 'ab1c', 'abc_', 'abc1', '1abc', 'abc_'], 'lemon'], ['SffUUs', 'fhgh'], ['SUfsfUs', 'SUfsfUs'], ['f电电gh', 'f电电ghh'], ['fghazmazon', 'fighoneydGigabyteew'], [['qwerty', 'asdfgh', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'favicon', 'ASD FGH'], 'qbatmanwne'], ['fabric', 'fhghh'], ['fgh', 'bbbuubbu'], ['fiburddocki', 'a'], ['honeydew', 'abc_'], ['hfiduew', 'hfiduciaryew'], ['fii', 'fiii'], ['fantasy', 'fatasy'], ['abelrderberry', 'abelrderberry'], [['电影', '电子', '电话', '邮件'], '电电'], ['amazolemonn', 'amazzoon'], [['appple', 'application', 'airport', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bbu'], ['qwehoneydewburgher', 'qwe'], [['fii', '123', 'abc', 'ABC', 'ab1c', 'bbulb', 'abc_', 'abc1', '1abc'], 'qwwe电'], ['fb1ab', '邮kiwi件'], ['fii', 'ju电wqwe电jube'], ['bcoffeebulb', 'ASDFGH'], ['qfwecdurianher电电电ry', 'foothills'], ['f电电gh', 'Kilometer'], ['fighoneydGigabytfhghyeew', 'fighoneydGigabytfhghyeew'], ['tea', 'tea'], ['Kilometer', 'ifi'], ['efacelaessburdocddk', 'facelaessburdocddk'], ['电honapplicationeydew', '电honeydew'], ['bbuuubbu', 'gh'], ['cherrybanana', 'banana'], ['batmabn', 'batman'], ['coocofampegrsandghJoyridefghhwine', 'coocofghhwine'], ['fhgh', 'fh'], ['amazolemonn', 'amaazoon'], ['fhgh', '1ab'], ['fantfhgfilterhasy', 'fantasy'], ['jiinx邮i件', 'jiinx邮i件'], ['fiig', 'fig'], ['fggh', 'bbbuubbhoneydewu'], ['电SffUs电', '电电'], ['ampersand', 'abelderberry'], ['A', 'ASDFGH'], ['\t', 'forgfcoffeeiiivefg'], ['jjin电SffUs电x', 'jxinx'], ['电superman', '电superman'], ['alligator\t', '\t'], ['amperabeldberrberryandjujubfhghe', 'jujubfhghe'], [['电coffee影', '电话'], '电supesrman'], ['fighoneydGigabytfhghyeamazolemonnew', 'fighoneydGigabytfhghyeew'], ['fbanyanaary', 'fbananaary'], ['fighoneydGigabytfhghyeama邮zolemonnew', 'fighoneydGigabytfhghyeew'], ['bu', 'qabecwbbuy'], ['jujube', '1ab'], ['hfiduciaryew', 'fiii'], ['mops', '12fgifiih3'], ['oneydew', 'oneydew'], ['ASD FGH', 'ASD FGH'], ['cocofghh', 'f电电ghfaflabbergastedon'], ['honeydew', '电'], ['bappleman', 'fatasy'], ['hqwertyuioponeydew', 'hqwertyuioponeydew'], ['bb电coffee影uuubbu邮jjinx', 'gh'], ['qwecdurianherry', 'qwecdurianheramiablery'], ['ccocofghhocofghh', 'fantfhgfilterhasy'], ['jujubue', 'jiinx邮i件'], ['facelaess', 'facelaess'], ['foiburdockia', 'foiburdockia'], ['a', 'applicaburdocktabcion'], ['faecelaess', 'fgghh'], ['alphabet', '邮kiwi件'], ['hqwertyuioponeydew', 'hqwerty电supesrmanuioponeydew'], ['jjujubeaa', 'bbu'], ['fabelderrberrygh', 'fabelderrberrygh'], ['电电子burrow', 'burrow'], ['ftoothills', 'qwecdurianherry'], ['jiinx邮i件', 'fbbuuubby'], ['ba\nbc_', 'abc_'], ['电suuperman', '电superman'], ['qwerty', '电电话a'], ['电supean', '电superman'], ['电电', '电ifiiju电wqwe电jube'], ['fantfhgfilterhasy', 'fantasay'], ['burdocdk', 'oneydew'], ['abelerbry', 'abelerry'], [['fii', '123', 'aabc', 'ABC', 'ab1c', '_abc', 'abc_', 'abc1', '1abc'], 'qwwe电'], ['fighoneydGigabytfhghyeew', '\n'], ['bb电coffee影uuubbu邮jojinx', 'bb电coffee影uuubbu邮jjinx'], ['ae', 'a'], [['电影', '电子', '邮kiwi件', '电话'], 'forwardburGigabytedocodkfgh'], ['电fhgh', '电'], ['abelerbry', 'alligator\t'], ['gfhgfhh', 'gfhgfhh'], [['appple', 'application', 'alligator', 'alphabet', 'ampoule', 'amazon', 'amorous', 'amaze', 'ampersand', 'amputee', 'ambulance', 'amiable', 'butter', 'budget', 'buds', 'bureaucracy', 'burgher', 'business', 'burrow', 'build', 'bully', 'bulge', 'bulb', 'bulldog', 'burdock'], 'bbu'], [['maplp'], 'suhowneydewpefhghrman'], ['amperabefoothillsldberhqwertyuioponeydewrberryand', 'amperabeldberrberryand'], ['fcoffeeii', 'fcoffeeii'], ['电电forward', 'abelderberry'], ['bannana', 'banana'], ['qfwecdurianher电电电ry', 'qfwecdurianher电电电ry'], ['ejjujube', 'amiable'], ['电', '电电'], ['fhwine', 'fhwine'], ['qwwe电', '电qwwe电'], ['qwecdurianheramiableryfoothills', 'qwecdurianherry'], ['fighoneydGigabw', 'fighoneydGigabyteew'], ['mopss', 'mops'], ['fh', 'bbuu'], ['acade', 'efacelaessburdocddk'], ['lalligator\t', 'lalligator\t'], ['a', 'aforgive'], ['burgher', 'burgher'], ['alligator\t', '\tffb1abault'], ['fighoneydGijjujubeaagabyteew', 'fighoneydGigabyteew'], ['abcc_', 'abc_'], ['jjinx', 'fabelderrberryi'], ['abelderberry', 'abelderberry'], ['burGigabytedocodkfgh', 'burGigabytedocodkfgh'], ['foigve', 'forgigve'], ['fhjujubfhghegh', 'bbu'], ['ASADFGH', 'ASDFGH'], ['f电电ghfaviconabc_', 'f电电ghfaviconabc_'], ['abelrderemopssberry', 'abelrderberry'], ['ffii', 'fiburddocki'], ['filter', 'fhghapplicaburdocktabcionhfacelaessbhatmanh'], ['jujubealphabet', '电'], ['QWERTYUIOP', 'QWERTYUIOP'], ['honeydew', 'honeydew'], ['honeyde', '1abc'], ['bu', '电superman'], ['Kilometemapl', 'azmazon'], ['\tpamsfii', 'gh'], ['bb电coffee影uuubbu邮jojinx', 'fabelderrberryi'], ['FGH', 'bbuu'], ['fbbuuubby', 'QWERTbuYUIOP'], ['jujubealphabet', 'film'], ['fggh', 'bbbuubbu'], ['电电forwardKilometemapl', '电电forward'], ['fiigh', 'fiigh'], ['fcoffebureaucuracyeiSfffsi', 'fcoffeeii'], ['eQwertaY', '电话a'], ['ccocofghhocofghh', '电superman'], ['babc_', 'qabecwbbuy'], ['ab', 'ftoothills'], ['fcoffeeii', 'facelaessbatmanh'], ['fcoffeeii电superman', '电话a'], ['howneydewfghJghoyride', 'fghJoyride'], ['fighoneydGigabyteew', '电话a'], ['watreer', 'water'], [['apple', 'banana', 'cherry', 'durian', 'honeydewburgher', 'elderberry', 'fig', 'grape', 'honeydew', 'jujube', 'kiwi', 'cocofghh', 'lemon'], 'ambulance'], ['efacelaessburdocd', 'facelaessburdocddk'], ['qabcwecherwry', 'hfidrew'], ['kiwi', 'kiwi'], ['amaazflabbergastedoon', 'amazolemonn'], ['电honeydew', 'fi'], ['bulance', 'ambulance'], ['fggh', 'buds'], ['fiburcki', 'fiburcki'], ['apple', 'efacelaessburdocd'], [['qwerty', 'asdfgh', '电a话a', 'QwertY', 'qwertyuiop', 'QWERTYUIOP', 'asdfgh', 'ASDFGH', 'favicon', 'ASD FGH'], 'qbatmanwne'], ['f电电gh', 'bulge'], ['heoneydew', 'heoneydew'], ['fijujubealphabet', 'bbbuubbu'], ['bb电coffee影uuubbu邮jojinx', 'winne'], ['honeydGigabyteew\t', 'honeydGigabyteew\t'], ['电电子', 'FGH电电子'], ['Joyride', '电'], ['jujubue电', 'jujubue电'], ['fgh', 'bbbu电电ubbu'], [['123', 'fabric', 'ab1c', '_abc', 'abc_', 'ab1', '1abc'], 'aqwecherry']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the problem:
+
+```python
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [s for s in strings if s.startswith(prefix)]
+
+# Test cases</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+# Test cases
+assert filter_by_prefix([], 'a') == []
+assert filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a') == ['abc', 'array']</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+
+def filter_by_suffix(strings: List[str], suffix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that end with a given suffix.
+    >>> filter_by_suffix([], 'a')
+    []
+    >>> filter_by_suffix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.endswith(suffix)]
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain a given substring.
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if substring in s]
+
+
+def filter_by_regex(strings: List[str], regex: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match a given regular expression.
+    >>> filter_by_regex([], 'a')
+    []
+    >>> filter_by_regex(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    import re
+    return [s for s in strings if re.search(regex, s)]
+
+
+def filter_by_length(strings: List[str], length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that have a given length.
+    >>> filter_by_length([], 1)
+    []
+    >>> filter_by_length(['abc', 'bcd', 'cde', 'array'], 3)
+    ['abc', 'bcd', 'cde']
+    """
+    return [s for s in strings if len(s) == length]
+
+
+def filter_by_length_range(strings: List[str], min_length: int, max_length: int) -></code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+
+
+# Test cases
+assert filter_by_prefix([], 'a') == []
+assert filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a') == ['abc', 'array']</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I can help with that. Here's a Python function that filters a list of strings based on a given prefix:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+```
+
+This function uses list comprehension to iterate over the input list of strings. It checks each string to see if it starts with the provided prefix using the `startswith()` method. If it does, the string is included in the new list that is returned. If not, it's excluded.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+# Test cases
+assert filter_by_prefix([], 'a') == []
+assert filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a') == ['abc', 'array']</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [string for string in strings if string.startswith(prefix)]
+
+print(filter_by_prefix([], 'a'))  # []
+print(filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a'))  # ['abc', 'array']</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+
+def filter_by_suffix(strings: List[str], suffix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that end with a given suffix.
+    >>> filter_by_suffix([], 'a')
+    []
+    >>> filter_by_suffix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'cde']
+    """
+    return [s for s in strings if s.endswith(suffix)]
+
+
+def filter_by_length(strings: List[str], length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that have a given length.
+    >>> filter_by_length([], 1)
+    []
+    >>> filter_by_length(['abc', 'bcd', 'cde', 'array'], 4)
+    ['abc', 'bcd', 'cde']
+    """
+    return [s for s in strings if len(s) == length]
+
+
+def filter_by_length_range(strings: List[str], min_length: int, max_length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that have a given length.
+    >>> filter_by_length_range([], 1, 2)
+    []
+    >>> filter_by_length_range(['abc', 'bcd', 'cde', 'array'], 2, 4)
+    ['abc', 'bcd', 'cde', 'array']
+    """
+    return [s for s in strings if min_length <= len(s) <= max_length]
+
+
+def filter_by_length_range_2(strings: List[str], min_length: int, max_length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that have a given length.
+    >>> filter_by_length_range_2([], 1, 2)
+    []
+    >>> filter_by_length_range_2(['abc', 'bcd', 'cde', 'array'], 2, 4)
+</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+This function uses a list comprehension to iterate over the input list of strings. The `startswith` method is used to check if each string starts with the given prefix. If it does, the string is included in the output list.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+
+
+if __name__ == "__main__":
+    strings = ['abc', 'bcd', 'cde', 'array']
+    prefix = 'a'
+    result = filter_by_prefix(strings, prefix)
+    print(result)</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    filtered_strings = []
+    for string in strings:
+        if string.startswith(prefix):
+            filtered_strings.append(string)
+    return filtered_strings</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+
+    :param strings: List of strings
+    :param prefix: String prefix
+    :return: List of strings that start with the given prefix
+    """
+    return [s for s in strings if s.startswith(prefix)]
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+
+
+# Test cases
+if __name__ == "__main__":
+    print(filter_by_prefix([], 'a'))
+    print(filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a'))</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+
+# Testing the function
+print(filter_by_prefix([], 'a')) # should return []
+print(filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')) # should return ['abc', 'array']</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    """
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+The `filter_by_prefix` function takes two arguments: `strings`, which is a list of strings, and `prefix`, which is a string that the function will use to filter the list. The function returns a new list containing only the strings that start with the given prefix.
+
+The function uses a list comprehension to iterate over the input list of strings and return a new list containing only the strings that start with the given prefix. The `startswith` method is used to check if each string starts with the given prefix.
+
+Here are some test cases:
+
+```python
+>>> filter_by_prefix([], 'a')
+[]
+>>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+['abc', 'array']
+```
+
+The first test case checks that the function returns an empty list when the input list is empty. The second test case checks that the function returns a new list containing only the strings that start with the given prefix.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+This function uses a list comprehension to iterate over the input list of strings and only include those that start with the given prefix. The `startswith` method is used to check if a string starts with a certain prefix.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+
+def filter_by_suffix(strings: List[str], suffix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that end with a given suffix.
+    >>> filter_by_suffix([], 'a')
+    []
+    >>> filter_by_suffix(['abc', 'bcd', 'cde', 'array'], 'e')
+    ['cde']
+    """
+    return [s for s in strings if s.endswith(suffix)]
+
+
+def filter_by_regex(strings: List[str], regex: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match a given regex.
+    >>> filter_by_regex([], 'a')
+    []
+    >>> filter_by_regex(['abc', 'bcd', 'cde', 'array'], 'e')
+    ['cde']
+    """
+    return [s for s in strings if re.match(regex, s)]
+
+
+def filter_by_regex_ignorecase(strings: List[str], regex: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match a given regex,
+    ignoring case.
+    >>> filter_by_regex_ignorecase([], 'a')
+    []
+    >>> filter_by_regex_ignorecase(['abc', 'bcd', 'cde', 'array'], 'e')
+    ['cde']
+    """
+    return [s for s in strings if re.match(regex, s, re.IGNORECASE)]
+
+
+def filter_by_regex_ignorecase_and_prefix(strings: List[str], regex: str, prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match a given regex,
+    ignoring case, and start with a given prefix.
+    >>> filter_by_regex_ignorecase_and_prefix([], 'a', 'a')
+    []
+    >>> filter_by_regex_ignorecase_and_prefix(['abc', 'bcd', 'cde', 'array</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+
+</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+This script defines a function `filter_by_prefix` that takes two arguments: a list of strings `strings` and a string `prefix`. The function returns a new list containing only the strings from the input list that start with the given prefix. The function uses a list comprehension to filter the input list based on the `startswith` method of each string.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix. """
+    return [s for s in strings if s.startswith(prefix)]
+
+# Test cases
+print(filter_by_prefix([], 'a'))  # []
+print(filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a'))  # ['abc', 'array']</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]
+```
+
+The `filter_by_prefix` function takes in a list of strings and a prefix as input and returns a new list of strings that only contain the strings that start with the given prefix. We use a list comprehension to iterate through each string in the input list and check if it starts with the given prefix using the `startswith` method. If it does, we add it to the new list. If not, we skip it. Finally, we return the new list. If the input list is empty, we return an empty list. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+
+    return [s for s in strings if s.startswith(prefix)]
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    filtered_strings = [s for s in strings if s.startswith(prefix)]
+    return filtered_strings
+```
+
+This code defines a function `filter_by_prefix` that takes in a list of strings `strings` and a prefix string `prefix`. It filters the input list by only keeping the strings that start with the given prefix. The filtered strings are stored in the `filtered_strings` list, which is then returned as the result.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in markdown style:
+
+```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """
+    Filter an input list of strings only for ones that start with a given prefix.
+
+    Examples:
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+This function uses list comprehension to create a new list that only includes strings that start with the given prefix.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [string for string in strings if string.startswith(prefix)]
+
+# Test cases
+print(filter_by_prefix([], 'a'))  # Output: []
+print(filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a'))  # Output: ['abc', 'array']
+```
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+
+    :param strings: The input list of strings
+    :param prefix: The prefix to filter for
+    :return: A new list containing only the strings that start with the given prefix
+
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [string for string in strings if string.startswith(prefix)]</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    result = []
+    for string in strings:
+        if string.startswith(prefix):
+            result.append(string)
+    return result</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    filtered_strings = []
+    for string in strings:
+        if string.startswith(prefix):
+            filtered_strings.append(string)
+    return filtered_strings
+
+
+if __name__ == "__main__":
+    print(filter_by_prefix([], 'a'))
+    print(filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a'))</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+
+    return [string for string in strings if string.startswith(prefix)]
+
+
+def filter_by_suffix(strings: List[str], suffix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that end with a given suffix.
+    >>> filter_by_suffix([], 'a')
+    []
+    >>> filter_by_suffix(['abc', 'bcd', 'cde', 'array'], 'y')
+    ['array']
+    """
+    return [string for string in strings if string.endswith(suffix)]
+
+
+def filter_by_substring(strings: List[str], substring: str) -> List[str]:
+    """ Filter an input list of strings only for ones that contain a given substring.
+    >>> filter_by_substring([], 'a')
+    []
+    >>> filter_by_substring(['abc', 'bcd', 'cde', 'array'], 'ar')
+    ['array']
+    """
+    return [string for string in strings if substring in string]
+
+
+def filter_by_length(strings: List[str], length: int) -> List[str]:
+    """ Filter an input list of strings only for ones that have a given length.
+    >>> filter_by_length([], 3)
+    []
+    >>> filter_by_length(['abc', 'bcd', 'cde', 'array'], 3)
+    ['abc', 'bcd', 'cde']
+    """
+    return [string for string in strings if len(string) == length]
+
+
+def filter_by_pattern(strings: List[str], pattern: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match a given pattern.
+    >>> filter_by_pattern([], 'a*')
+    []
+    >>> filter_by_pattern(['abc', 'bcd', 'cde', 'array'], 'a*')
+    ['abc', 'array']
+    """
+    return [string for string in strings if re.match(pattern, string)]
+
+
+def filter_by_regex(strings: List[str], regex: str) -> List[str]:
+    """ Filter an input list of strings only for ones that match a given regex.
+    >>> filter_by_regex([], 'a*')
+    []
+    >>> filter_by_regex(['abc', 'bcd', 'cde', 'array'], 'a*')
+    ['abc', 'array']
+    """
+    return [string for string in strings if</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> python-code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List
+
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List
+
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    >>> filter_by_prefix([], 'a')
+    []
+    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')
+    ['abc', 'array']
+    """
+    return [s for s in strings if s.startswith(prefix)]</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

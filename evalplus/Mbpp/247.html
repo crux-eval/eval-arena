@@ -1,0 +1,1707 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> Mbpp/247 </h1>
+<pre><code> """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+def lps(str1): 
+	n = len(str1)
+	dp = [[0] * n for _ in range(n)]
+	for i in range(n - 1, -1, -1):
+		dp[i][i] = 1
+		for j in range(i + 1, n):
+			if str1[i] == str1[j]:
+				dp[i][j] = dp[i + 1][j - 1] + 2
+			else:
+				dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+	return dp[0][n - 1]
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [['TENS FOR TENS'], ['CARDIO FOR CARDS'], ['PART OF THE JOURNEY IS PART']] </code></pre>
+<h2>plus input</h2>
+<pre><code> [['NDZWBHEJKTPQGAOSLYCRMYEX'], ['AAAAAAA'], ['BBBBBBBBB'], ['CCCCCCCCCCCC'], ['CCCCCCCAAAAAAACCCCC'], ['CCCCCCCAAAAAABBBBBBBBBCCCCC'], ['BBBBBBBBBB'], ['CCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCC'], ['CCCCCCCAACCCCCCCCCCCCCAAAAACCCCC'], ['NDZWBCCCCCCCAACCCCCCCCCCCCCAAAAACCCCCHCRMYEX'], ['CCCCCCCCCCCCCCCCCCCAAAAAAACCCCC'], ['BNDZWBHEJKTPQGAOSLYCRMYEXBBBBBBBBB'], ['CCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCCAAAAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['AAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCA'], ['CCCCCCCCCCCCC'], ['CCCCCCCCCCCCCCCCCCCCAAAAAA'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCCCAAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCCCCCCAAAAAACCCCCCCCCCCCCCCCAAAAAA'], ['BBBBBBBAAAAAAABBB'], ['AAAACCCCCCCAAAAAABBBBBBBBBCCCCCAAA'], ['CCCCCCCAACCCCCCCCCCCCCAAAACCC'], ['AAAAAACCCCCCCCCCCCCCCCCCCCAAAAAA'], ['CCCCCCCAACCCCCCCCCCCCCAAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCAAAAAABBBBBBBBBCCCCCCCCCCCCCCCCCC'], ['CCCCCCCAACCCCCCCCCCCCCCAAAACYCCCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCCCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['BBBBBBBBBBB'], ['CCCCAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCACCCCCAAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCBBBBBBBBBAAAAAAACCCCC'], ['BBBBBBBBBBBB'], ['CCCCCCCCCCCCCCCAAAAAAACCCCCAAAAAA'], ['CCCCCCCCCCCCCCCAAAAAAACCCCAAAAAA'], ['BCCCCCCCBBBBBBBBBAAAAAAACCCCC'], ['CCCCCCCACACCCCCCCCCCCCCAAAAACCCCC'], ['BBBBBBBBAAAAAAABBB'], ['CCCCCCNDZWBCCCCCCCAACCCCCCCCCCCCCAAAAACCCCCHCRMYEXCCCCCC'], ['CCCCCCCACAACCCCCCCCCCCCCAAAAACCCCC'], ['CCCCCCCAAACCCCCCCCCCCCCAAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCAAAAAABBCCCCCCCCCCCCCCCCCCCCAAAAAABBBBBBBCCCCCCCCCCCCCCCCCC'], ['AAAAAACCCCCCCAACCCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCA'], ['CCCCCCCCAACCCCCCCCCCCCCAAAAACCCCC'], ['CCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCCCCCCAAAAAACCCCCCCCCCCCCCCCACCCCCCCBBBBBBBBBAAAAAAACCCCCAAAAA'], ['AAAACCCCCCCAAAAAABBBBBBBCCCCCAAA'], ['CCCCCCCCCCCCACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['NDZWBHEJKTPQGAOSLDYCRMYEX'], ['CCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCACCCCCAAAAACCCCCCCCC'], ['AAAACCCCCCCCAAAAAABBBBBBCCCCAAA'], ['CCCCCCCACAACCCCCCCCCCCCCAAAAACCCCCC'], ['AAAAAACCCCCCCAACCACCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCA'], ['CCCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['AAAACCCCCCCCAAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCAAAAAABBBBBBCCCCAAA'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAA'], ['CCCCCCCACACCCCCCNDZWBHEJKTPQGAOSLDYCRMYEXCCCCCCCAAAAACCCCC'], ['AAAAAACCCCCCCAACCACCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCACAAACCCCCA'], ['CCCCCCNDZWBCCCCCCCAACCCCCCCCCCCCCCCAAAAACCCCCHCRMYEXCCCCCC'], ['CCCCCCCCCCACACCCCCCNDZWBHEJKTPQGAOSLDYCRMYEXCCCCCCCAAAAACCCCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCAAAAAABBCCCCCCCCCCCCCCCCCCCCAAAACCCCCCCCCAAAAACCCCCAABBBBBBBCCCCCCCCCCCCCCCCCC'], ['CCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCACCCCCAAAAACCCCCCCCC'], ['AAAACCAAA'], ['CCCCCCCAAAAAABBBB'], ['M'], ['CCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCCCCACACACCCCCCCCCCCCCAAAAACCCCCCCCCAAAACCCCC'], ['xZQOogNh'], ['CCCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCACACCCCCCCCCCCCCAAAAACCCCCMYEXCCCCCAAAACCCCC'], ['AAAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCAAAAACCCCCCCCCCCCCCCCCCCCAAAAAA'], ['ACCCCCCCCCCACACCCCCCNDZWBHEJKTPQGAOSLDYCRMYEXCCCCCCCAAAAACCCCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCCRMYEXCCCCCAAAACCCCCAAACCCCCCCAAAAAABBBBBBBCCCCCAAA'], ['NDZWBHEJKOSLDYCRMYEX'], ['ACCCCCCCCCCACACCCCCCNDZWBHEJKTPQGAOSLDYCRMYEXCCCCCCCAAAAACCCCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAACCCCCCCCCCCCCCCAAAAAAACCCCCAAAAAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCCRMYEXCCCCCAAAACCCCCAAACCCCCCCAAAAAABBBBBBBCCCCCAAA'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZAAAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCAAAAACCCCCCCCCCCCCCCCCCCCAAAAAAWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAA'], ['CCCCCCCC'], ['CCCCNDZWCBHEJKTPQGAOSLYCRMYEXCCCCCCCCACACACCCCCCCCCCCCCAAAAACCCCCCCCCAAAACCCCC'], ['BBBBNDZWBHEJKTPQGAOSLDYCRMYEXBBBBBB'], ['AAAAAAAA'], ['Q'], ['CCCCCCAAABBBBBBBBBCCCCC'], ['CCCCCCCABAAAAAABBBB'], ['LCCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCC'], ['NDZWBCCCCCCBCCCCCCCBBBBBBBBBAAAAAAACCCCCCCCHCRMYEX'], ['BNDZWACCCCCCCCCCACACCCCCCNDZWBHEJKTPQGAOSLDYCRMYEXCCCCCCCAAAAACCCCCCCCCAAACCCCCCCCCCCCCACCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAAACCCCCRMYEXCCCCCAACCCCCCCCCCCCCCCAAAAAAACCCCCAAAAAAAACCCCCAAAAAAACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCCRMYEXCCCCCAAAACCCCCAAACCCCCCCAAAAAABBBBBBBCCCCCAAABHEJKTPQGAOSLYCRMYEXBBBBBBBBB'], ['NDZWBHEEJKOSLDYCRMYEX'], ['CCCCCCBAAABBBBBBBBBCCCCC'], ['CCCCCCBAAAABBBBBBBBBCCCCC'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZAAAAAAAACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCCAAAAACCCCCCCCCCCCCCCCCCCCAAAAAAWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAAAAA'], ['CCCCCNDZWBCCCCCCCAACCCCCCCCCCCCCAAAAACCCCCHCRMYEXCCAAAAAABBBB'], ['CCCCCCCCCCCCCCCCCCAAAAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCCCCCCCCCCCCCAAACCCCCCCAAAAAABBBBBBBBBCCCCCAAAACCCCCRMYEXCCCCCAAAACCCCC'], ['CCWCCCCCNDZWBHEJKTPQGAOSLYCRMNDZWBHEJKTPQGAOSLDYCRMYEXYEXCCCCC'], ['CCCCCCCCCCCCACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQCGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZCWBHEJKTPQGAOSLYCRMYEXCCCCCAAAACCCCC'], ['CCCCCCNDZWBCCCCCCCAACCCCCCCCCCCCCAAAAACCCCCHCRMYEXCBBBBBBBAAAAAAABBBCCCCC'], ['CCCCCCBAAABBBBBBBBBCCCCCC'], ['AAAAAACCCCCCCAACCACCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSCLYCRMYEXCCCCCACAAACCCCCA'], ['BCCCCCCCAAAAACCCCC'], ['NDZWBCCCCCCCAACCCCCCCCCCCCCAAAAACCCCCHCRMYEXNDAAAAAACCCCCCCAACCACCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCRMYEXCCCCCACAAACCCCCAZWBHEJKTPQGAOSLDYCRMYEX'], ['CCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGCCCCCCCACAACCCCCCCCCCCCCAAAAACCCCCCAOSLYCCCCCCCCCCCCCCCCCCCCAAACCCCCCCAAAAAABBBBBBBBBCCCCCAAAACCCCCRMYEXCCCCCAAAACCCCC'], ['BBBBBBCCCCCCCCCCCCCCCAAAAAAACCCCCAAAAAABBBBB'], ['CCCxZQOogNhCCCCCCCCCACCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQCGAOSLYCRMYEXCCCCCAAAACCCCC'], ['BBBBNDZWBHEBBBBBB'], ['CCCCCCCACACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCAACCCCCCCCCCCCCACCCCCCCNDZWBHEJKTPQGAOSLYCCCCCCCCACACCCCCCCCCCCCCAAAAACCCCCMYEXCCCCCAAAACCCCCCCAAAAACCCCC'], ['CCCCCCCCCCAACCCC']] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> code-llama-multi-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    """
+    :param s: string
+    :return: length of the longest palindromic subsequence
+    """
+    if not s:
+        return 0
+    if len(s) == 1:
+        return 1
+    dp = [[0 for _ in range(len(s))] for _ in range(len(s))]
+    for i in range(len(s)):
+        dp[i][i] = 1
+    for i in range(len(s) - 1):
+        if s[i] == s[i + 1]:
+            dp[i][i + 1] = 2
+    for i in range(len(s) - 2, -1, -1):
+        for j in range(i + 2, len(s)):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][-1]
+
+
+if __name__ == '__main__':
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR TENS"))
+    print(lps("TENS FOR T</code></pre>
+
+      <p> databricks--dbrx-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s: str) -> int:
+    """
+    Find the length of the longest palindromic subsequence in the given string.
+
+    :param s: str - the input string
+    :return: int - the length of the longest palindromic subsequence
+    """
+    n = len(s)
+
+    # Create a table to store results of subproblems
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+
+    # Strings of length 1 are palindrome of length 1
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Build the table. Note that the lower diagonal values of the table are useless and not filled in the process.
+    for cl in range(2, n + 1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> CohereForAI--c4ai-command-r-plus. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s: str) -> int:
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n + 1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+```</code></pre>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the solution wrapped in a Python markdown block:
+
+```python
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+
+    return dp[0][n - 1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0 for x in range(n)]for y in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n+1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> dolphin-2.6. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+def lps(s):
+    n = len(s)
+    dp = [[0 for x in range(n)] for x in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n+1):
+        for i in range(n-cl+1):
+            j = i+cl-1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the code to find the length of the longest palindromic subsequence in a given string, wrapped in a markdown block:
+
+```python
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    
+    # Base case: palindrome of length 1
+    for i in range(n):
+        dp[i][i] = 1
+    
+    # Fill the dp table
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            
+            if s[i] == s[j] and length == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    
+    return dp[0][n-1]
+
+# Test the function</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(s):
+    # Initialize an empty list to store the lengths of LPS for different substrings
+    lengths = [0 for _ in range(len(s))]
+
+    # Initialize start and max length of the longest palindrome
+    start = 0
+    maxLength = 1
+
+    # Iterate through the string
+    for i in range(1, len(s)):
+        # Check for even length palindrome substring
+        if i % 2 == 0:
+            # If the current character and the previous character are the same,
+            # then there is a possibility of an even length palindrome
+            if s[i] == s[i - 1]:
+                # Calculate the length of the even length palindrome
+                lengths[i] = lengths[i - 2] + 2
+                # Update the start and max length of the longest palindrome
+                if lengths[i] > maxLength:
+                    start = i - lengths[i] + 1
+                    maxLength = lengths[i]
+
+        # Check for odd length palindrome substring
+        else:
+            # If the current character and the character two steps before are the same,
+            # then there is a possibility of an odd length palindrome
+            if i + 1 < len(s) and s[i] == s[i + 1]:
+                # Calculate the length of the odd length palindrome
+                lengths[i] = lengths[i - 1] + 2
+                # Update the start and max length of the longest palindrome
+                if lengths[i] > maxLength:
+                    start = i - lengths[i] + 1
+                    maxLength = lengths[i]
+
+    # Return the length of the longest palindromic subsequence
+    return maxLength
+
+# Test the function
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> wizardcoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's a Python function that finds the length of the longest palindromic subsequence in a given string:
+
+
+```python
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+print(lps("TENS FOR TENS")) # Output: 5
+```
+
+Explanation:
+
+We use dynamic programming to solve this problem. We create a 2D array `dp` of size `n x n`, where `dp[i][j]` represents the length of the longest palindromic subsequence in the substring `s[i:j+1]`. We start by initializing the diagonal elements of `dp` to 1, since each character is a palindrome of length 1. Then, we iterate through the array in reverse order and fill in the remaining elements of `dp` based on the following recurrence relation:
+
+
+- If `s[i] == s[j]`, then the longest palindromic subsequence in `s[i:j+1]` is the longest palindromic subsequence in `s[i+1:j-1]` plus 2 (for the two matching characters).
+- Otherwise, the longest palindromic subsequence in `s[i:j+1]` is the maximum of the longest palindromic subsequences in `s[i+1:j]` and `s[i:j-1]`.
+
+Finally, we return `dp[0][n-1]`, which represents the length of the longest palindromic subsequence in the entire string `s`. </code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    # Every single character is a palindrome of length 1
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Check for substring of length 2
+    for i in range(n - 1):
+        if s[i] == s[i + 1]:
+            dp[i][i + 1] = 2
+        else:
+            dp[i][i + 1] = max(dp[i][i], dp[i + 1][i + 1])
+
+    # Check for substrings of length greater than 2
+    for k in range(3, n + 1):
+        for i in range(n - k + 1):
+            j = i + k - 1
+            if s[i] == s[j] and dp[i + 1][j - 1] == k - 2:
+                dp[i][j] = k
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(string):
+    n = len(string)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for i in range(n - 1):
+        if string[i] == string[i + 1]:
+            dp[i][i + 1] = 2
+
+    for i in range(n - 1, 0, -1):
+        for j in range(i + 1, n):
+            if string[i] == string[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+
+    return dp[0][n - 1]
+
+
+if __name__ == "__main__":
+    print(lps("TENS FOR TENS"))
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    # Create a table to store lengths of longest palindromic subsequence
+    dp = [[0] * n for _ in range(n)]
+    
+    # All substrings of length 1 are palindromes
+    for i in range(n):
+        dp[i][i] = 1
+    
+    # Check for sub-string of length 2
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 2
+        else:
+            dp[i][i+1] = 1
+    
+    # Check for lengths greater than 2
+    for L in range(3, n+1):
+        for i in range(n-L+1):
+            j = i+L-1
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    
+    return dp[0][n-1]
+
+# Test the function
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, I'd be happy to help with that. Here's a Python function that uses dynamic programming to solve the problem:
+
+```python
+def lps(s):
+    n = len(s)
+
+    # Create a table to store lengths of longest palindromic subsequences of substring s[i..j]
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+
+    # Strings of length 1 are palindrome of length 1
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Build the table. Note that the lower diagonal values of the table are useless and not filled in the process.
+    for cl in range(2, n+1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+
+# Test the function
+assert lps("TENS FOR TENS") == 5
+```
+
+This function works by creating a 2D table where the cell at the i-th row and j-th column represents the length of the longest palindromic subsequence of the substring from i to j. It then fills this table using a bottom-up approach, considering all possible substrings. The final result is stored in the cell at the 0-th row and (n-1)-th column.</code></pre>
+
+      <p> codegen-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+"""
+Write a function to find the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+"""
+Write a function to find the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s: str) -> int:
+    n = len(s)
+    # Create a table to store lengths of longest palindromic subsequences
+    dp = [[0] * n for _ in range(n)]
+
+    # Strings of length 1 are palindromes of length 1
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Consider all substrings
+    for cl in range(2, n + 1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+
+# Test the function
+assert lps("TENS FOR TENS") == 5
+assert lps("racecar") == 7
+assert lps("programming") == 3
+assert lps("abba") == 4
+assert lps("abcd") == 1</code></pre>
+
+      <p> codegemma-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 2
+        else:
+            dp[i][i+1] = 1
+    for l in range(3, n+1):
+        for i in range(n-l+1):
+            j = i+l-1
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    """
+    :param s:
+    :return:
+    """
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n - 1):
+        if s[i] == s[i + 1]:
+            dp[i][i + 1] = 2
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 2, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]
+
+
+if __name__ == '__main__':
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS FOR TENS") == 5
+    assert lps("TENS</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the length of the longest palindromic subsequence in the given string:
+
+```python
+def lps(s):
+    n = len(s)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = 2 + dp[i+1][j-1]
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+```
+
+This function uses dynamic programming to solve the problem. The `dp[i][j]` represents the length of the longest palindromic subsequence in the substring `s[i:j+1]`. The base case is `dp[i][i] = 1`, which means the length of the longest palindromic subsequence in a single character string is 1. For other cases, if `s[i]` is equal to `s[j]`, the length of the longest palindromic subsequence is `2 + dp[i+1][j-1]`, otherwise, it is the maximum of `dp[i+1][j]` and `dp[i][j-1]`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n+1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+
+    return dp[0][n-1]
+
+print(lps("TENS FOR TENS"))</code></pre>
+
+      <p> codet5p-6b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS")</code></pre>
+
+      <p> codegemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(text):
+    """
+    Write a function to find the length of the longest palindromic subsequence in the given string.
+    assert lps("TENS FOR TENS") == 5
+    """
+    n = len(text)
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n - 1):
+        if text[i] == text[i + 1]:
+            dp[i][i + 1] = 2
+    for i in range(n - 3, -1, -1):
+        for j in range(i + 2, n):
+            if text[i] == text[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+def lps(s):
+    n = len(s)
+    table = [[0 for _ in range(n)] for _ in range(n)]
+    longest = 0
+    start = 0
+
+    # All substrings of length 1 are palindromes
+    for i in range(n):
+        table[i][i] = 1
+        longest = 1
+
+    # Check substrings of length 2.
+    for i in range(n - 1):
+        if s[i] == s[i + 1]:
+            table[i][i + 1] = 2
+            longest = 2
+
+    # Check lengths from 3 to n.
+    for k in range(3, n + 1):
+        for i in range(n - k + 1):
+            j = i + k - 1
+            if s[i] == s[j] and table[i + 1][j - 1]:
+                table[i][j] = table[i + 1][j - 1] + 2
+                if table[i][j] > longest:
+                    longest = table[i][j]
+                    start = i
+
+    return longest
+
+# Test the function
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n - 1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i + 1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+
+    return dp[0][n - 1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+
+    return dp[0][n-1]
+```
+
+Explanation:
+
+We create a 2D array `dp` of size `n x n` where `n` is the length of the input string `s`. We initialize all the diagonal elements of the array to 1 since a single character is always a palindrome.
+
+We then iterate over the array diagonally from top-left to bottom-right. If the characters at the current indices are equal, we add 2 to the value in the `dp` array at the indices diagonally above and below the current indices. Otherwise, we take the maximum of the values in the `dp` array at the indices diagonally above and below the current indices.
+
+Finally, we return the value in the `dp` array at the indices `(0, n-1)` which represents the length of the longest palindromic subsequence in the input string.</code></pre>
+
+      <p> code-llama-34b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(string):
+    # find the longest palindromic subsequence in string
+    # return the length of the longest palindromic subsequence
+    pass
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function to find the length of the longest palindromic subsequence in the given string.
+
+```python
+def lps(s):
+    n = len(s)
+    # Create a table to store lengths of longest palindromic subsequences
+    dp = [[0]*n for _ in range(n)]
+
+    # Strings of length 1 are palindromes of length 1
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Fill dp[][] in bottom up manner
+    for cl in range(2, n+1):
+        for i in range(n-cl+1):
+            j = i+cl-1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+
+    return dp[0][n-1]
+
+# Test the function
+print(lps("TENS FOR TENS"))  # Output: 5
+```
+
+This function uses dynamic programming to solve the problem. It first initializes a 2D array `dp` where `dp[i][j]` stores the length of the longest palindromic subsequence in the substring `s[i..j]`. It then fills up this table in a bottom-up manner. The final answer is stored in `dp[0][n-1]`.
+</code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+</code></pre>
+
+      <p> codet5p-2b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS")</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]</code></pre>
+
+      <p> codegemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 2
+    for l in range(3, n+1):
+        for i in range(n-l+1):
+            j = i + l - 1
+            if s[i] == s[j] and dp[i+1][j-1] > 0:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+    return dp[0][n-1]
+<|file_separator|></code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    # Create a table to store results of subproblems
+    L = [[0 for _ in range(n)] for _ in range(n)]
+
+    # Strings of length 1 are palindromes of length 1
+    for i in range(n):
+        L[i][i] = 1
+
+    # Build the table in bottom up manner
+    for cl in range(2, n + 1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                L[i][j] = 2
+            elif s[i] == s[j]:
+                L[i][j] = L[i + 1][j - 1] + 2
+            else:
+                L[i][j] = max(L[i][j - 1], L[i + 1][j])
+
+    return L[0][n - 1]
+
+# Test the function
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s: str) -> int:
+    n = len(s)
+    # Create a table to store results of subproblems
+    dp = [[0] * n for _ in range(n)]
+
+    # All substrings of length 1 are palindromes
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Build the table in bottom-up manner
+    for cl in range(2, n+1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+
+# Test the function
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0 for x in range(n)] for x in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for cl in range(2, n+1):
+        for i in range(n-cl+1):
+            j = i+cl-1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+```
+
+This script defines a function `lps` that takes a string `s` as input and returns the length of the longest palindromic subsequence in the string. The function uses dynamic programming to solve the problem by creating a 2D array `dp` to store the lengths of the longest palindromic subsequences for all substrings of the input string. The function then iterates over all possible lengths of substrings and updates the `dp` array accordingly. Finally, the function returns the value of `dp[0][n-1]`, which represents the length of the longest palindromic subsequence in the entire input string.
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(s):
+    s = s.replace(" ", "").lower()
+    n = len(s)
+    L = [[0 for x in range(n)]for x in range(n)]
+    for i in range(n):
+        L[i][i] = 1
+    for cl in range(2, n+1):
+        for i in range(n-cl+1):
+            j = i+cl-1
+            if s[i] == s[j] and cl == 2:
+                L[i][j] = 2
+            elif s[i] == s[j]:
+                L[i][j] = L[i+1][j-1] + 2
+            else:
+                L[i][j] = max(L[i][j-1], L[i+1][j])
+    return L[0][n-1]
+</code></pre>
+
+      <p> stable-code-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = 2 + dp[i+1][j-1]
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS FOR TENS"))
+print(lps("TENS FOR TENS FOR TENS</code></pre>
+
+      <p> codegen-6b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 2
+        else:
+            dp[i][i+1] = 1
+    for i in range(2, n):
+        for j in range(n-i):
+            if s[j] == s[j+i] and dp[j+1][j+i-1] == i+1:
+                dp[j][j+i] = i+1
+            else:
+                dp[j][j+i] = max(dp[j][j+i-1], dp[j+1][j+i])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS") == 1
+assert lps("T") == 1
+assert lps("") == 0
+assert lps("A") == 1
+assert lps("AB") == 2
+assert lps("ABBA") == 4
+assert lps("ABBAA") == 4
+assert lps("ABBAAAB") == 6
+assert lps("ABBAAABB") == 6
+assert lps("ABBAAABBB") == 7
+assert lps("ABBAAABBBB") == 7
+assert lps("ABBAAABBBBB") == 8
+assert lps("ABBAAABBBBBB") == 8
+assert lps("ABBAAABBBBBBB") == 8
+assert lps("ABBAAABBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBBBBBBB") == 8
+assert</code></pre>
+
+      <p> gpt-4-1106-preview. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+import functools
+
+def lps(s):
+    @functools.lru_cache(maxsize=None)
+    def dp(l, r):
+        if l > r: return 0
+        if l == r: return 1
+        if s[l] == s[r]:
+            return 2 + dp(l + 1, r - 1)
+        return max(dp(l + 1, r), dp(l, r - 1))
+    return dp(0, len(s) - 1)
+
+assert lps("TENS FOR TENS") == 5
+</code></pre>
+
+      <p> gemma-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    lps_length = 0
+    for i in range(n):
+        for j in range(i, n):
+            sub_s = s[i:j+1]
+            if sub_s == sub_s[::-1] and len(sub_s) > lps_length:
+                lps_length = len(sub_s)
+    return lps_length</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def lps(s):
+    n = len(s)
+    dp = [[0]*n for _ in range(n)]
+
+    for i in range(n-1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = 2 + dp[i+1][j-1]
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+
+    return dp[0][n-1]
+
+print(lps("TENS FOR TENS"))</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n+1):
+        for i in range(n - cl + 1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n+1):
+        for i in range(n-cl+1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> wizardcoder-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  Here's a Python function to find the length of the longest palindromic subsequence in a given string:
+
+```python
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = 2
+            else:
+                for k in range(i+1, j):
+                    if s[i] == s[j]:
+                        dp[i][j] = dp[i+1][k] + dp[k+1][j] + 1
+                    else:
+                        dp[i][j] = max(dp[i+1][j], dp[i][k])
+    
+    return dp[0][n-1]
+```
+
+Explanation:
+
+We create a 2D array `dp` of size `n x n` where `n` is the length of the string `s`. We initialize the diagonal elements of the array to 1 because a single character is always a palindrome of length 1. Then, we iterate through the string from right to left and top to bottom, filling in the values of the array. For each pair of indices `(i, j)`, we check if the characters at those indices are the same. If they are, we set `dp[i][j]` to 2 because we can add the characters to form a palindrome of length 2. Otherwise, we take the maximum of the lengths of the substrings that can be formed by excluding either the `i`th or `j`th character. Finally, we return the value in the bottom right corner of the array, which represents the length of the longest palindromic subsequence.
+
+Example:
+
+```python
+s = "TENS FOR TENS"
+print(lps(s)) # Output: 5
+```
+
+The longest palindromic subsequence in `s` is "ENS FOR TENS". </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(str1):
+    n = len(str1)
+    lps = [0] * n
+    for i in range(n):
+        for j in range(i, n):
+            if str1[i] == str1[j] and (j - i + 1) > lps[i]:
+                lps[i] = j - i + 1
+    return lps[n - 1]</code></pre>
+
+      <p> deepseek-coder-6.7b-base. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n - 1, -1, -1):
+        for j in range(i + 1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]
+
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> codegen-16b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 2
+        else:
+            dp[i][i+1] = 1
+    for i in range(2, n):
+        for j in range(n-i):
+            if s[j] == s[j+i] and dp[j+1][j+i-1] == i+1:
+                dp[j][j+i] = i+1
+            else:
+                dp[j][j+i] = max(dp[j][j+i-1], dp[j+1][j+i])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS") == 1
+assert lps("T") == 1
+assert lps("") == 0
+assert lps("A") == 1
+assert lps("AB") == 2
+assert lps("ABBA") == 4
+assert lps("ABBAA") == 4
+assert lps("ABBAAAB") == 6
+assert lps("ABBAAABB") == 6
+assert lps("ABBAAABBB") == 7
+assert lps("ABBAAABBBB") == 7
+assert lps("ABBAAABBBBB") == 8
+assert lps("ABBAAABBBBBB") == 8
+assert lps("ABBAAABBBBBBB") == 8
+assert lps("ABBAAABBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBBBBB") == 8
+assert lps("ABBAAABBBBBBBBBBBBBB") == 8
+assert</code></pre>
+
+      <p> mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n - 1, -1, -1):
+        for j in range(i + 1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]
+
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0 for x in range(n)] for y in range(n)]
+    max_length = 0
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            if i == j:
+                dp[i][j] = 1
+            elif s[i] == s[j]:
+                dp[i][j] = 2 + dp[i + 1][j - 1]
+            max_length = max(max_length, dp[i][j])
+    return max_length
+
+assert lps("TENS FOR TENS") == 5
+```
+</code></pre>
+
+      <p> codet5p-16b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1, -1, -1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS") == 5
+assert lps("TENS FOR TENS")</code></pre>
+
+      <p> code-llama-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n - 1, -1, -1):
+        for j in range(i + 1, n):
+            if s[i] == s[j]:
+                dp[i][j] = 2 + dp[i + 1][j - 1]
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]
+
+
+if __name__ == "__main__":
+    assert lps("TENS FOR TENS") == 5
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: True, fail_plus: True </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    max_length = 0
+    for i in range(n):
+        low = i
+        high = i
+        while high < n and s[high] == s[i]:
+            high += 1
+        while low > 0 and high < n and s[low] == s[high]:
+            low -= 1
+            high += 1
+        max_length = max(max_length, high - low - 1)
+    return max_length
+
+# Test the function
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+def lps(string: str) -> int:
+    n = len(string)
+    L = [0] * (n + 1)
+    P = [0] * (n + 1)
+    result = 0
+
+    for i in range(1, n + 1):
+        for j in range(1, i + 1):
+            if string[j - 1] == string[i - 1]:
+                if j - 1 <= P[j] and i - 1 <= P[i]:
+                    P[i] = max(P[j], j - P[j] + 1)
+                    L[i] = max(L[j], j - P[j] + 1)
+                else:
+                    P[i] = P[j]
+                    L[i] = j - P[j] + 1
+
+        result = max(result, L[i])
+
+    return result
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> gemma-2b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    if len(s) == 0:
+        return 0
+    if len(s) == 1:
+        return 1
+    if s[0] == s[1]:
+        return 2
+    return max(lps(s[1:]), lps(s[2:]), lps(s[1:] + s[2:]))
+</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python code to find the length of the longest palindromic subsequence in a given string:
+
+```python
+def lps(s):
+    """
+    Returns the length of the longest palindromic subsequence in the given string.
+    """
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+
+    # Base case: single character is a palindrome of length 1
+    for i in range(n):
+        dp[i][i] = 1
+
+    # Fill the dp table in bottom-up manner
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            if s[i] == s[j] and length == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+    return dp[0][n - 1]
+
+"""
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+print(lps("TENS FOR TENS"))  # Output: 5</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for l in range(2, n+1):
+        for i in range(n-l+1):
+            j = i+l-1
+            if s[i] == s[j] and l == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+</code></pre>
+
+      <p> starcoder2-3b. fail_base: False, fail_plus: False </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 2
+        else:
+            dp[i][i+1] = 1
+    for l in range(3, n+1):
+        for i in range(n-l+1):
+            j = i+l-1
+            if s[i] == s[j]:
+                dp[i][j] = 2 + dp[i+1][j-1]
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("TENS FOR TENS"))
+print(lps("T</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  def lps(s):
+    n = len(s)
+    dp = [[0 for i in range(n)] for j in range(n)]
+
+    for i in range(n):
+        dp[i][i] = 1
+
+    for cl in range(2, n+1):
+        for i in range(n-cl+1):
+            j = i + cl - 1
+            if s[i] == s[j] and cl == 2:
+                dp[i][j] = 2
+            elif s[i] == s[j]:
+                dp[i][j] = dp[i+1][j-1] + 2
+            else:
+                dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+      <p> gemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  """
+Write a function to find the length of the longest palindromic subsequence in the given string.
+assert lps("TENS FOR TENS") == 5
+"""
+
+
+def lps(s):
+    n = len(s)
+    dp = [[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for i in range(n - 1):
+        if s[i] == s[i + 1]:
+            dp[i][i + 1] = 2
+    for i in range(n - 2):
+        for j in range(i + 2, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+    return dp[0][n - 1]
+</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+def lps(s):
+    n = len(s)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = 2 + dp[i+1][j-1]
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1]
+
+assert lps("TENS FOR TENS") == 5</code></pre>
+
+                       
+</section>
+
+</body>
+</html>

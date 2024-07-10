@@ -1,0 +1,1164 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+</head>
+
+<body>
+<section class="section">                       
+<h1> HumanEval/12 </h1>
+<pre><code> from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+ </code></pre>
+<h2>solution</h2>
+<pre><code> 
+    if not strings:
+        return None
+
+    maxlen = max(len(x) for x in strings)
+    for s in strings:
+        if len(s) == maxlen:
+            return s
+
+ </code></pre>
+<h2>base input</h2>
+<pre><code> [[[]], [['x', 'y', 'z']], [['x', 'yyy', 'zzzz', 'www', 'kkkk', 'abc']]] </code></pre>
+<h2>plus input</h2>
+<pre><code> [[['', 'a', 'aa', 'aaa']], [['123456789', '1234', '12345', '123']], [['a', 'b', 'aa', 'bb']], [['dog', 'cat', 'horse', 'cow']], [['apple', 'banana', 'pear']], [['123', '12', '1234', '1', '12345']], [['aa', 'bb', 'cc', 'aaa', 'bb', 'cccc']], [['aaa', 'aa', 'a', 'aaaa']], [['a']], [['aa', 'z', 'p', 'q']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'cc', 'cccc']], [['dog', 'cat', 'horse', 'cow', 'q']], [['', 'a', 'aa', 'aaa', 'aa']], [['apple', 'banana', 'banna', 'banana']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'cccc', 'ccaaa']], [['', 'a', 'cow', 'aaa', 'aa']], [['aa', 'z', 'p', 'qq']], [['aa', 'apple', 'p', 'qq', 'apple']], [['dog', 'cat', 'horse']], [[]], [['apple', 'banana', 'pear', 'horse', 'pear']], [['aa', 'bb', 'cc', 'aaa', '1233', 'cccc', 'cccc', 'ccaaa']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'cc', 'cccc', '123']], [['', 'a', '1234', 'dog', 'aa']], [['aa', 'apple', 'p', 'qq', 'apple', 'p']], [['cat', 'horse']], [['dog', 'cat', 'horse', 'cow', 'hore', 'horse']], [['aa', 'apple', 'p', 'qq', 'apple', 'p', 'p', 'aa']], [['apple', 'banana', 'banna', 'banana', 'banana']], [['apple', 'banana', 'pear', 'horse', 'pear', 'apple']], [['aa', 'z', 'p', 'qq', 'aa', '']], [['aa', 'cc', 'aaa', '123', 'cccc', 'cc', 'cccc', '123', 'aa']], [['aa', 'bb', 'cc', 'aaa', 'bb', 'cccc', 'aa', 'aa']], [['dog', 'cat']], [['apple', 'p', 'qq', 'apple', 'p', 'pear']], [['aaa', 'z', 'p', 'qq', 'qqq']], [['', 'a', 'aa', 'aaa', 'aa', 'a']], [['', 'hore', '', 'nWa', 'aaa', 'pear', 'wRQ', 'qq']], [['', 'a', 'aaa', 'aa', 'a']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'ccaaa', 'ccaaa', 'aa']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'cc', '123']], [['odog', 'catt']], [['aa', 'bb', 'cc', 'aaa', 'bb', 'cccc', 'cccc']], [['aa', 'bb', 'cc', 'aaa', 'bb', 'cccc', 'qaa', 'aa']], [['dog', 'a', 'aa', 'aaa', 'aa', 'a', 'a']], [['apple', 'banaana', 'pear', 'horse', 'pear', 'apple']], [['', 'a', 'aaaa', 'a']], [['dopearg', 'a', 'aa', 'aaa', 'aa', 'a', 'a']], [['', 'a', 'aaa']], [['dog', 'cat', 'horse', 'cow', 'cat']], [['aaa', 'aa', 'a', 'aaaa', 'aa', 'qq']], [['aa', 'bb', 'cc', 'aaa', 'bb', 'cccc', 'aa', 'aa', 'aaa']], [['apple', 'banana', 'banna', 'banana', 'z']], [['odog', 'ctatt']], [['apple', 'banana', 'pear', 'horse', 'pear', 'odogpear', 'pear']], [['', 'a', 'aa', 'aaa', '']], [['', 'a', 'aaa', 'aa', 'a', 'bba']], [['cat', 'horse', 'horcate']], [['aa', 'p', 'qq', 'apple', 'p']], [['aa', 'apple', 'p', 'qq', 'apple', 'pbanaana']], [['apple', 'banana', 'banna', 'banana', 'z', 'babbnna']], [['horse']], [['dog', 'a', 'aaa', 'aa', 'a', 'a']], [['aa', 'apple', 'p', 'qq', 'apple', 'p', 'aa', 'alpple']], [['apple', 'banaa', 'pear']], [['apple', 'banana', 'pear', 'pear', 'apple']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'ccaaa', 'ccaaa', 'aa', 'ccaabanaanaa']], [['1', 'a', 'cow', 'aaa', 'aa', 'a']], [['apple', 'banana', 'horse', 'pear']], [['p', 'cat', 'horse', 'cow']], [['dog', 'cat', 'horse', 'cow', 'cat', 'cat']], [['dog', 'cat', 'hrorse', 'cow', 'q']], [['odog', 'catt', 'catt']], [['apple', 'banaa', 'pear', 'abanaa']], [['dog', 'cat', 'horse', 'w', 'q']], [['apple', 'pear', 'horse', 'pear', 'apple']], [['aa', 'apple', 'p', 'qq', 'apple', 'aa']], [['apple', 'banana', 'banna', 'zbanna']], [['a', 'a']], [['1', 'a', 'cow', 'aaa', 'aa', 'a', '11234564789', 'babbnnaa']], [['apple', 'banana', 'pear', 'banaana', 'apple']], [['123', '12', '1234', '1', '12345', '123']], [['aa', 'apple', 'p', 'qq', 'apple', 'p', 'ppp']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'cc', '123', '12345']], [['apple', 'banana', 'pear', 'ppphorse', 'pear', 'odogpear', 'pear']], [['1', 'a', 'bannacow', 'aaa', 'aa', 'a']], [['1', 'a', 'bannaccow', 'aaa', 'aa', 'a']], [['aa', 'apple', 'p', 'qq', 'apple', 'p', 'apple']], [['apple', 'banana', 'zbanna']], [['apple', 'banana']], [['aa', 'bb', 'cc', 'aaa', '123', 'cccc', 'cc', '123', '12345', 'cccc', '3123']], [['banana', 'pear', 'banaana', 'apple']], [['odog', 'ctatat']], [['apple', 'banaa', 'pear', 'apple']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ']], [['', '        ', '   ', '     ', '\t', '   \t']], [['', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff']], [['abc', 'defghijklmnop', '', 'qr']], [['  a  ', 'bb', 'ccc']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii']], [['hello', 'HOW', 'are', 'yOu', 'DOiNG', 'tODAY?']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀']], [['abc', 'defghijklmnop', 'eeeeeeeeee', '', 'qr']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['', '◯◯◯', 'bună ziua', '          ', ' ', '😀😀😀', '         ']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['abc', 'defghijklmnop', '', 'qr', 'defghijklmnop']], [['こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['abc', 'defghijklmnop', '', 'hello', 'r', 'defghijklmnop', 'defghijklmnop']], [['abc', 'defghijklmnop', 'eeeeeeeeee', '']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'привет,', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhh']], [['bc', 'defghijklmnop', 'eeeeeeeeee', '']], [['', '        ', '   ', '     ', '\t', '   ']], [['abc', 'defghijklmnop', 'eeeeeeeeee', 'œ']], [['hello', 'HOW', 'aare', 'tODAY?']], [['eeeeeeeeeeabc', 'abc', 'defghijklmnop', 'eeeeeeeeee', 'defop', 'œ']], [['1', '22', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '22']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grrape', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['œdefghijklmnop', 'abc', 'defghijklmnop', 'eeeeeeeeee', 'œ']], [['Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii']], [['', '        ', '   ', '  Grrape   ', '\t', '   \t']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Lemon', 'Mango', 'Orange']], [['◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ']], [['1', '22', '4444', '55555', '666666', '7777777', '999999999', '10000000000', '22']], [['bc', 'defghijklmnop', ' ', 'Fig', 'defghip', '']], [['666666abc', 'defghijklmnop', '', 'qr', 'defghijklmnop', 'defghijklmnop']], [['  a  ', 'bb']], [['hello', 'HOW', 'are', 'yOu', 'DOiNG', 'tODAY?', 'yOu', 'DOiNG']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', '', 'qr']], [['привет,', 'defghijklmnop', '', 'qr', 'defghijklmnop', 'defghijklmnop']], [['Apple', 'Avocado', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['1', '22', '4444', '9999999999', '55555', '666666', '7777777', '88888888', '999999999', '22']], [['defghijklmnop', '', 'qr', 'defghijklmnop', 'yOu']], [['abc', 'eeeeeeeeee', '', 'defghijklmnop']], [['', 'bună ziua', '          ', ' ', '😀😀😀', '         ', 'bună ziua']], [['hello', 'HOW', 'uyOuggggggggMangoggggg', 'are', 'uyOu', 'DOiNG', 'tODAY?', 'DOiNG']], [['', 'bună ziua', '          ', ' ', '55555😀😀😀', '         ', 'bună ziua']], [['', '◯◯◯', '          ', ' ', '😀', '         ']], [['', '        ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Grrape   ', '\t', '   \t']], [['defghijklmnop', '', 'hello', 'r', 'defghijklmnop', 'defghijklmnop']], [['eeeeeeeeeee', 'bc', 'defghijklmnop', 'eeeeeeeeee', '']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Lemon', 'Mango', 'Orange', 'Apple']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['abc', 'defghijklmnop', 'привет,', 'qr', 'defghijklmnop']], [['', '◯◯◯', 'bună ziua', ' ', '']], [['HOW', 'are', 'yOu', 'DOiNG', 'tODAY?']], [['defghijkllmnop', 'abc', 'defghijklmnop', '', 'hello', 'r', 'defghijklmnop', 'bb', 'defghijklmnop', 'defghijklmnop']], [[' ', '', '        ', '  Grrape   ', '\t', '   \t']], [['eeeeeeeeeeabc', 'abc', 'defghijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', 'œ', 'eeeeeeeeeee', 'defghijklmnop']], [['1', '4444', '55555', '666666', '7777777', '999999999', '10000000000', '22']], [['hello', 'HOW', 'uyOuggggggggMangoggggg', 'are', 'Helbblo', 'uyOu', 'DOiNG', 'tODAY?', 'DOiNG']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯◯']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯']], [['hello', 'areHOW', 'are', 'yOu', 'DOiNG', 'tODAY?']], [['Apple', 'Avocado', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Hola,', 'Lemon', 'Mango', 'Orange']], [['', '        ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Grrape   ', '\t', '   \t', '\t', '   \t']], [['', '◯◯◯', 'bună ziua', ' ', 'Durian']], [['', '◯◯◯', ' ', '', '         ']], [['Apple', 'Cherrry', 'Avocado', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Hola,', 'Lemon', 'Mango', 'Orange']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'defghijklminop', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Dur', 'Fig', 'Grape', 'Lemon', 'Mango', 'Orange', 'Grape']], [['defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'qr']], [['Apple', 'Avocado', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Graape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['   ', '', '        ', '   ', '\t', '   ']], [['defghijklmnop', '', 'hhhhhhhhhhhhhhhhhello', 'r', 'defghijklmnop', 'defghijklmnop']], [['aaaa', 'bbbbbb', 'cccccccc', 'ffffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii']], [['666666abc', 'defghijklmnop', '', '666666bc', 'qr', 'defghijklmnop', 'defghijklmnop']], [['22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000']], [['Hello, Hola, Bonjour, こんにちは, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['', '        ', '   ', '     ', '   \t']], [['œdefghijklmnop', 'abc', 'defghijklmnop', 'eeeeeeeeee', 'œ', 'eeeeeeeeee']], [['こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'прccccccccивет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['Apple', 'Avocado', 'Blueberry', 'hhhhhhhhhhhhhhh', 'Durian', 'Fig', 'Graape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['bc', 'areHOW', 'defghijklmnop', ' ', 'Fig', 'defghip', 'HOW', '']], [['ccccпривет,cccc', 'aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['defghijklmnop', '', 'hello', 'r', 'defghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['Hello, Hola, Bonjour, こんにちは, привет', 'HelloBonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['dœdefghijklmnopep', 'œdefghijklmnop', 'abc', 'dep', 'defghijklmnop', 'eeeeeeeeee', 'œ']], [['HOW', 'are', 'yOu', 'tODAY?']], [['◯ß◯◯', '', '◯◯◯', 'Hola,Mango', ' ']], [['', '        ', '◯◯◯', '   ', '     ', '\t', '   \t']], [['bc', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ']], [['aaaa', 'bbbbbb', 'cccccccc', 'aaaaa', 'ddddddddd', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['aaaaa', 'aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'iiiiiiiiiiiiiiiiiii']], [['ccccпривет,cccc', 'aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'œ', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grrape', 'Grape', 'Kiwi', 'Lemon', 'MangoCherrry', 'Orange']], [['Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Lemon', 'Mango', 'Orange']], [['defopß', '', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff']], [['æ', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['', '◯◯◯', 'bună ziua', 'bună ziuddddddddda', ' ', '  ', 'Durian']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'привет']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Grrape   ', '\t', '   \t', '\t', '   \t']], [['1', '4444', '55555', '666666', '7777777', '999999999', '10000000000', '22', '22']], [['abc', 'defghijklmnop', 'привет,999999999', 'qr', 'defghijklmnop']], [['   ', '', '        ', '   ', '88888888\t', '   ', '   ']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'привет']], [['Apple', 'Banana', 'lo,', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'defghijklminop', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['   ', '', '        ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '   ', '88888888\t', '   ', '   ']], [['Apple', 'Avocado', 'Blueberry', 'hhhhhhhhhhhhhhh', 'Fig', 'Graape', 'Kiwi', 'Lemon', 'Mango', 'Banana']], [['defghijklmnop', 'eeeeeeeeee', 'qr', 'defghkijklmnop', 'yOu']], [['hello', 'HOW', 'tODAYпривет,D?', 'aare', 'tODAY?']], [['  ', '◯ß◯◯', '', '◯◯◯', ' ']], [[' ', '', 'hhhhhhhhhhhhhhhh', '  Grrape   ', 'bc', '   \t']], [['Apple', 'Avocado', 'Blueberry', 'hhhhhhhhhhhhhhh', 'Durian', 'Graape', 'Kiwii', 'Lemon', 'Mango', 'Orange']], [['abc', 'defghijklmnop', '', 'hello', 'defghijklmnop', 'defghijklmnop']], [['defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'defghijklmnop']], [['666666abc', 'defghijklmnop', '', '666666bc', 'qr', 'defghijklmnop', '66666abc', 'defghijklmnop']], [['areHOW  a  ', 'bb', 'ccc']], [['eeeeeeeeeeabc', 'abc', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnpop', 'eeeeeeeeee', 'defop', 'œ']], [['bc', 'defghijmklmnop', 'eeeeeeeeee', '']], [['  a  ', 'hello', 'HOW', 'uyOuggggggggMangoggggg', 'are', 'uyOu', 'DOiNG', 'tODAY?', 'DOiNG']], [['666666abc', 'defkghijklmnop', '', 'qr', 'defghijklmnop', 'defghijklmnop']], [['abc', 'defghijklmnop', 'Helbblo', 'hello', 'r', 'defghijkilmnop', '◯◯', 'defghijklmnop', 'defghijklmnop']], [['', '◯◯◯', 'bună ziua', '😀😀😀', '         ']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['666666', 'æ', 'ccc']], [['defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'yOu']], [['dœdefghijklmnopep', 'abc', 'dep', 'bună ziua', 'eeeeeeeeee', 'œ']], [['abc', 'defghijklmnop', '', 'こんにちは,', 'defghijklmnop', 'defghijklmnop']], [['◯◯◯', 'bună ziua', 'defghijkllmnop', ' ', '😀😀😀', '         ']], [['areHOW  a  ', 'MangoCherrry', 'ccc']], [['fghijklmnop', 'defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu']], [['abc', 'defghijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', 'œ', 'eeeeeeeeeee', 'defghijklmnop']], [['1', '22', '4444', '9999999999', '55555', '666666', '7777777', '88888888', '22']], [['666666', 'æ', '666666']], [['  a  ', 'bb', 'ccc', 'bb', 'bb']], [['HOW', 'yOu', 'DOiNG', 'tODAY?']], [['◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', 'bună ziua']], [['', 'öäü', 'ß', 'Ø', '', 'œ', '\uf8ff']], [['defghijmklmnop', '', 'bună ziua', '          ', ' ', '55555😀😀😀', '         ', 'bună ziua', '55555😀😀😀']], [['abc', 'defghijklmnop', 'hello', '', 'defghijklmnop', 'defghijklmnop']], [['HOW', ' ', 'DOiNG']], [['abc', 'привет,999999999', 'qr', 'defghijklmnop']], [['abc', 'Blueberry', 'defghijklmnop', 'Helbblo', 'hello', 'r', 'defghijkilmnop', '◯◯', 'defghijklmnop', 'defghijklmnop']], [['666666abc', 'defghijklmnop', '', '666666bc', 'defghijklmnop', '66666abc', 'defghijklmnop']], [['◯ß◯◯', '', '◯◯◯', 'œ', 'привет, Hola, Bonjour, こんにちは, Hello', ' ']], [['Hello, Hola, Bonjour, こんにちは, привет', 'HelloBonjour, こんにちは, Hola, привет', 'dep', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['666666', 'æ', 'ccc', '666666']], [['defopß', '◯◯◯', 'bună ziua', ' ', 'Durian']], [['defghijklmnop', '', 'hello', 'r', 'defghijklmnop', 'Helolo,', 'defghijklmnop']], [['eeeeeeeeeeabc', 'abc', 'eeeeeeeeee', 'defop', 'œ']], [['Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['1', '4444', '55555', '666666', '7777777', '999999999', '10000000000', '22', '9999999999', '22']], [['defg  klmnop', 'defghijklmnop', 'fghijklmnopyOu', '', 'a', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'defghijklmnop']], [['666666abc', 'qqr', 'defkghijklmnop', '', 'qr', 'defghijklmnop', 'defghijklmnop']], [['defghijklmnop', '', 'r', 'defghijklmnop', 'defghijklmnop']], [['', 'привет, Hola, Bonjour, こんにちは, Hello', 'ß', 'Ø', '', 'œ', '\uf8ff']], [['abc', 'defghijklmnop', 'abcHelolo,', 'qr', 'abbc', 'defghijklmnop']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Dur', 'Grape', 'Lemon', 'Mango', 'Orange', 'Grape']], [['', '◯◯◯', 'bună ziua', '          ', '7777777', ' ', '😀😀😀', '         ', '          ']], [['◯◯◯', 'defghijkilmnopbună ziua', 'defghijkllmnop', ' ', '😀😀😀', '         ']], [['hello', 'tODAYпривет,D?', 'aare', 'tODAY\t?']], [['Hello, Hola, Bonjour, こんにちは, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mangodefghijkilmnopbună ziua привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mangodefghijkilmnopbună ziua привет']], [['aaaa', 'bbbbbb', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['ccccпривет,cccc', 'aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'areHOWfffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['HelloBonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'привет, Hola, ちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'HelloBonjour, こんにちは, Hola, привет']], [['abc', 'defghijklmnop', 'привет,999999999', 'abcc', 'qr', 'defghijklmnop']], [['dœdefghijklmnopep', 'abc', 'bună ziua', 'eeeeeeeeee', 'œ']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'qr', 'abc']], [['abc', 'defghijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', '', 'eeeeeeeeeHello, Bonjour, こんにちは, Hola, приветee', 'defghijklmnop']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '   \t', '\t', '   \t']], [['', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '   \t', '\t', '   \t']], [['HOW', '', 'bună ziua', '          ', ' ', '😀😀😀', 'bună ziua']], [['tODAY\t?', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'qaaaaar']], [['', '        ', '◯◯◯', '   ', '     ', '\t']], [['Banana', 'Blueberry', 'Cherry', 'Dun', 'Fig', 'Grape', 'Lemon', 'Mango', 'Orange']], [['  a  ', 'bb', 'defop', 'ccc', 'bb', 'bb', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'bb']], [['aaaa', 'bbbbbb', 'Cherry', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['', 'bună ziua', '          ', ' ', '😀😀😀', 'bună ziua']], [['defghijklmnop', '', 'привет, aaaaelbblo', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'прdefkghijklmnopивет, aaaaelbblo', 'yOu', 'yOu']], [['  a  ', 'bb', 'Lemon']], [['', '◯◯◯', 'bună ziua', ' ', '', 'bună ziua']], [[' ', '', '        ', '◯◯◯', '  Grrape   ', '\t', '   \t', '  Grrape   ']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'ffffffffff', 'ggggggggggggg', 'ggggggggManggoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['abc', 'Blueberry', 'defghijklmnop', 'Helbblo', 'hhhhhhhhhhhhhhh', 'hello', 'r', 'defghijkilmnop', '◯◯', 'defghijklmnop', 'defghijklmnop']], [['abc', 'defgdefghijkilmnopbună ziuahijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', 'defghijklmino', 'œ', 'eeeeeeeeeee', 'defghijklmnop']], [['abc', 'bună ziua', 'eeeeeeeeee', 'œ']], [['Hello, Hola, Bonjour, こんにちは, привет', 'tODAY', 'Hello, Bonjour, こんにちは, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['◯ß◯◯', '', '◯◯◯', 'œggggggggggggg', 'привет, Hola, Bonjour, こんにちは, Hello']], [['◯◯◯', 'bună ziua', ' ', '         ']], [['hello', 'HOW', 'uyOuggggggggMangoggggg', 'are', '   \t', 'DOiNG', 'tziuahijklmnopODAY?', 'DOiNG', 'DOiNG']], [['Apple', 'Banana', 'lo,', 'Blueberryy', 'Cherry', 'Durian', 'Fig', 'defghijklminop', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['abc', '', 'defghijklmnop']], [['abc', 'defghijklmnop', '\t', 'eeeeeeeeee', 'œ']], [['œdefghijklmnop', 'abc', 'defghijklmnop', 'eeeeeeeeee', 'œ', 'eeeeeeeeee', 'defghijklmnop']], [['666666abc', 'defghijklmnop', '', 'defkghijklmnop', '666666bc', 'qr', 'defghijklmnop', '66666abc', 'defghijklmnop']], [['eeeeeeeeeee', 'bc', 'defghijklmnop', 'привет, Hola, ちは, Hello', '']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'qr', 'qr']], [['defopß', '', '', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff']], [['abc', 'defghijklmnop', 'eeeeeeeeee', '', 'eeeeeeeeee']], [['bc', 'defghijklmnop', 'eeeeeeeeee', 'eeeeeeee', '']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Gr rape   ', '\t', '   \t', '\t', '   \t']], [['eeeeeeeeeeabc', 'abc', 'defghijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', 'œ', 'eeeeeeeeeee', 'defghijklmnop', 'defghijklmnop']], [['22', '4444', '9999999999', '55555', '666666', '7777777', '88888888', 'defghip', '999999999', '22']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '   \t', '\t', '   \t', '   \t']], [['aaaaa', 'aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'fffffffffff', 'iiiiiiiiiiiiiiiiiii']], [['aaaa', 'bbbbbb', 'Cherry', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg', 'cccccccc', 'ddddddddd']], [[' ', '', 'hhhhhhhhhhhhhhhh', '  Grrape   ', 'bc', '   \t', '   \t']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', 'rape']], [['\t', 'eeeeeeeeeee', 'bbbc', 'defghijklmnop', '']], [['HOW', 'are', 'yOu', 'tODAY?', 'yOu']], [['1', '22', '4444', '55  a  555', '666666', '7777777', '88888888', '999999999', '10000000000', '22']], [['◯◯◯Apple', 'bună ziua', '😀😀😀', '         ']], [['defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'abc', 'defghijklAvocadomnop']], [['hello', 'uyOuggggggggMangoggggg', 'DiOiNG', 'are', '   \t', 'DOiNG', 'tziuahijklmnopODAY?', 'DOiNG', 'DOiNG']], [['œdefghijklmnop', 'abc', 'defghijklmnop', '          ', 'œ']], [['', 'hello', 'defghijklmnop', 'defghijklmnop']], [['', '◯◯◯', '', '         ', '         ']], [['abc', 'bună zdœdefghijklmnopepiua', 'eeeeeeeeee', 'œ']], [['HOW', 'are', 'yOu', 'ziua', 'tODAY?', 'yOu', 'are']], [['abc', 'defghijklmnop', 'eeeeeeeeee', 'aaaaa', '']], [['1', '22', '4444', '55555', '666666', '7777777', '77777777', '88888888', '999999999', '10000000000', '22', '22']], [['1', '22', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '22', '10000000000']], [['◯◯◯◯', '', '◯◯◯', 'bună ziua', '', ' ', '']], [['aaaa', 'bbbbbb', 'cccccccc', 'Grape', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['abc', 'defghijklmnop', 'Hel', 'eeeeeeeeee', 'œ']], [['eeeeeeeeeee', 'bc', 'defghijklmnop', 'привет, Hola, ちは, Hello', '', '']], [['', '◯◯◯', 'bună ziua          ', 'bună ziua', '']], [['HW', 'HOW', ' ', 'DOiNG']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'привет,', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggabccggg', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhh']], [['  a  ', 'bb', 'defop', 'ccc', 'bbb', 'bb', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'bb']], [['', '◯◯◯', 'bună ziua', ' ', '', 'bună ziua', 'bună ziua']], [['666666abc', 'defghijklmnop', '', '666666bc', 'qr', 'defghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['areHOW  a  ', 'MangoCherrry', 'ccddddddddd', 'ccc']], [['', '◯◯◯', 'bună ziua', '😀😀😀', '         ', '']], [['defghijklmnop', '', 'r', 'defghijklmnop', 'Helolo,', 'dHelloBonjour,efghijklmnop']], [['defghijklmnop', '', '666666bc', 'qr', 'defghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'defghijklomnop', 'defghijklmnop']], [[' ', '', '        ', '  Grrape   ', 'ß', '   \t', ' ', ' ']], [['Banana', 'Blueberry', 'Chrerry', 'Durian', 'Fig', 'Grape', 'Lemon', 'Mango', 'Orange']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '   \t', '555', '   \t', '   \t', '', '\t']], [['uyOu', 'bc', 'areHOW', 'defghijklmnop', ' ', 'Fig', 'defghip', 'HOWW', 'HOW', '']], [['tODAY\t?', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'qaaaaar', 'eeeeeeeeee']], [['◯◯◯◯', '', '◯◯◯', 'bună ziua', '', ' ', '10000000000']], [['', 'Hola,', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', 'rape']], [['  a  ', 'bb', 'HW', 'ccc']], [['', '◯◯◯', '', '         ', '         ', '         ']], [['   \t', '  ', '😀', '', '◯◯◯', ' ']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Gr rape   ', '\t', '   \t', '\t', '4444']], [['HOW', 'こんにちは,', 'yOu', 'tODAY?']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'aaaa']], [['', '◯◯◯', 'bună ziua', ' ']], [['◯ß◯◯', '◯◯◯', 'œ', 'привет, Hola, Bonjour, こんにちは, Hello', ' ']], [['1', '4444', '55555', '7777777', '999999999', '10000000000', '22']], [['1', '4444', '55555', '666666', '77777777', '999cccccccc999999', '10000000000', '22']], [['', '◯◯◯', '◯◯◯◯', '', '         ', '         ', '         ']], [['bc', 'defghijklmnop', 'hhhhhhhhhhhhhhhhhello', 'eeeeeeeeee', '']], [['abc', 'bbbc', '', 'こんにちは,', 'Hola,Mango', 'defghijklmnop', 'defghijklmnop']], [['', '◯◯◯', '', '         ', '         ', '         ', '         ']], [['Helolo, Bonjour, こんにちは, Holaöäü, привет', 'Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Helloa, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['Apple', 'Avocado', 'Graape', 'Banana', 'Blueberry', 'defopß', 'Cherry', 'Durian', 'Fig', 'Grrape', 'Grape', 'Kiwi', 'Lemon', 'MangoCherrry', 'Orange']], [['aaaa', 'bggggggggManggogggggbbb', 'cccccccc', 'Grape', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'cccccccc']], [['bb', '1', '55555', '666666', '7777777', '999999999', '10000000000', '22', '9999999999', '22']], [['こんにちは,', 'yOu', 'aaaa', 'aaaa ', 'yOu']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'привет,', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggabccggg', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhh']], [['defopß', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff']], [['dœdefghijklmnopep', 'Dun', 'abc', 'dep', 'bună ziua', 'eeeeeeeeee', 'œ']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '999999999', '', 'qr', 'abc']], [['1', '4444', '55555', '666666', '7777777', 'Hello', '999999999', '10000000000', '22', '9999999999', '22']], [['abc', 'defghijklmnop', 'привет,999999999', 'abcc', 'qr', 'defghijklmnop', 'qr']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '  ziuahijklmnop \t', '   \t', '555', '   \t', '   \t', '', '\t']], [['abc', '\t', 'eeeeeeeeee', 'œ']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Gr rape   ', '\t', '   \t', '\t', '4444', '         ']], [['abc', '1', 'defghijklmnop', 'привет,999999999', 'abcc', 'qr', 'defghijklmnop']], [['привет', '  a  ', 'bb']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'ffabcfffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['666666abc', 'defghijklmnop', '', '666666bc', 'qr', '66666abc', 'defghijklmnop']], [['666666abc', 'defghijklmnop', '', '666666bc', 'qr', 'defghijklmnop', '66666abc', 'defghijklmnbună zdœdefghijklmnopepiuaop']], [['10000000000', ' ', '', 'hhhhhhhhhhhhhhhh', '  Grrape   ', 'bc', '   \t', '   \t']], [['', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff', '']], [['22', '333', '4444', '55555', '666666', '777', '88888888', '999999999', '10000000000']], [['◯ß◯◯', '', '◯◯◯', 'œggggggggggggg']], [['Hello, Hola, Bonjour, こんにちは, привет', 'HelloBonjour, こんにちは, Hola, привет', 'eeeeeeeeeee', 'こんにちは, Bonjour, Hello, Hola, привет', 'defgdefghijkilmnopbună ziuahijklmnop', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'eeeeeeeeee']], [['defghijklmnop', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'defkghijklmnop', '666666bc', 'qr', 'defghijklmnop', '66666abc', 'defghijklmnop', 'defkghijklmnop']], [['666666abc', 'defghijklmnop', '', 'defkghijklmnop', '666666bc', 'defghijklmnop', '66666abc', 'bbbc', 'defghijklmnop']], [['aabc', 'defghijklmnop', 'abcHelolo,', 'ziuddddddddda', 'qr', 'abbc', 'qr']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '  ziuahijklmnop \t', '   \t', '555', '   \t', '   \t', '', '\t', '\t', '', '   \t']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'привет', 'привет']], [['Helolo, Bonjour, こんにちは, Holaöäü, привет', 'Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Holaöärивет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Helloa, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['Apple', 'Avocado', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Hola,', 'Lemon', 'Mango', 'Orange', 'Avocado']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'ffabcfffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'iiiiiiiiiiiiiiiiiii', 'hhhhhhhhhhhhhhhhh', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['', 'Hola,', '◯◯◯', 'bună ziua', ' привет,', ' ', '😀😀😀', '         ', 'rape']], [['hello', 'HOW', 'bună ziuaaare', 'tODAY?']], [['abc', 'defghijklmnop', 'eeeeeeпрdefkghijklmnopивет,eeee', '', 'qr']], [['defopß', 'üöäü', 'ß', 'æ', 'œ', '\uf8ff']], [['œdefghijklmnop', 'abc', '          ', 'œ']], [['abc', 'Blueberry', 'fffffffffff', 'defghijklmnop', 'Helbblo', 'hello', 'r', 'defghijkilmnop', '◯◯', 'defghijklmnop', 'defghijklmnop']], [['Hello, Hlola, Bonjour, こんにちは, привет', 'HelloBonjour, こんにちは, Hola, привет', 'dep', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['aaaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'fffffffffff', 'iiiiiiiiiiiiiiiiiii']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '  ziuklmnop \t', '   \t', '555', '   \t', '   \t', '', '\t']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'ffabcfffffffff', 'bună ziua', 'ggggggggggggg', 'ggggggggMangoggggg', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['eeeeeeeeeee', 'bc', 'defghijklmnop', 'eeeeeeeeee', '', 'eeeeeeeeeee']], [['acbc', 'eeeeeeeeee', 'Orange', '', 'OranUNQHge', 'qr', 'qr']], [['bbbc', '', 'こんにちは,', 'Hola,Mango', 'defghijklmnop', 'defghijklmnop']], [['abc', '\t', 'defghijklAvocadomnop', 'eeeeeeeeee', 'eeeeeeeee', '', 'adefghijklmino', 'qr']], [['eeeeeeeeeee', 'bc', 'привет, Hola, ちは, Hello', '']], [['bb', 'HW', 'ccc']], [['hello', 'HOW', 'are', 'yOu', 'DOiNG', 'tODAY?', 'tODAY?']], [['aaaa', 'bbbbbb', 'Cherry', 'aaa', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg', 'aaaa']], [['abc', 'defgdefghijkilmnopbună ziuahijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', 'eeeeeeeee', 'defghijklmino', 'œ', 'eeeeeeeeeee', 'defghiljklmnop']], [['bc', '◯◯◯', 'ziuahijklmnop', 'bună ziua', ' ', '         ']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', 'a  ziuahijklmnop \tbc', '', 'qr', 'abc']], [['œdefghijklmnop', 'abc', 'defghijklmnop', 'eeeeeeeeee']], [['', 'DiOiNG', '        ', '◯◯◯', '   ', '     ', '     ', '\t', '   \t', '        ']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'defghijklminop', 'Kiwi', 'Lemon', 'eeeeeeeeee', 'Orange']], [['Apple', 'Avocado', 'Graape', 'Banana', 'Blueberry', 'defopß', 'Cherry', 'Durian', 'Fig', 'Grrape', 'Grape', 'Kiwi', 'eqqre', 'MangoCherrry', 'Orange']], [['bc', 'eeeeeeeeee', '']], [['Cherrry', '666666abc', 'defghijklmnop', '', 'ggggggggggggg', 'defghijklmnop', '66666abc', 'defghijklmnop']], [['eeeeeeeeeeabc', 'abc', '999999999', 'defop', 'œ', 'eeeeeeeeee']], [['aaaaa', 'bbbbbb', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMßangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['urian', 'Apple', 'Banana', 'lo,', 'Blueberryy', 'Cherry', 'Durian', 'Fig', 'defghijklminop', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['defghijkllmnop', 'abc', 'defghijklmnop', '', 'hello', 'Orange', 'defghijklmnop', 'bb', 'defghijklmnop', 'defghijklmnop']], [['◯ß◯◯', '◯◯◯', 'aaaaelbblo', ' ']], [['abc', 'eeeeeeeedefgdefghijkilmnopbunăee', '', 'qr']], [['defghijdefghijklmnpopklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu']], [['Apple', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Lemon', 'tODAYпривет,D?', 'Mango', 'Orange', 'Apple']], [['22', '4444', '9999999999', '55555', '666666', '7777777', '88888888', '22', '666666']], [['aaaaa', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', '  ', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['', '◯◯◯', '', '         ', '         ', '◯◯◯◯', '         ', '         ']], [['◯ß◯◯', 'bbbc', '◯◯◯', 'aaaaelbblo', ' ']], [['hello', 'HOW', 'are', 'yOu', 'DOiNG', 'tO?', 'HOW']], [['aaaa', 'bbbbbb', 'Cherry', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'Cherrry', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg']], [['acbc', 'eeeeeeeeee', '', 'OranUNQHge', 'qr', 'qr', 'eeeeeeeeee']], [['', '        ', '◯◯◯', '   ', '     ', '\t', '']], [['bc', '◯◯◯', 'bună ziua', ' ', '😀😀😀', 'Hlola,', '         ']], [['abc', 'defghijklmnop', 'abcc', 'qr', 'defghijklmnop']], [['666666abc', 'defkghijklmnop', '', 'defghijklmnop', 'defghijklmnop']], [['666666abc', '', 'defghijklmnop', '66666abc', 'defghijklmnop']], [['1', '22', '4444', '9999999999', '55555', '6999cccccccc99999966666', '7777777', '88888888', '999999999', '222', '22']], [['', '◯◯◯', 'bună ziua          ', 'bună ziua', 'こんにちは, Bonjour, Hello, Hola, привет']], [['abc', 'defghijklmnop', '', 'qr', 'defghijklmndop']], [['666666abc', 'qqr', 'defkghijklmnop', '', 'qr', 'defghijklmnop', 'defghijklmnop', '', '']], [['cccc', 'areHOW  a  ', 'bb', 'ccc']], [['defghijklmnop', '', 'y', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'yOu']], [['', '        ', '◯◯◯', '   ', '     ', '\t', 'Hello, Bonjour, こんにちは, Hola, привет', '', '◯◯◯']], [['666666', '666666', '666666']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', 'rape', 'bună ziua']], [['666666abc', '', '666666bc', 'qr', 'defghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['', '◯◯◯', 'bună ziua', ' ', '         ', '◯◯']], [['HOW', 'bună zdœdefghijklmnopepiua', 'bună ziua', '          ', ' ', '😀😀😀', 'bună ziua']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '55  a  555', '', 'qr', 'abc']], [['Blueberryy', '◯ß◯◯', 'defghijklmnop', '', 'hello', 'defghijklmnop', 'defghijklmnop']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Gr rape   ', '\t', '   \t', '\t', '4444', '         ', '4444']], [['aaaa', 'bbbbbb', 'Cherry', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'gggggggggggggg', 'Cherrry', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'Chrerry', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg']], [['◯◯◯aabc', '◯◯◯', 'bună ziua', 'defghijkllmnop', ' ', '😀😀😀😀', '         ']], [['', 'dep', '', '         ', '         ', '         ', '         ', '         ']], [['Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['hello', 'defghijklmnop']], [['', 'Kiwi', '◯◯◯', '', '          ', '         ', '         ']], [['eeeeeeeee', 'defghijklmnop', 'eeeeeeeeee', '', 'qr']], [['defghijmklmnop', '', 'bună ziua', '          ', ' ', '88888888', '         ', 'bună ziua', '55555😀😀😀']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'ffabcfffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'iiiiiiiiiiiiiiiiiii', 'hhhhhhhhhhhhhhhhh', 'ggggggggggggg', 'hhhhhhhhhhhhhhhbună ziuaaareh', 'hhhhhhhhhhhhhhhhh']], [['defghijklmnop', '', 'hello', 'defghijklmnop', 'defghijklmnop']], [['acbc', 'eeeeeeeeee', 'Orange', '', 'OranUNQHge', 'qr', 'qr', 'acbc']], [['bc', 'hhhhhhhhhhhhhhhhhhello', 'eeeeeeee', 'hhhhhhhhhhhhhhhhhello', 'eeeeeeeeee', '']], [['        ', '   ', '     ', '\t', '   ']], [['Hello, Hola, Bonjour, こんにちは, привет', 'こんにちは, Bonjour, Hello, Ho1la, привет', 'привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'привет']], [['◯ß◯◯', '◯◯◯', 'aaaaelbblo']], [['  a  ', 'bb', '  a  ', '  a  ']], [['   ', '', '        ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '   ', '88888888\t', '   ', '   ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '        ']], [['œdefghijklmnbună zdœdefghijklmnopepiuaopdefghijklmnop', 'abc', 'defghijklmnop']], [['Apple', 'Banana', 'Blueberry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['hello', 'HOW', 'tziuahijklmnopODAY?', 'yOu', 'DOiNG', 'tO?', 'HOW']], [['defghijklmnop', '', 'hello', 'r', 'hhello', 'defghijklmnop', 'defghijklmnop']], [['Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは,e Bonjour, Hello, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет']], [['Orange       ', '', 'bună ziua', '          ', ' ', '😀😀😀', '         ', 'bună ziua']], [['defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghlijklmnop', 'defghijklmnop', 'yOu']], [['defghijklmnop', '', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'yOu', 'defghijklmnop']], [['HOdefgW', 'are', 'yOu', 'DOiNG', 'tODAY?']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'ипривет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'привет', 'Hello, Bonjour, こんにちは, Hola, привет']], [['abc', 'bbbc', '', 'こんにちは,', 'Hola,Mango', 'defghijklmnop', 'defghijklmnop', 'defghijklmnop', '']], [['bc', '◯◯◯', 'bună ziua', ' ', '😀😀😀', 'Hlola,', '         ', '😀😀😀']], [['œdefghijklmnop', 'abc', 'œ']], [['', '◯◯◯', 'bună ziua', '😀😀😀']], [['', '◯◯◯', '', '         ', '◯◯◯◯', '         ', '         ']], [['aaaaa', 'aaaa', 'bbbbbb', 'cccccccc', 'deeeeeeeeeeabcdddddddd', 'eeeeeeeeee', 'fffffffffff', 'iiiiiiiiiiiiiiiiiii']], [['adefghijklmприветeeino', '4444', '55555', '666666', '7777777', '999999999', '10000000000', '22', '9999999999', '22']], [['defopß', 'üöäü', 'ß', 'gggggggggggggg', 'defghijkilmnopbună ziua', 'œ', '\uf8ff']], [['', '◯◯◯', 'bună ziua', '          ', '7777777', ' ', '         ', '          ']], [['◯◯◯', 'bună ziua', ' ', '         ', 'bună ziua', '         ']], [['  a  ', 'bb', 'defop', 'ccc', 'bb', 'bb', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'bb', 'defop']], [['1', '22', '4444', '9999999999', '55555', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', '7777777', '88888888', '22']], [['  a  ', 'qr  a  ', 'bb']], [['abc', 'eeeeeeeeee', 'defghijklminop', 'eeeeeeeee', 'defghijklmino', 'œ', 'eeeeeeeeeee', 'defghiljklmnop', 'defghiljklmnop']], [['', '◯◯Blueberry◯', '◯◯◯', '', '         ', '◯◯◯◯', '         ', '         ', '         ']], [[' ', 'Hola,Mango', 'hhhhhhhhhhhhhhhh', '  Grrape   ', 'bc']], [['abc', 'defghijklAvocadomnop', 'eeeeeeeeee', '', 'qr', 'defghijklAvocadomnop']], [['aaaa', 'bbbbbb', 'Cherry', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg', 'cccccccc', 'ddddddddd']], [['◯◯◯', 'bună ziua', ' ', '    œdefghijklmnop', 'bună ziua', '         ']], [[' ', 'Hola,Mango', 'r', 'hhhhhhhhhhhhhhhh', '  Grrape   ', 'bc']], [['', '◯◯◯', '😀😀😀', '         ', '']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '◯◯◯']], [['◯ß◯◯', 'bbbc', '◯◯◯', 'aaaaaelbblo', ' ']], [['defghijklmnop', 'defghihhhhhhhhhhhhhhhjklmnop', '', 'y', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defghijklmnop', 'yOu', 'yOu']], [['666666abc', 'defghijklmnbună', 'defkghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['areHOW  a  ', 'qRqCuk', 'tODAY', 'ccc', 'bb']], [['', '◯◯◯', '', '         ', '◯◯◯◯', '       ', '         ', '         ']], [['tODAY\t?', 'defghijklAvocadomnop', 'eeeeeeeeee', 'Orange', '', 'qaaaaar', 'eeeeeeeeee', 'eeeeeeeeee']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', '  Gr rape   ', '\t', '   \t', '\t', '4444', '\t']], [['', '◯◯defghijklmnbună zdœdefghijklmnopepiuaop', 'bună ziua', ' ', 'Durian']], [['Hello, Bonjour, こんにちは, Hola, привет', 'こんにIAtbeuOちは, Bonjour, Hello, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет']], [['hhhhhhhhhhhhhпрccccccccиветhhh', 'aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'areHOWfffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggMangoggggg']], [['', '◯◯◯', ' ', 'こんにIAtbeuOちは,', '', '         ']], [['defghijklmnop', 'defghihhhhhhhhhhhhhhhjklmnop', '', 'y', 'привет, Hola, Bonjour, こんにちは,ち Helbblo', 'defghijklmnop', 'yOu', 'yOu', 'y']], [['defghijklmnop', 'Blueberry', 'привет, aaaaelbblo', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'qRqCuk', 'прdefkghijklmnopивет, aaaaelbblo', 'yOu', 'yOu', 'qRqCuk']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '         ', '◯']], [['eeeeeeeeeeabc', 'abc', '999999999', 'œ', 'eeeeeeeeee']], [['◯◯◯', 'bună ziua', 'bună ggggggggManggoggggg', ' ', '         ']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Helolo, Bonjour, こんにちは, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['666666abc', 'defghijklmnop', '', '6c6666abc', 'defkghijklmnop', '666666bc', 'defghijklmnop', '66666abc', 'bbbc', 'defghijklmnop']], [['defghijklmnop', '', 'hello', 'r', 'defghijklmnop']], [['eeeeeeeeeeabc', 'abc', 'eeeeeeeeee', 'defop', 'œ', 'œ', 'œ']], [['666666abc', 'defghijklmnop', '', '666666bc', 'qr', 'defghijklmnop', '66666abc', 'q', 'defghijklmnop']], [['Hello, Hola, Bonjour, こんにちは, привет', 'tODAY', 'Hello, Bonjour, こんにちは, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'こんにちは, Bonjour, Hel        lo, Hola, привет', 'fghijklmnopyOu', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['defghijklmnop', '', 'r', 'defghijklmnop', 'Helolo,', 'dHelloBonjour,efghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['◯ß◯◯', '◯◯◯', 'œgggggggggggagg', '◯◯◯']], [['æ', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'æ']], [['HOW', 'こんにちは,', 'tODAY?']], [['', 'Hola,', 'hhhhhhhhhhhhhhh', 'bună ziua', ' ', '😀😀😀', '         ', 'rape']], [['acbc', 'eeeeeeeeee', 'ggggggggManggoggggg', 'OranUNQHge', 'qr', 'qr', 'eeeeeeeeee']], [['HOW', 'are', 'yOu', 'DOiNG']], [['hello', 'HOW', 'yOu', 'DOiNG', 'tODAY?', 'yOu', 'DOiNG']], [['прdefkghijklmnopивет,', '', '◯◯◯', 'bună ziua', '😀😀😀']], [['', 'bună ziua', '          ', ' Orange', '😀😀😀', '         ', 'bună ziua']], [['Apple', 'Avocado', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Hola,', 'Lemon', 'Mango', 'Orange', 'Durianddddddddd', 'Avocado', 'Grape']], [['        ', '   ', '     ', '\t\t', '   ']], [['', 'bună ziua', '          ', ' ', '55555😀😀😀', '         ', 'bună ziua', 'bună ziua']], [['Hello, Hola, Bonjour, こんにちは, привет', 'HelloBonjour, こんにちは, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['9999999999', 'areHOW  a  ', 'bb', 'ccc']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['dœdefghijklmnopep', 'abc', 'dep', 'bună ziua', 'eeeeeeeeee', 'eeeeeeeeeHello,', 'œ']], [['defghijmklmnop', '', 'bună ziua', '        привет, ', '          ', ' ', '55555😀😀😀', '         ', 'bună ziua', ' ']], [['こんにちは, Bonjour, Hello, Hola, привет', 'ສະບາຍດີ, Bonjour, こんにちは, Hola,Mango привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['', '◯◯◯', '          ', ' ', '😀😀😀', '         ', '', '          ']], [['aaaa', 'bbbbbb', 'cccccccc', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg']], [['Apple', 'Banana', 'Blueberry', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['fIdBykS', 'MangoCherrry', 'ccddddddddd', 'ccc', 'ccc']], [['aaaa', 'bbbbbb', 'Cherry', 'MangoCherrry', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'ggggggggMangoggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'ggggggggggggg']], [['Hello, Hola, Bonjour, こんにちは, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет']], [['acbc', '6c6666abc', 'eeeeeeeeee', 'ggggggggManggoggggg', 'OranUNQHge', 'qr', 'qr', 'eeeeeeeeee']], [['666666abc', 'ndefghijklmnop', 'defghijklmnbună', 'defkghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['hello', 'HOW', 'uyOuggggggggMangoggggg', 'defghijklmnbună', 'are', '   \t', 'DOiNG', 'tziuahijklmnopODAY?', 'DOiNG', 'DOiNG']], [['eeeeeeeeeeabc', ' привет,abc', 'defghijklmnop', 'eeeeeeeeee', 'defop', 'defghijklminop', 'œ', 'eeeeeeeeeee', 'defghijklmnop']], [['', '         ', 'привет, Hola, Bonjour, こんにちは, Helbblo', 'defkghijklmnop', '  Grrape   ', '\t', '   \t', '555', '   \t', '   \t', '', '\t', '\t', '', '   \t']], [['bb', '1', '55555', '666666', '7777777', '999999999', '10000000000', '22', '9999999999', '222', '22']], [['defghijklomnop', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['acbc', 'eeeeeeeeee', 'ggggggggManggoggggg', 'OranUNQHge', 'zdœdefghijklmnopepiuaopdefghijklmnopqr', 'qr', 'eeeeeeeeee']], [['bb', '1', '55555', '666666', '7777777', '999999999', '10000000000', '9999999999', '222', '22']], [['こんにちはは,', 'こんにちは,', 'tODAY?', 'こんにちはは,']], [['', '        ', '   ', '  Grrape   ', '\t', '            ', '   \t', '   ']], [['defghijklmnop', 'defghijklHolaöärиветmnop', '', '666666bc', 'qr', 'defghijklmnop', 'defghijklmnop', 'defghijklmnop']], [['a', 'bb', 'ccc', 'ddd']], [['abc']], [['x', 'y', 'z', '']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr']], [['  a  ', '  a  ']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'Bonjour,']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'Bonjour,']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'Bonjour,', 'Bonjour,']], [['ccc']], [['', '        ', '    \t', '   ', '     ', '\t', '   \t']], [['', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯◯']], [['1', 'привет,', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000']], [['1', 'привет,', '122', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'qr']], [['abc', 'defghijklmnop', 'Apple', 'qr']], [['iiiiiiiiiiiiiiiiiii', '  a  ', 'bb', 'ccc', 'bb', 'bb']], [['', '◯◯◯', ' ', '😀😀😀', '         ']], [['   ', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯◯', '◯◯◯']], [['', '   ', '   ', '     ', '\t', '   \t']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '10000000000', '7777777']], [['   ', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯◯', '◯◯◯', '◯◯◯']], [['ccc', 'ccc']], [['iiiiiiiiiiiiiiiiiii', 'Banana', '10000000000', 'bb', 'ccc', 'bb', 'bb']], [['   ', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '666666']], [[' ', '   ', ' ', '😀😀😀', '         ', '◯◯◯', '◯', '◯◯◯', '◯◯◯']], [['1', '22', '333', '4444', '555555', '666666', '7777777', '88888888', '999999999', '10000000000', '666666']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['qeeeeeeeeee', 'aœbc', 'qeeeeHola,eee', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'qr']], [['   ', ' ', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'Hello, Hola, Beeeeeeeeeeonjour, こんにちは, привет']], [['1', '', 'привет,', '122', '4444', '55555', '666666', '77777', '88888888', '999999999']], [['bb', 'ccc']], [['abc', 'fffffffffff', 'Apple', 'Ø', 'qr', 'qr', 'fffffffffff']], [['qeeeeeeeeee', 'abc', 'qeeeeeeeeee', 'defghijklmnop', 'Bonjour,', '', 'qr', 'Bonjour,']], [['Aplple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Lemonœ', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Orange']], [['aziuabc', 'fffffffffff', 'Apple', 'Ø', 'qr', 'qr', 'fffffffffff']], [['hello', 'chellocc', 'ccc', 'ccc', 'ccc']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'fffffffffff', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['hello', 'HOW', 'are', 'yOu', 'tODAY?']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '666666', '333']], [['', '   ', '   ', '     ', '\t', '   \t', '']], [[' ', '', ' ', '😀😀😀', '         ', '◯◯◯', '◯◯◯', '◯', '◯◯◯', '◯◯◯']], [['', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'hhhhhhhhhhhhhhhh', 'Bonjour,']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'hhhhhhhhhhhhhhhh', 'hhhhhhhhhhhhhhhh']], [['', '◯◯◯', ' ', '😀😀😀', '         ', ' ']], [['   ', ' ', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯', '◯◯◯', 'tODAY?']], [['', 'bună ziua', '◯◯◯◯', ' ', '😀😀😀', '         ', '◯◯◯']], [['', '        ', '    \t', '   ', '     ']], [['1', 'привет,', '22', '333', '4444', '55555', '66666Ø', '7777777', '88888888', '999999999', '10000000000', '1', '2']], [['bbccc']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Grape', 'Kiwi', 'Applle', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'bb', 'bb']], [['Appl', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['are', 'bb', 'ccc']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Graziuape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['ß', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff']], [['Apple', 'MMango', 'Avocado', 'Blueberry', 'Cyherry', '◯◯◯◯', 'Fig', 'Graziuape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Fig']], [['1', '', 'привет,', '122', '4444', '55555', '666666', '77777', '88888888', '999999999', '1']], [['iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'bb']], [['1', '', 'привет,', '122', '4444', '55555', '666666', '77777', '88888888', '999999999', '999999999']], [['szgkhWMLx', 'zRFADUSNC◯', 'JNGmHOkr', 'PxKKem', 'æ', 'qEK', 'TyUNzlo', '4444', 'NEs', 'TSNvGfDd']], [['', '◯◯◯', '  ', ' ', '😀😀😀', '         ']], [['こんにちは, Bonjour, Hello, Hola, привет', 'ccc', 'ccc']], [['szgkhWMLx', 'zRFADUSNC◯', 'TSNvGfyOuDd', 'JNGmHOkr', 'PxKKem', 'æ', 'qEK', 'TyUNzlo', '4444', 'NEs', 'TSNvGfDd', 'szgkhWMLx']], [['', '        ', '     ', '22', '   \t']], [['defghijklmnop', 'Apple']], [['1', '22', '333', '4444', '666666', '7777777', '88888888', '999999999', '10000000000']], [['1', '', 'привет,', 'hhhhhhhhhhhhhhhh122', '4444', '◯', '999999bbbbbb999', '666666', '77777', '88888888', '999999999', '']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'szgkhWMLx', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['defghijklmnop', '◯◯◯', '  ', ' ', '😀😀😀', '         ']], [['  a   ']], [['', 'Bonjour,', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'defghijklmnop', 'Bonjour,', '        ', 'qr', 'qr', 'qr']], [['привет', '1', '', 'привет,', '122', '4444', '888888888', '55555', '666666', '77777', '88888888', '999999999', '999999999', '']], [['chellocc', 'ccc', 'ccc', 'ccc', 'ccc']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '55555         ', '◯◯◯']], [['1', '22', '333', '4444', '666666', '7777777', '88888888', '999999999', '10000000000', '22', '7777777']], [['1', 'привет,', '22', '33', '4444', '55555', 'Hello, Hola, Bonjour, こんにちは, привет', '7777777', '88888888', '999999999', '10000000000', '1', '2']], [['1', 'привет,', '122', '333', '4444', '55555', '666666', '88888888', '999999999', '10000000000']], [['1', '', 'првет,', 'привет,', '122', '4444', '55555', '6Aplple66666', '77777', '88888888', '999999999', '999999999']], [['こんにちは, Bonjour, Hello, Hola, привет', 'cccc', 'ccc', 'ccc']], [['Apple', 'bbccc']], [['ß', '◯', 'ß', 'Ø', 'œ', '\uf8ff']], [['ß', 'öäü', 'ß', 'Ø', 'œ', 'szgkhWMLx']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango']], [['Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'DOiNG', 'Lemon', 'Mango', 'Orange', 'Orangre', 'Duriaccccccccn']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Mango', 'Avocado']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Avocado']], [['defghijklmnop', 'kdefghijklmnop', 'Apple', 'kdefghijklmnop']], [['9999◯◯◯◯99999', '1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '666666']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'Bonjour,', 'Bonjour,']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'Bonjour,', '       ', 'qr', 'qr', 'qr']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'defghijklmnop', 'Bonjour,', '        ', 'qr', 'tODAY?', 'qr', 'Bonjour,']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'F', 'Grape', 'Kiwi', '333', 'Lemon', 'Mango', 'Orange']], [['ß', 'öäüchellocc', 'ß', 'Ø', 'œ', '\uf8ff']], [['  a   ', '  a   ']], [['cccc', 'ccc', 'ccc']], [['Appl', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Grapこんにちは,', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['', '◯◯◯', 'bună ziua', ' ', 'qEK', '         ', '◯◯◯']], [['', '        ', '    \t', '   ', '     ', '    \t']], [['ß', '◯', 'Ø', 'œ', '\uf8ff']], [['1', '22', '333', '4444', '666666', '7777777', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '22', '7777777']], [['   ', 'bună ziua', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯']], [['1', 'привет,', '22', '33', '4444', '55555', 'Hello, Hola, Bonjour, こんにちは, привет', '7777777', '88888888', '99999999', '10000000000', '1', '2', '2', '4444']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', '77777', 'qr', 'Bonjour,']], [['   ', ' ', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯', '◯◯◯', 'tODAY?', 'tODAY?']], [['qeeeeeeeeee', 'aœbc', 'qeeeeHola,eee', 'defghijklmnop', 'hello', 'Bonjour,', '', 'qr', 'qr', 'qr']], [['', 'првет,', 'привет,', '122', '4444', '55555', '6Aplple66666', '77777', '88888888', '999999999', '999999999', '']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'bbbbbb']], [['', '        ', '    \t', '   ', '\t', '   \t']], [['1', '22', '333', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '22', '7777777']], [['abc', 'dBlueberryefghijklmnop', '', 'qr', 'Grapこんにちは,']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'defghijklmnop', '999999999', 'Bonjour,', '        ', 'qr', 'qr', 'qr', 'qr']], [['Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'DOiNG', 'Lemon', 'Mango', 'hhhhhhhhhhhhhhhh', 'Orangre', 'Duriaccccccccn']], [['cccc', 'ccKiwic', 'ccc', 'ccc']], [['1', 'привет,', '333', '4444', '55555', '66666Ø', '7777777', '88888888', '999999999', '10000000000', '1', '2']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Duriaccccccccn']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '22', '7777777']], [['bbbbbb', 'cccccccc', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'Liiiiiiiiiiiiiiiiiiiemon', 'Grapこんにちは,', 'iiiiiiiiiiiiiiiiiii', 'hhhhhhhhhhhhhhhh', 'hhhhhhhhhhhhhhhh']], [['\uf8ff6Aplple66666', 'ß', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff']], [['bbbbbb', 'cccccccc', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'Liiiiiiiiiiiiiiiiiiiemon', 'Grapこんにちは,', 'iiiiiiiiiiiiiiiiiiiAvocado', 'hhhhhhhhhhhhhhhh', '4444', 'hhhhhhhhhhhhhhhh']], [['Apple', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'hhhhhhhhhhhhhhhh', 'Bonjour,']], [['', 'првет,', 'привет,', '9999999999', '4444', '55555', '6Aplple66666', '77777', '88888888', '999999999', '999999999', '']], [['9999999999', '1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000']], [['Avocado', 'Banana', 'Blueberry', 'ziua', 'Duriaccccccccn', 'Grape', 'Kiwi', 'DOiNG', 'Lemon', 'Mango', 'hhhhhhhhhhhhhhhh', 'Orangre', 'Duriaccccccccn', 'Grape']], [['abc', 'defghijklmnop', 'Apple', ' ', 'qr']], [['Apple', 'Avocado', 'Hello', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Kiwi']], [['', 'bună ziua', ' ', '         ', '◯◯◯']], [['1', 'привет,', '122', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', 'привет,']], [['', 'MMango', '     ', '22', '   \t']], [['', '        ', '     ', '22', '   \t', '']], [['ccc', 'cc']], [['1', '', 'првет,', 'привет,', '122', '4444', '55555', '6Aplple66666', '77777', '88888888', '999999999', '999999999', '999999999']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'bbbbbb', '', 'qr', 'Bonjour,', 'qeeeeeeeee', 'Bonjour,']], [['hello', 'HOW', '😀😀😀', 'are', 'yOu', 'DOiNG', 'tODAY?']], [['defghijklmnop', '  ', ' ', '😀😀😀', '         ', ' ']], [['NEs', 'iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'bb', 'bb']], [['Hello, Bonjour, こんにちは, Hola, приNEsвет', 'こんにちは, Bonjour,u Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '77777777', '22', '7777777']], [['Hello, Bonjour, こんにちは, Hola, привет', 'ccc', 'ccc']], [['1', '22', '3333', '4444', '55555', '666666', '7777777', '88888888', '10000000000', '666666', '333']], [['Avocado', 'Banana', 'Avocado', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Or', 'DOiNG', 'Lemon', 'Mango', 'Orange', 'Orangre', 'Duriaccccccccn']], [['', '◯◯◯', ' ', '😀😀😀', '         ', '']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Duriaccccccccn']], [['aziuabc', 'fffffffffff', 'Apple', 'Ø', 'qqr', 'qr', 'fffffffffff', 'fffffffffff']], [['こんにちは, Bonjour, Hello, Hola, привет', 'cccc', 'ccc', 'cccc']], [['Apple', 'Avocado', 'Orangne', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['1', 'привет,', '122', '333', '4444', '55555', '666666', '88888888', '999999999', '10000000000', '88888888']], [['1', '', 'привет,', '122', '4444', '55555', '666666', '77777', '88888888', '999999999', '999999999', 'привет,']], [['Hello, Bonjour, こんにちは, Hola, приNEsвет', 'Hello, Bonjour, こんにちは, Hola, приNEsвет', 'こんにちは, Bonjour,u Hello, Hola, привет', 'こんにちは, Bonjour,u Hello, Hola, прbună ziuaвет', 'привет, Hola, Bonjour, こんにちは, Hello', 'Hello, Bonjour, こんにちは, Hola, приNEsвет']], [['abc', 'defghijklmnop', 'Appple', ' ', 'qr']], [['1', 'привет,', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '4444']], [['iiiiiiiiiiiiiiiiiii', 'Banana', '10000000000', 'bb', 'ccc', 'bb', 'bb', '10000000000']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'AvoJNGmHOkrdo', 'Avocado']], [['   ', ' ', 'Appl', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'Cherry', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'bbbbbb']], [['', 'Bonjour,', 'öäü', 'ß', 'Bonj', 'Ø', 'œ', '\uf8ff']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Orange', 'Mango', 'Avocado']], [['Apple', 'abc', 'defghijklmnop', 'Bonjour,', '', 'hhhhhhhhhhhhhhhh', 'Bonjour,', 'Bonjour,']], [['1', '', 'привет,', '122', '4444', '77771227', '55555', '666666', '77777', '88888888', '999999999']], [['', 'bună ziua', '◯◯◯◯', ' ', '😀😀😀', '         ', '◯◯◯', '😀😀😀']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'defghijklmnop', '999999999', 'Bonjour,', '        ', 'qr', 'qr', 'qr', 'qr', 'qr']], [['a', '        ', '    \t', '   ', '     ']], [['  a  ', '  a  ', '  a  ']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'bbbbbb', '', 'qr', 'Bonjour,', 'qeeeeeeeee', 'Bonjour,', 'Bonjour,']], [['こんにちは, Bonjour, Hello, Hola, привет', 'cccc', 'ccc']], [['', 'bună ziua', '◯◯◯◯', ' ', 'приNEsвет', '😀😀😀', '         ', 'bună ziua']], [['Apple']], [['55555', 'Apple', 'bbccc', 'bbccc']], [['iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'Banana']], [['iiiiiiiiiiiiiiiiiii', '        ', '10000000000', 'bb', '◯', 'ccc', 'bb']], [['1', 'привет,', '22', '3333', '4444', '55555', '66666Ø', '7777777', '88888888', '999999999', '10000000000', '1', '2', '1', '999999999']], [['defghijklmnop', '  ', ' ', '😀😀😀', '         ', ' ', '😀😀😀']], [['aziuabc', 'fffffffffff', '122', 'Ø', 'qqr', '', 'qr', 'fffffffffff', 'fffffffffff', 'fffffffffff', 'qqr']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '666666', '66qeeeeeeeee6666', '333']], [['1', '22', '333', '66666Durian6', '4444', '55555', '666666', '7777777', '88888888', '10000000000', '7777777']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'првет,', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'qr']], [['Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello']], [['ccccc', 'こんにちは, Bonjour, Hello, Hola, привет', 'cccc', 'ccc', 'ccc']], [['1', '', 'привет,', '', '4444', '55555', '666666', '77777', '88888888', '999999999', '1']], [['22', '333', '4444', '666666', '7777777', '88888888', '999999999', '10000000000']], [['', '◯◯◯', ' ', '😀😀😀', '    \t']], [[' ', '', ' ', '😀😀😀', '◯◯◯', '◯◯◯', '◯', '◯◯◯', '◯◯◯', '◯◯◯']], [['1', '22', '333', '4444', '555555', '666666', '7777777', 'iiiiiiiiiiiiiiiiiii', 'TyUNzlo', '10000000000', '666666', '7777777']], [['1', '22', '333', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '22', '9999999999', '7777777']], [['Appl', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Grachelloccpe', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'Cherry', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'bbbbbb', 'bbbbbb']], [['   ', 'bună ziua', ' ', '😀😀😀', '         ', '◯◯◯', 'tODAY?']], [['defghijklmnop', '  ', ' ', '😀😀😀', '         ', 'Appple', ' ']], [['cæccc', 'こんにちは, Bonjour, Hello, Hola, привет', 'cccc', 'ccc', 'こんにちは, Bonjour, Hello, Hola, привет']], [['◯66666Ø◯◯', '   ', 'bună ziua', '😀😀😀', '         ', '◯◯◯', 'tODAY?']], [['ß', '◯', 'ß', 'ßß', 'Ø', '\uf8ff']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'Bonjour,', '       ', 'BonAvoJNGmHOkrdojour,', 'qr', 'BonjourDurian,', 'qr', 'qr', 'BonAvoJNGmHOkrdojour,']], [['MMango', 'Durian', '     ', '22', '   \t', '22']], [['', '◯◯◯', '😀😀😀', '         ', '', '']], [['', '        ', '     ', '22', '9999◯◯◯◯99999']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', '666666', '66qeeehelloeeeeee6666', '333']], [['Hello, Bonjour, こんにちは, Hola, пр77771227иNEsвет', 'こんにちは, Bonjour,u Hello, Hola,H привет', 'Hello, Bonjour, こんにちは, Hola, приNEsвет', 'こんにちは, Bonjour,u Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'првет,', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Banana']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'првет,', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Avocado']], [['Or', '  a  ', 'bb', 'ccc', 'bb', 'bb', 'bb', 'bb']], [['', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff', 'œ']], [['Aplple', 'Avocado', 'Banana', 'Blueberry', 'Lemonœ', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange']], [['', 'bună ziua', '◯◯◯◯', ' ', '😀😀😀', '         ', ' ']], [['1', '', 'првет,', 'привет,', '122', '444', '55555', '6Aplple66666', '77777', '88888888', '999999999', '999999999', '999999999']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'GraziGraziuapeuape', 'Duriaccccccccn', 'Fig', 'првет,', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Banana']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '999999999', '10000000000', 'Avocado', '666666', '66qeeehelloeeeeee6666', '333']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'bbbbbb', '', 'qr', 'BonjourDuriaccccccccn,', 'qeeeeeeeee', 'Bonjour,', 'Bonjour,']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '77777777', '22', '7777777', '666666', '1']], [['abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'hhhhhhhhhhhhhhhh', 'Bonjour,']], [['1', 'привет,', '22', '333', '4444', '55555', '666666', '7777777', '99999abc', '88888888', '999999999', '10000000000', '4444', '1']], [['Or', '  a  ', 'bb', 'ccc', 'bb', 'bb', 'bb', '99999abc', 'bb', 'bb']], [['', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff', 'œ', 'œ']], [['', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff', '']], [['         ', '', '        ', '    \t', '   ', '     ', '\t', '   \t']], [['1', 'привет,', '22', '33', '4444', '55555', 'Hello, Hola, Bonjour, こんにちは, привет', '7777777', '88888888', '99999999', '10000000000', 'прqeeeeeeeeeивет,', '1', '2', '2', '4444']], [['', 'öäü', 'ß', 'Ø', 'æ◯', 'œ', '\uf8ff', 'Ø']], [['iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'Banan']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'F', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Avocado']], [['Hello, Bonjour, こんにちは, Hola, приNEsвет', 'こんにちは, Bonjour,u Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'Hello, Bonjour, こんにちは, Hola, приNEsвет']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'bbbbbb', '', 'qr', 'BonjourDuriaccccccccn,', 'qeeeeeeeee', 'Bonjour,']], [['9999999999', '1', '22', '333', '4444', '55555', '4', '666666', '7777777', '88888888', '999999999', '10000000000']], [['Appl', 'Avocado', 'cccccccc', 'Banana', 'Cyherry', 'Blueberrприветy', 'Duriaccccccccn', 'Grachelloccpe', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['9999999999', '1', '22', '333', '4444', '4', '666666', '7777777', '88888888', '999999999', '10000000000']], [['44', '1', 'првет,', 'привет,', '122', '4444', '55555', '6Aplple66666', '77777', '999999999', '999999999', '6Aplple66666']], [['ccccc', 'こんにちは, Bonjour, Hello, Hola, привет', 'cccc', '888888888', 'ccc', 'ccc']], [['abc', 'defghijklmnop', 'Bonjour,', '', 'qeeeeHola,eee', 'Bonjour,']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'Appple', 'Bonjour,', 'Bonjour,']], [['Hola,H', '1', '22', '333', '4444', '555555', '666666', '7777777', '88888888', 'ß', 'bbccc', '666666', '555555']], [['1', 'привет,', '22', '333', '4444', '55555', '66666Ø', '7777777', '88888888', '999999999', '10000000000', '1', '2', '1']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'Hello, Bonjour, こんにちは, Hola, привет']], [['  a  ', 'bb', 'ccc', 'bb', 'bb', 'bb', 'bb']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Mango']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyhry', 'Durian', 'fffffffffff', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Blueberry']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'DuriaccccccccnHello,', 'Duriaccccccccn', 'Fig', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['iiiiiiiiiiiiiiiiiii', 'Mango', 'iiiiiiiiiiiiiii', '10000000000', 'bb', '◯', 'ccc', 'bb', 'bb']], [['tODAY?', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['are', 'bb', 'cccc', 'ccc']], [['are', '', 'Bonjour,', 'öäü', 'ß', 'Ø', 'œ', 'Graziuape', '\uf8ff']], [['Apple', 'Avocao', 'Banana', 'Blueberry', 'Cherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Fig']], [['44', 'qeeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'Hello, Hola, Bonjour, こんにちは, привет', 'qr', 'Bonjour,']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'bbbbbb', 'qr', 'BonjourDuriaccccccccn,', 'qeeeeeeeee', 'Bonjour,', 'Bonjour,', 'qr']], [['1', '', 'привет,', 'hhhhhhhhhhhhhhhh', 'hhhhhhhhhhhhhhhh122', '◯', '999999bbbbbb999', '666666', '77777', '88888888', '999999999', '']], [['cccc', 'ccKiwic', 'ccc']], [['   ', 'bună ziua', ' ', '   ', '         ', '◯◯◯', '◯◯◯']], [['  a  ', 'bb', 'ccc', '  a  ', 'bb']], [['ccccc', 'こんにちは, Bonjour, Hello, Hola, привет', 'ccc', 'ccc', 'こんにちは, Bonjour, Hello, Hola, привет', 'ccc']], [['', '        ', '   ', '     ', '\t']], [['1', '', 'привет,', 'hhhhhhhhhhhhhhhh122', '44444', '◯', '999999bbbbbb999', '666666', '77777', '88888888', '999999999', '', '77777']], [['iiiiiiiiiiiiiiiiiii', 'Mango', 'iiiiiiiiiiiiiii', '10000000000', 'bb', '◯', 'ccc', 'bb', 'b']], [[' ', '   ', ' ', '😀😀😀', '         ', '◯◯◯', '◯', '◯◯◯', '◯◯◯', ' ']], [['DOiNG', '◯◯◯', 'bună ziua', ' ', '55555         ', '◯◯◯']], [['1', '22', '4444', '666666', '7777777', '88888888', '999999999', '10000000000']], [['  a  ', 'bb', 'ccc', 'bb', 'bb', 'bb']], [['', 'Bonjour,', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff', 'Ø']], [['qeeeeeeeeee', 'abc', 'BonAvoJNGmH,Okrdojour,', 'qeeeeHola,eee', 'Bonjour,', '       ', 'BonAvoJNGmHOkrdojour,', 'qr', 'BonjourDurian,', 'qr', 'qr', 'BonAvoJNGmHOkrdojour,', 'qeeeeeeeeee']], [['defghijklmnop', '  ', ' ', '😀😀😀', '         ']], [['1', '', 'привет,', '122', '4444', '77771227', '55555', '666666', '77777', '88888888']], [['cccc', 'TSNvGfDd', 'ccKiwic', 'ccc']], [['1', '22', '333', '77777', '4444', '666666', '777aœbc777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '77777777', '22', '7777777']], [['    ', 'bună ziua', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '◯◯◯']], [['', 'Bonjour,', 'öäü', 'ß', 'Ø', 'œ']], [['aaaa', 'bbbbbb', 'ccccccccc', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'iiiiiiiiiiiiiiiiiii', 'bbbbbb']], [['', 'bună ziua', '◯◯◯◯', ' ', '😀😀😀', '55555', '         ', '◯◯◯']], [['Apple', 'abc', 'defghijklmnop', 'Bonjour,', '', 'Bonjour,', 'Bonjour,']], [['1', '22', '333', '4444', '55555', '666666', '7777b777', '88888888', '999999999', '10000000000', '666666', '333', '1']], [['ccccc', 'こんにちは, Bonjour, Hello, Hola, привет', 'cccc', '888888888', 'ccc']], [['1', '', 'првет,', 'привет,', '122', '4444', 'iiiiiiiiiiiiiiiiiiiAvocado', '6Aplple66666', '77777', '88888888', ' 999999999', '999999999', '999999999']], [['qeeeeeeeeee', 'defghijklmnop', 'Bonjour,', 'bbbbbb', '', 'qr', 'BonjourDuriaccccccccn,', 'qeeeeeeeee', 'Bonjour,', 'Bonjour,']], [['1', '9999999999', '', 'привет,', 'hhhhhhhhhhhhhhhh', 'hhhhhhhhhhhhhhhh122', '◯', '999999bbbbbb999', '666666', '77777', '88888888', '999999999', '']], [['', 'BonjourDuriaccccccccn,', 'bună ziua', ' ', '         ', '◯◯◯']], [['1', 'привтет,', '22', '333', '4444', '55555', '666666', '7777777', '99999abc', '88888888', '999999999', '10000000000', '4444', '1']], [['   ', 'bună ziua', ' ', '   ', ' a', '         ', '◯◯◯', '◯◯◯']], [['1', 'привет,', '22', '333', '4444', '55555', '66666Ø', '7777777', '88888888', '999999999', '10000000000', '1', '2', '1', '7777777']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', '44Orange', 'Kiwi', 'こんにちは, Bonjour, Hello, Hola, привет', 'Mango', 'Orange']], [['55', 'Apple', 'bbccc', 'bbccc']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Avocado']], [['Or', '  a  ', 'bb', 'ccc', 'bb', 'bb', 'Beeeeeeeeeeonjour,', 'bb']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Cyherry', 'Duriaccccccccn', 'Fig', 'првет,', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Banana']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '11', '88888888', '7777777']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr']], [['   ', 'bună ziua', ' ', '       ', ' a', '         ', '◯◯◯', '◯◯◯']], [['1', 'привет,', '22', '33', '444', '66qeeeeeeeee6666', 'Hello, Hola, Bonjour, こんにちは, привет', '7777777', '88888888', '99999999', '10000000000', '1', '2', '2', '4444']], [['', 'öäü', 'ß', 'Ø', 'æ', 'œ', '\uf8ff', 'öäü']], [['Or', '  a  ', 'ccc', 'bb', 'bb', '99999999', 'bb']], [['iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'bbCherry']], [['Avocado', 'Bananпрвет,a', 'Avocado', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Or', 'DOiNG', 'Lemon', 'Mango', 'Orange', 'Orangre', 'Duriaccccccccn', 'Orangre']], [['Avocado', 'Bananпрвет,a', 'Avocado', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Or', 'Lemon', 'Mango', 'Orange', 'Orangre', 'Duriaccccccccn', 'Orangre', 'Bananпрвет,a']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '77777777', '22', '7777777', '666666', '7755777', '1', '7777777']], [['Apple', 'Avocado', 'Blueberry', 'Durian', '◯◯◯◯', 'Fig', 'Graziuape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Fig']], [['1', 'привет,', '122', '333', '4444', '11', '55555', '666666', '   ', '7777777', '88888888', '999999999', '10000000000', 'привет,']], [['22', '333', 'прbună', '666666', '7777777', '88888888', '999999999', '10000000000', '88888888']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'GraziGraziuapeuape', 'Duriaccccccccn', 'Fig', 'првет,', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'Banana', 'Avocado']], [['', '◯◯◯', ' ', '😀😀😀', '   ', '', '']], [['qeeeeeeeeeee', 'qeeeeeeeeee', 'defghijklmnop', 'Bonjour,', '', 'qr', 'hhhhhhhhhhhhhhhh', 'Bonjour,']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', '44Orange', 'Kiwi', 'こんにちは, Bonjour, Hello, Hola, привет', 'Mango', 'Orange', '44Orange']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', ' a', '10000000000', '22', '7777777']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'Cherry', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh', 'bbbbbb', 'bbbbbb', 'eeeeeeeeee']], [['cccc', 'こんにちは, Bonjour,u Hello, Hola, прbună ziuaвет', 'ccc']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Orange', 'Mango', 'Avocado', 'Cyherry']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', '😀😀😀', 'iiiiiiiiiiiiiiiiiii', 'bbbbbbb', 'eeeeeeeeee']], [['abc', 'defghijklmnop', ' ', 'qr', ' ']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Kiwi', 'Applle', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn']], [['', 'bună ziua', ' ', '         ', '◯◯◯', ' ']], [['  a    ']], [['  a  ', 'bb', 'ccc', 'kdefghijklmnop', '  a  ', 'bb']], [['こんにちは, Bonjour, Hello, Hola, привет', 'cccc', 'ccc', 'ccc', 'ccc']], [['cccc', 'ccKiwic', 'ccc', 'ccc', 'ccc']], [['defghijklmnop']], [['6666666', '1', '22', '333', '4444', '55555', '666666', '7777777', '88888888', '11', '88888888', '7777777']], [['Aplple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Lemonœ', 'Durian', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Grape']], [['tODAY?', '\uf8ff6Aplple66666', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет']], [['', 'MMango', '     ', '22', '']], [['Apple', 'bbccc', 'bbccc', 'bbccc']], [['1', '9999999999', '', 'привет,', 'hhHello, Bonjour, こんにちは, Hola, пр77771227иNEsветhhhhhhhhhhhhhh', 'hhhhhhhhhhhhhhhh122', '◯', '999999bbbbbb999', '666666', '77777', '88888888', '999999999']], [['qeeeeeeeeee', 'aœbc', 'qeeeeHola,eee', '         qr', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'qr']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', '', 'qr', 'qr', 'defghijklmnop']], [['◯◯◯', ' ', '😀😀😀', '    \t']], [[' ', '', ' ', '😀😀😀', '         ', 'привет,', '◯◯◯', '◯◯◯', '◯', '◯◯◯', '◯◯◯']], [['iiiiiiiiiiiiiiiiiii', 'Mango', '10000000000', 'bb', '◯', 'ccc', 'bb', 'bbb']], [[' ', '   ', '  ', '         ', '◯◯◯', '◯', '◯◯◯', '◯◯◯', ' ']], [['iiiiiiiiiiiiiiiiiii', 'Mango', 'Appple', '10000000000', 'bb', '◯', 'ccc', 'bbCherry']], [['Hello, Hola, Bonjour, こんにちは, привет', 'Hello, Bonjour, こんにちは, Hola, привет', 'こんにちは, Bonjour, Hello, Hola, привет555555', 'привет, Hola, Bonjour, こんにちは, Hello', 'ສະບາຍດີ, Bonjour, こんにちは, Hola, привет']], [['qeeeeeeeeee', 'abc', 'BonAvoJNGmH,Okrdojour,', 'qeeeeHola,eee', 'Bonjour,', '       ', 'BonAvoJNGmHOkrdojour,', 'qr', 'BonjourDurian,', 'qr', 'qr', 'BonAvoJNGmHOFkrdojour,', 'qeeeeeeeeee', 'qeeeeeeeeee']], [['', 'bună ziua', '', '◯◯◯◯', ' ', '😀😀😀', '         ', ' ']], [['Apple', 'MMango', 'Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Graziuape', 'Kiwi', 'Liiiiiiiiiiiiiiiiiiiemon', 'Mango', 'ggggggggggggg']], [['Durian', 'ccc']], [['abc', 'defghijklmnop', 'Bonjour,', '', 'BonjourDuriaccccccccn,', 'qeeeeHola,eee', 'Bonjour,']], [['ziua', '  a  ', 'bb', 'ccc', 'bb', 'bb', 'Beeeeeeeeeeonjour,', 'bb']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Avocado', 'Mango']], [['1', '22', '333', '4444', '55555', '666666', '7777777', '66Avocao', '88888888', 'aaaa', '10000000000', '666666', '66qeeehelloeeeeee6666', '333']], [['Apple', 'Avocado', 'Orangne', 'Banana', 'Blueberry', 'qeeeeeeeee', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Duriaccccccccn', 'Kiwi']], [['22', '333', '44444', '555555', '666666', '7777777', '88888888', '999999999', '666666']], [['Avocado', 'Bananпрвет,a', 'Avocado', 'NDOiNG', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Or', 'DOiNG', 'Lemon', 'Mango', 'Orange', 'Orangre', 'Duriaccccccccn', 'Orangre']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cyhry', 'Durian', 'fffffffffff', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Oranege', 'Blueberry']], [['', '    \t', '   ', '     ', '\t', '   \t']], [['   ', ' ', '😀😀😀', '         ', '◯◯◯', 'tODAY?', '😀😀😀', '◯◯◯', 'tODAY?']], [['ziua', '  a  ', 'bb', 'ccc', 'bb', 'bb', 'B9999999999eeeeeeonjour,', 'bb']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '77777777', '9999◯◯◯◯99999', '7777777', '666666', '1']], [['1', 'привтет,', '22', '333', '4444', '55555', '666666', '7777777', '99999abc', '88888888', '999999999', '10000000000', '44444', '4444', '1', '7777777']], [['', 'öäü', 'ß', 'Ø', 'œ', '\uf8ff', '', 'œ', '\uf8ff']], [['qeeeeeeeeee', 'defghijklmnop', '', 'qr', 'qr', 'defghijklmnop']], [['1', '', 'привет,', '', '4444', '55555', '666666', '77777', '88888888', '999999999', '1', '88888888']], [['', '        ', '    \t', '   ', '\t55', '\t', '   \t']], [['Hello, Bonjour, こんにちは, Hola, пр77771227иNEsвет', 'こんにちは, Bonjour,u Hello, Hola,H привет', 'Hello, Bonjour, こんにちは, Hola, приNEsвет', 'привет, Hola, Bonjour, こんにちは, Hello']], [['', 'öäü', '', 'Ø', 'œ', '\uf8ff', '', 'œ', '\uf8ff']], [['qeeeeeeeeee', 'abc', 'qeeeeHola,eee', 'Beeeeeeeeeeonjour,', 'Bonjour,', '       ', 'BonAvoJNGmHOkrdojour,', 'qr', 'BonjourDurian,', 'qr', 'qr', 'BonAvoJNGmHOkrdojour,']], [['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry', 'Fig', 'Cyhry', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Avocado', 'Mango']], [['iiiiiiiiiiiiiiiiiii', '  a  ', 'bb', 'ccc', 'bb', 'bb', 'ccc']], [['\uf8ff6Aplple66666', 'ß', 'öäü', 'Ø', 'œ', '\uf8ff']], [['', ' ', '         ', '◯◯◯']], [['Apple', 'abc', 'defghijklmnop', 'Bonjour,', 'hhhhhhhhhhhhhhhh', 'Bonjour,', 'Bonjour,']], [['are', 'bb', 'ccc', 'ccc']], [['', '◯◯◯', 'bună ziua', ' ', '😀😀😀', '55555         ']], [['Avocado', 'Banana', 'Blueberry', 'ziua', 'Duriaccccccccn', 'Avocadqro', 'Grape', 'Kiwi', 'DOiNG', '55555', 'Lemon', 'Mango', 'hhhhhhhhhhhhhhhh', 'Orangre', 'Duriaccccccccn', 'Grape']], [['Hello', 'dBlueberryefghijklmnop', '', 'qr', 'Grapこんにちは,']], [['Avocado', 'Banana', 'Blueberry', 'Cyherry', 'Duriaccccccccn', 'Fig', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Orangre', 'Duriaccccccccn']], [['Apple', 'Appple', 'Banana', 'Blueberry', 'Cyherry', 'Durian', 'Fig', 'Grape', '44Orange', 'Kiwi', 'こんにちは, Bonjour, Hello, Hola, привет', 'Mango', 'Orange', '44Orange', 'Durian']], [['qeeeeeeeeee', 'abc', 'defghijklmnop', 'Bonjour,', 'bbbbbb', '', 'qr', 'BonjourDuriaccccccccn,', 'qeeeeeeeee', 'Bonjour,', 'DOiNG', 'Bonjour,']], [['aaaa', 'bbbbbb', 'cccccccc', 'ddddddddd', 'eeeeeeeeee', 'fffffffffff', 'ggggggggggggg', 'hhhhhhhhhhhhhhhh']], [['Apple', 'Avocado', 'Banana', '555555', 'Cyherry', 'Durian', 'Fig', 'Grape', '44Orange', 'bQYg', 'Kiwi', 'こんにちは, Bonjour, Hello, Hola, привет', 'Mango', 'Orange', '44Orange']], [['22', '33         3', '44444', '666666', '7777777', '88888888', '999999999', '666666']], [['1', '22', '333', '77777', '4444', '666666', '7777777', '44', 'Beeeeeeeeeeonjour,', '999999999', '10000000000', '77777777', '22', '666666', '1']], [['ccfffffffffff', '  a  ', 'bb', 'ccc', 'kdefghijklmnop', '  a  ', 'bb']]] </code></pre>
+<br>
+<h1>Generations</h1>
+
+      <p> claude-3-haiku-20240307. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code for the problem:
+
+```python
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+    None
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    
+    return longest_string</code></pre>
+
+      <p> code-millenials-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+
+    return max(strings, key=len)</code></pre>
+
+      <p> speechless-coding-7b-16k-tora. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    else:
+        return max(strings, key=len)
+
+
+# Test cases
+print(longest([]))  # None
+print(longest(['a', 'b', 'c']))  # 'a'
+print(longest(['a', 'bb', 'ccc']))  # 'ccc'</code></pre>
+
+      <p> claude-3-opus-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the completed code wrapped in a markdown block:
+
+```python
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    
+    max_length = 0
+    longest_string = None
+    
+    for string in strings:
+        if len(string) > max_length:
+            max_length = len(string)
+            longest_string = string
+    
+    return longest_string</code></pre>
+
+      <p> mixtral-8x7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for s in strings[1:]:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string</code></pre>
+
+      <p> mixtral-8x22b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string
+
+# Test cases
+assert longest([]) is None
+assert longest(['a', 'b', 'c']) == 'a'
+assert longest(['a', 'bb', 'ccc']) == 'ccc'</code></pre>
+
+      <p> code-llama-multi-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+</code></pre>
+
+      <p> Qwen--Qwen1.5-72B-Chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    """
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string
+
+
+# Test cases</code></pre>
+
+      <p> mistral-large-latest. fail_base: False, fail_plus: False </p>
+      <pre><code>  Sure, here's a Python function that solves the problem:
+
+```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    else:
+        max_str = strings[0]
+        for s in strings:
+            if len(s) > len(max_str):
+                max_str = s
+        return max_str
+```
+
+This function first checks if the input list is empty. If it is, it returns `None`. If not, it initializes `max_str` as the first string in the list. It then iterates over the list, and if it finds a string with a length greater than the current `max_str`, it updates `max_str`. Finally, it returns `max_str`, which is the longest string in the list.</code></pre>
+
+      <p> HuggingFaceH4--starchat2-15b-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([]) is None
+    True
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_str = strings[0]
+    for string in strings:
+        if len(string) > len(longest_str):
+            longest_str = string
+    return longest_str
+
+# Running tests
+assert longest([]) is None
+assert longest(['a', 'b', 'c']) == 'a'
+assert longest(['a', 'bb', 'ccc']) == 'ccc'</code></pre>
+
+      <p> codegemma-7b. fail_base: True, fail_plus: True </p>
+      <pre><code>  def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    
+    longest_str = strings[0]
+    for string in strings:
+        if len(string) > len(longest_str):
+            longest_str = string
+            
+    return longest_str</code></pre>
+
+      <p> code-llama-multi-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+
+def longest_2(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+
+def longest_3(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+
+def longest_4(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string</code></pre>
+
+      <p> deepseek-coder-6.7b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function in a markdown style code block:
+
+```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """
+    Out of list of strings, return the longest one. 
+    Return the first one in case of multiple strings of the same length. 
+    Return None in case the input list is empty.
+
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    max_len = len(max(strings, key=len))
+    for string in strings:
+        if len(string) == max_len:
+            return string
+```
+
+This function uses the built-in `max` function with the `key=len` argument to find the longest string in the list. It then iterates over the list to find the first string with that length, returning it. If the list is empty, it returns `None`.
+</code></pre>
+
+      <p> open-hermes-2.5-code-290k-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string
+
+
+# Test cases
+print(longest([]))  # Output: None
+print(longest(['a', 'b', 'c']))  # Output: 'a'
+print(longest(['a', 'bb', 'ccc']))  # Output: 'ccc'</code></pre>
+
+      <p> speechless-coder-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string</code></pre>
+
+      <p> codegemma-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_str = strings[0]
+    for s in strings:
+        if len(s) > len(longest_str):
+            longest_str = s
+    return longest_str</code></pre>
+
+      <p> deepseek-coder-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+</code></pre>
+
+      <p> mistralai--Mistral-7B-Instruct-v0.2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+</code></pre>
+
+      <p> xwincoder-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+
+# Test cases
+print(longest([]))
+print(longest(['a', 'b', 'c']))
+print(longest(['a', 'bb', 'ccc']))</code></pre>
+
+      <p> code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    max_length = len(max(strings, key=len))
+    return next(s for s in strings if len(s) == max_length)
+
+print(longest([])) # None
+print(longest(['a', 'b', 'c'])) # 'a'
+print(longest(['a', 'bb', 'ccc'])) # 'ccc'</code></pre>
+
+      <p> wizardcoder-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the problem:
+
+```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    """
+    if not strings:
+        return None
+    longest_str = strings[0]
+    for string in strings:
+        if len(string) > len(longest_str):
+            longest_str = string
+    return longest_str
+```
+
+The function takes a list of strings as input and returns the longest one. If there are multiple strings of the same length, it returns the first one. If the input list is empty, it returns None.
+
+The function first checks if the input list is empty. If it is, it returns None. Otherwise, it initializes the longest_str variable to the first string in the list. It then iterates over the remaining strings in the list and compares their length to the length of the current longest_str. If a longer string is found, it becomes the new longest_str. Finally, the function returns the longest_str.</code></pre>
+
+      <p> mistral-7b-codealpaca. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    max_len = max(len(s) for s in strings)
+    max_strings = [s for s in strings if len(s) == max_len]
+    return max_strings[0] if max_strings else None
+
+</code></pre>
+
+      <p> deepseek-coder-33b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the Python function implemented in a markdown style code block:
+
+```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string
+```
+
+This function works by first checking if the input list is empty. If it is, it returns None. If it's not, it sets the first string as the longest one and then iterates over the rest of the strings. If it finds a string that is longer than the current longest string, it updates the longest string. Finally, it returns the longest string.
+<|EOT|></code></pre>
+
+      <p> phi-2. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</code></pre>
+
+      <p> bigcode--starcoder2-15b-instruct-v0.1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    max_len = max(len(s) for s in strings)
+    return next(s for s in strings if len(s) == max_len)</code></pre>
+
+      <p> white-rabbit-neo-33b-v1. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)</code></pre>
+
+      <p> microsoft--Phi-3-mini-4k-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+    None
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+# Test cases</code></pre>
+
+      <p> speechless-codellama-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+```
+</code></pre>
+
+      <p> meta-llama-3-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+# Test cases
+print(longest([]))  # Should print None
+print(longest(['a', 'b', 'c']))  # Should print 'a'
+print(longest(['a', 'bb', 'ccc']))  # Should print 'ccc'</code></pre>
+
+      <p> code-llama-70b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+if __name__ == "__main__":
+    print(longest([]))
+    print(longest(['a', 'b', 'c']))
+    print(longest(['a', 'bb', 'ccc']))</code></pre>
+
+      <p> opencodeinterpreter-ds-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string</code></pre>
+
+      <p> openchat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+
+# Test cases
+print(longest([]))  # Output: None
+print(longest(['a', 'b', 'c']))  # Output: 'a'
+print(longest(['a', 'bb', 'ccc']))  # Output: 'ccc'</code></pre>
+
+      <p> deepseek-coder-7b-instruct-v1.5. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)</code></pre>
+
+      <p> speechless-starcoder2-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    max_len = max(len(s) for s in strings)
+    return next(s for s in strings if len(s) == max_len)</code></pre>
+
+      <p> wizardcoder-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here's the Python script for the given problem:
+
+```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    """
+    if not strings:
+        return None
+    longest_str = max(strings, key=len)
+    return longest_str
+```
+
+We can use the `max()` function with the `key` parameter set to `len` to find the longest string in the list. If the list is empty, it will return `None`. Otherwise, it will return the first string in the list with the maximum length. </code></pre>
+
+      <p> octocoder. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+</code></pre>
+
+      <p> gemma-1.1-7b-it. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'c'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string</code></pre>
+
+      <p> gpt-3.5-turbo. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the code to complete the problem:
+
+```python
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+```
+
+This code checks if the input list is empty and returns `None` in that case. It then initializes the `longest_string` variable with the first string in the list. It iterates over the remaining strings in the list and updates `longest_string` if a longer string is found. Finally, it returns the `longest_string`.</code></pre>
+
+      <p> codebooga-34b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+</code></pre>
+
+      <p> deepseek-coder-1.3b-instruct. fail_base: False, fail_plus: False </p>
+      <pre><code>  Here is the implementation of the function in markdown style:
+
+```python
+from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    """
+    Out of list of strings, return the longest one. 
+    Return the first one in case of multiple strings of the same length. 
+    Return None in case the input list is empty.
+
+    >>> longest([])
+    None
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string
+```
+
+This function works by initializing the longest string to the first string in the list. Then, it iterates over the list of strings, updating the longest string if a longer string is found. If the list is empty, the function returns None.
+</code></pre>
+
+      <p> speechless-mistral-7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+```
+
+This script defines a function `longest` that takes a list of strings as input and returns the longest string in the list. If the list is empty, it returns `None`. The function iterates over the list and compares the length of each string with the length of the current longest string. If it finds a longer string, it updates the `longest_string` variable. Finally, it returns the `longest_string`.
+</code></pre>
+
+      <p> xdan-l1-chat. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    
+    max_length = max(len(string) for string in strings)
+    max_length_strings = [string for string in strings if len(string) == max_length]
+    
+    return max_length_strings[0] if max_length_strings else strings[0]
+
+
+# Test cases
+print(longest([]))  # None
+print(longest(['a', 'b', 'c']))  # 'a'
+print(longest(['a', 'bb', 'ccc']))  # 'ccc'</code></pre>
+
+      <p> solar-10.7b-instruct. fail_base: True, fail_plus: True </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    max_length = max(map(len, strings))
+    longest_strings = [string for string in strings if len(string) == max_length]
+    if len(longest_strings) == 1:
+        return longest_strings[0]
+    elif len(longest_strings) > 1:
+        return longest_strings[0]
+    elif not strings:
+        return None
+
+
+# Test cases
+print(longest([]))
+print(longest(['a', 'b', 'c']))
+print(longest(['a', 'bb', 'ccc']))</code></pre>
+
+      <p> claude-3-sonnet-20240229. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+    None
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+
+    return longest_string</code></pre>
+
+      <p> code-33b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string</code></pre>
+
+      <p> starcoder2-15b-oci. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string
+
+
+def longest_2(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest_2([])
+
+    >>> longest_2(['a', 'b', 'c'])
+    'a'
+    >>> longest_2(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)
+
+
+def longest_3(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest_3([])
+
+    >>> longest_3(['a', 'b', 'c'])
+    'a'
+    >>> longest_3(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return sorted(strings, key=len, reverse=True)[0]
+
+
+def longest_4(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest_4([])
+
+    >>> longest_4(['a', 'b', 'c'])
+    'a'
+    >>> longest_4(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return sorted(strings, key=len)[-1]
+
+
+def longest_5(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest_5([])
+
+    >>> longest_5(['a', 'b', 'c'])
+    'a'
+    >>> longest_5(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if</code></pre>
+
+      <p> speechless-starcoder2-15b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    longest_string = strings[0]
+    for string in strings:
+        if len(string) > len(longest_string):
+            longest_string = string
+    return longest_string</code></pre>
+
+      <p> python-code-13b. fail_base: False, fail_plus: False </p>
+      <pre><code>  from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    """ Out of list of strings, return the longest one. Return the first one in case of multiple
+    strings of the same length. Return None in case the input list is empty.
+    >>> longest([])
+
+    >>> longest(['a', 'b', 'c'])
+    'a'
+    >>> longest(['a', 'bb', 'ccc'])
+    'ccc'
+    """
+    if not strings:
+        return None
+    return max(strings, key=len)</code></pre>
+
+      <p> opencodeinterpreter-ds-6.7b. fail_base: False, fail_plus: False </p>
+      <pre><code>  ```python
+from typing import List, Optional
+
+
+def longest(strings: List[str]) -> Optional[str]:
+    if not strings:
+        return None
+    max_len = len(max(strings, key=len))
+    return next(s for s in strings if len(s) == max_len)
+
+# Test cases
+print(longest([]))         # Expected: None
+print(longest(['a', 'b', 'c']))  # Expected: 'a'
+print(longest(['a', 'bb', 'ccc'])) # Expected: 'ccc'
+```</code></pre>
+
+                       
+</section>
+
+</body>
+</html>
