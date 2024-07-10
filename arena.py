@@ -30,13 +30,14 @@ def _comp_stats(outcomes: pd.Series):
     diff = model_a - model_b
     sum = model_a + model_b
     std_count = np.sqrt(total * (pa*(1-pa) +  pb*(1-pb) + 2*pa*pb))
+    pvalue = stats.binomtest(model_a, sum, p=0.5).pvalue if sum != 0 else 1
     res = dict(
         sum = sum,
         diff = diff,
         accA = (model_a + both) / total,
         accB = (model_b + both) / total,
         total = total,
-        pvalue = stats.binomtest(model_a, sum, p=0.5).pvalue,
+        pvalue = pvalue,
         std_count = std_count,
         std_acc = std_count / total,
     )
@@ -56,46 +57,32 @@ def compute_mle_elo(
 ):
     """
     calculate Elo based on winrate, code from chatbot arena (https://chat.lmsys.org/)
-    with minor changes to use gpt-3.5 as as reference when possible
+    https://colab.research.google.com/drive/1KdwokPjirkTmpO_P1WByFNFiqxWQquwH
+    with a bugfix for when a model never wins, and add reference model as an argument
     """
     from sklearn.linear_model import LogisticRegression
-    ptbl_a_win = pd.pivot_table(
-        df[df["winner"] == "model_a"],
-        index="model_a",
-        columns="model_b",
-        aggfunc="size",
-        fill_value=0,
-    )
-    # if no tie, create a zero matrix
-    if sum(df["winner"].isin(["both", "neither"])) == 0:
-        ptbl_tie = pd.DataFrame(0, index=ptbl_a_win.index, columns=ptbl_a_win.columns)
-    else:
-        ptbl_tie = pd.pivot_table(
-            df[df["winner"].isin(["both", "neither"])],
-            index="model_a",
-            columns="model_b",
-            aggfunc="size",
-            fill_value=0,
-        )
-        ptbl_tie = ptbl_tie + ptbl_tie.T
+    
+    def ties_plus_two_wins(outcomes: pd.Series):
+        sufs = Counter(outcomes.values) # model_a, model_b, neither, both are the possible outcomes
+        # print(sufs)
+        return 2*sufs['model_a'] + sufs['both'] + sufs['neither']
 
-    ptbl_b_win = pd.pivot_table(
-        df[df["winner"] == "model_b"],
+    ptbl_win = pd.pivot_table(
+        df,
+        values=['winner'],
         index="model_a",
         columns="model_b",
-        aggfunc="size",
-        fill_value=0,
-    )
-    ptbl_win = ptbl_a_win * 2 + ptbl_b_win.T * 2 + ptbl_tie
+        aggfunc=ties_plus_two_wins,
+    ).reset_index().set_index('model_a').droplevel(axis=1, level=0)
 
     models = pd.Series(np.arange(len(ptbl_win.index)), index=ptbl_win.index)
-
     p = len(models)
     X = np.zeros([p * (p - 1) * 2, p])
     Y = np.zeros(p * (p - 1) * 2)
 
     cur_row = 0
     sample_weights = []
+
     for m_a in ptbl_win.index:
         for m_b in ptbl_win.columns:
             if m_a == m_b:

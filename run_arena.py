@@ -69,14 +69,13 @@ def generate_summary(eval_results: pd.DataFrame, OUTPUT_PATH):
                     }),
             }))
 
-
 records = []
-for fname in glob.glob(f"data/*.jsonl"):
+for fname in glob.glob(f"raw-data/*.jsonl"):
     with open(fname, 'rt') as f:
         records.extend([json.loads(l) for l in f.readlines()])
 eval_results = pd.DataFrame(records)
 
-OUTPUT_PATH = 'crux-eval.github.io/eval-arena'
+OUTPUT_PATH = 'results/'
 
 print('generating summary table...')
 generate_summary(eval_results, OUTPUT_PATH)
