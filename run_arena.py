@@ -30,6 +30,7 @@ def generate_summary(eval_results: pd.DataFrame, OUTPUT_PATH):
             'no_solve': (ex['acc'] == 0).to_numpy().sum(),
             'tau-': (ex['tau'] < 0).to_numpy().sum(),
         }
+        print(r)
         records.append(r)
 
     summary_count = pd.DataFrame(records).sort_values(by='benchmark_id')
@@ -70,14 +71,16 @@ def generate_summary(eval_results: pd.DataFrame, OUTPUT_PATH):
             }))
 
 records = []
-for fname in glob.glob(f"raw-data/*.jsonl"):
+for fname in glob.glob(f"raw-data/*_hf.jsonl") + glob.glob("data/*.jsonl"):
     with open(fname, 'rt') as f:
         records.extend([json.loads(l) for l in f.readlines()])
 eval_results = pd.DataFrame(records)
+print(eval_results)
 
 OUTPUT_PATH = 'results/'
 
 print('generating summary table...')
+
 generate_summary(eval_results, OUTPUT_PATH)
 benchmarks = set(eval_results['benchmark_id'])
 
