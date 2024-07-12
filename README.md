@@ -1,12 +1,14 @@
 # [Eval Arena](https://crux-eval.github.io/eval-arena)
 
-For evaluating methods or developing models, we want to know if the gains are real or noise, and if individual evaluation examples are informative or trustworthy. In this work, we match up thousands of model pairs from >200K example level results on several code generation benchmarks and leaderboards:
+For evaluating methods or developing models, we want to know if the gains are real or noise, and if individual evaluation examples are informative or trustworthy. In this work, we match up thousands of model pairs from > 1M example level results on several LLM evaluation benchmarks. These include code generation datasets,
 <ul>
       <li><a href="https://evalplus.github.io/">EvalPlus versions of MBPP/+, HumanEval/+</a> </li>
       <li><a href="https://livecodebench.github.io/leaderboard.html">LiveCodeBench</a></li>
       <li><a href="https://crux-eval.github.io/">CRUXEval</a></li>
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
 </ul>
+
+As well as popular LLM evaluations such as agi-english, arc_challenge, GSM-8k, hellaswag, mmlu, nq, piqa, siqa, and tqa (see [this paper for data descriptions](https://arxiv.org/pdf/2406.10229)).
 
  We find that all comparisons are noisy where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be meaningfully measured for each benchmark. We may expect that a good enough model can solve all easy enough examples, but actually models and examples are plausibly independent of each other as seen in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html). 
 
@@ -106,7 +108,8 @@ Additional models and evaluations are welcome.
 }
 ```
 
-Thanks for helpful discussions with Ari Holtzman, Nicolas Usunier, and Pedro Rodriguez. Chatbot arena provided the inspiration to test on all pairs and summary the results in a readable way. 
+Thanks for helpful discussions with Ari Holtzman, Nicolas Usunier, and Pedro Rodriguez. Chatbot arena provided the inspiration to test on all pairs and summary the results in a readable way.
+
 
 ## License
 

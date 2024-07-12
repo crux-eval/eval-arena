@@ -77,7 +77,7 @@ for fname in glob.glob(f"raw-data/*_hf.jsonl") + glob.glob("data/*.jsonl"):
 eval_results = pd.DataFrame(records)
 print(eval_results)
 
-OUTPUT_PATH = 'results/'
+OUTPUT_PATH = 'gh-pages/'
 
 print('generating summary table...')
 
