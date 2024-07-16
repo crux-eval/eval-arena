@@ -32,12 +32,13 @@ print(eval_results)
 results = generate_summary(eval_results)
 
 pairs = {
-    'Qwen1.5-': ['110B', '72B', '32B', '14B', '7B', '4B', '1.8B', '0.5B'],
-    # 'llama_': ['65B', '33B', '13B', '07B'],
-    # 'deepseek-llm-': ['67b-base', '7b-base'],
-    'llama2_': ['70B', '13B', '07B'],
+    # 'Qwen1.5-': ['110B', '72B', '32B', '14B', '7B', '4B', '1.8B', '0.5B'],
+    'Qwen1.5-': ['72B', '7B'],
+    'llama_': ['65B', '07B'],
+    'deepseek-llm-': ['67b-base', '7b-base'],
+    'llama2_': ['70B', '07B'],
     # 'Mixtral-': ['8x22B-v0.1', '8x7B-v0.1'],
-    # 'Meta-Llama-3-': ['70B', '8B'],
+    'Meta-Llama-3-': ['70B', '8B'],
     # 'gemma-': ['7b', '2b'],
 }
 
@@ -73,16 +74,24 @@ def f(x):
         
     logsize = np.log2(sizeB(x.name[0])) - np.log2(sizeB(x.name[1]))
     name = model_name(x.name[0])
-    return pd.Series({'signal_noise': x['diff'] / np.sqrt(x['sum']),
-                      'logsize': logsize,
-                      'sum': x['sum'],
-                      'model_family': name,
-                      'model_pair': ' vs. '.join(x.name),
-                      **x})
+    return pd.Series({
+        'signal to noise': x['diff'] / np.sqrt(x['sum']),
+        'norm. signal to noise': x['diff'] / np.sqrt(x['sum']) / np.sqrt(x['total']),
+        'logsize': logsize,
+        'sum': x['sum'],
+        'model_family': name,
+        'model_pair': ' vs. '.join(x.name),
+        **x,
+    })
 
 df = df.apply(f, axis=1)
 df.sort_values(by='total', inplace=True, ascending=False)
-fig = px.strip(df, x='benchmark_id', y='signal_noise', color='model_family', hover_name='model_pair')
+fig = px.scatter(df, x='benchmark_id', y='signal to noise', color='model_family', symbol='model_family', hover_name='model_pair')
+# fig = px.box(df, x='benchmark_id', y='signal to noise', hover_name='model_pair')
+fig.update_layout(
+    width=800, height=600,
+    xaxis = dict(tickangle=45),
+)
 
 OUTPUT_PATH = 'gh-pages/'
 print('generating summary table...')
