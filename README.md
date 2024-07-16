@@ -43,6 +43,8 @@ The easiest way is to use the `p5_min` or `p5_max` values in the summary table. 
 For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
 The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and consistent across pairwise matchups.
 
+An alternative metric is the stdev, which can be estimated from the `std = p5  / (sqrt(2) * 1.96)`. We also [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(A-B)` where `A` and `B` are models of the same series.
+
 **Details on testing.** 
 See [noise.md](noise.md) for technical information about testing and modeling noise.
 Let $A$ be the number of times model A won against model B and vice versa.

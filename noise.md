@@ -70,9 +70,12 @@ Of the leaderboards, [Chatbot arena](https://chat.lmsys.org/) and [CRUXEval](htt
 and they both did this by having a reference and then compute the intervals relative to the reference . While that is the only way (that I know) to show confidence levels in a linear figure, this method produce intervals that are too large on most pairs, but especially for models that most different from the reference. Both of their plots show larger and larger intervals just by being further from the reference (figure `visualize_bootstrap_scores` for chatbot arena). So some of their pairs with overlapping intervals are like not actually overlapping when tested pairwise.
 
 The work [Quantifying Variance in Evaluation Benchmarks](https://arxiv.org/pdf/2406.10229) measured noise due to random seeds for a more general set of benchmarks.
-This is a direct approach to measuring the noise due to a particularly source of randomness, which should be considered a lowerbound but is insufficient in general.
+This is a direct approach to measuring the noise due to a particularly source of randomness.
 As in the [noise due to sampling](#noise-from-stochastic-llm-prediction), it is direct and simple to measure,
 but does not account for
 other arbitrary decisions made in both data and code that are not explicitly seeded such as the choices made on how the data is shuffled / filtered. 
+In a comparison, we find that most of the time the random seeds
+produced similar variances as the null hypothesis. However it is possible for a particular run to produce statistically significant results due to random seeds. 
+ 
 
 
