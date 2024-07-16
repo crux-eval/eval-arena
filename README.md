@@ -41,9 +41,11 @@ Fortunately, p-values on these benchmarks are predictable from the accuracy diff
 This can be seen visually from [this figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_accs_and_pvalues).
 The easiest way is to use the `p5_min` or `p5_max` values in the summary table. If other p-values are desired, then we can get an estimate from the [p-values vs difference figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff). 
 For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
-The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) helped convince me that the noise across all matchups behaves predictably and the noise measurements are accurate and consistent across pairwise matchups.
+The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) is the most informative and shows that the noise across matchups is fairly consistent.
 
-An alternative metric is the stdev, which can be estimated from the `std = p5  / (sqrt(2) * 1.96)`. We also [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(A-B)` where `A` and `B` are models of the same series.
+An alternative metric is the implied stdev, which can be estimated from the `std(A) = p5  / (sqrt(2) * 1.96)`. This is technically the std of the null hypothesis mixing the two predictions with equal probability. The `sqrt(2)` is due to taking `std(acc(A) - acc(B))` and `1.96 std` corresponds to `p <= 5`.
+
+We also [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` and `B` are models of the same series.
 
 **Details on testing.** 
 See [noise.md](noise.md) for technical information about testing and modeling noise.
