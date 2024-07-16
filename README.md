@@ -8,7 +8,7 @@ For evaluating methods or developing models, we want to know if the gains are re
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
 </ul>
 
-As well as popular LLM evaluations such as agi-english, arc_challenge, GSM-8k, hellaswag, mmlu, nq, piqa, siqa, and tqa (see [this paper for data descriptions](https://arxiv.org/pdf/2406.10229)).
+As well as popular LLM evaluations such as agi-english, arc_challenge, GSM-8k, hellaswag, mmlu, nq, piqa, siqa, and tqa (see [this paper for data descriptions](https://arxiv.org/pdf/2406.10229)). 
 
  We find that all comparisons are noisy where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be meaningfully measured for each benchmark. We may expect that a good enough model can solve all easy enough examples, but actually models and examples are plausibly independent of each other as seen in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html). 
 
@@ -43,9 +43,14 @@ The easiest way is to use the `p5_min` or `p5_max` values in the summary table. 
 For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
 The [difference vs. sum figure](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_diff_vs_sum) is the most informative and shows that the noise across matchups is fairly consistent.
 
-An alternative metric is the implied stdev, which can be estimated from the `std(A) = p5  / (sqrt(2) * 1.96)`. This is technically the std of the null hypothesis mixing the two predictions with equal probability. The `sqrt(2)` is due to taking `std(acc(A) - acc(B))` and `1.96 std` corresponds to `p <= 5`.
+An alternative metric is the implied stdev of the null hypothesis, which can be estimated from the `std(A) = p5  / (sqrt(2) * 1.96)`. This is the std of the null hypothesis mixing the prediction of `A` and `B` with equal probability. The `sqrt(2)` is due to taking `std(acc(A) - acc(B))` and `1.96 std` corresponds to `p <= 5`.
 
-We also [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` and `B` are models of the same series.
+### Signal to noise ratio
+
+While the above is a good measurement of noise, evaluation benchmarks also differ in their signal.
+We measured the [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the 70B model and `B` is the 7B model of the same series.
+While the main factor is the size of the dataset, mmlu, tqa, and gsm8k produced relatively high signal to noise ratio for their sizes whereas siqa and piqa produced low signal to noise for their sizes.
+
 
 **Details on testing.** 
 See [noise.md](noise.md) for technical information about testing and modeling noise.
