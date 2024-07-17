@@ -65,7 +65,7 @@ def generate_summary(eval_results: pd.DataFrame, OUTPUT_PATH):
                         'min_dist': '{:.1%}'.format,
                         'no_solve': '{:.1%}'.format,
                         'tau-': '{:.1%}'.format,
-                        'sig_noise': '{:.1}'.format,
+                        'sig_noise': '{:.2f}'.format,
                     }),
             }))
 
@@ -83,8 +83,8 @@ print('generating summary table...')
 generate_summary(eval_results, OUTPUT_PATH)
 benchmarks = set(eval_results['benchmark_id'])
 
-# for bid in benchmarks:
-#     print(f'processing {bid}...')
-#     raw_results = eval_results[eval_results['benchmark_id'] == bid] 
-#     gen_example_report(bid, raw_results, OUTPUT_PATH)
-#     gen_model_report(bid, raw_results, OUTPUT_PATH)
+for bid in benchmarks:
+    print(f'processing {bid}...')
+    raw_results = eval_results[eval_results['benchmark_id'] == bid] 
+    gen_example_report(bid, raw_results, OUTPUT_PATH)
+    gen_model_report(bid, raw_results, OUTPUT_PATH)
