@@ -8,9 +8,9 @@ For evaluating methods or developing models, we want to know if the gains are re
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
 </ul>
 
-As well as popular LLM evaluations such as agi-english, arc_challenge, GSM-8k, hellaswag, mmlu, nq, piqa, siqa, and tqa (see [this paper for data descriptions](https://arxiv.org/pdf/2406.10229)). For these we also measured the [signal to noise ratio](#signal-to-noise-ratio) for model sizes.
+As well as popular LLM evaluations such as agi-english, arc_challenge, GSM-8k, hellaswag, mmlu, nq, piqa, siqa, and tqa (see [this paper for data descriptions](https://arxiv.org/pdf/2406.10229)).
 
- We find that all comparisons are noisy where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be meaningfully measured for each benchmark. We may expect that a good enough model can solve all easy enough examples, but actually models and examples are plausibly independent of each other as seen in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html). 
+ We find that all comparisons are highly inconsistent where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://crux-eval.github.io/eval-arena/model_humaneval+.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be measured meaningfully for each benchmark. We may expect that a good enough model can solve all easy enough examples, but actually models and examples are plausibly independent of each other as seen in the [example level leaderboard](https://crux-eval.github.io/eval-arena/ex_v_model_mbpp+.html). 
 
 For practical references, the results on measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). We provide performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs for all benchmarks (hence arena, inspired by chatbot arena but using static eval benchmarks). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards.
 
@@ -48,8 +48,9 @@ An alternative metric is the implied stdev of the null hypothesis, which can be 
 ### Signal to noise ratio
 
 While the above is a good measurement of noise, evaluation benchmarks also differ in their signal.
-We measured the [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the 70B model and `B` is the 7B model of the same series.
-While the main factor is the size of the dataset, mmlu, tqa, and gsm8k produced relatively high signal to noise ratio for their sizes whereas siqa and piqa produced low signal to noise for their sizes.
+We measured the [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the bigger model and `B` is the smaller model of the same series. We use size ranging from 7B to 70B normalized for each doubling `log2(size(A)/size(B))`.
+While the main factor is the size of the dataset, mmlu, tqa, and gsm8k produced high signal to noise ratios whereas siqa and piqa produced low signal to noise for their sizes
+(i.e. per sqrt(size)).
 
 
 **Details on testing.** 
