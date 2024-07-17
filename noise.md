@@ -3,7 +3,7 @@
 We show how to measure the noise in evaluation using sign test and the bootstrap and then discuss some considerations for LLMs evals. 
 
 For correctness evaluation, there are $N$ examples $\{(x_1, y_1), \ldots, (x_N, y_N)\}$,
-the model makes prediction $\hat{y}(x)$, possibly random, and we get a binary correctness judgement $R(\hat{y}, y) \in \{0, 1\}$, 0 for incorrect and 1 for correct. $R$ can be checking for equality or running tests on $\hat{y}$ or asking another model, but we assume a binary outcome here.
+the model makes prediction $\hat{y}(x)$, possibly random, and we get a binary correctness judgement $R(\hat{y}, y) \in \{0, 1\}$, 0 for incorrect and 1 for correct. $R$ can be checking for equality or running tests or asking another model, but we assume a binary outcome here.
 We may also compute then get the mean $\text{acc} = \frac1{N} \sum_i R(\hat{y}_i, y_i)$ 
 
 We have model A and B, and we are trying to determine if A is better than B.
