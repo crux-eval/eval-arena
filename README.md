@@ -104,13 +104,14 @@ python run_arena.py
 Additional models and evaluations are welcome.
 
 
-## Contributors
+## Contributors and citation 
 
+If you find this work helpful, consider citing us.
 
 ```
 @misc{evalarena,
-  title = {{E}val-{A}rena: noise and errors by leaderboard showdowns},
-  author = {Sida I. Wang and Alex Gu and Jiawei Liu and Yuxiang Wei and Naman Jain and Yuhang Lai and Sten Sootla and Ofir Press and Baptiste Rozière and Gabriel Synnaeve},
+  title = {{E}val-{A}rena: noise and errors for LLM evaluations},
+  author = {Sida I. Wang and Alex Gu and Lovish Madaan and Dieuwke Hupkes and Jiawei Liu and Yuxiang Wei and Naman Jain and Yuhang Lai and Sten Sootla and Ofir Press and Baptiste Rozière and Gabriel Synnaeve},
   year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
@@ -118,7 +119,7 @@ Additional models and evaluations are welcome.
 }
 ```
 
-Thanks for helpful discussions with Ari Holtzman, Nicolas Usunier, and Pedro Rodriguez. Chatbot arena provided the inspiration to test on all pairs and summary the results in a readable way.
+Thanks for helpful discussions with Ari Holtzman, Nicolas Usunier, and Pedro Rodriguez. Chatbot arena provided the inspiration to test all model pairs and summarizing the results in a understandable way.
 
 
 ## License
