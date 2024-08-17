@@ -48,7 +48,7 @@ An alternative metric is the implied stdev of the null hypothesis, which can be 
 ### Signal to noise ratio
 
 While the above is a good measurement of noise, evaluation benchmarks also differ in their signal.
-We measured the [measured signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the bigger model and `B` is the smaller model of the same series. We use size ranging from 7B to 70B normalized for each doubling `log2(size(A)/size(B))`.
+We measured the [signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the bigger model and `B` is the smaller model of the same series. We use size ranging from 7B to 70B normalized for each doubling `log2(size(A)/size(B))`.
 While the main factor is the size of the dataset, mmlu, tqa, and gsm8k produced high signal to noise ratios whereas siqa and piqa produced low signal to noise for their sizes
 (i.e. per sqrt(size)).
 
@@ -119,7 +119,7 @@ If you find this work helpful, consider citing us.
 }
 ```
 
-Thanks for helpful discussions with Ari Holtzman, Nicolas Usunier, and Pedro Rodriguez. Chatbot arena provided the inspiration to test all model pairs and summarizing the results in a understandable way.
+Thanks for the helpful discussions with Ari Holtzman, Nicolas Usunier, and Pedro Rodriguez. Chatbot arena provided the inspiration to test all model pairs and summarizing the results in a understandable way.
 
 
 ## License
