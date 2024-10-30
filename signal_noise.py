@@ -51,6 +51,12 @@ pairs_specific = {
     'humaneval+': {
         'deepseek-coder-': ['33b-instruct', '6.7b-instruct'], 
         'opencodeinterpreter-ds-': ['33b', '6.7b']
+    },
+    'safim': {
+        'deepseek-coder-': ['33b', '6.7b', '1.3b'],
+        'codellama-': ['34b', '13b', '7b'],
+        'wizard-coder-': ['33b', '15b', '3b'],
+        'codegen-': ['16b', '6b']
     }
 }
 pairs_specific['mbpp+'] = pairs_specific['mbpp']
@@ -106,7 +112,12 @@ def generate_all_summary(eval_results: pd.DataFrame):
 def signal_to_noise(bid: str, df):
     df['benchmark_id'] = bid
     df = df.set_index(['model_a', 'model_b'])
-    df = df.loc[model_pairs(bid)]
+    pairs = list(model_pairs(bid))
+    try:
+        df = df.loc[pairs]
+    except KeyError:
+        print('The data does not have all specified model pairs', pairs)
+        return None
     return df.apply(agg_signal_noise, axis=1)
 
 
