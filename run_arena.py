@@ -21,6 +21,7 @@ def summarize_benchmark(result: pd.DataFrame):
     summary = arena.battle_summary(battles)
     agg_results = arena.model_table(battles, result)
     ex = arena.example_table(result, agg_results)
+    print(summary)
 
     r = {
         'benchmark_id': bid,

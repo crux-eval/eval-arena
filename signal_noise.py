@@ -55,8 +55,8 @@ pairs_specific = {
     'safim': {
         'deepseek-coder-': ['33b', '6.7b', '1.3b'],
         'codellama-': ['34b', '13b', '7b'],
-        'wizard-coder-': ['33b', '15b', '3b'],
-        'codegen-': ['16b', '6b']
+        'wizardcoder-': ['33b', '15b', '3b'],
+        'codegen-': ['16b', '6b', '2b']
     }
 }
 pairs_specific['mbpp+'] = pairs_specific['mbpp']
