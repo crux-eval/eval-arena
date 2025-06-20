@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import math
 from arena import model_table, pass1_to_battle, example_table
+from jinja2 import Template
 
 def get_anchor(benchmark_id: str, example_id: str):
     def get_link():
@@ -63,13 +64,11 @@ def get_example_level_results(benchmark_id, result):
     print(benchmark_id, 'anti-correlated prop', np.mean(ex_table['tau'] <= 0))
 
     outputs['fig_example_vs_model'] = fig_example_vs_model(result, all_stats, ex_table)
-
     return outputs
 
 
 def gen_example_report(benchmark_id: str, raw_results: pd.DataFrame, OUTPUT_PATH):
     outputs = get_example_level_results(benchmark_id, raw_results)
-    from jinja2 import Template
     template_path = r"templates/template_example.html"
     output_path = rf"{OUTPUT_PATH}/ex_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:

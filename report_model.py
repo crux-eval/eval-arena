@@ -4,10 +4,46 @@ import scipy.stats as stats
 
 import plotly.express as px
 import plotly.graph_objects as go
+from jinja2 import Template
 
 from arena import model_table, pass1_to_battle, battle_summary
 
 def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
+    figs = px.scatter(diffvsum, x=diffvsum['diff'].abs(), y='sum',
+                      custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std_count', 'accA', 'accB'])
+    figs.update_traces(hovertemplate=
+        "<br>".join([
+        "Model A: %{customdata[0]} (acc: %{customdata[6]:.3f})",
+        "Model B: %{customdata[1]} (acc: %{customdata[7]:.3f})", 
+        "A + B: %{customdata[2]}", 
+        "A - B: %{customdata[3]}", 
+        "p-value: %{customdata[4]:.4f}", 
+        "std(A-B): %{customdata[5]:.2f}", 
+        ])  + '<extra></extra>')
+
+    maxy = diffvsum['sum'].max()
+    refs = []
+    data_sz = diffvsum.iloc[0]['total']
+    x = np.linspace(0, data_sz / 2, 100)
+    refs.append(pd.DataFrame({'x': x, 'y': x, 'type': 'x=y'}))
+    for alpha in [0.05, 0.1, 0.2]:
+        thres = stats.chi2.ppf(1-alpha, 1)
+        y = np.linspace(1, maxy, 200)
+        refs.append(pd.DataFrame({'x': 1 + np.sqrt(y * thres), 'y': y, 'type': f'pvalue={alpha}'}))
+    
+    df_ref = pd.concat(refs, axis=0)
+    figl = px.line(df_ref, x='x', y='y', color='type')
+    figl.update_layout(hovermode=False)
+
+    fig = go.Figure(data=figl.data + figs.data)
+    fig.update_layout(
+        width=800, height=600, title=bmname,
+        xaxis_title="|#A_win - #B_win|",
+        yaxis_title="#A_win + #B_win"
+    )
+    return fig
+
+def fig_noise_character(bmname: str, diffvsum: pd.DataFrame):
     figs = px.scatter(diffvsum, x=diffvsum['diff'].abs(), y='sum',
                       custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std_count', 'accA', 'accB'])
     figs.update_traces(hovertemplate=
@@ -87,6 +123,49 @@ def fig_accs_and_pvalues(bmname, diffvsum):
     return figs
 
 
+def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
+    df = diffvsum
+    df["is_close"] = np.where(df["diff"].abs() < df["total"] / 20, "close", "not_close")
+    figs = px.scatter(df, x=(df["accA"] + df["accB"]) / 2, y='std_acc',
+                      color="is_close",
+                    #   error_x=df["accA"] - df["accB"],
+                      custom_data=[df['model_a'], 'model_b', 'sum', 'diff', 'pvalue', 'std_count', 'accA', 'accB'])
+    figs.update_traces(hovertemplate=
+        "<br>".join([
+        "Model A: %{customdata[0]} (acc: %{customdata[6]:.3f})",
+        "Model B: %{customdata[1]} (acc: %{customdata[7]:.3f})", 
+        "A + B: %{customdata[2]}", 
+        "A - B: %{customdata[3]}", 
+        "p-value: %{customdata[4]:.4f}", 
+        "std(A-B): %{customdata[5]:.2f}", 
+        ])  + '<extra></extra>')
+
+    data_sz = diffvsum.iloc[0]['total']
+    x = np.linspace(0, 1, 100)
+    y = np.sqrt(x*(1-x) / data_sz)
+
+    figl = go.Figure()
+
+    figl.add_trace(go.Scatter(
+        x=x, y=y, name="std(acc)",
+        # hoverinfo="skip",
+        line=dict(color='lightgreen')
+    ))
+
+    figl.add_trace(go.Scatter(
+        x=x, y=np.sqrt(2)*y, name="sqrt(2) std(acc)",
+        # hoverinfo="skip",
+        line=dict(color='darkgreen')
+    ))
+
+    fig = go.Figure(data=figl.data + figs.data)
+    fig.update_layout(
+        width=800, height=600, title=bmname,
+        xaxis_title="accuracy",
+        yaxis_title="std"
+    )
+    return fig
+
 def get_sections(result: pd.DataFrame, benchmark_id):
     battles = pass1_to_battle(result)
     battles_no_ties = battles[battles["winner"].str.contains("model_")]
@@ -95,6 +174,7 @@ def get_sections(result: pd.DataFrame, benchmark_id):
         "fig_accs_and_pvalues": fig_accs_and_pvalues(benchmark_id, summary).to_html(full_html=False),
         "fig_pvalue_vs_diff": fig_pvalue_vs_diff(benchmark_id, summary).to_html(full_html=False),
         "fig_diff_vs_sum": fig_diff_vs_sum(benchmark_id, summary).to_html(full_html=False),
+        "fig_cov_baseline": fig_cov_baseline(benchmark_id, summary).to_html(full_html=False),
         "model_table": model_table(battles_no_ties, result).to_html(
             index=False,
             formatters={
@@ -109,7 +189,6 @@ def get_sections(result: pd.DataFrame, benchmark_id):
 
 def gen_model_report(benchmark_id: str, benchmark_results, OUTPUT_PATH):
     sections = get_sections(benchmark_results, benchmark_id)
-    from jinja2 import Template
     template_path=r"templates/template_model.html"
     output_path = f"{OUTPUT_PATH}/model_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
