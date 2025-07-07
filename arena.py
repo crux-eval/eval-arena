@@ -7,17 +7,58 @@ import numpy.random as rng
 import scipy.stats as stats
 import pandas as pd
 
-def pass1_to_battle(result: pd.DataFrame, thres=0.5):
-    pa = pd.merge(result, result, on=['example_id'], suffixes=["_a", "_b"], how='outer')
-    pa = pa[pa['model_a'] != pa['model_b']]
-    awins = (pa['pass1_a'] > thres) & (pa['pass1_b'] <= thres)
-    bwins = (pa['pass1_a'] <= thres) & (pa['pass1_b'] > thres)
-    ties_neither = (pa['pass1_a'] <= thres) & (pa['pass1_b'] <= thres)
-    ties_both = (pa['pass1_a'] > thres) & (pa['pass1_b'] > thres)
+
+def _hard_outcome(pa: pd.DataFrame, thres: float = 0.5):
+    a_pass = pa['pass1_a'] > thres
+    b_pass = pa['pass1_b'] > thres
+    awins = a_pass & ~b_pass
+    bwins = ~a_pass & b_pass
+    neither = ~a_pass & ~b_pass
+    both = a_pass & b_pass 
+
+    assert all(awins | bwins | neither | both) \
+        and sum(awins) + sum(bwins) + sum(both) + sum(neither) == len(pa), "outcomes should be unique and complete"
     pa.loc[awins, 'winner'] = 'model_a'
     pa.loc[bwins, 'winner'] = 'model_b'
-    pa.loc[ties_neither, 'winner'] = 'neither'
-    pa.loc[ties_both, 'winner'] = 'both'
+    pa.loc[neither, 'winner'] = 'neither'
+    pa.loc[both, 'winner'] = 'both'
+    return pa
+
+def _prob_outcome(pa: pd.DataFrame):
+    a_pass = pa['pass1_a']
+    b_pass = pa['pass1_b']
+    awins = a_pass * (1 - b_pass)
+    bwins = (1 - a_pass) * b_pass
+    neither = (1 - a_pass) * (1 - b_pass)
+    both = a_pass * b_pass
+
+    assert np.allclose(awins + bwins + both + neither, 1), "sum of probs should be 1"
+    pa['awins'] = awins
+    pa['bwins'] = bwins
+    pa['neither'] = neither
+    pa['both'] = both
+    return pa
+
+def _diff_outcome(pa: pd.DataFrame, thres: float = 0.5):
+    soft_diff = pa['pass1_a'] - pa['pass1_b']
+    hard_diff = np.where(pa['pass1_a'] > thres, 1, 0) - np.where(pa['pass1_b'] > thres, 1, 0)
+    pa['A-B'] = soft_diff 
+    pa['A-B_hard'] = hard_diff
+    return pa
+
+def pass1_to_battle(result: pd.DataFrame, thres=0.5):
+    """
+    generates a pairwise comparison table from pass1 information using 3 ways to summarize the outcome
+        - 1: using a threshold to decide the winner and store one of 4 outcomes in the winner column
+        - 2: use the difference in scores, which can generalize to 
+    """
+    pa = pd.merge(result, result, on=['example_id'], suffixes=["_a", "_b"], how='outer')
+    print(pa)
+    pa = pa[pa['model_a'] != pa['model_b']]
+    
+    pa = _hard_outcome(pa)
+    pa = _prob_outcome(pa)
+    pa = _diff_outcome(pa, thres)
     return pa
 
 def _comp_stats(outcomes: pd.Series):
@@ -34,21 +75,51 @@ def _comp_stats(outcomes: pd.Series):
     res = dict(
         sum = sum,
         diff = diff,
+        total = total,
         accA = (model_a + both) / total,
         accB = (model_b + both) / total,
-        total = total,
         pvalue = pvalue,
         std_count = std_count,
         std_acc = std_count / total,
+        covAB = (both / total - (model_a + both) / total*(model_b + both) / total),
     )
     return res
 
+def _pair_summary(df: pd.DataFrame):
+    N = len(df)
+    sufs = Counter(df["winner"])
+    awin, bwin, both, neither = sufs['model_a'], sufs['model_b'], sufs['both'], sufs['neither']
+    assert awin + bwin + both + neither == N
+    pawin = awin / N
+    pbwin = bwin / N
+    diff = awin - bwin
+    sum = awin + bwin
+    pvalue = stats.binomtest(awin, sum, p=0.5).pvalue if sum != 0 else 1
+
+    corr_ab = df['pass1_a'].corr(df['pass1_b'], method="pearson")
+    r = { 
+        "corr_ab": corr_ab,
+        "std(A-B)": df['A-B'].std(ddof=0) / np.sqrt(N),
+        "std(A-B)_hard": df['A-B_hard'].std(ddof=0) / np.sqrt(N),
+        "std_signtest": 1/N * np.sqrt((df["awins"].sum() + df["bwins"].sum())),
+        "std_bootstrap": np.sqrt(1/N * (pawin * (1 - pawin) + pbwin * (1 - pbwin) + 2 * pawin * pbwin)),
+        "std_fromcorr": 1/np.sqrt(N) * np.sqrt(df['pass1_a'].var(ddof=0) + df['pass1_b'].var(ddof=0)
+                                               - 2* np.sqrt(df['pass1_a'].var(ddof=0) * df['pass1_b'].var(ddof=0))*corr_ab),
+        "unpaired_std": 1/np.sqrt(N) * np.sqrt(df['pass1_a'].var(ddof=0) + df['pass1_b'].var(ddof=0)),
+    }
+
+    assert np.all(np.isclose(r["std(A-B)"], r["std_fromcorr"]) | np.isnan(r["corr_ab"]))
+    assert np.allclose(r["std(A-B)_hard"], r["std_bootstrap"])
+
+    # assert r["std_bootstrap"] < r["std_signtest"] or np.allclose(r["std_bootstrap"], r["std_signtest"])
+    # assert r["std_fromcorr"] < r["unpaired_std"] or np.allclose(r["std_fromcorr"], r["unpaired_std"])
+
+    return pd.Series({**r, **_comp_stats(df["winner"])})
+
 def battle_summary(battles):
     data_sz = len(set(battles['example_id']))
-    diffvsum = battles[['model_a', 'model_b', 'winner']]\
-        .groupby(['model_a', 'model_b'])\
-        .aggregate(_comp_stats)\
-        ['winner'].apply(pd.Series)\
+    diffvsum = battles.groupby(['model_a', 'model_b'])\
+        .apply(_pair_summary)\
         .reset_index(drop=False)
     return diffvsum
     

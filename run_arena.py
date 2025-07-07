@@ -28,6 +28,9 @@ def summarize_benchmark(result: pd.DataFrame):
         'size': int(summary.iloc[0]['total']),
         'p5_min': int(summary[summary['pvalue'] < 0.05]['diff'].abs().min()),
         'p5_max': int(summary[summary['pvalue'] > 0.05]['diff'].abs().max()),
+        'std(A-B)': summary["std(A-B)"].describe().to_dict(),
+        'corr_ab': summary["corr_ab"].describe().to_dict(),
+        'unpaired_std': summary["unpaired_std"].describe().to_dict(),
         'min_dist': int(summary['sum'].abs().min()),
         'no_solve': (ex['acc'] == 0).to_numpy().sum(),
         'tau-': (ex['tau'] < 0).to_numpy().sum(),
@@ -54,7 +57,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
             percent[c] = percent[c] / percent['size']
         return percent
 
-    includes_cols = ['benchmark_id', 'size', 'p5_min', 'p5_max', 'no_solve', 'tau-', 'sig_noise', 'link to details']
+    includes_cols = ['benchmark_id', 'size', 'p5_min', 'p5_max', 'no_solve', 'tau-', 'sig_noise', 'std(A-B)', 'corr_ab', 'unpaired_std', 'link to details']
     percent_cols = ['p5_min', 'p5_max', 'no_solve', 'tau-']
     summary_percent = normalize(summary_count, percent_cols)
 
@@ -71,6 +74,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
                     formatters={
                         'p5_min': '{:.1%}'.format,
                         'p5_max': '{:.1%}'.format,
+                        "std(A-B)": '{:.1%}'.format,
                         'min_dist': '{:.1%}'.format,
                         'no_solve': '{:.1%}'.format,
                         'tau-': '{:.1%}'.format,
@@ -116,6 +120,7 @@ def run_arena(args: ReportArgs):
         for fname in glob.glob(f'{tmp_dir}/summary-*.jsonl'):
             with open(fname, 'rt') as f:
                 records.extend([json.loads(l) for l in f.readlines()])
+        print(records)
         write_summary_table(pd.DataFrame(records), Path(args.out_dir) / 'index.html')
 
 
