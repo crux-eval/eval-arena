@@ -10,8 +10,17 @@ from pathlib import Path
 
 import arena
 from report_example import gen_example_report
-from report_model import gen_model_report
+from report_model import gen_model_report, write_summary_table
 from signal_noise import signal_to_noise
+
+
+@dataclass
+class ReportArgs:
+    out_dir: Optional[str] = 'gh-pages/'
+    data: str = "data/*.jsonl"
+    recompute: bool = True # generate results for all data and summary line
+    write_summary: bool = True # use results in out_dir/tmp to generate the summary table
+
 
 def summarize_benchmark(result: pd.DataFrame):
     benchmarks = set(result['benchmark_id'])
@@ -23,14 +32,18 @@ def summarize_benchmark(result: pd.DataFrame):
     ex = arena.example_table(result, agg_results)
     print(summary)
 
+    close_pairs = summary[summary["pvalue"] > 1e-3]
+
     r = {
         'benchmark_id': bid,
         'size': int(summary.iloc[0]['total']),
+        'models': len(set(summary["model_a"])),
+        'total_pairs': len(summary),
+        'close_pairs': len(close_pairs),
+        'std(A-B)': close_pairs["std(A-B)"].describe().to_dict(),
+        'corr(A,B)': close_pairs["corr(A,B)"].describe().to_dict(),
         'p5_min': int(summary[summary['pvalue'] < 0.05]['diff'].abs().min()),
         'p5_max': int(summary[summary['pvalue'] > 0.05]['diff'].abs().max()),
-        'std(A-B)': summary["std(A-B)"].describe().to_dict(),
-        'corr_ab': summary["corr_ab"].describe().to_dict(),
-        'unpaired_std': summary["unpaired_std"].describe().to_dict(),
         'min_dist': int(summary['sum'].abs().min()),
         'no_solve': (ex['acc'] == 0).to_numpy().sum(),
         'tau-': (ex['tau'] < 0).to_numpy().sum(),
@@ -40,55 +53,6 @@ def summarize_benchmark(result: pd.DataFrame):
     r['sig_noise'] = sig_to_noise['signal to noise'].median() if sig_to_noise is not None else float('nan')
     return r
 
-
-def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
-    summary_count = summary_count.sort_values(by='benchmark_id')
-
-    def link_detail(bid):
-        l1 = f"""by <a href="model_{bid}.html">models </a> """
-        l2 = f"""<a href="ex_{bid}.html"> examples </a>"""
-        l3 = f"""<a href="ex_v_model_{bid}.html"> data </a>"""
-        return l1 + '|' + l2 + '|' + l3
-    summary_count['link to details'] = summary_count['benchmark_id'].apply(link_detail)
-
-    def normalize(counts, includes):
-        percent = counts.copy(deep=True)
-        for c in includes:
-            percent[c] = percent[c] / percent['size']
-        return percent
-
-    includes_cols = ['benchmark_id', 'size', 'p5_min', 'p5_max', 'no_solve', 'tau-', 'sig_noise', 'std(A-B)', 'corr_ab', 'unpaired_std', 'link to details']
-    percent_cols = ['p5_min', 'p5_max', 'no_solve', 'tau-']
-    summary_percent = normalize(summary_count, percent_cols)
-
-    template_path = r"templates/summary.html"
-
-    with open(output_path, "w", encoding="utf-8") as output_file:
-        with open(template_path) as template_file:
-            j2_template = Template(template_file.read())
-            output_file.write(j2_template.render({
-                'count_table': summary_count[includes_cols].to_html(escape=False, index=False),
-                'percent_table': summary_percent[includes_cols].to_html(
-                    escape=False,
-                    index=False,
-                    formatters={
-                        'p5_min': '{:.1%}'.format,
-                        'p5_max': '{:.1%}'.format,
-                        "std(A-B)": '{:.1%}'.format,
-                        'min_dist': '{:.1%}'.format,
-                        'no_solve': '{:.1%}'.format,
-                        'tau-': '{:.1%}'.format,
-                        'sig_noise': '{:.2f}'.format,
-                    }),
-            }))
-
-
-@dataclass
-class ReportArgs:
-    out_dir: Optional[str] = 'gh-pages/'
-    data: str = "data/*.jsonl"
-    recompute: bool = True # generate results for all data and summary line
-    write_summary: bool = True # use results in out_dir/tmp to generate the summary table
 
 def run_arena(args: ReportArgs):
     records = []
@@ -121,7 +85,16 @@ def run_arena(args: ReportArgs):
             with open(fname, 'rt') as f:
                 records.extend([json.loads(l) for l in f.readlines()])
         print(records)
-        write_summary_table(pd.DataFrame(records), Path(args.out_dir) / 'index.html')
+        # Copy custom.css to the output directory
+        css_src = Path("templates/custom.css")
+        css_dst = Path(args.out_dir) / "static" / "custom.css"
+        os.makedirs(Path(args.out_dir) / "static" , exist_ok=True)
+        with open(css_src, "rb") as src_file, open(css_dst, "wb") as dst_file:
+            dst_file.write(src_file.read())
+
+        df_summary = pd.DataFrame(records)
+        df_summary.to_csv(Path(args.out_dir) / 'summary.csv')
+        write_summary_table(pd.DataFrame(df_summary), Path(args.out_dir) / 'index.html')
 
 
 if __name__ == "__main__":

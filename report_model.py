@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
@@ -122,23 +124,34 @@ def fig_accs_and_pvalues(bmname, diffvsum):
     )
     return figs
 
-
 def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
     df = diffvsum
-    df["is_close"] = np.where(df["diff"].abs() < df["total"] / 20, "close", "not_close")
-    figs = px.scatter(df, x=(df["accA"] + df["accB"]) / 2, y='std_acc',
-                      color="is_close",
-                    #   error_x=df["accA"] - df["accB"],
-                      custom_data=[df['model_a'], 'model_b', 'sum', 'diff', 'pvalue', 'std_count', 'accA', 'accB'])
+    # df["is_close"] = np.where(df["diff"].abs() < df["total"] / 20, "close", "not_close")
+    # df = df[df["accA"] >= df["accB"]]
+    df["is_close"] = np.where(np.abs(df["accA"] - df["accB"]) / df["std(A-B)"] <= 3, "close: ≤3σ", ">3σ")
+    
+    figs = px.scatter(df,
+                    x=0.5*(df["accB"] + df["accA"]), y='std_acc',
+                    # x=df["accB"], y='std_acc',
+                    color="is_close",
+                    # error_x=df["accA"] - df["accB"],
+                    custom_data=[df['model_a'], 'model_b', 'sum', 'diff', 'pvalue', 'std(A-B)', 'accA', 'accB'])
     figs.update_traces(hovertemplate=
         "<br>".join([
         "Model A: %{customdata[0]} (acc: %{customdata[6]:.3f})",
         "Model B: %{customdata[1]} (acc: %{customdata[7]:.3f})", 
-        "A + B: %{customdata[2]}", 
-        "A - B: %{customdata[3]}", 
+        # "A + B: %{customdata[2]}", 
+        # "A - B: %{customdata[3]}", 
         "p-value: %{customdata[4]:.4f}", 
         "std(A-B): %{customdata[5]:.2f}", 
         ])  + '<extra></extra>')
+
+    figs.update_traces(
+        marker=dict(
+            size=3,
+            opacity=0.5, 
+        )
+    )
 
     data_sz = diffvsum.iloc[0]['total']
     x = np.linspace(0, 1, 100)
@@ -147,13 +160,13 @@ def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
     figl = go.Figure()
 
     figl.add_trace(go.Scatter(
-        x=x, y=y, name="std(acc)",
+        x=x, y=y, name="σ(acc)",
         # hoverinfo="skip",
         line=dict(color='lightgreen')
     ))
 
     figl.add_trace(go.Scatter(
-        x=x, y=np.sqrt(2)*y, name="sqrt(2) std(acc)",
+        x=x, y=np.sqrt(2)*y, name="sqrt(2) σ(acc)",
         # hoverinfo="skip",
         line=dict(color='darkgreen')
     ))
@@ -161,8 +174,8 @@ def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
     fig = go.Figure(data=figl.data + figs.data)
     fig.update_layout(
         width=800, height=600, title=bmname,
-        xaxis_title="accuracy",
-        yaxis_title="std"
+        xaxis_title="mean(acc(A), acc(B))",
+        yaxis_title="σ(A-B)"
     )
     return fig
 
@@ -186,6 +199,61 @@ def get_sections(result: pd.DataFrame, benchmark_id):
     }
     return sections
 
+
+def summary_stats(s, f=2, percent=True):
+    return f"{s['mean']:.2g}±{s['std']:.2g} | [{s['min']:.2g}--{s['max']:.2g}] | n={int(s['count'])} "
+
+def format_stats_badge(s):
+    s_percent = dict(s)
+    for st in ["mean", "std", "min", "max"]:
+        s_percent[st] = 100 * s[st]
+    summary = summary_stats(s_percent)
+    mean = 100*s["mean"]
+    return f'<span class="tooltip" data-tooltip="{summary}">{mean:.2g}</span>'
+
+def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
+    summary_count = summary_count.sort_values(by='benchmark_id')
+
+    def link_detail(bid):
+        l1 = f"""<a href="model_{bid}.html">models </a> """
+        l2 = f"""<a href="ex_{bid}.html"> examples </a>"""
+        l3 = f"""<a href="ex_v_model_{bid}.html"> data </a>"""
+        return l1 + '|' + l2 + '|' + l3
+    summary_count['link to details'] = summary_count['benchmark_id'].apply(link_detail)
+
+    def normalize(counts, includes):
+        percent = counts.copy(deep=True)
+        for c in includes:
+            percent[c] = percent[c] / percent['size']
+        return percent
+
+    includes_cols = ['benchmark_id', 'size',  'std(A-B)', 'corr(A,B)', 'no_solve', 'tau-', 'sig_noise','link to details']
+    percent_cols = ['p5_min', 'p5_max', 'no_solve', 'tau-']
+    summary_percent = normalize(summary_count, percent_cols)
+
+    print(summary_percent)
+    template_path = r"templates/summary.html"
+
+    with open(output_path, "w", encoding="utf-8") as output_file:
+        with open(template_path) as template_file:
+            j2_template = Template(template_file.read())
+            output_file.write(j2_template.render({
+                'count_table': summary_count[includes_cols].to_html(escape=False, index=False),
+                'percent_table': summary_percent[includes_cols].to_html(
+                    escape=False,
+                    classes="number-table",
+                    index=False,
+                    formatters={
+                        "std(A-B)": lambda x: format_stats_badge(x),
+                        "corr(A,B)": lambda x: format_stats_badge(x),
+                        'p5_min': lambda x: f'{x*100:.2g}',
+                        'p5_max': lambda x: f'{x*100:.2g}',
+                        'no_solve': lambda x: f'{x*100:.2g}',
+                        'tau-': lambda x: f'{x*100:.2g}',
+                        'sig_noise': '{:.1g}'.format,
+                    }),
+            }))
+            
 
 def gen_model_report(benchmark_id: str, benchmark_results, OUTPUT_PATH):
     sections = get_sections(benchmark_results, benchmark_id)

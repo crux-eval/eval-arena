@@ -92,32 +92,22 @@ def _pair_summary(df: pd.DataFrame):
     assert awin + bwin + both + neither == N
     pawin = awin / N
     pbwin = bwin / N
-    diff = awin - bwin
-    sum = awin + bwin
-    pvalue = stats.binomtest(awin, sum, p=0.5).pvalue if sum != 0 else 1
 
     corr_ab = df['pass1_a'].corr(df['pass1_b'], method="pearson")
     r = { 
-        "corr_ab": corr_ab,
+        "corr(A,B)": corr_ab,
         "std(A-B)": df['A-B'].std(ddof=0) / np.sqrt(N),
-        "std(A-B)_hard": df['A-B_hard'].std(ddof=0) / np.sqrt(N),
         "std_signtest": 1/N * np.sqrt((df["awins"].sum() + df["bwins"].sum())),
         "std_bootstrap": np.sqrt(1/N * (pawin * (1 - pawin) + pbwin * (1 - pbwin) + 2 * pawin * pbwin)),
-        "std_fromcorr": 1/np.sqrt(N) * np.sqrt(df['pass1_a'].var(ddof=0) + df['pass1_b'].var(ddof=0)
-                                               - 2* np.sqrt(df['pass1_a'].var(ddof=0) * df['pass1_b'].var(ddof=0))*corr_ab),
+        
+        "std(A-B)_hard": df['A-B_hard'].std(ddof=0) / np.sqrt(N),
         "unpaired_std": 1/np.sqrt(N) * np.sqrt(df['pass1_a'].var(ddof=0) + df['pass1_b'].var(ddof=0)),
     }
 
-    assert np.all(np.isclose(r["std(A-B)"], r["std_fromcorr"]) | np.isnan(r["corr_ab"]))
     assert np.allclose(r["std(A-B)_hard"], r["std_bootstrap"])
-
-    # assert r["std_bootstrap"] < r["std_signtest"] or np.allclose(r["std_bootstrap"], r["std_signtest"])
-    # assert r["std_fromcorr"] < r["unpaired_std"] or np.allclose(r["std_fromcorr"], r["unpaired_std"])
-
     return pd.Series({**r, **_comp_stats(df["winner"])})
 
 def battle_summary(battles):
-    data_sz = len(set(battles['example_id']))
     diffvsum = battles.groupby(['model_a', 'model_b'])\
         .apply(_pair_summary)\
         .reset_index(drop=False)
