@@ -227,7 +227,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
             percent[c] = percent[c] / percent['size']
         return percent
 
-    includes_cols = ['benchmark_id', 'size',  'std(A-B)', 'corr(A,B)', 'no_solve', 'tau-', 'sig_noise','link to details']
+    includes_cols = ['benchmark_id', 'size', 'models',  'std(A-B)', 'corr(A,B)', 'no_solve', 'tau-', 'sig_noise','link to details']
     percent_cols = ['p5_min', 'p5_max', 'no_solve', 'tau-']
     summary_percent = normalize(summary_count, percent_cols)
 
