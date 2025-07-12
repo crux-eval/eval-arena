@@ -61,7 +61,10 @@ pairs_specific = {
 }
 pairs_specific['mbpp+'] = pairs_specific['mbpp']
 pairs_specific['humaneval'] = {**pairs_default, **pairs_specific['humaneval+']}
-pairs_specific['CRUXEval-input'] = pairs_specific['CRUXEval-output']
+pairs_specific['CRUXEval-input-T0.2'] = pairs_specific['CRUXEval-output']
+pairs_specific['CRUXEval-input-T0.8'] = pairs_specific['CRUXEval-output']
+pairs_specific['CRUXEval-output-T0.2'] = pairs_specific['CRUXEval-output']
+pairs_specific['CRUXEval-output-T0.8'] = pairs_specific['CRUXEval-output']
 
 
 def model_pairs(bid: str):

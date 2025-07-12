@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 import plotly.express as px
-import math
-from arena import model_table, pass1_to_battle, example_table
+from arena import ArenaResult
 from jinja2 import Template
 
 def get_anchor(benchmark_id: str, example_id: str):
@@ -31,24 +30,22 @@ def fig_example_vs_model(result, all_stats, ex_table):
                      hover_data=['acc', 'model', 'example_id'])
     fig.update_xaxes(autorange="reversed")
     fig.update_traces(marker={'symbol': 'square'})
-    bid = 'test'
     fig.update_layout(
             width=900, height=1200,
             xaxis = dict(side ="top"),
         )
     return fig
 
-def get_example_level_results(benchmark_id, result):
-    battles = pass1_to_battle(result)
-    battles_no_ties = battles[battles["winner"].str.contains("model_")]
-    all_stats = model_table(battles_no_ties, result)
-    ex_table = example_table(result, all_stats)
+def get_example_level_results(benchmark_id, ares: ArenaResult):
+    all_stats = ares.model_table 
+    ex_table = ares.example_table
     ex_table['example_link'] = ex_table['example_id'].apply(lambda x: get_anchor(benchmark_id, x))
 
     outputs = {}
-    outputs['result table'] = all_stats.sort_values(by='elo', ascending=False).to_html(float_format='%10.3f')
-    outputs['fig_min_elo_solve'] = px.histogram(ex_table, x='min_elo', marginal='rug', title='min ELO to solve').to_html(full_html=False)
-    outputs['table_histogram_accs'] = px.histogram(ex_table, x='acc', marginal='rug', title='accuracy on examples').to_html(full_html=False)
+    outputs['result table'] = all_stats.sort_values(by='elo', ascending=False).to_html(classes="number-table", float_format='%10.3f')
+    plotly_configs = dict(full_html=False, include_plotlyjs="cdn")
+    outputs['fig_min_elo_solve'] = px.histogram(ex_table, x='min_elo', marginal='rug', title='min ELO to solve').to_html(**plotly_configs)
+    outputs['table_histogram_accs'] = px.histogram(ex_table, x='acc', marginal='rug', title='accuracy on examples').to_html(**plotly_configs)
 
     no_solve = ex_table[ex_table['num_solved'] == 0]
     outputs['list_no_solve'] = sorted(no_solve['example_link'].to_list())
@@ -57,18 +54,17 @@ def get_example_level_results(benchmark_id, result):
     one_solve['model'] = one_solve['models'].apply(lambda x: x[0])
     one_solve = one_solve.sort_values(by='min_elo', ascending=False)
     one_solve = one_solve[['example_link', 'model', 'min_elo']]
-    outputs['table_one_solve'] = one_solve.to_html(escape=False, float_format='%10.3f', index=False)
+    outputs['table_one_solve'] = one_solve.to_html(escape=False, classes="number-table", float_format='%10.3f', index=False)
 
     list_suspect = ex_table.sort_values(by='tau', ascending=True).head(10)
-    outputs['table_suspect'] = list_suspect[['example_link', 'acc', 'tau']].to_html(escape=False, float_format='%10.3f', index=False)
+    outputs['table_suspect'] = list_suspect[['example_link', 'acc', 'tau']].to_html(escape=False, classes="number-table", float_format='%10.3f', index=False)
     print(benchmark_id, 'anti-correlated prop', np.mean(ex_table['tau'] <= 0))
 
-    outputs['fig_example_vs_model'] = fig_example_vs_model(result, all_stats, ex_table)
+    outputs['fig_example_vs_model'] = fig_example_vs_model(ares.input_table, all_stats, ex_table)
     return outputs
 
-
-def gen_example_report(benchmark_id: str, raw_results: pd.DataFrame, OUTPUT_PATH):
-    outputs = get_example_level_results(benchmark_id, raw_results)
+def gen_example_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
+    outputs = get_example_level_results(benchmark_id, ares)
     template_path = r"templates/template_example.html"
     output_path = rf"{OUTPUT_PATH}/ex_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:

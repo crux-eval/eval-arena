@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
 <link
   rel="stylesheet"
   href="https://crux-eval.github.io/static/css/bulma.min.css"
@@ -15,41 +14,45 @@
 
 <body>
 
+<div class="container">
 <section class="section">
-    <h2 class="title is-3"> Noise and errors of LLM evals </h2>
-    <h3 class="title is-4"> <a href="https://github.com/crux-eval/eval-arena">Doc/Code</a> </h3>
-    <div>
-    <p>
+    <h1 class="title"> Eval-Arena: Noise and errors of LLM evals </h1>
+    <h2 class="subtitle is-4"> <a href="https://github.com/crux-eval/eval-arena">Doc/Code</a> </h2>
       We ran pairwise match-ups on thousands of model pairs on various LLM benchmarks.
       Here is a summary of the main results with links to details aggregating by models or by examples.
       <ul>
         <li><b>size</b>: number of examples in the benchmark</li>
-        <li><b>p5_min</b>: the minimum difference with p-value &lt; 0.05</li>
-        <li><b>p5_max</b>: the maximum difference with p-value &gt; 0.05</li>
-        <li><b>no_solve</b>: examples not solved by any models</li>
-        <li><b>tau-</b>: examples negatively correlated with the overall model quality as measured by Kendall's tau.</li>
+        <li><b>model</b>: the number of models used on this benchmark</li>
+        <li><b>std(A-B)</b>: the paired std in percent</li>
+        <li><b>corr(A,B)</b>: correlation of models A and B on this benchmark in percent</li>
+        <li><b>no_solve</b>: percent examples not solved by any models</li>
+        <li><b>tau-</b>: percent examples negatively correlated with the overall model quality as measured by Kendall's tau.</li>
         <li><b>sig_noise</b>: median of <a href="signal_noise.html">signal-to-noise ratios</a> for doubling the model size.</li>
-        <li><b>details</b>: link to details for each benchmark, aggregating by the models or by examples in each benchmark, and a plot of all models and examples sorted by difficulty. </li>
-      </ul>
-      <a href="summary.csv">raw csv table</a>
-    </p>
+        <li><b>details</b>: details for each benchmark, aggregating by the models or by examples in each benchmark, and a plot of all models and examples sorted by difficulty. </li>
+      </ul>    
 
-    <p>{{ percent_table }}</p>
-    <p>
-    Code datasets:
+    <div style="overflow-x: auto;">
+    {{ percent_table }}
+    </div>
+
+    <!-- <div>
+    {{ overall_figure }}
+    </div> -->
+    
+    <div>Raw data: <a href="summary.csv">summary.csv</a></div>
+    <br/>
+    <h3 class="subtitle">Datasets:</h3>
     <ul>
       <li><a href="https://evalplus.github.io/">EvalPlus for MBPP/+, HumanEval+</a> </li>
       <li><a href="https://github.com/openai/human-eval">HumanEval</a> </li>
       <li><a href="https://github.com/google-research/google-research/tree/master/mbpp">MBPP (we used the EvalPlus version instead of original)</a> </li>
-      <li><a href="https://livecodebench.github.io/leaderboard.html">LiveCodeBench</a></li>
+      <li><a href="https://livecodebench.github.io/leaderboard.html">LiveCodeBench</a>: several versions are included, and default dates on v6</li>
       <li><a href="https://crux-eval.github.io/">CRUXEval</a></li>
       <li><a href="https://ds1000-code-gen.github.io/">DS1000</a></li>
       <li><a href="https://www.swebench.com/">SWE-bench</a></li>
       <li><a href="https://safimbenchmark.com/">SAFIM* (cluster correction maybe needed)</a></li>
     </ul>
-    </p>
 </section>
-
-
+</div>
 </body>
 </html>
