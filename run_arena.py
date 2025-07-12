@@ -20,39 +20,7 @@ class ReportArgs:
     data: str = "data/*.jsonl"
     recompute: bool = True # generate results for all data and summary line
     write_summary: bool = True # use results in out_dir/tmp to generate the summary table
-
-
-def summarize_benchmark(result: pd.DataFrame):
-    benchmarks = set(result['benchmark_id'])
-    assert len(benchmarks) == 1
-    bid = benchmarks.pop()
-    battles = arena.pass1_to_battle(result)
-    summary = arena.battle_summary(battles)
-    agg_results = arena.model_table(battles, result)
-    ex = arena.example_table(result, agg_results)
-    print(summary)
-
-    close_pairs = summary[summary["pvalue"] > 1e-3]
-
-    r = {
-        'benchmark_id': bid,
-        'size': int(summary.iloc[0]['total']),
-        'models': len(set(summary["model_a"])),
-        'total_pairs': len(summary),
-        'close_pairs': len(close_pairs),
-        'std(A-B)': close_pairs["std(A-B)"].describe().to_dict(),
-        'corr(A,B)': close_pairs["corr(A,B)"].describe().to_dict(),
-        'p5_min': int(summary[summary['pvalue'] < 0.05]['diff'].abs().min()),
-        'p5_max': int(summary[summary['pvalue'] > 0.05]['diff'].abs().max()),
-        'min_dist': int(summary['sum'].abs().min()),
-        'no_solve': (ex['acc'] == 0).to_numpy().sum(),
-        'tau-': (ex['tau'] < 0).to_numpy().sum(),
-    }
-
-    sig_to_noise = signal_to_noise(bid, summary)
-    r['sig_noise'] = sig_to_noise['signal to noise'].median() if sig_to_noise is not None else float('nan')
-    return r
-
+    
 
 def run_arena(args: ReportArgs):
     records = []
@@ -72,12 +40,17 @@ def run_arena(args: ReportArgs):
         for bid in benchmarks:
             print(f'processing {bid}...')
             result_bid = eval_results[eval_results['benchmark_id'] == bid] 
-            summary = summarize_benchmark(result_bid)
-            print(pd.DataFrame([summary]))
-            pd.DataFrame([summary]).to_json(tmp_dir / f'summary-{bid}.jsonl', orient='records', lines=True)
+            arena_res = arena.summarize_benchmark(result_bid)
 
-            gen_example_report(bid, result_bid, args.out_dir)
-            gen_model_report(bid, result_bid, args.out_dir)
+            sig_to_noise = signal_to_noise(bid, arena_res.summary)
+            summary_stats = arena_res.summary_stats 
+            summary_stats['sig_noise'] = sig_to_noise['signal to noise'].median() if sig_to_noise is not None else float('nan')
+
+            print(pd.DataFrame([summary_stats]))
+            pd.DataFrame([summary_stats]).to_json(tmp_dir / f'summary-{bid}.jsonl', orient='records', lines=True)
+
+            gen_model_report(bid, arena_res, args.out_dir)
+            gen_example_report(bid, arena_res, args.out_dir)
     
     if args.write_summary:
         records = []

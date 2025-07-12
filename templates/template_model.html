@@ -7,53 +7,44 @@
   rel="stylesheet"
   href="https://crux-eval.github.io/static/css/bulma.min.css"
 >
-<style>
-  table { 
-    white-space: nowrap;
-    text-align: right;
-  }
-</style>
+<link
+  rel="stylesheet"
+  href="static/custom.css"
+>
 </head>
 
 <body>
 
-<section class="section">
-<div class="container is-max-desktop">
-<div class="columns is-centered has-text-centered">
-<div class="column is-full">
-    <h2 class="title is-3"> {{benchmark_id}}: by models </h2>
-    <h3 class="title is-4">  <a href=".">Home</a> &nbsp; <a href="https://github.com/crux-eval/eval-arena">Doc/Code</a> </h3>
+<div class="container">
+<h1 class="title"> {{benchmark_id}}: by models</h1>
+<h2 class="subtitle is-4"> <a href=".">Home</a> <a href="https://github.com/crux-eval/eval-arena">Doc/Code</a> </h2>
+<br/>
+<h2 class="title is-4" id="fig_cov_baseline">std predicted by accuracy</h2>
+<p>The typical stddev between pairs of models on this dataset as a function of the absolute accuracy. </p>
+<p>{{sections['fig_cov_baseline']}}</p>
 
-    <div class="content has-text-justified" style="font-size: 120%;">
-      
-    <h2 id="fig_accs_and_pvalues">p-values for model pairs</h2>
-    <p>The null hypothesis is that model A and B each have a 1/2 chance to win whenever they are different, ties are ignored.
-    The p-value is the chance under the null-hypothesis to get a difference as extreme as the one observed.
-    For all pairs of models, this mainly depends on the difference in accuracy.
-    Hover over each model pair for detailed information. </p>
-    <p>{{sections['fig_accs_and_pvalues']}}</p>
+<h2 class="title is-4" id="fig_accs_and_pvalues">p-values for model pairs</h2>
+<p>The null hypothesis is that model A and B each have a 1/2 chance to win whenever they are different, ties are ignored.
+The p-value is the chance under the null-hypothesis to get a difference as extreme as the one observed.
+For all pairs of models, this mainly depends on the difference in accuracy.
+Hover over each model pair for detailed information. </p>
+<p>{{sections['fig_accs_and_pvalues']}}</p>
 
-    <p>{{sections['fig_cov_baseline']}}</p>
+<h2 class="title is-4" id="fig_diff_vs_sum">Differences vs inconsistencies</h2>
+<p>Here is a more informative figure of the source information used to compute p-value.
+  Any model pair to the right of the parabola is statistically different from each other at the given level.
+  This plot shows a pretty sharp transition since there are no model pairs with a small #A_win + #B_win,
+  which rules out significant results at a small difference in |#A_win-#B_win|.
+  For more explanation see <a href="https://github.com/crux-eval/eval-arena">doc</a>. </p>
+<p>{{sections['fig_diff_vs_sum']}}</p>
 
-    <h2 id="fig_diff_vs_sum">Differences vs inconsistencies</h2>
-    <p>Here is a more informative figure of the source information used to compute p-value.
-      Any model pair to the right of the parabola is statistically different from each other at the given level.
-      This plot shows a pretty sharp transition since there are no model pairs with a small #A_win + #B_win,
-      which rules out significant results at a small difference in |#A_win-#B_win|.
-      For more explanation see <a href="https://github.com/crux-eval/eval-arena">doc</a>. </p>
-    <p>{{sections['fig_diff_vs_sum']}}</p>
-
-    <h2 id="model_table">Results table by model</h2>
-    <p>We show 3 methods currently used for evaluating code models,
-    raw accuracy used by benchmarks, average win-rate over all other models (used by <a href="https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard">BigCode</a>),
-    and Elo (<a href="https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model">Bradly-Terry coefficients</a> following <a href="https://chat.lmsys.org/">Chatbot Arena</a>).
-    Average win-rate always have good correlation with Elo. GPT-3.5 gets an ELO of 1000 when available, otherwise the average is 1000.
-    </p>
-  <p>{{sections['model_table']}}</p>
-  </div>
-</div>
-</div>
-</div>
+<h2 class="title is-4" id="model_table">Results table by model</h2>
+<p>We show 3 methods currently used for evaluating code models,
+raw accuracy used by benchmarks, average win-rate over all other models (used by <a href="https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard">BigCode</a>),
+and Elo (<a href="https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model">Bradly-Terry coefficients</a> following <a href="https://chat.lmsys.org/">Chatbot Arena</a>).
+Average win-rate always have good correlation with Elo. GPT-3.5 gets an ELO of 1000 when available, otherwise the average is 1000.
+</p>
+<p>{{sections['model_table']}}</p>
 </section>
 
 </body>
