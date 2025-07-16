@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import numpy as np
@@ -10,10 +11,10 @@ from jinja2 import Template
 
 from arena import ArenaResult
 
-def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
-    data_sz = diffvsum.iloc[0]['total']
+def fig_diff_vs_sum(bmname: str, summary: pd.DataFrame):
+    data_sz = summary.iloc[0]['total']
 
-    figs = px.scatter(diffvsum, x=diffvsum['diff'].abs(), y='sum',
+    figs = px.scatter(summary, x=summary['diff'].abs(), y='sum',
                       custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std(A-B)', 'accA', 'accB', 'std(E(A-B))'])
     figs.update_traces(hovertemplate=
         "<br>".join([
@@ -32,7 +33,7 @@ def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
         )
     )
 
-    maxy = diffvsum['sum'].max()
+    maxy = summary['sum'].max()
     refs = []
     x = np.linspace(0, data_sz / 2, 100)
     refs.append(pd.DataFrame({'x': x, 'y': x, 'type': 'x=y'}))
@@ -101,7 +102,7 @@ def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
         "total A≠B: %{customdata[2]:.1f}",
         "total A-B: %{customdata[3]:.1f}", 
         "std(A-B): %{customdata[5]:.2%}", 
-        "p-value: %{customdata[4]:.3g}", 
+        "p-value: %{customdata[4]:.3g}",
         ])  + '<extra></extra>')
 
     figs.update_traces(
@@ -183,7 +184,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
         links.append(f"""<a href="model_{bid}.html">models </a> """)
         links.append(f"""<a href="ex_{bid}.html"> examples </a>""")
         links.append(f"""<a href="ex_v_model_{bid}.html"> data </a>""")
-        # links.append(f"""<a href="tables_{bid}.html"> tables </a>""")
+        links.append(f"""<a href="data_{bid}.html"> raw </a>""")
         return '|'.join(links)
     summary_count['details'] = summary_count['benchmark_id'].apply(link_detail)
 
@@ -193,7 +194,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
             percent[c] = percent[c] / percent['size']
         return percent
 
-    includes_cols = ['benchmark_id', 'size', 'models', 'std(A)', 'std(A-B)', 'corr(A,B)', 'no_solve', 'tau-', 'sig_noise', 'details']
+    includes_cols = ['benchmark_id', 'size', 'models', 'std(A)', 'std(E(A))', 'std(A-B)', 'corr(A,B)', 'no_solve', 'tau-', 'sig_noise', 'details']
     percent_cols = ['p5_min', 'p5_max', 'no_solve', 'tau-']
     summary_percent = normalize(summary_count, percent_cols)
 
@@ -230,3 +231,19 @@ def gen_model_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({'benchmark_id': benchmark_id, 'sections': sections}))
+
+
+def write_data_tables(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
+    template_path=r"templates/template_data.html"
+    output_path = f"{OUTPUT_PATH}/data_{benchmark_id}.html"
+    with open(output_path, "w", encoding="utf-8") as output_file:
+        with open(template_path) as template_file:
+            j2_template = Template(template_file.read())
+            output_file.write(j2_template.render({'benchmark_id': benchmark_id}))
+
+    data_path = Path(f"{OUTPUT_PATH}/data/{benchmark_id}/")
+    os.makedirs(data_path, exist_ok=True)
+    ares.input_table.to_csv(data_path / "input_table.csv")
+    ares.model_table.to_csv(data_path / "model_table.csv")
+    ares.example_table.to_csv(data_path / "example_table.csv")
+    ares.summary.to_csv(data_path / "summary.csv")
