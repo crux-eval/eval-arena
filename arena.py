@@ -6,110 +6,97 @@ import numpy as np
 import scipy.stats as stats
 import pandas as pd
 
+class BattleSummary:
+    @staticmethod
+    def _prob_outcome(pa: pd.DataFrame):
+        a_pass = pa["pass1_a"]
+        b_pass = pa["pass1_b"]
+        awins = a_pass * (1 - b_pass)
+        bwins = (1 - a_pass) * b_pass
+        neither = (1 - a_pass) * (1 - b_pass)
+        both = a_pass * b_pass
 
-def _hard_outcome(pa: pd.DataFrame, thres: float = 0.5):
-    a_pass = pa["pass1_a"] > thres
-    b_pass = pa["pass1_b"] > thres
-    awins = a_pass & ~b_pass
-    bwins = ~a_pass & b_pass
-    neither = ~a_pass & ~b_pass
-    both = a_pass & b_pass 
-
-    assert all(awins | bwins | neither | both) \
-        and sum(awins) + sum(bwins) + sum(both) + sum(neither) == len(pa), "outcomes should be unique and complete"
-    pa.loc[awins, "winner"] = "model_a"
-    pa.loc[bwins, "winner"] = "model_b"
-    pa.loc[neither, "winner"] = "neither"
-    pa.loc[both, "winner"] = "both"
-    return pa
-
-def _prob_outcome(pa: pd.DataFrame):
-    a_pass = pa["pass1_a"]
-    b_pass = pa["pass1_b"]
-    awins = a_pass * (1 - b_pass)
-    bwins = (1 - a_pass) * b_pass
-    neither = (1 - a_pass) * (1 - b_pass)
-    both = a_pass * b_pass
-
-    assert np.allclose(awins + bwins + both + neither, 1), "sum of probs should be 1"
-    pa["awins"] = awins
-    pa["bwins"] = bwins
-    pa["neither"] = neither
-    pa["both"] = both
-    return pa
-
-def _diff_outcome(pa: pd.DataFrame, thres: float = 0.5):
-    soft_diff = pa["pass1_a"] - pa["pass1_b"]
-    hard_diff = np.where(pa["pass1_a"] > thres, 1, 0) - np.where(pa["pass1_b"] > thres, 1, 0)
-    pa["A-B"] = soft_diff 
-    pa["A-B_hard"] = hard_diff
-    return pa
-
-def pass1_to_battle(result: pd.DataFrame, thres=0.5):
-    """
-    generates a pairwise comparison table from pass1 information using 3 ways to summarize the outcome
-        - 1: using a threshold to decide the winner and store one of 4 outcomes in the winner column
-        - 2: use the difference in scores, which can generalize to 
-    """
-    pa = pd.merge(result, result, on=["example_id"], suffixes=["_a", "_b"], how="outer")
-    print(pa)
-    pa = pa[pa["model_a"] != pa["model_b"]]
+        assert np.allclose(awins + bwins + both + neither, 1), "sum of probs should be 1"
+        pa["awins"] = awins
+        pa["bwins"] = bwins
+        pa["neither"] = neither
+        pa["both"] = both
+        return pa
     
-    pa = _hard_outcome(pa)
-    pa = _prob_outcome(pa)
-    pa = _diff_outcome(pa, thres)
-    return pa
+    @staticmethod
+    def _hard_outcome(pa: pd.DataFrame, thres: float = 0.5):
+        """
+        hard outcomes are required for elo calculations, the rest all use prob_outcomes
+        """
+        a_pass = pa["pass1_a"] > thres
+        b_pass = pa["pass1_b"] > thres
+        awins = a_pass & ~b_pass
+        bwins = ~a_pass & b_pass
+        neither = ~a_pass & ~b_pass
+        both = a_pass & b_pass 
 
-def _comp_stats(outcomes: pd.Series):
-    sufs = Counter(outcomes.values) # model_a, model_b, neither, both are the possible outcomes
-    total = sufs.total()
-    model_a, model_b, both, neither = sufs["model_a"], sufs["model_b"], sufs["both"], sufs["neither"]
-    assert model_a + model_b + both + neither == total
-    pa = model_a / total
-    pb = model_b / total
-    diff = model_a - model_b
-    sum = model_a + model_b
-    std_count = np.sqrt(total * (pa*(1-pa) +  pb*(1-pb) + 2*pa*pb))
-    pvalue = stats.binomtest(model_a, sum, p=0.5).pvalue if sum != 0 else 1
-    res = dict(
-        sum = sum,
-        diff = diff,
-        total = total,
-        accA = (model_a + both) / total,
-        accB = (model_b + both) / total,
-        pvalue = pvalue,
-        std_count = std_count,
-        std_acc = std_count / total,
-        covAB = (both / total - (model_a + both) / total*(model_b + both) / total),
-    )
-    return res
+        assert all(awins | bwins | neither | both) \
+            and sum(awins) + sum(bwins) + sum(both) + sum(neither) == len(pa), "outcomes should be unique and complete"
+        pa.loc[awins, "winner"] = "model_a"
+        pa.loc[bwins, "winner"] = "model_b"
+        pa.loc[neither, "winner"] = "neither"
+        pa.loc[both, "winner"] = "both"
+        return pa
 
-def _pair_summary(df: pd.DataFrame):
-    N = len(df)
-    sufs = Counter(df["winner"])
-    awin, bwin, both, neither = sufs["model_a"], sufs["model_b"], sufs["both"], sufs["neither"]
-    assert awin + bwin + both + neither == N
-    pawin = awin / N
-    pbwin = bwin / N
+    @staticmethod
+    def pass1_to_battle(result: pd.DataFrame, thres=0.5):
+        """
+        generates a pairwise comparison table from pass1 information using 3 ways to summarize the outcome
+            - 1: using a threshold to decide the winner and store one of 4 outcomes in the winner column
+            - 2: use the difference in scores, which can generalize to 
+        """
+        pa = pd.merge(result, result, on=["example_id"], suffixes=["_a", "_b"], how="outer")
+        print(pa)
+        pa = pa[pa["model_a"] != pa["model_b"]]
+        pa = BattleSummary._prob_outcome(pa)
+        pa = BattleSummary._hard_outcome(pa)
+        return pa
 
-    corr_ab = df["pass1_a"].corr(df["pass1_b"], method="pearson")
-    r = { 
-        "corr(A,B)": corr_ab,
-        "std(A-B)": df["A-B"].std(ddof=0) / np.sqrt(N),
-        "std_signtest": 1/N * np.sqrt((df["awins"].sum() + df["bwins"].sum())),
-        "std_bootstrap": np.sqrt(1/N * (pawin * (1 - pawin) + pbwin * (1 - pbwin) + 2 * pawin * pbwin)),
-        "std(A-B)_hard": df["A-B_hard"].std(ddof=0) / np.sqrt(N),
-        "unpaired_std": 1/np.sqrt(N) * np.sqrt(df["pass1_a"].var(ddof=0) + df["pass1_b"].var(ddof=0)),
-    }
+    @staticmethod
+    def _pair_summary(df: pd.DataFrame):
+        N = len(df)
+        awin, bwin, both, neither = df["awins"], df["bwins"], df["both"], df["neither"]
+        assert np.allclose(awin.sum() + bwin.sum() + both.sum() + neither.sum(), N)
+        assert np.allclose(awin.sum() + both.sum(), df["pass1_a"].sum())
+        assert np.allclose(bwin.sum() + both.sum(), df["pass1_b"].sum())
+        pawin = awin.sum() / N
+        pbwin = bwin.sum() / N
+        
+        assert np.allclose(df["pass1_a"] - df["pass1_b"], awin - bwin)
+        r = {
+            "sum": awin.sum() + bwin.sum(),
+            "diff": awin.sum() - bwin.sum(),
+            "total": N,
+            "accA": df["pass1_a"].mean(), 
+            "accB": df["pass1_b"].mean(),
 
-    assert np.allclose(r["std(A-B)_hard"], r["std_bootstrap"])
-    return pd.Series({**r, **_comp_stats(df["winner"])})
+            "corr(A,B)": df["pass1_a"].corr(df["pass1_b"], method="pearson"),
+            "std_signtest": np.sqrt(1/N * (awin + bwin).mean()),
+            "std(E(A-B))": np.sqrt(1/N * (awin - bwin).var(ddof=0)),
+            "E(std(A-B))": np.sqrt(1/N * np.mean(awin + bwin - (awin - bwin)**2)),
+            "std(A-B)": np.sqrt(1/N * (pawin * (1 - pawin) + pbwin * (1 - pbwin) + 2 * pawin * pbwin)),
 
-def battle_summary(battles):
-    diffvsum = battles.groupby(["model_a", "model_b"])\
-        .apply(_pair_summary)\
-        .reset_index(drop=False)
-    return diffvsum
+            "pvalue": stats.binomtest(int(awin.sum()), int(awin.sum() + bwin.sum()), p=0.5).pvalue if int(awin.sum() + bwin.sum()) != 0 else 1,
+        }
+
+        assert np.allclose(r["std(E(A-B))"]**2 + r["E(std(A-B))"]**2, r["std(A-B)"]**2)
+        assertcond = r["std(A-B)"] <= r["std_signtest"] or np.allclose(r["std(A-B)"], r["std_signtest"])
+        if not assertcond:
+            print("signtest not as big, strange", r)
+
+        return pd.Series(r)
+
+    @staticmethod
+    def battle_summary(battles):
+        diffvsum = battles.groupby(["model_a", "model_b"])\
+            .apply(BattleSummary._pair_summary)\
+            .reset_index(drop=False)
+        return diffvsum
     
 def compute_mle_elo(
     df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
@@ -180,19 +167,21 @@ def model_table(battles, result):
 
     def _stds(g: pd.Series):
         pass1s = g["pass1"]
-        Ns= g["N"]
         data_sz = len(pass1s)
         p = pass1s.to_numpy()
-        return pd.Series({
-            "std_i": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
-            "std": np.sqrt(1 / data_sz) * np.std(p),
+        vars = {
+            "E(std(A))": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
+            "std(E(A))": 1 / np.sqrt(data_sz) * np.std(p),
+            "std(A)": np.sqrt(1 / data_sz * p.mean()* (1-p.mean())),
             "pass1": np.mean(pass1s),
-            "N": np.mean(Ns),
-        })
+            "N": np.mean(g["N"]),
+        }
+        assert np.allclose(vars["E(std(A))"]**2 + vars["std(E(A))"]**2, vars["std(A)"]**2)
+        return pd.Series(vars)
 
     # add std if pass1 is not just 0 or 1 
     basic_stats = result[["model", "pass1", "N"]].groupby("model").apply(_stds).reset_index()
-    table_inds = ["model", "pass1", "std", "std_i", "N", "win_rate", "elo"]
+    table_inds = ["model", "pass1", "std(E(A))", "E(std(A))", "std(A)", "N", "win_rate", "elo"]
 
     all_stats = win_elo.merge(basic_stats, left_on="model_a", right_on="model")[table_inds].sort_values(by="pass1", ascending=False)
     return all_stats
@@ -212,14 +201,12 @@ def example_table(result, all_stats):
         r["models"] = solved_ex["model"].to_numpy()
         r["acc"] = len(solved_ex) / len(ex)
         r["tau"] = stats.kendalltau(ex["correct"], ex["pass1"]).statistic
-        # r['corr'] = stats.pearsonr(ex['correct'], ex['pass1']).statistic
         records.append(r)
 
     return pd.DataFrame(records)
 
 @dataclass
 class ArenaResult:
-    battles: pd.DataFrame
     summary: pd.DataFrame
     model_table: pd.DataFrame
     example_table: pd.DataFrame
@@ -228,36 +215,47 @@ class ArenaResult:
 
 
 def summarize_benchmark(result: pd.DataFrame) -> ArenaResult:
-    benchmarks = set(result['benchmark_id'])
+    benchmarks = set(result["benchmark_id"])
     assert len(benchmarks) == 1
     bid = benchmarks.pop()
-    battles = pass1_to_battle(result)
-    summary = battle_summary(battles)
+
+    if "N" not in result.columns:
+        result["N"] = 1
+        print(f"assuming N=1 on {bid}")
+
+    battles = BattleSummary.pass1_to_battle(result)
+    summary = BattleSummary.battle_summary(battles)
     agg_results = model_table(battles, result)
     ex = example_table(result, agg_results)
     close_pairs = summary[summary["pvalue"] > 2.7e-3] # 3 sigma
 
     summary_stats = {
-        'benchmark_id': bid,
-        'size': int(summary.iloc[0]['total']),
-        'models': len(set(summary["model_a"])),
-        'total_pairs': len(summary),
-        'close_pairs': len(close_pairs),
+        "benchmark_id": bid,
+        "size": int(summary.iloc[0]["total"]),
+        "models": len(set(summary["model_a"])),
+        "total_pairs": len(summary),
+        "close_pairs": len(close_pairs),
 
-        'std(A)': agg_results["std"].describe().to_dict(),
-        'std_i': agg_results["std_i"].describe().to_dict(),
+        "std(A)": agg_results["std(A)"].describe().to_dict(),
+        "std(E(A))": agg_results["std(E(A))"].describe().to_dict(),
+        "E(std(A))": agg_results["E(std(A))"].describe().to_dict(),
 
-        'std(A-B)': close_pairs["std(A-B)"].describe().to_dict(),
-        'std_signtest': close_pairs["std_signtest"].describe().to_dict(),
-        'corr(A,B)': close_pairs["corr(A,B)"].describe().to_dict(),
+        "std(A-B)": close_pairs["std(A-B)"].describe().to_dict(),
+        "E(std(A-B))": close_pairs["E(std(A-B))"].describe().to_dict(),
+        "std(E(A-B))": close_pairs["std(E(A-B))"].describe().to_dict(),
+        "std_signtest": close_pairs["std_signtest"].describe().to_dict(),
+        "corr(A,B)": close_pairs["corr(A,B)"].describe().to_dict(),
+        "A!=B": close_pairs["sum"].describe().to_dict(),
         
-        'p5_min': summary[summary['pvalue'] < 0.05]['diff'].abs().min(),
-        'p5_max': summary[summary['pvalue'] > 0.05]['diff'].abs().max(),
-        'min_dist': int(summary['sum'].abs().min()),
-        'no_solve': (ex['acc'] == 0).to_numpy().sum(),
-        'tau-': (ex['tau'] < 0).to_numpy().sum(),
+        "p5_min": summary[summary["pvalue"] < 0.05]["diff"].abs().min(),
+        "p5_max": summary[summary["pvalue"] > 0.05]["diff"].abs().max(),
+        "no_solve": (ex["acc"] == 0).to_numpy().sum(),
+        "tau-": (ex["tau"] < 0).to_numpy().sum(),
     }
 
-    return ArenaResult(input_table=result, battles=battles,
-                       summary=summary, model_table=agg_results,
-                       example_table=ex, summary_stats=summary_stats) 
+    return ArenaResult(input_table=result, 
+                       summary=summary,
+                       model_table=agg_results,
+                       example_table=ex,
+                       summary_stats=summary_stats,
+                    ) 
