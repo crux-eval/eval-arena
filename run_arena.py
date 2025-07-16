@@ -40,7 +40,7 @@ def run_arena(args: ReportArgs):
         for bid in benchmarks:
             print(f'processing {bid}...')
             result_bid = eval_results[eval_results['benchmark_id'] == bid] 
-            arena_res = arena.summarize_benchmark(result_bid)
+            arena_res: arena.ArenaResult = arena.summarize_benchmark(result_bid)
 
             sig_to_noise = signal_to_noise(bid, arena_res.summary)
             summary_stats = arena_res.summary_stats 

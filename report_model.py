@@ -14,17 +14,23 @@ def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
     data_sz = diffvsum.iloc[0]['total']
 
     figs = px.scatter(diffvsum, x=diffvsum['diff'].abs(), y='sum',
-                      custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', diffvsum['std_count'] / data_sz, 'accA', 'accB', 'std(A-B)'])
+                      custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std(A-B)', 'accA', 'accB', 'std(E(A-B))'])
     figs.update_traces(hovertemplate=
         "<br>".join([
         "Model A: %{customdata[0]} (acc: %{customdata[6]:.1%})",
         "Model B: %{customdata[1]} (acc: %{customdata[7]:.1%})", 
         "total A≠B: %{customdata[2]}",
         "total A-B: %{customdata[3]}", 
-        "std(A-B)_sign: %{customdata[5]:.2%}", 
-        "std(A-B)%: %{customdata[8]:.2%}", 
+        "std(A-B): %{customdata[5]:.4%}", 
+        "std(E[A-B]): %{customdata[8]:.4%}", 
         "p-value: %{customdata[4]:.3g}", 
         ])  + '<extra></extra>')
+    figs.update_traces(
+        marker=dict(
+            size=3,
+            opacity=0.5, 
+        )
+    )
 
     maxy = diffvsum['sum'].max()
     refs = []
@@ -51,7 +57,7 @@ def fig_diff_vs_sum(bmname: str, diffvsum: pd.DataFrame):
 def fig_accs_and_pvalues(bmname, diffvsum):
     figs = px.scatter(diffvsum, x='accA', y='accB',
             color='pvalue', range_color=[0, 0.2],
-            custom_data=['model_a', 'model_b', 'accA', 'accB', 'pvalue', 'std_acc'])
+            custom_data=['model_a', 'model_b', 'accA', 'accB', 'pvalue', 'std(A-B)'])
     figs.update_traces(hovertemplate=
         "<br>".join([
         "Model A: %{customdata[0]}",
@@ -59,7 +65,7 @@ def fig_accs_and_pvalues(bmname, diffvsum):
         "acc(A): %{customdata[2]:.1%}", 
         "acc(B): %{customdata[3]:.1%}", 
         "p-value: %{customdata[4]:.3g}", 
-        "std(acc(A)-acc(B)): %{customdata[5]:.2%}", 
+        "std(A-B)%: %{customdata[5]:.2%}", 
         ])  + '<extra></extra>')
     
     figs.update_layout(
@@ -81,10 +87,8 @@ def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
         'not close: >3σ': '#CCCCCC'     # Light gray
     } 
     figs = px.scatter(df,
-                    x=0.5*(df["accB"] + df["accA"]), y='std_acc',
-                    # x=df["accB"], y='std_acc',
+                    x=0.5*(df["accB"] + df["accA"]), y='std(A-B)',
                     color="is_close",
-                    # error_x=df["accA"] - df["accB"],
                     color_discrete_map=color_map,
                     custom_data=['model_a', 'model_b', 'sum', 'diff', 'pvalue', 'std(A-B)', 'accA', 'accB'])
     figs.for_each_trace(lambda trace: trace.update(opacity=0.5) 
@@ -94,8 +98,8 @@ def fig_cov_baseline(bmname: str, diffvsum: pd.DataFrame):
         "<br>".join([
         "Model A: %{customdata[0]} (acc: %{customdata[6]:.1%})",
         "Model B: %{customdata[1]} (acc: %{customdata[7]:.1%})", 
-        "total A≠B: %{customdata[2]}",
-        "total A-B: %{customdata[3]}", 
+        "total A≠B: %{customdata[2]:.1f}",
+        "total A-B: %{customdata[3]:.1f}", 
         "std(A-B): %{customdata[5]:.2%}", 
         "p-value: %{customdata[4]:.3g}", 
         ])  + '<extra></extra>')
@@ -145,8 +149,9 @@ def get_sections(bres: ArenaResult, benchmark_id):
             classes="number-table",
             formatters={
                 'pass1': lambda x: f'{100*x:.3g}',
-                'std': lambda x: f'{100*x:.2g}',
-                'std_i': lambda x: f'{100*x:.2g}',
+                'std(A)': lambda x: f'{100*x:.2g}',
+                'std(E(A))': lambda x: f'{100*x:.2g}',
+                'E(std(A))': lambda x: f'{100*x:.2g}',
                 'N': lambda x: f'{x:.2g}',
                 'win_rate': lambda x: f'{100*x:.3g}',
                 'elo': '{:.3g}'.format
@@ -160,8 +165,12 @@ def summary_stats(s, f=2, percent=True):
 
 def format_stats_badge(s):
     s_percent = dict(s)
+    print(s)
     for st in ["mean", "std", "min", "max"]:
-        s_percent[st] = 100 * s[st]
+        if s["count"] == 0:
+            s[st] = float("nan")
+        else:
+            s_percent[st] = 100 * s[st]
     summary = summary_stats(s_percent)
     mean = 100*s["mean"]
     return f'<span class="tooltip" data-tooltip="{summary}">{mean:.2g}</span>'
@@ -170,10 +179,12 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
     summary_count = summary_count.sort_values(by='benchmark_id')
 
     def link_detail(bid):
-        l1 = f"""<a href="model_{bid}.html">models </a> """
-        l2 = f"""<a href="ex_{bid}.html"> examples </a>"""
-        l3 = f"""<a href="ex_v_model_{bid}.html"> data </a>"""
-        return l1 + '|' + l2 + '|' + l3
+        links = []
+        links.append(f"""<a href="model_{bid}.html">models </a> """)
+        links.append(f"""<a href="ex_{bid}.html"> examples </a>""")
+        links.append(f"""<a href="ex_v_model_{bid}.html"> data </a>""")
+        # links.append(f"""<a href="tables_{bid}.html"> tables </a>""")
+        return '|'.join(links)
     summary_count['details'] = summary_count['benchmark_id'].apply(link_detail)
 
     def normalize(counts, includes):
@@ -200,10 +211,10 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
                     index=False,
                     formatters={
                         "std(A)": lambda x: format_stats_badge(x),
+                        "std(E(A))": lambda x: format_stats_badge(x),
                         "std(A-B)": lambda x: format_stats_badge(x),
+                        "std(E(A-B))": lambda x: format_stats_badge(x),
                         "corr(A,B)": lambda x: format_stats_badge(x),
-                        'p5_min': lambda x: f'{x*100:.2g}',
-                        'p5_max': lambda x: f'{x*100:.2g}',
                         'no_solve': lambda x: f'{x*100:.2g}',
                         'tau-': lambda x: f'{x*100:.2g}',
                         'sig_noise': '{:.2g}'.format,
@@ -219,4 +230,3 @@ def gen_model_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({'benchmark_id': benchmark_id, 'sections': sections}))
-
