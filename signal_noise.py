@@ -91,10 +91,10 @@ def agg_signal_noise(x):
     logsize = np.log2(sizeB(x.name[0])) - np.log2(sizeB(x.name[1]))
     name = model_name(x.name[0])
     return pd.Series({
-        'signal to noise': x['diff'] / np.sqrt(x['sum']) / logsize,
-        'norm. signal to noise': x['diff'] / np.sqrt(x['sum']) / logsize / np.sqrt(x['total']),
+        'signal to noise': x['sum(A-B)'] / np.sqrt(x['sum(A!=B)']) / logsize,
+        'norm. signal to noise': x['sum(A-B)'] / np.sqrt(x['sum(A!=B)']) / logsize / np.sqrt(x['total']),
         'logsize': logsize,
-        'sum': x['sum'],
+        'sum(A!=B)': x['sum(A!=B)'],
         'model_family': name,
         'model_pair': ' vs. '.join(x.name),
         **x,
@@ -106,8 +106,8 @@ def generate_all_summary(eval_results: pd.DataFrame):
     results = {}
     for bid in benchmarks:
         result = eval_results[eval_results['benchmark_id'] == bid]
-        battles = arena.pass1_to_battle(result)
-        summary = arena.battle_summary(battles)
+        battles = arena.BattleSummary.pass1_to_battle(result)
+        summary = arena.BattleSummary.battle_summary(battles)
         results[bid] = summary
     return results
 

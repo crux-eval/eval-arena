@@ -1,7 +1,5 @@
 import os
 import json, glob
-from dataclasses import dataclass, field
-from typing import Dict, Any, Iterator, Optional
 
 import pandas as pd
 from jinja2 import Template
@@ -9,17 +7,11 @@ from omegaconf import OmegaConf
 from pathlib import Path
 
 import arena
+from arena import ReportArgs
 from report_example import gen_example_report
 from report_model import gen_model_report, write_data_tables, write_summary_table
 from signal_noise import signal_to_noise
 
-
-@dataclass
-class ReportArgs:
-    out_dir: Optional[str] = "gh-pages/"
-    data: str = "data/*.jsonl"
-    recompute: bool = True # generate results for all data and summary line
-    write_summary: bool = True # use results in out_dir/tmp to generate the summary table
 
 def setup_output(args: ReportArgs):
     # Copy custom.css to the output directory
@@ -49,7 +41,7 @@ def run_arena(args: ReportArgs):
         for bid in benchmarks:
             print(f"processing {bid}...")
             result_bid = eval_results[eval_results["benchmark_id"] == bid] 
-            arena_res: arena.ArenaResult = arena.summarize_benchmark(result_bid)
+            arena_res: arena.ArenaResult = arena.summarize_benchmark(result_bid, args)
 
             sig_to_noise = signal_to_noise(bid, arena_res.summary)
             summary_stats = arena_res.summary_stats 

@@ -26,7 +26,7 @@ class BattleSummary:
     @staticmethod
     def _hard_outcome(pa: pd.DataFrame, thres: float = 0.5):
         """
-        hard outcomes are required for elo calculations, the rest all use prob_outcomes
+        hard outcomes are required for elo calculations
         """
         a_pass = pa["pass1_a"] > thres
         b_pass = pa["pass1_b"] > thres
@@ -62,15 +62,16 @@ class BattleSummary:
         N = len(df)
         awin, bwin, both, neither = df["awins"], df["bwins"], df["both"], df["neither"]
         assert np.allclose(awin.sum() + bwin.sum() + both.sum() + neither.sum(), N)
-        assert np.allclose(awin.sum() + both.sum(), df["pass1_a"].sum())
-        assert np.allclose(bwin.sum() + both.sum(), df["pass1_b"].sum())
+        assert np.allclose(awin + bwin + both + neither, np.ones((N, 1)))
+        assert np.allclose(awin + both, df["pass1_a"])
+        assert np.allclose(bwin + both, df["pass1_b"])
         pawin = awin.sum() / N
         pbwin = bwin.sum() / N
         
         assert np.allclose(df["pass1_a"] - df["pass1_b"], awin - bwin)
         r = {
-            "sum": awin.sum() + bwin.sum(),
-            "diff": awin.sum() - bwin.sum(),
+            "sum(A!=B)": awin.sum() + bwin.sum(),
+            "sum(A-B)": awin.sum() - bwin.sum(),
             "total": N,
             "accA": df["pass1_a"].mean(), 
             "accB": df["pass1_b"].mean(),
@@ -214,7 +215,17 @@ class ArenaResult:
     summary_stats: dict
 
 
-def summarize_benchmark(result: pd.DataFrame) -> ArenaResult:
+@dataclass
+class ReportArgs:
+    out_dir: str = "gh-pages/"
+    data: str = "data/*.jsonl"
+    recompute: bool = True # generate results for all data and summary line
+    write_summary: bool = True # use results in out_dir/tmp to generate the summary table
+    sigma_thres: float = 5.0 # how many std to consider as not close
+    min_perf: float = 0.05 # too bad for inconlusion, including near 0 models does give some extreme results
+
+
+def summarize_benchmark(result: pd.DataFrame, args: ReportArgs) -> ArenaResult:
     benchmarks = set(result["benchmark_id"])
     assert len(benchmarks) == 1
     bid = benchmarks.pop()
@@ -222,12 +233,16 @@ def summarize_benchmark(result: pd.DataFrame) -> ArenaResult:
     if "N" not in result.columns:
         result["N"] = 1
         print(f"assuming N=1 on {bid}")
+    result["N"].fillna(1, inplace=True)
 
     battles = BattleSummary.pass1_to_battle(result)
     summary = BattleSummary.battle_summary(battles)
     agg_results = model_table(battles, result)
     ex = example_table(result, agg_results)
-    close_pairs = summary[summary["pvalue"] > 2.7e-3] # 3 sigma
+    close_pairs = summary[
+        (summary["pvalue"] > 2 * stats.norm.sf(abs(args.sigma_thres))) &  # p=0.05, 0.0027, 6e-7  for 1.96, 3, 5 sigma
+        (summary["accA"] > args.min_perf) & (summary["accB"] > args.min_perf)
+    ]
 
     summary_stats = {
         "benchmark_id": bid,
@@ -236,22 +251,19 @@ def summarize_benchmark(result: pd.DataFrame) -> ArenaResult:
         "total_pairs": len(summary),
         "close_pairs": len(close_pairs),
 
-        "std(A)": agg_results["std(A)"].describe().to_dict(),
-        "std(E(A))": agg_results["std(E(A))"].describe().to_dict(),
-        "E(std(A))": agg_results["E(std(A))"].describe().to_dict(),
-
-        "std(A-B)": close_pairs["std(A-B)"].describe().to_dict(),
-        "E(std(A-B))": close_pairs["E(std(A-B))"].describe().to_dict(),
-        "std(E(A-B))": close_pairs["std(E(A-B))"].describe().to_dict(),
-        "std_signtest": close_pairs["std_signtest"].describe().to_dict(),
-        "corr(A,B)": close_pairs["corr(A,B)"].describe().to_dict(),
-        "A!=B": close_pairs["sum"].describe().to_dict(),
-        
-        "p5_min": summary[summary["pvalue"] < 0.05]["diff"].abs().min(),
-        "p5_max": summary[summary["pvalue"] > 0.05]["diff"].abs().max(),
+        "p5_min": summary[summary["pvalue"] < 0.05]["sum(A-B)"].abs().min(),
+        "p5_max": summary[summary["pvalue"] > 0.05]["sum(A-B)"].abs().max(),
         "no_solve": (ex["acc"] == 0).to_numpy().sum(),
         "tau-": (ex["tau"] < 0).to_numpy().sum(),
     }
+
+    model_stats_keys = ["std(A)", "std(E(A))", "E(std(A))"]
+    for key in model_stats_keys:
+        summary_stats[key] = agg_results[key].describe().to_dict()
+
+    close_pair_stats_keys = ["std(A-B)", "E(std(A-B))", "std(E(A-B))", "std_signtest", "corr(A,B)", "sum(A!=B)"]
+    for key in close_pair_stats_keys:
+        summary_stats[key] = close_pairs[key].describe().to_dict()
 
     return ArenaResult(input_table=result, 
                        summary=summary,
