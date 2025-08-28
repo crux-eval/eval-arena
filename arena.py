@@ -24,26 +24,6 @@ class BattleSummary:
         return pa
     
     @staticmethod
-    def _hard_outcome(pa: pd.DataFrame, thres: float = 0.5):
-        """
-        hard outcomes are required for elo calculations
-        """
-        a_pass = pa["pass1_a"] > thres
-        b_pass = pa["pass1_b"] > thres
-        awins = a_pass & ~b_pass
-        bwins = ~a_pass & b_pass
-        neither = ~a_pass & ~b_pass
-        both = a_pass & b_pass 
-
-        assert all(awins | bwins | neither | both) \
-            and sum(awins) + sum(bwins) + sum(both) + sum(neither) == len(pa), "outcomes should be unique and complete"
-        pa.loc[awins, "winner"] = "model_a"
-        pa.loc[bwins, "winner"] = "model_b"
-        pa.loc[neither, "winner"] = "neither"
-        pa.loc[both, "winner"] = "both"
-        return pa
-
-    @staticmethod
     def pass1_to_battle(result: pd.DataFrame, thres=0.5):
         """
         generates a pairwise comparison table from pass1 information using 3 ways to summarize the outcome
@@ -54,7 +34,6 @@ class BattleSummary:
         print(pa)
         pa = pa[pa["model_a"] != pa["model_b"]]
         pa = BattleSummary._prob_outcome(pa)
-        pa = BattleSummary._hard_outcome(pa)
         return pa
 
     @staticmethod
@@ -98,73 +77,13 @@ class BattleSummary:
             .apply(BattleSummary._pair_summary)\
             .reset_index(drop=False)
         return diffvsum
-    
-def compute_mle_elo(
-    df, SCALE=400, BASE=10, INIT_RATING=1000, ref_model="gpt-3.5-turbo-0613",
-):
-    """
-    calculate Elo based on winrate, code from chatbot arena (https://chat.lmsys.org/)
-    https://colab.research.google.com/drive/1KdwokPjirkTmpO_P1WByFNFiqxWQquwH
-    with a bugfix for when a model never wins, and add reference model as an argument
-    """
-    from sklearn.linear_model import LogisticRegression
-    
-    def ties_plus_two_wins(outcomes: pd.Series):
-        sufs = Counter(outcomes.values) # model_a, model_b, neither, both are the possible outcomes
-        # print(sufs)
-        return 2*sufs["model_a"] + sufs["both"] + sufs["neither"]
 
-    ptbl_win = pd.pivot_table(
-        df,
-        values=["winner"],
-        index="model_a",
-        columns="model_b",
-        aggfunc=ties_plus_two_wins,
-    ).reset_index().set_index("model_a").droplevel(axis=1, level=0)
-
-    models = pd.Series(np.arange(len(ptbl_win.index)), index=ptbl_win.index)
-    p = len(models)
-    X = np.zeros([p * (p - 1) * 2, p])
-    Y = np.zeros(p * (p - 1) * 2)
-
-    cur_row = 0
-    sample_weights = []
-
-    for m_a in ptbl_win.index:
-        for m_b in ptbl_win.columns:
-            if m_a == m_b:
-                continue
-            # if nan skip
-            if math.isnan(ptbl_win.loc[m_a, m_b]) or math.isnan(ptbl_win.loc[m_b, m_a]):
-                continue
-            X[cur_row, models[m_a]] = +math.log(BASE)
-            X[cur_row, models[m_b]] = -math.log(BASE)
-            Y[cur_row] = 1.0
-            sample_weights.append(ptbl_win.loc[m_a, m_b])
-
-            X[cur_row + 1, models[m_a]] = math.log(BASE)
-            X[cur_row + 1, models[m_b]] = -math.log(BASE)
-            Y[cur_row + 1] = 0.0
-            sample_weights.append(ptbl_win.loc[m_b, m_a])
-            cur_row += 2
-    X = X[:cur_row]
-    Y = Y[:cur_row]
-
-    lr = LogisticRegression(fit_intercept=False, penalty=None, tol=1e-6)
-    lr.fit(X, Y, sample_weight=sample_weights)
-    elo_scores = SCALE * lr.coef_[0] + INIT_RATING
-    if ref_model in models.index:
-        elo_scores += 1000 - elo_scores[models[ref_model]]
-    return pd.Series(elo_scores, index=models.index).sort_values(ascending=False)
 
 def model_table(battles, result):
-    win_rates = battles[["model_a", "model_b", "winner"]]\
+    win_rates = battles[["model_a", "model_b", "awins"]]\
         .groupby(["model_a"])\
-        .aggregate({"winner": lambda x: Counter(x)["model_a"] / Counter(x).total()})\
-        .reset_index().rename(columns={"winner": "win_rate"})
-
-    model_elos = compute_mle_elo(battles).to_frame("elo").reset_index()
-    win_elo = win_rates.merge(model_elos, on="model_a")
+        .aggregate({"awins": "mean"})\
+        .reset_index().rename(columns={"awins": "win_rate"})
 
     def _stds(g: pd.Series):
         pass1s = g["pass1"]
@@ -182,9 +101,9 @@ def model_table(battles, result):
 
     # add std if pass1 is not just 0 or 1 
     basic_stats = result[["model", "pass1", "N"]].groupby("model").apply(_stds).reset_index()
-    table_inds = ["model", "pass1", "std(E(A))", "E(std(A))", "std(A)", "N", "win_rate", "elo"]
+    table_inds = ["model", "pass1", "std(E(A))", "E(std(A))", "std(A)", "N", "win_rate"]
 
-    all_stats = win_elo.merge(basic_stats, left_on="model_a", right_on="model")[table_inds].sort_values(by="pass1", ascending=False)
+    all_stats = win_rates.merge(basic_stats, left_on="model_a", right_on="model")[table_inds].sort_values(by="pass1", ascending=False)
     return all_stats
 
 def example_table(result, all_stats):
@@ -193,14 +112,15 @@ def example_table(result, all_stats):
     for current_id in list(ids):
         example_data = result[result["example_id"] == current_id][["model", "pass1"]]
         example_data["correct"] = np.where(example_data["pass1"] > 0, 1, 0)
-        ex = example_data[["model", "correct"]].merge(all_stats[["model", "elo", "pass1"]], left_on = "model", right_on = "model")
+        ex = example_data[["model", "correct"]].merge(all_stats[["model", "pass1"]], left_on = "model", right_on = "model")
         r = {}
         r["example_id"] = current_id
         solved_ex = ex[ex["correct"] == 1]
-        r["min_elo"] = solved_ex["elo"].min()
+        r["min_pass1"] = solved_ex["pass1"].min()
         r["num_solved"] = len(solved_ex)
         r["models"] = solved_ex["model"].to_numpy()
         r["acc"] = len(solved_ex) / len(ex)
+        r["pass1_ex"] =  example_data["pass1"].mean()
         r["tau"] = stats.kendalltau(ex["correct"], ex["pass1"]).statistic
         records.append(r)
 

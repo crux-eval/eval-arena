@@ -7,7 +7,10 @@ from jinja2 import Template
 def get_anchor(benchmark_id: str, example_id: str):
     def get_link():
         if benchmark_id in ["humaneval", "humaneval+", "mbpp", "mbpp+"]:
-            dir, id = example_id.split("/") # expecting HumanEval/93 and Mbpp/622 etc.
+            if "/" in example_id:
+                dir, id = example_id.split("/") # expecting HumanEval/93 and Mbpp/622 etc
+            else:
+                return ""
             return f"https://crux-eval.github.io/eval-arena/evalplus/{dir}/{id}.html"
         elif benchmark_id in ["CRUXEval-input", "CRUXEval-output"]:
             id = example_id.replace(benchmark_id + "/", "")
@@ -20,14 +23,19 @@ def get_anchor(benchmark_id: str, example_id: str):
     else:
         return example_id
 
-def fig_example_vs_model(result, all_stats, ex_table):
-    df = result[["model", "example_id", "pass1"]].merge(ex_table[["example_id", "acc"]], on="example_id")
+def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False):
+    df = result[["model", "example_id", "pass1", "N"]].merge(ex_table[["example_id", "acc"]], on="example_id")
     df = df.merge(all_stats[["model", "pass1"]], on="model", suffixes=["_ex", "_model"])
     df.sort_values(by=["acc", "example_id", "pass1_model", "model"], inplace=True)
-    fig = px.scatter(df, y="example_id", x="model", color="pass1_ex",
+    if not use_acc_as_position:
+        yid, xid = "example_id", "model"
+    else:
+        yid, xid = "acc", "pass1_model"
+
+    fig = px.scatter(df, y=yid, x=xid, color="pass1_ex",
                      opacity=0.75,
                      color_continuous_scale=["red", "yellow", "green"],
-                     hover_data=["acc", "model", "example_id"])
+                     hover_data=["acc", "model", "example_id", "N"])
     fig.update_xaxes(autorange="reversed")
     fig.update_traces(marker={"symbol": "square"})
     fig.update_layout(
@@ -42,9 +50,9 @@ def get_example_level_results(benchmark_id, ares: ArenaResult):
     ex_table["example_link"] = ex_table["example_id"].apply(lambda x: get_anchor(benchmark_id, x))
 
     outputs = {}
-    outputs["result table"] = all_stats.sort_values(by="elo", ascending=False).to_html(classes="number-table", float_format="%10.3f")
+    outputs["result table"] = all_stats.sort_values(by="pass1", ascending=False).to_html(classes="number-table", float_format="%10.3f")
     plotly_configs = dict(full_html=False, include_plotlyjs="cdn")
-    outputs["fig_min_elo_solve"] = px.histogram(ex_table, x="min_elo", marginal="rug", title="min ELO to solve").to_html(**plotly_configs)
+    outputs["fig_min_rating_solve"] = px.histogram(ex_table, x="min_pass1", marginal="rug", title="min ELO to solve").to_html(**plotly_configs)
     outputs["table_histogram_accs"] = px.histogram(ex_table, x="acc", marginal="rug", title="accuracy on examples").to_html(**plotly_configs)
 
     no_solve = ex_table[ex_table["num_solved"] == 0]
@@ -52,8 +60,8 @@ def get_example_level_results(benchmark_id, ares: ArenaResult):
     one_solve = ex_table[ex_table["num_solved"] == 1]
     pd.options.mode.chained_assignment = None 
     one_solve["model"] = one_solve["models"].apply(lambda x: x[0])
-    one_solve = one_solve.sort_values(by="min_elo", ascending=False)
-    one_solve = one_solve[["example_link", "model", "min_elo"]]
+    one_solve = one_solve.sort_values(by="min_pass1", ascending=False)
+    one_solve = one_solve[["example_link", "model", "min_pass1"]]
     outputs["table_one_solve"] = one_solve.to_html(escape=False, classes="number-table", float_format="%10.3f", index=False)
 
     list_suspect = ex_table.sort_values(by="tau", ascending=True).head(10)
@@ -61,6 +69,7 @@ def get_example_level_results(benchmark_id, ares: ArenaResult):
     print(benchmark_id, "anti-correlated prop", np.mean(ex_table["tau"] <= 0))
 
     outputs["fig_example_vs_model"] = fig_example_vs_model(ares.input_table, all_stats, ex_table)
+    outputs["fig_example_vs_model_acc"] = fig_example_vs_model(ares.input_table, all_stats, ex_table, use_acc_as_position=True)
     return outputs
 
 def gen_example_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
@@ -75,4 +84,6 @@ def gen_example_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
     plotly_configs = dict(full_html=False, include_plotlyjs="cdn")
     with open(f"{OUTPUT_PATH}/ex_v_model_{benchmark_id}.html", "wt") as f:
         f.write(outputs["fig_example_vs_model"].to_html(**plotly_configs))
-    
+
+    with open(f"{OUTPUT_PATH}/ex_v_model_acc_{benchmark_id}.html", "wt") as f:
+        f.write(outputs["fig_example_vs_model_acc"].to_html(**plotly_configs)) 
