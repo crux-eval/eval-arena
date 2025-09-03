@@ -204,19 +204,19 @@ def get_sections(bres: ArenaResult, benchmark_id):
 
 
 def summary_stats(s, f=2, percent=True):
+    if s["count"] == 0:
+        return "n=0"
     return f"""{s["mean"]:.2g}±{s["std"]:.2g} | [{s["min"]:.2g}--{s["max"]:.2g}] | n={int(s["count"])}"""
 
 def format_stats_badge(s):
     s_percent = dict(s)
-    print(s)
     for st in ["mean", "std", "min", "max"]:
-        if s["count"] == 0:
-            s[st] = float("nan")
-        else:
+        if s["count"] != 0:
             s_percent[st] = 100 * s[st]
-    summary = summary_stats(s_percent)
-    mean = 100*s["mean"]
-    return f"""<span class="tooltip" data-tooltip="{summary}">{mean:.2g}</span>"""
+    summary = summary_stats(s)
+    mean = s["mean"]
+    mean_str = "N/A" if mean is None else f"{100*mean:.2g}"
+    return f"""<span class="tooltip" data-tooltip="{summary}">{mean_str}</span>"""
 
 def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
     summary_count = summary_count.sort_values(by="benchmark_id")
@@ -237,7 +237,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
         return percent
 
     includes_cols = ["benchmark_id", "size", "models", "std(A)", "std(E(A))", "std(A-B)", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
-    percent_cols = ["p5_min", "p5_max", "no_solve", "tau-"]
+    percent_cols = ["no_solve", "tau-"]
     summary_percent = normalize(summary_count, percent_cols)
 
     print(summary_percent)

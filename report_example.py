@@ -24,18 +24,19 @@ def get_anchor(benchmark_id: str, example_id: str):
         return example_id
 
 def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False):
-    df = result[["model", "example_id", "pass1", "N"]].merge(ex_table[["example_id", "acc"]], on="example_id")
-    df = df.merge(all_stats[["model", "pass1"]], on="model", suffixes=["_ex", "_model"])
-    df.sort_values(by=["acc", "example_id", "pass1_model", "model"], inplace=True)
+    df = result[["model", "example_id", "pass1", "N"]].merge(ex_table[["example_id", "pass1_of_ex"]], on="example_id")
+    model_table = all_stats[["model", "pass1"]].rename(columns={"pass1": "pass1_of_model"})
+    df = df.merge(model_table, on="model")
+    df.sort_values(by=["pass1_of_ex", "example_id", "pass1_of_model", "model"], inplace=True)
     if not use_acc_as_position:
         yid, xid = "example_id", "model"
     else:
-        yid, xid = "acc", "pass1_model"
+        yid, xid = "pass1_of_ex", "pass1_of_model"
 
-    fig = px.scatter(df, y=yid, x=xid, color="pass1_ex",
+    fig = px.scatter(df, y=yid, x=xid, color="pass1",
                      opacity=0.75,
                      color_continuous_scale=["red", "yellow", "green"],
-                     hover_data=["acc", "model", "example_id", "N"])
+                     hover_data=["pass1", "pass1_of_ex", "pass1_of_model", "model", "example_id", "N"])
     fig.update_xaxes(autorange="reversed")
     fig.update_traces(marker={"symbol": "square"})
     fig.update_layout(
@@ -52,20 +53,20 @@ def get_example_level_results(benchmark_id, ares: ArenaResult):
     outputs = {}
     outputs["result table"] = all_stats.sort_values(by="pass1", ascending=False).to_html(classes="number-table", float_format="%10.3f")
     plotly_configs = dict(full_html=False, include_plotlyjs="cdn")
-    outputs["fig_min_rating_solve"] = px.histogram(ex_table, x="min_pass1", marginal="rug", title="min ELO to solve").to_html(**plotly_configs)
-    outputs["table_histogram_accs"] = px.histogram(ex_table, x="acc", marginal="rug", title="accuracy on examples").to_html(**plotly_configs)
+    outputs["fig_min_rating_solve"] = px.histogram(ex_table, x="min_pass1_of_model", marginal="rug", title="min pass1 to solve").to_html(**plotly_configs)
+    outputs["table_histogram_accs"] = px.histogram(ex_table, x="pass1_of_ex", marginal="rug", title="accuracy on examples").to_html(**plotly_configs)
 
     no_solve = ex_table[ex_table["num_solved"] == 0]
     outputs["list_no_solve"] = sorted(no_solve["example_link"].to_list())
     one_solve = ex_table[ex_table["num_solved"] == 1]
     pd.options.mode.chained_assignment = None 
     one_solve["model"] = one_solve["models"].apply(lambda x: x[0])
-    one_solve = one_solve.sort_values(by="min_pass1", ascending=False)
-    one_solve = one_solve[["example_link", "model", "min_pass1"]]
+    one_solve = one_solve.sort_values(by="min_pass1_of_model", ascending=False)
+    one_solve = one_solve[["example_link", "model", "min_pass1_of_model"]]
     outputs["table_one_solve"] = one_solve.to_html(escape=False, classes="number-table", float_format="%10.3f", index=False)
 
     list_suspect = ex_table.sort_values(by="tau", ascending=True).head(10)
-    outputs["table_suspect"] = list_suspect[["example_link", "acc", "tau"]].to_html(escape=False, classes="number-table", float_format="%10.3f", index=False)
+    outputs["table_suspect"] = list_suspect[["example_link", "pass1_of_ex", "tau"]].to_html(escape=False, classes="number-table", float_format="%10.3f", index=False)
     print(benchmark_id, "anti-correlated prop", np.mean(ex_table["tau"] <= 0))
 
     outputs["fig_example_vs_model"] = fig_example_vs_model(ares.input_table, all_stats, ex_table)
