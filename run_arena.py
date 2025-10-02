@@ -9,7 +9,7 @@ from pathlib import Path
 import arena
 from arena import ReportArgs
 from report_example import gen_example_report
-from report_model import gen_model_report, write_data_tables, write_summary_table
+from report_model import gen_model_report, write_data_tables, write_summary_table, experimental
 from signal_noise import signal_to_noise
 
 
@@ -53,6 +53,7 @@ def run_arena(args: ReportArgs):
             gen_model_report(bid, arena_res, args.out_dir)
             gen_example_report(bid, arena_res, args.out_dir)
             write_data_tables(bid, arena_res, args.out_dir)
+            experimental(bid, arena_res, args.out_dir)
     
     if args.write_summary:
         records = []
