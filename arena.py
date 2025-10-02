@@ -59,7 +59,7 @@ class BattleSummary:
     def filter_battles(battles: pd.DataFrame, df_model, max_diff: float = 1) -> pd.DataFrame:
         df_pass = df_model[["model", "pass1"]]
         df_pairs = pd.merge(df_pass, df_pass, suffixes=["_a", "_b"], how="cross")
-        df_pairs = df_pairs[(df_pairs["pass1_a"] - df_pairs["pass1_b"]).abs() < max_diff]
+        df_pairs = df_pairs[(df_pairs["pass1_a"] - df_pairs["pass1_b"]).abs() <= max_diff]
         df_pairs = df_pairs[["model_a", "model_b"]]
         print(f"{len(battles)=}", f"{len(df_pairs)=}")
         battles = df_pairs.merge(battles, on=["model_a", "model_b"], how="inner")
@@ -167,7 +167,7 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
     if "N" not in df_input.columns:
         df_input["N"] = 1
         print(f"assuming N=1 on {bid}")
-    df_input["N"] = df_input["N"].fillna(1)
+    df_input["N"] = df_input["N"].fillna(1, inplace=False)
 
     df_model = model_table(df_input)
     df_example = example_table(df_input, df_model)

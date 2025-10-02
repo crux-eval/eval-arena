@@ -11,6 +11,8 @@ from jinja2 import Template
 
 from arena import ArenaResult
 
+PLOTLY_CONFIGS = dict(full_html=False, include_plotlyjs="cdn")
+
 def fig_diff_vs_sum(bmname: str, summary: pd.DataFrame):
     data_sz = summary.iloc[0]["total"]
 
@@ -108,16 +110,26 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     df = df_summary
     # df["is_close"] = np.where(df["sum(A-B)"].abs() < df["total"] / 20, "close", "not_close")
     # df = df[df["accA"] >= df["accB"]]
-    close_text = f"close: ≤{sigma_thres}σ"
-    not_close_text = f"not: >{sigma_thres}σ"
-    df["is_close"] = np.where(np.abs(df["accA"] - df["accB"]) / df["std(A-B)"] <= sigma_thres, close_text, not_close_text)
+    close_text = f"close model: ≤{sigma_thres}σ"
+    not_close_text = f"not close: >{sigma_thres}σ"
+    same_text = f"same model"
+    def label_fun(r):
+        if r["model_a"] == r["model_b"]:
+            return same_text
+        elif np.abs(r["accA"] - r["accB"]) / r["std(A-B)"] <= sigma_thres:
+            return close_text
+        else:
+            return not_close_text
+
+    df["type"] = df.apply(label_fun, axis=1)
     color_map = {
         close_text: "blue",      # Bright red
-        not_close_text: "#999999"     # Light gray
+        not_close_text: "#999999",     # Light gray
+        same_text: "green",
     } 
     figs = px.scatter(df,
                     x=df["accA"], y="std(A-B)",
-                    color="is_close",
+                    color="type",
                     color_discrete_map=color_map,
                     custom_data=["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "std(A-B)", "accA", "accB", "corr(A,B)"])
     figs.for_each_trace(lambda trace: trace.update(opacity=0.75) 
@@ -160,12 +172,6 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     ))
 
     figl.add_trace(go.Scatter(
-        x=dfmodel["p_mean"], y=dfmodel["vars"],
-        # hoverinfo="skip",
-        line=dict(color="red"),
-        name="scale clip corr=0"
-    ))
-    figl.add_trace(go.Scatter(
         x=dfmodel["p_mean_const"], y=dfmodel["vars_const"],
         # hoverinfo="skip",
         line=dict(color="pink"),
@@ -180,13 +186,191 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     )
     return fig
 
+def beta_est(mean, var):
+    nu = (mean * (1 - mean) / var) - 1
+    if nu <= 0:
+        print(f"Invalid parameter estimates. Check if data follows beta distribution. {nu=}")
+        nu = 1e-2
+    
+    alpha_hat = mean * nu
+    beta_hat = (1 - mean) * nu
+    # Sanity check
+    if alpha_hat <= 0 or beta_hat <= 0:
+        raise ValueError("Estimated parameters must be positive")
+    return float(alpha_hat), float(beta_hat)
+
+def fig_marginals(df_input, df_model, df_example, xkey="pass1_of_ex"):
+    df = df_input[["model", "example_id", "pass1", "N"]].merge(df_example[["example_id", "pass1_of_ex"]], on="example_id")
+    model_table = df_model[["model", "pass1"]].rename(columns={"pass1": "pass1_of_model"})
+    df = df.merge(model_table, on="model")
+    fig = go.Figure()
+    interval_size = 0.125
+    nzs = np.sum(df_example["pass1_of_ex"] == 0)
+    max_example = df_example["pass1_of_ex"].max()
+    min_example = df_example["pass1_of_ex"].min()
+    for i, start in enumerate(np.linspace(0, 1, 9)):
+        models = model_table[(model_table["pass1_of_model"] >= start) & (model_table["pass1_of_model"] < start + interval_size)]
+        # display(models)
+        data_inside = df[df['model'].isin(models["model"])]
+        if len(data_inside) == 0:
+            continue
+        data_means = data_inside.groupby("example_id").agg({"pass1": "mean", "pass1_of_ex": "mean", "N": "mean"}).reset_index()
+        # Merge with original marginals to ensure same sorting
+        # wsz = 1
+        # smoothed = data_means[("pass1")].rolling(window=5, center=True).mean()
+        data_means = data_means.sort_values(by="pass1_of_ex")
+        data_means["rank_of_ex"] = np.arange(len(data_means))
+
+        data_means = data_means.sort_values(by="pass1")
+        data_means["rank"] = np.arange(len(data_means))
+        # display(data_means)
+        # display(data_means)
+        smoothed = data_means[("pass1")].rolling(window=1, min_periods=1, center=True).mean()
+        mu = data_means["pass1"].mean()
+        n = len(models)
+        legend = f"{start:.2f}-{start+interval_size:.2f} ({n=}, {mu=:.3f})"
+        colors = px.colors.qualitative.Plotly
+        color_idx = i % len(colors)  # cycle through colors
+        color = colors[color_idx]
+
+        # fig.add_scatter(y=data_means["rank_of_ex"], x=data_means["pass1"],
+        #     mode='markers',
+        #     # showlegend=False,
+        #     legendgroup=legend,
+        #     name="rank" + legend,
+        #     marker=dict(
+        #         size=1,
+        #         opacity=0.1,
+        #         color=color,
+        #     )
+        # )
+        # fig.add_scatter(x=data_means[xkey], y=smoothed,
+        #     mode='lines',
+        #     # showlegend=False,
+        #     legendgroup=legend,
+        #     name="smoothed" + legend,
+        #     opacity=0.5,
+        #     line=dict(
+        #         dash='dash',
+        #         width=2,
+        #         color=color,
+        #     )
+        # )
+
+        fig.add_scatter(y=data_means[xkey], x=data_means["pass1"],
+            mode='lines',
+            # showlegend=False,
+            legendgroup=legend,
+            name="sorted" + legend,
+            line=dict(
+                dash='solid', 
+                width=2,
+                color=color
+            ),
+            opacity=0.5,
+        )
+
+        x = np.linspace(0, 1, 100)
+        # nzs = 0
+        data_nzs = data_means[data_means["pass1_of_ex"] != 0]
+        data_nzs = data_means
+        mu = data_nzs["pass1"].mean()
+        var = data_nzs["pass1"].var(ddof=1)
+        alpha, beta = beta_est(mu, var)
+        from scipy.stats import beta as betaf
+        s = 1
+        cdf_values = betaf.cdf(x, s*alpha, s*beta)
+        beta_mean = (1 - nzs/len(smoothed)) * alpha / (alpha + beta) 
+        print(f"{nzs=}\t{len(smoothed)=}")
+
+        y = nzs/len(smoothed) + cdf_values * (1 - nzs/len(smoothed))
+        # y = cdf_values 
+        y = y * len(smoothed)
+        fig.add_scatter(
+            x=x, 
+            y=y, 
+            mode='lines',
+            name=f'Beta({alpha:.2f}, {beta:.2f}) {beta_mean=:.3f}',
+            # legendgroup=legend,
+            line=dict(
+                dash='dot', 
+                width=2,
+                color=color
+            )
+        )
+    fig.update_layout(
+        width=800, height=600,
+        title="cdf plots",
+    ) 
+    return fig
+
+def show_betas(df_input, df_model, df_example):
+    df = df_input[["model", "example_id", "pass1", "N"]].merge(df_example[["example_id", "pass1_of_ex"]], on="example_id")
+    model_table = df_model[["model", "pass1"]].rename(columns={"pass1": "pass1_of_model"})
+    df = df.merge(model_table, on="model")
+    fig = go.Figure()
+    interval_size = 0.2
+    nzs = np.sum(df_example["pass1_of_ex"] == 0)
+    max_example = df_example["pass1_of_ex"].max()
+    min_example = df_example["pass1_of_ex"].min()
+    results = []
+    for i, start in enumerate(np.linspace(0, 1, 60)):
+        models = model_table[(model_table["pass1_of_model"] >= start) & (model_table["pass1_of_model"] < start + interval_size)]
+        # display(models)
+        data_inside = df[df['model'].isin(models["model"])]
+        if len(data_inside) == 0:
+            continue
+        data_means = data_inside.groupby("example_id").agg({"pass1": "mean", "pass1_of_ex": "mean", "N": "mean"}).reset_index()
+        # Merge with original marginals to ensure same sorting
+        # wsz = 1
+        # smoothed = data_means[("pass1")].rolling(window=5, center=True).mean()
+        data_means = data_means.sort_values(by="pass1_of_ex")
+        data_means["rank_of_ex"] = np.arange(len(data_means))
+
+        data_means = data_means.sort_values(by="pass1")
+        data_means["rank"] = np.arange(len(data_means))
+        # display(data_means)
+        # display(data_means)
+        smoothed = data_means[("pass1")].rolling(window=1, min_periods=1, center=True).mean()
+        mu = data_means["pass1"].mean()
+        n = len(models)
+        legend = f"{start:.2f}-{start+interval_size:.2f} ({n=}, {mu=:.3f})"
+        colors = px.colors.qualitative.Plotly
+        color_idx = i % len(colors)  # cycle through colors
+        color = colors[color_idx]
+        x = np.linspace(0, 1, 100)
+        # nzs = 0
+        data_nzs = data_means[data_means["pass1_of_ex"] != 0]
+        data_nzs = data_means
+        mu = data_nzs["pass1"].mean()
+        var = data_nzs["pass1"].var(ddof=1)
+        alpha, beta = beta_est(mu, var)
+        evar =  2 * alpha * beta/ ((alpha + beta) * (alpha + beta +1))
+        results.append({"mu": mu, "alpha+beta": alpha + beta, "alpha": alpha, "beta": beta, "expected_var": evar, "expected_std": np.sqrt(evar)})
+        
+    return results
+
+
+def experimental(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
+    os.makedirs(Path(OUTPUT_PATH) / "experimental", exist_ok=True)
+    with open(Path(OUTPUT_PATH) / "experimental" / f"fig_marginal_{benchmark_id}.html", "w", encoding="utf-8") as output_file:
+        fig = fig_marginals(ares.input_table, ares.model_table, ares.example_table, xkey="rank")
+        html = fig.to_html(**PLOTLY_CONFIGS)
+        output_file.write(html)
+
+    with open(Path(OUTPUT_PATH) / "experimental" / f"fig_hist_ex_{benchmark_id}.html", "w", encoding="utf-8") as output_file:
+        fig =  px.histogram(ares.example_table, x="pass1_of_ex")
+        html = fig.to_html(**PLOTLY_CONFIGS)
+        output_file.write(html)
+
+
 def get_sections(bres: ArenaResult, benchmark_id):
     summary = bres.summary 
-    plotly_configs = dict(full_html=False, include_plotlyjs="cdn")
+    
     sections = {
-        "fig_accs_and_pvalues": fig_accs_and_pvalues(benchmark_id, summary).to_html(**plotly_configs),
-        "fig_diff_vs_sum": fig_diff_vs_sum(benchmark_id, summary).to_html(**plotly_configs),
-        "fig_cov_baseline": fig_cov_baseline(benchmark_id, summary, bres.input_table).to_html(**plotly_configs),
+        "fig_accs_and_pvalues": fig_accs_and_pvalues(benchmark_id, summary).to_html(**PLOTLY_CONFIGS),
+        "fig_diff_vs_sum": fig_diff_vs_sum(benchmark_id, summary).to_html(**PLOTLY_CONFIGS),
+        "fig_cov_baseline": fig_cov_baseline(benchmark_id, summary, bres.input_table).to_html(**PLOTLY_CONFIGS),
         "model_table": bres.model_table.to_html(
             index=False,
             classes="number-table",
@@ -289,3 +473,12 @@ def write_data_tables(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
     ares.model_table.to_csv(data_path / "model_table.csv")
     ares.example_table.to_csv(data_path / "example_table.csv")
     ares.summary.to_csv(data_path / "summary.csv")
+
+def gen_experimental_figures(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
+    sections = get_sections(ares, benchmark_id)
+    template_path=r"templates/template_model.html"
+    output_path = f"{OUTPUT_PATH}/model_{benchmark_id}.html"
+    with open(output_path, "w", encoding="utf-8") as output_file:
+        with open(template_path) as template_file:
+            j2_template = Template(template_file.read())
+            output_file.write(j2_template.render({"benchmark_id": benchmark_id, "sections": sections}))
