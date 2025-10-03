@@ -3,8 +3,10 @@ import math
 from collections import Counter
 
 import numpy as np
+from numpy import mean, var, std
 import scipy.stats as stats
 import pandas as pd
+
 
 @dataclass
 class ArenaResult:
@@ -27,6 +29,68 @@ class ReportArgs:
     min_perf: float = 0.05 # too bad for inconlusion, including near 0 models does give some extreme results
 
 
+def cov(A, B, ddof=0):
+    return np.cov(A, B, ddof=ddof)[0, 1]
+    
+class Paired:
+    @staticmethod
+    def sample_vars(A: np.ndarray, B: np.ndarray, dof=0) -> dict:
+        assert A.shape[0] == B.shape[0], "should be paired" 
+        return {
+            "var(E(A-B))": var(mean(A-B, axis=1)),
+            "E(var(A-B))": mean(var(A, axis=1) + var(B, axis=1)),
+            "var(A-B)": var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
+            "cov(A,B)": cov(mean(A, axis=1), mean(B, axis=1)),
+            "var(A) + var(B)": var(A) + var(B),
+            # "_var(A-B)": mean(A**2 + B**2) - 2 * mean(mean(A, axis=1) * mean(B, axis=1)) - mean(A-B)**2,
+        }
+    
+    @staticmethod
+    def sample_vars_unbiased(A: np.ndarray, B: np.ndarray, dof=0) -> dict:
+        assert A.shape[0] == B.shape[0] # paired data
+        kA = A.shape[1]
+        kB = A.shape[1]
+        return {
+            "var(E(A-B))": var(mean(A-B, axis=1)) - mean(var(A, axis=1)/(kA-1) + var(B, axis=1)/(kA-1)) ,
+            "E(var(A-B))": mean(var(A, axis=1)* (1 + 1/(kA-1)) + var(B, axis=1) * (1 + 1/(kB-1))),
+            "var(A-B)": var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)), # actually this is slightly biased too, but we ignore it
+            # "_var(A-B)": mean(A**2 + B**2) - 2 * mean(mean(A, axis=1) * mean(B, axis=1)) - mean(A-B)**2,
+        }
+    
+    @staticmethod
+    def bernoulli_sample_vars(A: np.ndarray, B: np.ndarray, dof=0) -> dict:
+        ...
+
+    @staticmethod
+    def bernoulli_p_vars(pA: np.ndarray, pB: np.ndarray) -> dict:
+        assert pA.shape[0] == pB.shape[0]
+        assert pA.shape[1] == pB.shape[1] == 1
+        pA = pA.flatten()
+        pB = pB.flatten()
+        return {
+            "var(E(A-B))": var(pA - pB),
+            "E(var(A-B))": mean(pA*(1-pA) + pB*(1-pB)),
+            "var(A-B)": np.clip(mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*cov(pA, pB), a_min=0, a_max=None),
+            "cov(A,B)": cov(pA, pB),
+            "_var(A-B)": mean(pA + pB - 2*pA*pB) - mean(pA - pB)**2,
+        }
+    
+    @staticmethod
+    def bernoulli_self(ph: np.ndarray, K: np.ndarray) -> dict:
+        ph = ph.flatten()
+        pB = ph
+        mu = mean(ph)
+        covAA = mean((ph*ph - 1/K*ph)*(1+1/(K-1)))  - mu * mu
+        return {
+            "var(E(A-B))": var(ph - pB),
+            "E(var(A-B))": mean(ph*(1-ph) + pB*(1-pB)),
+            "var(A-B)": mean(ph)*(1-mean(ph)) + mean(pB)*(1-mean(pB)) - 2*covAA,
+            "cov(A,B)": covAA,
+            "var(A) + var(B)": mean(ph)*(1-mean(ph)) + mean(pB)*(1-mean(pB)),
+            "_var(A-B)": mean(ph + pB - 2*ph*pB) - mean(ph - pB)**2,
+        }
+    
+
 class BattleSummary:
     @staticmethod
     def _prob_outcome(pa: pd.DataFrame) -> pd.DataFrame:
@@ -47,9 +111,7 @@ class BattleSummary:
     @staticmethod
     def pass1_to_battle(df_input: pd.DataFrame) -> pd.DataFrame:
         """
-        generates a pairwise comparison table from pass1 information using 3 ways to summarize the outcome
-            - 1: using a threshold to decide the winner and store one of 4 outcomes in the winner column
-            - 2: use the difference in scores, which can generalize to 
+        generates a pairwise comparison table from pass1 information using 
         """
         pa = pd.merge(df_input, df_input, on=["example_id"], suffixes=["_a", "_b"], how="outer")
         pa = BattleSummary._prob_outcome(pa)
@@ -75,6 +137,8 @@ class BattleSummary:
         assert np.allclose(bwin + both, df["pass1_b"])
         pawin = awin.sum() / N
         pbwin = bwin.sum() / N
+        pA = df["pass1_a"].to_numpy().reshape(N, 1)
+        pB = df["pass1_b"].to_numpy().reshape(N, 1)
         
         assert np.allclose(df["pass1_a"] - df["pass1_b"], awin - bwin)
         r = {
@@ -89,10 +153,12 @@ class BattleSummary:
             "std(E(A-B))": np.sqrt(1/N * (awin - bwin).var(ddof=0)),
             "E(std(A-B))": np.sqrt(1/N * np.mean(awin + bwin - (awin - bwin)**2)),
             "std(A-B)": np.sqrt(1/N * (pawin * (1 - pawin) + pbwin * (1 - pbwin) + 2 * pawin * pbwin)),
+            "std(A-B)_2": np.sqrt(1/N * Paired.bernoulli_p_vars(pA, pB)["var(A-B)"]),
 
             "pvalue": stats.binomtest(int(awin.sum()), int(awin.sum() + bwin.sum()), p=0.5).pvalue if int(awin.sum() + bwin.sum()) != 0 else 1,
         }
 
+        assert np.allclose(r["std(A-B)"], r["std(A-B)_2"]), r
         assert np.allclose(r["std(E(A-B))"]**2 + r["E(std(A-B))"]**2, r["std(A-B)"]**2)
         assertcond = r["std(A-B)"] <= r["std_signtest"] or np.allclose(r["std(A-B)"], r["std_signtest"])
         if not assertcond:
