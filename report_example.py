@@ -24,7 +24,7 @@ def get_anchor(benchmark_id: str, example_id: str):
         return example_id
 
 def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False):
-    df = result[["model", "example_id", "pass1", "N"]].merge(ex_table[["example_id", "pass1_of_ex"]], on="example_id")
+    df = result[["model", "example_id", "pass1", "count"]].merge(ex_table[["example_id", "pass1_of_ex"]], on="example_id")
     model_table = all_stats[["model", "pass1"]].rename(columns={"pass1": "pass1_of_model"})
     df = df.merge(model_table, on="model")
     df.sort_values(by=["pass1_of_ex", "example_id", "pass1_of_model", "model"], inplace=True)
@@ -36,7 +36,7 @@ def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False)
     fig = px.scatter(df, y=yid, x=xid, color="pass1",
                      opacity=0.75,
                      color_continuous_scale=["red", "yellow", "green"],
-                     hover_data=["pass1", "pass1_of_ex", "pass1_of_model", "model", "example_id", "N"])
+                     hover_data=["pass1", "pass1_of_ex", "pass1_of_model", "model", "example_id", "count"])
     fig.update_xaxes(autorange="reversed")
     fig.update_traces(marker={"symbol": "square"})
     fig.update_layout(

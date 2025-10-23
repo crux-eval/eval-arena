@@ -19,12 +19,15 @@ class ArenaResult:
 class ReportArgs:
     out_dir: str = "gh-pages/"
     data: str = "data/*.jsonl"
-    recompute: bool = True # generate results for all data and summary line
+    recompute: bool = True # generate results for all data and summary 
     write_summary: bool = True # use results in out_dir/tmp to generate the summary table
     
     max_diff: float = 0.1 # skip models that are more than max_diff in performance
     sigma_thres: float = 5.0 # how many std to consider as not close
-    min_perf: float = 0.05 # too bad for inconlusion, including near 0 models does give some extreme results
+
+    min_perf: float = 0.05 # near 0 models behave differently
+    exclude_distill: bool = True # distilled models does not follow beta distribution
+    total_var_only: bool = True # distilled models does not follow beta distribution
 
 class BattleSummary:
     @staticmethod
@@ -49,6 +52,7 @@ class BattleSummary:
         generates a pairwise comparison table from pass1 information using 
         """
         pa = pd.merge(df_input, df_input, on=["example_id"], suffixes=["_a", "_b"], how="outer")
+        pa = pa[pa["model_a"] != pa["model_b"]]
         pa = BattleSummary._prob_outcome(pa)
         return pa
     
@@ -65,41 +69,31 @@ class BattleSummary:
     @staticmethod
     def _pair_summary(df: pd.DataFrame):
         N = len(df)
-        awin, bwin, both, neither = df["awins"], df["bwins"], df["both"], df["neither"]
         pA = df["pass1_a"].to_numpy().reshape(N, 1)
         pB = df["pass1_b"].to_numpy().reshape(N, 1)
-        # print("in pair summary", df)
-
-        if np.all(df["model_a"] == df["model_b"]):
-            if "N" in df.columns:
-                Ks = df["N"].to_numpy().reshape(N, 1)
-            else:
-                Ks = np.ones((N, 1))
-            total_var = np.sqrt(1/N * Paired.from_bernoulli_prob(pA, pB)["var(A-B)"])
-        else:
-            total_var = np.sqrt(1/N * Paired.from_bernoulli_prob(pA, pB)["var(A-B)"])
+        
+        # note this is slightly biased if model_a == model_b
+        vars = Paired.from_bernoulli_prob(pA, pB)
+        awin, bwin = df["awins"], df["bwins"]
         
         assert np.allclose(df["pass1_a"] - df["pass1_b"], awin - bwin)
         r = {
+            "total": N,
+            "accA": df["pass1_a"].mean(),
+            "accB": df["pass1_b"].mean(),
             "sum(A!=B)": awin.sum() + bwin.sum(),
             "sum(A-B)": awin.sum() - bwin.sum(),
-            "total": N,
-            "accA": df["pass1_a"].mean(), 
-            "accB": df["pass1_b"].mean(),
+            "SE_signtest": np.sqrt(1/N * (awin + bwin).mean()),
+            "pvalue": stats.binomtest(int(awin.sum()), int(awin.sum() + bwin.sum()), p=0.5).pvalue if int(awin.sum() + bwin.sum()) != 0 else 1,
+
+            "SE(var(A-B))": np.sqrt(1/N * vars["E(var(A-B))"]),
+            "SE(E(A-B))": np.sqrt(1/N * vars["var(E(A-B))"]),
+            "SE(A-B)": np.sqrt(1/N * vars["var(A-B)"]),
 
             "corr(A,B)": df["pass1_a"].corr(df["pass1_b"], method="pearson"),
-            "std_signtest": np.sqrt(1/N * (awin + bwin).mean()),
-            "std(E(A-B))": np.sqrt(1/N * (awin - bwin).var(ddof=0)),
-            "E(std(A-B))": np.sqrt(1/N * np.mean(awin + bwin - (awin - bwin)**2)),
-            "std(A-B)": total_var,
-
-            "pvalue": stats.binomtest(int(awin.sum()), int(awin.sum() + bwin.sum()), p=0.5).pvalue if int(awin.sum() + bwin.sum()) != 0 else 1,
         }
 
-        assert np.allclose(r["std(E(A-B))"]**2 + r["E(std(A-B))"]**2, r["std(A-B)"]**2)
-        assertcond = r["std(A-B)"] <= r["std_signtest"] or np.allclose(r["std(A-B)"], r["std_signtest"])
-        if not assertcond:
-            print("signtest std should be bigger than paired std", r)
+        assert r["SE(A-B)"] <= r["SE_signtest"] or np.allclose(r["SE(A-B)"], r["SE_signtest"])
 
         return pd.Series(r)
 
@@ -117,18 +111,18 @@ def model_table(df_input, battles: pd.DataFrame | None = None):
         data_sz = len(pass1s)
         p = pass1s.to_numpy()
         vars = {
-            "E(std(A))": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
-            "std(E(A))": 1 / np.sqrt(data_sz) * np.std(p),
-            "std(A)": np.sqrt(1 / data_sz * p.mean()* (1-p.mean())),
+            "SE(var(A))": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
+            "SE(E(A))": 1 / np.sqrt(data_sz) * np.std(p),
+            "SE(A)": np.sqrt(1 / data_sz * p.mean()* (1-p.mean())),
             "pass1": np.mean(pass1s),
-            "N": np.mean(g["N"]),
+            "count": np.mean(g["count"]),
         }
-        assert np.allclose(vars["E(std(A))"]**2 + vars["std(E(A))"]**2, vars["std(A)"]**2)
+        assert np.allclose(vars["SE(var(A))"]**2 + vars["SE(E(A))"]**2, vars["SE(A)"]**2)
         return pd.Series(vars)
 
     # add std if pass1 is not just 0 or 1 
-    model_stats = df_input[["model", "pass1", "N"]].groupby("model").apply(_stds).reset_index()
-    table_inds = ["model", "pass1", "std(E(A))", "E(std(A))", "std(A)", "N"]
+    model_stats = df_input[["model", "pass1", "count"]].groupby("model").apply(_stds).reset_index()
+    table_inds = ["model", "pass1", "SE(E(A))", "E(var(A))", "SE(A)", "count"]
 
     if battles:
         table_inds += ["win_rate"]
@@ -167,10 +161,10 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
     assert len(benchmarks) == 1
     bid = benchmarks.pop()
 
-    if "N" not in df_input.columns:
-        df_input["N"] = 1
-        print(f"assuming N=1 on {bid}")
-    df_input["N"] = df_input["N"].fillna(1, inplace=False)
+    if "count" not in df_input.columns:
+        df_input["count"] = 1
+        print(f"assuming one sample count=1 on {bid}")
+    # df_input["count"] = df_input["count"].fillna(1, inplace=False)
 
     df_model = model_table(df_input)
     df_example = example_table(df_input, df_model)
@@ -194,11 +188,11 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
         "tau-": (df_example["tau"] < 0).to_numpy().sum(),
     }
 
-    model_stats_keys = ["std(A)", "std(E(A))", "E(std(A))"]
+    model_stats_keys = ["SE(A)", "SE(E(A))", "SE(var(A))"]
     for key in model_stats_keys:
         summary_stats[key] = df_model[key].describe().to_dict()
 
-    close_pair_stats_keys = ["std(A-B)", "E(std(A-B))", "std(E(A-B))", "std_signtest", "corr(A,B)", "sum(A!=B)"]
+    close_pair_stats_keys = ["SE(A-B)", "SE(E(A-B))", "SE(var(A-B))", "SE_signtest", "corr(A,B)", "sum(A!=B)"]
     for key in close_pair_stats_keys:
         summary_stats[key] = close_pairs[key].describe().to_dict()
 

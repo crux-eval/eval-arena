@@ -43,7 +43,6 @@ class Paired:
             "var(E(A-B))": var(pA - pB),
             "E(var(A-B))": mean(pA*(1-pA) + pB*(1-pB)),
             "var(A-B)": np.clip(mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*cov(pA, pB), a_min=0, a_max=None),
-
             "_var(A-B)": mean(pA + pB - 2*pA*pB) - mean(pA - pB)**2,
         }
     
@@ -54,13 +53,22 @@ class Paired:
                 pA: Success probabilities of shape (n_samples, 1)
                 K: number of samples for bias correction
         """
+        assert all(K > 1), "need more than 1 sample per problem"
         pA = pA.flatten()
         pB = pA
-        covAA = mean((pA*pA - 1/K*pA)*(1+1/(K-1))) - mean(pA)**2
+        # use all 
+        # pA * (pA * K - 1)/(K-1)
+        covAA = mean((pA*pA - 1/K*pA)*(K/(K-1))) - mean(pA)**2
+        var_A_minus_B = mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*covAA
+        E_var_A_minus_B = mean((pA*(1-pA) + pB*(1-pB)) * (K/(K-1)))
+        assert var_A_minus_B > 0 or np.allclose(var_A_minus_B, 0), f"{var_A_minus_B=}"
+        assert np.allclose(var_A_minus_B, E_var_A_minus_B)
         return {
-            "var(E(A-B))": var(pA - pB),
-            "E(var(A-B))": mean(pA*(1-pA) + pB*(1-pB)),
-            "var(A-B)": mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*covAA,
+            "var(E(A-B))": 0,
+            # by indepedence of the noise conditioned on a prompt
+            "E(var(A-B))": E_var_A_minus_B,
+            # "E(var(A-B))": var_diff,
+            "var(A-B)": var_A_minus_B,
         }
 
 
