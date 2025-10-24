@@ -402,8 +402,8 @@ def get_sections(bres: ArenaResult, benchmark_id):
             formatters={
                 "pass1": lambda x: f"{100*x:.3g}",
                 "SE(A)": lambda x: f"{100*x:.2g}",
-                "SE(E(A))": lambda x: f"{100*x:.2g}",
-                "SE(var(A))": lambda x: f"{100*x:.2g}",
+                "SE_x(A)": lambda x: f"{100*x:.2g}",
+                "SE_pred(A)": lambda x: f"{100*x:.2g}",
                 "count": lambda x: f"{x:.2g}",
                 "win_rate": lambda x: f"{100*x:.3g}",
                 "elo": "{:.3g}".format
@@ -445,7 +445,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
             percent[c] = percent[c] / percent["size"]
         return percent
 
-    includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE(E(A))", "SE(A-B)", "SE_x(A-B)", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
+    includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE_x(A)", "SE(A-B)", "SE_x(A-B)", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
     percent_cols = ["no_solve", "tau-"]
     summary_percent = normalize(summary_count, percent_cols)
 
@@ -463,7 +463,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
                     index=False,
                     formatters={
                         "SE(A)": lambda x: format_stats_badge(x),
-                        "SE(E(A))": lambda x: format_stats_badge(x),
+                        "SE_x(A)": lambda x: format_stats_badge(x),
                         "SE(A-B)": lambda x: format_stats_badge(x),
                         "SE_x(A-B)": lambda x: format_stats_badge(x),
                         "corr(A,B)": lambda x: format_stats_badge(x),
