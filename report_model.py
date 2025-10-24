@@ -17,17 +17,17 @@ def fig_diff_vs_sum(bmname: str, summary: pd.DataFrame):
     data_sz = summary.iloc[0]["total"]
 
     figs = px.scatter(summary, x=summary["sum(A-B)"].abs(), y="sum(A!=B)",
-                      custom_data=["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "SE(E(A-B))", "corr(A,B)"])
+                      custom_data=["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "SE_x(A-B)", "corr(A,B)"])
     figs.update_traces(hovertemplate=
         "<br>".join([
         "Model A: %{customdata[0]} (acc: %{customdata[6]:.1%})",
-        "Model B: %{customdata[1]} (acc: %{customdata[7]:.1%})", 
+        "Model B: %{customdata[1]} (acc: %{customdata[7]:.1%})",
         "total A≠B: %{customdata[2]}",
-        "total A-B: %{customdata[3]}", 
-        "SE(A-B): %{customdata[5]:.4%}", 
-        "SE(E[A-B]): %{customdata[8]:.4%}", 
-        "p-value: %{customdata[4]:.3g}", 
-        "corr(A,B): %{customdata[9]:.3g}", 
+        "total A-B: %{customdata[3]}",
+        "SE(A-B): %{customdata[5]:.4%}",
+        "SE_x[A-B]: %{customdata[8]:.4%}",
+        "p-value: %{customdata[4]:.3g}",
+        "corr(A,B): %{customdata[9]:.3g}",
         ])  + "<extra></extra>")
     figs.update_traces(
         marker=dict(
@@ -132,12 +132,12 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
                     color="type",
                     color_discrete_map=color_map,
                     custom_data=["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"])
-    # add an extra scatter showing SE(E(A-B))
+    # add an extra scatter showing SE_x(A-B)
     figs.add_trace(go.Scatter(
         x=df["accA"],
-        y=df["SE(E(A-B))"],
+        y=df["SE_x(A-B)"],
         mode="markers",
-        name="SE(E(A-B))",
+        name="SE_x(A-B)",
         customdata=df[["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"]].values,
         marker=dict(size=3, symbol="x", color="purple", opacity=0.8),
     ))
@@ -445,7 +445,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
             percent[c] = percent[c] / percent["size"]
         return percent
 
-    includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE(E(A))", "SE(A-B)", "SE(E(A-B))", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
+    includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE(E(A))", "SE(A-B)", "SE_x(A-B)", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
     percent_cols = ["no_solve", "tau-"]
     summary_percent = normalize(summary_count, percent_cols)
 
@@ -465,7 +465,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
                         "SE(A)": lambda x: format_stats_badge(x),
                         "SE(E(A))": lambda x: format_stats_badge(x),
                         "SE(A-B)": lambda x: format_stats_badge(x),
-                        "SE(E(A-B))": lambda x: format_stats_badge(x),
+                        "SE_x(A-B)": lambda x: format_stats_badge(x),
                         "corr(A,B)": lambda x: format_stats_badge(x),
                         "no_solve": lambda x: f"{x*100:.2g}",
                         "tau-": lambda x: f"{x*100:.2g}",
