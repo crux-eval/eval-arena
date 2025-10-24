@@ -111,18 +111,18 @@ def model_table(df_input, battles: pd.DataFrame | None = None):
         data_sz = len(pass1s)
         p = pass1s.to_numpy()
         vars = {
-            "SE(var(A))": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
-            "SE(E(A))": 1 / np.sqrt(data_sz) * np.std(p),
+            "SE_pred(A)": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
+            "SE_x(A)": 1 / np.sqrt(data_sz) * np.std(p),
             "SE(A)": np.sqrt(1 / data_sz * p.mean()* (1-p.mean())),
             "pass1": np.mean(pass1s),
             "count": np.mean(g["count"]),
         }
-        assert np.allclose(vars["SE(var(A))"]**2 + vars["SE(E(A))"]**2, vars["SE(A)"]**2)
+        assert np.allclose(vars["SE_pred(A)"]**2 + vars["SE_x(A)"]**2, vars["SE(A)"]**2)
         return pd.Series(vars)
 
     # add std if pass1 is not just 0 or 1 
     model_stats = df_input[["model", "pass1", "count"]].groupby("model").apply(_stds).reset_index()
-    table_inds = ["model", "pass1", "SE(E(A))", "E(var(A))", "SE(A)", "count"]
+    table_inds = ["model", "pass1", "SE_x(A)", "E(var(A))", "SE(A)", "count"]
 
     if battles:
         table_inds += ["win_rate"]
@@ -188,7 +188,7 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
         "tau-": (df_example["tau"] < 0).to_numpy().sum(),
     }
 
-    model_stats_keys = ["SE(A)", "SE(E(A))", "SE(var(A))"]
+    model_stats_keys = ["SE(A)", "SE_x(A)", "SE_pred(A)"]
     for key in model_stats_keys:
         summary_stats[key] = df_model[key].describe().to_dict()
 
