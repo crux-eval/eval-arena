@@ -87,7 +87,7 @@ class BattleSummary:
             "pvalue": stats.binomtest(int(awin.sum()), int(awin.sum() + bwin.sum()), p=0.5).pvalue if int(awin.sum() + bwin.sum()) != 0 else 1,
 
             "SE_pred(A-B)": np.sqrt(1/N * vars["E(var(A-B))"]),
-            "SE(E(A-B))": np.sqrt(1/N * vars["var(E(A-B))"]),
+            "SE_x(A-B)": np.sqrt(1/N * vars["var(E(A-B))"]),
             "SE(A-B)": np.sqrt(1/N * vars["var(A-B)"]),
 
             "corr(A,B)": df["pass1_a"].corr(df["pass1_b"], method="pearson"),
@@ -192,7 +192,7 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
     for key in model_stats_keys:
         summary_stats[key] = df_model[key].describe().to_dict()
 
-    close_pair_stats_keys = ["SE(A-B)", "SE(E(A-B))", "SE_pred(A-B)", "SE_signtest", "corr(A,B)", "sum(A!=B)"]
+    close_pair_stats_keys = ["SE(A-B)", "SE_x(A-B)", "SE_pred(A-B)", "SE_signtest", "corr(A,B)", "sum(A!=B)"]
     for key in close_pair_stats_keys:
         summary_stats[key] = close_pairs[key].describe().to_dict()
 
