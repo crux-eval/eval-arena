@@ -144,9 +144,9 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
 
     figs.add_trace(go.Scatter(
         x=df["accA"],
-        y=df["SE(var(A-B))"],
+        y=df["SE_pred(A-B)"],
         mode="markers",
-        name="SE(var(A-B))",
+        name="SE_pred(A-B)",
         customdata=df[["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"]].values,
         marker=dict(size=3, symbol="x", color="yellow", opacity=0.8),
     ))
