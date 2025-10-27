@@ -6,7 +6,11 @@ def cov(A, B, ddof=0):
 
 class Paired:
     @staticmethod
-    def from_samples(A: np.ndarray, B: np.ndarray, dof=0) -> dict[str, float]:
+    def from_samples(A: np.ndarray, B: np.ndarray) -> dict[str, float]:
+        """Calculate variance from 
+            Args:
+                A, B: Success probabilities of shape (N questions, by K predictions for each question)
+        """
         assert A.shape[0] == B.shape[0], "should be paired" 
         return {
             "var(E(A-B))": var(mean(A, axis=1) - mean(B, axis=1)),
@@ -17,7 +21,7 @@ class Paired:
         }
     
     @staticmethod
-    def from_samples_unbiased(A: np.ndarray, B: np.ndarray, dof=0) -> dict[str, float]:
+    def from_samples_unbiased(A: np.ndarray, B: np.ndarray) -> dict[str, float]:
         assert A.shape[0] == B.shape[0] # paired data
         kA = A.shape[1]
         kB = A.shape[1]
@@ -31,7 +35,7 @@ class Paired:
 
     @staticmethod
     def from_bernoulli_prob(pA: np.ndarray, pB: np.ndarray) -> dict[str, float]:
-        """Calculate variance for Bernoulli random variables
+        """Calculate variance from the probability of Bernoulli 
             Args:
                 pA, pB: Success probabilities of shape (n_samples, 1)
         """
