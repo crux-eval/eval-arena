@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />   <!--It is necessary to use the UTF-8 encoding with plotly graphics to get e.g. negative signs to render correctly -->
+<link
+  rel="stylesheet"
+  href="https://crux-eval.github.io/static/css/bulma.min.css"
+>
+<link
+  rel="stylesheet"
+  href="static/custom.css"
+>
+</head>
+
+<body>
+
+<div class="container">
+<section class="section">
+    <h1 class="title"> Eval-Arena: Noise and errors of LLM evals </h1>
+    <h2 class="subtitle is-4"> <a href="https://github.com/crux-eval/eval-arena">Doc/Code</a> </h2>
+      Summary of millions of questions and thousands of model pairs on various LLM benchmarks. Some summary statistics are available on mouse over. 
+      
+      <ul>
+        <li><b>size</b>: number of questions in the benchmark</li>
+        <li><b>model</b>: the number of models used on this benchmark</li>
+        <li><b>SE(A)</b>: the standard error of a single score on each question (SE_x for expected score) in percent</li>
+        <li><b>SE(A-B)</b>: the paired standard error of a single score on each question (SE_x for expected score) in percent</li>
+        <!-- <li><b>SE_x(A-B)(A)</b>: the paired standard error of the expected score on each question</li> -->
+        <li><b>corr(A,B)</b>: correlation of expected scores in percent</li>
+        <li><b>no_solve</b>: percent questions not solved by any models</li>
+        <li><b>tau-</b>: percent questions negatively correlated with the overall model quality as measured by Kendall's tau.</li>
+        <!-- <li><b>sig_noise</b>: median of <a href="signal_noise.html">signal-to-noise ratios</a> for doubling the model size.</li> -->
+        <li><b>details</b>: details for each benchmark, aggregating by the models or by examples in each benchmark, and a plot of all models and examples sorted by difficulty. </li>
+      </ul>
+
+<p><b>Raw data: </b><a href="summary.csv">summary.csv</a> </p>
+<p><b>Versions:</b>
+  <a href="../main/">main</a>, 
+  Open models with vLLM:
+  <a href="../lowk_temp0.7/">T=0.7</a>, 
+  <a href="../lowk_temp1/">T=1</a>, 
+  <a href="../highk_temp0.7/">high K T=0.7</a>, 
+</p>
+
+    <div style="overflow-x: auto;">
+    <table border="1" class="dataframe number-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>benchmark_id</th>
+      <th>size</th>
+      <th>models</th>
+      <th>SE(A)</th>
+      <th>SE_x(A)</th>
+      <th>SE(A-B)</th>
+      <th>SE_x(A-B)</th>
+      <th>corr(A,B)</th>
+      <th>no_solve</th>
+      <th>tau-</th>
+      <th>sig_noise</th>
+      <th>details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>aime2024_cot</td>
+      <td>30</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.035±0.03 | [0--0.089] | n=52">3.5</span></td>
+      <td><span class="tooltip" data-tooltip="0.027±0.025 | [0--0.073] | n=52">2.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.079±0.0088 | [0.056--0.098] | n=148">7.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.051±0.014 | [0.024--0.088] | n=148">5.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.61±0.17 | [0.079--0.94] | n=148">61</span></td>
+      <td>20</td>
+      <td>0</td>
+      <td>None</td>
+      <td><a href="model_aime2024_cot.html">models </a> |<a href="ex_aime2024_cot.html"> examples </a>|<a href="ex_v_model_acc_aime2024_cot.html"> data </a>|<a href="data_aime2024_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>aime2025_cot</td>
+      <td>30</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.029±0.03 | [0--0.08] | n=52">2.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.022±0.026 | [0--0.074] | n=52">2.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.066±0.0063 | [0.042--0.079] | n=164">6.6</span></td>
+      <td><span class="tooltip" data-tooltip="0.037±0.0097 | [0.015--0.063] | n=164">3.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.82±0.085 | [0.57--0.96] | n=164">82</span></td>
+      <td>27</td>
+      <td>3.3</td>
+      <td>None</td>
+      <td><a href="model_aime2025_cot.html">models </a> |<a href="ex_aime2025_cot.html"> examples </a>|<a href="ex_v_model_acc_aime2025_cot.html"> data </a>|<a href="data_aime2025_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>ap_cot</td>
+      <td>711</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.016±0.0025 | [0.0099--0.019] | n=52">1.6</span></td>
+      <td><span class="tooltip" data-tooltip="0.012±0.0024 | [0.0057--0.018] | n=52">1.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.019±0.0038 | [0.01--0.025] | n=629">1.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.012±0.0027 | [0.0065--0.02] | n=629">1.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.51±0.14 | [0.009--0.79] | n=629">51</span></td>
+      <td>0</td>
+      <td>3.1</td>
+      <td>None</td>
+      <td><a href="model_ap_cot.html">models </a> |<a href="ex_ap_cot.html"> examples </a>|<a href="ex_v_model_acc_ap_cot.html"> data </a>|<a href="data_ap_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>bbh_cot</td>
+      <td>6511</td>
+      <td>45</td>
+      <td><span class="tooltip" data-tooltip="0.0056±0.00052 | [0.0043--0.0062] | n=45">0.56</span></td>
+      <td><span class="tooltip" data-tooltip="0.0042±0.00081 | [0.0023--0.0061] | n=45">0.42</span></td>
+      <td><span class="tooltip" data-tooltip="0.0068±0.00081 | [0.0047--0.0079] | n=158">0.68</span></td>
+      <td><span class="tooltip" data-tooltip="0.0043±0.00092 | [0.0026--0.0063] | n=158">0.43</span></td>
+      <td><span class="tooltip" data-tooltip="0.48±0.14 | [0.19--0.72] | n=158">48</span></td>
+      <td>1.2</td>
+      <td>2.1</td>
+      <td>None</td>
+      <td><a href="model_bbh_cot.html">models </a> |<a href="ex_bbh_cot.html"> examples </a>|<a href="ex_v_model_acc_bbh_cot.html"> data </a>|<a href="data_bbh_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>cruxeval_input_cot</td>
+      <td>800</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.015±0.0039 | [0.001--0.018] | n=52">1.5</span></td>
+      <td><span class="tooltip" data-tooltip="0.011±0.0038 | [0.0006--0.017] | n=52">1.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.019±0.00099 | [0.014--0.022] | n=667">1.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.011±0.0025 | [0.0066--0.021] | n=667">1.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.6±0.14 | [0.22--0.89] | n=667">60</span></td>
+      <td>0.62</td>
+      <td>1.5</td>
+      <td>None</td>
+      <td><a href="model_cruxeval_input_cot.html">models </a> |<a href="ex_cruxeval_input_cot.html"> examples </a>|<a href="ex_v_model_acc_cruxeval_input_cot.html"> data </a>|<a href="data_cruxeval_input_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>cruxeval_output_cot</td>
+      <td>800</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.015±0.003 | [0.0038--0.018] | n=52">1.5</span></td>
+      <td><span class="tooltip" data-tooltip="0.012±0.0032 | [0.0015--0.018] | n=52">1.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.018±0.0014 | [0.013--0.021] | n=566">1.8</span></td>
+      <td><span class="tooltip" data-tooltip="0.01±0.0018 | [0.0066--0.015] | n=566">1</span></td>
+      <td><span class="tooltip" data-tooltip="0.65±0.11 | [0.28--0.86] | n=566">65</span></td>
+      <td>2.5</td>
+      <td>1.1</td>
+      <td>None</td>
+      <td><a href="model_cruxeval_output_cot.html">models </a> |<a href="ex_cruxeval_output_cot.html"> examples </a>|<a href="ex_v_model_acc_cruxeval_output_cot.html"> data </a>|<a href="data_cruxeval_output_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>ds1000</td>
+      <td>1000</td>
+      <td>39</td>
+      <td><span class="tooltip" data-tooltip="0.01±0.0039 | [0.0019--0.016] | n=39">1</span></td>
+      <td><span class="tooltip" data-tooltip="0.0082±0.0036 | [0.00086--0.014] | n=39">0.82</span></td>
+      <td><span class="tooltip" data-tooltip="0.013±0.00082 | [0.01--0.015] | n=242">1.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.0086±0.0013 | [0.0062--0.012] | n=242">0.86</span></td>
+      <td><span class="tooltip" data-tooltip="0.65±0.087 | [0.39--0.82] | n=242">65</span></td>
+      <td>27</td>
+      <td>0.9</td>
+      <td>None</td>
+      <td><a href="model_ds1000.html">models </a> |<a href="ex_ds1000.html"> examples </a>|<a href="ex_v_model_acc_ds1000.html"> data </a>|<a href="data_ds1000.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>gmat_cot</td>
+      <td>92</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.045±0.0069 | [0.024--0.052] | n=51">4.5</span></td>
+      <td><span class="tooltip" data-tooltip="0.033±0.0079 | [0.011--0.052] | n=51">3.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.057±0.0089 | [0.029--0.07] | n=566">5.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.036±0.0076 | [0.015--0.057] | n=566">3.6</span></td>
+      <td><span class="tooltip" data-tooltip="0.45±0.16 | [-0.15--0.88] | n=566">45</span></td>
+      <td>0</td>
+      <td>1.1</td>
+      <td>None</td>
+      <td><a href="model_gmat_cot.html">models </a> |<a href="ex_gmat_cot.html"> examples </a>|<a href="ex_v_model_acc_gmat_cot.html"> data </a>|<a href="data_gmat_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>gpqa_cot</td>
+      <td>448</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.021±0.0027 | [0.013--0.024] | n=51">2.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.014±0.0046 | [0.0041--0.023] | n=51">1.4</span></td>
+      <td><span class="tooltip" data-tooltip="0.027±0.0015 | [0.019--0.03] | n=1364">2.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.017±0.0036 | [0.0072--0.028] | n=1364">1.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.32±0.16 | [-0.13--0.9] | n=1364">32</span></td>
+      <td>0</td>
+      <td>21</td>
+      <td>None</td>
+      <td><a href="model_gpqa_cot.html">models </a> |<a href="ex_gpqa_cot.html"> examples </a>|<a href="ex_v_model_acc_gpqa_cot.html"> data </a>|<a href="data_gpqa_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>gre_physics_cot</td>
+      <td>75</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.051±0.0077 | [0.023--0.058] | n=51">5.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.037±0.012 | [0.0079--0.056] | n=51">3.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.065±0.0061 | [0.042--0.079] | n=628">6.5</span></td>
+      <td><span class="tooltip" data-tooltip="0.043±0.011 | [0.016--0.071] | n=628">4.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.32±0.22 | [-0.29--0.9] | n=628">32</span></td>
+      <td>0</td>
+      <td>5.3</td>
+      <td>None</td>
+      <td><a href="model_gre_physics_cot.html">models </a> |<a href="ex_gre_physics_cot.html"> examples </a>|<a href="ex_v_model_acc_gre_physics_cot.html"> data </a>|<a href="data_gre_physics_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>gsm8k_cot</td>
+      <td>1319</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.011±0.0024 | [0.0065--0.014] | n=52">1.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.008±0.0019 | [0.0038--0.013] | n=52">0.8</span></td>
+      <td><span class="tooltip" data-tooltip="0.011±0.0026 | [0.0062--0.016] | n=471">1.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.007±0.0018 | [0.004--0.013] | n=471">0.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.61±0.089 | [0.32--0.79] | n=471">61</span></td>
+      <td>0.15</td>
+      <td>0.99</td>
+      <td>None</td>
+      <td><a href="model_gsm8k_cot.html">models </a> |<a href="ex_gsm8k_cot.html"> examples </a>|<a href="ex_v_model_acc_gsm8k_cot.html"> data </a>|<a href="data_gsm8k_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>gsm8k_plus_cot</td>
+      <td>10552</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.0043±0.00061 | [0.002--0.0049] | n=52">0.43</span></td>
+      <td><span class="tooltip" data-tooltip="0.0034±0.00072 | [0.00097--0.0048] | n=52">0.34</span></td>
+      <td><span class="tooltip" data-tooltip="0.0044±0.00058 | [0.0029--0.0055] | n=176">0.44</span></td>
+      <td><span class="tooltip" data-tooltip="0.0028±0.00053 | [0.0017--0.0042] | n=176">0.28</span></td>
+      <td><span class="tooltip" data-tooltip="0.71±0.089 | [0.49--0.87] | n=176">71</span></td>
+      <td>0.78</td>
+      <td>5.6</td>
+      <td>None</td>
+      <td><a href="model_gsm8k_plus_cot.html">models </a> |<a href="ex_gsm8k_plus_cot.html"> examples </a>|<a href="ex_v_model_acc_gsm8k_plus_cot.html"> data </a>|<a href="data_gsm8k_plus_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>human_eval</td>
+      <td>164</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.034±0.007 | [0.013--0.039] | n=51">3.4</span></td>
+      <td><span class="tooltip" data-tooltip="0.025±0.0073 | [0.0051--0.039] | n=51">2.5</span></td>
+      <td><span class="tooltip" data-tooltip="0.043±0.0056 | [0.026--0.053] | n=516">4.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.028±0.0052 | [0.016--0.041] | n=516">2.8</span></td>
+      <td><span class="tooltip" data-tooltip="0.51±0.12 | [0.19--0.76] | n=516">51</span></td>
+      <td>0.61</td>
+      <td>0</td>
+      <td>None</td>
+      <td><a href="model_human_eval.html">models </a> |<a href="ex_human_eval.html"> examples </a>|<a href="ex_v_model_acc_human_eval.html"> data </a>|<a href="data_human_eval.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>human_eval_plus</td>
+      <td>164</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.034±0.0073 | [0.011--0.039] | n=51">3.4</span></td>
+      <td><span class="tooltip" data-tooltip="0.026±0.0078 | [0.0053--0.039] | n=51">2.6</span></td>
+      <td><span class="tooltip" data-tooltip="0.042±0.0051 | [0.027--0.051] | n=554">4.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.028±0.0049 | [0.015--0.041] | n=554">2.8</span></td>
+      <td><span class="tooltip" data-tooltip="0.55±0.12 | [0.26--0.86] | n=554">55</span></td>
+      <td>6.1</td>
+      <td>1.2</td>
+      <td>None</td>
+      <td><a href="model_human_eval_plus.html">models </a> |<a href="ex_human_eval_plus.html"> examples </a>|<a href="ex_v_model_acc_human_eval_plus.html"> data </a>|<a href="data_human_eval_plus.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>jeebench_chat_cot</td>
+      <td>515</td>
+      <td>49</td>
+      <td><span class="tooltip" data-tooltip="0.012±0.0037 | [0.0057--0.02] | n=49">1.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.008±0.0033 | [0.0023--0.015] | n=49">0.8</span></td>
+      <td><span class="tooltip" data-tooltip="0.02±0.0016 | [0.017--0.024] | n=148">2</span></td>
+      <td><span class="tooltip" data-tooltip="0.012±0.0023 | [0.0072--0.017] | n=148">1.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.42±0.22 | [-0.088--0.82] | n=148">42</span></td>
+      <td>14</td>
+      <td>5.2</td>
+      <td>None</td>
+      <td><a href="model_jeebench_chat_cot.html">models </a> |<a href="ex_jeebench_chat_cot.html"> examples </a>|<a href="ex_v_model_acc_jeebench_chat_cot.html"> data </a>|<a href="data_jeebench_chat_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>leetcode</td>
+      <td>180</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.0051±0.0099 | [0--0.037] | n=51">0.51</span></td>
+      <td><span class="tooltip" data-tooltip="0.0041±0.0084 | [0--0.032] | n=51">0.41</span></td>
+      <td><span class="tooltip" data-tooltip="0.033±0.002 | [0.029--0.035] | n=12">3.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.023±0.0034 | [0.017--0.027] | n=12">2.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.55±0.09 | [0.45--0.66] | n=12">55</span></td>
+      <td>29</td>
+      <td>0</td>
+      <td>None</td>
+      <td><a href="model_leetcode.html">models </a> |<a href="ex_leetcode.html"> examples </a>|<a href="ex_v_model_acc_leetcode.html"> data </a>|<a href="data_leetcode.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>lsat_cot</td>
+      <td>403</td>
+      <td>45</td>
+      <td><span class="tooltip" data-tooltip="0.023±0.0015 | [0.02--0.025] | n=45">2.3</span></td>
+      <td><span class="tooltip" data-tooltip="0.019±0.0042 | [0.0064--0.025] | n=45">1.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.027±0.0027 | [0.02--0.031] | n=604">2.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.019±0.0033 | [0.01--0.028] | n=604">1.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.5±0.15 | [-0.022--0.84] | n=604">50</span></td>
+      <td>0.25</td>
+      <td>10</td>
+      <td>None</td>
+      <td><a href="model_lsat_cot.html">models </a> |<a href="ex_lsat_cot.html"> examples </a>|<a href="ex_v_model_acc_lsat_cot.html"> data </a>|<a href="data_lsat_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>math500_cot</td>
+      <td>500</td>
+      <td>51</td>
+      <td><span class="tooltip" data-tooltip="0.018±0.0051 | [0.0015--0.022] | n=51">1.8</span></td>
+      <td><span class="tooltip" data-tooltip="0.014±0.005 | [0.00044--0.021] | n=51">1.4</span></td>
+      <td><span class="tooltip" data-tooltip="0.021±0.0022 | [0.016--0.025] | n=422">2.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.012±0.0028 | [0.0073--0.022] | n=422">1.2</span></td>
+      <td><span class="tooltip" data-tooltip="0.69±0.12 | [0.12--0.87] | n=422">69</span></td>
+      <td>0.6</td>
+      <td>1</td>
+      <td>None</td>
+      <td><a href="model_math500_cot.html">models </a> |<a href="ex_math500_cot.html"> examples </a>|<a href="ex_v_model_acc_math500_cot.html"> data </a>|<a href="data_math500_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>math_cot</td>
+      <td>5000</td>
+      <td>49</td>
+      <td><span class="tooltip" data-tooltip="0.0059±0.0013 | [0.0016--0.0071] | n=49">0.59</span></td>
+      <td><span class="tooltip" data-tooltip="0.0045±0.0013 | [0.00065--0.0068] | n=49">0.45</span></td>
+      <td><span class="tooltip" data-tooltip="0.0073±0.00081 | [0.0052--0.0089] | n=142">0.73</span></td>
+      <td><span class="tooltip" data-tooltip="0.0042±0.0012 | [0.0025--0.0071] | n=142">0.42</span></td>
+      <td><span class="tooltip" data-tooltip="0.66±0.14 | [0.25--0.87] | n=142">66</span></td>
+      <td>1.1</td>
+      <td>0.64</td>
+      <td>None</td>
+      <td><a href="model_math_cot.html">models </a> |<a href="ex_math_cot.html"> examples </a>|<a href="ex_v_model_acc_math_cot.html"> data </a>|<a href="data_math_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>mbpp</td>
+      <td>500</td>
+      <td>35</td>
+      <td><span class="tooltip" data-tooltip="0.021±0.0028 | [0.0089--0.022] | n=35">2.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.017±0.0034 | [0.0057--0.022] | n=35">1.7</span></td>
+      <td><span class="tooltip" data-tooltip="0.021±0.0012 | [0.017--0.024] | n=348">2.1</span></td>
+      <td><span class="tooltip" data-tooltip="0.014±0.0025 | [0.007--0.02] | n=348">1.4</span></td>
+      <td><span class="tooltip" data-tooltip="0.69±0.076 | [0.51--0.88] | n=348">69</span></td>
+      <td>3</td>
+      <td>2.4</td>
+      <td>None</td>
+      <td><a href="model_mbpp.html">models </a> |<a href="ex_mbpp.html"> examples </a>|<a href="ex_v_model_acc_mbpp.html"> data </a>|<a href="data_mbpp.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>mgsm_cot</td>
+      <td>2750</td>
+      <td>52</td>
+      <td><span class="tooltip" data-tooltip="0.0079±0.0017 | [0.0028--0.0095] | n=52">0.79</span></td>
+      <td><span class="tooltip" data-tooltip="0.0062±0.0016 | [0.0012--0.0095] | n=52">0.62</span></td>
+      <td><span class="tooltip" data-tooltip="0.009±0.0013 | [0.0058--0.011] | n=216">0.9</span></td>
+      <td><span class="tooltip" data-tooltip="0.0057±0.0012 | [0.0038--0.009] | n=216">0.57</span></td>
+      <td><span class="tooltip" data-tooltip="0.64±0.11 | [0.33--0.84] | n=216">64</span></td>
+      <td>0.36</td>
+      <td>1.6</td>
+      <td>None</td>
+      <td><a href="model_mgsm_cot.html">models </a> |<a href="ex_mgsm_cot.html"> examples </a>|<a href="ex_v_model_acc_mgsm_cot.html"> data </a>|<a href="data_mgsm_cot.html"> raw </a></td>
+    </tr>
+    <tr>
+      <td>mmlu_pro_cot</td>
+      <td>12032</td>
+      <td>45</td>
+      <td><span class="tooltip" data-tooltip="0.0042±0.0005 | [0.0028--0.0046] | n=45">0.42</span></td>
+      <td><span class="tooltip" data-tooltip="0.0033±0.00079 | [0.0012--0.0046] | n=45">0.33</span></td>
+      <td><span class="tooltip" data-tooltip="0.0049±0.00033 | [0.0038--0.0054] | n=134">0.49</span></td>
+      <td><span class="tooltip" data-tooltip="0.0032±0.00071 | [0.0013--0.0046] | n=134">0.32</span></td>
+      <td><span class="tooltip" data-tooltip="0.54±0.12 | [0.24--0.73] | n=134">54</span></td>
+      <td>0.066</td>
+      <td>13</td>
+      <td>None</td>
+      <td><a href="model_mmlu_pro_cot.html">models </a> |<a href="ex_mmlu_pro_cot.html"> examples </a>|<a href="ex_v_model_acc_mmlu_pro_cot.html"> data </a>|<a href="data_mmlu_pro_cot.html"> raw </a></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+    <!-- <div>
+    
+    </div> -->
+    <br/>
+    <h3 class="subtitle">Notes:</h3>
+    <ul>
+      <li>Some datasets contains clustered questions (DS-1000, SAFIM, SQuAD, SWE-bench), a cluster correction might be needed (further increases the interval) but is not used.</a></li>
+    </ul>
+</section>
+</div>
+</body>
+</html>
