@@ -26,8 +26,6 @@ class ReportArgs:
     sigma_thres: float = 5.0 # how many std to consider as not close
 
     min_perf: float = 0.05 # near 0 models behave differently
-    exclude_distill: bool = True # distilled models does not follow beta distribution
-    total_var_only: bool = True # distilled models does not follow beta distribution
 
 class BattleSummary:
     @staticmethod
@@ -122,15 +120,14 @@ def model_table(df_input, battles: pd.DataFrame | None = None):
 
     # add std if pass1 is not just 0 or 1 
     model_stats = df_input[["model", "pass1", "count"]].groupby("model").apply(_stds).reset_index()
-    table_inds = ["model", "pass1", "SE_x(A)", "E(var(A))", "SE(A)", "count"]
 
-    if battles:
-        table_inds += ["win_rate"]
+    if battles is not None:
         win_rates = battles[["model_a", "model_b", "awins"]]\
             .groupby(["model_a"])\
             .aggregate({"awins": "mean"})\
             .reset_index().rename(columns={"awins": "win_rate"})
-        model_stats = win_rates.merge(model_stats, left_on="model_a", right_on="model")[table_inds].sort_values(by="pass1", ascending=False)
+        org_cols = ["model", "pass1", "win_rate", "count", "SE(A)", "SE_x(A)", "SE_pred(A)"]
+        model_stats = win_rates.merge(model_stats, left_on="model_a", right_on="model")[org_cols].sort_values(by="pass1", ascending=False)
     return model_stats
 
 def example_table(df_input, df_model_table):
@@ -166,12 +163,11 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
         print(f"assuming one sample count=1 on {bid}")
     # df_input["count"] = df_input["count"].fillna(1, inplace=False)
 
-    df_model = model_table(df_input)
-    df_example = example_table(df_input, df_model)
-
     battles = BattleSummary.pass1_to_battle(df_input)
+    df_model = model_table(df_input, battles)
     battles = BattleSummary.filter_battles(battles, df_model, args.max_diff)
     summary = BattleSummary.battle_summary(battles)
+    df_example = example_table(df_input, df_model)
 
     close_pairs = summary[
         (summary["pvalue"] > 2 * stats.norm.sf(abs(args.sigma_thres))) &  # p=0.05, 0.0027, 6e-7  for 1.96, 3, 5 sigma
