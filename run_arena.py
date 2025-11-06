@@ -62,7 +62,7 @@ def run_arena(args: ReportArgs):
         print(records)
         df_summary = pd.DataFrame(records)
         df_summary.to_csv(Path(args.out_dir) / "summary.csv")
-        write_summary_table(pd.DataFrame(df_summary), Path(args.out_dir) / "index.html")
+        write_summary_table(pd.DataFrame(df_summary), Path(args.out_dir) / "index.html", include_var_components=args.include_var_components)
 
 
 if __name__ == "__main__":

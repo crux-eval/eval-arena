@@ -59,19 +59,18 @@ class Paired:
         """
         assert all(K > 1), "need more than 1 sample per problem"
         pA = pA.flatten()
-        pB = pA
         # use all 
         # pA * (pA * K - 1)/(K-1)
+        # a direct computation using leave one out sampling
         covAA = mean((pA*pA - 1/K*pA)*(K/(K-1))) - mean(pA)**2
-        var_A_minus_B = mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*covAA
-        E_var_A_minus_B = mean((pA*(1-pA) + pB*(1-pB)) * (K/(K-1)))
+        var_A_minus_B = 2*mean(pA)*(1-mean(pA)) - 2*covAA
+
+        E_var_A_minus_B = 2*mean(pA*(1-pA) * K/(K-1))
         assert var_A_minus_B > 0 or np.allclose(var_A_minus_B, 0), f"{var_A_minus_B=}"
         assert np.allclose(var_A_minus_B, E_var_A_minus_B)
         return {
-            "var(E(A-B))": 0,
-            # by indepedence of the noise conditioned on a prompt
-            "E(var(A-B))": E_var_A_minus_B,
-            # "E(var(A-B))": var_diff,
+            "var(E(A-B))": 0, # by definition
+            "E(var(A-B))": E_var_A_minus_B, # by indepedence of the noise conditioned on a prompt
             "var(A-B)": var_A_minus_B,
         }
 

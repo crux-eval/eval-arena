@@ -23,7 +23,7 @@ def get_anchor(benchmark_id: str, example_id: str):
     else:
         return example_id
 
-def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False):
+def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False, zero_special=False):
     df = result[["model", "example_id", "pass1", "count"]].merge(ex_table[["example_id", "pass1_of_ex"]], on="example_id")
     model_table = all_stats[["model", "pass1"]].rename(columns={"pass1": "pass1_of_model"})
     df = df.merge(model_table, on="model")
@@ -31,17 +31,34 @@ def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False)
     if not use_acc_as_position:
         yid, xid = "example_id", "model"
     else:
-        yid, xid = "pass1_of_ex", "pass1_of_model"
+        yid, xid = "example_id", "pass1_of_model"
+
+    if zero_special:
+        emp_zero_scale = [
+            [0.0, "black"],
+            [1e-9, "red"],
+            [0.25, "yellow"],
+            [1, "green"],
+        ]
+    else:
+        emp_zero_scale = [
+            [0, "red"],
+            [0.25, "yellow"],
+            [1, "green"],
+        ]
 
     fig = px.scatter(df, y=yid, x=xid, color="pass1",
                      opacity=0.75,
-                     color_continuous_scale=["red", "yellow", "green"],
+                     color_continuous_scale=emp_zero_scale,
                      hover_data=["pass1", "pass1_of_ex", "pass1_of_model", "model", "example_id", "count"])
     fig.update_xaxes(autorange="reversed")
     fig.update_traces(marker={"symbol": "square"})
+
+    bid = set(result["benchmark_id"]).pop()
     fig.update_layout(
             width=900, height=1200,
             xaxis = dict(side ="top"),
+            title = bid,
         )
     return fig
 

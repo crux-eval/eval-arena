@@ -25,7 +25,8 @@ class ReportArgs:
     max_diff: float = 0.1 # skip models that are more than max_diff in performance
     sigma_thres: float = 5.0 # how many std to consider as not close
 
-    min_perf: float = 0.05 # near 0 models behave differently
+    min_perf: float = 0.1 # near 0 models behave differently
+    include_var_components: bool = True # use when there are multiple samples to report SE_x
 
 class BattleSummary:
     @staticmethod
@@ -70,7 +71,7 @@ class BattleSummary:
         pA = df["pass1_a"].to_numpy().reshape(N, 1)
         pB = df["pass1_b"].to_numpy().reshape(N, 1)
         
-        # note this is slightly biased if model_a == model_b
+        # note this is biased if model_a == model_b
         vars = Paired.from_bernoulli_prob(pA, pB)
         awin, bwin = df["awins"], df["bwins"]
         
@@ -90,9 +91,7 @@ class BattleSummary:
 
             "corr(A,B)": df["pass1_a"].corr(df["pass1_b"], method="pearson"),
         }
-
         assert r["SE(A-B)"] <= r["SE_signtest"] or np.allclose(r["SE(A-B)"], r["SE_signtest"])
-
         return pd.Series(r)
 
     @staticmethod
@@ -186,7 +185,8 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
 
     model_stats_keys = ["SE(A)", "SE_x(A)", "SE_pred(A)"]
     for key in model_stats_keys:
-        summary_stats[key] = df_model[key].describe().to_dict()
+        df_model_above_min = df_model[df_model["pass1"] > args.min_perf]
+        summary_stats[key] = df_model_above_min[key].describe().to_dict()
 
     close_pair_stats_keys = ["SE(A-B)", "SE_x(A-B)", "SE_pred(A-B)", "SE_signtest", "corr(A,B)", "sum(A!=B)"]
     for key in close_pair_stats_keys:
