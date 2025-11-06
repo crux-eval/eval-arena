@@ -119,6 +119,16 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
         visible='legendonly', # hide series by default
     ))
 
+    fig.add_trace(go.Scatter(
+        x=df["accA"],
+        y=df["SE_pred(A-B)"],
+        mode="markers",
+        name="SE_pred(A-B)",
+        customdata=df[["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"]].values,
+        marker=dict(size=3, symbol="x", color="red", opacity=0.8),
+        visible='legendonly', # hide series by default
+    ))
+
     # fig.for_each_trace(lambda trace: trace.update(opacity=0.75) 
     #                if trace.name == NOT_CLOSE else None)
     
@@ -168,7 +178,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     fig = go.Figure(data=figl.data + fig.data)
     fig.update_layout(
         width=800, height=600, title=bmname,
-        xaxis_title="acc(A)",
+        xaxis_title="E(A)",
         yaxis_title="SE(A-B)"
     )
     return fig
@@ -212,7 +222,7 @@ def fig_marginals(bmname: str, df_input, df_model, df_example, xkey="pass1_of_ex
         smoothed = data_means[("pass1")].rolling(window=1, min_periods=1, center=True).mean()
         mu = data_means["pass1"].mean()
         n = len(models)
-        legend = f"{start:.2f}-{start+interval_size:.2f} ({n=}, {mu=:.3f})"
+        legend = f"{start:.2f}-{start+interval_size:.2f} ({n=}, {mu=:.2f})"
         colors = px.colors.qualitative.Plotly
         color_idx = i % len(colors)  # cycle through colors
         color = colors[color_idx]
@@ -234,7 +244,7 @@ def fig_marginals(bmname: str, df_input, df_model, df_example, xkey="pass1_of_ex
             mode='lines',
             # showlegend=False,
             legendgroup=legend,
-            name="sorted " + legend,
+            name="CDF " + legend,
             line=dict(
                 dash='solid', 
                 width=2,
@@ -261,7 +271,7 @@ def fig_marginals(bmname: str, df_input, df_model, df_example, xkey="pass1_of_ex
                 x=x, 
                 y=y, 
                 mode='lines',
-                name=f'Beta({alpha:.2f}, {beta:.2f}) {beta_mean=:.3f}',
+                name=f'Beta({alpha:.2f}, {beta:.2f}) mu={beta_mean:.2f}',
                 # legendgroup=legend,
                 line=dict(
                     dash='dot', 
@@ -332,7 +342,7 @@ def format_stats_badge(s):
     mean_str = "N/A" if mean is None else f"{100*mean:.2g}"
     return f"""<span class="tooltip" data-tooltip="{summary}">{mean_str}</span>"""
 
-def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
+def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_var_components: bool = False):
     summary_count = summary_count.sort_values(by="benchmark_id")
 
     def link_detail(bid):
@@ -349,8 +359,9 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path):
         for c in includes:
             percent[c] = percent[c] / percent["size"]
         return percent
-
     includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE_x(A)", "SE(A-B)", "SE_x(A-B)", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
+    if not include_var_components:
+        includes_cols = [c for c in includes_cols if not c.startswith("SE_x")]
     percent_cols = ["no_solve", "tau-"]
     summary_percent = normalize(summary_count, percent_cols)
 
