@@ -1,17 +1,14 @@
-from collections import defaultdict
-import json, math, glob
+import logging
 import re
 
 import numpy as np
 import pandas as pd
-import scipy.stats as stats
 import plotly.express as px
-from tqdm import tqdm
-
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 import arena
+from utils import load_jsonl_files
+
+logger = logging.getLogger(__name__)
 
 pairs_default = {
     # 'Qwen1.5-': ['110B', '72B', '32B', '14B', '7B', '4B', '1.8B', '0.5B'],
@@ -119,16 +116,13 @@ def signal_to_noise(bid: str, df):
     try:
         df = df.loc[pairs]
     except KeyError:
-        print('The data does not have all specified model pairs', pairs)
+        logger.warning(f'The data does not have all specified model pairs: {pairs}')
         return None
     return df.apply(agg_signal_noise, axis=1)
 
 
 if __name__ == '__main__':
-    records = []
-    for fname in glob.glob('data/*.jsonl'):
-        with open(fname, 'rt') as f:
-            records.extend([json.loads(l) for l in f.readlines()])
+    records = load_jsonl_files('data/*.jsonl')
     eval_results = pd.DataFrame(records)
 
     def combine(results):
@@ -150,7 +144,7 @@ if __name__ == '__main__':
     fig.update_xaxes(categoryorder='mean descending')
 
     OUTPUT_PATH = 'gh-pages/'
-    print('generating signal noise table...')
+    logger.info('Generating signal noise table...')
 
     with open(f'{OUTPUT_PATH}/signal_noise.html', 'w') as f:
         f.write(fig.to_html(full_html=True))

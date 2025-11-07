@@ -1,8 +1,13 @@
+import logging
+
+from jinja2 import Template
 import numpy as np
 import pandas as pd
 import plotly.express as px
+
 from arena import ArenaResult
-from jinja2 import Template
+
+logger = logging.getLogger(__name__)
 
 def get_anchor(benchmark_id: str, example_id: str):
     def get_link():
@@ -84,7 +89,7 @@ def get_example_level_results(benchmark_id, ares: ArenaResult):
 
     list_suspect = ex_table.sort_values(by="tau", ascending=True).head(10)
     outputs["table_suspect"] = list_suspect[["example_link", "pass1_of_ex", "tau"]].to_html(escape=False, classes="number-table", float_format="%10.3f", index=False)
-    print(benchmark_id, "anti-correlated prop", np.mean(ex_table["tau"] <= 0))
+    logger.info(f"{benchmark_id} anti-correlated prop: {np.mean(ex_table['tau'] <= 0):.3f}")
 
     outputs["fig_example_vs_model"] = fig_example_vs_model(ares.input_table, all_stats, ex_table)
     outputs["fig_example_vs_model_acc"] = fig_example_vs_model(ares.input_table, all_stats, ex_table, use_acc_as_position=True)

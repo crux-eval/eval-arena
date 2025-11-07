@@ -1,15 +1,17 @@
+import logging
 import os
 from pathlib import Path
 
+from jinja2 import Template
 import numpy as np
 import pandas as pd
-import scipy.stats as stats
-
 import plotly.express as px
 import plotly.graph_objects as go
-from jinja2 import Template
+import scipy.stats as stats
 
 from arena import ArenaResult
+
+logger = logging.getLogger(__name__)
 
 PLOTLY_CONFIGS = dict(full_html=False, include_plotlyjs="cdn")
 
@@ -186,9 +188,9 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
 def beta_est(mean, var):
     nu = (mean * (1 - mean) / var) - 1
     if nu <= 0:
-        print(f"Invalid parameter estimates. Check if data follows beta distribution. {nu=}")
+        logger.warning(f"Invalid parameter estimates. Check if data follows beta distribution. {nu=}")
         nu = 1e-2
-    
+
     alpha_hat = mean * nu
     beta_hat = (1 - mean) * nu
     # Sanity check
@@ -262,8 +264,8 @@ def fig_marginals(bmname: str, df_input, df_model, df_example, xkey="pass1_of_ex
             var = data_nzs["pass1"].var(ddof=1)
             alpha, beta = beta_est(mu, var)
             cdf_values = betaf.cdf(x, alpha, beta)
-            beta_mean = (1 - nzs/len(smoothed)) * alpha / (alpha + beta) 
-            print(f"{nzs=}\t{len(smoothed)=}")
+            beta_mean = (1 - nzs/len(smoothed)) * alpha / (alpha + beta)
+            logger.debug(f"nzs={nzs}, len(smoothed)={len(smoothed)}")
             y = nzs/len(smoothed) + cdf_values * (1 - nzs/len(smoothed))
             # y = cdf_values 
             y = y * len(smoothed)
@@ -365,7 +367,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
     percent_cols = ["no_solve", "tau-"]
     summary_percent = normalize(summary_count, percent_cols)
 
-    print(summary_percent)
+    logger.info(f"Summary statistics:\n{summary_percent}")
     template_path = r"templates/summary.html"
 
     with open(output_path, "w", encoding="utf-8") as output_file:
