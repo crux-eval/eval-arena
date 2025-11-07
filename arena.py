@@ -1,10 +1,13 @@
 from dataclasses import dataclass
+import logging
 
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
 
 from estimators import Paired
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class ArenaResult:
@@ -61,7 +64,7 @@ class BattleSummary:
         df_pairs = pd.merge(df_pass, df_pass, suffixes=["_a", "_b"], how="cross")
         df_pairs = df_pairs[(df_pairs["pass1_a"] - df_pairs["pass1_b"]).abs() <= max_diff]
         df_pairs = df_pairs[["model_a", "model_b"]]
-        print(f"{len(battles)=}", f"{len(df_pairs)=}")
+        logger.info(f"Battles: {len(battles)}, filtered pairs: {len(df_pairs)}")
         battles = df_pairs.merge(battles, on=["model_a", "model_b"], how="inner")
         return battles
 
@@ -159,7 +162,7 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
 
     if "count" not in df_input.columns:
         df_input["count"] = 1
-        print(f"assuming one sample count=1 on {bid}")
+        logger.info(f"Assuming one sample count=1 on {bid}")
     # df_input["count"] = df_input["count"].fillna(1, inplace=False)
 
     battles = BattleSummary.pass1_to_battle(df_input)
