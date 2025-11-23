@@ -11,14 +11,54 @@ import pytest
 
 from estimators import Paired, Single, SingleTest, VarComps
 
+class GenerativeModel(ABC):
+    idx: np.ndarray # data index of the model, designed for paired
+    Npop: int # population size
+    N: int # sample size
+
+    @abstractmethod
+    def sample_preds(self) -> np.ndarray:
+        """
+        returns: array of sampled predictions given the same idx
+        """
+        pass
+
+    @abstractmethod
+    def true_vars(self) -> VarComps:
+        """
+        returns: true variance components for comparisons
+        """
+        pass
+
+    def sample_idx(self):
+        return np.random.choice(self.Npop, size=self.N, replace=True)
+
+class BernoulliModel(GenerativeModel):
+    def __init__(self, pA: np.ndarray, N: int, K: int, resample_method=False):
+        self.pA = pA
+        self.Npop = self.pA.shape[0]
+        self.N = N
+        self.idx = self.sample_idx()
+        self.K = K
+        self.resample_method = resample_method
+
+
+    def sample_preds(self) -> np.ndarray:
+        p = self.pA[self.idx]
+        A = np.random.rand(self.N, self.K)
+        A = np.where(A < p, 1, 0)
+        return A
+
+    def true_vars(self) -> dict[str]:
+        return Single.from_bernoulli_prob(self.pA)
+
+    
 class TestEstimator(ABC):
     def tscores(self, star: float, estimates: np.ndarray):
         errors = estimates - star
         se_mean = np.std(estimates, ddof=1) / np.sqrt(len(estimates))
         tstat = mean(errors) / se_mean
         # p_value_t = 2 * stats.t.sf(abs(tstat), df=len(errors)-1)
-        # p_value_N = 2 * stats.norm.sf(abs(tstat))
-        # print(f"{rms=:.2e}, {bias=:.2e}, {abs(bias)/se_mean=:.2f}, {p_value_t=:.2e}, {p_value_N=:.2e}")
         return tstat
     
     @staticmethod
@@ -36,170 +76,32 @@ class TestEstimator(ABC):
         fig.add_vline(x=np.mean(estimates) + se_mean, line_dash="dot", line_color="yellow", name=f"mean + se(mean)")
         fig.add_vline(x=np.mean(estimates) - se_mean, line_dash="dot", line_color="yellow", name=f"mean + se(mean)")
         display(fig)
-
-
-class TestPairEstimators(TestEstimator):
-    @staticmethod
-    def total_variance_test(v: dict):
-        assert np.allclose(v["var(A-B)"], v["E(var(A-B))"] + v["var(E(A-B))"]), v
-
-    def paired_sample_vs_truth(self, pA, pB, K, niters=100):
-        N = pA.shape[0]
-        vstar = Paired.from_bernoulli_prob(pA, pB)
-        self.total_variance_test(vstar)
-        
-        res = []
-        for i in range(niters):
-            A = np.random.rand(N, K)
-            A = np.where(A < pA, 1, 0)
-
-            B = np.random.rand(N, K)
-            B = np.where(B < pB, 1, 0)
-
-            vhat = Paired.from_samples(A, B)
-            self.total_variance_test(vhat) 
-
-            res.append({
-                "var(A-B)": vhat["var(A-B)"],
-            })
-        return vstar["var(A-B)"], pd.DataFrame(res)
-
-    def self_sample_vs_truth(self, pA, K=10, niters=100):
-        vstar = Paired.from_bernoulli_prob(pA, pA)
-        N = pA.shape[0]
-        res = []
-        for i in range(niters):
-            A = np.random.rand(N, K)
-            A = np.where(A < pA, 1, 0)
-            pA_hat = A.mean(axis=1, keepdims=True)
-            var_bernoulli_self = Paired.from_bernoulli_prob_self(pA_hat, K*np.ones_like(pA_hat))
-            self.total_variance_test(var_bernoulli_self)
-            var_bernoulli = Paired.from_bernoulli_prob(pA_hat, pA_hat)
-            self.total_variance_test(var_bernoulli)
-
-            res.append({
-                "bernouli_hat": var_bernoulli["var(A-B)"],
-                "bernoulli_self_hat": var_bernoulli_self["var(A-B)"],
-            })
-        return vstar["var(A-B)"], pd.DataFrame(res)
-
-    def test_uniform(self, niter=2, N=164):
-        pA = np.random.rand(N, 1)
-        pB = (pA + 1*(np.random.rand(N, 1)-0.5)).clip(0, 1)
-        for _ in range(niter):
-            star, df_hats = self.paired_sample_vs_truth(pA, pB, 10)
-            self.assert_inside_n_sigma(star, df_hats["var(A-B)"])
-
-    def test_self_uniform(self, niter=2, N=164):
-        pA = np.random.rand(N, 1)
-        for _ in range(niter):
-            star, df_hats = self.self_sample_vs_truth(pA, 10)
-            print(df_hats)
-            self.assert_inside_n_sigma(star, df_hats["bernoulli_self_hat"].to_numpy(), n_sigma=5)
-
-            with pytest.raises(AssertionError, match="Bias"):
-                self.assert_inside_n_sigma(star, df_hats["bernouli_hat"].to_numpy(), n_sigma=3)
-
-
-class GenerativeModel(ABC):
-    @abstractmethod
-    def sample(self, K: int, seed: None = None) -> np.ndarray:
-        """
-        Args:
-            K: Number of predictions to sample per question
-            idx: Optional array of indices for paired samples. If None, then use all indices.
-        Returns:
-            Array of sampled predictions N x K
-        """
-        pass
-
-    @abstractmethod
-    def true_vars(self) -> dict[str]:
-        pass
-
-    def get_data_seed(self):
-        pass
-
-    @staticmethod
-    def sample_indices(N: int):
-        return np.random.choice(N, size=N, replace=True)
-
-class BernoulliModel(GenerativeModel):
-    def __init__(self, pA: np.ndarray, N: int, K: int, resample_method=False):
-        self.pA = pA
-        self.Npop = self.pA.shape[0]
-        self.N = N
-        self.idx = self.sample_idx()
-
-        self.K = K
-        self.resample_method = resample_method
-
     
-    def sample_idx(self):
-        return np.random.choice(self.Npop, size=self.N, replace=True)
-
-    def sample(self) -> np.ndarray:
-        Npop = self.pA.shape[0]
-        # defaults to using the population
-        if self.resample_method:
-            self.idx = self.sample_idx()
-        
-        p = self.pA[self.idx]
-        A = np.random.rand(self.N, self.K)
-        A = np.where(A < p, 1, 0)
-        return A
-
-    def true_vars(self) -> dict[str]:
-        return Single.from_bernoulli_prob(self.pA)
-
-
-class TestSingleEstimators(TestEstimator):
-    @staticmethod
-    def total_variance_test(v: dict):
-        assert np.allclose(v["var(A)"], v["E(var(A))"] + v["var(E(A))"]), v
-
-    def get_estimates(self, model: GenerativeModel, estimator, attempts=20) -> list[VarComps]:
-        ests = []
-        for i in range(attempts):
-            A = model.sample()
-            vhat = estimator(A)
-            # self.total_variance_test(vhat)
-            ests.append(vhat)
-        return ests
-
-    def evaluate_estimator(self, model, estimator, verbose=False):
-        """
-        Get samples estimates, 
-        """
-        truth = model.true_vars()
-        print(f"{truth=}")
+    def evaluate_estimator(self, truth: VarComps, ests: list[VarComps], estimator, resample_method: bool, verbose=False):
+        if verbose:
+            print(f"{truth=}")
         rel_error_stats = []
-        for i in range(1):
-            np.random.seed(42)
-            ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
-            for comp in ["var(A)", "E(var(A))", "var(E(A))"]:
-            # for comp in ["var(A)"]:
-                star = truth[comp]
-                ests_comp = np.array([e[comp] for e in ests])
-                
-                t = self.tscores(star, ests_comp)
-                rel_errors = (ests_comp - star) / star
-                rel_error_stats.append({
-                    "iter": i,
-                    "estimator": estimator.__name__,
-                    "resample": model.resample_method,
-                    "K": model.K,
-                    "comp": comp,
-                    "t_score": t,
-                    "mean_abs_mean": mean(rel_errors),
-                    "mean_abs": np.mean(np.abs(rel_errors)),
-                    # "median_abs": np.median(np.abs(rel_errors)),
-                    "rms": np.sqrt(np.mean(rel_errors**2)),
-                    "star": star,
-                    "unbiased": ests[0].unbiased,
-                })
-                if verbose:
-                    display(TestEstimator.plot_distribution_vs_star(ests_comp, star))
+        for comp in [key for key in truth.to_dict()]:
+            star = truth[comp]
+            ests_comp = np.array([e[comp] for e in ests])
+
+            t = self.tscores(star, ests_comp)
+            rel_errors = (ests_comp - star) / star
+            rel_error_stats.append({
+                "estimator": estimator.__name__,
+                "resample": resample_method,
+                "comp": comp,
+                "t_score": t,
+                "mean_rel_error": mean(rel_errors),
+                "mean_abs": np.mean(np.abs(rel_errors)),
+                "rms": np.sqrt(np.mean(rel_errors**2)),
+                "star": star,
+                "mean": np.mean(ests_comp),
+                "std": np.std(ests_comp),
+                "unbiased": ests[0].unbiased,
+            })
+            if verbose:
+                self.plot_distribution_vs_star(ests_comp, star)
 
         results = pd.DataFrame(rel_error_stats)
         if verbose:
@@ -207,53 +109,77 @@ class TestSingleEstimators(TestEstimator):
             display(results)
 
         return results
- 
-    def test_estimators(self, pA, K, N, verbose=False):
-        def result_is_biased(results: pd.DataFrame, comp: str = "E(var(A))"):
-            biased = results[results["comp"] == comp]["t_score"].abs() > 5
-            all_biased = all(biased)
-            any_biased = any(biased)
-            if any_biased and not all_biased:
-                print("some but not appear biased")
-            return any_biased 
-        
 
+
+
+class TestPairEstimators(TestEstimator):
+    @staticmethod
+    def total_variance_test(v: VarComps):
+        assert np.allclose(v["var(A-B)"], v["E(var(A-B))"] + v["var(E(A-B))"]), v.to_dict()
+
+    def get_estimates(self, modelA: BernoulliModel, modelB: BernoulliModel, estimator, attempts=20) -> list[VarComps]:
+        """Get estimates from paired models with synchronized indices"""
+        ests = []
+        for i in range(attempts):
+            # Synchronize indices for paired sampling
+            if modelA.resample_method:
+                shared_idx = modelA.sample_idx()
+                modelA.idx = shared_idx
+                modelB.idx = shared_idx
+
+            A = modelA.sample_preds()
+            B = modelB.sample_preds()
+            vhat = estimator(A, B)
+            ests.append(vhat)
+        return ests
+
+    def test_estimators(self, pA=None, pB=None, K=5, N=100, verbose=False):
         results_table = pd.DataFrame()
-        for method in [True, False]:
-            model = BernoulliModel(pA, K=K, N=N, resample_method=method)
-            results = self.evaluate_estimator(model, estimator=Single.from_samples, verbose=verbose)
-            results_table = pd.concat([results_table, results], ignore_index=True)
-            # assert result_is_biased(results, "E(var(A))") == True
-            # assert result_is_biased(results, "var(E(A))") == True
-            results = self.evaluate_estimator(model, estimator=SingleTest.from_samples_naive, verbose=verbose)
-            results_table = pd.concat([results_table, results], ignore_index=True)
+        for resample_method in [True, False]:
+            modelA = BernoulliModel(pA, K=K, N=N, resample_method=resample_method)
+            modelB = BernoulliModel(pB, K=K, N=N, resample_method=resample_method)
+            modelB.idx = modelA.idx
+            truth = Paired.from_bernoulli_prob(modelA.pA, modelB.pA)
+            for estimator in [
+                Paired.from_samples,
+                Paired.from_samples_unbiased,
+            ]:
+                ests: list[VarComps] = self.get_estimates(modelA, modelB, estimator, attempts=1000)
+                results = self.evaluate_estimator(truth, ests, estimator, modelA.resample_method, verbose)
+                results_table = pd.concat([results_table, results], ignore_index=True)
 
-            results = self.evaluate_estimator(model, estimator=SingleTest.from_samples_unbiased, verbose=verbose)
-            results_table = pd.concat([results_table, results], ignore_index=True)
-
-            results = self.evaluate_estimator(model, estimator=SingleTest.from_samples_unbiasedNK, verbose=verbose)
-            results_table = pd.concat([results_table, results], ignore_index=True)
-            
-            results = self.evaluate_estimator(model, estimator=Single.from_samples_unbiasedK, verbose=verbose)
-            results_table = pd.concat([results_table, results], ignore_index=True)
-            # assert result_is_biased(results, "E(var(A))") == False
-            # assert result_is_biased(results, "var(E(A))") == False
-            # assert result_is_biased(results, "var(A)") == False
-        # self.is_unbiased(model, K=5, estimator=Single.from_sample_unbiased)
         return results_table
-        # pA = np.random.beta(3, 1, (30, 1))
-        # model = BernoulliModel(pA)
-        # self.is_close_and_unbiased(model, K=10)
 
-        # pA = 0.3 + 0.3 * np.random.rand(10, 1)
-        # model = BernoulliModel(pA)
-        # self.is_close_and_unbiased(model, K=3)
-        # self.is_biased(model, K=3)
 
-        # this uniform can fail when the true variance is near the maximum possible 0.25
-        # pA = np.random.rand(10, 1)
-        # self.is_close_and_unbiased(pA, K=10)
-        # self.is_biased(pA, K=10)
+class TestSingleEstimators(TestEstimator):
+    def get_estimates(self, model: GenerativeModel, estimator, attempts: int) -> list[VarComps]:
+        ests = []
+        for i in range(attempts):
+            if model.resample_method:
+                model.idx = model.sample_idx()
+            A = model.sample_preds()
+            vhat = estimator(A)
+            ests.append(vhat)
+        return ests
+
+ 
+    def test_estimators(self, pA=None, K=5, N=100, verbose=False):
+        results_table = pd.DataFrame()
+        for resample_method in [True, False]:
+            model = BernoulliModel(pA, K=K, N=N, resample_method=resample_method)
+            truth = model.true_vars()
+            for estimator in [
+                Single.from_samples,
+                SingleTest.from_samples_naive,
+                SingleTest.from_samples_unbiased,
+                SingleTest.from_samples_unbiasedNK,
+                Single.from_samples_unbiasedK,
+            ]:
+                ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
+                results = self.evaluate_estimator(truth, ests, estimator, model.resample_method, verbose)
+                results_table = pd.concat([results_table, results], ignore_index=True)
+
+        return results_table
 
 
 if __name__ == "__main__":
