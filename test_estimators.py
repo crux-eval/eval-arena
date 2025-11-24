@@ -9,7 +9,7 @@ import scipy.stats as stats
 
 import pytest
 
-from estimators import Paired, PairedExperimental, Single, SingleExperimental, VarComps
+from estimators import Paired, PairedExperimental, Single, SingleExperimental, VarComps, SingleVarComps, PairedVarComps
 
 class GenerativeModel(ABC):
     idx: np.ndarray # data index of the model, designed for paired
@@ -58,12 +58,12 @@ class BernoulliModelStratified(BernoulliModel):
 
     def true_vars(self) -> dict[str]:
         pA = self.pA
-        return VarComps(
-            total_var=mean(pA)*(1-mean(pA)),
+        return SingleVarComps(
+            total_var=var(pA)+mean(pA*(1-pA)),
             var_E=var(pA),
-            E_var=mean(pA*(1-pA)),
-            paired=False,
-            unbiased=False
+            E_var=(1+1/self.K)*mean(pA*(1-pA)),
+            unbiased=False,
+            satisfy_total_variance=False
         )
 
     
