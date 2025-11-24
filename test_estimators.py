@@ -9,11 +9,11 @@ import scipy.stats as stats
 
 import pytest
 
-from estimators import Paired, Single, SingleTest, VarComps
+from estimators import Paired, PairedExperimental, Single, SingleExperimental, VarComps
 
 class GenerativeModel(ABC):
     idx: np.ndarray # data index of the model, designed for paired
-    Npop: int # population size
+    N_pop: int # population size
     N: int # sample size
 
     @abstractmethod
@@ -42,7 +42,6 @@ class BernoulliModel(GenerativeModel):
         self.K = K
         self.resample_method = resample_method
 
-
     def sample_preds(self) -> np.ndarray:
         p = self.pA[self.idx]
         A = np.random.rand(self.N, self.K)
@@ -51,6 +50,21 @@ class BernoulliModel(GenerativeModel):
 
     def true_vars(self) -> dict[str]:
         return Single.from_bernoulli_prob(self.pA)
+
+
+class BernoulliModelStratified(BernoulliModel):
+    def sample_idx(self):
+        return np.arange(self.N)
+
+    def true_vars(self) -> dict[str]:
+        pA = self.pA
+        return VarComps(
+            total_var=mean(pA)*(1-mean(pA)),
+            var_E=var(pA),
+            E_var=mean(pA*(1-pA)),
+            paired=False,
+            unbiased=False
+        )
 
     
 class TestEstimator(ABC):
@@ -111,21 +125,15 @@ class TestEstimator(ABC):
         return results
 
 
-
-class TestPairEstimators(TestEstimator):
-    @staticmethod
-    def total_variance_test(v: VarComps):
-        assert np.allclose(v["var(A-B)"], v["E(var(A-B))"] + v["var(E(A-B))"]), v.to_dict()
-
+class TestPairedEstimators(TestEstimator):
     def get_estimates(self, modelA: BernoulliModel, modelB: BernoulliModel, estimator, attempts=20) -> list[VarComps]:
         """Get estimates from paired models with synchronized indices"""
         ests = []
         for i in range(attempts):
             # Synchronize indices for paired sampling
-            if modelA.resample_method:
-                shared_idx = modelA.sample_idx()
-                modelA.idx = shared_idx
-                modelB.idx = shared_idx
+            shared_idx = modelA.sample_idx()
+            modelA.idx = shared_idx
+            modelB.idx = shared_idx
 
             A = modelA.sample_preds()
             B = modelB.sample_preds()
@@ -133,20 +141,14 @@ class TestPairEstimators(TestEstimator):
             ests.append(vhat)
         return ests
 
-    def test_estimators(self, pA=None, pB=None, K=5, N=100, verbose=False):
+    def test_estimators(self, truth, modelA, modelB, estimators, verbose=False):
         results_table = pd.DataFrame()
-        for resample_method in [True, False]:
-            modelA = BernoulliModel(pA, K=K, N=N, resample_method=resample_method)
-            modelB = BernoulliModel(pB, K=K, N=N, resample_method=resample_method)
-            modelB.idx = modelA.idx
-            truth = Paired.from_bernoulli_prob(modelA.pA, modelB.pA)
-            for estimator in [
-                Paired.from_samples,
-                Paired.from_samples_unbiased,
-            ]:
-                ests: list[VarComps] = self.get_estimates(modelA, modelB, estimator, attempts=1000)
-                results = self.evaluate_estimator(truth, ests, estimator, modelA.resample_method, verbose)
-                results_table = pd.concat([results_table, results], ignore_index=True)
+        modelB.idx = modelA.idx
+        truth = Paired.from_bernoulli_prob(modelA.pA, modelB.pA)
+        for estimator in estimators:
+            ests: list[VarComps] = self.get_estimates(modelA, modelB, estimator, attempts=1000)
+            results = self.evaluate_estimator(truth, ests, estimator, modelA.resample_method, verbose)
+            results_table = pd.concat([results_table, results], ignore_index=True)
 
         return results_table
 
@@ -155,29 +157,19 @@ class TestSingleEstimators(TestEstimator):
     def get_estimates(self, model: GenerativeModel, estimator, attempts: int) -> list[VarComps]:
         ests = []
         for i in range(attempts):
-            if model.resample_method:
-                model.idx = model.sample_idx()
+            model.idx = model.sample_idx()
             A = model.sample_preds()
             vhat = estimator(A)
             ests.append(vhat)
         return ests
 
- 
-    def test_estimators(self, pA=None, K=5, N=100, verbose=False):
+    
+    def test_estimators(self, truth, model, estimators, verbose=False):
         results_table = pd.DataFrame()
-        for resample_method in [True, False]:
-            model = BernoulliModel(pA, K=K, N=N, resample_method=resample_method)
-            truth = model.true_vars()
-            for estimator in [
-                Single.from_samples,
-                SingleTest.from_samples_naive,
-                SingleTest.from_samples_unbiased,
-                SingleTest.from_samples_unbiasedNK,
-                Single.from_samples_unbiasedK,
-            ]:
-                ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
-                results = self.evaluate_estimator(truth, ests, estimator, model.resample_method, verbose)
-                results_table = pd.concat([results_table, results], ignore_index=True)
+        for estimator in estimators:
+            ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
+            results = self.evaluate_estimator(truth, ests, estimator, model.resample_method, verbose)
+            results_table = pd.concat([results_table, results], ignore_index=True)
 
         return results_table
 

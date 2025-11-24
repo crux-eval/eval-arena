@@ -24,11 +24,11 @@ class VarComps:
     E_var: float  # E(var(A-B)) or E(var(A))
     paired: bool
     unbiased: bool = False
-    total_var_rtol: float = 1e-5
+    satisfy_total_variance: bool = True
 
     def __post_init__(self):
         total = self.var_E + self.E_var
-        if not np.isclose(total, self.total_var, rtol=self.total_var_rtol):
+        if not np.isclose(total, self.total_var, rtol=self.satisfy_total_variance):
             rtol = (total - self.total_var) / self.total_var
             raise ValueError(f"Total variance did not hold. components {self.to_dict()}, rtol={rtol}")
 
@@ -90,7 +90,9 @@ class Paired:
             paired=True,
             unbiased=False
         )
-    
+
+
+class PairedExperimental:
     @staticmethod
     def from_bernoulli_prob_self(pA: np.ndarray, K: np.ndarray) -> VarComps:
         """Calculate variance for Bernoulli random variables
@@ -117,11 +119,39 @@ class Paired:
             paired=True,
             unbiased=False
         )
+    
+    @staticmethod
+    def from_samples_random_diffs(A: np.ndarray, B: np.ndarray, M=1000) -> VarComps:
+        assert A.shape[0] == B.shape[0], "should be paired"
+        # For each row i, generate M samples of A_ij - B_ik where j and k are randomly drawn
+        AB_diff_samples = np.array([
+            np.random.choice(A[i], size=M, replace=True) - np.random.choice(B[i], size=M, replace=True) 
+            for i in range(A.shape[0])
+        ])
+        return Single.from_samples(AB_diff_samples)
+    
+    @staticmethod
+    def from_samples_balanced_diff(A: np.ndarray, B: np.ndarray) -> VarComps:
+        """
+        For each row i, generate A_ij - B_ik where j and k covers all columns of A and B respectively
+        """
+        assert A.shape[0] == B.shape[0], "should be paired"
+        N = A.shape[0]
+        kA = A.shape[1]
+        kB = B.shape[1]
+        AB = np.zeros((N, kA*kB)) 
+        for i in range(N):
+            diffs = A[i][:, np.newaxis] - B[i][np.newaxis, :]
+            AB[i, :] = diffs.flatten()
+        comps = Single.from_samples(AB)
+        comps.paired = True
+        return comps
+    
 
 
 class Single:
     @staticmethod
-    def from_samples(A: np.ndarray, dof=0) -> VarComps:
+    def from_samples(A: np.ndarray) -> VarComps:
         return VarComps(
             total_var=var(A),
             var_E=var(mean(A, axis=1)),
@@ -157,12 +187,11 @@ class Single:
         )
     
     
-class SingleTest:
+class SingleExperimental:
     @staticmethod
-    def from_samples_naive(A: np.ndarray) -> VarComps:
-        N, kA = A.shape
+    def from_samples_naive(A: np.ndarray, M=100) -> VarComps:
         # draw M independent samples from the ith row of A, expanding kA to M for accurate direct estimations
-        M = 3*kA*kA
+        N, kA = A.shape
         A_expand_rows = np.array([np.random.choice(A[i], size=M, replace=True) for i in range(N)])
         # A_expand = np.array([np.random.choice(A.flatten, size=M, replace=True) for i in range(N)])
         return VarComps(
@@ -172,7 +201,7 @@ class SingleTest:
             E_var=float("nan") if kA == 1 else N * var(mean(A_expand_rows, axis=0)),
             paired=False,
             unbiased=False,
-            total_var_rtol=1, # total variance is not expected to hold
+            satisfy_total_variance=False, # total variance is not expected to hold
         )
     
     @staticmethod
@@ -201,5 +230,3 @@ class SingleTest:
             paired=False,
             unbiased=True
         )
-
-
