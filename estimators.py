@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from numpy import mean, var
 
-def cov(A, B, ddof=0):
+def cov(A: np.ndarray, B: np.ndarray, ddof=0) -> float:
     return np.sum((A - np.mean(A)) * (B - np.mean(B))) / (len(A) - ddof)
 
 @dataclass
@@ -75,7 +75,7 @@ class Paired:
             total_var=var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
             var_E=var(mean(A-B, axis=1)) - mean(var(A, axis=1)/(kA-1) + var(B, axis=1)/(kA-1)),
             E_var=mean(var(A, axis=1)* (1 + 1/(kA-1)) + var(B, axis=1) * (1 + 1/(kB-1))),
-            unbiased=True
+            unbiased=False
         )
 
     @staticmethod

@@ -7,8 +7,6 @@ from numpy import mean, var, std
 import pandas as pd
 import scipy.stats as stats
 
-import pytest
-
 from estimators import Paired, PairedExperimental, Single, SingleExperimental, VarComps, SingleVarComps, PairedVarComps
 
 
@@ -33,6 +31,7 @@ class GenerativeModel(ABC):
 
     def sample_idx(self):
         return np.random.choice(self.N_pop, size=self.N, replace=True)
+
 
 class BernoulliModel(GenerativeModel):
     def __init__(self, pA: np.ndarray, N: int, K: int):
@@ -69,6 +68,28 @@ class BernoulliModelStratified(BernoulliModel):
             unbiased=False,
             satisfy_total_variance=True
         )
+
+class BootstrapModel(GenerativeModel):
+    """
+    given A with size N_pop by K_pop. select rows of A iid with replacement (boostrap) N times,
+    then for each selected row,  draw K samples from that row, also iid with replacement.
+    useful to evaluating the SE of variance.
+    """
+    def __init__(self, A: np.ndarray, N: int, K: int):
+        self.A = A
+        self.N_pop = self.A.shape[0]
+        self.N = N
+        self.idx = self.sample_idx()
+        self.K = K
+
+    def sample_preds(self) -> np.ndarray:
+        N_pop, K = self.A.shape
+        row_idx = np.random.choice(N_pop, size=self.N, replace=True)
+        col_idx = np.random.choice(K, size=(self.N, self.K), replace=True)
+        return self.A[row_idx[:, None], col_idx]
+
+    def true_vars(self) -> dict[str]:
+        return Single.from_samples(self.A)
 
     
 class TestEstimator(ABC):
@@ -145,7 +166,7 @@ class TestPairedEstimators(TestEstimator):
             ests.append(vhat)
         return ests
 
-    def test_estimators(self, truth, modelA, modelB, estimators, verbose=False):
+    def estimator_results(self, truth, modelA, modelB, estimators, verbose=False):
         results_table = pd.DataFrame()
         modelB.idx = modelA.idx
         truth = Paired.from_bernoulli_prob(modelA.pA, modelB.pA)
@@ -169,7 +190,7 @@ class TestSingleEstimators(TestEstimator):
         return ests
 
     
-    def test_estimators(self, truth, model, estimators, verbose=False):
+    def estimator_results(self, truth, model, estimators, verbose=False):
         results_table = pd.DataFrame()
         for estimator in estimators:
             ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
@@ -179,9 +200,121 @@ class TestSingleEstimators(TestEstimator):
         return results_table
 
 
+# ============================================================================
+# actual test functions
+# ============================================================================
+
+def _table_single(pA, K, N):
+    model = BernoulliModel(pA, K=K, N=N)
+    truth = model.true_vars()
+    estimators = [
+        Single.from_samples,
+        Single.from_samples_unbiasedK,
+        SingleExperimental.from_samples_unbiasedNK,
+    ]
+    t = TestSingleEstimators().estimator_results(truth, model, estimators, verbose=False)
+    return t
+
+
+def _table_paired(pA, pB, K, N):
+    modelA = BernoulliModel(pA, K=K, N=N)
+    modelB = BernoulliModel(pB, K=K, N=N)
+    truth = Paired.from_bernoulli_prob(pA, pB)
+    estimators_to_test = [
+        Paired.from_samples,
+        Paired.from_samples_unbiasedK,
+    ]
+    return TestPairedEstimators().estimator_results(truth, modelA, modelB, estimators_to_test, verbose=False)
+
+
+def _subtest_stratified(pA, K):
+    model = BernoulliModelStratified(pA, K=K, N=pA.shape[0])
+    truth = model.true_vars()
+    estimators_to_test = [
+        SingleExperimental.from_samples_unbiased_stratified
+    ]
+    t = TestSingleEstimators().estimator_results(truth, model, estimators_to_test, verbose=False)
+    t_unbiased = t[t["unbiased"] == True]
+    if not all(t_unbiased["t_score"].abs() < 4):
+        raise ValueError("some unbiased estimator appears to be biased")
+
+    if any(t[t["comp"] == "var(A)"]["rms"] > 0.25):
+        raise ValueError("some total variance has unacceptable relative error")
+
+
+def test_single():
+    pA = np.array([[0.3], [0.1]])
+    t = _table_single(pA, K=10, N=2)
+    t_unbiased = t[t["unbiased"] == True]
+    assert all(t_unbiased["t_score"].abs() < 4)
+
+    pA = np.array([[0.1], [0.9]])
+    t = _table_single(pA, K=10, N=2)
+    t_unbiased = t[t["unbiased"] == True]
+    assert all(t_unbiased["t_score"].abs() < 4)
+
+    pA = np.random.beta(0.2, 0.8, (200, 1))
+    t = _table_single(pA, 10, N=100)
+    assert all(t["rms"] < 0.26)
+
+    pA = np.random.beta(0.2, 0.8, (400, 1))
+    t = _table_single(pA, 20, N=400)
+    assert all(t["rms"] < 0.13)
+
+    pA = 0.2 + 0.4 * np.random.rand(1000, 1)
+    t = _table_single(pA, K=10, N=500)
+    assert all(t[t["estimator"] != "from_samples"]["rms"] < 0.25)
+    assert all(t[t["estimator"] != "from_samples"]["t_score"] < 4)
+    assert any(t[t["estimator"] == "from_samples"]["rms"] > 0.25)
+
+    pA = np.random.beta(2, 1, (200, 1))
+    t = _table_single(pA, 10, N=100)
+    assert all(t[t["estimator"] != "from_samples"]["rms"] < 0.25)
+
+
+def test_stratified():
+    pA = np.array([[0.9], [0.1]])
+    _subtest_stratified(pA, 2)
+    _subtest_stratified(pA, 10)
+
+    pA = np.array([[0.4], [0.1]])
+    _subtest_stratified(pA, 20)
+
+
+def test_paired():
+    """Test paired model estimators."""
+    # unrelated Beta distributions should have reasonable error
+    pA = np.random.beta(0.3, 0.7, (100, 1))
+    pB = np.random.beta(0.2, 0.8, (100, 1))
+    t = _table_paired(pA, pB, K=10, N=100)
+    assert all(t["rms"] < 0.25)
+    assert any(t["rms"] > 0.1)
+
+    # Larger sample size - should have smaller error
+    pA = np.random.beta(0.3, 0.7, (500, 1))
+    pB = np.random.beta(0.2, 0.8, (500, 1))
+    t = _table_paired(pA, pB, K=40, N=400)
+    assert all(t["rms"] < 0.13)
+    assert all(t[t["comp"] == "var(A-B)"]["rms"] < 0.05)
+
+    # Correlated models - unbiased should outperform biased for var(E(A-B))
+    pA = np.random.beta(0.3, 0.7, (500, 1))
+    pB = np.clip(pA + 0.1 * (np.random.randn(*pA.shape) - 0), 0, 1)
+    t = _table_paired(pA, pB, K=200, N=500)
+
+    # In this test, the naive estimator should have higher error for var(E(A-B))
+    est_varE = t[(t["comp"] == "var(E(A-B))") & (t["estimator"] == Paired.from_samples.__name__)]["rms"].values[0]
+    est2_varE = t[(t["comp"] == "var(E(A-B))") & (t["estimator"] == Paired.from_samples_unbiasedK.__name__)]["rms"].values[0]
+    assert est_varE > est2_varE
+
+
 if __name__ == "__main__":
     # np.random.seed(42)
-    # for _ in range(10):
-    TestSingleEstimators().test_estimator()
-    # TestPairEstimators().test_self_uniform()
-    # TestPairEstimators().test_uniform()
+    test_single()
+    print("✓ test_single passed")
+
+    test_stratified()
+    print("✓ test_stratified passed")
+
+    test_paired()
+    print("✓ test_paired passed")
