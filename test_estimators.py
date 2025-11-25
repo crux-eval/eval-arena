@@ -11,6 +11,7 @@ import pytest
 
 from estimators import Paired, PairedExperimental, Single, SingleExperimental, VarComps, SingleVarComps, PairedVarComps
 
+
 class GenerativeModel(ABC):
     idx: np.ndarray # data index of the model, designed for paired
     N_pop: int # population size
@@ -31,16 +32,15 @@ class GenerativeModel(ABC):
         pass
 
     def sample_idx(self):
-        return np.random.choice(self.Npop, size=self.N, replace=True)
+        return np.random.choice(self.N_pop, size=self.N, replace=True)
 
 class BernoulliModel(GenerativeModel):
-    def __init__(self, pA: np.ndarray, N: int, K: int, resample_method=False):
+    def __init__(self, pA: np.ndarray, N: int, K: int):
         self.pA = pA
-        self.Npop = self.pA.shape[0]
+        self.N_pop = self.pA.shape[0]
         self.N = N
         self.idx = self.sample_idx()
         self.K = K
-        self.resample_method = resample_method
 
     def sample_preds(self) -> np.ndarray:
         p = self.pA[self.idx]
@@ -53,22 +53,27 @@ class BernoulliModel(GenerativeModel):
 
 
 class BernoulliModelStratified(BernoulliModel):
+    def __init__(self, pA: np.ndarray, N: int, K: int):
+        assert N == pA.shape[0], f"For stratified sampling, N must equal Npop (got N={N}, Npop={pA.shape[0]})"
+        super().__init__(pA, N, K)
+
     def sample_idx(self):
         return np.arange(self.N)
 
     def true_vars(self) -> dict[str]:
         pA = self.pA
         return SingleVarComps(
-            total_var=var(pA)+mean(pA*(1-pA)),
+            total_var=mean(pA)*(1-mean(pA)),
             var_E=var(pA),
-            E_var=(1+1/self.K)*mean(pA*(1-pA)),
+            E_var=mean(pA*(1-pA)),
             unbiased=False,
-            satisfy_total_variance=False
+            satisfy_total_variance=True
         )
 
     
 class TestEstimator(ABC):
-    def tscores(self, star: float, estimates: np.ndarray):
+    @staticmethod
+    def tscores(star: float, estimates: np.ndarray):
         errors = estimates - star
         se_mean = np.std(estimates, ddof=1) / np.sqrt(len(estimates))
         tstat = mean(errors) / se_mean
@@ -91,7 +96,8 @@ class TestEstimator(ABC):
         fig.add_vline(x=np.mean(estimates) - se_mean, line_dash="dot", line_color="yellow", name=f"mean + se(mean)")
         display(fig)
     
-    def evaluate_estimator(self, truth: VarComps, ests: list[VarComps], estimator, resample_method: bool, verbose=False):
+    @staticmethod
+    def evaluate_estimator(truth: VarComps, ests: list[VarComps], verbose=False):
         if verbose:
             print(f"{truth=}")
         rel_error_stats = []
@@ -99,11 +105,9 @@ class TestEstimator(ABC):
             star = truth[comp]
             ests_comp = np.array([e[comp] for e in ests])
 
-            t = self.tscores(star, ests_comp)
+            t = TestEstimator.tscores(star, ests_comp)
             rel_errors = (ests_comp - star) / star
             rel_error_stats.append({
-                "estimator": estimator.__name__,
-                "resample": resample_method,
                 "comp": comp,
                 "t_score": t,
                 "mean_rel_error": mean(rel_errors),
@@ -115,7 +119,7 @@ class TestEstimator(ABC):
                 "unbiased": ests[0].unbiased,
             })
             if verbose:
-                self.plot_distribution_vs_star(ests_comp, star)
+                TestEstimator.plot_distribution_vs_star(ests_comp, star)
 
         results = pd.DataFrame(rel_error_stats)
         if verbose:
@@ -147,7 +151,8 @@ class TestPairedEstimators(TestEstimator):
         truth = Paired.from_bernoulli_prob(modelA.pA, modelB.pA)
         for estimator in estimators:
             ests: list[VarComps] = self.get_estimates(modelA, modelB, estimator, attempts=1000)
-            results = self.evaluate_estimator(truth, ests, estimator, modelA.resample_method, verbose)
+            results = TestEstimator.evaluate_estimator(truth, ests, verbose)
+            results["estimator"] = estimator.__name__
             results_table = pd.concat([results_table, results], ignore_index=True)
 
         return results_table
@@ -168,9 +173,9 @@ class TestSingleEstimators(TestEstimator):
         results_table = pd.DataFrame()
         for estimator in estimators:
             ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
-            results = self.evaluate_estimator(truth, ests, estimator, model.resample_method, verbose)
+            results = TestEstimator.evaluate_estimator(truth, ests, verbose)
+            results["estimator"] = estimator.__name__
             results_table = pd.concat([results_table, results], ignore_index=True)
-
         return results_table
 
 

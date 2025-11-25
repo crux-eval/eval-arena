@@ -7,7 +7,6 @@ from numpy import mean, var
 def cov(A, B, ddof=0):
     return np.sum((A - np.mean(A)) * (B - np.mean(B))) / (len(A) - ddof)
 
-
 @dataclass
 class VarComps(ABC):
     total_var: float  # var(A-B) or var(A)
@@ -68,7 +67,7 @@ class Paired:
         )
     
     @staticmethod
-    def from_samples_unbiased(A: np.ndarray, B: np.ndarray) -> VarComps:
+    def from_samples_unbiasedK(A: np.ndarray, B: np.ndarray) -> VarComps:
         assert A.shape[0] == B.shape[0] # paired data
         kA = A.shape[1]
         kB = B.shape[1]
@@ -177,7 +176,7 @@ class Single:
             total_var=var(A),
             var_E=float("nan") if kA == 1 else var(mean(A, axis=1)) - 1/(kA-1) * mean(var(A, axis=1)),
             E_var=float("nan") if kA == 1 else mean(var(A, axis=1)) * (1 + 1/(kA-1)),
-            unbiased=True
+            unbiased=False
         )
 
     @staticmethod
@@ -187,8 +186,7 @@ class Single:
             var_E=var(pA),
             E_var=mean(pA*(1-pA)),
             unbiased=False
-        )
-    
+        )   
     
 class SingleExperimental:
     @staticmethod
@@ -220,7 +218,7 @@ class SingleExperimental:
     @staticmethod
     def from_samples_unbiasedNK(A: np.ndarray) -> VarComps:
         """
-        unbiased when drawing repeated samples
+        unbiased estimator in both N and K
         """
         kA = A.shape[1]
         N = A.shape[0]
@@ -229,4 +227,20 @@ class SingleExperimental:
             var_E=float("nan") if kA == 1 else var(mean(A, axis=1), ddof=1) - mean(var(A, axis=1, ddof=1)) + mean(var(A, axis=1, ddof=0)),
             E_var=float("nan") if kA == 1 else mean(var(A, axis=1, ddof=1)),
             unbiased=True
+        )
+    
+    @staticmethod
+    def from_samples_unbiased_stratified(A: np.ndarray) -> VarComps:
+        """
+        Test our understanding of stratified sampling, where the basic estimator is too big by O(1/NK) since the sample is less random
+        """
+        kA = A.shape[1]
+        N = A.shape[0]
+
+        return SingleVarComps(
+            total_var=float("nan") if kA == 1 else var(A) + 1/(N*kA) * mean(var(A, axis=1) * (1 + 1/(kA-1))),
+            var_E=float("nan") if kA == 1 else var(A) + (1/(N*kA) - 1) * mean(var(A, axis=1) * (1 + 1/(kA-1))),
+            E_var=float("nan") if kA == 1 else mean(var(A, axis=1) * (1 + 1/(kA-1))),
+            unbiased=True,
+            satisfy_total_variance=True
         )
