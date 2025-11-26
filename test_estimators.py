@@ -1,17 +1,14 @@
 from abc import ABC, abstractmethod
-from collections import defaultdict
-import random
 
 import numpy as np
-from numpy import mean, var, std
+from numpy import mean
 import pandas as pd
-import scipy.stats as stats
 
-from estimators import Paired, PairedExperimental, Single, SingleExperimental, VarComps, SingleVarComps, PairedVarComps
+from estimators import Paired, Single, SingleExperimental, VarComps 
 
 
 class GenerativeModel(ABC):
-    idx: np.ndarray # data index of the model, designed for paired
+    idx: np.ndarray # data index of the model to support pairing 
     N_pop: int # population size
     N: int # sample size
 
@@ -52,6 +49,9 @@ class BernoulliModel(GenerativeModel):
 
 
 class BernoulliModelStratified(BernoulliModel):
+    """
+    Not resampling the data, for measuring prediction variance directly
+    """
     def __init__(self, pA: np.ndarray, N: int, K: int):
         assert N == pA.shape[0], f"For stratified sampling, N must equal Npop (got N={N}, Npop={pA.shape[0]})"
         super().__init__(pA, N, K)
@@ -59,15 +59,6 @@ class BernoulliModelStratified(BernoulliModel):
     def sample_idx(self):
         return np.arange(self.N)
 
-    def true_vars(self) -> dict[str]:
-        pA = self.pA
-        return SingleVarComps(
-            total_var=mean(pA)*(1-mean(pA)),
-            var_E=var(pA),
-            E_var=mean(pA*(1-pA)),
-            unbiased=False,
-            satisfy_total_variance=True
-        )
 
 class BootstrapModel(GenerativeModel):
     """
@@ -83,10 +74,9 @@ class BootstrapModel(GenerativeModel):
         self.K = K
 
     def sample_preds(self) -> np.ndarray:
-        N_pop, K = self.A.shape
-        row_idx = np.random.choice(N_pop, size=self.N, replace=True)
-        col_idx = np.random.choice(K, size=(self.N, self.K), replace=True)
-        return self.A[row_idx[:, None], col_idx]
+        N_pop, K_pop = self.A.shape
+        col_idx = np.random.choice(K_pop, size=(self.N, self.K), replace=True)
+        return self.A[self.idx[:, None], col_idx]
 
     def true_vars(self) -> dict[str]:
         return Single.from_samples(self.A)
@@ -166,12 +156,10 @@ class TestPairedEstimators(TestEstimator):
             ests.append(vhat)
         return ests
 
-    def estimator_results(self, truth, modelA, modelB, estimators, verbose=False):
+    def estimator_results(self, truth, modelA, modelB, estimators, verbose=False, attempts=1000):
         results_table = pd.DataFrame()
-        modelB.idx = modelA.idx
-        truth = Paired.from_bernoulli_prob(modelA.pA, modelB.pA)
         for estimator in estimators:
-            ests: list[VarComps] = self.get_estimates(modelA, modelB, estimator, attempts=1000)
+            ests: list[VarComps] = self.get_estimates(modelA, modelB, estimator, attempts=attempts)
             results = TestEstimator.evaluate_estimator(truth, ests, verbose)
             results["estimator"] = estimator.__name__
             results_table = pd.concat([results_table, results], ignore_index=True)
@@ -190,10 +178,10 @@ class TestSingleEstimators(TestEstimator):
         return ests
 
     
-    def estimator_results(self, truth, model, estimators, verbose=False):
+    def estimator_results(self, truth, model, estimators, verbose=False, attempts=1000):
         results_table = pd.DataFrame()
         for estimator in estimators:
-            ests: list[VarComps] = self.get_estimates(model, estimator, attempts=1000)
+            ests: list[VarComps] = self.get_estimates(model, estimator, attempts=attempts)
             results = TestEstimator.evaluate_estimator(truth, ests, verbose)
             results["estimator"] = estimator.__name__
             results_table = pd.concat([results_table, results], ignore_index=True)
@@ -311,10 +299,5 @@ def test_paired():
 if __name__ == "__main__":
     # np.random.seed(42)
     test_single()
-    print("✓ test_single passed")
-
     test_stratified()
-    print("✓ test_stratified passed")
-
     test_paired()
-    print("✓ test_paired passed")
