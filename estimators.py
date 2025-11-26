@@ -16,7 +16,7 @@ class VarComps(ABC):
     satisfy_total_variance: bool = True
 
     def __post_init__(self):
-        if not self.satisfy_total_variance:
+        if not self.satisfy_total_variance or np.isnan(self.var_E) or np.isnan(self.E_var):
             return
         total = self.var_E + self.E_var
         if not np.isclose(total, self.total_var):
@@ -73,7 +73,7 @@ class Paired:
         kB = B.shape[1]
         return PairedVarComps(
             total_var=var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
-            var_E=var(mean(A-B, axis=1)) - mean(var(A, axis=1)/(kA-1) + var(B, axis=1)/(kA-1)),
+            var_E=var(mean(A, axis=1) - mean(B, axis=1)) - mean(var(A, axis=1)/(kA-1) + var(B, axis=1)/(kB-1)),
             E_var=mean(var(A, axis=1)* (1 + 1/(kA-1)) + var(B, axis=1) * (1 + 1/(kB-1))),
             unbiased=False
         )
@@ -142,11 +142,11 @@ class PairedExperimental:
         N = A.shape[0]
         kA = A.shape[1]
         kB = B.shape[1]
-        AB = np.zeros((N, kA*kB)) 
+        A_minus_B = np.zeros((N, kA*kB)) 
         for i in range(N):
             diffs = A[i][:, np.newaxis] - B[i][np.newaxis, :]
-            AB[i, :] = diffs.flatten()
-        comps = Single.from_samples(AB)
+            A_minus_B[i, :] = diffs.flatten()
+        comps = Single.from_samples(A_minus_B)
         return PairedVarComps(
             total_var=comps.total_var,
             var_E=comps.var_E,
@@ -164,7 +164,6 @@ class Single:
             unbiased=False
         )
     
-  
     @staticmethod
     def from_samples_unbiasedK(A: np.ndarray) -> VarComps:
         """
@@ -187,7 +186,8 @@ class Single:
             E_var=mean(pA*(1-pA)),
             unbiased=False
         )   
-    
+
+
 class SingleExperimental:
     @staticmethod
     def from_samples_naive(A: np.ndarray, M=100) -> VarComps:
