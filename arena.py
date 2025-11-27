@@ -9,6 +9,7 @@ from estimators import Paired
 
 logger = logging.getLogger(__name__)
 
+
 @dataclass
 class ArenaResult:
     summary: pd.DataFrame
@@ -74,10 +75,14 @@ class BattleSummary:
         pA = df["pass1_a"].to_numpy().reshape(N, 1)
         pB = df["pass1_b"].to_numpy().reshape(N, 1)
         
-        # note this is biased if model_a == model_b
-        vars = Paired.from_bernoulli_prob(pA, pB)
-        awin, bwin = df["awins"], df["bwins"]
+        kA = df["count_a"].to_list()[0]
+        kB = df["count_b"].to_list()[0]
         
+        # note this is biased if model_a == model_b
+        vars = Paired.from_bernoulli_prob_unbiasedK(pA, pB, kA, kB)
+        vars.clip()
+        # vars = Paired.from_bernoulli_prob(pA, pB)
+        awin, bwin = df["awins"], df["bwins"]
         assert np.allclose(df["pass1_a"] - df["pass1_b"], awin - bwin)
         r = {
             "total": N,
@@ -99,9 +104,8 @@ class BattleSummary:
 
     @staticmethod
     def battle_summary(battles: pd.DataFrame) -> pd.DataFrame:
-        diffvsum = battles.groupby(["model_a", "model_b"])\
-            .apply(BattleSummary._pair_summary)\
-            .reset_index(drop=False)
+        diffvsum = battles.groupby(["model_a", "model_b"], group_keys=True, as_index=False)\
+            .apply(BattleSummary._pair_summary)
         return diffvsum
 
 
@@ -159,10 +163,6 @@ def summarize_benchmark(df_input: pd.DataFrame, args: ReportArgs) -> ArenaResult
     benchmarks = set(df_input["benchmark_id"])
     assert len(benchmarks) == 1
     bid = benchmarks.pop()
-
-    if "count" not in df_input.columns:
-        df_input["count"] = 1
-        logger.info(f"Assuming one sample count=1 on {bid}")
     # df_input["count"] = df_input["count"].fillna(1, inplace=False)
 
     battles = BattleSummary.pass1_to_battle(df_input)
