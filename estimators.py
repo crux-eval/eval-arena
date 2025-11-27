@@ -16,12 +16,17 @@ class VarComps(ABC):
     satisfy_total_variance: bool = True
 
     def __post_init__(self):
-        if not self.satisfy_total_variance or np.isnan(self.var_E) or np.isnan(self.E_var):
-            return
-        total = self.var_E + self.E_var
-        if not np.isclose(total, self.total_var):
-            rtol = (total - self.total_var) / self.total_var
-            raise ValueError(f"Total variance did not hold. components {self.to_dict()}, rtol={rtol}")
+        if self.satisfy_total_variance and not np.isnan(self.var_E) and not np.isnan(self.E_var):
+            total = self.var_E + self.E_var
+            if not np.isclose(total, self.total_var):
+                rtol = (total - self.total_var) / self.total_var
+                raise ValueError(f"Total variance did not hold. components {self.to_dict()}, rtol={rtol}")
+
+    def clip(self):
+        """clip to valid range for downstream. Will be biased after clipping"""
+        if self.total_var < 0: self.total_var = 0
+        if self.var_E < 0: self.var_E = 0
+        if self.E_var < 0: self.E_var = 0
 
     @abstractmethod
     def to_dict(self) -> dict[str, float]:
@@ -71,10 +76,11 @@ class Paired:
         assert A.shape[0] == B.shape[0] # paired data
         kA = A.shape[1]
         kB = B.shape[1]
+        bias = 1/(kA-1) * mean(var(A, axis=1)) + 1/(kB-1) * mean(var(B, axis=1))
         return PairedVarComps(
             total_var=var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
-            var_E=var(mean(A, axis=1) - mean(B, axis=1)) - mean(var(A, axis=1)/(kA-1) + var(B, axis=1)/(kB-1)),
-            E_var=mean(var(A, axis=1)* (1 + 1/(kA-1)) + var(B, axis=1) * (1 + 1/(kB-1))),
+            var_E=var(mean(A, axis=1) - mean(B, axis=1)) - bias,
+            E_var=mean(var(A, axis=1)) + mean(var(B, axis=1)) + bias,
             unbiased=False
         )
 
@@ -89,9 +95,30 @@ class Paired:
         pA = pA.flatten()
         pB = pB.flatten()
         return PairedVarComps(
-            total_var=np.clip(mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*cov(pA, pB), a_min=0, a_max=None),
+            total_var=mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*cov(pA, pB),
             var_E=var(pA - pB),
-            E_var=mean(pA*(1-pA) + pB*(1-pB)),
+            E_var=mean(pA*(1-pA)) + mean(pB*(1-pB)),
+            unbiased=False
+        )
+    
+    @staticmethod
+    def from_bernoulli_prob_unbiasedK(pA: np.ndarray, pB: np.ndarray, kA: int, kB: int) -> VarComps:
+        """Calculate variance from the probability of Bernoulli
+            Args:
+                pA, pB: Success probabilities of shape (n_samples, 1)
+        """
+        assert pA.shape[0] == pB.shape[0]
+        assert pA.shape[1] == pB.shape[1] == 1
+        pA = pA.flatten()
+        pB = pB.flatten()
+        if kA == 1 or kB == 1:
+            bias = np.nan
+        else:
+            bias = 1/kA * mean(pA*(1-pA)) + 1/kB * mean(pB*(1-pB)) 
+        return PairedVarComps(
+            total_var=mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*cov(pA, pB),
+            var_E=var(pA - pB) - bias,
+            E_var=mean(pA*(1-pA)) + mean(pB*(1-pB)) + bias,
             unbiased=False
         )
 

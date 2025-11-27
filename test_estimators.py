@@ -176,7 +176,6 @@ class TestSingleEstimators(TestEstimator):
             vhat = estimator(A)
             ests.append(vhat)
         return ests
-
     
     def estimator_results(self, truth, model, estimators, verbose=False, attempts=1000):
         results_table = pd.DataFrame()
@@ -275,6 +274,7 @@ def test_paired():
     pA = np.random.beta(0.3, 0.7, (100, 1))
     pB = np.random.beta(0.2, 0.8, (100, 1))
     t = _table_paired(pA, pB, K=10, N=100)
+    print(t)
     assert all(t["rms"] < 0.25)
     assert any(t["rms"] > 0.1)
 

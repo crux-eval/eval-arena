@@ -10,7 +10,7 @@ from arena import ReportArgs
 from report_example import gen_example_report
 from report_model import gen_model_report, write_data_tables, write_summary_table
 from signal_noise import signal_to_noise
-from utils import load_jsonl_files
+from utils import load_jsonl_files, check_data, fill_count
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +30,8 @@ def setup_output(args: ReportArgs):
 def run_arena(args: ReportArgs):
     records = load_jsonl_files(args.data)
     eval_results = pd.DataFrame(records)
+    eval_results = fill_count(eval_results)
+    check_data(eval_results)
     logger.info(f"Loaded {len(eval_results)} evaluation results")
 
     benchmarks = set(eval_results["benchmark_id"])
