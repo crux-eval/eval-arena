@@ -114,7 +114,7 @@ class Paired:
         if kA == 1 or kB == 1:
             bias = np.nan
         else:
-            bias = 1/kA * mean(pA*(1-pA)) + 1/kB * mean(pB*(1-pB)) 
+            bias = 1/(kA-1) * mean(pA*(1-pA)) + 1/(kB-1) * mean(pB*(1-pB)) 
         return PairedVarComps(
             total_var=mean(pA)*(1-mean(pA)) + mean(pB)*(1-mean(pB)) - 2*cov(pA, pB),
             var_E=var(pA - pB) - bias,
@@ -152,7 +152,7 @@ class PairedExperimental:
     
     @staticmethod
     def from_samples_random_diffs(A: np.ndarray, B: np.ndarray, M=1000) -> VarComps:
-        assert A.shape[0] == B.shape[0], "should be paired"
+        assert A.shape[0] == B.shape[0]
         # For each row i, generate M samples of A_ij - B_ik where j and k are randomly drawn
         AB_diff_samples = np.array([
             np.random.choice(A[i], size=M, replace=True) - np.random.choice(B[i], size=M, replace=True) 
@@ -165,7 +165,7 @@ class PairedExperimental:
         """
         For each row i, generate A_ij - B_ik where j and k covers all columns of A and B respectively
         """
-        assert A.shape[0] == B.shape[0], "should be paired"
+        assert A.shape[0] == B.shape[0]
         N = A.shape[0]
         kA = A.shape[1]
         kB = B.shape[1]
@@ -198,10 +198,11 @@ class Single:
         """
         kA = A.shape[1]
         N = A.shape[0]
+        bias = 1/(kA-1) * mean(var(A, axis=1)) 
         return SingleVarComps(
             total_var=var(A),
-            var_E=float("nan") if kA == 1 else var(mean(A, axis=1)) - 1/(kA-1) * mean(var(A, axis=1)),
-            E_var=float("nan") if kA == 1 else mean(var(A, axis=1)) * (1 + 1/(kA-1)),
+            var_E=float("nan") if kA == 1 else var(mean(A, axis=1)) - bias,
+            E_var=float("nan") if kA == 1 else mean(var(A, axis=1)) + bias,
             unbiased=False
         )
 
@@ -221,25 +222,12 @@ class SingleExperimental:
         # draw M independent samples from the ith row of A, expanding kA to M for accurate direct estimations
         N, kA = A.shape
         A_expand_rows = np.array([np.random.choice(A[i], size=M, replace=True) for i in range(N)])
-        # A_expand = np.array([np.random.choice(A.flatten, size=M, replace=True) for i in range(N)])
         return SingleVarComps(
             total_var=np.mean(var(A_expand_rows, axis=0)),
             var_E=float("nan") if kA == 1 else var(mean(A_expand_rows, axis=1)),
-            # E_var is estimated directly
             E_var=float("nan") if kA == 1 else N * var(mean(A_expand_rows, axis=0)),
             unbiased=False,
             satisfy_total_variance=False, # total variance is not expected to hold
-        )
-    
-    @staticmethod
-    def from_samples_unbiased(A: np.ndarray) -> VarComps:
-        kA = A.shape[1]
-        N = A.shape[0]
-        return SingleVarComps(
-            total_var=var(A) * (1 + 1/(N*kA - 1)),
-            var_E=float("nan") if kA == 1 else var(mean(A, axis=1)) - 1/(kA-1) * mean(var(A, axis=1)) + var(A)*1/(N*kA - 1),
-            E_var=float("nan") if kA == 1 else mean(var(A, axis=1)* (1 + 1/(kA-1))),
-            unbiased=True
         )
     
     @staticmethod
