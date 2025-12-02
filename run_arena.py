@@ -36,6 +36,7 @@ def run_arena(args: ReportArgs):
 
     benchmarks = set(eval_results["benchmark_id"])
     logger.info(f"Included benchmarks: {benchmarks}")
+    logger.info(f"Included models: {set(eval_results['model'])}")
     tmp_dir = Path(args.out_dir) / "tmp"
 
     if args.recompute:
