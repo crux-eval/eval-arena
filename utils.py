@@ -22,7 +22,9 @@ def load_jsonl_files(pattern: str) -> List[Dict[str, Any]]:
 def fill_count(df) -> pd.DataFrame:
     for benchmark_id in df['benchmark_id'].unique():
         benchmark_df = df[df['benchmark_id'] == benchmark_id]
-        if any(benchmark_df["count"].isna()):
+        if "count" not in benchmark_df:
+            df.loc[df['benchmark_id'] == benchmark_id, "count"] = 1 
+        elif any(benchmark_df["count"].isna()):
             logger.info(f"no count on {benchmark_id=}, filling count=1")
             assert all(benchmark_df["count"].isna())
             df.loc[df['benchmark_id'] == benchmark_id, "count"] = 1
