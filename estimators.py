@@ -9,9 +9,9 @@ def cov(A: np.ndarray, B: np.ndarray, ddof=0) -> float:
 
 @dataclass
 class VarComps(ABC):
-    total_var: float  # var(A-B) or var(A)
-    var_E: float  # var(E(A-B)) or var(E(A))
-    E_var: float  # E(var(A-B)) or E(var(A))
+    total_var: float  # The total variance, var(A-B) or var(A)
+    var_E: float  # The data variance, var(E(A-B)) or var(E(A))
+    E_var: float  # The prediction variance, E(var(A-B)) or E(var(A))
     unbiased: bool = False
     satisfy_total_variance: bool = True
 
@@ -83,6 +83,19 @@ class Paired:
             E_var=mean(var(A, axis=1)) + mean(var(B, axis=1)) + bias,
             unbiased=False
         )
+    
+    @staticmethod
+    def from_samples_unbiasedK_off1(A: np.ndarray, B: np.ndarray) -> VarComps:
+        assert A.shape[0] == B.shape[0] # paired data
+        kA = A.shape[1]
+        kB = B.shape[1]
+        bias = 1/(kA) * mean(var(A, axis=1)) + 1/(kB) * mean(var(B, axis=1))
+        return PairedVarComps(
+            total_var=var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
+            var_E=var(mean(A, axis=1) - mean(B, axis=1)) - bias,
+            E_var=mean(var(A, axis=1)) + mean(var(B, axis=1)) + bias,
+            unbiased=False
+        )
 
     @staticmethod
     def from_bernoulli_prob(pA: np.ndarray, pB: np.ndarray) -> VarComps:
@@ -126,7 +139,7 @@ class Paired:
 class PairedExperimental:
     @staticmethod
     def from_bernoulli_prob_self(pA: np.ndarray, K: np.ndarray) -> VarComps:
-        """Calculate variance for Bernoulli random variables
+        """Calculate the variance components of A-A', A' contains the exact same set of samples as A
             Args:
                 pA: Success probabilities of shape (n_samples, 1)
                 K: number of samples for bias correction
@@ -134,13 +147,12 @@ class PairedExperimental:
         assert pA.shape == K.shape
         assert all(K > 1), "need more than 1 sample per problem"
         pA = pA.flatten()
-        # use all
-        # pA * (pA * K - 1)/(K-1)
         # a direct computation using leave one out sampling
         covAA = mean((pA*pA - 1/K*pA)*(K/(K-1))) - mean(pA)**2
         var_A_minus_B = 2*mean(pA)*(1-mean(pA)) - 2*covAA
 
-        E_var_A_minus_B = 2*mean(pA*(1-pA) * K/(K-1))
+        # using 0
+        E_var_A_minus_B = 2*mean(pA*(1-pA) * (1+1/(K-1)))
         assert var_A_minus_B > 0 or np.allclose(var_A_minus_B, 0), f"{var_A_minus_B=}"
         assert np.allclose(var_A_minus_B, E_var_A_minus_B)
         return PairedVarComps(
