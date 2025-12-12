@@ -15,10 +15,15 @@ logger = logging.getLogger(__name__)
 
 PLOTLY_CONFIGS = dict(full_html=False, include_plotlyjs="cdn")
 
-def fig_diff_vs_sum(bmname: str, summary: pd.DataFrame):
-    data_sz = summary.iloc[0]["total"]
+def fig_diff_vs_sum(bmname: str, df_summary: pd.DataFrame, perf_thres: float = 0.05):
+    df = df_summary.copy()
+    data_sz = df.iloc[0]["total"]
 
-    figs = px.scatter(summary, x=summary["sum(A-B)"].abs(), y="sum(A!=B)",
+    has_ok_perf = (df["accA"] > perf_thres) & (df["accB"] > perf_thres) 
+    df = df[has_ok_perf]
+
+
+    figs = px.scatter(df, x=df["sum(A-B)"].abs(), y="sum(A!=B)", 
                       custom_data=["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "SE_x(A-B)", "corr(A,B)"])
     figs.update_traces(hovertemplate=
         "<br>".join([
@@ -38,7 +43,7 @@ def fig_diff_vs_sum(bmname: str, summary: pd.DataFrame):
         )
     )
 
-    maxy = summary["sum(A!=B)"].max()
+    maxy = df["sum(A!=B)"].max()
     refs = []
     x = np.linspace(0, data_sz / 2, 100)
     refs.append(pd.DataFrame({"x": x, "y": x, "type": "x=y"}))
@@ -161,7 +166,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     figl.add_trace(go.Scatter(
         x=x, y=np.sqrt(2)*y, name="indep. theory",
         # hoverinfo="skip",
-        line=dict(color="darkgreen", dash="dash")
+        line=dict(color="black", dash="dash")
     ))
 
     marginals = input_table.groupby(["example_id"]).agg({'pass1': 'mean'}).reset_index()
@@ -361,7 +366,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
         for c in includes:
             percent[c] = percent[c] / percent["size"]
         return percent
-    includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE_x(A)", "SE(A-B)", "SE_x(A-B)", "corr(A,B)", "no_solve", "tau-", "sig_noise", "details"]
+    includes_cols = ["benchmark_id", "size", "models", "SE(A)", "SE_x(A)", "SE(A-B)", "SE_x(A-B)", "corr(A,B)", "no_solve", "tau-", "details"]
     if not include_var_components:
         includes_cols = [c for c in includes_cols if not c.startswith("SE_x")]
     percent_cols = ["no_solve", "tau-"]
