@@ -4,7 +4,7 @@ import numpy as np
 from numpy import mean
 import pandas as pd
 
-from estimators import Paired, Single, SingleExperimental, VarComps 
+from estimators import Paired, Unpaired, UnpairedExperimental, VarComps 
 
 
 class GenerativeModel(ABC):
@@ -45,7 +45,7 @@ class BernoulliModel(GenerativeModel):
         return A
 
     def true_vars(self) -> dict[str]:
-        return Single.from_bernoulli_prob(self.pA)
+        return Unpaired.from_bernoulli_prob(self.pA)
 
 
 class BernoulliModelStratified(BernoulliModel):
@@ -79,7 +79,7 @@ class BootstrapModel(GenerativeModel):
         return self.A[self.idx[:, None], col_idx]
 
     def true_vars(self) -> dict[str]:
-        return Single.from_samples(self.A)
+        return Unpaired.from_samples(self.A)
 
     
 class TestEstimator(ABC):
@@ -195,9 +195,9 @@ def _table_single(pA, K, N):
     model = BernoulliModel(pA, K=K, N=N)
     truth = model.true_vars()
     estimators = [
-        Single.from_samples,
-        Single.from_samples_unbiasedK,
-        SingleExperimental.from_samples_unbiasedNK,
+        Unpaired.from_samples,
+        Unpaired.from_samples_unbiasedK,
+        UnpairedExperimental.from_samples_unbiasedNK,
     ]
     t = TestSingleEstimators().estimator_results(truth, model, estimators, verbose=False)
     return t
@@ -218,7 +218,7 @@ def _subtest_stratified(pA, K):
     model = BernoulliModelStratified(pA, K=K, N=pA.shape[0])
     truth = model.true_vars()
     estimators_to_test = [
-        SingleExperimental.from_samples_unbiased_stratified
+        UnpairedExperimental.from_samples_unbiased_stratified
     ]
     t = TestSingleEstimators().estimator_results(truth, model, estimators_to_test, verbose=False)
     t_unbiased = t[t["unbiased"] == True]

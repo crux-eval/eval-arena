@@ -1,5 +1,5 @@
 import numpy as np
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from abc import ABC, abstractmethod
 from numpy import mean, var
@@ -7,26 +7,33 @@ from numpy import mean, var
 def cov(A: np.ndarray, B: np.ndarray, ddof=0) -> float:
     return np.sum((A - np.mean(A)) * (B - np.mean(B))) / (len(A) - ddof)
 
-@dataclass
+@dataclass(frozen=True)
 class VarComps(ABC):
-    total_var: float  # The total variance, var(A-B) or var(A)
-    var_E: float  # The data variance, var(E(A-B)) or var(E(A))
-    E_var: float  # The prediction variance, E(var(A-B)) or E(var(A))
+    total_var: float
+    """The total variance, shown as var(A-B) or var(A)"""
+    var_E: float
+    """The data variance, shown as var(E(A-B)) or var(E(A))"""
+    E_var: float
+    """The prediction variance, shown as E(var(A-B)) or E(var(A))"""
     unbiased: bool = False
-    satisfy_total_variance: bool = True
+    satisfy_total_var: bool = True
 
     def __post_init__(self):
-        if self.satisfy_total_variance and not np.isnan(self.var_E) and not np.isnan(self.E_var):
+        if self.satisfy_total_var and not np.isnan(self.var_E) and not np.isnan(self.E_var):
             total = self.var_E + self.E_var
             if not np.isclose(total, self.total_var):
                 rtol = (total - self.total_var) / self.total_var
                 raise ValueError(f"Total variance did not hold. components {self.to_dict()}, rtol={rtol}")
 
-    def clip(self):
-        """clip to valid range for downstream use"""
-        if self.total_var < 0: self.total_var = 0
-        if self.var_E < 0: self.var_E = 0
-        if self.E_var < 0: self.E_var = 0
+    def clipped(self):
+        """Return a clipped version of this dataclass with values in valid range"""
+        return replace(
+            self,
+            total_var=max(0, self.total_var),
+            var_E=max(0, self.var_E),
+            E_var=max(0, self.E_var),
+            satisfy_total_var=False,
+        )
 
     @abstractmethod
     def to_dict(self) -> dict[str, float]:
@@ -36,7 +43,6 @@ class VarComps(ABC):
         return self.to_dict()[key]
 
 
-@dataclass
 class PairedVarComps(VarComps):
     def to_dict(self) -> dict[str, float]:
         return {
@@ -46,7 +52,6 @@ class PairedVarComps(VarComps):
         }
 
 
-@dataclass
 class SingleVarComps(VarComps):
     def to_dict(self) -> dict[str, float]:
         return {
@@ -57,11 +62,14 @@ class SingleVarComps(VarComps):
 
 
 class Paired:
+    """
+    Namespace containing the recommended estimators
+    """
     @staticmethod
     def from_samples(A: np.ndarray, B: np.ndarray) -> VarComps:
-        """Calculate variance from
+        """Calculate variance from samples
             Args:
-                A, B: Success probabilities of shape (N questions, by K predictions for each question)
+                A, B: metric results (N questions, by K predictions for each question)
         """
         assert A.shape[0] == B.shape[0], "should be paired"
         return PairedVarComps(
@@ -73,6 +81,9 @@ class Paired:
     
     @staticmethod
     def from_samples_unbiasedK(A: np.ndarray, B: np.ndarray) -> VarComps:
+        """Like from_samples, but correcting for small K. When the estimator is unbiased in K, large N can average out the error
+        this is especially important when the data noise var_E is smaller than E_var
+        """
         assert A.shape[0] == B.shape[0] # paired data
         kA = A.shape[1]
         kB = B.shape[1]
@@ -84,24 +95,16 @@ class Paired:
             unbiased=False
         )
     
-    @staticmethod
-    def from_samples_unbiasedK_off1(A: np.ndarray, B: np.ndarray) -> VarComps:
-        assert A.shape[0] == B.shape[0] # paired data
-        kA = A.shape[1]
-        kB = B.shape[1]
-        bias = 1/(kA) * mean(var(A, axis=1)) + 1/(kB) * mean(var(B, axis=1))
-        return PairedVarComps(
-            total_var=var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
-            var_E=var(mean(A, axis=1) - mean(B, axis=1)) - bias,
-            E_var=mean(var(A, axis=1)) + mean(var(B, axis=1)) + bias,
-            unbiased=False
-        )
-
+    
     @staticmethod
     def from_bernoulli_prob(pA: np.ndarray, pB: np.ndarray) -> VarComps:
-        """Calculate variance from the probability of Bernoulli
-            Args:
-                pA, pB: Success probabilities of shape (n_samples, 1)
+        """
+        same as from_samples, but useful on correctness evals that's already aggregated into a probability of correct rather than 0,1 samples.
+        i.e. from_bernoulli_prob(pA, pA) == from_samples(A, B)
+        if pA == A.sum(axis=1) and pB == B.sum(axis=1)
+
+        Args:
+                pA, pB: probability of correct on each of N questions
         """
         assert pA.shape[0] == pB.shape[0]
         assert pA.shape[1] == pB.shape[1] == 1
@@ -116,9 +119,10 @@ class Paired:
     
     @staticmethod
     def from_bernoulli_prob_unbiasedK(pA: np.ndarray, pB: np.ndarray, kA: int, kB: int) -> VarComps:
-        """Calculate variance from the probability of Bernoulli
-            Args:
-                pA, pB: Success probabilities of shape (n_samples, 1)
+        """Like from_bernoulli_prob, but correcting for small K.
+        Args:
+                pA, pB: metric results N questions
+                kA, kB: the number of actual samples used to calculate pA and pB
         """
         assert pA.shape[0] == pB.shape[0]
         assert pA.shape[1] == pB.shape[1] == 1
@@ -136,10 +140,67 @@ class Paired:
         )
 
 
+class Unpaired:
+    """
+    Namespace containing the same methods as Paired.
+    These can be useful as a baseline, but has less power compared to Paired
+    """
+    @staticmethod
+    def from_samples(A: np.ndarray) -> VarComps:
+        return SingleVarComps(
+            total_var=var(A),
+            var_E=var(mean(A, axis=1)),
+            E_var=mean(var(A, axis=1)),
+            unbiased=False
+        )
+    
+    @staticmethod
+    def from_samples_unbiasedK(A: np.ndarray) -> VarComps:
+        kA = A.shape[1]
+        N = A.shape[0]
+        bias = 1/(kA-1) * mean(var(A, axis=1)) 
+        return SingleVarComps(
+            total_var=var(A),
+            var_E=float("nan") if kA == 1 else var(mean(A, axis=1)) - bias,
+            E_var=float("nan") if kA == 1 else mean(var(A, axis=1)) + bias,
+            unbiased=False
+        )
+
+    @staticmethod
+    def from_bernoulli_prob(pA: np.ndarray) -> VarComps:
+        assert pA.shape[1] == 1
+        pA = pA.flatten()
+        return SingleVarComps(
+            total_var=mean(pA)*(1-mean(pA)),
+            var_E=var(pA),
+            E_var=mean(pA*(1-pA)),
+            unbiased=False
+        )   
+    
+    @staticmethod
+    def from_bernoulli_prob_unbiasedK(pA: np.ndarray, kA: int) -> VarComps:
+        # assert pA.shape[1] == 1
+        pA = pA.flatten()
+        if kA == 1:
+            bias = np.nan
+        else:
+            bias = 1/(kA-1) * mean(pA*(1-pA)) 
+        return SingleVarComps(
+            total_var=mean(pA)*(1-mean(pA)),
+            var_E=var(pA) - bias,
+            E_var=mean(pA*(1-pA))  + bias,
+            unbiased=False
+        )
+
+
 class PairedExperimental:
+    """
+    Namespace containing experimental estimators. Useful for testing, and for understanding the setup and bias, but not recommended for most.
+    """
     @staticmethod
     def from_bernoulli_prob_self(pA: np.ndarray, K: np.ndarray) -> VarComps:
         """Calculate the variance components of A-A', A' contains the exact same set of samples as A
+        Used to check that the two ways to compute this agrees with each other
             Args:
                 pA: Success probabilities of shape (n_samples, 1)
                 K: number of samples for bias correction
@@ -170,12 +231,13 @@ class PairedExperimental:
             np.random.choice(A[i], size=M, replace=True) - np.random.choice(B[i], size=M, replace=True) 
             for i in range(A.shape[0])
         ])
-        return Single.from_samples(AB_diff_samples)
+        return Unpaired.from_samples(AB_diff_samples)
     
     @staticmethod
     def from_samples_balanced_diff(A: np.ndarray, B: np.ndarray) -> VarComps:
         """
         For each row i, generate A_ij - B_ik where j and k covers all columns of A and B respectively
+        should agree with the basic from_samples estimator
         """
         assert A.shape[0] == B.shape[0]
         N = A.shape[0]
@@ -185,50 +247,34 @@ class PairedExperimental:
         for i in range(N):
             diffs = A[i][:, np.newaxis] - B[i][np.newaxis, :]
             A_minus_B[i, :] = diffs.flatten()
-        comps = Single.from_samples(A_minus_B)
+        comps = Unpaired.from_samples(A_minus_B)
         return PairedVarComps(
             total_var=comps.total_var,
             var_E=comps.var_E,
             E_var=comps.E_var,
         )
-    
 
-class Single:
     @staticmethod
-    def from_samples(A: np.ndarray) -> VarComps:
-        return SingleVarComps(
-            total_var=var(A),
-            var_E=var(mean(A, axis=1)),
-            E_var=mean(var(A, axis=1)),
-            unbiased=False
-        )
-    
-    @staticmethod
-    def from_samples_unbiasedK(A: np.ndarray) -> VarComps:
+    def from_samples_unbiasedK_off1(A: np.ndarray, B: np.ndarray) -> VarComps:
         """
-        only be unbiased in K, assumes N is large enough
+        Used to check if the slightly biased correction is observably worse -- it is. So not recommended.
         """
+        assert A.shape[0] == B.shape[0] # paired data
         kA = A.shape[1]
-        N = A.shape[0]
-        bias = 1/(kA-1) * mean(var(A, axis=1)) 
-        return SingleVarComps(
-            total_var=var(A),
-            var_E=float("nan") if kA == 1 else var(mean(A, axis=1)) - bias,
-            E_var=float("nan") if kA == 1 else mean(var(A, axis=1)) + bias,
+        kB = B.shape[1]
+        bias = 1/(kA) * mean(var(A, axis=1)) + 1/(kB) * mean(var(B, axis=1))
+        return PairedVarComps(
+            total_var=var(A) + var(B) - 2 * cov(mean(A, axis=1), mean(B, axis=1)),
+            var_E=var(mean(A, axis=1) - mean(B, axis=1)) - bias,
+            E_var=mean(var(A, axis=1)) + mean(var(B, axis=1)) + bias,
             unbiased=False
         )
 
-    @staticmethod
-    def from_bernoulli_prob(pA: np.ndarray) -> VarComps:
-        return SingleVarComps(
-            total_var=mean(pA)*(1-mean(pA)),
-            var_E=var(pA),
-            E_var=mean(pA*(1-pA)),
-            unbiased=False
-        )   
 
-
-class SingleExperimental:
+class UnpairedExperimental:
+    """
+    Namespace containing experimental estimators. Useful for testing, and for understanding the setup and bias, but not recommended for most.
+    """
     @staticmethod
     def from_samples_naive(A: np.ndarray, M=100) -> VarComps:
         # draw M independent samples from the ith row of A, expanding kA to M for accurate direct estimations
@@ -245,7 +291,9 @@ class SingleExperimental:
     @staticmethod
     def from_samples_unbiasedNK(A: np.ndarray) -> VarComps:
         """
-        unbiased estimator in both N and K
+        unbiased estimator in both N and K. The challenge is to have an estimator that passes the unbiasedness test even on small N
+        This is not recommended, since the unbiased one has higher rms.
+        When N is too small such that the bias matters, all the estimators are too inaccurate to be useful.
         """
         kA = A.shape[1]
         N = A.shape[0]

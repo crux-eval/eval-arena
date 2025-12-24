@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as stats
 
-from estimators import Paired
+from estimators import Paired, Unpaired
 
 logger = logging.getLogger(__name__)
 
@@ -79,8 +79,7 @@ class BattleSummary:
         kB = df["count_b"].to_list()[0]
         
         # note this is biased if model_a == model_b
-        vars = Paired.from_bernoulli_prob_unbiasedK(pA, pB, kA, kB)
-        vars.clip()
+        vars = Paired.from_bernoulli_prob_unbiasedK(pA, pB, kA, kB).clipped()
         # vars = Paired.from_bernoulli_prob(pA, pB)
         awin, bwin = df["awins"], df["bwins"]
         assert np.allclose(df["pass1_a"] - df["pass1_b"], awin - bwin)
@@ -111,17 +110,21 @@ class BattleSummary:
 
 def model_table(df_input, battles: pd.DataFrame | None = None):
     def _stds(g: pd.Series):
-        pass1s = g["pass1"]
-        data_sz = len(pass1s)
-        p = pass1s.to_numpy()
+        pA = g["pass1"].to_numpy()
+        kA = g["count"].to_numpy()
+        if len(set(kA)) == 1:
+            kA = kA[0]
+        else:
+            kA = 1
+        vars = Unpaired.from_bernoulli_prob_unbiasedK(pA, kA).clipped()
+        data_sz = len(pA)
         vars = {
-            "SE_pred(A)": np.sqrt(1 / data_sz * np.mean(p*(1-p))),
-            "SE_x(A)": 1 / np.sqrt(data_sz) * np.std(p),
-            "SE(A)": np.sqrt(1 / data_sz * p.mean()* (1-p.mean())),
-            "pass1": np.mean(pass1s),
+            "SE_pred(A)": np.sqrt(1 / data_sz * vars.E_var),
+            "SE_x(A)": np.sqrt(1 / data_sz * vars.var_E),
+            "SE(A)": np.sqrt(1 / data_sz * vars.total_var),
+            "pass1": np.mean(pA),
             "count": np.mean(g["count"]),
         }
-        assert np.allclose(vars["SE_pred(A)"]**2 + vars["SE_x(A)"]**2, vars["SE(A)"]**2)
         return pd.Series(vars)
 
     # add std if pass1 is not just 0 or 1 
