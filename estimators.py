@@ -23,7 +23,7 @@ class VarComps(ABC):
                 raise ValueError(f"Total variance did not hold. components {self.to_dict()}, rtol={rtol}")
 
     def clip(self):
-        """clip to valid range for downstream. Will be biased after clipping"""
+        """clip to valid range for downstream use"""
         if self.total_var < 0: self.total_var = 0
         if self.var_E < 0: self.var_E = 0
         if self.E_var < 0: self.E_var = 0
@@ -259,7 +259,11 @@ class SingleExperimental:
     @staticmethod
     def from_samples_unbiased_stratified(A: np.ndarray) -> VarComps:
         """
-        Test our understanding of stratified sampling, where the basic estimator is too big by O(1/NK) since the sample is less random
+        Test our understanding of stratified sampling where K samples are draw from each question.
+        Here the basic estimator is too small by O(1/NK) since the sample is less random
+        For example, if p_1=0.9, p_2=0.1, the true total var is still 0.25, but a sample estimator
+        will return (0.81+0.01)*0.25 instead and there is nothing we can do if K=1.
+        For K > 1, the stratified sample [~1, ~1, ..; ~0, ~0, ..] needs this estimator to get the right answer
         """
         kA = A.shape[1]
         N = A.shape[0]
