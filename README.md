@@ -21,8 +21,8 @@ and [the predictions heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex
 
 ### Why?
 * These measurements allow us to assess the statistical significance of any results on these evals.
-* Allows us to detect much smaller effects in well-controlled experiments when prediction noise > data noise.
-* When prediction noise is too high, modelling the data is pointless, so we should know how much noise is due to the model predictions vs. the eval data.
+* Shows that we can detect much smaller effects when prediction noise > data noise. Typically this allows us to detect 1/2 the effect size, but could be <1/6 on related models and even less on related checkpoints.
+* When prediction noise is too high, modelling the data is pointless, so we need to know how much noise is due to the model predictions vs. the eval data.
 
 ### How?
 * Since LLMs can draw independent and diverse samples, we can draw multiple samples to measure the prediction noise directly.
@@ -75,18 +75,7 @@ The dataset used to produce the results can be found in the release. Correspondi
 }
 ```
 
-For the data or findings in [eval-arena](doc/eval-arena-readme.md):
-
-```bibtex
-@misc{evalarena,
-  title = {{E}val-{A}rena: noise and errors on LLM evaluations},
-  author = {Sida I. Wang and Alex Gu and Lovish Madaan and Dieuwke Hupkes and Jiawei Liu and Yuxiang Wei and Naman Jain and Yuhang Lai and Sten Sootla and Ofir Press and Baptiste Rozière and Gabriel Synnaeve},
-  year = {2024},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/crux-eval/eval-arena}}
-}
-```
+For findings in [eval-arena](doc/eval-arena-readme.md#contributors-and-citation):
 
 ## 🙏 Acknowledgements
 I thank Sean O’Brien, Lovish Madaan, Dieuwke Hupkes, Alex Gu, Jiawei

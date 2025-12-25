@@ -108,7 +108,7 @@ Additional models and evaluations are welcome.
 
 If you find this work helpful, consider citing us.
 
-```
+```bibtex
 @misc{evalarena,
   title = {{E}val-{A}rena: noise and errors on LLM evaluations},
   author = {Sida I. Wang and Alex Gu and Lovish Madaan and Dieuwke Hupkes and Jiawei Liu and Yuxiang Wei and Naman Jain and Yuhang Lai and Sten Sootla and Ofir Press and Baptiste Rozière and Gabriel Synnaeve},
