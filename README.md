@@ -32,7 +32,7 @@ Typically this allows us to detect 1/2 the effect size, but could be <1/6 on rel
 * [estimators.py](estimators.py) contains the core Paired and Unpaired estimators to do this.
 
 
-The original Eval-Arena docs are at [doc/eval-arena-findings.md](doc/eval-arena-findings.md).
+The original Eval-Arena docs are at [doc/eval-arena-findings.md](doc/eval-arena-readme.md).
 
 ## 🚀 Quick Start
 
