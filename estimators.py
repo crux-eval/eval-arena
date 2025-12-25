@@ -231,6 +231,9 @@ class PairedExperimental:
     
     @staticmethod
     def from_samples_random_diffs(A: np.ndarray, B: np.ndarray, M=1000) -> VarComps:
+        """
+        Actually resamples M random pairs, used to test when we reach the same RMS as the better estimator
+        """
         assert A.shape[0] == B.shape[0]
         # For each row i, generate M samples of A_ij - B_ik where j and k are randomly drawn
         AB_diff_samples = np.array([
@@ -263,7 +266,7 @@ class PairedExperimental:
     @staticmethod
     def from_samples_unbiasedK_off1(A: np.ndarray, B: np.ndarray) -> VarComps:
         """
-        Used to check if the slightly biased correction is observably worse -- it is. So not recommended.
+        Used to check if the slightly biased correction 1/kA (instead of 1/(kA-1)) is observably worse -- it is for small kA. So not recommended.
         """
         assert A.shape[0] == B.shape[0] # paired data
         kA = A.shape[1]

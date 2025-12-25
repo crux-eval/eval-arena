@@ -149,4 +149,4 @@ if __name__ == '__main__':
     PLOTLY_CONFIGS = dict(full_html=False, include_plotlyjs="cdn")
 
     with open(f'{OUTPUT_PATH}/signal_noise.html', 'w') as f:
-        f.write(fig.to_html(config=PLOTLY_CONFIGS))
+        f.write(fig.to_html(**PLOTLY_CONFIGS))

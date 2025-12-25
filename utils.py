@@ -37,7 +37,7 @@ def check_data(df) -> None:
     If a model do appear, it must be complete for each benchmark and have all the example_ids exactly once 
     raise errors if these basic conditions are not satisfied
     If a count is present for benchmark_id, model, then it must be the same count for all example_id
-    Claude generated validation code, partly verified by human.
+    Claude generated validation code, only partly verified.
     """
     if len(df) == 0:
         raise ValueError(f"No data to work with")
