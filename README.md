@@ -58,7 +58,7 @@ The example level evaluation data is stored in this format:
 {"benchmark_id":"CRUXEval-input", "model":"phind", "example_id":"CRUXEval-input0", "pass1":0.8, "correct":4, "count":5}
 ```
 
-The dataset used to produce the results can be found in the release. Corresponding to [`submit_all.sh`](./submit_all.sh)
+The dataset used to produce the results can be found in the [release](https://github.com/crux-eval/eval-arena/releases/tag/data-12-25-25). Corresponding to [`submit_all.sh`](./submit_all.sh)
 
 
 ## 📝 Citation
