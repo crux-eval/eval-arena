@@ -18,6 +18,8 @@ LLMs/agents and evals.
 You can get the reference noise measurements for many evals [here](https://all-the-noises.github.io/main/index.html),
 which links to interactive figures such as [noises vs. accuracy](https://all-the-noises.github.io/highk_temp0.7/model_math500_cot.html), 
 and [the predictions heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex_v_model_acc_math500_cot.html).
+For results based on one prediction per example, use the total standard error shown under `SE(A-B)`.
+Averaging out the prediction noise has the potential to reduce to the data standard error shown under `SE_x(A-B)`.
 
 ### Why?
 * These measurements allow us to assess the statistical significance of any results on these evals.
