@@ -21,7 +21,8 @@ and [the predictions heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex
 
 ### Why?
 * These measurements allow us to assess the statistical significance of any results on these evals.
-* Shows that we can detect much smaller effects when prediction noise > data noise. Typically this allows us to detect 1/2 the effect size, but could be <1/6 on related models and even less on related checkpoints.
+* Shows that we can detect much smaller effects when prediction noise > data noise if we reduce the prediction noise.
+Typically this allows us to detect 1/2 the effect size, but could be <1/6 on related models and even less on related checkpoints.
 * When prediction noise is too high, modelling the data is pointless, so we need to know how much noise is due to the model predictions vs. the eval data.
 
 ### How?
@@ -75,7 +76,7 @@ The dataset used to produce the results can be found in the [release](https://gi
 }
 ```
 
-For findings in [eval-arena](doc/eval-arena-readme.md#contributors-and-citation):
+See [eval-arena](doc/eval-arena-readme.md#contributors-and-citation) for its findings and data.
 
 ## 🙏 Acknowledgements
 I thank Sean O’Brien, Lovish Madaan, Dieuwke Hupkes, Alex Gu, Jiawei
