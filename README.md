@@ -1,17 +1,21 @@
-# [Eval Arena](https://crux-eval.github.io/eval-arena)
+# [Eval Arena](https://all-the-noises.github.io)
+
+
 
 ## Usage 
 
 The raw example level evaluation data is stored in `data/*` in this format:
+
 ```
-{"benchmark_id":"humaneval", "model":"code-llama-multi-34b", "example_id":"HumanEval\/4", "pass1":1, "count": 2, "correct": 2}
-{"benchmark_id":"CRUXEval-input", "model":"phind", "example_id":"CRUXEval-input\/0", "pass1":0.8, "count": 5, "correct": 4}
+{"benchmark_id":"humaneval", "model":"code-llama-multi-34b", "example_id":"HumanEval\/4", "pass1":1, "count":2, "correct":2}
+{"benchmark_id":"CRUXEval-input", "model":"phind", "example_id":"CRUXEval-input\/0", "pass1":0.8, "count":5, "correct":4}
 ```
 
 To generate the summaries and figures, install requirements and set `OUTPUT_PATH` then
+
 ```
  python -u run_arena.py data="data/vllm_evals/highk_temp0.7.jsonl" \
-    out_dir=${OUTPATH}/${NAME}/highk_temp0.7 \
+    out_dir=${OUTPUT_PATH}/highk_temp0.7 \
     max_diff=0.2 recompute=True
 ```
 
