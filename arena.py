@@ -78,7 +78,7 @@ class BattleSummary:
         kA = df["count_a"].to_list()[0]
         kB = df["count_b"].to_list()[0]
         
-        # note this is biased if model_a == model_b
+        # note this is incorrect if model_a == model_b
         vars = Paired.from_bernoulli_prob_unbiasedK(pA, pB, kA, kB).clipped()
         # vars = Paired.from_bernoulli_prob(pA, pB)
         awin, bwin = df["awins"], df["bwins"]

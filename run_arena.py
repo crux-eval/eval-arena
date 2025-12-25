@@ -17,10 +17,11 @@ logger = logging.getLogger(__name__)
 
 def setup_output(args: ReportArgs):
     # Copy custom.css to the output directory
-    css_src = Path("templates/custom.css")
-    css_dst = Path(args.out_dir) / "static" / "custom.css"
-    os.makedirs(Path(args.out_dir) / "static" , exist_ok=True)
-    with open(css_src, "rb") as src_file, open(css_dst, "wb") as dst_file:
+    os.makedirs(Path(args.out_dir) / "static" / "css" , exist_ok=True)
+    with open(Path("templates/custom.css"), "rb") as src_file, open(Path(args.out_dir) / "static" / "css" / "custom.css", "wb") as dst_file:
+        dst_file.write(src_file.read())
+    
+    with open(Path("templates/bulma.min.css"), "rb") as src_file, open(Path(args.out_dir) / "static" / "css" / "bulma.min.css", "wb") as dst_file:
         dst_file.write(src_file.read())
     
     tmp_dir = Path(args.out_dir) / "tmp"

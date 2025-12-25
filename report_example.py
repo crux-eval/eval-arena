@@ -56,7 +56,12 @@ def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False,
                      opacity=0.75,
                      color_continuous_scale=emp_zero_scale,
                      hover_data=["pass1", "pass1_of_ex", "pass1_of_model", "model", "example_id", "count"])
+            
     fig.update_xaxes(autorange="reversed")
+    fig.update_yaxes(ticktext=[label[:20] + '...' if len(label) > 20 else label 
+                           for label in fig.layout.yaxis.ticktext],
+                 tickvals=fig.layout.yaxis.tickvals)
+    
     fig.update_traces(marker={"symbol": "square"})
 
     bid = set(result["benchmark_id"]).pop()

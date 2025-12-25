@@ -112,7 +112,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
         y=df["SE(A-B)"],
         mode="markers",
         name="SE(A-B)",
-        customdata=df[["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"]].values,
+        customdata=df[["model_a", "model_b", "SE(A-B)", "accA", "accB", "corr(A,B)", "sum(A!=B)", "sum(A-B)", "pvalue"]].values,
         marker=dict(size=3, symbol="x", color="blue", opacity=0.8),
     ))
 
@@ -121,7 +121,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
         y=df["SE_x(A-B)"],
         mode="markers",
         name="SE_x(A-B)",
-        customdata=df[["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"]].values,
+        customdata=df[["model_a", "model_b", "SE_x(A-B)", "SE(A-B)", "accA", "accB"]].values,
         marker=dict(size=3, symbol="circle", color="red", opacity=0.8),
         visible='legendonly', # hide series by default
     ))
@@ -131,7 +131,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
         y=df["SE_pred(A-B)"],
         mode="markers",
         name="SE_pred(A-B)",
-        customdata=df[["model_a", "model_b", "sum(A!=B)", "sum(A-B)", "pvalue", "SE(A-B)", "accA", "accB", "corr(A,B)"]].values,
+        customdata=df[["model_a", "model_b", "SE_pred(A-B)", "SE(A-B)", "accA", "accB"]].values,
         marker=dict(size=3, symbol="square", color="green", opacity=0.8),
         visible='legendonly', # hide series by default
     ))
