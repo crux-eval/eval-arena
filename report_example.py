@@ -52,13 +52,16 @@ def fig_example_vs_model(result, all_stats, ex_table, use_acc_as_position=False,
             [1, "green"],
         ]
 
-    df[yid] = df[yid].astype(str).str[:20]
+    # df[yid] = df[yid].astype(str).str[:20]
     fig = px.scatter(df, y=yid, x=xid, color="pass1",
                      opacity=0.75,
                      color_continuous_scale=emp_zero_scale,
                      hover_data=["pass1", "pass1_of_ex", "pass1_of_model", "model", "example_id", "count"])
             
     fig.update_xaxes(autorange="reversed")
+    show_yaxis = all(len(str(label)) <= 20 for label in df[yid].unique())
+    if not show_yaxis:
+        fig.update_yaxes(showticklabels=False)
 
     
     fig.update_traces(marker={"symbol": "square"})

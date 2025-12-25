@@ -146,5 +146,7 @@ if __name__ == '__main__':
     OUTPUT_PATH = 'gh-pages/'
     logger.info('Generating signal noise table...')
 
+    PLOTLY_CONFIGS = dict(full_html=False, include_plotlyjs="cdn")
+
     with open(f'{OUTPUT_PATH}/signal_noise.html', 'w') as f:
-        f.write(fig.to_html(full_html=True))
+        f.write(fig.to_html(config=PLOTLY_CONFIGS))

@@ -27,12 +27,23 @@ class VarComps(ABC):
 
     def clipped(self):
         """Return a clipped version of this dataclass with values in valid range"""
+
+        def clip(x):
+            return x if np.isnan(x) else max(0, x)
+        
+        has_nan = any(np.isnan([self.total_var, self.var_E, self.E_var]))
+        need_clip = any([
+            self.total_var < 0,
+            self.var_E < 0,
+            self.E_var < 0
+        ])
+        
         return replace(
             self,
-            total_var=max(0, self.total_var),
-            var_E=max(0, self.var_E),
-            E_var=max(0, self.E_var),
-            satisfy_total_var=False,
+            total_var=clip(self.total_var),
+            var_E=clip(self.var_E),
+            E_var=clip(self.E_var),
+            satisfy_total_var=not (has_nan or need_clip),
         )
 
     @abstractmethod
@@ -95,7 +106,6 @@ class Paired:
             unbiased=False
         )
     
-    
     @staticmethod
     def from_bernoulli_prob(pA: np.ndarray, pB: np.ndarray) -> VarComps:
         """
@@ -106,8 +116,7 @@ class Paired:
         Args:
                 pA, pB: probability of correct on each of N questions
         """
-        assert pA.shape[0] == pB.shape[0]
-        assert pA.shape[1] == pB.shape[1] == 1
+        assert pA.size == pB.size
         pA = pA.flatten()
         pB = pB.flatten()
         return PairedVarComps(
@@ -124,8 +133,7 @@ class Paired:
                 pA, pB: metric results N questions
                 kA, kB: the number of actual samples used to calculate pA and pB
         """
-        assert pA.shape[0] == pB.shape[0]
-        assert pA.shape[1] == pB.shape[1] == 1
+        assert pA.size == pB.size
         pA = pA.flatten()
         pB = pB.flatten()
         if kA == 1 or kB == 1:
@@ -168,7 +176,6 @@ class Unpaired:
 
     @staticmethod
     def from_bernoulli_prob(pA: np.ndarray) -> VarComps:
-        assert pA.shape[1] == 1
         pA = pA.flatten()
         return SingleVarComps(
             total_var=mean(pA)*(1-mean(pA)),
@@ -179,7 +186,6 @@ class Unpaired:
     
     @staticmethod
     def from_bernoulli_prob_unbiasedK(pA: np.ndarray, kA: int) -> VarComps:
-        # assert pA.shape[1] == 1
         pA = pA.flatten()
         if kA == 1:
             bias = np.nan

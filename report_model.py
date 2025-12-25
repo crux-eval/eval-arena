@@ -105,14 +105,14 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     df["type"] = df.apply(label_fun, axis=1)
 
     df = df[df["type"] == CLOSE]
-
+    hover_data = df[["model_a", "model_b", "accA", "accB", "SE(A-B)", "SE_x(A-B)", "SE_pred(A-B)"]].values
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=df["accA"],
         y=df["SE(A-B)"],
         mode="markers",
         name="SE(A-B)",
-        customdata=df[["model_a", "model_b", "SE(A-B)", "accA", "accB", "corr(A,B)", "sum(A!=B)", "sum(A-B)", "pvalue"]].values,
+        customdata=hover_data,
         marker=dict(size=3, symbol="x", color="blue", opacity=0.8),
     ))
 
@@ -121,7 +121,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
         y=df["SE_x(A-B)"],
         mode="markers",
         name="SE_x(A-B)",
-        customdata=df[["model_a", "model_b", "SE_x(A-B)", "SE(A-B)", "accA", "accB"]].values,
+        customdata=hover_data,
         marker=dict(size=3, symbol="circle", color="red", opacity=0.8),
         visible='legendonly', # hide series by default
     ))
@@ -131,7 +131,7 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
         y=df["SE_pred(A-B)"],
         mode="markers",
         name="SE_pred(A-B)",
-        customdata=df[["model_a", "model_b", "SE_pred(A-B)", "SE(A-B)", "accA", "accB"]].values,
+        customdata=hover_data,
         marker=dict(size=3, symbol="square", color="green", opacity=0.8),
         visible='legendonly', # hide series by default
     ))
@@ -141,13 +141,11 @@ def fig_cov_baseline(bmname: str, df_summary: pd.DataFrame, input_table: pd.Data
     
     fig.update_traces(hovertemplate=
         "<br>".join([
-        "Model A: %{customdata[0]} (acc: %{customdata[6]:.1%})",
-        "Model B: %{customdata[1]} (acc: %{customdata[7]:.1%})", 
-        "total A≠B: %{customdata[2]:.1f}",
-        "total A-B: %{customdata[3]:.1f}", 
-        "SE(A-B): %{customdata[5]:.2%}", 
-        "p-value: %{customdata[4]:.3g}",
-        "corr(A,B): %{customdata[8]:.3g}",
+        "Model A: %{customdata[0]} (acc: %{customdata[2]:.1%})",
+        "Model B: %{customdata[1]} (acc: %{customdata[3]:.1%})", 
+        "SE(A-B): %{customdata[4]:.2%}", 
+        "SE_x(A-B): %{customdata[5]:.2%}", 
+        "SE_pred(A-B): %{customdata[6]:.2%}", 
         ])  + "<extra></extra>")
 
     fig.update_traces(

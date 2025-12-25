@@ -48,7 +48,7 @@ An alternative metric is the implied stdev of the null hypothesis, which can be 
 ### Signal to noise ratio
 
 While the above is a good measurement of noise, evaluation benchmarks also differ in their signal.
-We measured the [signal to noise](https://crux-eval.github.io/eval-arena/signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the bigger model and `B` is the smaller model of the same series. We use size ranging from 7B to 70B normalized for each doubling `log2(size(A)/size(B))`.
+We measured the [signal to noise](./signal_noise.html) by `(acc(A) - acc(B)) / std(acc(A) - acc(B))` where `A` is the bigger model and `B` is the smaller model of the same series. We use size ranging from 7B to 70B normalized for each doubling `log2(size(A)/size(B))`.
 Dataset size is the most important for signal noise ratio, and intuitively better quality datasets are not measurably better in signal-to-noise.
 For example, while MBPP has lower intuitive quality but much higher signal-to-noise compared to HumanEval.
 mmlu, tqa, and gsm8k produced high signal to noise ratios whereas siqa and piqa produced low signal to noise for their sizes (i.e. per sqrt(size)).
