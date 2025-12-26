@@ -16,9 +16,7 @@
 This code measures the prediction noise, data noise, and total noise on many
 LLMs/agents and evals.
 These measurements allow us to estimate the statistical significance of any results on these evals.
-Averaging multiple prediction is important and valid since typically prediction noise > data noise.
-Thus, by reducing the prediction noise, we can usually detect effect sizes 2x smaller,
-which could be 6x smaller on related models and checkpoints.
+Using paired analysis, we find that the model predictions are responsible for more noises than the data, thus we can usually detect effect sizes 2 times smaller on unrelated models and 6+ times smaller on related models by reducing the prediction noise.
 
 The reference noise measurements for many evals are [here](https://all-the-noises.github.io/main/index.html),
 which links interactive figures such as [noises vs. accuracy](https://all-the-noises.github.io/highk_temp0.7/model_math500_cot.html), 
@@ -29,7 +27,7 @@ For the potential of noise reduction, the remaining data standard error is shown
 ### How?
 * Since LLMs generates independent and diverse samples, we can draw multiple samples per question to measure the noise components.
 * [estimators.py](estimators.py) contains the Paired and Unpaired estimators to do this.
-* By measuring the paired noise of many pairs of models, some clear patterns emerge.
+* By measuring the noise of many pairs of models, some clear patterns emerge.
 
 
 The original Eval-Arena docs are at [doc/eval-arena-findings.md](doc/eval-arena-readme.md).
