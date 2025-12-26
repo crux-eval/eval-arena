@@ -15,54 +15,55 @@
 
 This code measures the prediction noise, data noise, and total noise on many
 LLMs/agents and evals.
-You can get the reference noise measurements for many evals [here](https://all-the-noises.github.io/main/index.html),
-which links to interactive figures such as [noises vs. accuracy](https://all-the-noises.github.io/highk_temp0.7/model_math500_cot.html), 
+These measurements allow us to estimate the statistical significance of any results on these evals.
+Averaging multiple prediction is important and valid since typically prediction noise > data noise.
+Thus, by reducing the prediction noise, we can usually detect effect sizes 2x smaller,
+which could be 6x smaller on related models and checkpoints.
+
+The reference noise measurements for many evals are [here](https://all-the-noises.github.io/main/index.html),
+which links interactive figures such as [noises vs. accuracy](https://all-the-noises.github.io/highk_temp0.7/model_math500_cot.html), 
 and [the predictions heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex_v_model_acc_math500_cot.html).
 For results based on one prediction per example, use the total standard error shown under `SE(A-B)`.
-Averaging out the prediction noise has the potential to reduce to the data standard error shown under `SE_x(A-B)`.
-
-### Why?
-* These measurements allow us to assess the statistical significance of any results on these evals.
-* Shows that we can detect much smaller effects when prediction noise > data noise if we reduce the prediction noise.
-Typically this allows us to detect 1/2 the effect size, but could be <1/6 on related models and even less on related checkpoints.
-* When prediction noise is too high, modelling the data is pointless, so we need to know how much noise is due to the model predictions vs. the eval data.
+For the potential of noise reduction, the remaining data standard error is shown under `SE_x(A-B)`.
 
 ### How?
-* Since LLMs can draw independent and diverse samples, we can draw multiple samples to measure the prediction noise directly.
-* [estimators.py](estimators.py) contains the core Paired and Unpaired estimators to do this.
+* Since LLMs generates independent and diverse samples, we can draw multiple samples per question to measure the noise components.
+* [estimators.py](estimators.py) contains the Paired and Unpaired estimators to do this.
+* By measuring the paired noise of many pairs of models, some clear patterns emerge.
 
 
 The original Eval-Arena docs are at [doc/eval-arena-findings.md](doc/eval-arena-readme.md).
 
 ## 🚀 Quick Start
 
-To generate the static summaries and figures, install requirements and set `OUTPUT_PATH` 
+To generate the static summaries and figures, install requirements and set `OUTPATH` 
 
-```
+```bash
  python -u run_arena.py data="data/vllm_evals/highk_temp0.7.jsonl" \
-    out_dir=${OUTPUT_PATH}/highk_temp0.7 \
+    out_dir=${OUTPATH}/highk_temp0.7 \
     max_diff=0.2 recompute=True
 ```
 
 To view the results,
 
-```
-cd ${OUTPUT_PATH}/highk_temp0.7
+```bash
+cd ${OUTPATH}/highk_temp0.7
 python -m http.server
 ```
 
 
 ### Data
 
-The example level evaluation data is stored in this format:
+The question level metrics are stored in this format:
 
-```
+```json
 {"benchmark_id":"humaneval", "model":"code-llama-multi-34b", "example_id":"HumanEval4", "pass1":1, "correct":2, "count":2}
 {"benchmark_id":"CRUXEval-input", "model":"phind", "example_id":"CRUXEval-input0", "pass1":0.8, "correct":4, "count":5}
 ```
 
-The dataset used to produce the results can be found in the [release](https://github.com/crux-eval/eval-arena/releases/tag/data-12-25-25). Corresponding to [`submit_all.sh`](./submit_all.sh)
+The datasets used to produce the results is in [this release](https://github.com/crux-eval/eval-arena/releases/tag/data-12-25-25). The corresponding runs are at [`submit_all.sh`](./submit_all.sh)
 
+This data is visualized by these [heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex_v_model_acc_math500_cot.html), linked under details/data of each eval from the [main table](https://all-the-noises.github.io/).
 
 ## 📝 Citation
 
@@ -77,8 +78,7 @@ The dataset used to produce the results can be found in the [release](https://gi
       url={https://arxiv.org/abs/2512.21326}, 
 }
 ```
-
-See [eval-arena](doc/eval-arena-readme.md#contributors-and-citation) for its findings and data.
+<!-- For the data, cite [eval-arena](doc/eval-arena-readme.md#contributors-and-citation). -->
 
 ## 🙏 Acknowledgements
 I thank Sean O’Brien, Lovish Madaan, Dieuwke Hupkes, Alex Gu, Jiawei
