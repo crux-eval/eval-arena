@@ -123,11 +123,11 @@ def model_table(df_input, battles: pd.DataFrame | None = None):
             "SE_x(A)": np.sqrt(1 / data_sz * vars.var_E),
             "SE(A)": np.sqrt(1 / data_sz * vars.total_var),
             "pass1": np.mean(pA),
+            "pass@count": np.mean(pA > 0),
             "count": np.mean(g["count"]),
         }
         return pd.Series(vars)
 
-    # add std if pass1 is not just 0 or 1 
     model_stats = df_input[["model", "pass1", "count"]].groupby("model").apply(_stds).reset_index()
 
     if battles is not None:
@@ -135,7 +135,7 @@ def model_table(df_input, battles: pd.DataFrame | None = None):
             .groupby(["model_a"])\
             .aggregate({"awins": "mean"})\
             .reset_index().rename(columns={"awins": "win_rate"})
-        org_cols = ["model", "pass1", "win_rate", "count", "SE(A)", "SE_x(A)", "SE_pred(A)"]
+        org_cols = ["model", "pass1", "pass@count", "win_rate", "count", "SE(A)", "SE_x(A)", "SE_pred(A)"]
         model_stats = win_rates.merge(model_stats, left_on="model_a", right_on="model")[org_cols].sort_values(by="pass1", ascending=False)
     return model_stats
 

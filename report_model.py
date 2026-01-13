@@ -293,20 +293,16 @@ def fig_marginals(bmname: str, df_input, df_model, df_example, xkey="pass1_of_ex
     return fig
 
 
-def experimental(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
-    fig_pref = "fig_marginal"
-    os.makedirs(Path(OUTPUT_PATH) / "experimental" / fig_pref, exist_ok=True)
-    with open(Path(OUTPUT_PATH) / "experimental" / fig_pref / f"{fig_pref}_{benchmark_id}.html", "w", encoding="utf-8") as output_file:
-        fig = fig_marginals(ares.input_table, ares.model_table, ares.example_table, xkey="rank")
-        html = fig.to_html(**PLOTLY_CONFIGS)
-        output_file.write(html)
+def write_figures(benchmark_id: str, sections: dict, OUTPUT_PATH):
+    # Create directory structure: sections/benchmark_id/
+    sections_dir = Path(OUTPUT_PATH) / "sections" / benchmark_id
+    os.makedirs(sections_dir, exist_ok=True)
 
-    fig_pref = "fig_ex_hist"
-    os.makedirs(Path(OUTPUT_PATH) / "experimental" / fig_pref, exist_ok=True)
-    with open(Path(OUTPUT_PATH) / "experimental" / fig_pref / f"{fig_pref}_{benchmark_id}.html", "w", encoding="utf-8") as output_file:
-        fig =  px.histogram(ares.example_table, x="pass1_of_ex")
-        html = fig.to_html(**PLOTLY_CONFIGS)
-        output_file.write(html)
+    # Write each section to its own file
+    for section_name, section_content in sections.items():
+        section_path = sections_dir / f"{section_name}.html"
+        with open(section_path, "w", encoding="utf-8") as output_file:
+            output_file.write(section_content)
 
 
 def get_sections(res: ArenaResult, benchmark_id):
@@ -322,6 +318,7 @@ def get_sections(res: ArenaResult, benchmark_id):
             classes="number-table",
             formatters={
                 "pass1": lambda x: f"{100*x:.3g}",
+                "pass@count": lambda x: f"{100*x:.3g}",
                 "win_rate": lambda x: f"{100*x:.3g}",
                 "SE(A)": lambda x: f"{100*x:.2g}",
                 "SE_x(A)": lambda x: f"{100*x:.2g}",
@@ -397,6 +394,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
 
 def gen_model_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
     sections = get_sections(ares, benchmark_id)
+    write_figures(benchmark_id, sections, OUTPUT_PATH)
     template_path=r"templates/template_model.html"
     output_path = f"{OUTPUT_PATH}/model_{benchmark_id}.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
