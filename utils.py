@@ -4,8 +4,22 @@ import logging
 from typing import Any, Dict, List
 
 import pandas as pd
+import numpy as np
 
 logger = logging.getLogger(__name__)
+
+def pass_at_k(n: int, c: int, k: int) -> float:
+    """
+    Unbiased pass@k estimator from Codex (https://arxiv.org/abs/2107.03374):
+    $ E_{x_i \sim p, i \leq k}[ max x_i ] $
+    estimated from n samples.
+    :param n: total number of samples
+    :param c: number of correct samples
+    :param k: k in pass@$k$
+    """
+    if n - c < k:
+        return 1.0 if c > 0 else 0.0
+    return 1.0 - np.prod(1.0 - k / np.arange(n - c + 1, n + 1))
 
 
 def load_jsonl_files(pattern: str) -> List[Dict[str, Any]]:
@@ -19,16 +33,46 @@ def load_jsonl_files(pattern: str) -> List[Dict[str, Any]]:
     logger.info(f"In total loaded {len(records)} records from {pattern}")
     return records
 
+
 def fill_count(df) -> pd.DataFrame:
+    df = df.copy()
+    if "count" not in df:
+        logger.info(f"no count at all, assuming 1")
+        df.loc["count"] = 1
+        return df
     for benchmark_id in df['benchmark_id'].unique():
         benchmark_df = df[df['benchmark_id'] == benchmark_id]
-        if "count" not in benchmark_df:
-            df.loc[df['benchmark_id'] == benchmark_id, "count"] = 1 
-        elif any(benchmark_df["count"].isna()):
-            logger.info(f"no count on {benchmark_id=}, filling count=1")
+        if any(benchmark_df["count"].isna()):
+            logger.info(f"no count on {benchmark_id=}, filling 1")
             assert all(benchmark_df["count"].isna())
             df.loc[df['benchmark_id'] == benchmark_id, "count"] = 1
     return df
+
+
+def check_and_fill_correct(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    for backwards compatibility, fill the correct field using pass1 and count
+    """
+    df = df.copy()
+    expected = df["count"] * df["pass1"]
+    
+    if "correct" in df.columns:
+        mask = df["correct"].notna()
+        if not np.allclose(df.loc[mask, "correct"], expected[mask]):
+            logger.error("'correct' values don't match expected (count * pass1)")
+        df["correct"] = df["correct"].fillna(expected)
+    else:
+        logger.info("'correct' column missing, computing from count * pass1")
+        df["correct"] = expected
+    
+    if not np.allclose(df["correct"], df["correct"].round()):
+        logger.error("'correct' values are not close to integers")
+        not_close_mask = ~np.isclose(df["correct"], df["correct"].round())
+        logger.info(f"Not close rows:\n{df.loc[not_close_mask, ['benchmark_id', 'example_id', 'model', 'count', 'pass1', 'correct']]}")
+    
+    df["correct"] = df["correct"].round().astype(int)
+    return df
+
 
 def check_data(df) -> None:
     """

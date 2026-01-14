@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 import scipy.stats as stats
 
 from arena import ArenaResult
+from utils import pass_at_k
 
 logger = logging.getLogger(__name__)
 
@@ -292,6 +293,55 @@ def fig_marginals(bmname: str, df_input, df_model, df_example, xkey="pass1_of_ex
     ) 
     return fig
 
+def fig_pass_at_k(bmname: str, df_input: pd.DataFrame) -> go.Figure:
+    """
+    for each model, find the maximum k that can be used, then compute pass_at_k
+    """
+    fig = go.Figure()
+    def get_log_k_values(max_k: int):
+        k_values = []
+        k = 1
+        step = 1
+        while k < max_k:
+            k_values.append(k)
+            k += step
+            if k >= step * 10:
+                step *= 10
+        k_values.append(max_k)
+        return k_values
+
+    def pass_at_ks(g: pd.Series):
+        kA = g["count"].to_numpy()
+        if len(set(kA)) == 1:
+            kA = kA[0]
+        else:
+            kA = np.min(kA)
+        pass_ks = []
+        N = len(g)
+        for k in get_log_k_values(kA):
+            pass_at_ks = [pass_at_k(n, c, k) for n, c in zip(g["count"], g["correct"])]
+            pass_ks.append({
+                "k": k,
+                "pass_at_k": np.mean(pass_at_ks),
+                "pass_at_k_stderr": 1/np.sqrt(N) * np.std(pass_at_ks),
+            })
+        return pd.DataFrame(pass_ks)
+    model_stats = df_input[["model", "correct", "count"]].groupby("model").apply(pass_at_ks).reset_index()
+    fig = px.line(
+        model_stats,
+        x="k",
+        y="pass_at_k",
+        # error_y="pass_at_k_stderr",
+        color="model",
+        line_dash="model",  # use different dash styles per model
+        log_x=True
+    )
+    fig.update_traces(line=dict(width=2))
+    fig.update_layout(
+        width=800, height=800, title=bmname
+    )
+    return fig
+
 
 def write_figures(benchmark_id: str, sections: dict, OUTPUT_PATH):
     # Create directory structure: sections/benchmark_id/
@@ -306,13 +356,14 @@ def write_figures(benchmark_id: str, sections: dict, OUTPUT_PATH):
 
 
 def get_sections(res: ArenaResult, benchmark_id):
-    summary = res.summary 
-    
+    summary = res.summary
+
     sections = {
         "fig_accs_and_pvalues": fig_accs_and_pvalues(benchmark_id, summary).to_html(**PLOTLY_CONFIGS),
         "fig_diff_vs_sum": fig_diff_vs_sum(benchmark_id, summary).to_html(**PLOTLY_CONFIGS),
         "fig_cov_baseline": fig_cov_baseline(benchmark_id, summary, res.input_table).to_html(**PLOTLY_CONFIGS),
         "fig_marginals": fig_marginals(benchmark_id, res.input_table, res.model_table, res.example_table, xkey="rank").to_html(**PLOTLY_CONFIGS),
+        "fig_pass_at_k": fig_pass_at_k(benchmark_id, res.input_table).to_html(**PLOTLY_CONFIGS),
         "model_table": res.model_table.to_html(
             index=False,
             classes="number-table",
