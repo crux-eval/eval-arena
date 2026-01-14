@@ -16,7 +16,7 @@ def get_anchor(benchmark_id: str, example_id: str):
                 dir, id = example_id.split("/") # expecting HumanEval/93 and Mbpp/622 etc
             else:
                 return ""
-            return f"https://crux-eval.github.io/eval-arena/evalplus/{dir}/{id}.html"
+            return f"https://all-the-noises.github.io/evalplus/{dir}/{id}.html"
         elif benchmark_id in ["CRUXEval-input", "CRUXEval-output"]:
             id = example_id.replace(benchmark_id + "/", "")
             return f"https://crux-eval.github.io/demo.html?id={int(id) + 1}"
