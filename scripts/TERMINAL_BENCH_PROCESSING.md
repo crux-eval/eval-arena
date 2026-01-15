@@ -2,7 +2,7 @@
 
 ## Overview
 
-A standalone Python script [process_terminal_bench.py](process_terminal_bench.py) is provided to convert Terminal Bench raw evaluation data into the standardized format used by eval-arena.
+A standalone Python script [process_terminal_bench.py](process_terminal_bench.py) is provided to convert Terminal Bench raw evaluation data from [terminal-bench-core@0.1.1](https://github.com/laude-institute/terminal-bench-leaderboard/tree/main/results/terminal-bench-core%400.1.1) into the standardized format used by eval-arena.
 
 ## Input Data Structure
 

@@ -13,7 +13,7 @@ import re
 
 def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
     """
-    Process Terminal Bench evaluation results as of 1/14/2026.
+    Process terminal-bench-core@0.1.1 evaluation results.
 
     See TERMINAL_BENCH_PROCESSING.md for processing guide.
     """
