@@ -9,7 +9,6 @@ import glob
 import numpy as np
 import pandas as pd
 import os
-import re
 
 def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
     """
@@ -20,32 +19,15 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
 
     records = []
 
-    # Pattern to parse directory names: YYYYMMDD_<agent-name>_<model-name>
-    dir_pattern = re.compile(r'^\d{8}_(.+)_(.+)$')
-
     for exp_dir in sorted(glob.glob(f"{raw_data_dir}/*")):
         if not os.path.isdir(exp_dir):
             continue
 
         exp_name = os.path.basename(exp_dir)
 
-        # Special case: ob1-09-10-25 directory
-        if exp_name == 'ob1-09-10-25':
-            agent_name = 'ob1_agent'
-            model_name = 'sdk'
-            model_full_name = 'ob1_agent_sdk'
-            print(f"Processing {exp_name} (special case: ob1_agent_sdk)...")
-        else:
-            # Parse agent and model from directory name
-            match = dir_pattern.match(exp_name)
-            if not match:
-                print(f"Skipping {exp_name}: doesn't match expected pattern")
-                continue
-
-            agent_name = match.group(1)
-            model_name = match.group(2)
-            model_full_name = f"{agent_name}_{model_name}"
-            print(f"Processing {exp_name}...")
+        # Use the experiment folder name as the model identifier
+        model_full_name = exp_name
+        print(f"Processing {exp_name}...")
 
         # Find all results.json files in this experiment directory
         result_files = []
@@ -105,9 +87,7 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
                 'model': model_full_name,
                 'example_id': task_id,
                 'pass1': pass_at_1,
-                'count': count,
-                'agent': agent_name,
-                'base_model': model_name
+                'count': count
             })
 
     # Create DataFrame
@@ -117,18 +97,7 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
         print("\nWarning: No records were created!")
         return df
 
-    print(f"\nProcessed {len(df)} task results (before deduplication)")
-
-    # Deduplicate: merge records with same model + example_id
-    # This handles cases where the same model was run multiple times
-    df_grouped = df.groupby(['benchmark_id', 'model', 'example_id', 'agent', 'base_model']).agg({
-        'pass1': lambda x: np.mean(x),  # Average pass1 across duplicate experiments
-        'count': lambda x: np.sum(x)     # Sum counts from duplicate experiments
-    }).reset_index()
-
-    df = df_grouped
-
-    print(f"After deduplication: {len(df)} task results")
+    print(f"\nProcessed {len(df)} task results")
     print(f"Unique models: {df['model'].nunique()}")
     print(f"Unique tasks: {df['example_id'].nunique()}")
 
