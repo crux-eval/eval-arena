@@ -12,9 +12,9 @@ import os
 
 def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
     """
-    Process terminal-bench-core@0.1.1 evaluation results.
+    Convert terminal-bench-core@0.1.1 evaluation results into the standardized format used by eval-arena.
 
-    See TERMINAL_BENCH_PROCESSING.md for processing guide.
+    Output will be saved to 'data/terminal-bench.jsonl'
     """
 
     records = []
@@ -38,12 +38,14 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
         if os.path.exists(root_results):
             result_files.append(root_results)
 
-        # Case 2: Direct results files in the experiment directory (timestamped files)
+        # Case 2: Direct results files in the experiment directory
+        # (e.g., <experiment_name>/<run_id>_results.json)
         if not result_files:
             direct_results = glob.glob(f"{exp_dir}/*_results.json")
             result_files.extend(direct_results)
 
         # Case 3: Aggregated results.json in immediate subdirectories (run directories)
+        # (e.g., <experiment_name>/<run_id>/results.json)
         if not result_files:
             for subdir in glob.glob(f"{exp_dir}/*/"):
                 results_file = os.path.join(subdir, 'results.json')
@@ -56,7 +58,7 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
 
         print(f"  Found {len(result_files)} result files")
 
-        # Track task results across runs for pass@k calculation
+        # Track task results across runs for pass1 calculation
         task_results = defaultdict(list)  # task_id -> list of pass/fail (1/0)
 
         for result_file in result_files:
@@ -78,15 +80,15 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
 
         # Create records for each task
         for task_id, results_list in task_results.items():
-            # Calculate pass@1 as the success rate across all runs
-            pass_at_1 = np.mean(results_list)
+            # Calculate pass1 as the success rate across all runs
+            pass1 = np.mean(results_list)
             count = len(results_list)
 
             records.append({
                 'benchmark_id': 'terminal-bench',
                 'model': model_full_name,
                 'example_id': task_id,
-                'pass1': pass_at_1,
+                'pass1': pass1,
                 'count': count
             })
 
@@ -100,16 +102,6 @@ def process_terminal_bench(raw_data_dir='raw-data/terminal-bench-core@0.1.1'):
     print(f"\nProcessed {len(df)} task results")
     print(f"Unique models: {df['model'].nunique()}")
     print(f"Unique tasks: {df['example_id'].nunique()}")
-
-    # Display summary statistics
-    print("\nSummary by model:")
-    summary = df.groupby('model').agg({
-        'pass1': 'mean',
-        'example_id': 'count',
-        'count': 'first'
-    }).round(3)
-    summary.columns = ['avg_pass1', 'n_tasks', 'n_runs']
-    print(summary.sort_values('avg_pass1', ascending=False))
 
     return df
 
