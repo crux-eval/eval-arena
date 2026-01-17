@@ -1,6 +1,23 @@
 #!/usr/bin/env python3
 """
 Process Terminal Bench evaluation results into standardized format.
+
+A standalone Python script [process_terminal_bench.py](process_terminal_bench.py) is provided to convert
+Terminal Bench raw evaluation data from [terminal-bench-core@0.1.1](https://github.com/laude-institute/terminal-bench-leaderboard/tree/main/results/terminal-bench-core%400.1.1) into the standardized format used by eval-arena.
+
+The function expects raw data in this directory structure:
+```
+raw-data/terminal-bench-core@0.1.1/
+├── YYYYMMDD_<agent-name>_<model-name>/
+│   ├── YYYY-MM-DD__HH-MM-SS__results.json  (5 files, one per run)
+│   └── ...
+└── YYYYMMDD_<agent-name>_<model-name>/
+    ├── <run-name-1>/
+    │   └── results.json  (aggregated results for this run)
+    ├── <run-name-2>/
+    │   └── results.json
+    └── ...
+```
 """
 
 from collections import defaultdict
