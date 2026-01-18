@@ -347,6 +347,7 @@ def write_figures(sections: dict, OUTPUT_PATH):
     sections_dir = Path(OUTPUT_PATH) / "sections"
     os.makedirs(sections_dir, exist_ok=True)
 
+    # Write each section to its own file
     for section_name, section_content in sections.items():
         section_path = sections_dir / f"{section_name}.html"
         with open(section_path, "w", encoding="utf-8") as output_file:
