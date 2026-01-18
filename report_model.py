@@ -401,8 +401,8 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
         links = []
         links.append(f"""<a href="{bid}/model.html">models </a> """)
         links.append(f"""<a href="{bid}/ex.html"> examples </a>""")
-        links.append(f"""<a href="{bid}/data.html"> data </a>""")
-        links.append(f"""<a href="{bid}/ex_v_model_acc.html"> raw </a>""")
+        links.append(f"""<a href="{bid}/ex_v_model_acc.html"> data </a>""")
+        links.append(f"""<a href="{bid}/data.html"> raw </a>""")
         return "|".join(links)
     summary_count["details"] = summary_count["benchmark_id"].apply(link_detail)
 
