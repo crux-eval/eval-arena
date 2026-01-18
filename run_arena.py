@@ -26,7 +26,6 @@ def setup_output(args: ReportArgs):
     
     tmp_dir = Path(args.out_dir) / "tmp"
     os.makedirs(tmp_dir, exist_ok=True)
-    os.makedirs(Path(args.out_dir) / "data" , exist_ok=True)
 
 def run_arena(args: ReportArgs):
     records = load_jsonl_files(args.data)
@@ -54,9 +53,12 @@ def run_arena(args: ReportArgs):
             logger.info(f"Summary stats for {bid}:\n{pd.DataFrame([summary_stats])}")
             pd.DataFrame([summary_stats]).to_json(tmp_dir / f"summary-{bid}.jsonl", orient="records", lines=True)
 
-            gen_model_report(bid, arena_res, args.out_dir)
-            gen_example_report(bid, arena_res, args.out_dir)
-            write_data_tables(bid, arena_res, args.out_dir)
+            benchmark_out_dir = Path(args.out_dir) / bid
+            os.makedirs(benchmark_out_dir, exist_ok=True)
+            
+            gen_model_report(bid, arena_res, benchmark_out_dir)
+            gen_example_report(bid, arena_res, benchmark_out_dir)
+            write_data_tables(bid, arena_res, benchmark_out_dir)
 
     if args.write_summary:
         records = load_jsonl_files(f"{tmp_dir}/summary-*.jsonl")

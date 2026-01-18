@@ -343,12 +343,10 @@ def fig_pass_at_k(bmname: str, df_input: pd.DataFrame) -> go.Figure:
     return fig
 
 
-def write_figures(benchmark_id: str, sections: dict, OUTPUT_PATH):
-    # Create directory structure: sections/benchmark_id/
-    sections_dir = Path(OUTPUT_PATH) / "sections" / benchmark_id
+def write_figures(sections: dict, OUTPUT_PATH):
+    sections_dir = Path(OUTPUT_PATH) / "sections"
     os.makedirs(sections_dir, exist_ok=True)
 
-    # Write each section to its own file
     for section_name, section_content in sections.items():
         section_path = sections_dir / f"{section_name}.html"
         with open(section_path, "w", encoding="utf-8") as output_file:
@@ -400,10 +398,10 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
 
     def link_detail(bid):
         links = []
-        links.append(f"""<a href="model_{bid}.html">models </a> """)
-        links.append(f"""<a href="ex_{bid}.html"> examples </a>""")
-        links.append(f"""<a href="ex_v_model_acc_{bid}.html"> data </a>""")
-        links.append(f"""<a href="data_{bid}.html"> raw </a>""")
+        links.append(f"""<a href="{bid}/model.html">models </a> """)
+        links.append(f"""<a href="{bid}/ex.html"> examples </a>""")
+        links.append(f"""<a href="{bid}/data.html"> data </a>""")
+        links.append(f"""<a href="{bid}/ex_v_model_acc.html"> raw </a>""")
         return "|".join(links)
     summary_count["details"] = summary_count["benchmark_id"].apply(link_detail)
 
@@ -445,9 +443,9 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
 
 def gen_model_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
     sections = get_sections(ares, benchmark_id)
-    write_figures(benchmark_id, sections, OUTPUT_PATH)
+    write_figures(sections, OUTPUT_PATH)
     template_path=r"templates/template_model.html"
-    output_path = f"{OUTPUT_PATH}/model_{benchmark_id}.html"
+    output_path = Path(OUTPUT_PATH) / "model.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
@@ -456,15 +454,15 @@ def gen_model_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
 
 def write_data_tables(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
     template_path=r"templates/template_data.html"
-    output_path = f"{OUTPUT_PATH}/data_{benchmark_id}.html"
+    output_path = Path(OUTPUT_PATH) / "data.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({"benchmark_id": benchmark_id}))
 
-    data_path = Path(f"{OUTPUT_PATH}/assets/tables/")
+    data_path = Path(OUTPUT_PATH) / "tables"
     os.makedirs(data_path, exist_ok=True)
-    ares.input_table.to_csv(data_path / f"input_table_{benchmark_id}.csv")
-    ares.model_table.to_csv(data_path / f"model_table_{benchmark_id}.csv")
-    ares.example_table.to_csv(data_path / f"example_table_{benchmark_id}.csv")
-    ares.summary.to_csv(data_path / f"summary_{benchmark_id}.csv")
+    ares.input_table.to_csv(data_path / "input.csv")
+    ares.model_table.to_csv(data_path / "model.csv")
+    ares.example_table.to_csv(data_path / "example.csv")
+    ares.summary.to_csv(data_path / "summary.csv")

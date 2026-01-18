@@ -105,15 +105,15 @@ def get_example_level_results(benchmark_id, ares: ArenaResult):
 def gen_example_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
     outputs = get_example_level_results(benchmark_id, ares)
     template_path = r"templates/template_example.html"
-    output_path = rf"{OUTPUT_PATH}/ex_{benchmark_id}.html"
+    output_path = f"{OUTPUT_PATH}/ex.html"
     with open(output_path, "w", encoding="utf-8") as output_file:
         with open(template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render({"benchmark_id": benchmark_id, "outputs": outputs}))
 
     plotly_configs = dict(full_html=False, include_plotlyjs="cdn")
-    with open(f"{OUTPUT_PATH}/ex_v_model_{benchmark_id}.html", "wt") as f:
+    with open(f"{OUTPUT_PATH}/ex_v_model.html", "wt") as f:
         f.write(outputs["fig_example_vs_model"].to_html(**plotly_configs))
 
-    with open(f"{OUTPUT_PATH}/ex_v_model_acc_{benchmark_id}.html", "wt") as f:
+    with open(f"{OUTPUT_PATH}/ex_v_model_acc.html", "wt") as f:
         f.write(outputs["fig_example_vs_model_acc"].to_html(**plotly_configs)) 
