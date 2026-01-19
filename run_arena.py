@@ -9,6 +9,7 @@ import arena
 from arena import ReportArgs
 from report_example import gen_example_report
 from report_model import gen_model_report, write_data_tables, write_summary_table
+from scripts.generate_sections_index import write_sections_index
 from signal_noise import signal_to_noise
 from utils import load_jsonl_files, check_data, fill_count, check_and_fill_correct
 
@@ -66,6 +67,8 @@ def run_arena(args: ReportArgs):
         df_summary = pd.DataFrame(records)
         df_summary.to_csv(Path(args.out_dir) / "summary.csv")
         write_summary_table(pd.DataFrame(df_summary), Path(args.out_dir) / "index.html", include_var_components=args.include_var_components)
+
+    write_sections_index(Path(args.out_dir))
 
 
 if __name__ == "__main__":
