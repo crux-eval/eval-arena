@@ -342,6 +342,38 @@ def fig_pass_at_k(bmname: str, df_input: pd.DataFrame) -> go.Figure:
     )
     return fig
 
+def write_sections_index(out_dir: Path):
+    """
+    Generate ${OUTPATH}/raw_index.html listing all section files across benchmarks.
+    """
+    sections_index_dir = out_dir / "raw_index.html"
+    sections_index_dir.mkdir(parents=True, exist_ok=True)
+
+    html = ['<!DOCTYPE html><html><head>',
+            '<meta charset="utf-8">',
+            '<title>Sections Index</title>',
+            '<link rel="stylesheet" href="../static/css/bulma.min.css">',
+            '<link rel="stylesheet" href="../static/css/custom.css">',
+            '</head><body>',
+            '<section class="section"><div class="container">',
+            '<h1 class="title">All Sections</h1>']
+
+    # Find all benchmark directories with sections
+    for benchmark_dir in sorted(out_dir.iterdir()):
+        sections_path = benchmark_dir / "sections"
+        if sections_path.is_dir():
+            html.append(f'<h2 class="subtitle" style="margin-top: 1.5rem;">{benchmark_dir.name}</h2><ul>')
+            for f in sorted(sections_path.iterdir()):
+                if f.is_file() and f.suffix == '.html':
+                    html.append(f'<li><a href="../{benchmark_dir.name}/sections/{f.name}">{f.stem}</a></li>')
+            html.append('</ul>')
+
+    html.append('</div></section></body></html>')
+
+    index_path = sections_index_dir / "index.html"
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write('\n'.join(html))
+
 
 def write_figures(sections: dict, OUTPUT_PATH):
     sections_dir = Path(OUTPUT_PATH) / "sections"
@@ -402,7 +434,7 @@ def write_summary_table(summary_count: pd.DataFrame, output_path: Path, include_
         links.append(f"""<a href="{bid}/model.html">models </a> """)
         links.append(f"""<a href="{bid}/ex.html"> examples </a>""")
         links.append(f"""<a href="{bid}/ex_v_model_acc.html"> data </a>""")
-        links.append(f"""<a href="{bid}/data.html"> raw </a>""")
+        links.append(f"""<a href="{bid}/raw_index.html"> raw </a>""")
         return "|".join(links)
     summary_count["details"] = summary_count["benchmark_id"].apply(link_detail)
 
@@ -453,17 +485,41 @@ def gen_model_report(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
             output_file.write(j2_template.render({"benchmark_id": benchmark_id, "sections": sections}))
 
 
-def write_data_tables(benchmark_id: str, ares: ArenaResult, OUTPUT_PATH):
-    template_path=r"templates/template_data.html"
-    output_path = Path(OUTPUT_PATH) / "data.html"
-    with open(output_path, "w", encoding="utf-8") as output_file:
-        with open(template_path) as template_file:
-            j2_template = Template(template_file.read())
-            output_file.write(j2_template.render({"benchmark_id": benchmark_id}))
-
+def write_data_tables(ares: ArenaResult, OUTPUT_PATH):
+    """Write data tables (CSVs) to the tables directory."""
     data_path = Path(OUTPUT_PATH) / "tables"
     os.makedirs(data_path, exist_ok=True)
-    ares.input_table.to_csv(data_path / "input.csv")
+    ares.input_table.to_csv(data_path / "input.csv", index=True)
     ares.model_table.to_csv(data_path / "model.csv")
     ares.example_table.to_csv(data_path / "example.csv")
     ares.summary.to_csv(data_path / "summary.csv")
+
+
+def write_directory_index(benchmark_id: str, OUTPUT_PATH):
+    """Generate raw_index.html with directory listing of all files."""
+    base_path = Path(OUTPUT_PATH)
+
+    # Get tables
+    table_files = []
+    if (base_path / "tables").exists():
+        table_files = sorted([f.name for f in (base_path / "tables").iterdir() if f.is_file()])
+
+    # Get sections (figures)
+    section_files = []
+    if (base_path / "sections").exists():
+        section_files = sorted([f.name for f in (base_path / "sections").iterdir() if f.is_file()])
+
+    # Get root HTML files (reports)
+    report_files = sorted([f.name for f in base_path.iterdir() if f.is_file() and f.suffix == '.html'])
+
+    template_path=r"templates/template_data.html"
+    output_path = Path(OUTPUT_PATH) / "raw_index.html"
+    with open(output_path, "w", encoding="utf-8") as output_file:
+        with open(template_path) as template_file:
+            j2_template = Template(template_file.read())
+            output_file.write(j2_template.render({
+                "benchmark_id": benchmark_id,
+                "table_files": table_files,
+                "section_files": section_files,
+                "report_files": report_files,
+            }))
