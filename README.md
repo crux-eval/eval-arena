@@ -19,8 +19,8 @@ These measurements allow us to estimate the statistical significance of any resu
 Using paired analysis, we find that the model predictions are responsible for more noises than the data, thus we can usually detect effect sizes 2 times smaller on unrelated models and 6+ times smaller on related models by reducing the prediction noise.
 
 The reference noise measurements for many evals are [here](https://all-the-noises.github.io/main/index.html),
-which links interactive figures such as [noises vs. accuracy](https://all-the-noises.github.io/highk_temp0.7/model_math500_cot.html),
-and [the predictions heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex_v_model_acc_math500_cot.html).
+which links interactive figures such as [noises vs. accuracy](https://all-the-noises.github.io/highk_temp0.7/math500_cot/model.html),
+and [the predictions heatmaps](https://all-the-noises.github.io/highk_temp0.7/math500_cot/ex_v_model_acc.html).
 For results based on one prediction per example, use the total standard error shown under `SE(A-B)`.
 For the potential of noise reduction, the remaining data standard error is shown under `SE_x(A-B)`.
 
@@ -65,7 +65,7 @@ Data contributions are welcome via pull requests to [data](https://github.com/al
 
 The datasets used to produce the results is in [this release](https://github.com/crux-eval/eval-arena/releases/tag/data-12-25-25). The corresponding runs are at [`submit_all.sh`](./submit_all.sh)
 
-This data is visualized by these [heatmaps](https://all-the-noises.github.io/highk_temp0.7/ex_v_model_acc_math500_cot.html), linked under details/data of each eval from the [main table](https://all-the-noises.github.io/).
+This data is visualized by [heatmaps](https://all-the-noises.github.io/highk_temp0.7/math500_cot/ex_v_model_acc.html), accessible through the "data" link of each eval from the [main table](https://all-the-noises.github.io/). All raw data files and figures can be accessed through the "raw" link, which points to each benchmark's `raw_index.html`.
 
 ## 📝 Citation
 
