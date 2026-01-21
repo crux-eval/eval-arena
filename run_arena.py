@@ -7,7 +7,7 @@ import pandas as pd
 
 import arena
 from arena import ReportArgs
-from report import (
+from reports import (
     write_example_report,
     write_model_report,
     write_data_tables,
