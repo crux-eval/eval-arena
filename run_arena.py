@@ -7,8 +7,14 @@ import pandas as pd
 
 import arena
 from arena import ReportArgs
-from report_example import gen_example_report
-from report_model import gen_model_report, write_data_tables, write_directory_index, write_summary_table, write_sections_index
+from report import (
+    write_example_report,
+    write_model_report,
+    write_data_tables,
+    write_summary_table,
+    write_sections_index,
+    write_directory_index,
+)
 from signal_noise import signal_to_noise
 from utils import load_jsonl_files, check_data, fill_count, check_and_fill_correct
 
@@ -56,8 +62,8 @@ def run_arena(args: ReportArgs):
             benchmark_out_dir = Path(args.out_dir) / bid
             os.makedirs(benchmark_out_dir, exist_ok=True)
             
-            gen_model_report(bid, arena_res, benchmark_out_dir)
-            gen_example_report(bid, arena_res, benchmark_out_dir)
+            write_model_report(bid, arena_res, benchmark_out_dir)
+            write_example_report(bid, arena_res, benchmark_out_dir)
             write_data_tables(arena_res, benchmark_out_dir)
             write_directory_index(bid, benchmark_out_dir)
 
