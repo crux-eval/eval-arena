@@ -5,8 +5,7 @@ Process SWE-bench Bash-Only evaluation results into standardized format.
 This script fetches and processes raw evaluation data from:
 https://github.com/SWE-bench/experiments/tree/main/evaluation/bash-only
 
-Each subdirectory under bash-only contains results for a model, with naming format:
-    YYYYMMDD_mini-vX.X.X_<model-name>
+Each subdirectory under bash-only contains results for a model.
 
 Each directory contains a per_instance_details.json file with:
     {
@@ -24,7 +23,6 @@ Output format (one JSON object per line):
 
 import json
 import os
-import re
 import urllib.request
 import urllib.error
 
@@ -52,13 +50,7 @@ def list_model_directories():
 
 
 def extract_model_name(dir_name):
-    """
-    Extract model name from directory name.
-    """
-    # Match YYYYMMDD_mini-vX.X.X followed by _ or -
-    match = re.match(r'^\d{8}_mini-v[\d.]+[_-](.+)$', dir_name)
-    if match:
-        return match.group(1)
+    """Use folder name as model name."""
     return dir_name
 
 
