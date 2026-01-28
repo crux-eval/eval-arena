@@ -1,9 +1,8 @@
+#!/usr/bin/env python3
 """
 Process SWE-bench Bash-Only evaluation results into standardized format.
 
-A standalone Python script to convert SWE-bench Bash-Only raw evaluation data from
-[SWE-bench/experiments](https://github.com/SWE-bench/experiments/tree/main/evaluation/bash-only)
-into the standardized format used by eval-arena.
+Raw data source: [SWE-bench/experiments](https://github.com/SWE-bench/experiments/tree/main/evaluation/bash-only)
 
 The script expects raw data in this directory structure:
 ```
@@ -25,6 +24,9 @@ Each per_instance_details.json contains:
     ...
 }
 ```
+
+Output will be saved to:
+- data/swebench-bash.jsonl
 """
 
 import json
