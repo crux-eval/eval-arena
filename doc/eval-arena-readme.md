@@ -10,7 +10,7 @@ For evaluating methods or developing models, we want to know if the gains are re
 
 As well as popular LLM evaluations such as agi-english, arc_challenge, GSM-8k, hellaswag, mmlu, nq, piqa, siqa, and tqa (see [this paper for data descriptions](https://arxiv.org/pdf/2406.10229)).
 
-We find that all comparisons are highly inconsistent where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://all-the-noises.github.io/main/model_humaneval+.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be measured meaningfully for each benchmark. We may expect that a good enough model can solve all easy enough examples, but this is not at all the case as seen in the [example level leaderboard](https://all-the-noises.github.io/main/ex_v_model_mbpp+.html).
+We find that all comparisons are highly inconsistent where a better model is also worse on some examples than a worse model.  As seen in the [pairwise results](https://all-the-noises.github.io/main/humaneval+/model.html#fig_pvalue_vs_diff), the noise level thus has low dependence on particular model pairs, and can be measured meaningfully for each benchmark. We may expect that a good enough model can solve all easy enough examples, but this is not at all the case as seen in the [example level leaderboard](https://all-the-noises.github.io/main/mbpp+/ex_v_model.html).
 
 For practical references, the results on measuring noise level, model quality and benchmark quality can be found at [https://crux-eval.github.io/eval-arena](https://crux-eval.github.io/eval-arena). We provide performance results by models (accuracy, win rates, ELO, all pairwise comparisons) and by examples (solved by 0 or 1 models, suspect examples and distribution of difficulties). The method is to run comparisons on all model pairs for all benchmarks (hence arena, inspired by chatbot arena but using static eval benchmarks). The example level evaluation data is released in `data/`, which might be useful for developing better evaluation metrics / leaderboards.
 
@@ -38,10 +38,10 @@ The p-value is the probability that data from the null-hypothesis is more extrem
 ### Reading p-value and noise level from eval-arena
 Understandably, most people have better priorities than calculating p-values.
 Fortunately, p-values on these benchmarks are predictable from the accuracy difference alone which mostly depends on the benchmark.
-This can be seen visually from [this figure](https://all-the-noises.github.io/main/model_humaneval+.html#fig_accs_and_pvalues).
-The easiest way is to use the `p5_min` or `p5_max` values in the summary table. If other p-values are desired, then we can get an estimate from the [p-values vs difference figure](https://all-the-noises.github.io/main/model_humaneval+.html#fig_pvalue_vs_diff).
+This can be seen visually from [this figure](https://all-the-noises.github.io/main/humaneval+/model.html#fig_accs_and_pvalues).
+The easiest way is to use the `p5_min` or `p5_max` values in the summary table. If other p-values are desired, then we can get an estimate from the [p-values vs difference figure](https://all-the-noises.github.io/main/humaneval+/model.html#fig_pvalue_vs_diff).
 For example, a 4% difference is unlikely to be significant even at the 0.2 level on HumanEval, whereas a 10% difference is significant at the 0.05 level.
-The [difference vs. sum figure](https://all-the-noises.github.io/main/model_humaneval+.html#fig_diff_vs_sum) is the most informative and shows that the noise across matchups is fairly consistent.
+The [difference vs. sum figure](https://all-the-noises.github.io/main/humaneval+/model.html#fig_diff_vs_sum) is the most informative and shows that the noise across matchups is fairly consistent.
 
 An alternative metric is the implied stdev of the null hypothesis, which can be estimated from the `std(A) = p5  / (sqrt(2) * 1.96)`. This is the std of the null hypothesis mixing the prediction of `A` and `B` with equal probability. The `sqrt(2)` is due to taking `std(acc(A) - acc(B))` and `1.96 std` corresponds to `p <= 5`.
 
@@ -58,13 +58,13 @@ See [noise.md](noise.md) for technical information about testing and modeling no
 Let $A$ be the number of times model A won against model B and vice versa.
 The key observation from these thousands of comparisons is that for any pair of models A and B, there is always disagreements where $A + B > \sim 20$. That is, model A is never strictly better than model B on all examples across all benchmarks and all model pairs (if A and B had somewhat similar accuracies). This fact rules out significant results with a small $A-B$. If A beats B 10 times  without losing at all, that is more significant than if A won 55 times and B won 45 times out of 100 matches for the same difference of 10. Assuming $A \geq B$, the p-values are computed as $\text{Pr}[X \leq B \lor X \geq A]$  for $X \sim \text{binom}(A+B, 0.5)$.
 
-<!-- Since there is always enough disagreements $A+B$, this simple theory is well-justified and the $\chi^2$ approximations is accurate for all pairs. An accurate and interpretable test is then $(|A-B| - 1)^2 / (A + B) > \chi^2_{\alpha}$ for desired level $\alpha$, the resulting parabolas are plotted in [the difference vs. inconsistency figure](https://all-the-noises.github.io/main/model_humaneval+.html#fig_diff_vs_sum).
+<!-- Since there is always enough disagreements $A+B$, this simple theory is well-justified and the $\chi^2$ approximations is accurate for all pairs. An accurate and interpretable test is then $(|A-B| - 1)^2 / (A + B) > \chi^2_{\alpha}$ for desired level $\alpha$, the resulting parabolas are plotted in [the difference vs. inconsistency figure](https://all-the-noises.github.io/main/humaneval+/model.html#fig_diff_vs_sum).
 Different treatment of ties and bootstrap gave similar answers.  -->
 
 
 ### Errors and contamination
 While errors in evaluation set are irritating, errors and idiosyncrasies provide some signal about contamination as well.
-We test a method for detecting errors by finding examples that are anti-correlated with the overall model quality. MBPP/MBPP+ seems to be the most promising source of suspect problems, [here](https://all-the-noises.github.io/main/ex_mbpp+.html#suspect) is the list. I manually inspected the 10 most suspect examples, and 7 of them are indeed wrong:
+We test a method for detecting errors by finding examples that are anti-correlated with the overall model quality. MBPP/MBPP+ seems to be the most promising source of suspect problems, [here](https://all-the-noises.github.io/main/mbpp+/ex.html#suspect) is the list. I manually inspected the 10 most suspect examples, and 7 of them are indeed wrong:
 
 * Reference answer is wrong: [459](https://all-the-noises.github.io/evalplus/Mbpp/459.html)
 * Example contradicts instruction: [581](https://all-the-noises.github.io/evalplus/Mbpp/581.html), [102](https://all-the-noises.github.io/evalplus/Mbpp/102.html), [615](https://all-the-noises.github.io/evalplus/Mbpp/615.html)
@@ -72,13 +72,13 @@ We test a method for detecting errors by finding examples that are anti-correlat
 
 These errors can provide some evidence when models memorize the incorrect reference solution. On Mbpp/[615](https://all-the-noises.github.io/evalplus/Mbpp/615.html) and [459](https://all-the-noises.github.io/evalplus/Mbpp/459.html), `codegen-6b`, `CohereForAI--c4ai-command`, `codet5p-6b` outputs the incorrect reference solution whereas most other models outputs the correct answer. On [581](https://all-the-noises.github.io/evalplus/Mbpp/581.html), Claude and GPT both gave a less wrong answer than the reference. This provides some evidence that models have not memorized many of the answers. A few wrong or underspecified problems may provide evidence if a model is memorizing the evaluation data (likely post-training) instead of making correct predictions.
 
-Increasing data size without degrading average quality clearly improves the statistical power whereas a higher quality dataset of the same size does not seem to have a measurable effect (yet). HumanEval+ has the same ranking issues as HumanEval whereas MBPP+ seems to rank all model series correctly where the bigger model is better within each series of models `X-7B, X-13B, X-34B, etc`. So the bigger size of MBPP+ seems to overcome the much higher intuitive quality of HumanEval over MBPP (For example, HumanEval has fewer tau- examples, which all pass manual inspection anyway). This can also be seen visually by comparing [HumanEval+](https://all-the-noises.github.io/main/model_humaneval+.html#fig_accs_and_pvalues) vs. [mbpp+](https://all-the-noises.github.io/main/model_mbpp+.html#fig_accs_and_pvalues) where mbpp has a narrower band of statistically insignificant comparisons.
+Increasing data size without degrading average quality clearly improves the statistical power whereas a higher quality dataset of the same size does not seem to have a measurable effect (yet). HumanEval+ has the same ranking issues as HumanEval whereas MBPP+ seems to rank all model series correctly where the bigger model is better within each series of models `X-7B, X-13B, X-34B, etc`. So the bigger size of MBPP+ seems to overcome the much higher intuitive quality of HumanEval over MBPP (For example, HumanEval has fewer tau- examples, which all pass manual inspection anyway). This can also be seen visually by comparing [HumanEval+](https://all-the-noises.github.io/main/humaneval+/model.html#fig_accs_and_pvalues) vs. [mbpp+](https://all-the-noises.github.io/main/mbpp+/model.html#fig_accs_and_pvalues) where mbpp has a narrower band of statistically insignificant comparisons.
 
 ### Accuracy, win rate, ELO
-In [results tables](https://all-the-noises.github.io/main/model_humaneval+.html#model_table), we provide pass1, average win-rate over all other models (used by [BigCode](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)), and Elo (Bradly-Terry coefficients following [Chatbot Arena](https://chat.lmsys.org/)). **We recommend raw accuracy (or pass1)** -- since all metrics are highly correlated for our setting and since accuracy actually has better stability as measured by tau-correlation between subsamples of benchmarks (following figure 4 of [this paper](https://aclanthology.org/2021.acl-long.346.pdf)). Unless a more complex metric is measurably better, accuracy has a clear advantage in that it does not depend on other models.
+In [results tables](https://all-the-noises.github.io/main/humaneval+/model.html#model_table), we provide pass1, average win-rate over all other models (used by [BigCode](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)), and Elo (Bradly-Terry coefficients following [Chatbot Arena](https://chat.lmsys.org/)). **We recommend raw accuracy (or pass1)** -- since all metrics are highly correlated for our setting and since accuracy actually has better stability as measured by tau-correlation between subsamples of benchmarks (following figure 4 of [this paper](https://aclanthology.org/2021.acl-long.346.pdf)). Unless a more complex metric is measurably better, accuracy has a clear advantage in that it does not depend on other models.
 
 ### Difficulty levels and hard problems
-In the `by examples` section, we provide a list of examples that are solved by 0 model and solved by only 1 model ([example](https://all-the-noises.github.io/main/ex_humaneval+.html#nosolve)). These are useful for understanding the ability of leading models as well as the quality of the datasets. Whether a benchmark is truly saturated depends on if the remaining examples still contain signal and not just on the raw accuracy. We also provide histograms of accuracies and minimum Elo required to solve examples. On this metric, [LiveCodeBench](https://all-the-noises.github.io/main/ex_lcb_codegen.html#hist) stands out for having a lot of hard examples and a fairly even distribution of difficulties (maybe since it was constructed with a mixture of difficulties).
+In the `by examples` section, we provide a list of examples that are solved by 0 model and solved by only 1 model ([example](https://all-the-noises.github.io/main/humaneval+/ex.html#nosolve)). These are useful for understanding the ability of leading models as well as the quality of the datasets. Whether a benchmark is truly saturated depends on if the remaining examples still contain signal and not just on the raw accuracy. We also provide histograms of accuracies and minimum Elo required to solve examples. On this metric, [LiveCodeBench](https://all-the-noises.github.io/main/lcb_codegen/ex.html#hist) stands out for having a lot of hard examples and a fairly even distribution of difficulties (maybe since it was constructed with a mixture of difficulties).
 
 
 ### Improving evaluation
@@ -86,7 +86,7 @@ Since it is difficult to collect more high quality evaluations, using more evalu
 
 For test based benchmarks, a solution passing a weak test is still different from a solution failing it, thus running indepedent tests may also help yield more information per example instead of focusing on complete correctness. This is similar to the tech interview approach, where often only 1 or 2 questions are asked but we may get more information than just correct vs. incorrect, especially with a progressive question with easy to hard parts.
 
-It may also be possible to model individual problems better, such as the probability of each outcome or the difficulty level using [item response model](https://eacl2024irt.github.io/). However our initial attempts did not improve stability or significance levels, maybe because most examples give [very noisy](https://all-the-noises.github.io/main/ex_v_model_humaneval+.html) signals.
+It may also be possible to model individual problems better, such as the probability of each outcome or the difficulty level using [item response model](https://eacl2024irt.github.io/). However our initial attempts did not improve stability or significance levels, maybe because most examples give [very noisy](https://all-the-noises.github.io/main/humaneval+/ex_v_model.html) signals.
 
 ## Usage
 
@@ -100,6 +100,8 @@ To generate the summaries and figures, install requirements and set `OUTPUT_PATH
 ```
 python run_arena.py
 ```
+
+Access raw data and all generated files through the "raw" link in the main summary table, which points to `<benchmark_id>/raw_index.html`.
 
 Additional models and evaluations are welcome.
 
