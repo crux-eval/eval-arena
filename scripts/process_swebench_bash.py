@@ -1,51 +1,46 @@
-#!/usr/bin/env python3
 """
 Process SWE-bench Bash-Only evaluation results into standardized format.
 
-This script fetches and processes raw evaluation data from:
-https://github.com/SWE-bench/experiments/tree/main/evaluation/bash-only
+A standalone Python script to convert SWE-bench Bash-Only raw evaluation data from
+[SWE-bench/experiments](https://github.com/SWE-bench/experiments/tree/main/evaluation/bash-only)
+into the standardized format used by eval-arena.
 
-Each subdirectory under bash-only contains results for a model.
+The script expects raw data in this directory structure:
+```
+raw-data/swebench-bash/
+├── <run-name>/
+│   └── per_instance_details.json
+└── <run-name>/
+    └── per_instance_details.json
+```
 
-Each directory contains a per_instance_details.json file with:
-    {
-        "<instance_id>": {
-            "cost": float,
-            "api_calls": int,
-            "resolved": bool
-        },
-        ...
-    }
-
-Output format (one JSON object per line):
-    {"benchmark_id": "swebench-bash", "model": "<model-name>", "example_id": "<instance_id>", "pass1": 0|1, "count": 1}
+Each per_instance_details.json contains:
+```json
+{
+    "<instance_id>": {
+        "cost": float,
+        "api_calls": int,
+        "resolved": bool
+    },
+    ...
+}
+```
 """
 
 import json
 import os
-import urllib.request
-import urllib.error
 
 
-GITHUB_API_BASE = "https://api.github.com/repos/SWE-bench/experiments/contents/evaluation/bash-only"
-RAW_BASE = "https://raw.githubusercontent.com/SWE-bench/experiments/main/evaluation/bash-only"
-
-
-def fetch_json(url):
-    """Fetch JSON from a URL."""
-    req = urllib.request.Request(url)
-    req.add_header('User-Agent', 'eval-arena-processor')
-    with urllib.request.urlopen(req, timeout=30) as response:
-        return json.loads(response.read().decode('utf-8'))
+RAW_DATA_DIR = "raw-data/swebench-bash"
 
 
 def list_model_directories():
-    """List all model directories from GitHub API."""
-    data = fetch_json(GITHUB_API_BASE)
+    """List all model directories from local raw-data folder."""
     directories = []
-    for item in data:
-        if item['type'] == 'dir':
-            directories.append(item['name'])
+    for item in os.listdir(RAW_DATA_DIR):
+        item_path = os.path.join(RAW_DATA_DIR, item)
+        if os.path.isdir(item_path):
+            directories.append(item)
     return sorted(directories)
 
 
@@ -54,13 +49,17 @@ def extract_model_name(dir_name):
     return dir_name
 
 
-def fetch_per_instance_details(dir_name):
-    """Fetch per_instance_details.json for a model directory."""
-    url = f"{RAW_BASE}/{dir_name}/per_instance_details.json"
+def load_per_instance_details(dir_name):
+    """Load per_instance_details.json from a model directory."""
+    file_path = os.path.join(RAW_DATA_DIR, dir_name, "per_instance_details.json")
     try:
-        return fetch_json(url)
-    except urllib.error.HTTPError as e:
-        print(f"  Warning: Could not fetch {url}: {e}")
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"  Warning: Could not find {file_path}")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"  Warning: Could not parse {file_path}: {e}")
         return None
 
 
@@ -70,7 +69,7 @@ def process_swebench_bash():
 
     Returns a list of records in the standard eval-arena format.
     """
-    print("Fetching list of model directories...")
+    print("Scanning local model directories...")
     directories = list_model_directories()
     print(f"Found {len(directories)} model directories")
 
@@ -80,7 +79,7 @@ def process_swebench_bash():
         print(f"Processing {dir_name}...")
 
         model_name = extract_model_name(dir_name)
-        details = fetch_per_instance_details(dir_name)
+        details = load_per_instance_details(dir_name)
 
         if details is None:
             continue
@@ -115,7 +114,7 @@ def main():
     records = process_swebench_bash()
 
     if not records:
-        print("\nNo data was processed. Please check network connectivity.")
+        print(f"\nNo data was processed. Please check that {RAW_DATA_DIR}/ contains model directories.")
         return
 
     # Create data directory if it doesn't exist
