@@ -6,11 +6,19 @@ Raw data source: [SWE-bench/experiments](https://github.com/SWE-bench/experiment
 
 The script expects raw data in this directory structure:
 ```
-raw-data/swebench-bash/
+raw-data/swebench-experiments/bash-only/
 ├── <run-name>/
-│   └── per_instance_details.json
+│   ├── metadata.yaml
+│   ├── per_instance_details.json
+│   └── ...
 └── <run-name>/
-    └── per_instance_details.json
+    └── ...
+```
+
+Each metadata.yaml contains model info (used for model name):
+```yaml
+info:
+  name: "Model Display Name"
 ```
 
 Each per_instance_details.json contains:
@@ -26,14 +34,15 @@ Each per_instance_details.json contains:
 ```
 
 Output will be saved to:
-- data/swebench-bash.jsonl
+- data/swebench-bash-only.jsonl
 """
 
 import json
 import os
+import yaml
 
 
-RAW_DATA_DIR = "raw-data/swebench-bash"
+RAW_DATA_DIR = "raw-data/swebench-experiments/bash-only"
 
 
 def list_model_directories():
@@ -46,8 +55,23 @@ def list_model_directories():
     return sorted(directories)
 
 
+def load_metadata(dir_name):
+    """Load metadata.yaml from a model directory."""
+    file_path = os.path.join(RAW_DATA_DIR, dir_name, "metadata.yaml")
+    try:
+        with open(file_path, 'r') as f:
+            return yaml.safe_load(f)
+    except FileNotFoundError:
+        return None
+    except yaml.YAMLError:
+        return None
+
+
 def extract_model_name(dir_name):
-    """Use folder name as model name."""
+    """Extract model name from metadata.yaml, fallback to folder name."""
+    metadata = load_metadata(dir_name)
+    if metadata and 'info' in metadata and 'name' in metadata['info']:
+        return metadata['info']['name']
     return dir_name
 
 
@@ -93,7 +117,7 @@ def process_swebench_bash():
             is_resolved = instance_data.get('resolved', False)
 
             records.append({
-                'benchmark_id': 'swebench-bash',
+                'benchmark_id': 'swebench-bash-only',
                 'model': model_name,
                 'example_id': instance_id,
                 'pass1': 1 if is_resolved else 0,
@@ -122,7 +146,7 @@ def main():
     # Create data directory if it doesn't exist
     os.makedirs('data', exist_ok=True)
 
-    output_file = 'data/swebench-bash.jsonl'
+    output_file = 'data/swebench-bash-only.jsonl'
 
     with open(output_file, 'w') as f:
         for record in records:
