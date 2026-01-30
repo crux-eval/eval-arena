@@ -1,30 +1,31 @@
 #!/usr/bin/env python3
 """
-python scripts/process_swebench.py
+Convert SWE-bench raw evaluation data into the standardized format used by eval-arena.
 
-Convert SWE-bench raw evaluation data into the
-standardized format used by eval-arena.
+Usage:
+    python scripts/process_swebench.py [<variant> ...]
+
+Examples:
+    python scripts/process_swebench.py              # run all variants
+    python scripts/process_swebench.py lite         # run only lite
+    python scripts/process_swebench.py lite verified # run lite and verified
 
 Raw data source: [SWE-bench/experiments](https://github.com/SWE-bench/experiments/tree/main/evaluation/
 The script expects raw data in this directory structure:
 ```
 raw-data/swebench-experiments/evaluation/
 ├── lite/
-│   ├── <run-name>/
-│   │   ├── metadata.yaml       # contains info.name for display name
-│   │   └── results/
-│   │       └── results.json
-│   └── ...
+│   ├── instance_ids.json       # from HuggingFace (via download_swebench_instance_ids.py)
+│   └── <run-name>/
+│       ├── metadata.yaml       # contains info.name for display name
+│       └── results/
+│           └── results.json
 ├── verified/
 │   └── ...
 ├── test/
 │   └── ...
 └── multimodal/
-    ├── instance_ids.json       # from HuggingFace dataset
-    └── <run-name>/
-        ├── metadata.yaml
-        └── results/
-            └── results.json
+    └── ...
 ```
 
 Output will be saved to:
@@ -57,23 +58,13 @@ def get_model_name(swetype, dir_name):
     return dir_name
 
 
-def load_instance_ids(swetype, id_path):
-    """Load instance IDs for a benchmark type.
-
-    For multimodal: loads from instance_ids.json (list of IDs from HuggingFace dataset)
-    For others: loads from reference model's results.json (generated + no_generation)
-    """
+def load_instance_ids(id_path):
     with open(id_path) as id_file:
-        res = json.load(id_file)
-
-    if swetype == 'multimodal':
-        return set(res)
-    else:
-        return set(res['generated']) | set(res['no_generation'])
+        return set(json.load(id_file))
 
 
 def process_swe(swetype, id_path):
-    ids = load_instance_ids(swetype, id_path)
+    ids = load_instance_ids(id_path)
     print(f'len of {swetype}', len(ids))
     print('model', 'total', 'deduped')
     for fname in glob.glob(f"{BASE_PATH}/{swetype}/*/results/results.json"):
@@ -128,22 +119,22 @@ def process_swe(swetype, id_path):
     dfo.to_json(f'data/swebench-{swetype}.jsonl', orient='records', lines=True)
 
 
+SUPPORTED_VARIANTS = ['lite', 'verified', 'test', 'multimodal']
+
+
 if __name__ == '__main__':
+    import sys
+
     # Create data directory if it doesn't exist
     os.makedirs('data', exist_ok=True)
 
-    swetype = 'lite'
-    id_path = 'raw-data/swebench-experiments/evaluation/lite/20231010_rag_claude2/results/results.json'
-    process_swe(swetype, id_path)
+    # Use command-line args if provided, otherwise run all variants
+    variants = sys.argv[1:] if len(sys.argv) > 1 else SUPPORTED_VARIANTS
 
-    swetype = 'verified'
-    id_path = 'raw-data/swebench-experiments/evaluation/verified/20231010_rag_claude2/results/results.json'
-    process_swe(swetype, id_path)
-
-    swetype = 'test'
-    id_path = 'raw-data/swebench-experiments/evaluation/test/20231010_rag_claude2/results/results.json'
-    process_swe(swetype, id_path)
-
-    swetype = 'multimodal'
-    id_path = 'raw-data/swebench-experiments/evaluation/multimodal/instance_ids.json'
-    process_swe(swetype, id_path)
+    for swetype in variants:
+        if swetype not in SUPPORTED_VARIANTS:
+            print(f"Error: Unknown variant '{swetype}'")
+            print(f"Available variants: {', '.join(SUPPORTED_VARIANTS)}")
+            sys.exit(1)
+        id_path = f'{BASE_PATH}/{swetype}/instance_ids.json'
+        process_swe(swetype, id_path)
