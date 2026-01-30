@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
+python scripts/process_swebench_bash_only.py
+
 Process SWE-bench Bash-Only evaluation results into standardized format.
 
 Raw data source: [SWE-bench/experiments](https://github.com/SWE-bench/experiments/tree/main/evaluation/bash-only)
 
 The script expects raw data in this directory structure:
 ```
-raw-data/swebench-experiments/bash-only/
+raw-data/swebench-experiments/evaluation/bash-only/
 ├── <run-name>/
 │   ├── metadata.yaml
 │   ├── per_instance_details.json
@@ -42,7 +44,7 @@ import os
 import yaml
 
 
-RAW_DATA_DIR = "raw-data/swebench-experiments/bash-only"
+RAW_DATA_DIR = "raw-data/swebench-experiments/evaluation/bash-only"
 
 
 def list_model_directories():

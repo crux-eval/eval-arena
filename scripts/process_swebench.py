@@ -5,6 +5,7 @@ python scripts/process_swebench.py
 Convert SWE-bench raw evaluation data into the
 standardized format used by eval-arena.
 
+Raw data source: [SWE-bench/experiments](https://github.com/SWE-bench/experiments/tree/main/evaluation/
 The script expects raw data in this directory structure:
 ```
 raw-data/swebench-experiments/evaluation/
