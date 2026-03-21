@@ -167,3 +167,10 @@ The question level evaluation results is described under **eval results**. Some 
 - **Paper**: Arora et al., "Have LLMs Advanced Enough? A Challenging Problem Solving Benchmark For Large Language Models" ([ACL Anthology:2023.emnlp-main.468](https://aclanthology.org/2023.emnlp-main.468.pdf)), EMNLP 2023
 - **Data**: [HuggingFace](https://huggingface.co/datasets/daman1209arora/jeebench)
 - **Eval results**: ran by collaborators
+
+## AIME 2024 and AIME 2025 (`aime2024_cot`, `aime2025_cot`)
+- **Size**: each contains 30 questions
+- **Description**: Derived from problems of the American Invitational Mathematics Examination (AIME), which consist of challenging, multi-step problems primarily in algebra, number theory, combinatorics, geometry, and probability.
+- **Data (2024)**: [HuggingFace](https://huggingface.co/datasets/HuggingFaceH4/aime_2024)
+- **Data (2025)**: [HuggingFace](https://huggingface.co/datasets/opencompass/AIME2025)
+- **Eval results**: ran by collaborators
